@@ -48,7 +48,7 @@ $skConf = array();   // Skinny設定情報格納配列
 /**************************************  Skinny config  **************************************/
 
 // 文字エンコード関連
-$skConf['ENCODE']['FLG']      = false;      // 自動文字エンコード変換の利用      [true]:する  false:しない
+$skConf['ENCODE']['FLG']      = true;      // 自動文字エンコード変換の利用      [true]:する  false:しない
 $skConf['ENCODE']['INTERNAL'] = 'UTF-8';    // PHPの文字エンコード（このファイル含む）（"ASCII/JIS/UTF-8/EUC-JP/SJIS-win"）
 $skConf['ENCODE']['TEMPLATE'] = 'UTF-8';    // スキンファイルの文字エンコード         （"ASCII/JIS/UTF-8/EUC-JP/SJIS-win"）
 $skConf['ENCODE']['EXTERNAL'] = 'UTF-8';    // 出力するHTMLの文字エンコード           （"ASCII/JIS/UTF-8/EUC-JP/SJIS-win"）
@@ -127,8 +127,8 @@ ini_set( 'magic_quotes_gpc', 'off' );
 #php_value short_open_tag off
 
 
-ini_set('mbstring.detect_order', 'auto');
-ini_set('default_charset', $skConf['ENCODE']['INTERNAL']);
+//ini_set('mbstring.detect_order', 'auto');
+//ini_set('default_charset', $skConf['ENCODE']['INTERNAL']);
 
 /**************************************  /PHP setting  ***************************************/
 

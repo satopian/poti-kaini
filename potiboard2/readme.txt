@@ -1,6 +1,6 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  POTI-board改二 v2.0.0b1 lot.180915
+  POTI-board改二 v2.0.0a2 lot.180916
   by sakots >> https://sakots.red/poti/
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -160,5 +160,8 @@ http://sugachan.dip.jp/download/komono.php#repng2jpeg
 
 　
 ■変更履歴
-[2018/09/15] v2.0.0b1 lot.180915
+[2018/09/15] v2.0.0a2 lot.180916
+・記録
+
+[2018/09/15] v2.0.0a1 lot.180915
 ・公開

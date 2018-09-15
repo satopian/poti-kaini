@@ -1,7 +1,7 @@
 <?php
 /*
   *
-  * POTI-board改二 v2.0.0a1 lot.180916
+  * POTI-board改二 v2.0.0a2 lot.180916
   *   (C)sakots >> https://sakots.red/poti/
   *
   *----------------------------------------------------------------------------------
@@ -69,8 +69,8 @@ if((THUMB_SELECT==0 && gd_check()) || THUMB_SELECT==1){
 define('USE_MB' , '1');
 
 //バージョン
-define('POTI_VER' , 'v2.0.0a1');
-define('POTI_VERLOT' , 'v2.0.0a1 lot.180915');
+define('POTI_VER' , 'v2.0.0a2');
+define('POTI_VERLOT' , 'v2.0.0a2 lot.180916');
 
 //メール通知クラスのファイル名
 define('NOTICEMAIL_FILE' , 'noticemail.inc');
@@ -2280,15 +2280,16 @@ function charconvert($str,$charset){
 }
 
 /* HTML出力 */
-function htmloutput($template,$dat,$buf_flag=''){
-//	$buf = charconvert(HtmlTemplate::t_buffer($template,$dat), 4);
-	$Skinny->SkinnyDisplay( MAINFILE, $dat );
-	if($buf_flag){
-		return $buf;
-	}else{
-		header("Content-type: text/html; charset=".CHARSET_HTML);
-		echo $buf;
-	}
+//function htmloutput($template,$dat,$buf_flag=''){
+function htmloutput($template,$dat){
+	//$buf = charconvert(HtmlTemplate::t_buffer($template,$dat), 4);
+	$Skinny->SkinnyDisplay( $template, $dat );
+	//if($buf_flag){
+	//	return $Skinny;
+	//}else{
+	//	header("Content-type: text/html; charset=".CHARSET_HTML);
+	//	echo $Skinny;
+	//}
 }
 
 /*-----------Main-------------*/
