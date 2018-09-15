@@ -1,0 +1,253 @@
+@charset "UTF-8";
+/*! =====このcssファイルはsassから生成されています。===== */
+
+//設定ファイルの読み込み
+@import "nee2_conf";
+
+//リセット
+* {
+	margin: 0px;
+	padding: 0px;
+}
+
+//全体的指定
+body {
+	background-color: $ushiro;
+	color: $moji;
+	font-family: sans-serif;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+}
+a:link {
+	color: $link;
+}
+a:visited {
+	color: $link_visited;
+}
+a:active {
+	color: $link_active;
+}
+a:hover {
+	color: $link_hover;
+}
+a i {
+	color: $moji;
+}
+hr {
+	border-style: solid;
+	border-width: 1px;
+	border-color: $ushiro;
+	margin: 1ex auto;
+}
+//----------
+header, main, footer {
+	background-color: $haikei;
+	border-radius: 8px;
+	padding: 8px;
+}
+header {
+	width: 300px;
+	position: fixed;
+	margin: 12px;
+	top: 0px;
+}
+main {
+	display: block;
+	margin: 12px 12px 12px 340px;
+}
+footer {
+	@extend main;
+	text-align: right;
+}
+input, textarea, button {
+	border-style: none;
+	border-radius: 4px;
+	padding: 4px;
+	color: $form_txt;
+	background-color: $form_txt_bk;
+}
+select {
+	@extend input;
+	padding: 2px;
+}
+input[name="picw"], input[name="pich"], input[name="del[]"], input[name="pwd"] {
+	width: 3em;
+}
+input[value="お絵かき"] {
+	background-color: $button;
+	color: $button_moji;
+}
+input[name="upfile"] {
+	width: 10em;
+}
+em.thispage {
+	@extend input;
+	background-color: $ushiro;
+	color: $moji;
+	font-style: normal;
+	font-weight: bold;
+}
+.se {
+	@extend input;
+	background-color: $ushiro;
+	color: $moji;
+	font-style: normal;
+}
+.pn {
+
+}
+figure {
+	float: left;
+	margin-right: 8px;
+	margin-bottom: 1ex;
+	img {
+		max-width: 100%;
+	}
+}
+figcaption {
+	font-size: smaller;
+}
+ul {
+	list-style-type: none;
+	font-size: smaller
+}
+.res {
+	section {
+		display: table;
+	}
+	h3, h4 {
+		font-size: 100%;
+		margin-bottom: 1ex;
+	}
+	figure {
+		float: none;
+	}
+}
+.resma {
+	color: $resmoji;
+}
+.thfoot {
+	clear: left;
+	text-align: right;
+}
+.button {
+	@extend button;
+	@extend input[value="お絵かき"];
+	padding-left: 1ex;
+	padding-right: 1ex;
+	display: inline-block;
+	a {
+		text-decoration: none;
+		color: $button_moji;
+		i {
+			color: $button_moji;
+		}
+	}
+}
+.oyano, .oyaresno {
+	@extend button;
+	background-color: $ushiro;
+	color: $moji;
+	display: inline-block;
+	text-align: center;
+	min-width: 2em;
+}
+.oekaki {
+	font-size: smaller;
+}
+#appstage {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	.app {
+		margin: 0px 4px;
+	}
+}
+.NEO {
+	.color_bk { color: $bk; }
+	.color_bk2 { color: $bk2; }
+	.color_tool_icon { color: $tool_icon; }
+	.color_icon { color: $icon; }
+	.color_iconselect { color: $iconselect; }
+	.color_text { color: $text; }
+	.color_bar { color: $bar; }
+	.tool_color_button { color: $tool_button; }
+	.tool_color_button2 { color: $tool_button2; }
+	.tool_color_text { color: $tool_text; }
+	.tool_color_bar { color: $tool_bar; }
+	.tool_color_frame { color: $tool_frame; }
+}
+.palette {
+	width: 180px;
+	fieldset {
+		text-align: center;
+	}
+}
+.c {
+	text-align: center;
+}
+#catalog {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	div {
+		width: $cat_img_size + 16px;
+		text-align: center;
+		overflow: hidden;
+	}
+	p {
+		margin: 0.5ex auto;
+	}
+	img {
+		width: $cat_img_size;
+		height: $cat_img_size;
+	}
+}
+.delfo {
+	font-size: smaller;
+	th, td {
+		border: 1px solid $ushiro;
+	}
+}
+
+//以下レスポンシブ対応
+@media screen and (max-width: 1024px) {
+	.res {
+		clear: left;
+	}
+}
+@media screen and (max-width: 768px) {
+	header {
+		width: auto;
+		position: relative;
+		margin: 12px;
+	}
+	main {
+		display: block;
+		margin: 12px;
+	}
+	#paintmode {
+		header {
+			width: 300px;
+			position: relative;
+			margin: 12px;
+		}
+		main {
+			display: block;
+			margin: 12px;
+		}
+		footer {
+			text-align: right;
+			margin: 12px;
+		}
+	}
+}
+@media screen and (max-width: 450px) {
+	footer {
+		text-align: right;
+		margin: 12px;
+	}
+	#appstage {
+		display: block;
+	}
+}
