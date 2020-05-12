@@ -1,7 +1,7 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  POTI-board改二 v2.0.0a2 lot.180916
-  by sakots >> https://sakots.red/poti/
+  POTI-board改二 v2.0.0a3 lot.200512
+  by sakots >> https://poti-k.info/
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -136,7 +136,7 @@ http://sugachan.dip.jp/download/komono.php#repng2jpeg
 
 ■著作権
 
-　POTI-boaed改二                     by sakots「赤原文庫」
+　POTI-boaed改二                     by sakots「POTI改公式」
 
 　POTI-board v1.32                   (C)SakaQ「ぷにゅねっと」
 
