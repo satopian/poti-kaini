@@ -37,7 +37,6 @@
 「ふたば★ちゃんねる」「ぷにゅねっと」に問い合わせないでください。
 ご質問は、<https://sakots.red/nee/>までどうぞ。
 */
-require_once( "Skinny.php");
 
 if(phpversion()>="5.5.0"){
 //スパム無効化関数
@@ -159,8 +158,8 @@ else{
 }
 //設定の読み込み
 require(__DIR__.'/config.php');
-//HTMLテンプレートクラス(htmltemplate_oo 0.3.1)
-//require(__DIR__.'/htmltemplate.inc');
+//HTMLテンプレート Skinny
+require_once(__DIR__.'/Skinny.php');
 //Template設定ファイル
 require(__DIR__.'/template_ini.php');
 
@@ -559,6 +558,8 @@ unset($value);
 			$tab=$oya+1;
 			//文字色
 			//$fontcolor = $fcolor ? $fcolor : DEF_FONTCOLOR;
+			$fontcolor =null;//compact()エラー回避暫定
+
 			//<br />を<br>へ
 			$com = preg_replace("{<br( *)/>}i","<br>",$com);
 			//独自タグ変換
