@@ -3,7 +3,7 @@
 //$time_start = microtime(true);
 /*
   *
-  * POTI-board改二 v2.0.0a3 lot.200512
+  * POTI-board改二 v2.0.0a4 lot.200513
   *   (C)sakots >> https://poti-k.info/
   *
   *----------------------------------------------------------------------------------
@@ -20,7 +20,7 @@
   *     (C)shi-chan >> http://hp.vector.co.jp/authors/VA016309/
   *
   * USE FUNCTION :
-  *   Skinny                (C)Kuasuki   >> http://skinny.sx68.net/
+  *   HTML template         (C)H.Ayukawa >> http://hoover.ktplan.ne.jp/kaihatsu/php/
   *   DynamicPalette        (C)NoraNeko  >> http://wondercatstudio.com/
   *   repng2jpeg            (C)SUGA      >> http://sugachan.dip.jp/
   *----------------------------------------------------------------------------------
@@ -37,6 +37,8 @@
 「ふたば★ちゃんねる」「ぷにゅねっと」に問い合わせないでください。
 ご質問は、<https://sakots.red/nee/>までどうぞ。
 */
+require_once( "Skinny.php");
+
 if(phpversion()>="5.5.0"){
 //スパム無効化関数
 function newstring($string) {
@@ -157,95 +159,8 @@ else{
 }
 //設定の読み込み
 require(__DIR__.'/config.php');
-//HTMLテンプレート(Skinny 0.4.4)
-require_once(__DIR__.'/Skinny.php');
-$dat = array();
-$dat['lognum'] = LOG_MAX;
-$dat['mode'] = $mode;
-$dat['resto'] = $resto;
-$dat['name'] = $name;
-$dat['email'] = $email; 
-$dat['url'] = $url;
-$dat['sub'] = $sub;
-$dat['com'] = $com;
-$dat['pwd'] = $pwd;
-$dat['textonly'] = $textonly; 
-$dat['shi'] = $shi;
-$dat['picw'] = $picw; 
-$dat['pich'] = $pich;
-$dat['anime'] = $anime;
-$dat['useneo'] = $useneo;
-$dat['no'] = $no;
-$dat['pch'] = $pch;
-$dat['ext'] = $ext; 
-$dat['ctype'] = $ctype;
-$dat['type'] = $type;
-$dat['pictmp'] = $pictmp;
-$dat['ptime'] = $ptime;
-$dat['picfile'] = $picfile;
-$dat['del'] = $del;
-$dat['admin'] = $admin;
-$dat['pass'] = $pass;
-$dat['onlyimgdel'] = $onlyimgdel;
-
-$dat['fcolor'] = $fcolor;
-$dat['undo'] = $undo;
-$dat['undo_in_mg'] = $undo_in_mg;
-$dat['quality'] = $quality;
-$dat['savetype'] = $savetype;
-
-$dat['res'] = $res;
-
-if((filter_input(INPUT_GET, 'mode'))==="openpch"){
-	$dat['pch'] = $pch;
-	$dat['shi'] = $shi;
-}
-if((filter_input(INPUT_GET, 'mode'))==="continue"){
-	$dat['no'] = $no;
-	$dat['mode'] = $mode;
-}
-if((filter_input(INPUT_GET, 'mode'))==="edit"){
-	$dat['del'] = $del;
-	$dat['pwd'] = $pwd;
-	$dat['mode'] = $mode;
-}
-if((filter_input(INPUT_GET, 'mode'))==="admin"){
-	$dat['admin'] = $admin;
-	$dat['pass'] = $pass;
-	$dat['mode'] = $mode;
-}
-if((filter_input(INPUT_GET, 'mode'))==="catalog"){
-	$dat['page'] = $page;
-	$dat['mode'] = $mode;
-}
-if((filter_input(INPUT_GET, 'mode'))==="piccom"){
-	$dat['stime'] = $stime;
-	$dat['resto'] = $resto;
-	$dat['mode'] = $mode;
-}
-if((filter_input(INPUT_GET, 'mode'))==="picrep"){
-	$dat['no'] = $no;
-	$dat['pwd'] = $pwd;
-	$dat['repcode'] = $repcode;
-	$dat['stime'] = $stime;
-}
-$dat['mode'] = $mode;
-
-$dat['urlc'] = $urlc;
-$dat['namec'] = $namec;
-$dat['emailc'] = $emailc;
-$dat['pwdc'] = $pwdc;
-$dat['usercode'] = $usercode;
-$dat['fcolorc'] = $fcolorc;
-
-$dat['REQUEST_METHOD'] = $REQUEST_METHOD;
-
-$dat['upfile_name'] = $upfile_name;
-if (strpos($upfile_name, '/') !== false) {//ファイル名に/がなければ続行
-	$dat['upfile_name'] = $upfile_name;
-}
-$dat['upfile'] = $upfile;
-
+//HTMLテンプレートクラス(htmltemplate_oo 0.3.1)
+//require(__DIR__.'/htmltemplate.inc');
 //Template設定ファイル
 require(__DIR__.'/template_ini.php');
 
@@ -278,8 +193,8 @@ if(!defined('ELAPSED_DAYS')){//config.phpで未定義なら0
 define('USE_MB' , '1');
 
 //バージョン
-define('POTI_VER' , '改二 v2.0.0a3');
-define('POTI_VERLOT' , '改二 v2.0.0a3 lot.200512');
+define('POTI_VER' , '改二 v2.0.0a4');
+define('POTI_VERLOT' , '改二 v2.0.0a4 lot.200513');
 
 //メール通知クラスのファイル名
 define('NOTICEMAIL_FILE' , 'noticemail.inc');
@@ -290,6 +205,8 @@ define('SIIHELP_FILE' , 'siihelp.php');
 
 //タイムゾーン
 date_default_timezone_set('Asia/Tokyo');
+
+
 
 //GD版が使えるかチェック
 function gd_check(){
@@ -641,7 +558,7 @@ unset($value);
 			//TAB
 			$tab=$oya+1;
 			//文字色
-			$fontcolor = $fcolor ? $fcolor : DEF_FONTCOLOR;
+			//$fontcolor = $fcolor ? $fcolor : DEF_FONTCOLOR;
 			//<br />を<br>へ
 			$com = preg_replace("{<br( *)/>}i","<br>",$com);
 			//独自タグ変換
@@ -739,7 +656,7 @@ unset($value);
 					$name=preg_replace("/(◆.*)/","",$name);
 				}else{$trip='';}
 				//文字色
-				$fontcolor = $fcolor ? $fcolor : DEF_FONTCOLOR;
+				//$fontcolor = $fcolor ? $fcolor : DEF_FONTCOLOR;
 				//<br />を<br>へ
 				$com = preg_replace("{<br( *)/>}i","<br>",$com);
 				//独自タグ変換
@@ -1206,7 +1123,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 	if($buf==''){error(MSG019,$dest);}
 	$buf = charconvert($buf);
 	$line = explode("\n",$buf);
-	$countline=count($line);
+//	$countline=count($line);
 	foreach($line as $i =>&$value){//$i必要
 		if($value!==""){//190624
 			list($artno,)=explode(",", rtrim($value));	//逆変換テーブル作成
@@ -1698,7 +1615,7 @@ function admindel($pass){
 			$size = 0;
 			$chk= "";
 		}
-		$bg = ($j % 2) ? ADMIN_DELGUSU : ADMIN_DELKISU;//背景色
+		//$bg = ($j % 2) ? ADMIN_DELGUSU : ADMIN_DELKISU;//背景色
 
 		$dat['del'][$j] = compact('bg','no','now','sub','name','com','host','clip','size','chk');
 	}
@@ -3068,8 +2985,14 @@ function charconvert($str){
 
 /* HTML出力 */
 function htmloutput($template,$dat,$buf_flag=''){
-
-	$buf=$Skinny->SkinnyDisplay( $template, $dat );
+	// require_once( "Skinny.php");
+	global $Skinny;
+	// $out = array();
+		// $out['message'] = "吾輩はPHPである。\n名前は「PHP:Hypertext Preprocessor」である。\n";
+		$buf=$Skinny->SkinnyDisplay($template, $dat );
+		// $buf=$Skinny->SkinnyDisplay( $template, $out );
+	
+	// $buf=HtmlTemplate::t_buffer($template,$dat);
 	if($buf_flag){
 		return $buf;
 	}else{
