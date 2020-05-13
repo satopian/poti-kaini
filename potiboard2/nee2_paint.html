@@ -410,6 +410,8 @@
 						<param name="undo_in_mg" value="<% echo(undo_in_mg) %>">
 						<param name="url_save" value="picpost.php">
 						<param name="url_exit" value="<% echo(self) %>?mode=<% echo(mode) %>&amp;stime=<% echo(stime) %>">
+						<% def(anime) %><param name="thumbnail_type" value="animation"><% /def %><?php echo "\n"; ?>
+						<% def(pchfile) %><param name="pch_file" value="<% echo(pchfile) %>"><% /def %><?php echo "\n"; ?>
 						<% def(imgfile) %><param name="image_canvas" value="<% echo(imgfile) %>"><% /def %><?php echo "\n"; ?>
 						<% def(usercode) %><param name="send_header" value="usercode=<% echo(usercode) %>"><% /def %><?php echo "\n"; ?>
 						<param name="poo" value="false">

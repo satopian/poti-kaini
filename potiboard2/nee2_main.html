@@ -50,6 +50,7 @@
 							<% /def %><?php echo "\n"; ?>
 							<input type="hidden" name="mode" value="paint">
 							<input class="button" type="submit" value="お絵かき">
+							<% def(anime) %><label><input type="checkbox" value="true" name="anime" title="動画記録" <% echo(animechk) %>>アニメーション記録</label><% /def %><?php echo "\n"; ?>
 						</p>
 					</form>
 				</section>
@@ -77,7 +78,7 @@
 							<tr>
 								<td>sub<% def(usesub) %><% echo(usesub) %><% /def %></td>
 								<td>
-									<input class="form" type="text" name="sub" size="20" value="<% def(usesub) %><% echo(resub) %><% /def %>" autocomplete="section-sub">
+									<input class="form" type="text" name="sub" size="20" value="<% echo(resub) %>" autocomplete="section-sub">
 									<input class="button" type="submit" value="WRITE">
 								</td>
 							</tr>
@@ -148,7 +149,11 @@
 					<section>
 						<% def(oya/src) %><?php echo "\n"; ?>
 						<figure>
-							<figcaption><a href="<% echo(oya/src) %>" data-lightbox="a<% echo(oya/no) %>" data-title="<% echo(oya/srcname) %>"><% echo(oya/srcname) %></a> (<% echo(oya/size) %> B) <% def(oya/thumb) %>- サムネイル表示中 -<% /def %><br><% def(oya/painttime) %>PaintTime : <% echo(oya/painttime) %><% /def %><% def(oya/continue) %>  <a href="<% echo(self) %>?mode=continue&amp;no=<% echo(oya/continue) %>">続きを描く</a><% /def %></figcaption>
+							<figcaption><a href="<% echo(oya/src) %>" data-lightbox="a<% echo(oya/no) %>" data-title="<% echo(oya/srcname) %>"><% echo(oya/srcname) %></a> (<% echo(oya/size) %> B) <% def(oya/thumb) %>- サムネイル表示中 -<% /def %><br><% def(oya/painttime) %>PaintTime : <% echo(oya/painttime) %><% /def %><br>
+								
+								<% def(oya/pch) %><a href="<% echo(self) %>?mode=openpch&amp;pch=<% echo(oya/pch) %>" target="_blank">●動画</a><% /def %>
+								
+								<% def(oya/continue) %>  <a href="<% echo(self) %>?mode=continue&amp;no=<% echo(oya/continue) %>">続きを描く</a><% /def %></figcaption>
 							<a href="<% echo(oya/src) %>" data-lightbox="b<% echo(oya/no) %>" tabindex="<% echo(oya/tab) %>"  data-title="<% echo(oya/srcname) %>"><img src="<% echo(oya/imgsrc) %>" alt="<% echo(oya/srcname) %>"></a>
 						</figure>
 						<% /def %><?php echo "\n"; ?>
