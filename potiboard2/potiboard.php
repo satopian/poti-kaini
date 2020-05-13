@@ -2985,19 +2985,13 @@ function charconvert($str){
 
 /* HTML出力 */
 function htmloutput($template,$dat,$buf_flag=''){
-	// require_once( "Skinny.php");
 	global $Skinny;
-	// $out = array();
-		// $out['message'] = "吾輩はPHPである。\n名前は「PHP:Hypertext Preprocessor」である。\n";
-		$buf=$Skinny->SkinnyDisplay($template, $dat );
-		// $buf=$Skinny->SkinnyDisplay( $template, $out );
-	
-	// $buf=HtmlTemplate::t_buffer($template,$dat);
+		
 	if($buf_flag){
+		$buf=$Skinny->SkinnyFetchHTML($template, $dat );
 		return $buf;
 	}else{
-	header("Content-type: text/html; charset=UTF-8");
-		echo $buf;
+		$Skinny->SkinnyDisplay( $template, $dat );
 	}
 }
 
