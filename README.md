@@ -18,7 +18,7 @@ POTI-board改で使用しているテンプレートエンジン「htmltemplate.
 
 ## 今後
 
-- pallete.txtを読み込めないのをどうにかする
+- セキュリティとか
 
 ## 使い方
 基本的に <a href="https://github.com/sakots/poti-kai/">POTI-board改</a> と同じですが、スキンを置くフォルダができました。  
@@ -39,6 +39,10 @@ config.phpの設定をし、アップロードしてpotiboard.phpにアクセス
 ---
 
 ## 履歴
+
+### [2020/05/15] v2.0.2　lot.200515
+
+- palette.txtの読み込み処理(by さとぴあ)
 
 ### [2020/05/15] v2.0.1　lot.200515
 
