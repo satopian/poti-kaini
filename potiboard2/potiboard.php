@@ -560,9 +560,11 @@ unset($value);
 			//TAB
 			$tab=$oya+1;
 			//文字色
-			//$fontcolor = $fcolor ? $fcolor : DEF_FONTCOLOR;
-			$fontcolor = null; //compact()エラー回避暫定
-
+			if(!defined('DEF_FONTCOLOR')){//DEF_FONTCOLORの設定がないテンプレートの場合
+				define('DEF_FONTCOLOR','null');
+			}
+			$fontcolor = $fcolor ? $fcolor : DEF_FONTCOLOR;
+			// var_dump($fontcolor);
 			//<br />を<br>へ
 			$com = preg_replace("{<br( *)/>}i","<br>",$com);
 			//独自タグ変換
