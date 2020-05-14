@@ -88,45 +88,36 @@ $savetype = newstring(filter_input(INPUT_POST, 'savetype'));
 
 //var_dump($_GET);
 $res = filter_input(INPUT_GET, 'res',FILTER_VALIDATE_INT);
-if((filter_input(INPUT_GET, 'mode'))==="openpch"){
+if(filter_input(INPUT_GET, 'mode')==="openpch"){
 $pch = newstring(filter_input(INPUT_GET, 'pch'));
 $shi = filter_input(INPUT_GET, 'shi',FILTER_VALIDATE_INT);
 $mode = "openpch";
 }
-if((filter_input(INPUT_GET, 'mode'))==="continue"){
+if(filter_input(INPUT_GET, 'mode')==="continue"){
 $no = filter_input(INPUT_GET, 'no',FILTER_VALIDATE_INT);
 $mode = "continue";
 }
-if((filter_input(INPUT_GET, 'mode'))==="edit"){
-$del = filter_input(INPUT_GET,'del',FILTER_VALIDATE_INT,FILTER_REQUIRE_ARRAY);
-$pwd = newstring(filter_input(INPUT_GET, 'pwd'));
-$mode = "edit";
-}
-if((filter_input(INPUT_GET, 'mode'))==="admin"){
-$admin = newstring(filter_input(INPUT_GET, 'admin'));
-$pass = newstring(filter_input(INPUT_GET, 'pass'));
+if(filter_input(INPUT_GET, 'mode')==="admin"){
 $mode = "admin";
-}if((filter_input(INPUT_GET, 'mode'))==="catalog"){
+}
+if(filter_input(INPUT_GET, 'mode')==="catalog"){
 $page = filter_input(INPUT_GET, 'page',FILTER_VALIDATE_INT);
 $mode = "catalog";
 }
-if((filter_input(INPUT_GET, 'mode'))==="piccom"){
+if(filter_input(INPUT_GET, 'mode')==="piccom"){
 $stime = filter_input(INPUT_GET, 'stime',FILTER_VALIDATE_INT);
 $resto = filter_input(INPUT_GET, 'resto',FILTER_VALIDATE_INT);
 $mode = "piccom";
 }
-if((filter_input(INPUT_GET, 'mode'))==="picrep"){
+if(filter_input(INPUT_GET, 'mode')==="picrep"){
 $no = filter_input(INPUT_GET, 'no',FILTER_VALIDATE_INT);
 $pwd = newstring(filter_input(INPUT_GET, 'pwd'));
 $repcode = newstring(filter_input(INPUT_GET, 'repcode'));
 $stime = filter_input(INPUT_GET, 'stime',FILTER_VALIDATE_INT);
 $mode = "picrep";
 }
-if((filter_input(INPUT_GET, 'mode'))==="newpost"){
+if(filter_input(INPUT_GET, 'mode')==="newpost"){
 $mode = "newpost";
-}
-if((filter_input(INPUT_GET, 'mode'))==="tag"){
-$mode = "tag";
 }
 //INPUT_COOKIEから変数を取得
 
@@ -2908,90 +2899,6 @@ function catalog(){
 	}
 
 	htmloutput(SKIN_DIR.CATALOGFILE,$dat);
-}
-
-/* 独自タグ */
-function potitag($str){
-	global $tags1,$tags2,$ryfont1,$ryfont2;
-
-	$tagrp = 0;
-	$tagrps1 = array();
-	$tagrps2 = array();
-
-	while(preg_match('/\[([^\]:]+):([^\]]*)\]/',$str,$match)){
-		$str = str_replace($match[0],'<com'.$tagrp.'>',$str);
-		array_push($tagrps1,'/<com'.$tagrp.'>/');
-
-		$tag_ex = array();
-		$tag_ed = array();
-		$base_tags = explode("&#44;",$match[1]);
-		$com = $match[2];
-
-		foreach($base_tags as $base_tag){
-			$base_tag = trim($base_tag);
-			if(preg_match('/^F/',$base_tag)){
-				if(preg_match('/s\(([^\)]+)\)/',$base_tag,$m)){$size = $m[1];}
-				if(preg_match('/c\(([^\)]+)\)/',$base_tag,$m)){$color = $m[1];}
-				if(preg_match('/f\(([^\)]+)\)/',$base_tag,$m)){
-					$face = $m[1];
-					$countryfont1 = count($ryfont1);
-					for($i = 0; $i < $countryfont1; ++$i){
-						if($face == $ryfont1[$i]){$face = $ryfont2[$i];}
-					}
-				}
-				$font_ex = 1;
-			}
-			if($base_tag=='RB'){
-				array_push($tag_ex,'<ruby>');
-				array_push($tag_ed,'</ruby>');
-				$rb_chk = 1;
-			}else{
-				$counttags1 = count($tags1);
-				for($i = 0; $i < $counttags1; ++$i){
-					if($base_tag==$tags1[$i]){
-						array_push($tag_ex,'<'.$tags2[$i].'>');
-						$endtag = preg_replace("/^([[:alpha:]]+)(.*)/",'\\1',$tags2[$i]);
-						array_push($tag_ed,'</'.$endtag.'>');
-						break;
-					}
-				}
-			}
-		}
-		if(isset($rb_chk)&&$rb_chk){
-			if(preg_match('/\(([^\):]+):([^\)]+)\)$/',$com,$m)){
-				$com = str_replace($m[0],'('.$m[2].')',$com);
-				$rb_color = ' style="color:'.$m[1].'"';
-			}
-			$com = preg_replace('/\(([^\)]+)\)$/','<rp>(</rp><rt'.$rb_color.'>\\1</rt><rp>)</rp>',$com);
-		}
-
-		if(isset($font_ex)&&$font_ex){
-			$size  = (isset($size)&&$size)  ? ' size="'.$size.'"' : '';
-			$color = (isset($color)&&$color) ? ' color="'.$color.'"' : '';
-			$face  = (isset($face)&&$face)  ? ' face="'.$face.'"' : '';
-			array_unshift($tag_ex,"<font$size$color$face>");
-			array_unshift($tag_ed,"</font>");
-		}
-		$counttag_ex=count($tag_ex);
-		for($i = 0; $i < $counttag_ex; ++$i){
-			$com = $tag_ex[$i].$com.$tag_ed[$i];
-		}
-		array_push($tagrps2,$com);
-		++$tagrp;
-		unset($tag_ex,$tag_ed,$base_tags,$com,$font_ex,$size,$color,$face,$rb_chk,$rb_color);
-	}
-
-	return preg_replace($tagrps1, $tagrps2, $str);
-}
-
-/* 独自タグ説明 */
-function potitagview(){
-	global $tags1,$tags2,$ryfont1,$ryfont2;
-
-	head($dat);
-	$dat['potitag_mode'] = true;
-	htmloutput(SKIN_DIR.OTHERFILE,$dat);
-	exit;
 }
 
 /* 文字コード変換 */
