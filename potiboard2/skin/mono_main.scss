@@ -37,8 +37,11 @@ hr {
 	border-color: $border;
 	margin: 1ex auto;
 }
+hr.hr {
+	clear: both;
+}
 //----------
-header, main, footer>section {
+header, main > section > .thread, footer > section {
 	background-color: $haikei;
 	padding: 8px;
 }
@@ -52,10 +55,10 @@ header {
 	border-width: 1px;
 	border-color: $border;
 }
-main {
+main > section > .thread {
 	@extend header;
 }
-footer>section {
+footer > section {
 	@extend header;
 	form {
 		text-align: right;

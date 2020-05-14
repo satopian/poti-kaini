@@ -40,6 +40,10 @@ hr {
   margin: 1ex auto;
 }
 
+hr.hr {
+  clear: both;
+}
+
 header, main, footer, footer {
   background-color: #333;
   border-radius: 8px;

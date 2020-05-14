@@ -530,6 +530,28 @@
 			</section>
 			<% /def %><?php echo "\n"; ?>
 			<!--(========== PAINT MODE(お絵かきモード) end ==========)--><?php echo "\n"; ?>
+			<!--(========== 動画表示モード ==========)-->
+			<% def(pch_mode) %><?php echo "\n"; ?>
+			<section id="appstage">
+				<div class="app">
+					<applet-dummy name="pch" code="pch.PCHViewer.class" archive="PCHViewer.jar,PaintBBS.jar" width="<% echo(w) %>" height="<% echo(h) %>" mayscript>
+						<param name="image_width" value="<% echo(picw) %>">
+						<param name="image_height" value="<% echo(pich) %>">
+						<param name="pch_file" value="<% echo(pchfile) %>">
+						<param name="speed" value="<% echo(speed) %>">
+						<param name="buffer_progress" value="false">
+						<param name="buffer_canvas" value="false">
+					</applet-dummy>
+					<p>
+						<a href="<% echo(pchfile) %>" target="_blank">Download</a> - Datasize : <% echo(datasize) %> byte
+					</p>
+					<p>
+						<a href="javascript:close()">閉じる</a>
+					</p>
+				</div>
+			</section>
+			<% /def %><?php echo "\n"; ?>
+			<!--(========== 動画表示モード ここまで ==========)--><?php echo "\n"; ?>
 			<!--(========== CONTINUE MODE(コンティニューモード) start ==========)--><?php echo "\n"; ?>
 			<% def(continue_mode) %><?php echo "\n"; ?>
 			<script type="text/javascript" src="loadcookie.js"></script>

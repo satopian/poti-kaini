@@ -39,6 +39,9 @@ hr {
 	border-color: $ushiro;
 	margin: 1ex auto;
 }
+hr.hr {
+	clear: both;
+}
 //----------
 header, main, footer {
 	background-color: $haikei;

@@ -374,6 +374,8 @@
 						<param name="undo_in_mg" value="<% echo(undo_in_mg) %>">
 						<param name="url_save" value="picpost.php">
 						<param name="url_exit" value="<% echo(self) %>?mode=<% echo(mode) %>&amp;stime=<% echo(stime) %>">
+						<% def(anime) %><param name="thumbnail_type" value="animation"><% /def %>
+						<% def(pchfile) %><param name="pch_file" value="<% echo(pchfile) %>"><% /def %>
 						<% def(imgfile) %><param name="image_canvas" value="<% echo(imgfile) %>"><% /def %>
 						<% def(usercode) %><param name="send_header" value="usercode=<% echo(usercode) %>"><% /def %>
 						<param name="poo" value="false">
@@ -533,6 +535,28 @@
 			</section>
 			<% /def %>
 			<!--(========== PAINT MODE(お絵かきモード) end ==========)-->
+			<!--(========== 動画表示モード ==========)-->
+			<% def(pch_mode) %>
+			<section id="appstage">
+				<div class="app">
+					<applet-dummy name="pch" code="pch.PCHViewer.class" archive="PCHViewer.jar,PaintBBS.jar" width="<% echo(w) %>" height="<% echo(h) %>" mayscript>
+						<param name="image_width" value="<% echo(picw) %>">
+						<param name="image_height" value="<% echo(pich) %>">
+						<param name="pch_file" value="<% echo(pchfile) %>">
+						<param name="speed" value="<% echo(speed) %>">
+						<param name="buffer_progress" value="false">
+						<param name="buffer_canvas" value="false">
+					</applet-dummy>
+					<p>
+						<a href="<% echo(pchfile) %>" target="_blank">Download</a> - Datasize : <% echo(datasize) %> byte
+					</p>
+					<p>
+						<a href="javascript:close()">閉じる</a>
+					</p>
+				</div>
+			</section>
+			<% /def %>
+			<!--(========== 動画表示モード ここまで ==========)-->
 			<!--(========== CONTINUE MODE(コンティニューモード) start ==========)-->
 			<% def(continue_mode) %>
 			<script type="text/javascript" src="loadcookie.js"></script>
@@ -542,6 +566,7 @@
 						<img src="<% echo(picfile) %>">
 						<figcaption><% echo(picfile) %><% def(painttime) %> PaintTime : <% echo(painttime) %><% /def %></figcaption>
 					</figure>
+					<hr class="hr">
 					<form action="<% echo(self) %>" method="post">
 						<input type="hidden" name="mode" value="contpaint">
 						<input type="hidden" name="anime" value="true">

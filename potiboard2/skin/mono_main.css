@@ -36,12 +36,16 @@ hr {
   margin: 1ex auto;
 }
 
-header, main, footer > section, footer > section.copy, main, footer > section {
+hr.hr {
+  clear: both;
+}
+
+header, main > section > .thread, footer > section, footer > section.copy, main > section > .thread, footer > section {
   background-color: #FEFEFE;
   padding: 8px;
 }
 
-header, main, footer > section, footer > section.copy {
+header, main > section > .thread, footer > section, footer > section.copy {
   margin: 12px;
   display: block;
   width: 70%;
@@ -301,7 +305,7 @@ ul.menu {
 }
 
 @media screen and (max-width: 768px) {
-  header, main, footer > section, footer > section.copy {
+  header, main > section > .thread, footer > section, footer > section.copy {
     width: auto;
     position: relative;
     margin: 12px;
@@ -310,7 +314,7 @@ ul.menu {
     display: block;
     margin: 12px;
   }
-  #paintmode header, #paintmode main, #paintmode footer > section {
+  #paintmode header, #paintmode main > section > .thread, #paintmode footer > section {
     width: 300px;
     position: relative;
     margin: 12px;
