@@ -235,36 +235,10 @@ ul.menu {
 		clear: left;
 	}
 }
-@media screen and (max-width: 768px) {
-	header {
-		width: auto;
-		position: relative;
-		margin: 12px;
-	}
-	main {
-		display: block;
-		margin: 12px;
-	}
-	#paintmode {
-		header {
-			width: 300px;
-			position: relative;
-			margin: 12px;
-		}
-		main {
-			display: block;
-			margin: 12px;
-		}
-		footer {
-			text-align: right;
-			margin: 12px;
-		}
-	}
-}
+
 @media screen and (max-width: 450px) {
-	footer {
-		text-align: right;
-		margin: 12px;
+	textarea, input[name="upfile"] {
+		width: 15em;
 	}
 	#appstage {
 		display: block;

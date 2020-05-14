@@ -304,35 +304,9 @@ ul.menu {
   }
 }
 
-@media screen and (max-width: 768px) {
-  header, main > section > .thread, footer > section, footer > section.copy {
-    width: auto;
-    position: relative;
-    margin: 12px;
-  }
-  main {
-    display: block;
-    margin: 12px;
-  }
-  #paintmode header, #paintmode main > section > .thread, #paintmode footer > section {
-    width: 300px;
-    position: relative;
-    margin: 12px;
-  }
-  #paintmode main {
-    display: block;
-    margin: 12px;
-  }
-  #paintmode footer {
-    text-align: right;
-    margin: 12px;
-  }
-}
-
 @media screen and (max-width: 450px) {
-  footer {
-    text-align: right;
-    margin: 12px;
+  textarea, input[name="upfile"], textarea[name="upfile"], select[name="upfile"], .se[name="upfile"] {
+    width: 15em;
   }
   #appstage {
     display: block;
