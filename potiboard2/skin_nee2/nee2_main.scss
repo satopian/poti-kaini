@@ -93,9 +93,7 @@ em.thispage {
 	color: $moji;
 	font-style: normal;
 }
-.pn {
 
-}
 figure {
 	float: left;
 	margin-right: 8px;
@@ -109,7 +107,11 @@ figcaption {
 }
 ul {
 	list-style-type: none;
-	font-size: smaller
+	font-size: smaller;
+}
+ul.menu {
+	font-size: medium;
+	line-height: 2em;
 }
 .res {
 	section {

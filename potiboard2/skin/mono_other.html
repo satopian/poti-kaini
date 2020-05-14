@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ja">
+	<head>
+		<meta charset="<% echo(charset) %>">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+		<link rel="stylesheet" href="<% echo(skindir) %>mono_main.css" type="text/css">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.6/css/all.css">
+		<title><% echo(title) %></title>
+	</head>
+	<body>
+		<header>
+			<h1><% echo(title) %></h1>
+			<hr>
+			<section>
+				<p class="menu">
+					<a href="<% echo(self2) %>"><i class="fas fa-star fa-fw fa-lg" title="トップ"></i>トップ</a>
+					<a href="<% echo(home) %>" target="_top"><i class="fas fa-home fa-fw fa-lg" title="ホーム"></i>ホーム</a>
+					<a href="<% echo(self) %>?mode=newpost"><i class="fas fa-pen-square fa-fw fa-lg" title="投稿"></i>投稿</a>
+					<a href="<% echo(self) %>?mode=admin"><i class="fas fa-cog fa-fw fa-lg" title="管理モード"></i>管理モード</a>
+				</p>
+			</section>
+			<hr>
+		</header>
+		<main>
+			<!--(========== POST MODE(投稿モード) start ==========
+			// 【NEW(新規投稿)、OEKAKI(お絵かき投稿)、UPDATE(編集)】
+			)-->
+			<% def(post_mode) %>
+			<% def(regist) %>
+			<script type="text/javascript" src="loadcookie.js"></script>
+			<% /def %>
+			<h1 class="oekaki">投稿フォーム<% def(admin) %> - ADMIN MODE-<% /def %></h1>
+			<section>
+				<div class="thread">
+					<% def(admin) %>
+					<p>tag can be used</p>
+					<% /def %>
+					<% def(pictmp) %>
+					<div class="tmpimg">
+						<% def(notmp) %>
+						<p>Not OEKAKI image</p>
+						<% /def %>
+						<% def(tmp) %>
+						<div>
+							<% each(tmp) %>
+							<figure>
+								<img src="<% echo(tmp/src) %>">
+								<figcaption><% echo(tmp/srcname) %>[<% echo(tmp/date) %>]</figcaption>
+							</figure>
+							<% /each %>
+						</div>
+						<% /def %>
+					</div>
+					<% /def %>
+					<% def(ptime) %><p class="ptime">PaintTime : <% echo(ptime) %></p><% /def %>
+					<form class="" action="<% echo(self) %>" method="post" enctype="multipart/form-data">
+						<table>
+							<tr>
+								<td>name<% echo(usename) %></td>
+								<td><input class="form" type="text" name="name" size="28" autocomplete="username"<% def(name) %> value="<% echo(name) %>"<% /def %>></td>
+							</tr>
+							<tr>
+								<td>URL</td><td>
+									<input class="form" type="text" name="url" size="28" autocomplete="url"<% def(url) %> value="<% echo(url) %>"<% /def %>></td>
+							</tr>
+							<tr>
+								<td>sub<% echo(usesub) %></td>
+								<td>
+									<input class="form" type="text" name="sub" size="35" autocomplete="section-sub"<% def(sub) %> value="<% echo(sub) %>"<% /def %>>
+									<input class="button" type="submit" value="書き込む">
+									<% def(regist) %>
+									<input type="hidden" name="mode" value="regist">
+									<% /def %>
+									<% def(rewrite) %>
+									<input type="hidden" name="mode" value="rewrite">
+									<input type="hidden" name="no" value="<% echo(rewrite) %>">
+									<input type="hidden" name="pwd" value="<% echo(pwd) %>">
+									<% /def %>
+									<% def(admin) %>
+									<input type="hidden" name="admin" value="<% echo(admin) %>">
+									<% /def %>
+									<% def(pictmp) %>
+									<input type="hidden" name="pictmp" value="<% echo(pictmp) %>">
+									<% /def %>
+									<% def(ptime) %>
+									<input type="hidden" name="ptime" value="<% echo(ptime) %>">
+									<% /def %>
+									<% def(resno) %>
+									<input type="hidden" name="resto" value="<% echo(resno) %>">
+									<% /def %>
+									<input type="hidden" name="MAX_FILE_SIZE" value="<% echo(maxbyte) %>">
+									<% def(ipcheck) %>IP address check ... ON<% /def %>
+								</td>
+							</tr>
+							<tr>
+								<td>com<% def(usecom) %><% echo(usecom) %><% /def %></td>
+								<td><textarea class="form" name="com" cols="48" rows="4" wrap="soft"><% def(com) %><% echo(com) %><% /def %></textarea></td>
+							</tr>
+							<% def(upfile) %>
+							<tr>
+								<td>UpFile</td>
+								<td><input class="form" type="file" name="upfile" size="35"> [<label><input type="checkbox" name="textonly" value="on">No File</label>]</td>
+							</tr>
+							<% /def %>
+							<% def(tmp) %>
+							<tr>
+								<td>imgs</td>
+								<td><select name="picfile">
+								<% each(tmp) %><option value="<% echo(tmp/srcname) %>"><% echo(tmp/srcname) %></option><% /each %>
+								</select></td>
+							</tr>
+							<% /def %>
+							<% def(regist) %>
+							<tr>
+								<td>Pass</td>
+								<td><input class="form" type="password" name="pwd" size="8" value="" autocomplete="current-password"><small>(投稿の削除に使います)</small></td>
+							</tr>
+							<% /def %>
+						</table>
+						<% def(regist) %>
+						<ul>
+							<li>添付可能ファイル：GIF, JPG, PNG ブラウザによっては正常に添付できないことがあります。</li>
+							<li>画像は横 <% echo(maxw) %>ピクセル、縦 <% echo(maxh) %>ピクセルを超えると縮小表示されます。</li>
+							<li>最大投稿データ量は <% echo(maxkb) %> KB までです。sage機能付き。</li>
+							<% def(rewrite) %>
+							<li>編集では クッキーは保存されません。さらにsageを入れても位置は変わりません。</li>
+							<li>トリップは 再生成されるので、名前を変更しない場合は 未入力(空白)にしてください。</li>
+							<li>最大投稿データ量は <% echo(maxkb) %> KB までです。sage機能付き。</li>
+							<% /def %>
+						</ul>
+						<% /def %>
+					</form>
+					<% def(regist) %>
+					<script type="text/javascript">
+					l(); //LoadCookie
+					</script>
+					<% /def %>
+				</div>
+			</section>
+			<% /def %>
+			<!--(========== POST MODE(投稿モード) end ==========)-->
+
+			<!--(========== ADMIN MODE -LOGIN-(管理モード(認証)) start ==========)-->
+			<% def(admin_in) %>
+			<h1 class="oekaki">管理モード</h1>
+			<section>
+				<div class="thread">
+					<form action="<% echo(self) %>" method="post">
+						<label><input type="radio" name="admin" value="update" checked>UPDATE</label>
+						<label><input type="radio" name="admin" value="del">DELETE</label>
+						<label><input type="radio" name="admin" value="post">ADMIN POST</label>
+						<input type="hidden" name="mode" value="admin">
+						<input class="form" type="password" name="pass" size="8">
+						<input class="button" type="submit" value="SUBMIT">
+					</form>
+				</div>
+			</section>
+			<% /def %>
+			<!--(========== ADMIN MODE -LOGIN-(管理モード(認証)) end ==========)-->
+
+			<!--(========== ADMIN MODE -DELETE-(管理モード(削除)) start ==========)-->
+			<% def(admin_del) %>
+			<h1 class="oekaki">管理モード</h1>
+			<section>
+				<div class="thread">
+					<form action="<% echo(self) %>" method="post">
+						<input type="hidden" name="mode" value="admin">
+						<input type="hidden" name="admin" value="del">
+						<input type="hidden" name="pass" value="<% echo(pass) %>">
+						[<a href="<% echo(self) %>?mode=admin&amp;admin=update&amp;pass=<% echo(pass) %>">UPDATE</a>]
+						<p>削除したい記事のチェックボックスにチェックを入れ、削除ボタンを押して下さい。記事Noをクリックすると編集できます</p>
+						<input class="button" type="submit" value="DELETE">
+						<input class="button" type="reset" value="RESET">
+						[<input type="checkbox" name="onlyimgdel" value="on" checked>ImageOnly]
+						<table class="delfo">
+							<tr>
+								<th>Check</th>
+								<th>No</th>
+								<!-- th>Time</th>
+								<th>題名</th -->
+								<th>名前</th>
+								<th>コメント</th>
+								<th>Host</th>
+								<th>Image (Bytes)</th>
+								<!-- th>md5</th -->
+							</tr>
+							<% def(del) %><% each(del) %>
+							<tr>
+								<td><input type="checkbox" name="del[]" value="<% echo(del/no) %>"></td>
+								<td><a href="<% echo(self) %>?mode=edit&amp;del[]=<% echo(del/no) %>&amp;pwd=<% echo(pass) %>"><% echo(del/no) %></a></td>
+								<!-- td><% echo(del/now) %></td>
+								<td><% echo(del/sub) %></td -->
+								<td><% echo(del/name) %></td>
+								<td><% echo(del/com) %></td>
+								<td><% echo(del/host) %></td>
+								<td><% echo(del/clip) %>(<% echo(del/size) %>)</td>
+								<!-- td><% echo(del/chk) %></td -->
+							</tr>
+							<% /each %><% /def %>
+						</table>
+						<input class="button" type="submit" value="DELETE">
+						<input class="button" type="reset" value="RESET">
+					</form>
+				</div>
+				<p>&lt;&lt;Image all size : <% echo(all) %> KB &gt;&gt;</p>
+			</section>
+			<% /def %>
+			<!--(========== ADMIN MODE -DELETE-(管理モード(削除)) end ==========)-->
+
+			<!--(========== ERROR MODE(エラー画面) start ==========)-->
+			<% def(err_mode) %>
+			<h1 class="oekaki">ERROR</h1>
+			<section>
+				<div class="thread">
+					<p class="err"><% echo(mes) %></p>
+					<p><a href="<% echo(self2) %>">[リロード]</a></p>
+				</div>
+			</section>
+			<% /def %>
+			<!--(========== ERROR MODE(エラー画面) end ==========)-->
+		</main>
+		<footer>
+			<section class="copy">
+				<!--著作権表示 削除しないでください-->
+				<!-- GazouBBS v3.0 --><!-- ふたば改0.8 --><!-- POTI-board -->
+				<p>
+					<a href="https://poti-k.info/" target="_top" title="POTI-board改二 <% echo(verlot) 	%>">POTI-board改二 <% echo(ver) %></a>
+					Web Style by <a href="https://poti-k.info/" target="_top" title="nee2 <% echo(tver) %>">MONO</a>
+				</p>
+				<p>
+					OriginalScript -
+					<a href="http://www.punyu.net/" target="_top" title="POTI-board (by PunyuNet)">POTI-board</a>
+					<a href="http://www.2chan.net/" target="_top" title="futaba.php v0.8 lot.031015 (by futaba)">futaba.php</a>
+					(<a href="http://php.s3.to" target="_top" title="gazou.php v3.0 (by Let's PHP!)">gazou.php</a>custom )
+				</p>
+				<p>
+					UseFunction -
+					<a href="http://skinny.sx68.net/" target="_top" title="Skinny v0.4.1 (by Kuasuki)">Skinny</a>
+					<a href="http://wondercatstudio.com/" target="_top" title="by WonderCatStudio">DynamicPalette</a>
+					<a href="https://github.com/funige/neo/" target="_top" title="by ImageCanvas">PaintBBS NEO</a>
+				</p>
+			</section>	
+		</footer>
+	</body>
+</html>

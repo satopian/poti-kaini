@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="<% echo(charset) %>">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-		<link rel="stylesheet" href="nee2_main.css" type="text/css">
+		<link rel="stylesheet" href="<% echo(skindir) %>nee2_main.css" type="text/css">
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.6/css/all.css">
 		<title><% echo(title) %></title>
 	</head>
@@ -12,12 +12,12 @@
 			<h1><% echo(title) %></h1>
 			<hr>
 			<section>
-				<p class="menu">
-					<a href="<% echo(self2) %>"><i class="fas fa-star fa-fw fa-lg" title="トップ"></i></a>
-					<a href="<% echo(home) %>" target="_top"><i class="fas fa-home fa-fw fa-lg" title="ホーム"></i></a>
-					<a href="<% echo(self) %>?mode=newpost"><i class="fas fa-pen-square fa-fw fa-lg" title="投稿"></i></a>
-					<a href="<% echo(self) %>?mode=admin"><i class="fas fa-cog fa-fw fa-lg" title="管理"></i></a>
-				</p>
+				<ul class="menu">
+					<li><a href="<% echo(self2) %>"><i class="fas fa-star fa-fw fa-lg" title="トップ"></i>トップ</a></li>
+					<li><a href="<% echo(home) %>" target="_top"><i class="fas fa-home fa-fw fa-lg" title="ホーム"></i>ホーム</a></li>
+					<li><a href="<% echo(self) %>?mode=newpost"><i class="fas fa-pen-square fa-fw fa-lg" title="投稿"></i>投稿</a></li>
+					<li><a href="<% echo(self) %>?mode=admin"><i class="fas fa-cog fa-fw fa-lg" title="管理モード"></i>管理モード</a></li>
+				</ul>
 			</section>
 			<hr>
 		</header>
@@ -93,7 +93,7 @@
 								</td>
 							</tr>
 							<tr>
-								<td>com<% echo(usecom) %></td>
+								<td>com<% def(usecom) %><% echo(usecom) %><% /def %></td>
 								<td><textarea class="form" name="com" cols="48" rows="4" wrap="soft"><% def(com) %><% echo(com) %><% /def %></textarea></td>
 							</tr>
 							<% def(upfile) %><?php echo "\n"; ?>
@@ -131,9 +131,9 @@
 						<% /def %><?php echo "\n"; ?>
 					</form>
 					<% def(regist) %><?php echo "\n"; ?>
-					<script type="text/javascript"><!--
+					<script type="text/javascript">
 					l(); //LoadCookie
-					//--></script>
+					</script>
 					<% /def %><?php echo "\n"; ?>
 				</div>
 			</section>
@@ -223,8 +223,8 @@
 			<!--著作権表示 削除しないでください-->
 			<!-- GazouBBS v3.0 --><!-- ふたば改0.8 --><!-- POTI-board -->
 			<p>
-				<a href="http://sakots.red/" target="_top" title="POTI-board改二 <% echo(verlot) %> (by 赤原文庫)">POTI-board改二 <% echo(ver) %></a>
-				Web Style by <a href="https://sakots.red/" target="_top" title="nee2 <% echo(tver) %> (by 赤原文庫)">nee</a>
+				<a href="https://poti-k.info/" target="_top" title="POTI-board改二 <% echo(verlot) %>">POTI-board改二 <% echo(ver) %></a>
+				Web Style by <a href="https://poti-k.info/" target="_top" title="nee2 <% echo(tver) %>">nee2</a>
 			</p>
 			<p>
 				OriginalScript -

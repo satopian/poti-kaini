@@ -1,11 +1,17 @@
 <?php
 /*
-  * POTI-board改二 v2.0.0a4 lot.200513
+  * POTI-board改二 v2.0.0 lot.200514
   * by sakots >> https://poti-k.info/
   *
   * POTI-board改二の設定ファイルです。
   *
 */
+
+/* ---------- ADD:2020/05/14 ---------- */
+
+//スキンのディレクトリ
+define('SKIN_DIR', 'skin/');
+
 /* ---------- ADD:2020/05/01 ---------- */
 //指定した日数を過ぎたスレッドのフォームを閉じる
 define('ELAPSED_DAYS','0');
@@ -386,7 +392,7 @@ define('IMG_SIZE', '60');
 /* ---------- お絵かき設定 ---------- */
 
 //お絵かき機能を使用する お絵かきのみ:2 する:1 しない:0
-define('USE_PAINT', '2');
+define('USE_PAINT', '1');
 
 //利用するアプレット PaintBBS:0 しぃペインター:1 両方:2
 define('APPLET', '2');
@@ -414,6 +420,7 @@ define('PDEF_H', '300');	//高さ
 define('DSP_PAINTTIME', '1');
 
 //パレットデータファイル名
+//v2.0.0現在デフォルトスキンではダミー
 define('PALETTEFILE', 'palette.txt');
 
 //動画機能を使用する する:1 しない:0

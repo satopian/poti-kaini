@@ -3,7 +3,7 @@
 //$time_start = microtime(true);
 /*
   *
-  * POTI-board改二 v2.0.0a5 lot.200514
+  * POTI-board改二 v2.0.0a6 lot.200514
   *   (C)sakots >> https://poti-k.info/
   *
   *----------------------------------------------------------------------------------
@@ -161,7 +161,7 @@ require(__DIR__.'/config.php');
 //HTMLテンプレート Skinny
 require_once(__DIR__.'/Skinny.php');
 //Template設定ファイル
-require(__DIR__.'/template_ini.php');
+require(__DIR__.'/'.SKIN_DIR.'/template_ini.php');
 
 $path = realpath("./").'/'.IMG_DIR;
 $temppath = realpath("./").'/'.TEMP_DIR;
@@ -192,8 +192,8 @@ if(!defined('ELAPSED_DAYS')){//config.phpで未定義なら0
 define('USE_MB' , '1');
 
 //バージョン
-define('POTI_VER' , 'v2.0.0a5');
-define('POTI_VERLOT' , 'v2.0.0a5 lot.200514');
+define('POTI_VER' , 'v2.0.0a6');
+define('POTI_VERLOT' , 'v2.0.0a6 lot.200514');
 
 //メール通知クラスのファイル名
 define('NOTICEMAIL_FILE' , 'noticemail.inc');
@@ -267,6 +267,9 @@ function head(&$dat){
 
 	$dat['userdel'] = USER_DEL;
 	$dat['charset'] = 'UTF-8';
+
+	$dat['skindir'] = SKIN_DIR;
+
 //OGPイメージ シェアボタン
 	$dat['rooturl'] = ROOT_URL;//設置場所url
 	if (defined ('SHARE_BUTTON') && SHARE_BUTTON){
@@ -558,7 +561,7 @@ unset($value);
 			$tab=$oya+1;
 			//文字色
 			//$fontcolor = $fcolor ? $fcolor : DEF_FONTCOLOR;
-			$fontcolor =null;//compact()エラー回避暫定
+			$fontcolor = null; //compact()エラー回避暫定
 
 			//<br />を<br>へ
 			$com = preg_replace("{<br( *)/>}i","<br>",$com);
@@ -760,13 +763,13 @@ unset($value);
 			}
 		}
 
-		if($resno){htmloutput(RESFILE,$dat);break;}
+		if($resno){htmloutput(SKIN_DIR.RESFILE,$dat);break;}
 		// $dat['resform'] = RES_FORM ? true : false;
 		$dat['resform'] = false;	
 		if(RES_FORM && !ELAPSED_DAYS){
 			$dat['resform'] = true;	
 		}
-		$buf = htmloutput(MAINFILE,$dat,true);
+		$buf = htmloutput(SKIN_DIR.MAINFILE,$dat,true);
 		if($page==0){$logfilename=PHP_SELF2;}
 			else{$logfilename=$page/PAGE_DEF.PHP_EXT;}
 		$fp = fopen($logfilename, "w");
@@ -811,7 +814,7 @@ function error($mes,$dest=''){
 	$dat['err_mode'] = true;
 	head($dat);
 	$dat['mes'] = $mes;
-	htmloutput(OTHERFILE,$dat);
+	htmloutput(SKIN_DIR.OTHERFILE,$dat);
 	exit;
 }
 
@@ -1525,7 +1528,7 @@ function valid($pass){
 	if(!$pass){
 		$dat['admin_in'] = true;
 		head($dat);
-		htmloutput(OTHERFILE,$dat);
+		htmloutput(SKIN_DIR.OTHERFILE,$dat);
 		exit;
 	}
 }
@@ -1622,7 +1625,7 @@ function admindel($pass){
 	}
 			if(!isset($all)){$all=0;}
 	$dat['all'] = ($all - ($all % 1024)) / 1024;
-	htmloutput(OTHERFILE,$dat);
+	htmloutput(SKIN_DIR.OTHERFILE,$dat);
 	exit;
 }
 
@@ -1970,12 +1973,12 @@ if($admin===ADMIN_PASS){
 		$dat['usercode'] = $usercode.'&amp;repcode='.$repcode;
 	}
 
-	$buf = htmloutput(PAINTFILE,$dat,true);
+	$buf = htmloutput(SKIN_DIR.PAINTFILE,$dat,true);
 
 	list($buf1,$buf2) = explode('<SIIHELP>', $buf);
 	echo $buf1;
-	if(is_file(SIIHELP_FILE)){
-		$help = implode('', file(SIIHELP_FILE));
+	if(is_file(SKIN_DIR.SIIHELP_FILE)){
+		$help = implode('', file(SKIN_DIR.SIIHELP_FILE));
 		echo charconvert($help);
 	}
 	echo $buf2;
@@ -2053,7 +2056,7 @@ function paintcom($resto=''){
 	}
 	// if(ADMIN_NEWPOST&&$admin=='picpost') $dat['admin'] = $admin;
 	form($dat,$resto,'',$tmp);
-	htmloutput(OTHERFILE,$dat);
+	htmloutput(SKIN_DIR.OTHERFILE,$dat);
 }
 
 /* 動画表示 */
@@ -2092,7 +2095,7 @@ function openpch($pch,$sp=""){
 	$dat['pchfile'] = './'.$pchfile;
 	$dat['speed'] = $sp;
 	$dat['datasize'] = $datasize;
-	htmloutput(PAINTFILE,$dat);
+	htmloutput(SKIN_DIR.PAINTFILE,$dat);
 }
 
 /* テンポラリ内のゴミ除去 */
@@ -2186,7 +2189,7 @@ function incontinue($no){
 //}
 //	}
 
-	htmloutput(PAINTFILE,$dat);
+	htmloutput(SKIN_DIR.PAINTFILE,$dat);
 }
 
 /* コンティニュー認証 */
@@ -2266,7 +2269,7 @@ function editform($del,$pwd){
 			if(!$fcolor) $dat['fctable'][0]['chk'] = true; //値が無い場合、先頭にチェック
 		}
 
-		htmloutput(OTHERFILE,$dat);
+		htmloutput(SKIN_DIR.OTHERFILE,$dat);
 	}else{ error(MSG031); }
 }
 
@@ -2891,7 +2894,7 @@ function catalog(){
 		$dat['next'] = PHP_SELF.'?mode=catalog&amp;page='.$next;
 	}
 
-	htmloutput(CATALOGFILE,$dat);
+	htmloutput(SKIN_DIR.CATALOGFILE,$dat);
 }
 
 /* 独自タグ */
@@ -2974,7 +2977,7 @@ function potitagview(){
 
 	head($dat);
 	$dat['potitag_mode'] = true;
-	htmloutput(OTHERFILE,$dat);
+	htmloutput(SKIN_DIR.OTHERFILE,$dat);
 	exit;
 }
 
@@ -3032,7 +3035,7 @@ unset($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pictmp,$picf
 			$dat['regist'] = true;
 			head($dat);
 			form($dat,$res,1);
-			htmloutput(OTHERFILE,$dat);
+			htmloutput(SKIN_DIR.OTHERFILE,$dat);
 		}
 		if($admin==="update"){
 			updatelog();
@@ -3072,7 +3075,7 @@ paintform($picw,$pich,$palette,$anime);
 		$dat['regist'] = true;
 		head($dat);
 		form($dat,'');
-		htmloutput(OTHERFILE,$dat);
+		htmloutput(SKIN_DIR.OTHERFILE,$dat);
 		break;
 	case 'edit':
 		editform($del,$pwd);

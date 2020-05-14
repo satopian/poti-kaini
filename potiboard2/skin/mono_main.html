@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ja">
+	<head>
+		<meta charset="<% echo(charset) %>">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+		<link rel="stylesheet" href="<% echo(skindir) %>mono_main.css" type="text/css">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.6/css/all.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css">
+		<script type="text/javascript" src="loadcookie.js"></script>
+		<title><% echo(title) %></title>
+		<% def(notres) %>
+		<meta name="twitter:card" content="summary">
+		<meta name="twitter:site" content="">
+		<meta property="og:site_name" content="">
+		<meta property="og:title" content="<% echo(title) %>">
+		<meta property="og:type" content="article">
+		<meta property="og:description" content="">
+		<meta property="og:image" content="">
+		<% /def %>
+		<% def(resno) %><% each(oya) %>
+		<meta name="twitter:card" content="summary">
+		<meta name="twitter:site" content="">
+		<meta property="og:site_name" content="">
+		<meta property="og:title" content="[<% echo(oya/no) %>] <% echo(oya/sub) %> by <% echo(oya/name) %> - <% echo(title) %>">
+		<meta property="og:type" content="article">
+		<meta property="og:description" content="">
+		<meta property="og:url" content="<% echo(rooturl) %><% echo(self) %>?res=<% echo(oya/no) %>">
+		<% def(oya/src) %><meta property="og:image" content="<% echo(rooturl) %><% echo(oya/imgsrc) %>"><% /def %>
+		<% /each %><% /def %>
+	</head>
+	<body>
+		<header>
+			<h1><% echo(title) %></h1>
+			<hr>
+			<section>
+				<p class="menu">
+					<% def(resno) %><a href="<% echo(self2) %>"><i class="fas fa-star fa-fw fa-lg" title="トップ"></i>トップ</a><% /def %>
+					<a href="<% echo(home) %>" target="_top"><i class="fas fa-home fa-fw fa-lg" title="ホーム"></i>ホーム</a>
+					<a href="<% echo(self) %>?mode=newpost"><i class="fas fa-pen-square fa-fw fa-lg" title="投稿"></i>投稿</a>
+					<a href="<% echo(self) %>?mode=admin"><i class="fas fa-cog fa-fw fa-lg" title="管理モード"></i>管理モード</a>
+					<a href="<% echo(self) %>?mode=catalog"><i class="fas fa-table fa-fw fa-lg" title="カタログ"></i>カタログ</a>
+					<a href="<% echo(self) %>?mode=piccom<% def(resno) %>&amp;resto=<% echo(resno) %><% /def %>"><i class="fas fa-paste fa-fw fa-lg" title="投稿途中の絵"></i>投稿途中の絵</a>
+				</p>
+				<hr>
+				<% def(resno) %>
+				<p class="resm">レス送信モード</p>
+				<hr>
+				<% /def %>
+				<% def(paintform) %>
+				<% def(paint) %>
+				<% def(resno) %>
+				<p class="resm">お絵かきレス</p>
+				<hr>
+				<% /def %>
+				<section class="epost">
+					<form action="<% echo(self) %>" method="post">
+						<p>
+							<% def(applet) %>
+							<select class="form" name="shi">
+								<option value="0" selected>NEO</option>
+							</select>
+							<% /def %>
+							<label>幅：<input class="form" type="text" name="picw" value="<% echo(pdefw) %>"></label>
+							<label>高さ：<input class="form" type="text" name="pich" value="<% echo(pdefh) %>"></label>
+							<% def(resno) %>
+							<input type="hidden" name="resto" value="<% echo(resno) %>">
+							<% /def %>
+							<% def(anime) %><label><input type="checkbox" value="true" name="anime" title="動画記録" <% def(animechk) %><% echo(animechk) %><% /def %>>アニメーション記録</label><% /def %>
+							<input type="hidden" name="mode" value="paint">
+							<input class="button" type="submit" value="お絵かき">
+						</p>
+					</form>
+				</section>
+				<% /def %>
+				<% /def %>
+				<% def(form) %>
+				<section>
+					<form action="<% echo(self) %>" method="post" enctype="multipart/form-data">
+						<input type="hidden" name="mode" value="regist">
+						<% def(resno) %><input type="hidden" name="resto" value="<% echo(resno) %>"><% /def %>
+						<input type="hidden" name="MAX_FILE_SIZE" value="<% echo(maxbyte) %>">
+						<table summary="投稿フォーム">
+							<tr>
+								<td>name<% def(usename) %><% echo(usename) %><% /def %></td>
+								<td><input class="form" type="text" name="name" size="28" value="" autocomplete="username"></td>
+							</tr>
+							<tr>
+								<td>URL</td>
+								<td><input class="form" type="text" name="url" size="28" autocomplete="url"></td>
+							</tr>
+							<tr>
+								<td>sage</td>
+								<td><input class="form" type="text" name="email" size="28" value="" autocomplete="email"></td>
+							</tr>
+							<tr>
+								<td>sub<% def(usesub) %><% echo(usesub) %><% /def %></td>
+								<td>
+									<input class="form" type="text" name="sub" size="20" value="<% def(resub) %><% echo(resub) %><% /def %>" autocomplete="section-sub">
+									<input class="button" type="submit" value="WRITE">
+								</td>
+							</tr>
+							<tr>
+								<td>com<% def(usecom) %><% echo(usecom) %><% /def %></td>
+								<td><textarea class="form" name="com" cols="28" rows="4" wrap="soft"></textarea></td>
+							</tr>
+							<% def(upfile) %>
+							<tr>
+								<td>UpFile</td>
+								<td>
+									<input class="form" type="file" name="upfile" size="20">
+									[<label><input type="checkbox" name="textonly" value="on"<% def(resno) %> checked<% /def %>>No File</label>]
+								</td>
+							</tr>
+							<% /def %>
+							<tr>
+								<td>Pass</td>
+								<td><input class="form" type="password" name="pwd" size="8" value="" autocomplete="current-password"><small>記事の削除に必要</small></td>
+							</tr>
+						</table>
+						<ul>
+							<% def(upfile) %>
+							<% def(resno) %>
+							<li>画像を添付する場合は、'No File'のチェックを外して下さい。</li>
+							<% /def %>
+							<li>添付可能ファイル：GIF, JPG, PNG ブラウザによっては正常に添付できないことがあります。</li>
+							<li>画像は横 <% echo(maxw) %>ピクセル、縦 <% echo(maxh) %>ピクセルを超えると縮小表示されます。</li>
+							<% /def %>
+							<li>最大投稿データ量は <% echo(maxkb) %> KB までです。sage機能付き。</li>
+						</ul>
+					</form>
+				</section>
+				<% /def %>
+			</section>
+		</header>
+		<main>
+			<section>
+				<% each(oya) %>
+				<div class="thread">
+					<hr>
+					<h2><span class="oyano">[<% echo(oya/no) %>]</span> <% echo(oya/sub) %></h2>
+					<hr>
+					<section>
+						<% def(oya/src) %>
+						<figure>
+							<figcaption><a href="<% echo(oya/src) %>" data-lightbox="a<% echo(oya/no) %>" data-title="<% echo(oya/srcname) %>"><% echo(oya/srcname) %></a> (<% echo(oya/size) %> B) <% def(oya/thumb) %>- サムネイル表示中 -<% /def %><br><% def(oya/painttime) %>PaintTime : <% echo(oya/painttime) %><% /def %><% def(oya/pch) %><a href="<% echo(self) %>?mode=openpch&amp;pch=<% echo(oya/pch) %>" target="_blank">●動画</a><% /def %>
+							<% def(oya/continue) %> <a href="<% echo(self) %>?mode=continue&amp;no=<% echo(oya/continue) %>">続きを描く</a><% /def %></figcaption>
+							<a href="<% echo(oya/src) %>" data-lightbox="b<% echo(oya/no) %>" tabindex="<% echo(oya/tab) %>" data-title="<% echo(oya/srcname) %>"><img src="<% echo(oya/imgsrc) %>" alt="<% echo(oya/srcname) %>"></a>
+						</figure>
+						<% /def %>
+						<div class="res">
+							<h3>
+								<span class="oyano">[<% echo(oya/no) %>]</span>
+								<span class="rsub"><% echo(oya/sub) %></span> :
+								<span class="name"><% echo(oya/name) %></span><span class="trip"><% echo(oya/trip) %></span> :
+								<% echo(oya/now) %><% def(oya/id) %> ID : <% echo(oya/id) %><% /def %><% def(oya/url) %> <span class="button"><a href="<% echo(oya/url) %>" target="_blank" rel="nofollow noopener noreferrer"><i class="fas fa-flag-checkered"></i> URL</a></span> <% /def %><% def(oya/updatemark) %><% echo(oya/updatemark) %><% /def %>
+							</h3>
+							<section>
+								<p><% echo(oya/com) %></p>
+								<% def(oya/limit) %><p class="limit">このスレは古いので、もうすぐ消えます。</p><% /def %>
+								<% def(resform) %><% def(oya/skipres) %><p class="ryaku">レス<% echo(oya/skipres) %> 件省略。[<a href="<% echo(self) %>?res=<% echo(oya/no) %>">すべて見る</a>]</p><% /def %><% /def %>
+							</section>
+							<% def(oya/res) %>
+							<% each(oya/res) %>
+							<hr>
+							<section>
+								<% def(oya/res/src) %>
+								<figure>
+									<figcaption><a href="<% echo(oya/res/src) %>"   data-lightbox="a<% echo(oya/res/no) %>" data-title="<% echo(oya/res/srcname) %>"><% echo(oya/res/srcname) %></a> (<% echo(oya/res/size) %> B)<% def(oya/res/thumb) %> - サムネイル表示中 - <% /def %><br><% def(oya/res/painttime) %> PaintTime :<% echo(oya/res/painttime) %><% /def %><% def(oya/res/continue) %> <a href="<% echo(self) %>?mode=continue&amp;no=<% echo(oya/res/continue) %>">続きを描く</a><% /def %></figcaption>
+									<a href="<% echo(oya/res/src) %>" data-lightbox="b<% echo(oya/res/no) %>" data-title="<% echo(oya/res/srcname) %>"><img src="<% echo(oya/res/imgsrc) %>" alt="<% echo(oya/res/srcname) %>"></a>
+								</figure>
+								<% /def %>
+								<h4>
+									<span class="oyaresno">[<% echo(oya/res/no) %>]</span>
+									<span class="rsub"><% echo(oya/res/sub) %></span> :
+									<span class="name"><% echo(oya/res/name) %></span><span class="trip"><% echo(oya/res/trip) %></span> : <% echo(oya/res/now) %><% def(oya/res/id) %> ID : <% echo(oya/res/id) %><% /def %><% def(oya/res/url) %> <span class="button"><a href="<% echo(oya/res/url) %>" target="_blank" rel="nofollow noopener noreferrer"><i class="fas fa-flag-checkered"></i> URL</a></span><% /def %><% def(oya/res/updatemark) %> <% echo(oya/res/updatemark) %><% /def %>
+								</h4>
+								<section>
+									<p><% echo(oya/res/com) %></p>
+								</section>
+							</section>
+							<% /each %>
+							<% /def %>
+						</div>
+						<div class="thfoot">
+							<hr>
+							<% def(resform) %><% elsedef(resform) %>
+							<% def(oya/skipres) %>
+							レス<% echo(oya/skipres) %>件省略。すべて見るには返信ボタンをクリックしてください。
+							<% /def %>
+							<% def(sharebutton) %>
+							<span class="share_button">
+								<script>
+									(function(){
+										var url = encodeURIComponent('<% echo(rooturl) %><% echo(self) %>?res=<% echo(oya/no) %>'); //ページURL。一応エンコード
+										var title = encodeURIComponent('[<% echo(oya/no) %>] <% echo(oya/sub) %> by <% echo(oya/name) %> - <% echo(title %>'); //ページタイトル。同上。
+									document.write( '<a target="_blank" href="https://twitter.com/intent/tweet?&text=' + title + '&url=' + url + '"><span class="icon-twitter button"><i class="fab fa-twitter"></i> tweet</span></a> <a target="_blank" class="fb btn" href="http://www.facebook.com/share.php?u=' + url + '"><span class="icon-facebook2 button"><i class="fab fa-facebook-square"></i> share</span></a>' );})();
+								</script>
+							</span>
+							<% /def %>
+							<% def(notres) %><span class="button"><a href="<% echo(self) %>?res=<% echo(oya/no) %>"><i class="fas fa-reply-all"></i> 返信</a></span><% /def %>
+							<% /def %>
+							<% def(resform) %>
+							<form class="resform" action="<% echo(self) %>" method="post" enctype="multipart/form-data">
+								<input type="hidden" name="mode" value="regist">
+								<input type="hidden" name="resto" value="<% echo(oya/no) %>">
+								<input type="hidden" name="textonly" value="on">
+								<label>name<% def(usename) %><% echo(usename) %><% /def %> <input class="form" type="text" name="name" size="20" value="" autocomplete="username"></label>
+								<label>sub<% def(usesub) %><% echo(usesub) %><% /def %> <input class="form" type="text" name="sub" size="18" value="<% def(oya/resub) %><% echo(oya/resub) %><% /def %>" autocomplete="section-sub"></label><br>
+								<label>URL <input class="form" type="text" name="url" size="20" autocomplete="url"></label>
+								<label>sage <input class="form" type="text" name="email" size="8" autocomplete="email"></label>
+								<label>Pass <input class="form" type="password" name="pwd" size="8" value="" autocomplete="current-password"></label>
+								<input class="button" type="submit" value="返信">
+								<textarea class="form" name="com" cols="56" rows="3" wrap="soft"></textarea>
+							</form>
+							<% /def %>
+						</div>
+					</section>
+				</div>
+				<hr>
+				<% /each %>
+			</section>
+		</main>
+		<footer>
+			<script type="text/javascript">
+				l(); //LoadCookie
+			</script>
+			<script src="https://code.jquery.com/jquery-1.12.4.min.js" type="text/javascript"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/js/lightbox.min.js" type="text/javascript"></script>
+			<section>
+				<% def(notres) %>
+				<p class="page">
+					<% def(prev) %><a href="<% echo(prev) %>">[&lt;&lt;BACK]</a><% elsedef %>[START]<% /def %>
+					<% echo(paging) %>
+					<% def(next) %><a href="<% echo(next) %>">[NEXT&gt;&gt;]</a><% elsedef %>[END]<% /def %>
+				</p>
+				<% /def %>
+				<form class="delf" action="<% echo(self) %>" method="post">
+					<p>
+						No <input class="form" type="text" name="del[]" value="" autocomplete="section-no">
+						Pass <input class="form" type="password" name="pwd" value="" autocomplete="new-password">
+						<select class="form" name="mode" tabindex="1">
+							<option value="edit" selected>編集</option>
+							<% def(userdel) %>
+							<option value="usrdel">削除</option>
+							<% /def %>
+						</select>
+						<input class="button" type="submit" value=" OK ">
+					</p>
+				</form>
+			</section>
+			<section class="copy">
+			<!-- 著作権表示 削除しないでください -->
+			<!-- GazouBBS v3.0 --><!-- ふたば改0.8 --><!-- POTI-board -->
+				<p>
+					<a href="https://poti-k.info/" target="_top" title="POTI-board改二 <% echo(verlot) %>">POTI-board改二 <% echo(ver) %></a>
+					Web Style by <a href="https://poti-k.info/" target="_top" title="MONO <% echo(tver) %>">MONO</a>
+				</p>
+				<p>
+					OriginalScript -
+					<a href="http://www.punyu.net/" target="_top" title="POTI-board (by PunyuNet)">POTI-board</a>
+					<a href="http://www.2chan.net/" target="_top" title="futaba.php v0.8 lot.031015 (by futaba)">futaba.php</a>
+					(<a href="http://php.s3.to" target="_top" title="gazou.php v3.0 (by Let's PHP!)">gazou.php</a>custom )
+				</p>
+				<p>
+					UseFunction -
+					<a href="http://skinny.sx68.net/" target="_top" title="Skinny v0.4.1 (by Kuasuki)">Skinny</a>
+					<a href="http://wondercatstudio.com/" target="_top" title="by WonderCatStudio">DynamicPalette</a>
+					<a href="https://github.com/funige/neo/" target="_top" title="by ImageCanvas">PaintBBS NEO</a>
+				</p>
+			</section>
+		</footer>
+	</body>
+</html>

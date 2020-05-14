@@ -3,27 +3,44 @@
 	<head>
 		<meta charset="<% echo(charset) %>">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-		<link rel="stylesheet" href="nee2_main.css" type="text/css">
+		<link rel="stylesheet" href="<% echo(skindir) %>nee2_main.css" type="text/css">
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.6/css/all.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css">
 		<script type="text/javascript" src="loadcookie.js"></script>
 		<title><% echo(title) %></title>
+		<% def(notres) %><?php echo "\n"; ?>
+		<meta name="twitter:card" content="summary">
+		<meta name="twitter:site" content="">
+		<meta property="og:site_name" content="">
+		<meta property="og:title" content="<% echo(title) %>">
+		<meta property="og:type" content="article">
+		<meta property="og:description" content="">
+		<meta property="og:image" content="">
+		<% /def %><?php echo "\n"; ?>
+		<% def(resno) %><% each(oya) %><?php echo "\n"; ?>
+		<meta name="twitter:card" content="summary">
+		<meta name="twitter:site" content="">
+		<meta property="og:site_name" content="">
+		<meta property="og:title" content="[<% echo(oya/no) %>] <% echo(oya/sub) %> by <% echo(oya/name) %> - <% echo(title) %>">
+		<meta property="og:type" content="article">
+		<meta property="og:description" content="">
+		<meta property="og:url" content="<% echo(rooturl) %><% echo(self) %>?res=<% echo(oya/no) %>">
+		<% def(oya/src) %><meta property="og:image" content="<% echo(rooturl) %><% echo(oya/imgsrc) %>"><% /def %><?php echo "\n"; ?>
+		<% /each %><% /def %><?php echo "\n"; ?>
 	</head>
 	<body>
 		<header>
 			<h1><% echo(title) %></h1>
 			<hr>
 			<section>
-				<p class="menu">
-					<% def(resno) %><?php echo "\n"; ?>
-					<a href="<% echo(self2) %>"><i class="fas fa-star fa-fw fa-lg" title="トップ"></i></a>
-					<% /def %><?php echo "\n"; ?>
-					<a href="<% echo(home) %>" target="_top"><i class="fas fa-home fa-fw fa-lg" title="ホーム"></i></a>
-					<a href="<% echo(self) %>?mode=newpost"><i class="fas fa-pen-square fa-fw fa-lg" title="投稿"></i></a>
-					<a href="<% echo(self) %>?mode=admin"><i class="fas fa-cog fa-fw fa-lg" title="管理"></i></a>
-					<a href="<% echo(self) %>?mode=catalog"><i class="fas fa-table fa-fw fa-lg" title="カタログ"></i></a>
-					<a href="<% echo(self) %>?mode=piccom<% def(resno) %>&amp;resto=<% echo(resno) %><% /def %>"><i class="fas fa-paste fa-fw fa-lg" title="投稿途中の絵"></i></a>
-				</p>
+				<ul class="menu">
+					<% def(resno) %><li><a href="<% echo(self2) %>"><i class="fas fa-star fa-fw fa-lg" title="トップ"></i>トップ</a></li><% /def %><?php echo "\n"; ?>
+					<li><a href="<% echo(home) %>" target="_top"><i class="fas fa-home fa-fw fa-lg" title="ホーム"></i>ホーム</a></li>
+					<li><a href="<% echo(self) %>?mode=newpost"><i class="fas fa-pen-square fa-fw fa-lg" title="投稿"></i>投稿</a></li>
+					<li><a href="<% echo(self) %>?mode=admin"><i class="fas fa-cog fa-fw fa-lg" title="管理モード"></i>管理モード</a></li>
+					<li><a href="<% echo(self) %>?mode=catalog"><i class="fas fa-table fa-fw fa-lg" title="カタログ"></i>カタログ</a></li>
+					<li><a href="<% echo(self) %>?mode=piccom<% def(resno) %>&amp;resto=<% echo(resno) %><% /def %>"><i class="fas fa-paste fa-fw fa-lg" title="投稿途中の絵"></i>投稿途中の絵</a></li>
+				</ul>
 				<hr>
 				<% def(resno) %><?php echo "\n"; ?>
 				<p class="resm">レス送信モード</p>
@@ -48,9 +65,9 @@
 							<% def(resno) %><?php echo "\n"; ?>
 							<input type="hidden" name="resto" value="<% echo(resno) %>">
 							<% /def %><?php echo "\n"; ?>
+							<% def(anime) %><br><label><input type="checkbox" value="true" name="anime" title="動画記録" <% def(animechk) %><% echo(animechk) %><% /def %>>アニメーション記録</label><% /def %><?php echo "\n"; ?>
 							<input type="hidden" name="mode" value="paint">
 							<input class="button" type="submit" value="お絵かき">
-							<% def(anime) %><label><input type="checkbox" value="true" name="anime" title="動画記録" <% echo(animechk) %>>アニメーション記録</label><% /def %><?php echo "\n"; ?>
 						</p>
 					</form>
 				</section>
@@ -78,7 +95,7 @@
 							<tr>
 								<td>sub<% def(usesub) %><% echo(usesub) %><% /def %></td>
 								<td>
-									<input class="form" type="text" name="sub" size="20" value="<% echo(resub) %>" autocomplete="section-sub">
+									<input class="form" type="text" name="sub" size="20" value="<% def(resub) %><% echo(resub) %><% /def %>" autocomplete="section-sub">
 									<input class="button" type="submit" value="WRITE">
 								</td>
 							</tr>
@@ -149,11 +166,8 @@
 					<section>
 						<% def(oya/src) %><?php echo "\n"; ?>
 						<figure>
-							<figcaption><a href="<% echo(oya/src) %>" data-lightbox="a<% echo(oya/no) %>" data-title="<% echo(oya/srcname) %>"><% echo(oya/srcname) %></a> (<% echo(oya/size) %> B) <% def(oya/thumb) %>- サムネイル表示中 -<% /def %><br><% def(oya/painttime) %>PaintTime : <% echo(oya/painttime) %><% /def %><br>
-								
-								<% def(oya/pch) %><a href="<% echo(self) %>?mode=openpch&amp;pch=<% echo(oya/pch) %>" target="_blank">●動画</a><% /def %>
-								
-								<% def(oya/continue) %>  <a href="<% echo(self) %>?mode=continue&amp;no=<% echo(oya/continue) %>">続きを描く</a><% /def %></figcaption>
+							<figcaption><a href="<% echo(oya/src) %>" data-lightbox="a<% echo(oya/no) %>" data-title="<% echo(oya/srcname) %>"><% echo(oya/srcname) %></a> (<% echo(oya/size) %> B) <% def(oya/thumb) %>- サムネイル表示中 -<% /def %><br><% def(oya/painttime) %>PaintTime : <% echo(oya/painttime) %><% /def %><% def(oya/pch) %><a href="<% echo(self) %>?mode=openpch&amp;pch=<% echo(oya/pch) %>" target="_blank">●動画</a><% /def %>
+							<% def(oya/continue) %> <a href="<% echo(self) %>?mode=continue&amp;no=<% echo(oya/continue) %>">続きを描く</a><% /def %></figcaption>
 							<a href="<% echo(oya/src) %>" data-lightbox="b<% echo(oya/no) %>" tabindex="<% echo(oya/tab) %>"  data-title="<% echo(oya/srcname) %>"><img src="<% echo(oya/imgsrc) %>" alt="<% echo(oya/srcname) %>"></a>
 						</figure>
 						<% /def %><?php echo "\n"; ?>
@@ -197,6 +211,16 @@
 							<% def(oya/skipres) %><?php echo "\n"; ?>
 							レス<% echo(oya/skipres) %>件省略。すべて見るには返信ボタンをクリックしてください。
 							<% /def %><?php echo "\n"; ?>
+							<% def(sharebutton) %><?php echo "\n"; ?>
+							<span class="share_button">
+								<script>
+									(function(){
+										var url = encodeURIComponent('<% echo(rooturl) %><% echo(self) %>?res=<% echo(oya/no) %>'); //ページURL。一応エンコード
+										var title = encodeURIComponent('[<% echo(oya/no) %>] <% echo(oya/sub) %> by <% echo(oya/name) %> - <% echo(title %>'); //ページタイトル。同上。
+									document.write( '<a target="_blank" href="https://twitter.com/intent/tweet?&text=' + title + '&url=' + url + '"><span class="icon-twitter button"><i class="fab fa-twitter"></i> tweet</span></a> <a target="_blank" class="fb btn" href="http://www.facebook.com/share.php?u=' + url + '"><span class="icon-facebook2 button"><i class="fab fa-facebook-square"></i> share</span></a>' );})();
+								</script>
+							</span>
+							<% /def %><?php echo "\n"; ?>
 							<% def(notres) %><span class="button"><a href="<% echo(self) %>?res=<% echo(oya/no) %>"><i class="fas fa-reply-all"></i> 返信</a></span><% /def %><?php echo "\n"; ?>
 							<% /def %><?php echo "\n"; ?>
 							<% def(resform) %><?php echo "\n"; ?>
@@ -204,8 +228,8 @@
 								<input type="hidden" name="mode" value="regist">
 								<input type="hidden" name="resto" value="<% echo(oya/no) %>">
 								<input type="hidden" name="textonly" value="on">
-								<label>name<% echo(usename) %> <input class="form" type="text" name="name" size="20" value="" autocomplete="username"></label>
-								<label>sub<% echo(usesub) %> <input class="form" type="text" name="sub" size="18" value="<% echo(oya/resub) %>" autocomplete="section-sub"></label><br>
+								<label>name<% def(usename) %><% echo(usename) %><% /def %> <input class="form" type="text" name="name" size="20" value="" autocomplete="username"></label>
+								<label>sub<% def(usesub) %><% echo(usesub) %><% /def %> <input class="form" type="text" name="sub" size="18" value="<% def(oya/resub) %><% echo(oya/resub) %><% /def %>" autocomplete="section-sub"></label><br>
 								<label>URL <input class="form" type="text" name="url" size="20" autocomplete="url"></label>
 								<label>sage <input class="form" type="text" name="email" size="8" autocomplete="email"></label>
 								<label>Pass <input class="form" type="password" name="pwd" size="8" value="" autocomplete="current-password"></label>
@@ -229,8 +253,8 @@
 			<!-- 著作権表示 削除しないでください -->
 			<!-- GazouBBS v3.0 --><!-- ふたば改0.8 --><!-- POTI-board -->
 			<p>
-				<a href="http://sakots.red/" target="_top" title="POTI-board改二 <% echo(verlot) %> (by 赤原文庫)">POTI-board改二 <% echo(ver) %></a>
-				Web Style by <a href="https://sakots.red/" target="_top" title="nee2 <% echo(tver) %> (by 赤原文庫)">nee</a>
+				<a href="https://poti-k.info/" target="_top" title="POTI-board改二 <% echo(verlot) %>">POTI-board改二 <% echo(ver) %></a>
+				Web Style by <a href="https://poti-k.info/" target="_top" title="nee2 <% echo(tver) %>">nee2</a>
 			</p>
 			<p>
 				OriginalScript -

@@ -1,0 +1,337 @@
+@charset "UTF-8";
+/*! =====このcssファイルはsassから生成されています。===== */
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
+body {
+  background-color: #EEEEEE;
+  color: #000;
+  font-family: sans-serif;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+a:link {
+  color: #33F;
+}
+
+a:visited {
+  color: #666;
+}
+
+a:active {
+  color: #F33;
+}
+
+a:hover {
+  color: #F33;
+}
+
+hr {
+  border-style: dashed;
+  border-width: 1px;
+  border-color: #33F;
+  margin: 1ex auto;
+}
+
+header, main, footer > section, footer > section.copy, main, footer > section {
+  background-color: #FEFEFE;
+  padding: 8px;
+}
+
+header, main, footer > section, footer > section.copy {
+  margin: 12px;
+  display: block;
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #33F;
+}
+
+footer > section form {
+  text-align: right;
+}
+
+footer > section.copy {
+  text-align: right;
+}
+
+input, textarea, select, .se {
+  border-style: solid;
+  border-color: #003 #66F #66F #003;
+  border-width: 1px;
+  color: #000;
+  background-color: #EEEEEE;
+  padding: 3px;
+}
+
+textarea {
+  width: 25em;
+  height: 5em;
+}
+
+button, .button {
+  border-style: solid;
+  border-color: #66F #003 #003 #66F;
+  border-width: 1px;
+  color: #000;
+  background-color: #EEEEEE;
+}
+
+select {
+  padding: 2px;
+}
+
+input[name="picw"], textarea[name="picw"], select[name="picw"], .se[name="picw"], input[name="pich"], textarea[name="pich"], select[name="pich"], .se[name="pich"], input[name="del[]"], textarea[name="del[]"], select[name="del[]"], .se[name="del[]"], input[name="pwd"], textarea[name="pwd"], select[name="pwd"], .se[name="pwd"] {
+  width: 3em;
+}
+
+input[value="お絵かき"], textarea[value="お絵かき"], select[value="お絵かき"], .se[value="お絵かき"], .button {
+  background-color: #69F;
+  color: #FFF;
+}
+
+input[name="upfile"], textarea[name="upfile"], select[name="upfile"], .se[name="upfile"] {
+  width: 25em;
+}
+
+em.thispage {
+  font-weight: bold;
+  font-style: normal;
+}
+
+.se {
+  background-color: #EEEEEE;
+  color: #000;
+  font-style: normal;
+}
+
+figure {
+  float: left;
+  margin-right: 8px;
+  margin-bottom: 1ex;
+}
+
+figure img {
+  max-width: 100%;
+}
+
+figcaption {
+  font-size: smaller;
+}
+
+ul {
+  list-style-type: none;
+  font-size: smaller;
+}
+
+ul.menu {
+  font-size: medium;
+  line-height: 2em;
+}
+
+.res section {
+  display: table;
+}
+
+.res h3, .res h4 {
+  font-size: 100%;
+  margin-bottom: 1ex;
+}
+
+.res figure {
+  float: none;
+}
+
+.resma {
+  color: #454;
+}
+
+.thfoot {
+  clear: left;
+  text-align: right;
+}
+
+.button {
+  padding: 3px 1ex 3px 1ex;
+  display: inline-block;
+}
+
+.button a {
+  text-decoration: none;
+  color: #FFF;
+}
+
+.button a i {
+  color: #FFF;
+}
+
+.oyano, .oyaresno {
+  font-weight: bold;
+}
+
+.oekaki {
+  font-size: smaller;
+}
+
+#appstage {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#appstage .app {
+  margin: 0px 4px;
+}
+
+.NEO .color_bk {
+  color: #69F;
+}
+
+.NEO .color_bk2 {
+  color: #369;
+}
+
+.NEO .color_tool_icon {
+  color: #396;
+}
+
+.NEO .color_icon {
+  color: #063;
+}
+
+.NEO .color_iconselect {
+  color: #063;
+}
+
+.NEO .color_text {
+  color: #FFF;
+}
+
+.NEO .color_bar {
+  color: #369;
+}
+
+.NEO .tool_color_button {
+  color: #669;
+}
+
+.NEO .tool_color_button2 {
+  color: #336;
+}
+
+.NEO .tool_color_text {
+  color: #FFF;
+}
+
+.NEO .tool_color_bar {
+  color: #69F;
+}
+
+.NEO .tool_color_frame {
+  color: #369;
+}
+
+.palette {
+  width: 180px;
+}
+
+.palette fieldset {
+  text-align: center;
+}
+
+.palette fieldset textarea {
+  width: 120px;
+  height: 1.2em;
+}
+
+.c {
+  text-align: center;
+}
+
+#catalog {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+#catalog div {
+  width: 166px;
+  text-align: center;
+  overflow: hidden;
+}
+
+#catalog p {
+  margin: 0.5ex auto;
+}
+
+#catalog img {
+  width: 150px;
+  height: 150px;
+}
+
+.delfo {
+  font-size: smaller;
+}
+
+.delfo th, .delfo td {
+  border: 1px solid #EEEEEE;
+}
+
+@media screen and (max-width: 1024px) {
+  .res {
+    clear: left;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  header, main, footer > section, footer > section.copy {
+    width: auto;
+    position: relative;
+    margin: 12px;
+  }
+  main {
+    display: block;
+    margin: 12px;
+  }
+  #paintmode header, #paintmode main, #paintmode footer > section {
+    width: 300px;
+    position: relative;
+    margin: 12px;
+  }
+  #paintmode main {
+    display: block;
+    margin: 12px;
+  }
+  #paintmode footer {
+    text-align: right;
+    margin: 12px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  footer {
+    text-align: right;
+    margin: 12px;
+  }
+  #appstage {
+    display: block;
+  }
+}
+/*# sourceMappingURL=mono_main.css.map */
