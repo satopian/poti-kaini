@@ -40,12 +40,12 @@ hr.hr {
   clear: both;
 }
 
-header, main > section > .thread, footer > section, footer > section.copy, main > section > .thread, footer > section {
+header, main > section > .thread, main > section#catalog, footer > section, footer > section.copy, main > section > .thread, footer > section {
   background-color: #FEFEFE;
   padding: 8px;
 }
 
-header, main > section > .thread, footer > section, footer > section.copy {
+header, main > section > .thread, main > section#catalog, footer > section, footer > section.copy {
   margin: 12px;
   display: block;
   width: 70%;
@@ -263,7 +263,7 @@ ul.menu {
   text-align: center;
 }
 
-#catalog {
+#catalog > div {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -275,17 +275,17 @@ ul.menu {
       flex-wrap: wrap;
 }
 
-#catalog div {
+#catalog > div div {
   width: 166px;
   text-align: center;
   overflow: hidden;
 }
 
-#catalog p {
+#catalog > div p {
   margin: 0.5ex auto;
 }
 
-#catalog img {
+#catalog > div img {
   width: 150px;
   height: 150px;
 }
