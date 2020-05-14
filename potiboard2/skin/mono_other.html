@@ -29,9 +29,9 @@
 			<% def(regist) %>
 			<script type="text/javascript" src="loadcookie.js"></script>
 			<% /def %>
-			<h1 class="oekaki">投稿フォーム<% def(admin) %> - ADMIN MODE-<% /def %></h1>
 			<section>
 				<div class="thread">
+					<h1 class="oekaki">投稿フォーム<% def(admin) %> - ADMIN MODE-<% /def %></h1>
 					<% def(admin) %>
 					<p>tag can be used</p>
 					<% /def %>
@@ -143,9 +143,9 @@
 
 			<!--(========== ADMIN MODE -LOGIN-(管理モード(認証)) start ==========)-->
 			<% def(admin_in) %>
-			<h1 class="oekaki">管理モード</h1>
 			<section>
 				<div class="thread">
+					<h1 class="oekaki">管理モード</h1>
 					<form action="<% echo(self) %>" method="post">
 						<label><input type="radio" name="admin" value="update" checked>UPDATE</label>
 						<label><input type="radio" name="admin" value="del">DELETE</label>
@@ -161,9 +161,9 @@
 
 			<!--(========== ADMIN MODE -DELETE-(管理モード(削除)) start ==========)-->
 			<% def(admin_del) %>
-			<h1 class="oekaki">管理モード</h1>
 			<section>
 				<div class="thread">
+					<h1 class="oekaki">管理モード</h1>
 					<form action="<% echo(self) %>" method="post">
 						<input type="hidden" name="mode" value="admin">
 						<input type="hidden" name="admin" value="del">
@@ -202,17 +202,17 @@
 						<input class="button" type="submit" value="DELETE">
 						<input class="button" type="reset" value="RESET">
 					</form>
+					<p>&lt;&lt;Image all size : <% echo(all) %> KB &gt;&gt;</p>
 				</div>
-				<p>&lt;&lt;Image all size : <% echo(all) %> KB &gt;&gt;</p>
 			</section>
 			<% /def %>
 			<!--(========== ADMIN MODE -DELETE-(管理モード(削除)) end ==========)-->
 
 			<!--(========== ERROR MODE(エラー画面) start ==========)-->
 			<% def(err_mode) %>
-			<h1 class="oekaki">ERROR</h1>
 			<section>
 				<div class="thread">
+					<h1 class="oekaki">ERROR</h1>
 					<p class="err"><% echo(mes) %></p>
 					<p><a href="<% echo(self2) %>">[リロード]</a></p>
 				</div>
