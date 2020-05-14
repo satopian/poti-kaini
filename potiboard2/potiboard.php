@@ -658,7 +658,7 @@ unset($value);
 				//<br />を<br>へ
 				$com = preg_replace("{<br( *)/>}i","<br>",$com);
 				//独自タグ変換
-				if(USE_POTITAG) $com = potitag($com);
+				// if(USE_POTITAG) $com = potitag($com);
 
 				// レス記事一時格納
 				$rres[$oya][] = compact('no','sub','name','now','com','url','email','id','updatemark','trip','fontcolor'
@@ -3010,9 +3010,6 @@ paintform($picw,$pich,$palette,$anime);
 		break;
 	case 'catalog':
 		catalog();
-		break;
-	case 'tag':
-		potitagview();
 		break;
 	default:
 	if($res){
