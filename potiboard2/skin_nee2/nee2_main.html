@@ -231,10 +231,11 @@
 								<label>name<% def(usename) %><% echo(usename) %><% /def %> <input class="form" type="text" name="name" size="20" value="" autocomplete="username"></label>
 								<label>sub<% def(usesub) %><% echo(usesub) %><% /def %> <input class="form" type="text" name="sub" size="18" value="<% def(oya/resub) %><% echo(oya/resub) %><% /def %>" autocomplete="section-sub"></label><br>
 								<label>URL <input class="form" type="text" name="url" size="20" autocomplete="url"></label>
-								<label>sage <input class="form" type="text" name="email" size="8" autocomplete="email"></label>
+								<label>sage <input class="form" type="text" name="email" size="8" autocomplete="email"></label><br>
+								<textarea class="form" name="com" cols="56" rows="3" wrap="soft"></textarea><br>
 								<label>Pass <input class="form" type="password" name="pwd" size="8" value="" autocomplete="current-password"></label>
 								<input class="button" type="submit" value="返信">
-								<textarea class="form" name="com" cols="56" rows="3" wrap="soft"></textarea>
+								
 							</form>
 							<% /def %><?php echo "\n"; ?>
 						</div>
