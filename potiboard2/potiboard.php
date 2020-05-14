@@ -1890,7 +1890,7 @@ if($admin===$ADMIN_PASS){
 	elseif(!$useneo && $shi==2){ $dat['pro'] = true; }
 	else{ $dat['paintbbs'] = true; }
 
-	$dat['palettes'][0] = 'Palettes[0] = "#000000\n#FFFFFF\n#B47575\n#888888\n#FA9696\n#C096C0\n#FFB6FF\n#8080FF\n#25C7C9\n#E7E58D\n#E7962D\n#99CB7B\n#FCECE2\n#F9DDCF";';
+	$initial_palette = 'Palettes[0] = "#000000\n#FFFFFF\n#B47575\n#888888\n#FA9696\n#C096C0\n#FFB6FF\n#8080FF\n#25C7C9\n#E7E58D\n#E7962D\n#99CB7B\n#FCECE2\n#F9DDCF";';
 	$pal=array();
 	$DynP=array();
 	$p_cnt=1;
@@ -1913,7 +1913,7 @@ if($admin===$ADMIN_PASS){
 			array_shift($C_Palette); array_shift($C_Palette);
 		}
 	}
-	$dat['palettes']=implode('',$arr_pal);
+	$dat['palettes']=$initial_palette.implode('',$arr_pal);
 
 	$dat['w'] = $w;
 	$dat['h'] = $h;
