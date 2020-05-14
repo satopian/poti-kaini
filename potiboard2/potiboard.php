@@ -282,6 +282,7 @@ function head(&$dat){
 function form(&$dat,$resno,$admin="",$tmp=""){
 	global $addinfo,$stime;
 	global $fontcolors,$undo,$undo_in_mg,$quality,$qualitys;
+	global $ADMIN_PASS;
 
 	$dat['form'] = true;
 	if(USE_PAINT){
@@ -314,7 +315,7 @@ function form(&$dat,$resno,$admin="",$tmp=""){
 		$dat['notres'] = true;
 	}
 
-	if($admin) $dat['admin'] = ADMIN_PASS;
+	if($admin) $dat['admin'] = $ADMIN_PASS;
 
 	if($stime && DSP_PAINTTIME){
 		//描画時間
@@ -838,6 +839,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 	global $REQUEST_METHOD,$temppath,$ptime;
 	global $fcolor,$usercode;
 	global $admin,$badstr_A,$badstr_B,$badname;
+	global $ADMIN_PASS;
 	$userip = get_uip();
 	$mes="";
 
@@ -946,7 +948,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 	}
 
 	//本文へのURLの書き込みを禁止
-	if(DENY_COMMENTS_URL && $admin!==ADMIN_PASS && preg_match('/:\/\/|\.co|\.ly|\.gl|\.net|\.org|\.cc|\.ru|\.su|\.ua|\.gd/i', $com)) error(MSG036,$dest);
+	if(DENY_COMMENTS_URL && $admin!==$ADMIN_PASS && preg_match('/:\/\/|\.co|\.ly|\.gl|\.net|\.org|\.cc|\.ru|\.su|\.ua|\.gd/i', $com)) error(MSG036,$dest);
 
 	foreach($badstring as $value){//拒絶する文字列
 		if($value===''){
@@ -1351,7 +1353,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 
 	//メール通知
 	if(is_file(NOTICEMAIL_FILE)	//メール通知クラスがある場合
-	&& !(NOTICE_NOADMIN && $pwd == ADMIN_PASS)){//管理者の投稿の場合メール出さない
+	&& !(NOTICE_NOADMIN && $pwd == $ADMIN_PASS)){//管理者の投稿の場合メール出さない
 		require(__DIR__.'/'.NOTICEMAIL_FILE);
 
 		$data['to'] = TO_MAIL;
@@ -1456,9 +1458,9 @@ function CleanStr($str){//コメント以外190603
 	return str_replace(",", "&#44;", $str);//カンマを変換
 }
 function CleanCom($str){//コメントは管理者以外タグ禁止
-	global $admin;
+	global $admin,$ADMIN_PASS;
 	$str = trim($str);//先頭と末尾の空白除去
-	if($admin!==ADMIN_PASS){//管理者はタグ可能
+	if($admin!==$ADMIN_PASS){//管理者はタグ可能
 		$str = htmlspecialchars($str,ENT_QUOTES,'utf-8');//タグ禁止
 	}
 	return str_replace(",", "&#44;", $str);//カンマを変換
@@ -1467,6 +1469,7 @@ function CleanCom($str){//コメントは管理者以外タグ禁止
 /* ユーザー削除 */
 function usrdel($del,$pwd){
 	global $path,$pwdc,$onlyimgdel;
+	global $ADMIN_PASS;
 
 	if(is_array($del)){
 		sort($del);
@@ -1492,7 +1495,7 @@ function usrdel($del,$pwd){
 				list($no,,,,,,,$dhost,$pass,$ext,,,$tim,,) = explode(",",$value);
 			
 			if(in_array($no,$del) && (password_verify($pwd,$pass)||substr(md5($pwd),2,8) === $pass
-			|| ADMIN_PASS === $pwd)){
+			|| $ADMIN_PASS === $pwd)){
 				if(!$onlyimgdel){	//記事削除
 					treedel($no);
 					if(USER_DEL > 2){$value = "";$find = true;}
@@ -1525,7 +1528,8 @@ function usrdel($del,$pwd){
 
 /* パス認証 */
 function valid($pass){
-	if($pass && $pass != ADMIN_PASS) error(MSG029);
+	global $ADMIN_PASS;
+	if($pass && $pass != $ADMIN_PASS) error(MSG029);
 
 	if(!$pass){
 		$dat['admin_in'] = true;
@@ -1621,7 +1625,11 @@ function admindel($pass){
 			$size = 0;
 			$chk= "";
 		}
-		//$bg = ($j % 2) ? ADMIN_DELGUSU : ADMIN_DELKISU;//背景色
+		if(!defined('ADMIN_DELGUSU')||!defined('ADMIN_DELKISU')){//テンプレートに設定が無かったら
+			define(ADMIN_DELGUSU,null);
+			define(ADMIN_DELKISU,null);
+		}
+		$bg = ($j % 2) ? ADMIN_DELGUSU : ADMIN_DELKISU;//背景色
 
 		$dat['del'][$j] = compact('bg','no','now','sub','name','com','host','clip','size','chk');
 	}
@@ -1683,11 +1691,12 @@ function paintform($picw,$pich,$palette,$anime,$pch=""){
 	global $admin,$shi,$ctype,$type,$no,$pwd,$ext;
 	global $resto,$mode,$savetype,$quality,$qualitys,$usercode;
 	global $useneo; //NEOを使う
+	global $ADMIN_PASS;
 	if ($useneo) $dat['useneo'] = true; //NEOを使う
 	$userip = get_uip();
 
 //pchファイルアップロードペイント
-if($admin===ADMIN_PASS){
+if($admin===$ADMIN_PASS){
 	if(isset($_FILES['pch_upload']['name'])){
 		$pchfilename=$_FILES['pch_upload']['name'];
 	}
@@ -1942,7 +1951,7 @@ if($admin===ADMIN_PASS){
 		$dat['anime'] = false;
 		$dat['imgfile'] = './'.PCH_DIR.$pch.$ext;
 	}
-	// if(ADMIN_NEWPOST&&$admin===ADMIN_PASS) $dat['admin'] = 'picpost';
+	// if(ADMIN_NEWPOST&&$admin===$ADMIN_PASS) $dat['admin'] = 'picpost';
 
 	if(isset($C_Palette)){
 		for ($n = 1;$n < 7;++$n)
@@ -2212,6 +2221,7 @@ function usrchk($no,$pwd){
 function editform($del,$pwd){
 	global $pwdc,$addinfo;
 	global $fontcolors;
+	global $ADMIN_PASS;
 
 	if(is_array($del)){
 		sort($del);
@@ -2237,7 +2247,7 @@ function editform($del,$pwd){
 		if($value){
 		list($no,,$name,$email,$sub,$com,$url,$ehost,$pass,,,,,,,$fcolor) = explode(",", rtrim($value));
 			 if($no == $del[0] && (password_verify($pwd,$pass)||
-			substr(md5($pwd),2,8) === $pass|| ADMIN_PASS === $pwd)){
+			substr(md5($pwd),2,8) === $pass|| $ADMIN_PASS === $pwd)){
 				$flag = TRUE;
 				break;
 			}
@@ -2249,7 +2259,7 @@ function editform($del,$pwd){
 		head($dat);
 		$dat['post_mode'] = true;
 		$dat['rewrite'] = $no;
-		if(ADMIN_PASS == $pwd) $dat['admin'] = ADMIN_PASS;
+		if($ADMIN_PASS == $pwd) $dat['admin'] = $ADMIN_PASS;
 		$dat['maxbyte'] = MAX_KB * 1024;
 		$dat['maxkb']   = MAX_KB;
 		$dat['addinfo'] = $addinfo;
@@ -2280,6 +2290,7 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 	global $badstring,$badip;
 	global $REQUEST_METHOD;
 	global $fcolor,$badstr_A,$badstr_B,$badname;
+	global $ADMIN_PASS;
 	$userip = get_uip();
 	
 	// 時間
@@ -2302,7 +2313,7 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 	}
 
 	//本文へのURLの書き込みを禁止
-	if(DENY_COMMENTS_URL && $admin!==ADMIN_PASS && preg_match('/:\/\/|\.co|\.ly|\.gl|\.net|\.org|\.cc|\.ru|\.su|\.ua|\.gd/i', $com)) error(MSG036,$dest);
+	if(DENY_COMMENTS_URL && $admin!==$ADMIN_PASS && preg_match('/:\/\/|\.co|\.ly|\.gl|\.net|\.org|\.cc|\.ru|\.su|\.ua|\.gd/i', $com)) error(MSG036,$dest);
 
 	foreach($badstring as $value){//拒絶する文字列
 		if($value===''){
@@ -2472,8 +2483,8 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 	$flag = FALSE;
 	foreach($line as &$value){
 		list($eno,,$ename,,$esub,$ecom,$eurl,$ehost,$epwd,$ext,$W,$H,$tim,$chk,$ptime,$efcolor) = explode(",", rtrim($value));
-	//		if($eno == $no && ($pass == $epwd /*|| $ehost == $host*/ || ADMIN_PASS == $admin)){
-		if($eno == $no && (password_verify($pwd,$epwd) ||$epwd=== substr(md5($pwd),2,8)|| ADMIN_PASS === $admin)){
+	//		if($eno == $no && ($pass == $epwd /*|| $ehost == $host*/ || $ADMIN_PASS == $admin)){
+		if($eno == $no && (password_verify($pwd,$epwd) ||$epwd=== substr(md5($pwd),2,8)|| $ADMIN_PASS === $admin)){
 			if(!$name) $name = $ename;
 			if(!$sub)  $sub  = $esub;
 			if(!$com)  $com  = $ecom;
@@ -2634,7 +2645,7 @@ function replace($no,$pwd,$stime){
 
 	foreach($line as &$value){
 		list($eno,,$name,$email,$sub,$com,$url,$ehost,$epwd,$ext,$W,$H,$etim,,$eptime,$fcolor) = explode(",", rtrim($value));
-	//		if($eno == $no && ($pwd == $epwd /*|| $ehost == $host*/ || $pwd == substr(md5(ADMIN_PASS),2,8))){
+	//		if($eno == $no && ($pwd == $epwd /*|| $ehost == $host*/ || $pwd == substr(md5($ADMIN_PASS),2,8))){
 	//画像差し替えに管理パスは使っていない
 		if($eno == $no && (password_verify($pwd,$epwd)||$epwd=== substr(md5($pwd),2,8))){
 			$upfile = $temppath.$file_name.$imgext;
@@ -3017,7 +3028,7 @@ setcookie("usercode", $usercode, time()+86400*365);//1年間
 switch($mode){
 	case 'regist':
 		if(ADMIN_NEWPOST && !$resto){
-			if($pwd != ADMIN_PASS){ error(MSG029);
+			if($pwd != $ADMIN_PASS){ error(MSG029);
 			}else{ $admin=$pwd; }
 		}
 	if($textonly){//画像なしの時
