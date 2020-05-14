@@ -1906,13 +1906,14 @@ if($admin===$ADMIN_PASS){
 			$palettes.='\n#'.$p;
 		}
 		$palettes.='";';//190622
-		$dat['palettes'][$p_cnt] = $palettes;
+		$arr_pal[$p_cnt] = $palettes;
 		$p_cnt++;
 		if($pid==$palette){
 			$C_Palette = explode(",", $line);
 			array_shift($C_Palette); array_shift($C_Palette);
 		}
 	}
+	$dat['palettes']=implode('',$arr_pal);
 
 	$dat['w'] = $w;
 	$dat['h'] = $h;
@@ -1961,8 +1962,9 @@ if($admin===$ADMIN_PASS){
 
 	$dat['palsize'] = count($DynP) + 1;
 	foreach ($DynP as $p){
-		$dat['dynp'][] = $p;
+		$arr_dynp[] = '<option>'.$p.'</option>';
 	}
+	$dat['dynp']=implode('',$arr_dynp);
 	$dat['usercode'] = $usercode;
 
 	//差し換え時の認識コード追加
