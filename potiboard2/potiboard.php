@@ -3,7 +3,7 @@
 //$time_start = microtime(true);
 /*
   *
-  * POTI-board改二 v2.0.0 lot.200515
+  * POTI-board改二 v2.0.1 lot.200515
   *   (C)sakots >> https://poti-k.info/
   *
   *----------------------------------------------------------------------------------
@@ -183,8 +183,8 @@ if(!defined('ELAPSED_DAYS')){//config.phpで未定義なら0
 define('USE_MB' , '1');
 
 //バージョン
-define('POTI_VER' , 'v2.0.0');
-define('POTI_VERLOT' , 'v2.0.0 lot.200515');
+define('POTI_VER' , 'v2.0.1');
+define('POTI_VERLOT' , 'v2.0.1 lot.200515');
 
 //メール通知クラスのファイル名
 define('NOTICEMAIL_FILE' , 'noticemail.inc');
@@ -345,7 +345,7 @@ function form(&$dat,$resno,$admin="",$tmp=""){
 	$dat['maxw']    = $resno ? MAX_RESW : MAX_W;
 	$dat['maxh']    = $resno ? MAX_RESH : MAX_H;
 	$dat['addinfo'] = $addinfo;
-	$dat['potitag'] = USE_POTITAG ? true : false;
+	//$dat['potitag'] = USE_POTITAG ? true : false;
 
 	//文字色
 	if(USE_FONTCOLOR){
@@ -560,7 +560,7 @@ unset($value);
 			//<br />を<br>へ
 			$com = preg_replace("{<br( *)/>}i","<br>",$com);
 			//独自タグ変換
-			if(USE_POTITAG) $com = potitag($com);
+			//if(USE_POTITAG) $com = potitag($com);
 			//メタタグに使うコメントから
 			//タグを除去
 			$descriptioncom=strip_tags($com);
