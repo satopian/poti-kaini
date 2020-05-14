@@ -57,7 +57,7 @@
 					<form class="" action="<% echo(self) %>" method="post" enctype="multipart/form-data">
 						<table>
 							<tr>
-								<td>name<% echo(usename) %></td>
+								<td>name<% def(usename) %><% echo(usename) %><% /def %></td>
 								<td><input class="form" type="text" name="name" size="28" autocomplete="username"<% def(name) %> value="<% echo(name) %>"<% /def %>></td>
 							</tr>
 							<tr>
@@ -65,7 +65,7 @@
 									<input class="form" type="text" name="url" size="28" autocomplete="url"<% def(url) %> value="<% echo(url) %>"<% /def %>></td>
 							</tr>
 							<tr>
-								<td>sub<% echo(usesub) %></td>
+								<td>sub<% def(usesub) %><% echo(usesub) %><% /def %></td>
 								<td>
 									<input class="form" type="text" name="sub" size="35" autocomplete="section-sub"<% def(sub) %> value="<% echo(sub) %>"<% /def %>>
 									<input class="button" type="submit" value="書き込む">
@@ -169,7 +169,7 @@
 						<input type="hidden" name="admin" value="del">
 						<input type="hidden" name="pass" value="<% echo(pass) %>">
 						[<a href="<% echo(self) %>?mode=admin&amp;admin=update&amp;pass=<% echo(pass) %>">UPDATE</a>]
-						<p>削除したい記事のチェックボックスにチェックを入れ、削除ボタンを押して下さい。記事Noをクリックすると編集できます</p>
+						<p>削除したい記事のチェックボックスにチェックを入れ、削除ボタンを押して下さい。</p>
 						<input class="button" type="submit" value="DELETE">
 						<input class="button" type="reset" value="RESET">
 						[<input type="checkbox" name="onlyimgdel" value="on" checked>ImageOnly]
@@ -188,7 +188,7 @@
 							<% def(del) %><% each(del) %>
 							<tr>
 								<td><input type="checkbox" name="del[]" value="<% echo(del/no) %>"></td>
-								<td><a href="<% echo(self) %>?mode=edit&amp;del[]=<% echo(del/no) %>&amp;pwd=<% echo(pass) %>"><% echo(del/no) %></a></td>
+								<td><% echo(del/no) %></td>
 								<!-- td><% echo(del/now) %></td>
 								<td><% echo(del/sub) %></td -->
 								<td><% echo(del/name) %></td>
