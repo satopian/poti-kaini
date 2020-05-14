@@ -138,19 +138,6 @@ define('LANG', 'Japanese');
 //★1.44.1以降はUTF-8
 
 /* ---------- ADD:2004/06/22 ---------- */
-// 独自タグ使用 (0=no 1=yes)
-// 0を強く推奨 ！廃止予定！
-define('USE_POTITAG', '0');
-
-// -- 独自タグの種類（font以外）--
-//独自タグ名。大文字のほうが無難
-$tags1 = array("B","I","U","S","H","Q","CN","RT","M","M2","MR","MR2","MA","MA2","DS","MU","MD");
-//上記独自タグに対応するタグ（<～>の中に入る部分）
-$tags2 = array("b","i","u","s","a style='cursor:hand'","a style='cursor:help'","div align=center","div align=right","marquee","marquee scrollamount=12","marquee direction=right","marquee direction=right scrollamount=12","marquee behavior=alternate","marquee behavior=alternate scrollamount=12","div style='width:100%;filter:dropshadow(offx=1,offy=1,color=silver)'","marquee direction=up height=20 scrollamount=1","marquee direction=down height=20 scrollamount=1");
-
-//短縮フォント名
-$ryfont1 = array("PO","ME","W1","W2");
-$ryfont2 = array("HGP創英角ﾎﾟｯﾌﾟ体","ＭＳ Ｐ明朝","webdings","wingdings");
 
 //ユーザー削除権限 (0:不可 1:treeのみ許可 2:treeと画像のみ許可 3:tree,log,画像全て許可)
 //※treeのみを消して後に残ったlogは管理者のみ削除可能

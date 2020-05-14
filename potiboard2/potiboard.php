@@ -3,7 +3,7 @@
 //$time_start = microtime(true);
 /*
   *
-  * POTI-board改二 v2.0.0a8 lot.200514
+  * POTI-board改二 v2.0.0 lot.200515
   *   (C)sakots >> https://poti-k.info/
   *
   *----------------------------------------------------------------------------------
@@ -183,8 +183,8 @@ if(!defined('ELAPSED_DAYS')){//config.phpで未定義なら0
 define('USE_MB' , '1');
 
 //バージョン
-define('POTI_VER' , 'v2.0.0a8');
-define('POTI_VERLOT' , 'v2.0.0a8 lot.200514');
+define('POTI_VER' , 'v2.0.0');
+define('POTI_VERLOT' , 'v2.0.0 lot.200515');
 
 //メール通知クラスのファイル名
 define('NOTICEMAIL_FILE' , 'noticemail.inc');
