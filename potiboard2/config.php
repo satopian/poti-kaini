@@ -220,8 +220,8 @@ define('NOTICE_NOADMIN', '1');
 define('TO_MAIL', 'root@xxx.xxx');
 
 //メール通知のほか、シェアボタンなどで使用
-//設置場所のURL。'/'まで
-define('ROOT_URL', 'http://www.hoge.ne.jp/');
+//設置場所のURL。phpのあるフォルダの'/'まで
+define('ROOT_URL', 'http://www.hoge.ne.jp/oekaki/');
 
 //メール通知に本文を付ける 付ける:1 付けない:0
 define('SEND_COM', '0');
