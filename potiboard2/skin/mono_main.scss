@@ -33,7 +33,7 @@ a:hover {
 
 hr {
 	border-style: dashed;
-	border-width: 1px 0px 0px 0px;
+	border-width: 1px;
 	border-color: $border;
 	margin: 1ex auto;
 }
@@ -243,6 +243,9 @@ ul.menu {
 
 //以下レスポンシブ対応
 @media screen and (max-width: 1024px) {
+	header, main > section > .thread, main > section#catalog, footer > sectio {
+		width: 90%;
+	}
 	.res {
 		clear: left;
 	}
