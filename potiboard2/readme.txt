@@ -51,7 +51,7 @@ POTI-board改<https://poti-k.info/>を発展させたものです。
 ・template_ini.php 以外は解凍したファイルで置き換えるのが手っ取り早いが、
 テンプレートを弄ってた場合は、こちらで用意している最新のテンプレートを
 参考に修正して下さい（これもUTF-8で保存する）
-※MONO に説明コメントをテンプレート内記載する予定です。
+※MONOのreadmeに説明を記載する予定です。
 
 ★準備が出来たらアップロードして、管理画面より「ログ更新」を行って下さい。
 
@@ -127,7 +127,11 @@ POTI-board改<https://poti-k.info/>を発展させたものです。
 ■thanks!!
 
 　　【ぷにゅねっと<https://www.punyu.net/>SakaQさん】
-　POTI改の親です。
+　POTI改二の親です。
+
+　　【さとぴあさん】
+　バグ修正、セキュリティ向上、スピードアップ等していただいています。
+大感謝です。
 
 以下SakaQさんのthanks
 
@@ -156,7 +160,7 @@ POTI-board改<https://poti-k.info/>を発展させたものです。
 
 ■著作権
 
-　POTI-boaed改二                      by sakots & さとぴあ
+　POTI-boaed改二                      by sakots
 
 　POTI-board v1.32                   (C)SakaQ「ぷにゅねっと」
 
