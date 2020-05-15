@@ -1067,12 +1067,9 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 	// 改行文字の統一。
 	$com = str_replace("\r\n", "\n", $com);
 	$com = str_replace("\r", "\n", $com);
-	// 連続する空行を一行 *削除予定*
-	define('BR_CHECK','0');
+	// 連続する空行を一行
 	$com = preg_replace("/\n((　| )*\n){3,}/","\n",$com);
-	if(!BR_CHECK || substr_count($com,"\n")<BR_CHECK){
-		$com = nl2br($com);		//改行文字の前に<br>を代入する
-	}
+	$com = nl2br($com);		//改行文字の前に<br>を代入する
 	$com = str_replace("\n", "", $com);	//\nを文字列から消す
 
 	$name=preg_replace("/◆/","◇",$name);
@@ -2385,9 +2382,7 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 	$com = str_replace("\r", "\n", $com);
 	// 連続する空行を一行
 	$com = preg_replace("#\n((　| )*\n){3,}#","\n",$com);
-	// if(!BR_CHECK || substr_count($com,"\n")<BR_CHECK){
 	$com = nl2br($com);		//改行文字の前に<br>を代入する
-	// }
 	$com = str_replace("\n", "", $com);	//\nを文字列から消す
 
 	$name=preg_replace("/◆/","◇",$name);
