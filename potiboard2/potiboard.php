@@ -3,7 +3,7 @@
 //$time_start = microtime(true);
 /*
   *
-  * POTI-board改二 v2.0.3 lot.200515
+  * POTI-board改二 v2.0.4 lot.200515
   *   (C)sakots >> https://poti-k.info/
   *
   *----------------------------------------------------------------------------------
@@ -19,8 +19,11 @@
   *   PCHViewer  (test by v1.12)
   *     (C)shi-chan >> http://hp.vector.co.jp/authors/VA016309/
   *
+  * PAINTBBS NEO　
+  *     (C)funige >> https://github.com/funige/neo/
+  *
   * USE FUNCTION :
-  *   HTML template         (C)H.Ayukawa >> http://hoover.ktplan.ne.jp/kaihatsu/php/
+  *   Skinny                (C)Kuasuki   >> http://skinny.sx68.net/
   *   DynamicPalette        (C)NoraNeko  >> http://wondercatstudio.com/
   *   repng2jpeg            (C)SUGA      >> http://sugachan.dip.jp/
   *----------------------------------------------------------------------------------
@@ -37,6 +40,10 @@
 「ふたば★ちゃんねる」「ぷにゅねっと」に問い合わせないでください。
 ご質問は、<https://sakots.red/nee/>までどうぞ。
 */
+
+//バージョン
+define('POTI_VER' , 'v2.0.4');
+define('POTI_VERLOT' , 'v2.0.4 lot.200515');
 
 if(phpversion()>="5.5.0"){
 //スパム無効化関数
@@ -181,10 +188,6 @@ if(!defined('ELAPSED_DAYS')){//config.phpで未定義なら0
 
 //MB関数を使うか？ 使う:1 使わない:0
 define('USE_MB' , '1');
-
-//バージョン
-define('POTI_VER' , 'v2.0.3');
-define('POTI_VERLOT' , 'v2.0.3 lot.200515');
 
 //メール通知クラスのファイル名
 define('NOTICEMAIL_FILE' , 'noticemail.inc');

@@ -5,7 +5,7 @@ phpお絵かき掲示板スクリプトPOTI-boardをさらに改良していく�
 <a href="https://github.com/sakots/poti-kai/">POTI-board改</a>  
   
 ## 概要
-POTI-board改で使用しているテンプレートエンジン「htmltemplate.inc」はphp7だとエラーが出てしまうので今後が危ない…  
+POTI-board改で使用しているテンプレートエンジン「htmltemplate.inc」は老朽化が進んでいる… 
 ということでなんか新しいテンプレートエンジンはないか探したところ、
   
 <a href="http://skinny.sx68.net/">Skinny</a>  
@@ -39,6 +39,11 @@ config.phpの設定をし、アップロードしてpotiboard.phpにアクセス
 ---
 
 ## 履歴
+
+### [2020/05/15] v2.0.4　lot.200515
+
+- 改行の抑制とProxyチェックを廃止(by さとぴあ)
+- potiboard.phpの上のほうの説明を修正
 
 ### [2020/05/15] v2.0.3　lot.200515
 
