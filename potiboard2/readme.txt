@@ -81,21 +81,9 @@ POTI-board改<https://poti-k.info/>を発展させたものです。
   ｜neo.js
   ｜neo.css
   ｜
-  ｜template_ini.php
-  ｜nee_catalog.html
-  ｜nee_main.html
-  ｜nee_other.html
-  ｜nee_paint.html
-  ｜nee.css
-  ｜nee_main.css
-  ｜nee_main.css.map
-  ｜nee_main.scss
-  ｜siihelp.php
-  ｜_nee_conf.scss
-  ｜
   ＋--./src/       ディレクトリ
   ＋--./thumb/     ディレクトリ
-　＋--./skin/      ディレクトリ
+　＋--./skin/      ディレクトリ(スキンのディレクトリはconfigで設定できます)
     ｜.htaccess
     ｜template_ini.php
     ｜mono_catalog.html
@@ -168,7 +156,7 @@ POTI-board改<https://poti-k.info/>を発展させたものです。
 
 ■著作権
 
-　POTI-boaed改二                      by sakots
+　POTI-boaed改二                      by sakots & さとぴあ
 
 　POTI-board v1.32                   (C)SakaQ「ぷにゅねっと」
 
