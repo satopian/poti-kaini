@@ -66,7 +66,7 @@ $skConf['CACHE']['DIR']       = './cache';  // キャッシュの生成先DIR �
 $skConf['CACHE']['ALIVETIME'] = 3600;       // キャッシュの有効時間（秒）
 
 // 画面表示関連
-$skConf['DISP']['ERRORS']     = true;       // エラーの画面出力      [true]:する   false:しない
+$skConf['DISP']['ERRORS']     = false;       // エラーの画面出力      [true]:する   false:しない
 $skConf['DISP']['BENCHMARK']  = false;      // ベンチマーク結果表示  [true]:する   false:しない
 
 // ログ関連
