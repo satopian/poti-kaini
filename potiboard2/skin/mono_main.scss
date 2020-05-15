@@ -33,7 +33,7 @@ a:hover {
 
 hr {
 	border-style: dashed;
-	border-width: 1px;
+	border-width: 1px 0px 0px 0px;
 	border-color: $border;
 	margin: 1ex auto;
 }
@@ -114,6 +114,14 @@ em.thispage {
 	background-color: $ushiro;
 	color: $moji;
 	font-style: normal;
+}
+
+h2 {
+	border-left: solid 1ex $border;
+	background-color: $th_bg;
+}
+h3 {
+	padding-left: 1ex;
 }
 
 figure {

@@ -31,7 +31,7 @@ a:hover {
 
 hr {
   border-style: dashed;
-  border-width: 1px;
+  border-width: 1px 0px 0px 0px;
   border-color: #33F;
   margin: 1ex auto;
 }
@@ -112,6 +112,15 @@ em.thispage {
   background-color: #EEEEEE;
   color: #000;
   font-style: normal;
+}
+
+h2 {
+  border-left: solid 1ex #33F;
+  background-color: #9CF;
+}
+
+h3 {
+  padding-left: 1ex;
 }
 
 figure {

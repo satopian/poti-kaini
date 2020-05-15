@@ -1,13 +1,13 @@
 <?php
 /*
-  * Template - MONO - v1.0.2 lot.200515  by sakots  >> https://poti-k.info/
+  * Template - MONO - v1.0.3 lot.200515  by sakots  >> https://poti-k.info/
   *
   * potiboard.php(v2.0.3～)のTemplate設定ファイルです。
   *
 */
 
 //テンプレートのバージョン
-define('TEMPLATE_VER', "v1.0.2 lot.200515");
+define('TEMPLATE_VER', "v1.0.3 lot.200515");
 
 //エラーメッセージ
 define('MSG001', "該当記事がみつかりません[Log is not found.]");
