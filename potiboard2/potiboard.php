@@ -1591,8 +1591,8 @@ function admindel($pass){
 			$chk= "";
 		}
 		if(!defined('ADMIN_DELGUSU')||!defined('ADMIN_DELKISU')){//テンプレートに設定が無かったら
-			define(ADMIN_DELGUSU,null);
-			define(ADMIN_DELKISU,null);
+			define('ADMIN_DELGUSU',null);
+			define('ADMIN_DELKISU',null);
 		}
 		$bg = ($j % 2) ? ADMIN_DELGUSU : ADMIN_DELKISU;//背景色
 
