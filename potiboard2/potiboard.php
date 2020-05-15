@@ -3,7 +3,7 @@
 //$time_start = microtime(true);
 /*
   *
-  * POTI-board改二 v2.0.8 lot.200515
+  * POTI-board改二 v2.0.9 lot.200515
   *   (C)sakots >> https://poti-k.info/
   *
   *----------------------------------------------------------------------------------
@@ -42,8 +42,8 @@
 */
 
 //バージョン
-define('POTI_VER' , 'v2.0.8');
-define('POTI_VERLOT' , 'v2.0.8 lot.200515');
+define('POTI_VER' , 'v2.0.9');
+define('POTI_VERLOT' , 'v2.0.9 lot.200515');
 
 if(phpversion()>="5.5.0"){
 //スパム無効化関数
@@ -1070,6 +1070,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 	// 連続する空行を一行
 	$com = preg_replace("/\n((　| )*\n){3,}/","\n",$com);
 	$com = nl2br($com);		//改行文字の前に<br>を代入する
+
 	$com = str_replace("\n", "", $com);	//\nを文字列から消す
 
 	$name=preg_replace("/◆/","◇",$name);
