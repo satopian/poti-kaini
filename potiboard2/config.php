@@ -93,9 +93,6 @@ define('DENY_COMMENTS_URL', '0');
 //設定すると各スレにフォームを表示するオプションは無効になり返信ボタン→レス画面になります。
 define('ELAPSED_DAYS','0');
 
-
-//ペイント画面のパスワードの暗号鍵
-
 //拒絶するファイルのmd5
 $badfile = array("dummy","dummy2");
 
