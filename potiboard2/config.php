@@ -392,7 +392,6 @@ define('PDEF_H', '300');	//高さ
 define('DSP_PAINTTIME', '1');
 
 //パレットデータファイル名
-//v2.0.0現在デフォルトスキンではダミー
 define('PALETTEFILE', 'palette.txt');
 
 //動画機能を使用する する:1 しない:0
