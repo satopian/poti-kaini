@@ -2,7 +2,7 @@
 /*
   * Template - MONO - v1.0.9 lot.200515  by sakots  >> https://poti-k.info/
   *
-  * potiboard.php(v2.0.3～)のTemplate設定ファイルです。
+  * potiboard.php(v2.1.0～)のTemplate設定ファイルです。
   *
 */
 
