@@ -29,18 +29,19 @@
 		<% /each %><% /def %>
 	</head>
 	<body>
-		<header>
+		<header id="header">
 			<h1><% echo(title) %></h1>
 			<hr>
 			<section>
-				<p class="menu">
+				<nav class="menu">
 					<% def(resno) %><a href="<% echo(self2) %>"><i class="fas fa-star fa-fw fa-lg" title="トップ"></i>トップ</a><% /def %>
 					<a href="<% echo(home) %>" target="_top"><i class="fas fa-home fa-fw fa-lg" title="ホーム"></i>ホーム</a>
 					<a href="<% echo(self) %>?mode=newpost"><i class="fas fa-pen-square fa-fw fa-lg" title="投稿"></i>投稿</a>
 					<a href="<% echo(self) %>?mode=admin"><i class="fas fa-cog fa-fw fa-lg" title="管理モード"></i>管理モード</a>
 					<a href="<% echo(self) %>?mode=catalog"><i class="fas fa-table fa-fw fa-lg" title="カタログ"></i>カタログ</a>
 					<a href="<% echo(self) %>?mode=piccom<% def(resno) %>&amp;resto=<% echo(resno) %><% /def %>"><i class="fas fa-paste fa-fw fa-lg" title="投稿途中の絵"></i>投稿途中の絵</a>
-				</p>
+					<a href="#footer"><i class="fas fa-angle-double-down fa-fw fa-lg" title="一番下へ"></i></a>
+				</nav>
 				<hr>
 				<% def(resno) %>
 				<p class="resm">レス送信モード</p>
@@ -194,7 +195,7 @@
 								</script>
 							</span>
 							<% /def %>
-							<% def(notres) %><span class="button"><a href="<% echo(self) %>?res=<% echo(oya/no) %>"><i class="fas fa-reply-all"></i> 返信</a></span><% /def %>
+							<% def(notres) %><span class="button"><a href="<% echo(self) %>?res=<% echo(oya/no) %>"><i class="fas fa-reply-all"></i> 返信</a></span> <a href="#header"><i class="fas fa-angle-double-up fa-fw fa-lg" title="一番上へ"></i></a><% /def %>
 							<% /def %>
 							<% def(resform) %>
 							<form class="resform" action="<% echo(self) %>" method="post" enctype="multipart/form-data">
@@ -208,6 +209,7 @@
 								<textarea class="form" name="com" cols="56" rows="3" wrap="soft"></textarea><br>
 								<label>Pass <input class="form" type="password" name="pwd" size="8" value="" autocomplete="current-password"></label>
 								<input class="button" type="submit" value="返信">
+								<a href="#header"><i class="fas fa-angle-double-up fa-fw fa-lg" title="一番上へ"></i></a>
 							</form>
 							<% /def %>
 						</div>
@@ -216,7 +218,7 @@
 				<% /each %>
 			</section>
 		</main>
-		<footer>
+		<footer id="footer">
 			<script type="text/javascript">
 				l(); //LoadCookie
 			</script>
@@ -259,7 +261,7 @@
 				</p>
 				<p>
 					UseFunction -
-					<a href="http://skinny.sx68.net/" target="_top" title="Skinny v0.4.1 (by Kuasuki)">Skinny</a>
+					<a href="http://skinny.sx68.net/" target="_top" title="Skinny (by Kuasuki)">Skinny</a>
 					<a href="http://wondercatstudio.com/" target="_top" title="by WonderCatStudio">DynamicPalette</a>
 					<a href="https://github.com/funige/neo/" target="_top" title="by ImageCanvas">PaintBBS NEO</a>
 				</p>
