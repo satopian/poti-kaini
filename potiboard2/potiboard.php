@@ -1022,35 +1022,6 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 	foreach($badip as $value){ //拒絶host
 		if(preg_match("/$value$/i",$host)) error(MSG016,$dest);
 	}
-	if(preg_match("/^mail/i",$host)
-	|| preg_match("/^ns/i",$host)
-	|| preg_match("/^dns/i",$host)
-	|| preg_match("/^ftp/i",$host)
-	|| preg_match("/^prox/i",$host)
-	|| preg_match("/^pc/i",$host)
-	|| preg_match("/^[^\.]\.[^\.]$/i",$host)){
-		$pxck = "on";
-	}
-	if(preg_match("/ne\\.jp$/i",$host)
-	|| preg_match("/ad\\.jp$/i",$host)
-	|| preg_match("/bbtec\\.net$/i",$host)
-	|| preg_match("/aol\\.com$/i",$host)
-	|| preg_match("/uu\\.net$/i",$host)
-	|| preg_match("/asahi-net\\.or\\.jp$/i",$host)
-	|| preg_match("/rim\\.or\\.jp$/i",$host)){
-		$pxck = "off";
-	}else{
-		$pxck = "on";
-	}
-
-	//if($pxck=="on" && PROXY_CHECK){
-	if($pxck=="on"){
-		if(proxy_connect('80') == 1){
-			error(MSG017,$dest);
-		}elseif(proxy_connect('8080') == 1){
-			error(MSG018,$dest);
-		}
-	}
 
 	// No.とパスと時間とURLフォーマット
 	srand((double)microtime()*1000000);
@@ -2380,35 +2351,6 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 
 	foreach($badip as $value){ //拒絶host
 		if(preg_match("/$value$/i",$host)) error(MSG016);
-	}
-	if(preg_match("/^mail/i",$host)
-	|| preg_match("/^ns/i",$host)
-	|| preg_match("/^dns/i",$host)
-	|| preg_match("/^ftp/i",$host)
-	|| preg_match("/^prox/i",$host)
-	|| preg_match("/^pc/i",$host)
-	|| preg_match("/^[^\.]\.[^\.]$/i",$host)){
-		$pxck = "on";
-	}
-	if(preg_match("/ne\\.jp$/i",$host)
-	|| preg_match("/bbtec\\.net$/i",$host)
-	|| preg_match("/ad\\.jp$/i",$host)
-	|| preg_match("/aol\\.com$/i",$host)
-	|| preg_match("/uu\\.net$/i",$host)
-	|| preg_match("/asahi-net\\.or\\.jp$/i",$host)
-	|| preg_match("/rim\\.or\\.jp$/i",$host)){
-		$pxck = "off";
-	}else{
-		$pxck = "on";
-	}
-
-	//if($pxck=="on" && PROXY_CHECK){
-	if($pxck=="on"){
-		if(proxy_connect('80') == 1){
-			error(MSG017);
-		}elseif(proxy_connect('8080') == 1){
-			error(MSG018);
-		}
 	}
 
 	// 時間とURLフォーマット
