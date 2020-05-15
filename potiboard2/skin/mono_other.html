@@ -22,10 +22,10 @@
 			<hr>
 		</header>
 		<main>
-			<!--(========== POST MODE(投稿モード) start ==========
-			// 【NEW(新規投稿)、OEKAKI(お絵かき投稿)、UPDATE(編集)】
-			)-->
 			<% def(post_mode) %>
+			<!-- (========== POST MODE(投稿モード) start ==========
+			// 【NEW(新規投稿)、OEKAKI(お絵かき投稿)、UPDATE(編集)】
+			) -->
 			<% def(regist) %>
 			<script type="text/javascript" src="loadcookie.js"></script>
 			<% /def %>
@@ -138,11 +138,10 @@
 					<% /def %>
 				</div>
 			</section>
+			<!-- (========== POST MODE(投稿モード) end ==========) -->
 			<% /def %>
-			<!--(========== POST MODE(投稿モード) end ==========)-->
-
-			<!--(========== ADMIN MODE -LOGIN-(管理モード(認証)) start ==========)-->
 			<% def(admin_in) %>
+			<!-- (========== ADMIN MODE -LOGIN-(管理モード(認証)) start ==========) -->
 			<section>
 				<div class="thread">
 					<h1 class="oekaki">管理モード</h1>
@@ -156,11 +155,10 @@
 					</form>
 				</div>
 			</section>
+			<!-- (========== ADMIN MODE -LOGIN-(管理モード(認証)) end ==========) -->
 			<% /def %>
-			<!--(========== ADMIN MODE -LOGIN-(管理モード(認証)) end ==========)-->
-
-			<!--(========== ADMIN MODE -DELETE-(管理モード(削除)) start ==========)-->
 			<% def(admin_del) %>
+			<!-- (========== ADMIN MODE -DELETE-(管理モード(削除)) start ==========) -->
 			<section>
 				<div class="thread">
 					<h1 class="oekaki">管理モード</h1>
@@ -205,11 +203,10 @@
 					<p>&lt;&lt;Image all size : <% echo(all) %> KB &gt;&gt;</p>
 				</div>
 			</section>
+			<!-- (========== ADMIN MODE -DELETE-(管理モード(削除)) end ==========) -->
 			<% /def %>
-			<!--(========== ADMIN MODE -DELETE-(管理モード(削除)) end ==========)-->
-
-			<!--(========== ERROR MODE(エラー画面) start ==========)-->
 			<% def(err_mode) %>
+			<!-- (========== ERROR MODE(エラー画面) start ==========) -->
 			<section>
 				<div class="thread">
 					<h1 class="oekaki">ERROR</h1>
@@ -217,12 +214,12 @@
 					<p><a href="<% echo(self2) %>">[リロード]</a></p>
 				</div>
 			</section>
+			<!-- (========== ERROR MODE(エラー画面) end ==========) -->
 			<% /def %>
-			<!--(========== ERROR MODE(エラー画面) end ==========)-->
 		</main>
 		<footer>
 			<section class="copy">
-				<!--著作権表示 削除しないでください-->
+				<!-- 著作権表示 削除しないでください -->
 				<!-- GazouBBS v3.0 --><!-- ふたば改0.8 --><!-- POTI-board -->
 				<p>
 					<a href="https://poti-k.info/" target="_top" title="POTI-board改二 <% echo(verlot) 	%>">POTI-board改二 <% echo(ver) %></a>

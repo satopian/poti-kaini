@@ -31,8 +31,8 @@
 			<% /def %>
 		</header>
 		<main>
-			<!--(========== PAINT MODE(お絵かきモード) start ==========)-->
 			<% def(paint_mode) %>
+			<!-- (========== PAINT MODE(お絵かきモード) start ==========) -->
 			<script type="text/javascript">
 			var DynamicColor = 1;	// パレットリストに色表示
 			var Palettes = new Array();
@@ -516,10 +516,10 @@
 					<!--PaintBBS HELP-->
 				</div>
 			</section>
+			<!-- (========== PAINT MODE(お絵かきモード) end ==========) -->
 			<% /def %>
-			<!--(========== PAINT MODE(お絵かきモード) end ==========)-->
-			<!--(========== 動画表示モード ==========)-->
 			<% def(pch_mode) %>
+			<!-- (========== 動画表示モード ==========) -->
 			<section id="appstage">
 				<div class="app">
 					<applet-dummy name="pch" code="pch.PCHViewer.class" archive="PCHViewer.jar,PaintBBS.jar" width="<% echo(w) %>" height="<% echo(h) %>" mayscript>
@@ -538,10 +538,10 @@
 					</p>
 				</div>
 			</section>
+			<!-- (========== 動画表示モード ここまで ==========) -->
 			<% /def %>
-			<!--(========== 動画表示モード ここまで ==========)-->
-			<!--(========== CONTINUE MODE(コンティニューモード) start ==========)-->
 			<% def(continue_mode) %>
+			<!-- (========== CONTINUE MODE(コンティニューモード) start ==========) -->
 			<script type="text/javascript" src="loadcookie.js"></script>
 			<section>
 				<div class="thread">
@@ -584,12 +584,12 @@
 				l(); //LoadCookie
 				</script>
 			</section>
+			<!-- (========== CONTINUE MODE(コンティニューモード) end ==========) -->
 			<% /def %>
-			<!--(========== CONTINUE MODE(コンティニューモード) end ==========)-->
 		</main>
 		<footer>
 			<section class="copy">
-				<!--著作権表示 削除しないでください-->
+				<!-- 著作権表示 削除しないでください -->
 				<!-- GazouBBS v3.0 --><!-- ふたば改0.8 --><!-- POTI-board -->
 				<p>
 					<a href="https://poti-k.info/" target="_top" title="POTI-board改二 <% echo(verlot) %>">POTI-board改二 <% echo(ver) %></a>
