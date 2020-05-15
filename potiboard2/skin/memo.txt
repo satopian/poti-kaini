@@ -1,9 +1,12 @@
 ・POTI用テンプレートから改二用テンプレートへの変換メモ
 
 ・{$var} は <% echo(var) %>に（ただしvarが存在しない場合、無視されずエラーになるので、その可能性があるときは<% def(var) %><% /def %>で囲む。）
-・<!--{def var}--><!--{/def}-->は<% def(var) %>＜% /def %＞
+・<!--{def var}--><!--{/def}-->は<% def(var) %><% /def %>
 ・<!--{each var}--><!--{/each}-->は<% each(var) %><% /each %>
 ・<!--{ndef var}--> が見た限りでは存在してない。
 　<!--{ndef var}--> aaa <!--{/ndef}--> <!--{def var}--> bbb <!--{/def}-->
 　が続いている場所は
 　<% def(var) %> bbb <% elsedef %> aaa <% /def %>となる。(ページング処理など)
+・<!--{ndef var}--> ccc <!--{/ndef}-->と単独の場合、
+　<% def(var) %><% elsedef %> ccc <% /def %>とするのがベターか
+　(定義されていれば何も出力しない、されていなければccc)
