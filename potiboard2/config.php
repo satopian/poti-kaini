@@ -24,7 +24,7 @@ define('ROOT_URL', 'http://www.hoge.ne.jp/oekaki/');
 //設置場所のURL ROOT_URL で設定したurlをもとにリンクを作成
 define('SHARE_BUTTON', '0');
 
-
+//ペイント画面のパスワードの暗号鍵
 define('crypt_pass','fbgtK4pj9t8Auek');
 
 //暗号化と解読のためのパスワード。
