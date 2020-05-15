@@ -303,18 +303,11 @@ define('RENZOKU2', '20');
 //強制sageレス数( 0 ですべてsage)
 define('MAX_RES', '20');
 
-//proxyの書込みを制限する y:1 n:0
-define('PROXY_CHECK', '0');
-
 //IDを表示する 強制:2 する:1 しない:0
 define('DISP_ID', '0');
 
 //ID生成の種
 define('ID_SEED', 'IDの種');
-
-//改行を抑制する行数 しない:0
-//改行荒らし対策だったものです(たぶん)
-define('BR_CHECK', '0');
 
 //URLを自動リンクする する:1 しない:0
 define('AUTOLINK', '1');

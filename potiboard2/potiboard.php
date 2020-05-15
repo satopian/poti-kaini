@@ -2437,9 +2437,9 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 	$com = str_replace("\r", "\n", $com);
 	// 連続する空行を一行
 	$com = preg_replace("#\n((　| )*\n){3,}#","\n",$com);
-	if(!BR_CHECK || substr_count($com,"\n")<BR_CHECK){
-		$com = nl2br($com);		//改行文字の前に<br>を代入する
-	}
+	// if(!BR_CHECK || substr_count($com,"\n")<BR_CHECK){
+	$com = nl2br($com);		//改行文字の前に<br>を代入する
+	// }
 	$com = str_replace("\n", "", $com);	//\nを文字列から消す
 
 	$name=preg_replace("/◆/","◇",$name);
@@ -2531,34 +2531,6 @@ function replace($no,$pwd,$stime){
 
 	foreach($badip as $value){ //拒絶host
 		if(preg_match("/$value$/i",$host)) error(MSG016);
-	}
-	if(preg_match("/^mail/i",$host)
-	|| preg_match("/^ns/i",$host)
-	|| preg_match("/^dns/i",$host)
-	|| preg_match("/^ftp/i",$host)
-	|| preg_match("/^prox/i",$host)
-	|| preg_match("/^pc/i",$host)
-	|| preg_match("/^[^\.]\.[^\.]$/i",$host)){
-		$pxck = "on";
-	}
-	if(preg_match("/ne\\.jp$/i",$host)
-	|| preg_match("/ad\\.jp$/i",$host)
-	|| preg_match("/bbtec\\.net$/i",$host)
-	|| preg_match("/aol\\.com$/i",$host)
-	|| preg_match("/uu\\.net$/i",$host)
-	|| preg_match("/asahi-net\\.or\\.jp$/i",$host)
-	|| preg_match("/rim\\.or\\.jp$/i",$host)){
-		$pxck = "off";
-	}else{
-		$pxck = "on";
-	}
-
-	if($pxck=="on" && PROXY_CHECK){
-		if(proxy_connect('80') == 1){
-			error(MSG017);
-		}elseif(proxy_connect('8080') == 1){
-			error(MSG018);
-		}
 	}
 
 	/*--- テンポラリ捜査 ---*/
