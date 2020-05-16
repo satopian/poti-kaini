@@ -23,25 +23,25 @@
 				<hr>
 				<h2>カタログモード</h2>
 				<hr>
-				<% def(paint) %><?php echo "\n"; ?>
+				<% def(paint) %>
 				<section class="epost">
 					<form action="<% echo(self) %>" method="post" enctype="multipart/form-data">
 						<p>
-							<% def(applet) %><?php echo "\n"; ?>
+							<% def(applet) %>
 							<select class="form" name="shi">
 								<option value="0" selected>NEO</option>
 							</select>
-							<% /def %><?php echo "\n"; ?>
+							<% /def %>
 							<label>幅：<input class="form" type="text" name="picw" value="<% echo(pdefw) %>" size="4"></label>
 							<label>高さ：<input class="form" type="text" name="pich" value="<% echo(pdefh) %>" size="3"></label>
-							<% def(resno) %><?php echo "\n"; ?>
+							<% def(resno) %>
 							<input type="hidden" name="resto" value="<% echo(resno) %>">
-							<% /def %><?php echo "\n"; ?>
+							<% /def %>
 							<input type="hidden" name="mode" value="paint">
 							<input class="button" type="submit" value="お絵かき">
 						</p>
 					</form>
-					<% /def %><?php echo "\n"; ?>
+					<% /def %>
 				</section>
 				<hr>
 				<section>
@@ -51,38 +51,38 @@
 							Pass <input class="form" type="password" name="pwd" size="6" value="" autocomplete="new-password">
 							<select class="form" name="mode">
 								<option value="edit" selected>編集</option>
-								<% def(userdel) %><?php echo "\n"; ?>
+								<% def(userdel) %>
 								<option value="usrdel">削除</option>
-								<% /def %><?php echo "\n"; ?>
+								<% /def %>
 							</select>
 							<input class="button" type="submit" value=" OK ">
 						</p>
 					</form>
-					<% def(notres) %><?php echo "\n"; ?>
+					<% def(notres) %>
 					<hr>
 					<p class="page">
-						<% def(prev) %><span class="button"><a href="<% echo(prev) %>">BACK</a></span><% elsedef(prev) %><span class="se">START</span><% /def %><?php echo "\n"; ?>
+						<% def(prev) %><span class="button"><a href="<% echo(prev) %>">BACK</a></span><% elsedef(prev) %><span class="se">START</span><% /def %>
 						<% echo(paging) %>
-						<% def(next) %><span class="button"><a href="<% echo(next) %>">NEXT</a></span><% elsedef(next) %><span class="se">END</span><% /def %><?php echo "\n"; ?>
+						<% def(next) %><span class="button"><a href="<% echo(next) %>">NEXT</a></span><% elsedef(next) %><span class="se">END</span><% /def %>
 					</p>
-					<% /def %><?php echo "\n"; ?>
+					<% /def %>
 				</section>
 			</section>
 		</header>
 		<main>
 			<hr>
 			<section id="catalog">
-				<% each(y) %><% each(y/x) %><% def(y/x/no) %><?php echo "\n"; ?>
+				<% each(y) %><% each(y/x) %><% def(y/x/no) %>
 				<div>
-					<% def(y/x/imgsrc) %><?php echo "\n"; ?>
+					<% def(y/x/imgsrc) %>
 					<p><a href="<% echo(self) %>?res=<% echo(y/x/no) %>" title="<% echo(y/x/sub) %> (by <% echo(y/x/name) %><% echo(y/x/trip) %>)"><img src="<% echo(y/x/imgsrc) %>" alt="<% echo(y/x/sub) %> (by <% echo(y/x/name) %><% echo(y/x/trip) %>)"></a></p>
-					<% /def %><?php echo "\n"; ?>
-					<% def(y/x/txt) %><?php echo "\n"; ?>
+					<% /def %>
+					<% def(y/x/txt) %>
 					<p><a href="<% echo(self) %>?res=<% echo(y/x/no) %>" title="<% echo(y/x/sub) %> (by <% echo(y/x/name) %><% echo(y/x/trip) %>)"><% echo(y/x/sub) %> (by <% echo(y/x/name) %><% echo(y/x/trip) %>)</a></p>
-					<% /def %><?php echo "\n"; ?>
+					<% /def %>
 					<p>[<% echo(y/x/no) %>] <% echo(y/x/now) %><% def(y/x/updatemark) %><% echo(y/x/updatemark) %><% /def %><% def(y/x/id) %> ID:<% echo(y/x/id) %><% /def %></p>
 				</div>
-				<% /def %><% /each %><% /each %><?php echo "\n"; ?>
+				<% /def %><% /each %><% /each %>
 			</section>
 			<hr>
 		</main>

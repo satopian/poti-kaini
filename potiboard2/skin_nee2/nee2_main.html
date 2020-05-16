@@ -8,7 +8,7 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css">
 		<script type="text/javascript" src="loadcookie.js"></script>
 		<title><% echo(title) %></title>
-		<% def(notres) %><?php echo "\n"; ?>
+		<% def(notres) %>
 		<meta name="twitter:card" content="summary">
 		<meta name="twitter:site" content="">
 		<meta property="og:site_name" content="">
@@ -16,8 +16,8 @@
 		<meta property="og:type" content="article">
 		<meta property="og:description" content="">
 		<meta property="og:image" content="">
-		<% /def %><?php echo "\n"; ?>
-		<% def(resno) %><% each(oya) %><?php echo "\n"; ?>
+		<% /def %>
+		<% def(resno) %><% each(oya) %>
 		<meta name="twitter:card" content="summary">
 		<meta name="twitter:site" content="">
 		<meta property="og:site_name" content="">
@@ -25,8 +25,8 @@
 		<meta property="og:type" content="article">
 		<meta property="og:description" content="">
 		<meta property="og:url" content="<% echo(rooturl) %><% echo(self) %>?res=<% echo(oya/no) %>">
-		<% def(oya/src) %><meta property="og:image" content="<% echo(rooturl) %><% echo(oya/imgsrc) %>"><% /def %><?php echo "\n"; ?>
-		<% /each %><% /def %><?php echo "\n"; ?>
+		<% def(oya/src) %><meta property="og:image" content="<% echo(rooturl) %><% echo(oya/imgsrc) %>"><% /def %>
+		<% /each %><% /def %>
 	</head>
 	<body>
 		<header>
@@ -34,7 +34,7 @@
 			<hr>
 			<section>
 				<ul class="menu">
-					<% def(resno) %><li><a href="<% echo(self2) %>"><i class="fas fa-star fa-fw fa-lg" title="トップ"></i>トップ</a></li><% /def %><?php echo "\n"; ?>
+					<% def(resno) %><li><a href="<% echo(self2) %>"><i class="fas fa-star fa-fw fa-lg" title="トップ"></i>トップ</a></li><% /def %>
 					<li><a href="<% echo(home) %>" target="_top"><i class="fas fa-home fa-fw fa-lg" title="ホーム"></i>ホーム</a></li>
 					<li><a href="<% echo(self) %>?mode=newpost"><i class="fas fa-pen-square fa-fw fa-lg" title="投稿"></i>投稿</a></li>
 					<li><a href="<% echo(self) %>?mode=admin"><i class="fas fa-cog fa-fw fa-lg" title="管理モード"></i>管理モード</a></li>
@@ -42,42 +42,42 @@
 					<li><a href="<% echo(self) %>?mode=piccom<% def(resno) %>&amp;resto=<% echo(resno) %><% /def %>"><i class="fas fa-paste fa-fw fa-lg" title="投稿途中の絵"></i>投稿途中の絵</a></li>
 				</ul>
 				<hr>
-				<% def(resno) %><?php echo "\n"; ?>
+				<% def(resno) %>
 				<p class="resm">レス送信モード</p>
 				<hr>
-				<% /def %><?php echo "\n"; ?>
-				<% def(paintform) %><?php echo "\n"; ?>
-				<% def(paint) %><?php echo "\n"; ?>
-				<% def(resno) %><?php echo "\n"; ?>
+				<% /def %>
+				<% def(paintform) %>
+				<% def(paint) %>
+				<% def(resno) %>
 				<p class="resm">お絵かきレス</p>
 				<hr>
-				<% /def %><?php echo "\n"; ?>
+				<% /def %>
 				<section class="epost">
 					<form action="<% echo(self) %>" method="post">
 						<p>
-							<% def(applet) %><?php echo "\n"; ?>
+							<% def(applet) %>
 							<select class="form" name="shi">
 								<option value="0" selected>NEO</option>
 							</select>
-							<% /def %><?php echo "\n"; ?>
+							<% /def %>
 							<label>幅：<input class="form" type="text" name="picw" value="<% echo(pdefw) %>"></label>
 							<label>高さ：<input class="form" type="text" name="pich" value="<% echo(pdefh) %>"></label>
-							<% def(resno) %><?php echo "\n"; ?>
+							<% def(resno) %>
 							<input type="hidden" name="resto" value="<% echo(resno) %>">
-							<% /def %><?php echo "\n"; ?>
-							<% def(anime) %><br><label><input type="checkbox" value="true" name="anime" title="動画記録" <% def(animechk) %><% echo(animechk) %><% /def %>>アニメーション記録</label><% /def %><?php echo "\n"; ?>
+							<% /def %>
+							<% def(anime) %><br><label><input type="checkbox" value="true" name="anime" title="動画記録" <% def(animechk) %><% echo(animechk) %><% /def %>>アニメーション記録</label><% /def %>
 							<input type="hidden" name="mode" value="paint">
 							<input class="button" type="submit" value="お絵かき">
 						</p>
 					</form>
 				</section>
-				<% /def %><?php echo "\n"; ?>
-				<% /def %><?php echo "\n"; ?>
-				<% def(form) %><?php echo "\n"; ?>
+				<% /def %>
+				<% /def %>
+				<% def(form) %>
 				<section>
 					<form action="<% echo(self) %>" method="post" enctype="multipart/form-data">
 						<input type="hidden" name="mode" value="regist">
-						<% def(resno) %><input type="hidden" name="resto" value="<% echo(resno) %>"><% /def %><?php echo "\n"; ?>
+						<% def(resno) %><input type="hidden" name="resto" value="<% echo(resno) %>"><% /def %>
 						<input type="hidden" name="MAX_FILE_SIZE" value="<% echo(maxbyte) %>">
 						<table summary="投稿フォーム">
 							<tr>
@@ -103,7 +103,7 @@
 								<td>com<% def(usecom) %><% echo(usecom) %><% /def %></td>
 								<td><textarea class="form" name="com" cols="28" rows="4" wrap="soft"></textarea></td>
 							</tr>
-							<% def(upfile) %><?php echo "\n"; ?>
+							<% def(upfile) %>
 							<tr>
 								<td>UpFile</td>
 								<td>
@@ -111,25 +111,25 @@
 									[<label><input type="checkbox" name="textonly" value="on"<% def(resno) %> checked<% /def %>>No File</label>]
 								</td>
 							</tr>
-							<% /def %><?php echo "\n"; ?>
+							<% /def %>
 							<tr>
 								<td>Pass</td>
 								<td><input class="form" type="password" name="pwd" size="8" value="" autocomplete="current-password"><small>記事の削除に必要</small></td>
 							</tr>
 						</table>
 						<ul>
-							<% def(upfile) %><?php echo "\n"; ?>
-							<% def(resno) %><?php echo "\n"; ?>
+							<% def(upfile) %>
+							<% def(resno) %>
 							<li>画像を添付する場合は、'No File'のチェックを外して下さい。</li>
-							<% /def %><?php echo "\n"; ?>
+							<% /def %>
 							<li>添付可能ファイル：GIF, JPG, PNG ブラウザによっては正常に添付できないことがあります。</li>
 							<li>画像は横 <% echo(maxw) %>ピクセル、縦 <% echo(maxh) %>ピクセルを超えると縮小表示されます。</li>
-							<% /def %><?php echo "\n"; ?>
+							<% /def %>
 							<li>最大投稿データ量は <% echo(maxkb) %> KB までです。sage機能付き。</li>
 						</ul>
 					</form>
 				</section>
-				<% /def %><?php echo "\n"; ?>
+				<% /def %>
 			</section>
 			<hr>
 			<section>
@@ -139,38 +139,38 @@
 						Pass <input class="form" type="password" name="pwd" value="" autocomplete="new-password">
 						<select class="form" name="mode" tabindex="1">
 							<option value="edit" selected>編集</option>
-							<% def(userdel) %><?php echo "\n"; ?>
+							<% def(userdel) %>
 							<option value="usrdel">削除</option>
-							<% /def %><?php echo "\n"; ?>
+							<% /def %>
 						</select>
 						<input class="button" type="submit" value=" OK ">
 					</p>
 				</form>
-				<% def(notres) %><?php echo "\n"; ?>
+				<% def(notres) %>
 				<hr>
 				<p class="page">
-						<% def(prev) %><span class="button"><a href="<% echo(prev) %>">BACK</a></span><% elsedef %><span class="se">START</span><% /def %><?php echo "\n"; ?>
+						<% def(prev) %><span class="button"><a href="<% echo(prev) %>">BACK</a></span><% elsedef %><span class="se">START</span><% /def %>
 						<% echo(paging) %>
-						<% def(next) %><span class="button"><a href="<% echo(next) %>">NEXT</a></span><% elsedef %><span class="se">END</span><% /def %><?php echo "\n"; ?>
+						<% def(next) %><span class="button"><a href="<% echo(next) %>">NEXT</a></span><% elsedef %><span class="se">END</span><% /def %>
 					</p>
-				<% /def %><?php echo "\n"; ?>
+				<% /def %>
 			</section>
 		</header>
 		<main>
 			<section>
-				<% each(oya) %><?php echo "\n"; ?>
+				<% each(oya) %>
 				<div class="thread">
 					<hr>
 					<h2><span class="oyano"><% echo(oya/no) %></span> <% echo(oya/sub) %></h2>
 					<hr>
 					<section>
-						<% def(oya/src) %><?php echo "\n"; ?>
+						<% def(oya/src) %>
 						<figure>
 							<figcaption><a href="<% echo(oya/src) %>" data-lightbox="a<% echo(oya/no) %>" data-title="<% echo(oya/srcname) %>"><% echo(oya/srcname) %></a> (<% echo(oya/size) %> B) <% def(oya/thumb) %>- サムネイル表示中 -<% /def %><br><% def(oya/painttime) %>PaintTime : <% echo(oya/painttime) %><% /def %><% def(oya/pch) %><a href="<% echo(self) %>?mode=openpch&amp;pch=<% echo(oya/pch) %>" target="_blank">●動画</a><% /def %>
 							<% def(oya/continue) %> <a href="<% echo(self) %>?mode=continue&amp;no=<% echo(oya/continue) %>">続きを描く</a><% /def %></figcaption>
 							<a href="<% echo(oya/src) %>" data-lightbox="b<% echo(oya/no) %>" tabindex="<% echo(oya/tab) %>"  data-title="<% echo(oya/srcname) %>"><img src="<% echo(oya/imgsrc) %>" alt="<% echo(oya/srcname) %>"></a>
 						</figure>
-						<% /def %><?php echo "\n"; ?>
+						<% /def %>
 						<div class="res">
 							<h3>
 								<span class="oyano"><% echo(oya/no) %></span>
@@ -180,19 +180,19 @@
 							</h3>
 							<section>
 								<p><% echo(oya/com) %></p>
-								<% def(oya/limit) %><p class="limit">このスレは古いので、もうすぐ消えます。</p><% /def %><?php echo "\n"; ?>
-								<% def(resform) %><% def(oya/skipres) %><p class="ryaku">レス<% echo(oya/skipres) %> 件省略。[<a href="<% echo(self) %>?res=<% echo(oya/no) %>">すべて見る</a>]</p><% /def %><% /def %><?php echo "\n"; ?>
+								<% def(oya/limit) %><p class="limit">このスレは古いので、もうすぐ消えます。</p><% /def %>
+								<% def(resform) %><% def(oya/skipres) %><p class="ryaku">レス<% echo(oya/skipres) %> 件省略。[<a href="<% echo(self) %>?res=<% echo(oya/no) %>">すべて見る</a>]</p><% /def %><% /def %>
 							</section>
-							<% def(oya/res) %><?php echo "\n"; ?>
-							<% each(oya/res) %><?php echo "\n"; ?>
+							<% def(oya/res) %>
+							<% each(oya/res) %>
 							<hr>
 							<section>
-								<% def(oya/res/src) %><?php echo "\n"; ?>
+								<% def(oya/res/src) %>
 								<figure>
 									<figcaption><a href="<% echo(oya/res/src) %>"   data-lightbox="a<% echo(oya/res/no) %>" data-title="<% echo(oya/res/srcname) %>"><% echo(oya/res/srcname) %></a> (<% echo(oya/res/size) %> B)<% def(oya/res/thumb) %> - サムネイル表示中 - <% /def %><br><% def(oya/res/painttime) %> PaintTime :<% echo(oya/res/painttime) %><% /def %><% def(oya/res/continue) %> <a href="<% echo(self) %>?mode=continue&amp;no=<% echo(oya/res/continue) %>">続きを描く</a><% /def %></figcaption>
 									<a href="<% echo(oya/res/src) %>" data-lightbox="b<% echo(oya/res/no) %>" data-title="<% echo(oya/res/srcname) %>"><img src="<% echo(oya/res/imgsrc) %>" alt="<% echo(oya/res/srcname) %>"></a>
 								</figure>
-								<% /def %><?php echo "\n"; ?>
+								<% /def %>
 								<h4>
 									<span class="oyaresno"><% echo(oya/res/no) %></span>
 									<span class="rsub"><% echo(oya/res/sub) %></span> :
@@ -202,16 +202,16 @@
 									<p><% echo(oya/res/com) %></p>
 								</section>
 							</section>
-							<% /each %><?php echo "\n"; ?>
-							<% /def %><?php echo "\n"; ?>
+							<% /each %>
+							<% /def %>
 						</div>
 						<div class="thfoot">
 							<hr>
-							<% def(resform) %><% elsedef(resform) %><?php echo "\n"; ?>
-							<% def(oya/skipres) %><?php echo "\n"; ?>
+							<% def(resform) %><% elsedef(resform) %>
+							<% def(oya/skipres) %>
 							レス<% echo(oya/skipres) %>件省略。すべて見るには返信ボタンをクリックしてください。
-							<% /def %><?php echo "\n"; ?>
-							<% def(sharebutton) %><?php echo "\n"; ?>
+							<% /def %>
+							<% def(sharebutton) %>
 							<span class="share_button">
 								<script>
 									(function(){
@@ -220,11 +220,11 @@
 									document.write( '<a target="_blank" href="https://twitter.com/intent/tweet?&text=' + title + '&url=' + url + '"><span class="icon-twitter button"><i class="fab fa-twitter"></i> tweet</span></a> <a target="_blank" class="fb btn" href="http://www.facebook.com/share.php?u=' + url + '"><span class="icon-facebook2 button"><i class="fab fa-facebook-square"></i> share</span></a>' );})();
 								</script>
 							</span>
-							<% /def %><?php echo "\n"; ?>
-							<% def(notres) %><span class="button"><a href="<% echo(self) %>?res=<% echo(oya/no) %>"><i class="fas fa-reply-all"></i> 返信</a></span><% /def %><?php echo "\n"; ?>
-							<% /def %><?php echo "\n"; ?>
-							<% def(resform) %><?php echo "\n"; ?>
-							<% def(oya/disp_resform) %><?php echo "\n"; ?>
+							<% /def %>
+							<% def(notres) %><span class="button"><a href="<% echo(self) %>?res=<% echo(oya/no) %>"><i class="fas fa-reply-all"></i> 返信</a></span><% /def %>
+							<% /def %>
+							<% def(resform) %>
+							<% def(oya/disp_resform) %>
 							<form class="resform" action="<% echo(self) %>" method="post" enctype="multipart/form-data">
 								<input type="hidden" name="mode" value="regist">
 								<input type="hidden" name="resto" value="<% echo(oya/no) %>">
@@ -237,13 +237,13 @@
 								<label>Pass <input class="form" type="password" name="pwd" size="8" value="" autocomplete="current-password"></label>
 								<input class="button" type="submit" value="返信">
 							</form>
-							<% /def %><?php echo "\n"; ?>
-							<% /def %><?php echo "\n"; ?>
+							<% /def %>
+							<% /def %>
 						</div>
 					</section>
 				</div>
 				<hr>
-				<% /each %><?php echo "\n"; ?>
+				<% /each %>
 			</section>
 		</main>
 		<footer>

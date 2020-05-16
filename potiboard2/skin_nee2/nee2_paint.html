@@ -23,13 +23,13 @@
 				</ul>
 			</section>
 			<hr>
-			<% def(paint_mode) %><?php echo "\n"; ?>
+			<% def(paint_mode) %>
 			<h2 class="oekaki">OEKAKI MODE</h2>
-			<% /def %><?php echo "\n"; ?>
-			<% def(continue_mode) %><?php echo "\n"; ?>
+			<% /def %>
+			<% def(continue_mode) %>
 			<h2 class="oekaki">CONTINUE MODE</h2>
-			<% /def %><?php echo "\n"; ?>
-			<% def(paint_mode) %><?php echo "\n"; ?>
+			<% /def %>
+			<% def(paint_mode) %>
 			<hr>
 			<div class="timeid">
 				<form class="watch" action="index.html" name="watch">
@@ -67,11 +67,11 @@
 					</script>
 				</form>
 			</div>
-			<% /def %><?php echo "\n"; ?>
+			<% /def %>
 		</header>
 		<main>
-			<!--(========== PAINT MODE(お絵かきモード) start ==========)--><?php echo "\n"; ?>
-			<% def(paint_mode) %><?php echo "\n"; ?>
+			<!--(========== PAINT MODE(お絵かきモード) start ==========)-->
+			<% def(paint_mode) %>
 			<script type="text/javascript">
 			var DynamicColor = 1;	// パレットリストに色表示
 			var Palettes = new Array();
@@ -403,22 +403,22 @@
 						<param name="undo_in_mg" value="<% echo(undo_in_mg) %>">
 						<param name="url_save" value="picpost.php">
 						<param name="url_exit" value="<% echo(self) %>?mode=<% echo(mode) %>&amp;stime=<% echo(stime) %>">
-						<% def(imgfile) %><param name="image_canvas" value="<% echo(imgfile) %>"><% /def %><?php echo "\n"; ?>
-						<% def(usercode) %><param name="send_header" value="usercode=<% echo(usercode) %>"><% /def %><?php echo "\n"; ?>
+						<% def(imgfile) %><param name="image_canvas" value="<% echo(imgfile) %>"><% /def %>
+						<% def(usercode) %><param name="send_header" value="usercode=<% echo(usercode) %>"><% /def %>
 						<param name="poo" value="false">
 						<param name="send_advance" value="true">
 						<param name="thumbnail_width" value="100%">
 						<param name="thumbnail_height" value="100%">
 						<param name="tool_advance" value="true">
-						<% def(cpal) %><% each(cpal) %><?php echo "\n"; ?>
+						<% def(cpal) %><% each(cpal) %>
 						<param name="color_<% echo(cpal/no) %>" value="#<% echo(cpal/pal) %>">
-						<% /each %><% /def %><?php echo "\n"; ?>
-						<% def(security) %><?php echo "\n"; ?>
-						<% def(security_click) %><param name="security_click" value="<% echo(security_click) %>"><% /def %><?php echo "\n"; ?>
-						<% def(security_timer) %><param name="security_timer" value="<% echo(security_timer) %>"><% /def %><?php echo "\n"; ?>
+						<% /each %><% /def %>
+						<% def(security) %>
+						<% def(security_click) %><param name="security_click" value="<% echo(security_click) %>"><% /def %>
+						<% def(security_timer) %><param name="security_timer" value="<% echo(security_timer) %>"><% /def %>
 						<param name="security_url" value="<% echo(security_url) %>">
 						<param name="security_post" value="false">
-						<% /def %><?php echo "\n"; ?>
+						<% /def %>
 					</applet-dummy>
 				</div>
 				<div class="palette">
@@ -432,9 +432,9 @@
 							<legend>PALETTE</legend>
 							<select class="form" name="select" size="13" onchange="setPalette()">
 								<option>一時パレット</option>
-								<% def(dynp) %><?php echo "\n"; ?>
+								<% def(dynp) %>
 								<% echo(dynp) %>
-								<% /def %><?php echo "\n"; ?>
+								<% /def %>
 							</select><br>
 							<input class="button" type="button" value="一時保存" onclick="PaletteSave()"><br>
 							<input class="button" type="button" value="作成" onclick="PaletteNew()">
@@ -505,14 +505,14 @@
 				</script>
 				<div class="thread siihelp">
 					<!--PaintBBS HELP-->
-					<?php echo "\n"; ?><SIIHELP>
+					<SIIHELP>
 					<!--PaintBBS HELP-->
 				</div>
 			</section>
-			<% /def %><?php echo "\n"; ?>
-			<!--(========== PAINT MODE(お絵かきモード) end ==========)--><?php echo "\n"; ?>
+			<% /def %>
+			<!--(========== PAINT MODE(お絵かきモード) end ==========)-->
 			<!--(========== 動画表示モード ==========)-->
-			<% def(pch_mode) %><?php echo "\n"; ?>
+			<% def(pch_mode) %>
 			<section id="appstage">
 				<div class="app">
 					<applet-dummy name="pch" code="pch.PCHViewer.class" archive="PCHViewer.jar,PaintBBS.jar" width="<% echo(w) %>" height="<% echo(h) %>" mayscript>
@@ -531,10 +531,10 @@
 					</p>
 				</div>
 			</section>
-			<% /def %><?php echo "\n"; ?>
-			<!--(========== 動画表示モード ここまで ==========)--><?php echo "\n"; ?>
-			<!--(========== CONTINUE MODE(コンティニューモード) start ==========)--><?php echo "\n"; ?>
-			<% def(continue_mode) %><?php echo "\n"; ?>
+			<% /def %>
+			<!--(========== 動画表示モード ここまで ==========)-->
+			<!--(========== CONTINUE MODE(コンティニューモード) start ==========)-->
+			<% def(continue_mode) %>
 			<script type="text/javascript" src="loadcookie.js"></script>
 			<section>
 				<div class="thread">
@@ -552,33 +552,33 @@
 						<input type="hidden" name="pch" value="<% echo(pch) %>">
 						<input type="hidden" name="ext" value="<% echo(ext) %>">
 						<select class="form" name="ctype">
-							<% def(ctype_pch) %><option value="pch">from animation</option><% /def %><?php echo "\n"; ?>
-							<% def(ctype_img) %><option value="img">from picture</option><% /def %><?php echo "\n"; ?>
+							<% def(ctype_pch) %><option value="pch">from animation</option><% /def %>
+							<% def(ctype_img) %><option value="img">from picture</option><% /def %>
 						</select>
 						<select class="form" name="type">
 							<option value="rep">replace</option>
 							<option value="new">newpost</option>
 						</select>
-						<% def(passflag) %>Pass<input class="form" type="password" name="pwd" size="8" value=""> <% /def %><?php echo "\n"; ?>
+						<% def(passflag) %>Pass<input class="form" type="password" name="pwd" size="8" value=""> <% /def %>
 						<input class="button" type="submit" value="続きを描く">
 					</form>
-					<% def(passflag) %><?php echo "\n"; ?>
+					<% def(passflag) %>
 					<ul>
-						<% def(newpost_nopassword) %><?php echo "\n"; ?>
+						<% def(newpost_nopassword) %>
 						<li>新規投稿なら削除キーがなくても続きを描く事ができます。</li>
-						<?php echo "\n"; ?>
-						<% elsedef(newpost_nopassword) %><?php echo "\n"; ?>
+						
+						<% elsedef(newpost_nopassword) %>
 						<li>続きを描くには描いたときの削除キーが必要です。</li>
-						<% /def %><?php echo "\n"; ?>
+						<% /def %>
 						</ul>
-					<% /def %><?php echo "\n"; ?>
+					<% /def %>
 				</div>
 				<script type="text/javascript">
 				l(); //LoadCookie
 				</script>
 			</section>
-			<% /def %><?php echo "\n"; ?>
-			<!--(========== CONTINUE MODE(コンティニューモード) end ==========)--><?php echo "\n"; ?>
+			<% /def %>
+			<!--(========== CONTINUE MODE(コンティニューモード) end ==========)-->
 		</main>
 		<footer>
 			<!--著作権表示 削除しないでください-->
