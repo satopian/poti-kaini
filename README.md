@@ -40,6 +40,10 @@ config.phpの設定をし、アップロードしてpotiboard.phpにアクセス
 
 ## 履歴
 
+### [2020/05/16] v2.2.2 lot.200516d
+
+- 対応スキン用にしぃちゃんアプレットを本体に同梱。[Readme_Shichan.html](./Readme_Shichan.html)
+
 ### [2020/05/16] v2.2.1 lot.200516c
 
 - Skinnyを配布用に設定変更
