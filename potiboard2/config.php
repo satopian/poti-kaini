@@ -86,11 +86,12 @@ define('USE_JAPANESEFILTER', '1');
 define('DENY_COMMENTS_URL', '0');
 
 //指定した日数を過ぎたスレッドのフォームを閉じる
-//設定しないなら初期値の '0'で(無期限になります)。
-//define('ELAPSED_DAYS','180');
-//	↑ 180日
-//で半年以上経過したスレッドに返信できなくなります。
-define('ELAPSED_DAYS','360');
+//define('ELAPSED_DAYS','0');
+//設定しないなら '0'で。フォームを閉じません。
+//define('ELAPSED_DAYS','365');
+//	↑ 365日
+//で1年以上経過したスレッドに返信できなくなります。
+define('ELAPSED_DAYS','365');
 
 //拒絶するファイルのmd5
 $badfile = array("dummy","dummy2");
