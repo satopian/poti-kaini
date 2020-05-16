@@ -224,6 +224,7 @@
 							<% def(notres) %><span class="button"><a href="<% echo(self) %>?res=<% echo(oya/no) %>"><i class="fas fa-reply-all"></i> 返信</a></span><% /def %><?php echo "\n"; ?>
 							<% /def %><?php echo "\n"; ?>
 							<% def(resform) %><?php echo "\n"; ?>
+							<% def(oya/disp_resform) %><?php echo "\n"; ?>
 							<form class="resform" action="<% echo(self) %>" method="post" enctype="multipart/form-data">
 								<input type="hidden" name="mode" value="regist">
 								<input type="hidden" name="resto" value="<% echo(oya/no) %>">
@@ -235,8 +236,8 @@
 								<textarea class="form" name="com" cols="56" rows="3" wrap="soft"></textarea><br>
 								<label>Pass <input class="form" type="password" name="pwd" size="8" value="" autocomplete="current-password"></label>
 								<input class="button" type="submit" value="返信">
-								
 							</form>
+							<% /def %><?php echo "\n"; ?>
 							<% /def %><?php echo "\n"; ?>
 						</div>
 					</section>

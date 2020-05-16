@@ -58,6 +58,7 @@ Skinnyのタグは[本家](http://skinny.sx68.net/tag/taglist.html)を見てい�
 - 以下、oya/res/... はスレッドの中でのものになりますので省略します。
 - def(sharebutton) - SNSシェアボタンを付けるかどうかのチェックです。
 - def(resform) - スレッドにレスフォームを付けるかどうかのチェックです。
+- def(oya/disp_resform) - レスフォームを表示するか、のチェックです。経過日数で閉じる設定のときに使います。
 - def(prev) - 前ページがあるかのチェックです。
 - echo(prev) - 前ページのURLです。
 - def(next) - 次ページがあるかのチェックです。
@@ -107,6 +108,10 @@ Skinnyのタグは[本家](http://skinny.sx68.net/tag/taglist.html)を見てい�
 
 
 ## 履歴
+
+### [2020/05/16] v1.1.0
+
+- poti2.2.0の経過日数でミニレスフォームを閉じる、に対応
 
 ### [2020/05/16] v1.0.10
 

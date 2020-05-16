@@ -1,13 +1,13 @@
 <?php
 /*
-  * Template - nee2 - v1.0.1 lot.200515  by sakots  >> https://poti-k.info/
+  * Template - nee2 - v1.1.0 lot.200516  by sakots  >> https://poti-k.info/
   *
-  * potiboard.php(v2.1.0～)のTemplate設定ファイルです。
+  * potiboard.php(v2.2.0～)のTemplate設定ファイルです。
   *
 */
 
 //テンプレートのバージョン
-define('TEMPLATE_VER', "v1.0.1 lot.200515");
+define('TEMPLATE_VER', "v1.1.0 lot.200516");
 
 //エラーメッセージ
 define('MSG001', "該当記事がみつかりません[Log is not found.]");
