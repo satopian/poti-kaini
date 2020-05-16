@@ -24,6 +24,7 @@ define('ROOT_URL', 'http://www.hoge.ne.jp/oekaki/');
 define('SHARE_BUTTON', '0');
 
 //ペイント画面のパスワードの暗号鍵
+//あまり頻繁に変えないように
 define('crypt_pass','fbgtK4pj9t8Auek');
 
 //暗号化と解読のためのパスワード。
@@ -137,7 +138,7 @@ define('COMMENT_LIMIT_HIGH', '80');
 // 言語設定
 define('LANG', 'Japanese');
 
-//★1.44.1以降はUTF-8
+//★文字コードは1.44.1以降UTF-8固定
 
 /* ---------- ADD:2004/06/22 ---------- */
 
