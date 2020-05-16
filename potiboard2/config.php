@@ -1,6 +1,6 @@
 <?php
 /*
-  * POTI-board改二 v2.0.7 lot.200515
+  * POTI-board改二 v2.1.1 lot.200516a
   * by sakots >> https://poti-k.info/
   *
   * POTI-board改二の設定ファイルです。
@@ -8,9 +8,8 @@
 */
 /* ---------- 最初に設定する項目 ---------- */
 //管理者パスワード
-$ADMIN_PASS = 'kanripass';
-
 //必ず変更してください。
+$ADMIN_PASS = 'kanripass';
 
 //スキンのディレクトリ
 define('SKIN_DIR', 'skin/');
