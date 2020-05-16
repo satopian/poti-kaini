@@ -3,7 +3,7 @@
 //$time_start = microtime(true);
 /*
   *
-  * POTI-board改二 v2.2.0 lot.200516b
+  * POTI-board改二 v2.2.1 lot.200516c
   *   (C)sakots >> https://poti-k.info/
   *
   *----------------------------------------------------------------------------------
@@ -42,8 +42,8 @@
 */
 
 //バージョン
-define('POTI_VER' , 'v2.2.0');
-define('POTI_VERLOT' , 'v2.2.0 lot.200516b');
+define('POTI_VER' , 'v2.2.1');
+define('POTI_VERLOT' , 'v2.2.1 lot.200516c');
 
 if(phpversion()>="5.5.0"){
 //スパム無効化関数
