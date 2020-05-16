@@ -1,6 +1,6 @@
 <?php
 /*
-  * POTI-board改二 v2.1.1 lot.200516a
+  * POTI-board改二 v2.2.0 lot.200516b
   * by sakots >> https://poti-k.info/
   *
   * POTI-board改二の設定ファイルです。
@@ -27,7 +27,7 @@ define('SHARE_BUTTON', '0');
 //あまり頻繁に変えないように
 define('CRYPT_PASS','fbgtK4pj9t8Auek');
 
-//暗号化と解読のためのパスワード。
+//↑ 暗号化と解読のためのパスワード。
 //phpの内部で処理するので覚えておく必要はありません。
 //管理パスとは別なものです。
 //適当な英数字を入れてください。
@@ -86,11 +86,11 @@ define('USE_JAPANESEFILTER', '1');
 define('DENY_COMMENTS_URL', '0');
 
 //指定した日数を過ぎたスレッドのフォームを閉じる
-//設定しないなら初期値の '0'で。
+//設定しないなら初期値の '0'で(無期限になります)。
 //define('ELAPSED_DAYS','180');
 //	↑ 180日
 //で半年以上経過したスレッドに返信できなくなります。
-define('ELAPSED_DAYS','1');
+define('ELAPSED_DAYS','360');
 
 //拒絶するファイルのmd5
 $badfile = array("dummy","dummy2");
