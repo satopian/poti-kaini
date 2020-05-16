@@ -25,7 +25,7 @@ define('SHARE_BUTTON', '0');
 
 //ペイント画面のパスワードの暗号鍵
 //あまり頻繁に変えないように
-define('crypt_pass','fbgtK4pj9t8Auek');
+define('CRYPT_PASS','fbgtK4pj9t8Auek');
 
 //暗号化と解読のためのパスワード。
 //phpの内部で処理するので覚えておく必要はありません。
@@ -90,8 +90,7 @@ define('DENY_COMMENTS_URL', '0');
 //define('ELAPSED_DAYS','180');
 //	↑ 180日
 //で半年以上経過したスレッドに返信できなくなります。
-//設定すると各スレにフォームを表示するオプションは無効になり返信ボタン→レス画面になります。
-define('ELAPSED_DAYS','0');
+define('ELAPSED_DAYS','1');
 
 //拒絶するファイルのmd5
 $badfile = array("dummy","dummy2");
@@ -327,7 +326,6 @@ define('DEF_SUB', '無題');	//未入力時の題名
 define('USE_RESUB', '1');
 
 //各スレにレスフォームを表示する する:1 しない:0
-//ELAPSED_DAYSが0でない場合は強制的に0
 define('RES_FORM', '0');
 
 //フォーム下の追加お知らせ
