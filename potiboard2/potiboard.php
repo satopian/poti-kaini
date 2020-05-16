@@ -175,11 +175,11 @@ else{
 }
 
 //ペイント画面の$pwdの暗号化
-if(!defined('crypt_pass')){//config.phpで未定義なら初期値が入る
-define('crypt_pass','qRyFfhV6nyUggSb');//暗号鍵初期値
+if(!defined('CRYPT_PASS')){//config.phpで未定義なら初期値が入る
+define('CRYPT_PASS','qRyFfhV6nyUggSb');//暗号鍵初期値
 }
-define('crypt_method','aes-128-cbc');
-define('crypt_iv','T3pkYxNyjN7Wz3pu');//半角英数16文字
+define('CRYPT_METHOD','aes-128-cbc');
+define('CRYPT_IV','T3pkYxNyjN7Wz3pu');//半角英数16文字
 
 //指定した日数を過ぎたスレッドのフォームを閉じる
 if(!defined('ELAPSED_DAYS')){//config.phpで未定義なら0
@@ -422,13 +422,15 @@ unset($value);
 				 else{//フォームを閉じる日数が未設定なら
 				 $r_threads = true;
 				 }
-				 if(!$r_threads){
+				$disp_resform = true;
+				if(!$r_threads){
+					 $disp_resform = false;//ミニレスフォームを閉じる
 					 if($resno){//レスなら
 					 $dat['form'] = false;//フォームを閉じる
 					 $dat['paintform'] = false;
 					 }
 				 }
- 
+				
 			// URLとメールにリンク
 			//if($email) $name = "<a href=\"mailto:$email\">$name</a>";
 			if(AUTOLINK) $com = auto_link($com);
@@ -569,9 +571,9 @@ unset($value);
 			$descriptioncom=strip_tags($com);
 
 			// 親記事格納
-			$dat['oya'][$oya] = compact('src','srcname','size','painttime','pch','continue','thumb','imgsrc','w','h','no','sub','name','now','com','descriptioncom','limit','skipres','resub','url','email','id','updatemark','trip','tab','fontcolor');
+			$dat['oya'][$oya] = compact('src','srcname','size','painttime','pch','continue','thumb','imgsrc','w','h','no','sub','name','now','com','descriptioncom','limit','skipres','resub','url','email','id','updatemark','trip','tab','fontcolor','disp_resform');
 			// 変数クリア
-			unset($src,$srcname,$size,$painttime,$pch,$continue,$thumb,$imgsrc,$w,$h,$no,$sub,$name,$now,$com,$descriptioncom,$limit,$skipres,$resub,$url,$email);
+			unset($src,$srcname,$size,$painttime,$pch,$continue,$thumb,$imgsrc,$w,$h,$no,$sub,$name,$now,$com,$descriptioncom,$limit,$skipres,$resub,$url,$email,$disp_resform);
 
 			//レス作成
 			$rres=array();
@@ -761,11 +763,11 @@ unset($value);
 		}
 
 		if($resno){htmloutput(SKIN_DIR.RESFILE,$dat);break;}
-		// $dat['resform'] = RES_FORM ? true : false;
-		$dat['resform'] = false;	
-		if(RES_FORM && !ELAPSED_DAYS){
-			$dat['resform'] = true;	
-		}
+		$dat['resform'] = RES_FORM ? true : false;
+		// $dat['resform'] = false;	
+		// if(RES_FORM && !ELAPSED_DAYS){
+		// 	$dat['resform'] = true;	
+		// }
 		$buf = htmloutput(SKIN_DIR.MAINFILE,$dat,true);
 		if($page==0){$logfilename=PHP_SELF2;}
 			else{$logfilename=$page/PAGE_DEF.PHP_EXT;}
@@ -1897,7 +1899,7 @@ if($admin===$ADMIN_PASS){
 	$dat['stime'] = $stime;
 	//if($pwd) $pwd = substr(md5($pwd),2,8);
 	if($pwd){
-	$pwd=openssl_encrypt ($pwd,crypt_method, crypt_pass, true, crypt_iv);//暗号化
+	$pwd=openssl_encrypt ($pwd,CRYPT_METHOD, CRYPT_PASS, true, CRYPT_IV);//暗号化
 	$pwd=bin2hex($pwd);//16進数に
 	}
 	$resto = ($resto) ? '&amp;resto='.$resto : '';
@@ -2550,7 +2552,7 @@ function replace($no,$pwd,$stime){
 	// 記事上書き
 	$flag = false;
 	$pwd=hex2bin($pwd);//バイナリに
-	$pwd=openssl_decrypt($pwd,crypt_method, crypt_pass, true, crypt_iv);//復号化
+	$pwd=openssl_decrypt($pwd,CRYPT_METHOD, CRYPT_PASS, true, CRYPT_IV);//復号化
 
 	foreach($line as &$value){
 		list($eno,,$name,$email,$sub,$com,$url,$ehost,$epwd,$ext,$W,$H,$etim,,$eptime,$fcolor) = explode(",", rtrim($value));
