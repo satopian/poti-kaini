@@ -95,9 +95,12 @@ select {
 	@extend input;
 	padding: 2px;
 }
-input[name="picw"], input[name="pich"], input[name="del[]"], input[name="pwd"] {
+input[name="picw"], input[name="pich"], input[name="del[]"] {
 	width: 3em;
 }
+input[name="pwd"] {
+	width: 4em;
+} 
 input[value="お絵かき"] {
 	background-color: $button;
 	color: $button_moji;
@@ -179,6 +182,11 @@ ul.menu {
 .oyano, .oyaresno {
 	font-weight: bold;
 }
+
+.delf p select {
+	vertical-align: middle;
+}
+
 .oekaki {
 	font-size: smaller;
 }

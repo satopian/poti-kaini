@@ -1,6 +1,6 @@
 <?php
 /*
-  * Template - MONO - v1.0.9 lot.200515  by sakots  >> https://poti-k.info/
+  * Template - MONO - v1.0.10 lot.200516  by sakots  >> https://poti-k.info/
   *
   * potiboard.php(v2.1.0～)のTemplate設定ファイルです。
   *
