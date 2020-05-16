@@ -40,6 +40,11 @@ config.phpの設定をし、アップロードしてpotiboard.phpにアクセス
 
 ## 履歴
 
+### [2020/05/16] v2.2.3 lot.200516e
+
+- readme_pch.html を追加。Javaのpchビューワー配布条件に必要でした。(by さとぴあ)
+- thumbnail_re.php を削除。現在のバージョンのPOTIでは使っていない。(by さとぴあ)
+
 ### [2020/05/16] v2.2.2 lot.200516d
 
 - 対応スキン用にしぃちゃんアプレットを本体に同梱。[Readme_Shichan.html](./potiboard2/Readme_Shichan.html)
