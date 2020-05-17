@@ -101,6 +101,7 @@ POTI-board改<https://poti-k.info/>を発展させたものです。
 ./-- 同ルート
   ｜picpost.php
   ｜palette.txt
+  ｜security_c.html
   ｜
   ＋--./tmp/       ディレクトリ
   ｜
