@@ -125,6 +125,11 @@ input.copy_txt, textarea.copy_txt, select.copy_txt, .copy_txt.se {
   z-index: -1;
 }
 
+button.copy_button, .copy_button.button {
+  padding: 3px 1ex 3px 1ex;
+  display: inline-block;
+}
+
 em.thispage {
   font-weight: bold;
   font-style: normal;

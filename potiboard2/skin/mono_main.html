@@ -230,7 +230,7 @@
 						</div>
 						<div class="thfoot">
 							<hr>
-							<% def(resform) %><% elsedef(resform) %>
+							<% if(resform,==,false) %>
 							<% def(oya/skipres) %>
 							レス<% echo(oya/skipres) %>件省略。すべて見るには返信ボタンをクリックしてください。
 							<% /def %>
@@ -245,9 +245,8 @@
 							</span>
 							<% /def %>
 							<% def(notres) %><span class="button"><a href="<% echo(self) %>?res=<% echo(oya/no) %>"><i class="fas fa-reply-all"></i> 返信</a></span> <a href="#header"><i class="fas fa-angle-double-up fa-fw fa-lg" title="一番上へ"></i></a><% /def %>
-							<% /def %>
+							<% /if %>
 							<% def(resform) %>
-							<% def(oya/disp_resform) %>
 							<form class="resform" action="<% echo(self) %>" method="post" enctype="multipart/form-data">
 								<input type="hidden" name="mode" value="regist">
 								<input type="hidden" name="resto" value="<% echo(oya/no) %>">

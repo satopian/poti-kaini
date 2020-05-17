@@ -126,6 +126,8 @@ input.copy_txt {
 button.copy_button {
 	@extend button;
 	@extend input[value="お絵かき"];
+	padding: 3px 1ex 3px 1ex;
+	display: inline-block;
 }
 em.thispage {
 	font-weight: bold;
