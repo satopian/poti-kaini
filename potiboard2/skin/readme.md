@@ -30,6 +30,7 @@ Skinnyのタグは[本家](http://skinny.sx68.net/tag/taglist.html)を見てい�
 - echo(self) - スクリプト自身の名前です。通常はpotiboard.phpです。
 - echo(self2) - 入口の名前です。なにも変更していなければindex.htmlとなっています。
 - def(applet) - 「お絵かきアプレットを使用する場合」です。
+- def(paint2) - 「お絵かき機能を使用する お絵かきのみ」(define('USE_PAINT', '2');)の設定の場合です。
 - echo(pdefw) - デフォルトのお絵かきサイズ幅です。
 - echo(pdefh) - デフォルトのお絵かきサイズ高さです。
 - def(anime) - 動画記録を使用するかどうかです。
@@ -72,7 +73,6 @@ Skinnyのタグは[本家](http://skinny.sx68.net/tag/taglist.html)を見てい�
 - 以下、oya/res/... はスレッドの中でのものになりますので省略します。
 - def(sharebutton) - SNSシェアボタンを付けるかどうかのチェックです。
 - def(resform) - スレッドにレスフォームを付けるかどうかのチェックです。
-- def(oya/disp_resform) - レスフォームを表示するか、のチェックです。経過日数で閉じる設定のときに使います。
 - def(prev) - 前ページがあるかのチェックです。
 - echo(prev) - 前ページのURLです。
 - def(next) - 次ページがあるかのチェックです。
@@ -128,10 +128,11 @@ Skinnyのタグは[本家](http://skinny.sx68.net/tag/taglist.html)を見てい�
 
 ## 履歴
 
-### [2020/05/16] v1.1.1
+### [2020/05/17] v1.2.0
 
-- .htaccessのデフォルト値変更
-- 画像だけ消す(ユーザー削除)実装。
+- しぃペインター対応
+- キャンバスサイズを選択式に
+- カタログモードで表示する記事の数のデフォルト数変更
 
 ### [2020/05/16] v1.1.0
 
@@ -139,8 +140,8 @@ Skinnyのタグは[本家](http://skinny.sx68.net/tag/taglist.html)を見てい�
 
 ### [2020/05/16] v1.0.10
 
-- [prev][next]調整
-- 削除、編集のselectの縦位置調整
+- `[BACK][NEXT]`調整
+- selectの縦位置調整
 
 ### [2020/05/15] v1.0.9
 

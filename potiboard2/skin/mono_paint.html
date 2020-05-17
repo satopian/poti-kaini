@@ -2,9 +2,23 @@
 <html lang="ja">
 	<head>
 		<meta charset="<% echo(charset) %>">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+		<% def(pinchin) %>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0">
+		<% elsedef %>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+		<% /def %>
+		<% def(pch_mode) %><meta name="viewport" content="width=device-width,initial-scale=1.0"><% /def %>
+		<% def(continue_mode) %><meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0"><% /def %>
+		<% def(useneo) %>
 		<link rel="stylesheet" href="neo.css" type="text/css">
 		<script src="neo.js" charset="UTF-8"></script>
+		<% /def %>
+		<% def(paintbbs) %>
+		<% def(pch_mode) %>
+		<link rel="stylesheet" href="neo.css" type="text/css" />
+		<script src="neo.js" charset="UTF-8"></script>
+		<% /def %>
+		<% /def %>
 		<link rel="stylesheet" href="<% echo(skindir) %>mono_main.css" type="text/css">
 		<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
 		<title><% echo(title) %></title>
@@ -354,7 +368,35 @@
 			</noscript>
 			<section id="appstage">
 				<div class="app">
+					<% def(useneo) %>
 					<applet-dummy code="pbbs.PaintBBS.class" archive="./PaintBBS.jar" name="paintbbs" width="<% echo(w) %>" height="<% echo(h) %>" mayscript>
+					<% elsedef %>
+					<% if(applet,!=,true) %>
+					<applet code="pbbs.PaintBBS.class" archive="./PaintBBS.jar" name="paintbbs" width="<% echo(w) %>" height="<% echo(h) %>" mayscript>
+					<% /if %>
+					<% /def %>
+					<!--(========== しぃペインター個別設定 ==========)-->
+					<% def(normal) %>
+					<applet code="c.ShiPainter.class" archive="spainter_all.jar" name="paintbbs" WIDTH="<% 	echo(w) %>" HEIGHT="<% echo(h) %>" mayscript>
+						<param name=dir_resource value="./">
+						<param name="tt.zip" value="tt_def.zip">
+						<param name="res.zip" value="res.zip">
+						<!--(しぃペインターv1.05_9以前を使うなら res_normal.zip に変更)-->
+						<param name=tools value="normal">
+						<param name=layer_count value="<% echo(layer_count) %>">
+						<% def(quality) %><param name=quality value="<% echo(quality) %>"><% /def %>
+						<% /def %>
+						<!--(========== しぃペインターPro個別設定 ==========)-->
+					<% def(pro) %>
+					<applet code="c.ShiPainter.class" archive="spainter_all.jar" name="paintbbs" WIDTH="<% 	echo(w) %>" HEIGHT="<% echo(h) %>" mayscript>
+						<param name=dir_resource value="./">
+						<param name="tt.zip" value="tt_def.zip">
+						<param name="res.zip" value="res.zip"><!--(しぃペインターv1.05_9以前を使うなら res_pro.	zip に変更)-->
+						<param name=tools value="pro">
+						<param name=layer_count value="<% echo(layer_count) %>">
+						<% def(quality) %><param name=quality value="<% echo(quality) %>"><% /def %>
+						<% /def %>
+						<!--(========== 共通設定(変更不可) ==========)-->
 						<param name="image_width" value="<% echo(picw) %>">
 						<param name="image_height" value="<% echo(pich) %>">
 						<param name="image_jpeg" value="<% echo(image_jpeg) %>">
@@ -382,15 +424,29 @@
 						<param name="security_url" value="<% echo(security_url) %>">
 						<param name="security_post" value="false">
 						<% /def %>
+					<% def(useneo) %>
 					</applet-dummy>
+					<% elsedef %>
+					<% if(applet,!=,true) %>
+					</applet>
+					<% /if %>
+					<% /def %>
+					<% def(normal) %>
+					</applet>
+					<% /def %>
+					<% def(pro) %>
+					</applet>
+					<% /def %>
 				</div>
 				<div class="palette">
 					<form name="Palette">
+						<% def(useneo) %>
 						<fieldset>
 							<legend>TOOL</legend>
 							<input class="button" type="button" value="左" onclick="Neo.setToolSide(true)">
 							<input class="button" type="button" value="右" onclick="Neo.setToolSide(false)">
-						</fieldset>	
+						</fieldset>
+						<% /def %>
 						<fieldset>
 							<legend>PALETTE</legend>
 							<select class="form" name="select" size="13" onchange="setPalette()">
@@ -522,14 +578,29 @@
 			<!-- (========== 動画表示モード ==========) -->
 			<section id="appstage">
 				<div class="app">
-					<applet-dummy name="pch" code="pch.PCHViewer.class" archive="PCHViewer.jar,PaintBBS.jar" width="<% echo(w) %>" height="<% echo(h) %>" mayscript>
+					<% def(paintbbs) %>
+					<applet-dummy code="pch.PCHViewer.class" archive="PCHViewer.jar,PaintBBS.jar" name="pch" width="<% echo(w) %>" height="<% echo(h) %>" mayscript>
+					<% /def %>
+					<% def(normal) %>
+					<applet name="pch" code="pch2.PCHViewer.class" archive="PCHViewer.jar,spainter_all.jar" codebase="./" width="<% echo(w) %>" height="<% echo(h) %>">
+					<% /def %>
+						<% def(normal) %>
+						<param name="res.zip" value="res.zip"><!--(しぃペインターv1.05_9以前を使うなら res_normal.zip に変更)-->
+						<param name="tt.zip" value="tt_def.zip">
+						<param name="tt_size" value="31">
+						<% /def %>
 						<param name="image_width" value="<% echo(picw) %>">
 						<param name="image_height" value="<% echo(pich) %>">
 						<param name="pch_file" value="<% echo(pchfile) %>">
 						<param name="speed" value="<% echo(speed) %>">
 						<param name="buffer_progress" value="false">
 						<param name="buffer_canvas" value="false">
+					<% def(paintbbs) %>
 					</applet-dummy>
+					<% /def %>
+					<% def(normal) %>
+					</applet>
+					<% /def %>
 					<p>
 						<a href="<% echo(pchfile) %>" target="_blank">Download</a> - Datasize : <% echo(datasize) %> byte
 					</p>
@@ -568,6 +639,15 @@
 						</select>
 						<% def(passflag) %>Pass<input class="form" type="password" name="pwd" size="8" value=""> <% /def %>
 						<input class="button" type="submit" value="続きを描く">
+						<!-- NEOを使う -->
+						<% if(ctype_pch,==,false) %>
+						<label><input type="checkbox" name="useneo" checked="checked" /><span class="use_neo">NEOを使う</span></label>
+						<% /if %>
+						<% def(applet) %>
+						<input type="hidden" name="shi" value="1">
+						<% elsedef %>
+						<input type="hidden" name="useneo" value="1">
+						<% /def %>
 					</form>
 					<% def(passflag) %>
 					<ul>
@@ -600,6 +680,11 @@
 					<a href="http://www.2chan.net/" target="_top" title="futaba.php v0.8 lot.031015 (by futaba)">futaba.php</a>
 					(<a href="http://php.loglog.jp/" target="_top" title="gazou.php v3.0 (by Let's PHP!)">gazou.php</a>custom )
 				</p>
+				<% def(paint) %>
+				<p>
+					OekakiApplet - <a href="http://hp.vector.co.jp/authors/VA016309/" target="_blank" rel="noopener noreferrer" title="by しぃちゃん">Shi-Painter</a>
+				</p>
+				<% /def %>
 				<p>
 					UseFunction -
 					<a href="http://skinny.sx68.net/" target="_top" title="Skinny (by Kuasuki)">Skinny</a>

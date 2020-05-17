@@ -88,14 +88,23 @@ button, .button {
 
 select {
   padding: 2px;
+  vertical-align: middle;
 }
 
-input[name="picw"], textarea[name="picw"], select[name="picw"], .se[name="picw"], input[name="pich"], textarea[name="pich"], select[name="pich"], .se[name="pich"], input[name="del[]"], textarea[name="del[]"], select[name="del[]"], .se[name="del[]"] {
+select[name="picw"], select[name="pich"] {
+  width: 4em;
+}
+
+select[name="shi"] {
+  width: 11em;
+}
+
+input[name="del[]"], textarea[name="del[]"], select[name="del[]"], .se[name="del[]"] {
   width: 3em;
 }
 
 input[name="pwd"], textarea[name="pwd"], select[name="pwd"], .se[name="pwd"] {
-  width: 4em;
+  width: 6em;
 }
 
 input[value="お絵かき"], textarea[value="お絵かき"], select[value="お絵かき"], .se[value="お絵かき"], .button {
@@ -190,10 +199,6 @@ ul.menu {
 
 .oyano, .oyaresno {
   font-weight: bold;
-}
-
-.delf p select {
-  vertical-align: middle;
 }
 
 .oekaki {

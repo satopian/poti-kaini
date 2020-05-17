@@ -2,12 +2,12 @@
 /*
   * Template - MONO by sakots  >> https://poti-k.info/
   *
-  * potiboard.php(v2.2.0～)のTemplate設定ファイルです。
+  * potiboard.php(v2.2.2～)のTemplate設定ファイルです。
   *
 */
 
 //テンプレートのバージョン
-define('TEMPLATE_VER', "v1.1.1 lot.200516b");
+define('TEMPLATE_VER', "v1.2.0 lot.200517");
 
 //エラーメッセージ
 define('MSG001', "該当記事がみつかりません[Log is not found.]");
@@ -106,8 +106,8 @@ define('CATALOGFILE', "mono_catalog.html");
 
 //カタログモードで表示する記事の数
 //X * Y の個数分表示
-define('CATALOG_X', '3');
-define('CATALOG_Y', '4');
+define('CATALOG_X', '4');
+define('CATALOG_Y', '5');
 
 //カタログの画像幅　これはcssで指定します
 define('CATALOG_W', '200');
