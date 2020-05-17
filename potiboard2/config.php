@@ -1,6 +1,6 @@
 <?php
 /*
-  * POTI-board改二 v2.2.0 lot.200516b
+  * POTI-board改二 v2.2.4 lot.200517
   * by sakots >> https://poti-k.info/
   *
   * POTI-board改二の設定ファイルです。
@@ -11,7 +11,7 @@
 //必ず変更してください。
 $ADMIN_PASS = 'kanripass';
 
-//スキンのディレクトリ
+//スキンのディレクトリ。'/'まで
 define('SKIN_DIR', 'skin/');
 
 //メール通知のほか、シェアボタンなどで使用
@@ -144,7 +144,7 @@ define('LANG', 'Japanese');
 
 //ユーザー削除権限 (0:不可 1:treeのみ許可 2:treeと画像のみ許可 3:tree,log,画像全て許可)
 //※treeのみを消して後に残ったlogは管理者のみ削除可能
-define('USER_DEL', '1');
+define('USER_DEL', '2');
 
 /* ---------- ADD:2004/03/16 ---------- */
 //文字色選択を使用する する:1 しない:0
@@ -200,7 +200,7 @@ define('SECURITY_CLICK', '40');
 //セキュリティタイマー(単位:秒)。設定しないなら''で
 define('SECURITY_TIMER', '60');
 //セキュリティにヒットした場合の飛び先
-define('SECURITY_URL', './');
+define('SECURITY_URL', './security_c.html');
 
 //続きを描くときのセキュリティ。利用しないなら両方''で
 //続きを描くときのセキュリティクリック数。設定しないなら''で
