@@ -305,6 +305,10 @@ ul.menu {
   border: 1px solid #222;
 }
 
+.delfo tr:nth-child(odd) {
+  background-color: #222;
+}
+
 @media screen and (max-width: 1024px) {
   .res {
     clear: left;

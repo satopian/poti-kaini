@@ -335,6 +335,10 @@ ul.menu {
   border: 1px solid #EEEEEE;
 }
 
+.delfo tr:nth-child(odd) {
+  background-color: #9CF;
+}
+
 @media screen and (max-width: 1024px) {
   header, main > section > .thread, main > section#catalog, footer > section, footer > section.copy, main > section > .thread, main > section#catalog, footer > sectio {
     width: 90%;

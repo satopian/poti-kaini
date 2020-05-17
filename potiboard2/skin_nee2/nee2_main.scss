@@ -230,6 +230,9 @@ ul.menu {
 	th, td {
 		border: 1px solid $ushiro;
 	}
+	tr:nth-child(odd) {
+		background-color: $ushiro;
+	}
 }
 
 //以下レスポンシブ対応

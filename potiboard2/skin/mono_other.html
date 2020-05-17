@@ -170,13 +170,13 @@
 						<p>削除したい記事のチェックボックスにチェックを入れ、削除ボタンを押して下さい。</p>
 						<input class="button" type="submit" value="DELETE">
 						<input class="button" type="reset" value="RESET">
-						[<input type="checkbox" name="onlyimgdel" value="on" checked>ImageOnly]
+						<label>[<input type="checkbox" name="onlyimgdel" value="on">ImageOnly]</label>
 						<table class="delfo">
 							<tr>
 								<th>Check</th>
 								<th>No</th>
-								<!-- th>Time</th>
-								<th>題名</th -->
+								<th>Time</th>
+								<th>題名</th>
 								<th>名前</th>
 								<th>コメント</th>
 								<th>Host</th>
@@ -187,8 +187,8 @@
 							<tr>
 								<td><input type="checkbox" name="del[]" value="<% echo(del/no) %>"></td>
 								<td><% echo(del/no) %></td>
-								<!-- td><% echo(del/now) %></td>
-								<td><% echo(del/sub) %></td -->
+								<td><% echo(del/now) %></td>
+								<td><% echo(del/sub) %></td>
 								<td><% echo(del/name) %></td>
 								<td><% echo(del/com) %></td>
 								<td><% echo(del/host) %></td>

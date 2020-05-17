@@ -263,6 +263,9 @@ ul.menu {
 	th, td {
 		border: 1px solid $ushiro;
 	}
+	tr:nth-child(odd) {
+		background-color: $th_bg;
+	}
 }
 
 //以下レスポンシブ対応
