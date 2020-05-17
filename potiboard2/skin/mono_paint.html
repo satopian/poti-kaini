@@ -644,7 +644,10 @@
 						<label><input type="checkbox" name="useneo" checked="checked" /><span class="use_neo">NEOを使う</span></label>
 						<% /if %>
 						<% def(applet) %>
-						<input type="hidden" name="shi" value="1">
+						<select class="form" name="shi">
+							<option value="1" selected>しぃペインター</option>
+							<option value="2">しぃペインターPro</option>
+						</select>
 						<% elsedef %>
 						<input type="hidden" name="useneo" value="1">
 						<% /def %>
