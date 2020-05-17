@@ -195,19 +195,20 @@ $qualitys = array('1','2','3','4');
 
 //　セキュリティ関連－URLとクリック数かタイマーのどちらかが設定されていれば有効
 //※アプレットのreadmeを参照し、十分テストした上で設定して下さい
-// NEOでは無効
+//NEOでは無効
 //セキュリティクリック数。設定しないなら''で
-define('SECURITY_CLICK', '40');
+define('SECURITY_CLICK', '');
 //セキュリティタイマー(単位:秒)。設定しないなら''で
-define('SECURITY_TIMER', '60');
+define('SECURITY_TIMER', '');
 //セキュリティにヒットした場合の飛び先
 define('SECURITY_URL', './security_c.html');
 
 //続きを描くときのセキュリティ。利用しないなら両方''で
 //続きを描くときのセキュリティクリック数。設定しないなら''で
-define('C_SECURITY_CLICK', '10');
+//NEOでは無効
+define('C_SECURITY_CLICK', '');
 //続きを描くときのセキュリティタイマー(単位:秒)。設定しないなら''で
-define('C_SECURITY_TIMER', '10');
+define('C_SECURITY_TIMER', '');
 
 /* ---------- ADD:2004/02/03 ---------- */
 //そろそろ消える表示のボーダー。最大ログ数からみたパーセンテージ
