@@ -66,7 +66,7 @@ footer {
   text-align: right;
 }
 
-input, select, em.thispage, .se, textarea, button, .button, .oyano, .oyaresno {
+input, select, em.thispage, .se, textarea, button, button.copy_button, .button, .oyano, .oyaresno {
   border-style: none;
   border-radius: 4px;
   padding: 4px;
@@ -76,13 +76,14 @@ input, select, em.thispage, .se, textarea, button, .button, .oyano, .oyaresno {
 
 select {
   padding: 2px;
+  vertical-align: middle;
 }
 
 input[name="picw"], select[name="picw"], em.thispage[name="picw"], .se[name="picw"], input[name="pich"], select[name="pich"], em.thispage[name="pich"], .se[name="pich"], input[name="del[]"], select[name="del[]"], em.thispage[name="del[]"], .se[name="del[]"], input[name="pwd"], select[name="pwd"], em.thispage[name="pwd"], .se[name="pwd"] {
   width: 3em;
 }
 
-input[value="お絵かき"], select[value="お絵かき"], em.thispage[value="お絵かき"], .se[value="お絵かき"], .button {
+input[value="お絵かき"], select[value="お絵かき"], button.copy_button, em.thispage[value="お絵かき"], .se[value="お絵かき"], .button {
   background-color: #396;
   color: #FFF;
 }
@@ -91,17 +92,33 @@ input[name="upfile"], select[name="upfile"], em.thispage[name="upfile"], .se[nam
   width: 10em;
 }
 
+input.copy_txt, select.copy_txt, em.copy_txt.thispage, .copy_txt.se {
+  width: 1px;
+  height: 1px;
+  position: relative;
+  vertical-align: middle;
+  left: 2em;
+  z-index: -1;
+}
+
+button.copy_button, .copy_button.button, .copy_button.oyano, .copy_button.oyaresno {
+  padding: 3px 1ex 3px 1ex;
+  display: inline-block;
+}
+
 em.thispage {
   background-color: #222;
   color: #FFF;
   font-style: normal;
   font-weight: bold;
+  margin-right: 0.8ex;
 }
 
 .se {
   background-color: #222;
   color: #FFF;
   font-style: normal;
+  margin-right: 0.8ex;
 }
 
 figure {

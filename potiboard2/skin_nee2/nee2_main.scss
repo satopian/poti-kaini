@@ -72,6 +72,7 @@ input, textarea, button {
 select {
 	@extend input;
 	padding: 2px;
+	vertical-align: middle;
 }
 input[name="picw"], input[name="pich"], input[name="del[]"], input[name="pwd"] {
 	width: 3em;
@@ -83,18 +84,34 @@ input[value="お絵かき"] {
 input[name="upfile"] {
 	width: 10em;
 }
+input.copy_txt {
+	width: 1px;
+	height: 1px;
+	position: relative;
+	vertical-align: middle;
+	left: 2em;
+	z-index: -1;
+}
+button.copy_button {
+	@extend button;
+	@extend input[value="お絵かき"];
+	padding: 3px 1ex 3px 1ex;
+	display: inline-block;
+}
 em.thispage {
 	@extend input;
 	background-color: $ushiro;
 	color: $moji;
 	font-style: normal;
 	font-weight: bold;
+	margin-right: 0.8ex;
 }
 .se {
 	@extend input;
 	background-color: $ushiro;
 	color: $moji;
 	font-style: normal;
+	margin-right: 0.8ex;
 }
 
 figure {
