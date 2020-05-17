@@ -1,6 +1,6 @@
 <?php
 /*
-  * POTI-board改二 v2.2.4 lot.200517
+  * POTI-board改二 v2.3.0 lot.200517e
   * by sakots >> https://poti-k.info/
   *
   * POTI-board改二の設定ファイルです。
