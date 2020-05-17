@@ -570,6 +570,8 @@ unset($value);
 			//タグを除去
 			$descriptioncom=strip_tags($com);
 
+			$oyaname=$name;//投稿者名をコピー
+
 			// 親記事格納
 			$dat['oya'][$oya] = compact('src','srcname','size','painttime','pch','continue','thumb','imgsrc','w','h','no','sub','name','now','com','descriptioncom','limit','skipres','resub','url','email','id','updatemark','trip','tab','fontcolor','disp_resform');
 			// 変数クリア
@@ -668,12 +670,31 @@ unset($value);
 				// レス記事一時格納
 				$rres[$oya][] = compact('no','sub','name','now','com','url','email','id','updatemark','trip','fontcolor'
 								,'src','srcname','size','painttime','pch','continue','thumb','imgsrc','w','h');
+				$rresname[] = $name;//投稿者名を配列にいれる
+
+				
 				// 変数クリア
 				unset($no,$sub,$name,$now,$com,$url,$email
 						,$src,$srcname,$size,$painttime,$pch,$continue,$thumb,$imgsrc,$w,$h);
 			}
 			// レス記事一括格納
 			if($rres){//レスがある時
+			
+				$rresname=array_unique($rresname);//投稿者名重複削除
+				foreach($rresname as $key=>$val){
+					if($rresname[$key]===$oyaname){
+						unset($rresname[$key]);
+					}
+				}
+				unset($val);
+				if($rresname){
+					$resname=implode('さん ',$rresname);//文字列として結合
+					var_dump($resname);
+				// exit;
+
+					$dat['resname']=$resname;//投稿者名一覧
+				}
+
 			$dat['oya'][$oya]['res'] = $rres[$oya];
 			}
 			unset($rres); //クリア
