@@ -26,6 +26,7 @@ Skinnyのタグは[本家](http://skinny.sx68.net/tag/taglist.html)を見てい�
 - echo(skindir) - スキンのディレクトリを指します。スキンフォルダにcssや.jsファイルがある場合に使用します。
 - def(notres) - 「レス表示モードでない場合」です。
 - def(resno) - 「レス表示モードの場合」です。
+- def(resname) - 「投稿者名をコピー」で使います。
 - echo(rooturl) - 掲示板の設置URLです。ツイッターカードなどで使います。
 - echo(self) - スクリプト自身の名前です。通常はpotiboard.phpです。
 - echo(self2) - 入口の名前です。なにも変更していなければindex.htmlとなっています。
@@ -92,7 +93,7 @@ Skinnyのタグは[本家](http://skinny.sx68.net/tag/taglist.html)を見てい�
 - def(pch_mode) - 動画再生モードかどうかです。
 - def(passflag) - 続きからか描くのpassの設定です。
 - def(newpost_nopassword) - 新規投稿なら削除キーがなくても続きを描く事ができます。のチェックです。
-- \<SIIHELP\> - 特殊タグ。siihelp.phpを呼び出します。
+- `<SIIHELP>` - 特殊タグ。siihelp.phpを呼び出します。
 
 ### catalog.htmlで使っているもの
 
@@ -129,6 +130,10 @@ Skinnyのタグは[本家](http://skinny.sx68.net/tag/taglist.html)を見てい�
 ---
 
 ## 履歴
+
+### [2020/05/17] v1.3.0
+
+- 「投稿者名をコピー」に対応。
 
 ### [2020/05/17] v1.2.2
 

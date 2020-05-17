@@ -115,6 +115,18 @@ input[value="お絵かき"] {
 input[name="upfile"] {
 	width: 25em;
 }
+input.copy_txt {
+	width: 1px;
+	height: 1px;
+	position: relative;
+	vertical-align: middle;
+	left: 2em;
+	z-index: -1;
+}
+button.copy_button {
+	@extend button;
+	@extend input[value="お絵かき"];
+}
 em.thispage {
 	font-weight: bold;
 	font-style: normal;
