@@ -189,6 +189,10 @@ if(!defined('ELAPSED_DAYS')){//config.phpで未定義なら0
 //MB関数を使うか？ 使う:1 使わない:0
 define('USE_MB' , '1');
 
+//ユーザー削除権限 (0:不可 1:treeのみ許可 2:treeと画像のみ許可 3:tree,log,画像全て許可)
+//※treeのみを消して後に残ったlogは管理者のみ削除可能
+define('USER_DELETION', '3');
+
 //メール通知クラスのファイル名
 define('NOTICEMAIL_FILE' , 'noticemail.inc');
 //アプレットヘルプのファイル名
@@ -259,7 +263,7 @@ function head(&$dat){
 	$dat['verlot'] = POTI_VERLOT;
 	$dat['tver'] = TEMPLATE_VER;
 
-	$dat['userdel'] = USER_DEL;
+	$dat['userdel'] = USER_DELETION;
 	$dat['charset'] = 'UTF-8';
 
 	$dat['skindir'] = SKIN_DIR;
@@ -834,12 +838,6 @@ function error($mes,$dest=''){
 	$dat['mes'] = $mes;
 	htmloutput(SKIN_DIR.OTHERFILE,$dat);
 	exit;
-}
-
-function proxy_connect($port) {
-	$userip = get_uip();
-		$fp = fsockopen ($userip, $port,$a,$b,2);
-	if(!$fp){return 0;}else{return 1;}
 }
 
 /* 文字列の類似性を見積もる */
@@ -1484,9 +1482,9 @@ function usrdel($del,$pwd){
 			|| $ADMIN_PASS === $pwd)){
 				if(!$onlyimgdel){	//記事削除
 					treedel($no);
-					if(USER_DEL > 2){$value = "";$find = true;}
+					if(USER_DELETION > 2){$value = "";$find = true;}
 				}
-				if(USER_DEL > 1){
+				if(USER_DELETION > 1){
 					$delfile = $path.$tim.$ext;	//削除ファイル
 					if(is_file($delfile)) unlink($delfile);//削除
 					if(is_file(THUMB_DIR.$tim.'s.jpg')) unlink(THUMB_DIR.$tim.'s.jpg');//削除
@@ -2902,7 +2900,7 @@ unset($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pictmp,$picf
 		}
 		break;
 	case 'usrdel':
-		if(USER_DEL){
+		if(USER_DELETION){
 			usrdel($del,$pwd);
 			updatelog();
 			echo '<!DOCTYPE html>'."\n".'<head><meta http-equiv="refresh" content="0; URL='.PHP_SELF2.'"><title></title></head>';
