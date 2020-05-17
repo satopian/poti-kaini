@@ -688,10 +688,8 @@ unset($value);
 				}
 				unset($val);
 				if($rresname){
-					$resname=implode('さん ',$rresname);//文字列として結合
-					var_dump($resname);
-				// exit;
 
+					$resname=implode('さん ',$rresname);//文字列として結合
 					$dat['resname']=$resname;//投稿者名一覧
 				}
 
