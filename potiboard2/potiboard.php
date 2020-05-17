@@ -42,8 +42,8 @@
 */
 
 //バージョン
-define('POTI_VER' , 'v2.2.8');
-define('POTI_VERLOT' , 'v2.2.8 lot.200517d');
+define('POTI_VER' , 'v2.3.0');
+define('POTI_VERLOT' , 'v2.3.0 lot.200517e');
 
 if(phpversion()>="5.5.0"){
 //スパム無効化関数
