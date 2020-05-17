@@ -47,8 +47,8 @@
 				<section>
 					<form class="delf" action="<% echo(self) %>" method="post">
 						<p>
-							No <input class="form" type="text" name="del[]" size="4" value="" autocomplete="section-no">
-							Pass <input class="form" type="password" name="pwd" size="6" value="" autocomplete="new-password">
+							No <input class="form" type="number" min="1" name="del[]" value="" autocomplete="off">
+							Pass <input class="form" type="password" name="pwd" value="" autocomplete="current-password">
 							<select class="form" name="mode">
 								<option value="edit" selected>編集</option>
 								<% def(userdel) %>
