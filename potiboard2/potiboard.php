@@ -130,12 +130,8 @@ $mode = "newpost";
 
 //var_dump($_COOKIE);
 
-$urlc = filter_input(INPUT_COOKIE, 'urlc');
-$namec = filter_input(INPUT_COOKIE, 'namec');
-$emailc = filter_input(INPUT_COOKIE, 'emailc');
 $pwdc = filter_input(INPUT_COOKIE, 'pwdc');
 $usercode = filter_input(INPUT_COOKIE, 'usercode');//nullならuser-codeを発行
-$fcolorc = filter_input(INPUT_COOKIE, 'fcolorc');
 
 //$_SERVERから変数を取得
 //var_dump($_SERVER);
@@ -1298,8 +1294,6 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 	foreach ( $cooks as $cook ) {
 		
 		list($c_name,$c_cookie) = explode('<>',$cook);
-			// mb_language(LANG);
-			// $c_cookie = mb_convert_encoding($c_cook, "UTF-8", "auto");	//to UTF-8
 			// $c_cookie = str_replace("&amp;", "&", $c_cookie);
 		setcookie ($c_name, $c_cookie,time()+(SAVE_COOKIE*24*3600));
 	}
@@ -2175,16 +2169,6 @@ function incontinue($no){
 	}
 	$dat['ctype_img'] = true;
 	$dat['addinfo'] = $addinfo;
-
-//v1.32のMONO WHITEでコメントアウト、対応テンプレートが無いパレット選択用データ(selectタグ用option配列)
-//	$lines = file(PALETTEFILE);
-//	foreach ( $lines as $line ) {
-//		$line=preg_replace("/[\t\r\n]/","",$line);
-//		list($pid,$pname,) = explode(",", $line);
-//if(isset($palette)){
-//	$dat['palette'] .= '<option value="'.$pid.'">'.CleanStr($pname)."</option>\n";
-//}
-//	}
 
 	htmloutput(SKIN_DIR.PAINTFILE,$dat);
 }
