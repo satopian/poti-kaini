@@ -191,7 +191,7 @@ define('USE_MB' , '1');
 
 //ユーザー削除権限 (0:不可 1:treeのみ許可 2:treeと画像のみ許可 3:tree,log,画像全て許可)
 //※treeのみを消して後に残ったlogは管理者のみ削除可能
-define('USER_DELETION', '3');
+define('USER_DELETES', '3');
 
 //メール通知クラスのファイル名
 define('NOTICEMAIL_FILE' , 'noticemail.inc');
@@ -263,7 +263,7 @@ function head(&$dat){
 	$dat['verlot'] = POTI_VERLOT;
 	$dat['tver'] = TEMPLATE_VER;
 
-	$dat['userdel'] = USER_DELETION;
+	$dat['userdel'] = USER_DELETES;
 	$dat['charset'] = 'UTF-8';
 
 	$dat['skindir'] = SKIN_DIR;
@@ -1482,9 +1482,9 @@ function usrdel($del,$pwd){
 			|| $ADMIN_PASS === $pwd)){
 				if(!$onlyimgdel){	//記事削除
 					treedel($no);
-					if(USER_DELETION > 2){$value = "";$find = true;}
+					if(USER_DELETES > 2){$value = "";$find = true;}
 				}
-				if(USER_DELETION > 1){
+				if(USER_DELETES > 1){
 					$delfile = $path.$tim.$ext;	//削除ファイル
 					if(is_file($delfile)) unlink($delfile);//削除
 					if(is_file(THUMB_DIR.$tim.'s.jpg')) unlink(THUMB_DIR.$tim.'s.jpg');//削除
@@ -2900,7 +2900,7 @@ unset($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pictmp,$picf
 		}
 		break;
 	case 'usrdel':
-		if(USER_DELETION){
+		if(USER_DELETES){
 			usrdel($del,$pwd);
 			updatelog();
 			echo '<!DOCTYPE html>'."\n".'<head><meta http-equiv="refresh" content="0; URL='.PHP_SELF2.'"><title></title></head>';
