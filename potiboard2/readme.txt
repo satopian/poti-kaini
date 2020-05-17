@@ -90,18 +90,19 @@ POTI-board改<https://poti-k.info/>を発展させたものです。
     ｜mono_main.html
     ｜mono_other.html
     ｜mono_paint.html
-    ｜mono_main.css
-    ｜mono_main.css.map
-    ｜mono_main.scss
     ｜siihelp.php
-    ｜_mono_conf.scss
+　　＋--./css/　　 ディレクトリ(cssが入っています)
+      ｜mono_main.css
+      ｜mono_main.css.map
+      ｜mono_main.scss
+      ｜_mono_conf.scss
+      ｜など
 
 
 ※お絵かき機能を使用する場合、下記を追加
 ./-- 同ルート
   ｜picpost.php
   ｜palette.txt
-  ｜security_c.html
   ｜
   ＋--./tmp/       ディレクトリ
   ｜

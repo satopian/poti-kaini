@@ -2,7 +2,7 @@
 /*! =====このcssファイルはsassから生成されています。===== */
 
 //設定ファイルの読み込み
-@import "mono_conf";
+@import "mono_dark_conf";
 
 //リセット
 * {
@@ -103,7 +103,7 @@ select[name="shi"] {
 	width: 11em;
 }
 input[name="del[]"] {
-	width: 3em;
+	width: 4em;
 }
 input[name="pwd"] {
 	width: 6em;

@@ -1,0 +1,359 @@
+@charset "UTF-8";
+/*! =====このcssファイルはsassから生成されています。===== */
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
+body {
+  background-color: #d1ce9e;
+  color: #000;
+  font-family: sans-serif;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+a:link {
+  color: #00F;
+}
+
+a:visited {
+  color: #666;
+}
+
+a:active {
+  color: #F33;
+}
+
+a:hover {
+  color: #F33;
+}
+
+hr {
+  border-style: dashed;
+  border-width: 1px;
+  border-color: #000;
+  margin: 1ex auto;
+}
+
+hr.hr {
+  clear: both;
+}
+
+header, main > section > .thread, main > section#catalog, footer > section, footer > section.copy, main > section > .thread, footer > section {
+  background-color: #FEFEFE;
+  padding: 8px;
+}
+
+header, main > section > .thread, main > section#catalog, footer > section, footer > section.copy {
+  margin: 12px;
+  display: block;
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #000;
+}
+
+footer > section form {
+  text-align: right;
+}
+
+footer > section.copy {
+  text-align: right;
+}
+
+input, textarea, select, .se {
+  border-style: solid;
+  border-color: #300 #F66 #F66 #300;
+  border-width: 1px;
+  color: #000;
+  background-color: #EEEEEE;
+  padding: 3px;
+}
+
+textarea {
+  width: 25em;
+  height: 5em;
+}
+
+button, button.copy_button, .button {
+  border-style: solid;
+  border-color: #F66 #300 #300 #F66;
+  border-width: 1px;
+  color: #000;
+  background-color: #EEEEEE;
+}
+
+select {
+  padding: 2px;
+  vertical-align: middle;
+}
+
+select[name="picw"], select[name="pich"] {
+  width: 4em;
+}
+
+select[name="shi"] {
+  width: 11em;
+}
+
+input[name="del[]"], textarea[name="del[]"], select[name="del[]"], .se[name="del[]"] {
+  width: 4em;
+}
+
+input[name="pwd"], textarea[name="pwd"], select[name="pwd"], .se[name="pwd"] {
+  width: 6em;
+}
+
+input[value="お絵かき"], textarea[value="お絵かき"], select[value="お絵かき"], button.copy_button, .se[value="お絵かき"], .button {
+  background-color: #F96;
+  color: #FFF;
+}
+
+input[name="upfile"], textarea[name="upfile"], select[name="upfile"], .se[name="upfile"] {
+  width: 25em;
+}
+
+input.copy_txt, textarea.copy_txt, select.copy_txt, .copy_txt.se {
+  width: 1px;
+  height: 1px;
+  position: relative;
+  vertical-align: middle;
+  left: 2em;
+  z-index: -1;
+}
+
+button.copy_button, .copy_button.button {
+  padding: 3px 1ex 3px 1ex;
+  display: inline-block;
+}
+
+em.thispage {
+  font-weight: bold;
+  font-style: normal;
+}
+
+.se {
+  background-color: #d1ce9e;
+  color: #000;
+  font-style: normal;
+}
+
+h2 {
+  border-left: solid 1ex #000;
+  background-color: #F66;
+}
+
+h3 {
+  padding-left: 1ex;
+  margin-top: 1ex;
+}
+
+figure {
+  float: left;
+  margin-right: 8px;
+  margin-bottom: 1ex;
+}
+
+figure img {
+  max-width: 100%;
+}
+
+figcaption {
+  font-size: smaller;
+}
+
+ul {
+  list-style-type: none;
+  font-size: smaller;
+}
+
+ul.menu {
+  font-size: medium;
+  line-height: 2em;
+}
+
+.res section {
+  display: table;
+}
+
+.res h3, .res h4 {
+  font-size: 100%;
+  margin-bottom: 1ex;
+}
+
+.res figure {
+  float: none;
+}
+
+.resma {
+  color: #505544;
+}
+
+.thfoot {
+  clear: left;
+  text-align: right;
+}
+
+.button {
+  padding: 3px 1ex 3px 1ex;
+  display: inline-block;
+}
+
+.button a {
+  text-decoration: none;
+  color: #FFF;
+}
+
+.button a i {
+  color: #FFF;
+}
+
+.oyano, .oyaresno {
+  font-weight: bold;
+}
+
+.oekaki {
+  font-size: smaller;
+}
+
+#appstage {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#appstage .app {
+  margin: 0px 4px;
+}
+
+.NEO .color_bk {
+  color: #F96;
+}
+
+.NEO .color_bk2 {
+  color: #963;
+}
+
+.NEO .color_tool_icon {
+  color: #693;
+}
+
+.NEO .color_icon {
+  color: #360;
+}
+
+.NEO .color_iconselect {
+  color: #360;
+}
+
+.NEO .color_text {
+  color: #FFF;
+}
+
+.NEO .color_bar {
+  color: #963;
+}
+
+.NEO .tool_color_button {
+  color: #966;
+}
+
+.NEO .tool_color_button2 {
+  color: #633;
+}
+
+.NEO .tool_color_text {
+  color: #FFF;
+}
+
+.NEO .tool_color_bar {
+  color: #F96;
+}
+
+.NEO .tool_color_frame {
+  color: #963;
+}
+
+.palette {
+  width: 180px;
+}
+
+.palette fieldset {
+  text-align: center;
+}
+
+.palette fieldset textarea {
+  width: 120px;
+  height: 1.2em;
+}
+
+.c {
+  text-align: center;
+}
+
+#catalog > div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+#catalog > div div {
+  width: 166px;
+  text-align: center;
+  overflow: hidden;
+}
+
+#catalog > div p {
+  margin: 0.5ex auto;
+}
+
+#catalog > div img {
+  width: 150px;
+  height: 150px;
+}
+
+.delfo {
+  font-size: smaller;
+}
+
+.delfo th, .delfo td {
+  border: 1px solid #d1ce9e;
+}
+
+.delfo tr:nth-child(odd) {
+  background-color: #F66;
+}
+
+@media screen and (max-width: 1024px) {
+  header, main > section > .thread, main > section#catalog, footer > section, footer > section.copy, main > section > .thread, main > section#catalog, footer > sectio {
+    width: 90%;
+  }
+  .res {
+    clear: left;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  textarea, input[name="upfile"], textarea[name="upfile"], select[name="upfile"], .se[name="upfile"] {
+    width: 15em;
+  }
+  #appstage {
+    display: block;
+  }
+}
+/*# sourceMappingURL=mono_mayo.css.map */

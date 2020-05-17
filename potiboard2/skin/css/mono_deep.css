@@ -6,33 +6,33 @@
 }
 
 body {
-  background-color: #EEEEEE;
-  color: #000;
+  background-color: #111111;
+  color: #FEFEFE;
   font-family: sans-serif;
   word-wrap: break-word;
   overflow-wrap: break-word;
 }
 
 a:link {
-  color: #33F;
+  color: #FEFEFE;
 }
 
 a:visited {
-  color: #666;
+  color: #999;
 }
 
 a:active {
-  color: #F33;
+  color: #FEFEFE;
 }
 
 a:hover {
-  color: #F33;
+  color: #FEFEFE;
 }
 
 hr {
   border-style: dashed;
   border-width: 1px;
-  border-color: #33F;
+  border-color: #396;
   margin: 1ex auto;
 }
 
@@ -41,7 +41,7 @@ hr.hr {
 }
 
 header, main > section > .thread, main > section#catalog, footer > section, footer > section.copy, main > section > .thread, footer > section {
-  background-color: #FEFEFE;
+  background-color: #333333;
   padding: 8px;
 }
 
@@ -53,7 +53,7 @@ header, main > section > .thread, main > section#catalog, footer > section, foot
   margin-right: auto;
   border-style: solid;
   border-width: 1px;
-  border-color: #33F;
+  border-color: #396;
 }
 
 footer > section form {
@@ -66,7 +66,7 @@ footer > section.copy {
 
 input, textarea, select, .se {
   border-style: solid;
-  border-color: #003 #66F #66F #003;
+  border-color: #063 #6C9 #6C9 #063;
   border-width: 1px;
   color: #000;
   background-color: #EEEEEE;
@@ -80,7 +80,7 @@ textarea {
 
 button, button.copy_button, .button {
   border-style: solid;
-  border-color: #66F #003 #003 #66F;
+  border-color: #6C9 #063 #063 #6C9;
   border-width: 1px;
   color: #000;
   background-color: #EEEEEE;
@@ -100,7 +100,7 @@ select[name="shi"] {
 }
 
 input[name="del[]"], textarea[name="del[]"], select[name="del[]"], .se[name="del[]"] {
-  width: 3em;
+  width: 4em;
 }
 
 input[name="pwd"], textarea[name="pwd"], select[name="pwd"], .se[name="pwd"] {
@@ -108,7 +108,7 @@ input[name="pwd"], textarea[name="pwd"], select[name="pwd"], .se[name="pwd"] {
 }
 
 input[value="お絵かき"], textarea[value="お絵かき"], select[value="お絵かき"], button.copy_button, .se[value="お絵かき"], .button {
-  background-color: #69F;
+  background-color: #396;
   color: #FFF;
 }
 
@@ -136,14 +136,14 @@ em.thispage {
 }
 
 .se {
-  background-color: #EEEEEE;
-  color: #000;
+  background-color: #111111;
+  color: #FEFEFE;
   font-style: normal;
 }
 
 h2 {
-  border-left: solid 1ex #33F;
-  background-color: #9CF;
+  border-left: solid 1ex #396;
+  background-color: #111111;
 }
 
 h3 {
@@ -189,7 +189,7 @@ ul.menu {
 }
 
 .resma {
-  color: #454;
+  color: #999;
 }
 
 .thfoot {
@@ -236,11 +236,11 @@ ul.menu {
 }
 
 .NEO .color_bk {
-  color: #69F;
+  color: #333;
 }
 
 .NEO .color_bk2 {
-  color: #369;
+  color: #222;
 }
 
 .NEO .color_tool_icon {
@@ -260,15 +260,15 @@ ul.menu {
 }
 
 .NEO .color_bar {
-  color: #369;
+  color: #333;
 }
 
 .NEO .tool_color_button {
-  color: #669;
+  color: #369;
 }
 
 .NEO .tool_color_button2 {
-  color: #336;
+  color: #036;
 }
 
 .NEO .tool_color_text {
@@ -276,11 +276,11 @@ ul.menu {
 }
 
 .NEO .tool_color_bar {
-  color: #69F;
+  color: #333;
 }
 
 .NEO .tool_color_frame {
-  color: #369;
+  color: #222;
 }
 
 .palette {
@@ -332,11 +332,11 @@ ul.menu {
 }
 
 .delfo th, .delfo td {
-  border: 1px solid #EEEEEE;
+  border: 1px solid #111111;
 }
 
 .delfo tr:nth-child(odd) {
-  background-color: #9CF;
+  background-color: #111111;
 }
 
 @media screen and (max-width: 1024px) {
@@ -356,4 +356,4 @@ ul.menu {
     display: block;
   }
 }
-/*# sourceMappingURL=mono_main.css.map */
+/*# sourceMappingURL=mono_deep.css.map */

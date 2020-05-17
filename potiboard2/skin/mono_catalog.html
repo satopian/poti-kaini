@@ -3,7 +3,32 @@
 	<head>
 		<meta charset="<% echo(charset) %>">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-		<link rel="stylesheet" href="<% echo(skindir) %>mono_main.css" type="text/css">
+		<script type="text/javascript">
+			var css = GetCookie("CSS");
+			if(css == ""){css = "<% echo(skindir) %>css/mono_main.css";}
+			document.write('<link rel="stylesheet" href="' + css + '" type="text/css">');
+			function SetCss(file){
+				SetCookie("CSS", file);
+				window.location.reload();
+			}
+			function GetCookie(key){
+				var tmp = document.cookie + ";";
+				var tmp1 = tmp.indexOf(key, 0);
+				if(tmp1 != -1){
+					tmp = tmp.substring(tmp1, tmp.length);
+					var start = tmp.indexOf("=", 0) + 1;
+					var end = tmp.indexOf(";", start);
+					return(unescape(tmp.substring(start,end)));
+					}
+				return("");
+			}
+			function SetCookie(key, val){
+				document.cookie = key + "=" + escape(val) + ";expires=Fri, 31-Dec-2030 23:59:59;";
+			}
+		</script>
+		<noscript>
+			<link rel="stylesheet" href="<% echo(skindir) %>css/mono_main.css" type="text/css">
+		</noscript>
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.6/css/all.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css">
 		<script type="text/javascript" src="loadcookie.js"></script>
@@ -128,6 +153,9 @@
 						</select>
 						<!-- <label>[<input type="checkbox" name="onlyimgdel" value="on">ImageOnly]</label> -->
 						<input class="button" type="submit" value=" OK ">
+						<a onclick="SetCss('<% echo(skindir) %>css/mono_main.css')">[MONO]</a>
+						<a onclick="SetCss('<% echo(skindir) %>css/mono_dark.css')">[dark]</a>
+						<a onclick="SetCss('<% echo(skindir) %>css/mono_deep.css')">[deep]</a>
 					</p>
 				</form>
 				<script type="text/javascript">
