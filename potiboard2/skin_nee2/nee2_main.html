@@ -56,9 +56,8 @@
 					<form action="<% echo(self) %>" method="post">
 						<p>
 							<% def(applet) %>
-							<select class="form" name="shi">
-								<option value="0" selected>NEO</option>
-							</select>
+							<!-- しぃペインター通常版 -->
+							<input type="hidden" name="shi" value="1">
 							<% /def %>
 							<label>幅：<input class="form" type="text" name="picw" value="<% echo(pdefw) %>"></label>
 							<label>高さ：<input class="form" type="text" name="pich" value="<% echo(pdefh) %>"></label>
@@ -67,9 +66,19 @@
 							<% /def %>
 							<% def(anime) %><br><label><input type="checkbox" value="true" name="anime" title="動画記録" <% def(animechk) %><% echo(animechk) %><% /def %>>アニメーション記録</label><% /def %>
 							<input type="hidden" name="mode" value="paint">
-							<input class="button" type="submit" value="お絵かき">
+							<input class="button" type="submit" value="お絵かき"><br>
+							<!-- NEOを使う -->
+							<label><input type="checkbox" name="useneo" checked="checked">NEOを使う</span></label>
 						</p>
 					</form>
+					<% def(paint2) %>
+					<ul>
+						<li>お絵かきできる画像のサイズは横 300～<% echo (pmaxw) %>、縦 300～<% echo (pmaxh) %>の範囲内です。</li>
+						<li>画像は横 <% echo (maxw) %>ピクセル、縦 <% echo (maxh) %>ピクセルを超えると縮小表示されます。</li>
+						<li>USE NEOのチェックが入っていればPaintBBS NEOが起動します。</li>
+						<li>chrome系のwebブラウザでしぃペインターを使うには、拡張機能 <a href="https://chrome.google.com/webstore/detail/cheerpj-applet-runner/bbmolahhldcbngedljfadjlognfaaein/">CheerpJ</a> が必要です</li>
+					</ul>
+					<% /def %>
 				</section>
 				<% /def %>
 				<% /def %>
@@ -142,9 +151,9 @@
 							<% def(userdel) %>
 							<option value="usrdel">削除</option>
 							<% /def %>
-						</select><br>
+						</select>
+						<input class="button" type="submit" value=" OK "><br>
 						<label>[<input type="checkbox" name="onlyimgdel" value="on">ImageOnly]</label>
-						<input class="button" type="submit" value=" OK ">
 					</p>
 				</form>
 				<% def(notres) %>
@@ -265,6 +274,11 @@
 				<a href="http://www.2chan.net/" target="_top" title="futaba.php v0.8 lot.031015 (by futaba)">futaba.php</a>
 				(<a href="http://php.loglog.jp/" target="_top" title="gazou.php v3.0 (by Let's PHP!)">gazou.php</a>custom )
 			</p>
+			<% def(paint) %>
+			<p>
+				OekakiApplet - <a href="http://hp.vector.co.jp/authors/VA016309/" target="_blank" rel="noopener noreferrer" title="by しぃちゃん">Shi-Painter</a>
+			</p>
+			<% /def %>
 			<p>
 				UseFunction -
 				<a href="http://skinny.sx68.net/" target="_top" title="Skinny v0.4.1 (by Kuasuki)">Skinny</a>

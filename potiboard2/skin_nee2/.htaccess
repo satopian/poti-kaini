@@ -1,5 +1,4 @@
-order allow,deny
-deny from all
-<files ~ "\.*(css|js|eot|svg|ttf|woff)$">
-  allow from all
-</files>
+<Files ~ "\.html?$">
+	deny from all
+</Files>
+
