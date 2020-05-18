@@ -844,7 +844,7 @@ function similar_str($str1,$str2){
 
 /* 記事書き込み */
 function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pictmp,$picfile){
-	global $path,$badstring,$badfile,$badip,$pwdc,$textonly;
+	global $path,$badstring,$badip,$pwdc,$textonly;
 	global $REQUEST_METHOD,$temppath,$ptime;
 	global $fcolor,$usercode;
 	global $admin,$badstr_A,$badstr_B,$badname;
@@ -908,9 +908,6 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 		$img_type=mime_content_type($dest);//190603
 		if($img_type==="image/gif"||$img_type==="image/jpeg"||$img_type==="image/png"){//190603
 		$chk = md5_file($dest);
-		foreach($badfile as $value){if(preg_match("/^$value/",$chk)){
-			error(MSG005,$dest); //拒絶画像
-		}}
 		chmod($dest,0606);
 		$W = $size[0];
 		$H = $size[1];
@@ -2469,7 +2466,7 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 
 /* 画像差し換え */
 function replace($no,$pwd,$stime){
-	global $path,$temppath,$badip,$badfile,$repcode;
+	global $path,$temppath,$badip,$repcode;
 	$userip = get_uip();
 	$mes="";
 	
@@ -2569,9 +2566,6 @@ function replace($no,$pwd,$stime){
 		$img_type=mime_content_type($dest);//190603
 		if($img_type==="image/gif"||$img_type==="image/jpeg"||$img_type==="image/png"){//190603
 			$chk = md5_file($dest);
-			foreach($badfile as $value){if(preg_match("/^$value/",$chk)){
-				error(MSG005,$dest); //拒絶画像
-			}}
 			chmod($dest,0606);
 			$mes = "画像のアップロードが成功しました<br><br>";
 			}
