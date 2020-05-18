@@ -182,8 +182,7 @@
 								<th>名前</th>
 								<th>コメント</th>
 								<th>Host</th>
-								<th>Image (Bytes)</th>
-								<!-- th>md5</th -->
+								<th>Image (Bytes) md5</th>
 							</tr>
 							<% def(del) %><% each(del) %>
 							<tr>
@@ -194,8 +193,7 @@
 								<td><% echo(del/name) %></td>
 								<td><% echo(del/com) %></td>
 								<td><% echo(del/host) %></td>
-								<td><% echo(del/clip) %>(<% echo(del/size) %>)</td>
-								<!-- td><% echo(del/chk) %></td -->
+								<td><% def(del/clip) %><% echo(del/clip) %>(<% echo(del/size) %>)<br><% echo(del/chk) %><% /def %></td>
 							</tr>
 							<% /each %><% /def %>
 						</table>
