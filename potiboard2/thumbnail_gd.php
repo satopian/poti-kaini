@@ -3,7 +3,7 @@
 function thumb($path,$tim,$ext,$max_w,$max_h){
 	if(!function_exists("ImageCreate")||!function_exists("ImageCreateFromJPEG"))return;
 	$fname=$path.$tim.$ext;
-	$fsize = filesize($fname);    // ファイルサイズを取得
+	// $fsize = filesize($fname);    // ファイルサイズを取得
 	$size = GetImageSize($fname); // 画像の幅と高さとタイプを取得
 	// リサイズ
 	if($size[0] > $max_w || $size[1] > $max_h){
