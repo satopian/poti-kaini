@@ -140,6 +140,9 @@
 							<% def(anime) %><label><input type="checkbox" value="true" name="anime" title="動画記録" <% def(animechk) %><% echo(animechk) %><% /def %>>アニメーション記録</label><% /def %>
 							<input type="hidden" name="mode" value="paint">
 							<input class="button" type="submit" value="お絵かき">
+							<% def(n) %>
+							「neoを使う」の<label>～</label>を def(usepbbs) で囲めばしぃペインターのみ使う設定でチェックボックスは出なくなりますが、オススメしません。
+							<% /def %>
 							<!-- NEOを使う -->
 							<label><input type="checkbox" name="useneo" checked>USE NEO</label>
 						</p>
