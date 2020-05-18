@@ -34,7 +34,7 @@ config.phpの設定をし、アップロードしてpotiboard.phpにアクセス
 
 ### [2020/05/19] v2.4.0 lot.200519
 
-- Firefox、cheerpJのインストールなしでもchromeでしぃペインターが使用可能に
+- Firefox、およびcheerpJのインストールなしでもchromeでしぃペインターが使用可能に
 
 ### [2020/05/18] v2.3.4 lot.200518b
 
