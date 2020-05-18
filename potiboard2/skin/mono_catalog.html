@@ -23,7 +23,7 @@
 				return("");
 			}
 			function SetCookie(key, val){
-				document.cookie = key + "=" + escape(val) + ";expires=Fri, 31-Dec-2030 23:59:59;";
+				document.cookie = key + "=" + escape(val) + ";max-age=31536000;";
 			}
 		</script>
 		<noscript>
@@ -58,6 +58,8 @@
 								<option value="1" selected>しぃペインター</option>
 								<option value="2">しぃペインターPro</option>
 							</select>
+							<% elsedef %>
+							<input type="hidden" name="shi" value="1">
 							<% /def %>
 							<label>
 								幅：<select name="picw" title="幅" class="form">
@@ -104,7 +106,8 @@
 						<li>お絵かきできる画像のサイズは横 300～<% echo (pmaxw) %>、縦 300～<% echo (pmaxh) %>の範囲内です。</li>
 						<li>画像は横 <% echo (maxw) %>ピクセル、縦 <% echo (maxh) %>ピクセルを超えると縮小表示されます。</li>
 						<li>USE NEOのチェックが入っていればPaintBBS NEOが起動します。</li>
-						<li>chrome系のwebブラウザでしぃペインターを使うには、拡張機能 <a href="https://chrome.google.com/webstore/detail/cheerpj-applet-runner/bbmolahhldcbngedljfadjlognfaaein/">CheerpJ</a> が必要です</li>
+						<% def(applet) %><li>chrome系のwebブラウザでしぃペインターを使うには、拡張機能 <a href="https://chrome.google.com/webstore/detail/cheerpj-applet-runner/bbmolahhldcbngedljfadjlognfaaein/">CheerpJ</a> が必要です</li><% /def %>
+						<% def(addinfo) %><% echo (addinfo) %><% /def %>
 					</ul>
 					<% /def %>
 				</section>
