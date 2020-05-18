@@ -14,10 +14,12 @@ function thumb($path,$tim,$ext,$max_w,$max_h){
 		// $out_h = ceil($size[1] * $keys) +1;
 		$out_w = ceil($size[0] * $keys);//端数の切り上げ
 		$out_h = ceil($size[1] * $keys);
-	}elseif(FORCED_THUMB && $fsize > (IMG_SIZE*1024)){ //指定KBより大きければ強制サムネイル
-		$out_w = $size[0];
-		$out_h = $size[1];
-	}else{return;}
+	}
+	// elseif(FORCED_THUMB && $fsize > (IMG_SIZE*1024)){ //指定KBより大きければ強制サムネイル
+	// 	$out_w = $size[0];
+	// 	$out_h = $size[1];
+	// }
+	else{return;}
 
 	switch ($size[2]) {
 		case 1 :
