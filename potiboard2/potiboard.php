@@ -908,9 +908,12 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 		$img_type=mime_content_type($dest);//190603
 		if($img_type==="image/gif"||$img_type==="image/jpeg"||$img_type==="image/png"){//190603
 		$chk = md5_file($dest);
-		foreach($badfile as $value){if(preg_match("/^$value/",$chk)){
+		foreach($badfile as $value){
+			if(preg_match("/^$value/",$chk)){
 			error(MSG005,$dest); //拒絶画像
-		}}
+			}
+		}
+
 		chmod($dest,0606);
 		$W = $size[0];
 		$H = $size[1];
@@ -2569,9 +2572,12 @@ function replace($no,$pwd,$stime){
 		$img_type=mime_content_type($dest);//190603
 		if($img_type==="image/gif"||$img_type==="image/jpeg"||$img_type==="image/png"){//190603
 			$chk = md5_file($dest);
-			foreach($badfile as $value){if(preg_match("/^$value/",$chk)){
+			foreach($badfile as $value){
+				if(preg_match("/^$value/",$chk)){
 				error(MSG005,$dest); //拒絶画像
-			}}
+				}
+			}
+
 			chmod($dest,0606);
 			$mes = "画像のアップロードが成功しました<br><br>";
 			}
