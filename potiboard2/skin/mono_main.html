@@ -34,13 +34,17 @@
 		<script type="text/javascript" src="loadcookie.js"></script>
 		<title><% echo(title) %></title>
 		<% def(notres) %>
+		<% def(n) %>
+		このあたりは各自変更してもらえると嬉しいです
+		<% /def %>
 		<meta name="twitter:card" content="summary">
 		<meta name="twitter:site" content="">
 		<meta property="og:site_name" content="">
 		<meta property="og:title" content="<% echo(title) %>">
 		<meta property="og:type" content="article">
 		<meta property="og:description" content="">
-		<meta property="og:image" content="">
+		<meta property="og:image" content="<% echo(skindir) %>/img/og.png">
+		<meta property="og:url" content="<% echo(rooturl) %>">
 		<% /def %>
 		<% def(resno) %><% each(oya) %>
 		<meta name="twitter:card" content="summary">
