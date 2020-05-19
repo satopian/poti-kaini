@@ -1,5 +1,6 @@
 # POTI-board改二
-phpお絵かき掲示板スクリプトPOTI-boardをさらに改良していくプロジェクトです。
+phpお絵かき掲示板スクリプトPOTI-boardをさらに改良していくプロジェクトです。  
+php5.5～ 対応。
   
 <a href="https://github.com/funige/neo/">PaintBBS NEO</a>  
 <a href="https://github.com/sakots/poti-kai/">POTI-board改</a>  
