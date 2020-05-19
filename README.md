@@ -32,6 +32,10 @@ config.phpの設定をし、アップロードしてpotiboard.phpにアクセス
 
 ## 履歴
 
+### [2020/05/19]
+
+- noticemailをpotiboard2ディレクトリから分離
+
 ### [2020/05/19] v2.4.0 lot.200519
 
 - Firefox、およびcheerpJのインストールなしでもchromeでしぃペインターが使用可能に
