@@ -32,6 +32,11 @@ config.phpの設定をし、アップロードしてpotiboard.phpにアクセス
 
 ## 履歴
 
+### [2020/05/19] v2.4.1 lot.200519a
+
+- デフォルトスキン更新
+- configに説明追加
+
 ### [2020/05/19]
 
 - noticemailをpotiboard2ディレクトリから分離
