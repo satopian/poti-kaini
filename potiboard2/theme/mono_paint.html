@@ -2,9 +2,12 @@
 <html lang="ja">
 	<head>
 		<meta charset="<% echo(charset) %>">
+		<% def(paint_mode) %>
 		<% def(pinchin) %>
 		<meta name="viewport" content="width=device-width,initial-scale=1.0">
 		<% elsedef %>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+		<% /def %>
 		<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
 		<% /def %>
 		<% def(pch_mode) %><meta name="viewport" content="width=device-width,initial-scale=1.0"><% /def %>
