@@ -100,8 +100,6 @@ Skinnyのタグは[本家](http://skinny.sx68.net/tag/taglist.html)を見てい�
 `<% echo(palettes) %>`  
 `<% /def %>`
 
-↓
-
 `<% def(dynp) %>`  
 `<% echo(dynp) %>`  
 `<% /def %>`
