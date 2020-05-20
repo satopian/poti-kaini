@@ -2,11 +2,11 @@
 /*
   * Template - nee2 by sakots  >> https://poti-k.info/
   *
-  * potiboard.php(v2.2.0～)のTemplate設定ファイルです。
+  * potiboard.php(v2.5.0～)のテーマ(テンプレート)設定ファイルです。
   *
 */
 
-//テンプレートのバージョン
+//テーマ(テンプレート)のバージョン
 define('TEMPLATE_VER', "v1.3.1 lot.200519a");
 
 //エラーメッセージ

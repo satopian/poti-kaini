@@ -1,6 +1,6 @@
 <?php
 /*
-  * POTI-board改二 v2.3.3 lot.200518a
+  * POTI-board改二 v2.5.0 lot.200520
   * by sakots >> https://poti-k.info/
   *
   * POTI-board改二の設定ファイルです。
@@ -15,11 +15,11 @@ $ADMIN_PASS = 'kanripass';
 //古いログから順番に消えます
 define('LOG_MAX', '1000');
 
-//スキンのディレクトリ。'/'まで
-//skinディレクトリに使いたいtemplateをいれて使ってください。(推奨)
+//テーマ(テンプレート)のディレクトリ。'/'まで
+//themeディレクトリに使いたいtemplateをいれて使ってください。(推奨)
 //別のディレクトリにしたい場合は設定してください。
-//例えばおまけのnee2を使いたい場合はskin_nee2/とすることができます。初期値は skin/ です。
-define('SKIN_DIR', 'skin/');
+//例えばおまけのnee2を使いたい場合はtheme_nee2/とすることができます。初期値は theme/ です。
+define('SKIN_DIR', 'theme/');
 
 //メール通知のほか、シェアボタンなどで使用
 //設置場所のURL。phpのあるフォルダの'/'まで
