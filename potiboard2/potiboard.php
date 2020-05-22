@@ -746,7 +746,8 @@ function updatelog($resno=0){
 				}
 				$paging.=$pformat;
 			}
-	} elseif ($i < PAGE_DEF*22 ){ //表示しているページが20ページ以下の時はページ番号のリンクを制限する
+	} 
+	elseif ($i < PAGE_DEF*22 ){ //表示しているページが20ページ以下の時はページ番号のリンクを制限する
 			for($i = 0; $i < PAGE_DEF*22 ; $i+=PAGE_DEF){
 				if($st===$i){
 					$pformat = str_replace("<PAGE>", $i/PAGE_DEF, NOW_PAGE);
@@ -763,9 +764,10 @@ function updatelog($resno=0){
 						$pno = str_replace("<PAGE>", $i/PAGE_DEF, OTHER_PAGE);
 						$pformat = str_replace("<PURL>", ($i/PAGE_DEF).PHP_EXT, $pno);
 					}
-				}}
-				$paging.=$pformat;
+				}
 			}
+			$paging.=$pformat;
+		}
 	}
 
 	//改ページ分岐ここまで
@@ -2792,7 +2794,8 @@ function catalog(){
 			}
 			$paging.=$pformat;
 		}
-	} elseif ($i < $pagedef*22 ){ //表示しているページが20ページ以下の時はページ番号のリンクを制限する
+	} 
+	elseif ($i < $pagedef*22 ){ //表示しているページが20ページ以下の時はページ番号のリンクを制限する
 		for($i = 0; $i < $pagedef*22 ; $i+=$pagedef){
 			if($page===$i){
 				$pformat = str_replace("<PAGE>", $i/$pagedef, NOW_PAGE);
