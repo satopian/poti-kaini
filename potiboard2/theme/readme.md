@@ -92,7 +92,7 @@ Skinnyのタグは[本家](http://skinny.sx68.net/tag/taglist.html)を見てい�
 - def(pch_mode) - 動画再生モードかどうかです。
 - def(passflag) - 続きからか描くのpassの設定です。
 - def(newpost_nopassword) - 新規投稿なら削除キーがなくても続きを描く事ができます。のチェックです。
-- `<SIIHELP>` - 特殊タグ。siihelp.phpを呼び出します。
+- `<SIIHELP>` - 特殊タグ。siihelp.phpを呼び出します。→2.6.0で廃止
 
 もとは配列でeachだったが改二では結合された文字列
 
@@ -141,6 +141,10 @@ Skinnyのタグは[本家](http://skinny.sx68.net/tag/taglist.html)を見てい�
 ---
 
 ## 履歴
+
+### [2020/05/22] v1.6.0
+
+- `<SIIHELP>` 廃止に対応
 
 ### [2020/05/21] v1.5.5
 
