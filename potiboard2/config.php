@@ -30,6 +30,14 @@ define('ROOT_URL', 'http://www.hoge.ne.jp/oekaki/');
 //設置場所のURL ROOT_URL で設定したurlをもとにリンクを作成
 define('SHARE_BUTTON', '0');
 
+//掲示板のタイトルタイトル（<title>とTOP）
+define('TITLE', 'お絵かき掲示板');
+
+//「ホーム」へのリンク
+// 自分のサイトにお絵かき掲示板がある、という慣習からのものです。
+// 自分のサイトのURL（絶対パスも可）をどうぞ。
+define('HOME', '../');
+
 //ペイント画面のパスワードの暗号鍵
 //あまり頻繁に変えないように
 define('CRYPT_PASS','fbgtK4pj9t8Auek');
@@ -239,14 +247,6 @@ define('IMG_DIR', 'src/');
 //サムネイル保存ディレクトリ
 define('THUMB_DIR', 'thumb/');
 
-//タイトル（<title>とTOP）
-define('TITLE', 'お絵かき掲示板');
-
-//「ホーム」へのリンク
-// 自分のサイトにお絵かき掲示板がある、という慣習からのものです。
-// 自分のサイトのURL（絶対パスも可）をどうぞ。
-define('HOME', '../');
-
 //このスクリプト名
 define('PHP_SELF', 'potiboard.php');
 
@@ -352,7 +352,7 @@ define('RE_SAMPLED', '1');
 /* ---------- お絵かき設定 ---------- */
 
 //お絵かき機能を使用する お絵かきのみ:2 する:1 しない:0
-define('USE_PAINT', '1');
+define('USE_PAINT', '2');
 
 //利用するアプレット PaintBBS:0 しぃペインター:1 両方:2
 define('APPLET', '2');
