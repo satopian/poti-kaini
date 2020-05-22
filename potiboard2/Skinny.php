@@ -153,14 +153,14 @@ ini_set('default_charset', $skConf['ENCODE']['INTERNAL']);
 
 // キャッシュ利用時にキャッシュフォルダを自動生成する
 if($skConf['CACHE']['FLG'] && (!file_exists($skConf['CACHE']['DIR']) || (file_exists($skConf['CACHE']['DIR']) && !is_dir($skConf['CACHE']['DIR'])))) {
-	@mkdir( $skConf['CACHE']['DIR'] , 0777 );
-	@chmod( $skConf['CACHE']['DIR'] , 0777 );
+	@mkdir( $skConf['CACHE']['DIR'] , 0707 );
+	@chmod( $skConf['CACHE']['DIR'] , 0707 );
 }
 
 // エラーログ利用時にログフォルダを自動生成する
 if($skConf['ERRORLOG']['FLG'] && (!file_exists($skConf['ERRORLOG']['DIR']) || (file_exists($skConf['ERRORLOG']['DIR']) && !is_dir($skConf['ERRORLOG']['DIR'])))) {
-	@mkdir( $skConf['ERRORLOG']['DIR'] , 0777 );
-	@chmod( $skConf['ERRORLOG']['DIR'] , 0777 );
+	@mkdir( $skConf['ERRORLOG']['DIR'] , 0707 );
+	@chmod( $skConf['ERRORLOG']['DIR'] , 0707 );
 }
 
 
@@ -1229,7 +1229,7 @@ class Skinny {
 			if ( file_put_contents( $cache_name, $code ) === false ) {
 				$this->_skErrorLog( "The cache was not able to write in file. [{$cache_name}]" );
 			} else {
-				chmod( $cache_name, 0777 );
+				chmod( $cache_name, 0707 );
 			}
 		}
 		return $code;
