@@ -61,7 +61,7 @@ $skConf['TEMPLATE']['BASEDIR']= '';         // テンプレートを保存する
                                             // externalタグはここで指定した場所から相対で参照します
 
 // キャッシュ関連
-$skConf['CACHE']['FLG']       = false;      // スキンキャッシュの利用    [true]:する  false:しない
+$skConf['CACHE']['FLG']       = true;      // スキンキャッシュの利用    [true]:する  false:しない
 $skConf['CACHE']['DIR']       = './cache';  // キャッシュの生成先DIR （出来ればフルパスで。相対だとアチコチに作られるかも）
 $skConf['CACHE']['ALIVETIME'] = 3600;       // キャッシュの有効時間（秒）
 

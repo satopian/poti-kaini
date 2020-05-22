@@ -42,8 +42,8 @@
 */
 
 //バージョン
-define('POTI_VER' , 'v2.5.1');
-define('POTI_VERLOT' , 'v2.5.1 lot.200521');
+define('POTI_VER' , 'v2.5.2');
+define('POTI_VERLOT' , 'v2.5.2 lot.200522');
 
 if(phpversion()>="5.5.0"){
 //スパム無効化関数
@@ -267,8 +267,8 @@ function head(&$dat){
 //OGPイメージ シェアボタン
 	$dat['rooturl'] = ROOT_URL;//設置場所url
 	if (defined ('SHARE_BUTTON') && SHARE_BUTTON){
-	$dat['sharebutton'] = true;//1ならシェアボタンを表示
-		}
+		$dat['sharebutton'] = true;//1ならシェアボタンを表示
+	}
 	
 }
 
@@ -281,14 +281,14 @@ function form(&$dat,$resno,$admin="",$tmp=""){
 	$dat['form'] = true;
 	if(USE_PAINT){
 
-//v1.32のMONO WHITEでコメントアウト、対応テンプレートが無いパレット選択用データ(selectタグ用option配列)
-//		$dat['palette'] = '';
-//		$lines = file(PALETTEFILE);
-//		foreach ( $lines as $line ) {
-//			$line=preg_replace("/[\t\r\n]/","",$line);
-//			list($pid,$pname,) = explode(",", $line);
-//			$dat['palette'] .= '<option value="'.$pid.'">'.CleanStr($pname)."</option>\n";
-//		}
+		//v1.32のMONO WHITEでコメントアウト、対応テンプレートが無いパレット選択用	データ(selectタグ用option配列)
+		//		$dat['palette'] = '';
+		//		$lines = file(PALETTEFILE);
+		//		foreach ( $lines as $line ) {
+		//			$line=preg_replace("/[\t\r\n]/","",$line);
+		//			list($pid,$pname,) = explode(",", $line);
+		//			$dat['palette'] .= '<option value="'.$pid.'">'.CleanStr($pname)."</option>\n";
+		//		}
 		$dat['pdefw'] = PDEF_W;
 		$dat['pdefh'] = PDEF_H;
 		$dat['anime'] = USE_ANIME ? true : false;
@@ -380,7 +380,7 @@ function updatelog($resno=0){
 			list($artno,)=explode(",",rtrim($value));
 			if($artno==$resno){$st=$i;$find=true;break;} //レス先検索
 		}
-unset($value);
+	unset($value);
 		if(!$find) error(MSG001);
 	}
 	$line = file(LOGFILE);
@@ -388,7 +388,7 @@ unset($value);
 		list($no,) = explode(",", $value);
 		$lineindex[$no]=$i + 1; //逆変換テーブル作成
 	}
-unset($value);
+	unset($value);
 	$counttree = count($tree);//190619
 	for($page=0;$page<$counttree;$page+=PAGE_DEF){
 		$oya = 0;	//親記事のメイン添字
@@ -400,7 +400,7 @@ unset($value);
 		for($i = $st; $i < $st+PAGE_DEF; ++$i){
 			//if($tree[$i]=="") continue;
 			if(!isset($tree[$i])){
-			continue;
+				continue;
 			}
 
 			$treeline = explode(",", rtrim($tree[$i]));
@@ -713,22 +713,22 @@ unset($value);
 				}
 			}
 			$paging = "";
-//			for($i = 0; $i < $counttree ; $i+=PAGE_DEF){
-//				if($st==$i){
-//					$pformat = str_replace("<PAGE>", $i/PAGE_DEF, NOW_PAGE);
-//				}else{
-//					if($i==0){
-//						$pno = str_replace("<PAGE>", "0", OTHER_PAGE);
-//						$pformat = str_replace("<PURL>", PHP_SELF2, $pno);
-//					}else{
-//						$pno = str_replace("<PAGE>", $i/PAGE_DEF, OTHER_PAGE);
-//						$pformat = str_replace("<PURL>", ($i/PAGE_DEF).PHP_EXT, $pno);
-//					}
-//				}
-//				$paging.=$pformat;
-//			}
+			//for($i = 0; $i < $counttree ; $i+=PAGE_DEF){
+			//	if($st==$i){
+			//		$pformat = str_replace("<PAGE>", $i/PAGE_DEF, NOW_PAGE);
+			//	}else{
+			//		if($i==0){
+			//			$pno = str_replace("<PAGE>", "0", OTHER_PAGE);
+			//			$pformat = str_replace("<PURL>", PHP_SELF2, $pno);
+			//		}else{
+			//			$pno = str_replace("<PAGE>", $i/PAGE_DEF, OTHER_PAGE);
+			//			$pformat = str_replace("<PURL>", ($i/PAGE_DEF).PHP_EXT, $pno);
+			//		}
+			//	}
+			//	$paging.=$pformat;
+			//}
 
-//表示しているページが20ページ以上または投稿数が少ない時はページ番号のリンクを制限しない
+			//表示しているページが20ページ以上または投稿数が少ない時はページ番号のリンクを制限しない
 
 	if($counttree <= PAGE_DEF*21||$i >= PAGE_DEF*22){
 
@@ -746,11 +746,7 @@ unset($value);
 				}
 				$paging.=$pformat;
 			}
-	}
-
-//表示しているページが20ページ以下の時はページ番号のリンクを制限する
-
-	elseif($i < PAGE_DEF*22 ){
+	} elseif ($i < PAGE_DEF*22 ){ //表示しているページが20ページ以下の時はページ番号のリンクを制限する
 			for($i = 0; $i < PAGE_DEF*22 ; $i+=PAGE_DEF){
 				if($st===$i){
 					$pformat = str_replace("<PAGE>", $i/PAGE_DEF, NOW_PAGE);
@@ -761,7 +757,7 @@ unset($value);
 					}else{
 					if($i===PAGE_DEF*21){
 						$pno = str_replace("<PAGE>", "≫", OTHER_PAGE);
-//						$pformat = str_replace("<PURL>", PHP_SELF2, $pno);
+						//$pformat = str_replace("<PURL>", PHP_SELF2, $pno);
 						$pformat = str_replace("<PURL>", ($i/PAGE_DEF).PHP_EXT, $pno);
 					}else{
 						$pno = str_replace("<PAGE>", $i/PAGE_DEF, OTHER_PAGE);
@@ -772,7 +768,7 @@ unset($value);
 			}
 	}
 
-//改ページ分岐ここまで
+	//改ページ分岐ここまで
 
 			
 			$dat['paging'] = $paging;
@@ -2691,8 +2687,8 @@ function catalog(){
 	form($dat,'');
 	if(!$page) $page=0;
 	for($i = $page; $i < $page+$pagedef; ++$i){
-//		if($tree[$i]==""){
-//空文字ではなく未定義になっている
+		//if($tree[$i]==""){
+		//空文字ではなく未定義になっている
 		if(!isset($tree[$i])){
 			$dat['y'][$y]['x'][$x]['noimg'] = true;
 		}else{
@@ -2772,53 +2768,46 @@ function catalog(){
 	if($prev >= 0) $dat['prev'] = PHP_SELF.'?mode=catalog&amp;page='.$prev;
 	$paging = "";
 
-//カタログモードの改ページ
+	//カタログモードの改ページ
 
-//	for($i = 0; $i < $counttree ; $i+=$pagedef){
-//		if($page==$i){
-//			$pformat = str_replace("<PAGE>", $i/$pagedef, NOW_PAGE);
-//		}else{
-//			$pno = str_replace("<PAGE>", $i/$pagedef, OTHER_PAGE);
-//			$pformat = str_replace("<PURL>", PHP_SELF."?mode=catalog&amp;page=".$i, $pno);
-//		}
-//		$paging.=$pformat;
-//	}
+	//	for($i = 0; $i < $counttree ; $i+=$pagedef){
+	//		if($page==$i){
+	//			$pformat = str_replace("<PAGE>", $i/$pagedef, NOW_PAGE);
+	//		}else{
+	//			$pno = str_replace("<PAGE>", $i/$pagedef, OTHER_PAGE);
+	//			$pformat = str_replace("<PURL>", PHP_SELF."?mode=catalog&amp;page=".$i, $pno);
+	//		}
+	//		$paging.=$pformat;
+	//	}
 
-//表示しているページが20ページ以上または投稿数が少ない時はページ番号のリンクを制限しない
+	//表示しているページが20ページ以上または投稿数が少ない時はページ番号のリンクを制限しない
 
 	if($counttree <= $pagedef*21||$i >= $pagedef*22){
-			for($i = 0; $i < $counttree ; $i+=$pagedef){
-		if($page===$i){
-			$pformat = str_replace("<PAGE>", $i/$pagedef, NOW_PAGE);
-		}else{
+		for($i = 0; $i < $counttree ; $i+=$pagedef){
+			if($page===$i){
+				$pformat = str_replace("<PAGE>", $i/$pagedef, NOW_PAGE);
+			}else{
 			$pno = str_replace("<PAGE>", $i/$pagedef, OTHER_PAGE);
 			$pformat = str_replace("<PURL>", PHP_SELF."?mode=catalog&amp;page=".$i, $pno);
+			}
+			$paging.=$pformat;
 		}
+	} elseif ($i < $pagedef*22 ){ //表示しているページが20ページ以下の時はページ番号のリンクを制限する
+		for($i = 0; $i < $pagedef*22 ; $i+=$pagedef){
+			if($page===$i){
+				$pformat = str_replace("<PAGE>", $i/$pagedef, NOW_PAGE);
+			} elseif ($i===$pagedef*21){
+				$pno = str_replace("<PAGE>", "≫", OTHER_PAGE);
+				$pformat = str_replace("<PURL>", PHP_SELF."?mode=catalog&amp;page=".$i, $pno);
+			}else{
+				$pno = str_replace("<PAGE>", $i/$pagedef, OTHER_PAGE);
+				$pformat = str_replace("<PURL>", PHP_SELF."?mode=catalog&amp;page=".$i, $pno);
+			}
 		$paging.=$pformat;
-	}
-	}
-
-//表示しているページが20ページ以下の時はページ番号のリンクを制限する
-
-		elseif($i < $pagedef*22 ){
-			for($i = 0; $i < $pagedef*22 ; $i+=$pagedef){
-		if($page===$i){
-			$pformat = str_replace("<PAGE>", $i/$pagedef, NOW_PAGE);
 		}
-
-		elseif($i===$pagedef*21){
-			$pno = str_replace("<PAGE>", "≫", OTHER_PAGE);
-			$pformat = str_replace("<PURL>", PHP_SELF."?mode=catalog&amp;page=".$i, $pno);
-
-		}else{
-			$pno = str_replace("<PAGE>", $i/$pagedef, OTHER_PAGE);
-			$pformat = str_replace("<PURL>", PHP_SELF."?mode=catalog&amp;page=".$i, $pno);
-		}
-		$paging.=$pformat;
-	}
 	}
 
-//改ページ分岐ここまで
+	//改ページ分岐ここまで
 	
 	$dat['paging'] = $paging;
 	if($counttree > $next){
