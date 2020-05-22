@@ -192,7 +192,7 @@ define('USER_DELETES', '3');
 //メール通知クラスのファイル名
 define('NOTICEMAIL_FILE' , 'noticemail.inc');
 //アプレットヘルプのファイル名
-define('SIIHELP_FILE' , 'siihelp.php');
+// define('SIIHELP_FILE' , 'siihelp.php');
 
 //define('CHARSET_HTML', 'UTF-8');
 
@@ -1964,16 +1964,17 @@ if($admin===$ADMIN_PASS){
 		$dat['mode'] = 'picrep&amp;no='.$no.'&amp;pwd='.$pwd.'&amp;repcode='.$repcode;
 		$dat['usercode'] = $usercode.'&amp;repcode='.$repcode;
 	}
+	htmloutput(SKIN_DIR.PAINTFILE,$dat);
 
-	$buf = htmloutput(SKIN_DIR.PAINTFILE,$dat,true);
+	// $buf = htmloutput(SKIN_DIR.PAINTFILE,$dat,true);
 
-	list($buf1,$buf2) = explode('<SIIHELP>', $buf);
-	echo $buf1;
-	if(is_file(SKIN_DIR.SIIHELP_FILE)){
-		$help = implode('', file(SKIN_DIR.SIIHELP_FILE));
-		echo charconvert($help);
-	}
-	echo $buf2;
+	// list($buf1,$buf2) = explode('<SIIHELP>', $buf);
+	// echo $buf1;
+	// if(is_file(SKIN_DIR.SIIHELP_FILE)){
+	// 	$help = implode('', file(SKIN_DIR.SIIHELP_FILE));
+	// 	echo charconvert($help);
+	// }
+	// echo $buf2;
 }
 
 /* お絵かきコメント */
