@@ -1,4 +1,5 @@
 <?php
+// オリジナルのSkinnyの以下の箇所を変更しています。パーミッション 0777→0707 0666→0606 変更者 https://poti-k.info/
 /**
  *  Skinny  - One File Simple Template Engine over PHP -
  *  
@@ -239,7 +240,7 @@ class Skinny {
 				$error_message = date('Y-m-d H:i:s') . "\t" . $str . "\n";
 				$error_logfile = $this->skConf['ERRORLOG']['DIR'] . "/errorlog_" . date('Ymd') . ".log";
 				error_log( $error_message, 3, $error_logfile );
-				chmod( $error_logfile, 0666 );
+				chmod( $error_logfile, 0606 );
 				return true;
 			}
 		}
