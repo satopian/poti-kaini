@@ -1,4 +1,6 @@
 <?php
+define('USE_DUMP_FOR_DEBUG','0');
+//HTML出力の前に$datをdump しない:0 する:1 dumpしてexit：2 
 // ini_set('error_reporting', E_ALL);
 //$time_start = microtime(true);
 /*
@@ -2835,6 +2837,12 @@ function htmloutput($template,$dat,$buf_flag=''){
 		$buf=$Skinny->SkinnyFetchHTML($template, $dat );
 		return $buf;
 	}else{
+		if(USE_DUMP_FOR_DEBUG){//Skinnyで出力する前にdump
+			var_dump($dat);
+			if(USE_DUMP_FOR_DEBUG==='2'){
+				exit;
+			}
+		}
 		$Skinny->SkinnyDisplay( $template, $dat );
 	}
 }
