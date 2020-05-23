@@ -44,8 +44,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.6.0');
-define('POTI_VERLOT' , 'v2.6.0 lot.200522a');
+define('POTI_VER' , 'v2.6.1');
+define('POTI_VERLOT' , 'v2.6.1 lot.200523');
 
 if(phpversion()>="5.5.0"){
 //スパム無効化関数
