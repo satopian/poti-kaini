@@ -83,7 +83,7 @@ POTI-board改<https://poti-k.info/>を発展させたものです。
   ｜
   ＋--./src/       ディレクトリ
   ＋--./thumb/     ディレクトリ
-　＋--./skin/      ディレクトリ(スキンのディレクトリはconfigで設定できます)
+　＋--./theme/     ディレクトリ(テーマのディレクトリはconfigで設定できます)
     ｜.htaccess
     ｜template_ini.php
     ｜mono_catalog.html
