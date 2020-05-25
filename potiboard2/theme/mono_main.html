@@ -169,7 +169,7 @@
 								<td><input class="form" type="text" name="url" size="28" autocomplete="url"></td>
 							</tr>
 							<tr>
-								<td>sage</td>
+								<td>mail</td>
 								<td><input class="form" type="text" name="email" size="28" value="" autocomplete="email"></td>
 							</tr>
 							<tr>
@@ -219,7 +219,7 @@
 				<div class="thread">
 					<h2><span class="oyano">[<% echo(oya/no) %>]</span> <% echo(oya/sub) %></h2>
 					<h3>
-						<span class="name"><% echo(oya/name) %></span><span class="trip"><% echo(oya/trip) %></span> :
+						<span class="name"><% def(oya/email) %><a href="mailto:<% echo(oya/email) %>"><% /def %><% echo(oya/name) %><% def(oya/email) %></a><% /def %></span><span class="trip"><% echo(oya/trip) %></span> :
 						<% echo(oya/now) %><% def(oya/id) %> ID : <% echo(oya/id) %><% /def %><% def(oya/url) %> [<a href="<% echo(oya/url) %>" target="_blank" rel="nofollow noopener noreferrer">URL</a>] <% /def %><% def(oya/updatemark) %><% echo(oya/updatemark) %><% /def %>
 					</h3>
 					<hr>
@@ -258,7 +258,7 @@
 								<h4>
 									<span class="oyaresno">[<% echo(oya/res/no) %>]</span>
 									<span class="rsub"><% echo(oya/res/sub) %></span> :
-									<span class="name"><% echo(oya/res/name) %></span><span class="trip"><% echo(oya/res/trip) %></span> : <% echo(oya/res/now) %><% def(oya/res/id) %> ID : <% echo(oya/res/id) %><% /def %><% def(oya/res/url) %> [<a href="<% echo(oya/res/url) %>" target="_blank" rel="nofollow noopener noreferrer">URL</a>]</span><% /def %><% def(oya/res/updatemark) %> <% echo(oya/res/updatemark) %><% /def %>
+									<span class="name"><% def(oya/res/email) %><a href="mailto:<% echo(oya/res/email) %>"><% /def %><% echo(oya/res/name) %><% def(oya/res/email) %></a><% /def %></span><span class="trip"><% echo(oya/res/trip) %></span> : <% echo(oya/res/now) %><% def(oya/res/id) %> ID : <% echo(oya/res/id) %><% /def %><% def(oya/res/url) %> [<a href="<% echo(oya/res/url) %>" target="_blank" rel="nofollow noopener noreferrer">URL</a>]</span><% /def %><% def(oya/res/updatemark) %> <% echo(oya/res/updatemark) %><% /def %>
 								</h4>
 								<section>
 									<p><% echo(oya/res/com) %></p>
@@ -294,7 +294,7 @@
 								<label>name<% def(usename) %><% echo(usename) %><% /def %> <input class="form" type="text" name="name" size="20" value="" autocomplete="username"></label>
 								<label>sub<% def(usesub) %><% echo(usesub) %><% /def %> <input class="form" type="text" name="sub" size="18" value="<% def(oya/resub) %><% echo(oya/resub) %><% /def %>" autocomplete="section-sub"></label><br>
 								<label>URL <input class="form" type="text" name="url" size="20" autocomplete="url"></label>
-								<label>sage <input class="form" type="text" name="email" size="8" autocomplete="email"></label><br>
+								<label>mail <input class="form" type="text" name="email" size="8" autocomplete="email"></label><br>
 								<textarea class="form" name="com" cols="56" rows="3" wrap="soft"></textarea><br>
 								<label>Pass <input class="form" type="password" name="pwd" size="8" value="" autocomplete="current-password"></label>
 								<input class="button" type="submit" value="返信">
