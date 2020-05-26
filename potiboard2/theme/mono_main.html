@@ -31,7 +31,7 @@
 		</noscript>
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.6/css/all.css">
 		<link rel="stylesheet" href="<% echo(skindir) %>css/swipebox.css">
-		<script type="text/javascript" src="loadcookie.js"></script>
+		<script src="loadcookie.js"></script>
 		<title><% echo(title) %></title>
 		<% def(notres) %>
 		<% def(n) %>
@@ -64,7 +64,7 @@
 		<header id="header">
 			<h1><% echo(title) %></h1>
 			<hr>
-			<section>
+			<article>
 				<nav class="menu">
 					<% def(resno) %><a href="<% echo(self2) %>"><i class="fas fa-star fa-fw fa-lg" title="トップ"></i>トップ</a><% /def %>
 					<a href="<% echo(home) %>" target="_top"><i class="fas fa-home fa-fw fa-lg" title="ホーム"></i>ホーム</a>
@@ -93,7 +93,7 @@
 				<p class="resm">お絵かきレス</p>
 				<hr>
 				<% /def %>
-				<section class="epost">
+				<article class="epost">
 					<form action="<% echo(self) %>" method="post" enctype="multipart/form-data">
 						<p>
 							<% def(applet) %>
@@ -150,11 +150,11 @@
 						<% def(addinfo) %><% echo (addinfo) %><% /def %>
 					</ul>
 					<% /def %>
-				</section>
+				</article>
 				<% /def %>
 				<% /def %>
 				<% def(form) %>
-				<section>
+				<article>
 					<form action="<% echo(self) %>" method="post" enctype="multipart/form-data">
 						<input type="hidden" name="mode" value="regist">
 						<% def(resno) %><input type="hidden" name="resto" value="<% echo(resno) %>"><% /def %>
@@ -209,9 +209,9 @@
 							<% def(addinfo) %><% echo (addinfo) %><% /def %>
 						</ul>
 					</form>
-				</section>
+				</article>
 				<% /def %>
-			</section>
+			</article>
 		</header>
 		<main>
 			<section>
@@ -223,7 +223,7 @@
 						<% echo(oya/now) %><% def(oya/id) %> ID : <% echo(oya/id) %><% /def %><% def(oya/url) %> <span class="url">[<a href="<% echo(oya/url) %>" target="_blank" rel="nofollow noopener noreferrer">URL</a>]</span> <% /def %><% def(oya/updatemark) %><% echo(oya/updatemark) %><% /def %>
 					</h3>
 					<hr>
-					<section>
+					<article>
 						<% def(oya/src) %>
 						<figure>
 							<figcaption><a href="<% echo(oya/src) %>" title="<% echo(oya/sub) %>" target="_blank"><% echo(oya/srcname) %></a> (<% echo(oya/size) %> B)<% def(oya/thumb) %> - サムネイル表示中 -<% /def %><br><% def(oya/painttime) %>PaintTime : <% echo(oya/painttime) %><% /def %><% def(oya/pch) %> <a href="<% echo(self) %>?mode=openpch&amp;pch=<% echo(oya/pch) %>" target="_blank">●動画</a><% /def %>
@@ -236,15 +236,15 @@
 						</figure>
 						<% /def %>
 						<div class="res">
-							<section>
+							<article>
 								<p><% echo(oya/com) %></p>
 								<% def(oya/limit) %><p class="limit">このスレは古いので、もうすぐ消えます。</p><% /def %>
 								<% def(resform) %><% def(oya/skipres) %><p class="ryaku">レス<% echo(oya/skipres) %> 件省略。[<a href="<% echo(self) %>?res=<% echo(oya/no) %>">すべて見る</a>]</p><% /def %><% /def %>
-							</section>
+							</article>
 							<% def(oya/res) %>
 							<% each(oya/res) %>
 							<hr>
-							<section>
+							<article>
 								<% def(oya/res/src) %>
 								<figure>
 									<figcaption><a href="<% echo(oya/res/src) %>" title="<% echo(oya/res/sub) %>" target="_blank" ><% echo(oya/res/srcname) %></a> (<% echo(oya/res/size) %> B)<% def(oya/res/thumb) %> - サムネイル表示中 - <% /def %><br><% def(oya/res/painttime) %> PaintTime :<% echo(oya/res/painttime) %><% /def %><% def(oya/res/continue) %> <a href="<% echo(self) %>?mode=continue&amp;no=<% echo(oya/res/continue) %>">続きを描く</a><% /def %></figcaption>
@@ -260,10 +260,10 @@
 									<span class="rsub"><% echo(oya/res/sub) %></span> :
 									<span class="name"><% def(oya/res/email) %><a href="mailto:<% echo(oya/res/email) %>"><% /def %><% echo(oya/res/name) %><% def(oya/res/email) %></a><% /def %></span><span class="trip"><% echo(oya/res/trip) %></span> : <% echo(oya/res/now) %><% def(oya/res/id) %> ID : <% echo(oya/res/id) %><% /def %><% def(oya/res/url) %> <span class="url">[<a href="<% echo(oya/res/url) %>" target="_blank" rel="nofollow noopener noreferrer">URL</a>]</span><% /def %><% def(oya/res/updatemark) %> <% echo(oya/res/updatemark) %><% /def %>
 								</h4>
-								<section>
+								<article>
 									<p><% echo(oya/res/com) %></p>
-								</section>
-							</section>
+								</article>
+							</article>
 							<% /each %>
 							<% /def %>
 						</div>
@@ -307,13 +307,13 @@
 							<% /def %>
 							<% /def %>
 						</div>
-					</section>
+					</article>
 				</div>
 				<% /each %>
 			</section>
 		</main>
 		<footer id="footer">
-			<section>
+			<article>
 				<% def(notres) %>
 				<p class="page">
 					<% def(prev) %><a href="<% echo(prev) %>">&lt;&lt;[BACK]</a><% elsedef %>[START]<% /def %>
@@ -342,11 +342,11 @@
 						<a href="javascript:SetCss('<% echo(skindir) %>css/mono_mayo.css');">[MAYO]</a>
 					</p>
 				</form>
-				<script type="text/javascript">
+				<script>
 					l(); //LoadCookie
 				</script>
-			</section>
-			<section class="copy">
+			</article>
+			<article class="copy">
 			<!-- 著作権表示 削除しないでください -->
 			<!-- GazouBBS v3.0 --><!-- ふたば改0.8 --><!-- POTI-board -->
 				<p>
@@ -370,7 +370,7 @@
 					DynamicPalette <!-- http://wondercatstudio.com/ -->
 					<a href="https://github.com/funige/neo/" target="_top" title="by ImageCanvas">PaintBBS NEO</a>
 				</p>
-			</section>
+			</article>
 		</footer>
 	</body>
 </html>

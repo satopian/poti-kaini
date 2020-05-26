@@ -7,7 +7,7 @@
 */
 
 //テーマ(テンプレート)のバージョン
-define('TEMPLATE_VER', "v1.6.5 lot.200526b");
+define('TEMPLATE_VER', "v1.6.6 lot.200526c");
 
 //エラーメッセージ
 define('MSG001', "該当記事がみつかりません[Log is not found.]");

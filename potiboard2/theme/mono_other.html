@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="<% echo(charset) %>">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-		<script type="text/javascript">
+		<script>
 			var css = GetCookie("CSS");
 			if(css == ""){css = "<% echo(skindir) %>css/mono_main.css";}
 			document.write('<link rel="stylesheet" href="' + css + '" type="text/css">');
@@ -36,14 +36,14 @@
 		<header>
 			<h1><% echo(title) %></h1>
 			<hr>
-			<section>
+			<article>
 				<p class="menu">
 					<a href="<% echo(self2) %>"><i class="fas fa-star fa-fw fa-lg" title="トップ"></i>トップ</a>
 					<a href="<% echo(home) %>" target="_top"><i class="fas fa-home fa-fw fa-lg" title="ホーム"></i>ホーム</a>
 					<a href="<% echo(self) %>?mode=newpost"><i class="fas fa-pen-square fa-fw fa-lg" title="投稿"></i>投稿</a>
 					<a href="<% echo(self) %>?mode=admin"><i class="fas fa-cog fa-fw fa-lg" title="管理モード"></i>管理モード</a>
 				</p>
-			</section>
+			</article>
 			<hr>
 		</header>
 		<main>
@@ -246,7 +246,7 @@
 			<% /def %>
 		</main>
 		<footer>
-			<section class="copy">
+			<article class="copy">
 				<!-- 著作権表示 削除しないでください -->
 				<!-- GazouBBS v3.0 --><!-- ふたば改0.8 --><!-- POTI-board -->
 				<p>
@@ -270,7 +270,7 @@
 					DynamicPalette <!-- http://wondercatstudio.com/ -->
 					<a href="https://github.com/funige/neo/" target="_top" title="by ImageCanvas">PaintBBS NEO</a>
 				</p>
-			</section>	
+			</article>	
 		</footer>
 	</body>
 </html>

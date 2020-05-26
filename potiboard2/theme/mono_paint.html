@@ -74,7 +74,7 @@
 		<header>
 			<h1><% echo(title) %></h1>
 			<hr>
-			<section>
+			<article>
 				<p class="menu">
 					<a href="<% echo(self2) %>"><i class="fas fa-star fa-fw fa-lg" title="トップ"></i>トップ</a>
 					<a href="<% echo(home) %>" target="_top"><i class="fas fa-home fa-fw fa-lg" title="ホーム"></i>ホーム</a>
@@ -82,7 +82,7 @@
 					<a href="<% echo(self) %>?mode=admin"><i class="fas fa-cog fa-fw fa-lg" title="管理モード"></i>管理モード</a>
 					<a href="<% echo(self) %>?mode=piccom<% def(resno) %>&amp;resto=<% echo(resno) %><% /def %>"><i class="fas fa-paste fa-fw fa-lg" title="投稿途中の絵"></i>投稿途中の絵</a>
 				</p>
-			</section>
+			</article>
 			<hr>
 			<% def(paint_mode) %>
 			<h2 class="oekaki">OEKAKI MODE</h2>
@@ -94,7 +94,7 @@
 		<main>
 			<% def(paint_mode) %>
 			<!-- (========== PAINT MODE(お絵かきモード) start ==========) -->
-			<script type="text/javascript">
+			<script>
 				var DynamicColor = 1;	// パレットリストに色表示
 				var Palettes = new Array();
 				<% def(palettes) %>
@@ -121,7 +121,7 @@
 			<noscript>
 				<p>JavaScriptが動いてないよ</p>
 			</noscript>
-			<section id="appstage">
+			<article id="appstage">
 				<div class="app">
 					<% def(useneo) %>
 					<applet-dummy code="pbbs.PaintBBS.class" archive="./PaintBBS.jar" name="paintbbs" width="<% echo(w) %>" height="<% echo(h) %>" mayscript>
@@ -277,7 +277,7 @@
 						<p class="c">DynamicPalette &copy;NoraNeko</p>
 					</form>
 				</div>
-			</section>
+			</article>
 			<% def(paint_mode) %>
 			<section>
 				<div class="thread">
@@ -448,7 +448,7 @@
 			<% /def %>
 			<% def(pch_mode) %>
 			<!-- (========== 動画表示モード ==========) -->
-			<section id="appstage">
+			<article id="appstage">
 				<div class="app">
 					<% def(paintbbs) %>
 					<applet-dummy code="pch.PCHViewer.class" archive="PCHViewer.jar,PaintBBS.jar" name="pch" width="<% echo(w) %>" height="<% echo(h) %>" mayscript>
@@ -480,7 +480,7 @@
 						<a href="javascript:close()">閉じる</a>
 					</p>
 				</div>
-			</section>
+			</article>
 			<!-- (========== 動画表示モード ここまで ==========) -->
 			<% /def %>
 			<% def(continue_mode) %>
@@ -539,7 +539,7 @@
 			<% /def %>
 		</main>
 		<footer>
-			<section class="copy">
+			<article class="copy">
 				<!-- 著作権表示 削除しないでください -->
 				<!-- GazouBBS v3.0 --><!-- ふたば改0.8 --><!-- POTI-board -->
 				<p>
@@ -563,7 +563,7 @@
 					DynamicPalette <!-- http://wondercatstudio.com/ -->
 					<a href="https://github.com/funige/neo/" target="_top" title="by ImageCanvas">PaintBBS NEO</a>
 				</p>
-			</section>
+			</article>
 		</footer>
 	</body>
 </html>

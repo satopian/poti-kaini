@@ -41,7 +41,7 @@ hr.hr {
 	clear: both;
 }
 //----------
-header, main > section > .thread, footer > section {
+header, main > section > .thread, footer > article {
 	background-color: $haikei;
 	padding: 8px;
 }
@@ -58,16 +58,16 @@ header {
 main > section > .thread {
 	@extend header;
 }
-main > section#catalog {
+main > article#catalog {
 	@extend header;
 }
-footer > section {
+footer > article {
 	@extend header;
 	form {
 		text-align: right;
 	}
 }
-footer>section.copy {
+footer>article.copy {
 	@extend header;
 	text-align: right;
 }
@@ -270,7 +270,7 @@ ul.menu {
 
 //以下レスポンシブ対応
 @media screen and (max-width: 1024px) {
-	header, main > section > .thread, main > section#catalog, footer > sectio {
+	header, main > section > .thread, main > article#catalog, footer > article {
 		width: 90%;
 	}
 	.res {
