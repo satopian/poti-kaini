@@ -479,6 +479,15 @@
 						</select>
 						<% def(passflag) %>Pass<input class="form" type="password" name="pwd" size="8" value=""> <% /def %>
 						<input class="button" type="submit" value="続きを描く">
+						<!-- NEOを使う -->
+						<% if(ctype_pch,==,false) %>
+						<label><input type="checkbox" name="useneo" checked="checked" /><span class="use_neo">USE NEO</span></label>
+						<% /if %>
+						<% def(applet) %>
+						<input type="hidden" name="shi" value="1">
+						<% elsedef %>
+						<input type="hidden" name="useneo" value="1">
+						<% /def %>
 					</form>
 					<% def(passflag) %>
 					<ul>
