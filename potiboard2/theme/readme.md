@@ -9,6 +9,7 @@ Skinnyのタグは[本家](http://skinny.sx68.net/tag/taglist.html)を見てい�
 
 変更したほうが開発によさそう。  
 
+- `$skConf['CACHE']['FLG'] = true;` - スキンキャッシュの利用「しない(false)」でないとwindows上ではキャッシュが更新されないことがあるようです。
 - `$skConf['DISP']['ERRORS'] = false;` - エラーの画面出力。「する(true)」のほうがバグ探しに便利です。
 - `$skConf['DISP']['TAB_DELETE'] = 1;` - 出力時にタブコード '\t' を取り除く。オフ(0)のほうがソースチェックしやすいかもしれません。chromeの検証ツールを使えばほぼ問題はないと思います。
 - `$skConf['DISP']['RET_DELETE'] = 1;` - 出力時に連続した改行 '\n' を取り除く。オフ(0)でソースチェックがしやすいかも。これもchromeの検証ツールなら問題ないかと。

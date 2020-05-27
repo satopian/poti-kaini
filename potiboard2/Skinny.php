@@ -64,7 +64,7 @@ $skConf['TEMPLATE']['BASEDIR']= '';         // テンプレートを保存する
 // キャッシュ関連
 $skConf['CACHE']['FLG']       = true;      // スキンキャッシュの利用    [true]:する  false:しない
 $skConf['CACHE']['DIR']       = './cache';  // キャッシュの生成先DIR （出来ればフルパスで。相対だとアチコチに作られるかも）
-$skConf['CACHE']['ALIVETIME'] = 3600;       // キャッシュの有効時間（秒）
+$skConf['CACHE']['ALIVETIME'] = 86400;       // キャッシュの有効時間（秒）
 
 // 画面表示関連
 $skConf['DISP']['ERRORS']     = false;       // エラーの画面出力      [true]:する   false:しない
