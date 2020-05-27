@@ -91,7 +91,7 @@ Skinnyのタグは[本家](http://skinny.sx68.net/tag/taglist.html)を見てい�
 - echo(picw),echo(pich) - キャンバスの幅と高さです。
 - 以下アプレットスクリプト内の説明は今は省略させてください…
 - def(pch_mode) - 動画再生モードかどうかです。
-- def(passflag) - 続きからか描くのpassの設定です。
+- def(passflag) - 続きからか描くのpassの設定です。（互換性のために残してあるところでパスワード入力欄を出す消すの切り替えに使われていました。今は常にtrueなので不要）
 - def(newpost_nopassword) - 新規投稿なら削除キーがなくても続きを描く事ができます。のチェックです。
 - `<SIIHELP>` - 特殊タグ。siihelp.phpを呼び出します。→2.6.0で廃止
 
