@@ -1,14 +1,19 @@
-## ！デジタルインク(windows Ink)の機能について！
-
-デジタルインク(Window Ink)がオンの状態でPaintBBS NEO / しぃペインターを操作すると、
-例えばペンを左から右に大きくスライドさせるとブラウザが前の画面に戻る、などの誤動作が発生する可能性が大きくあります。PaintBBS NEO / しぃペインターご利用の際はデジタルインク(Window Ink)をオフにお願いいたします。
-
 # POTI-board改二
+
+<img width="300" alt="0z674" src="https://user-images.githubusercontent.com/31465648/83109430-5ebf0080-a0fc-11ea-8acc-87f2fbbd2070.PNG">
+
 phpお絵かき掲示板スクリプトPOTI-boardをさらに改良していくプロジェクトです。  
 php5.5～ 対応。
   
 <a href="https://github.com/funige/neo/">PaintBBS NEO</a>  
 <a href="https://github.com/sakots/poti-kai/">POTI-board改</a>  
+
+## ！デジタルインク(windows Ink)の機能について！
+
+デジタルインク(Window Ink)がオンの状態でPaintBBS NEO / しぃペインターを操作すると、
+例えばペンを左から右に大きくスライドさせるとブラウザが前の画面に戻る、などの誤動作が発生する可能性が大きくあります。PaintBBS NEO / しぃペインターご利用の際はデジタルインク(Window Ink)をオフにお願いいたします。
+
+<img width="200" alt="0z676" src="https://user-images.githubusercontent.com/31465648/83109254-0c7ddf80-a0fc-11ea-9627-7b4afe5ae193.PNG">
   
 ## 概要
 POTI-board改で使用しているテンプレートエンジン「htmltemplate.inc」は老朽化が進んでいる… 
