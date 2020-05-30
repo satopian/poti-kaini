@@ -10,6 +10,11 @@
 	padding: 0px;
 }
 
+//iOS対策
+label {
+    cursor: pointer;
+}
+
 //全体的指定
 body {
 	background-color: $ushiro;

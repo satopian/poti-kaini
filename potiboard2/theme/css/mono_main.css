@@ -5,6 +5,10 @@
   padding: 0px;
 }
 
+label {
+  cursor: pointer;
+}
+
 body {
   background-color: #EEEEEE;
   color: #000;
