@@ -44,8 +44,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.6.2');
-define('POTI_VERLOT' , 'v2.6.2 lot.200530');
+define('POTI_VER' , 'v2.6.3');
+define('POTI_VERLOT' , 'v2.6.3 lot.200530a');
 
 if(phpversion()>="5.5.0"){
 //スパム無効化関数
@@ -565,7 +565,7 @@ function updatelog($resno=0){
 			$fontcolor = $fcolor ? $fcolor : DEF_FONTCOLOR;
 			// var_dump($fontcolor);
 			//<br />を<br>へ
-			//$com = preg_replace("{<br( *)/>}i","<br>",$com);
+			$com = preg_replace("{<br( *)/>}i","<br>",$com);
 			//独自タグ変換
 			//if(USE_POTITAG) $com = potitag($com);
 			//メタタグに使うコメントから
@@ -665,7 +665,7 @@ function updatelog($resno=0){
 				//文字色
 				//$fontcolor = $fcolor ? $fcolor : DEF_FONTCOLOR;
 				//<br />を<br>へ
-				//$com = preg_replace("{<br( *)/>}i","<br>",$com);
+				$com = preg_replace("{<br( *)/>}i","<br>",$com);
 				//独自タグ変換
 				// if(USE_POTITAG) $com = potitag($com);
 
@@ -1087,7 +1087,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 	$com = str_replace("\r", "\n", $com);
 	// 連続する空行を一行
 	$com = preg_replace("/\n((　| )*\n){3,}/","\n",$com);
-	$com = nl2br($com, false);		//改行文字の前に<br>を代入する
+	$com = nl2br($com);		//改行文字の前に<br>を代入する
 
 	$com = str_replace("\n", "", $com);	//\nを文字列から消す
 
@@ -2390,7 +2390,7 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 	$com = str_replace("\r", "\n", $com);
 	// 連続する空行を一行
 	$com = preg_replace("#\n((　| )*\n){3,}#","\n",$com);
-	$com = nl2br($com, false);		//改行文字の前に<br>を代入する
+	$com = nl2br($com,);		//改行文字の前に<br>を代入する
 	$com = str_replace("\n", "", $com);	//\nを文字列から消す
 
 	$name=preg_replace("/◆/","◇",$name);
