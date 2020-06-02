@@ -44,8 +44,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.6.3');
-define('POTI_VERLOT' , 'v2.6.3 lot.200530a');
+define('POTI_VER' , 'v2.6.4');
+define('POTI_VERLOT' , 'v2.6.4 lot.200602');
 
 if(phpversion()>="5.5.0"){
 //スパム無効化関数
@@ -663,7 +663,7 @@ function updatelog($resno=0){
 					$name=preg_replace("/(◆.*)/","",$name);
 				}else{$trip='';}
 				//文字色
-				//$fontcolor = $fcolor ? $fcolor : DEF_FONTCOLOR;
+				$fontcolor = $fcolor ? $fcolor : DEF_FONTCOLOR;
 				//<br />を<br>へ
 				$com = preg_replace("{<br( *)/>}i","<br>",$com);
 				//独自タグ変換
