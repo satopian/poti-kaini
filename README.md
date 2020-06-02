@@ -13,7 +13,9 @@ php5.5～ 対応。
 デジタルインク(Window Ink)がオンの状態でPaintBBS NEO / しぃペインターを操作すると、
 例えばペンを左から右に大きくスライドさせるとブラウザが前の画面に戻る、などの誤動作が発生する可能性が大きくあります。PaintBBS NEO / しぃペインターご利用の際はデジタルインク(Window Ink)をオフにお願いいたします。
 
-<img width="200" alt="0z676" src="https://user-images.githubusercontent.com/31465648/83109254-0c7ddf80-a0fc-11ea-9627-7b4afe5ae193.PNG">
+<img width="200" alt="0z676" src="https://user-images.githubusercontent.com/31465648/83109254-0c7ddf80-a0fc-11ea-9627-7b4afe5ae193.PNG">  
+
+また、マウスジェスチャーの拡張機能とも競合する可能性があります。不具合を感じたらオフにしてみてください。
   
 ## 概要
 POTI-board改で使用しているテンプレートエンジン「htmltemplate.inc」は老朽化が進んでいる… 
