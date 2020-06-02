@@ -1,30 +1,28 @@
 function l(e){
 	var P=loadCookie("pwdc"),N=loadCookie("namec"),E=loadCookie("emailc"),U=loadCookie("urlc"),FC=loadCookie("fcolorc"),i,j;
-	with(document){
-		for(i=0;i<forms.length;i++){
-			if(forms[i].pwd){
-				forms[i].pwd.value=P;
+		for(i=0;i<document.forms.length;i++){
+			if(document.forms[i].pwd){
+				document.forms[i].pwd.value=P;
 			}
-			if(forms[i].name){
-				forms[i].name.value=N;
+			if(document.forms[i].name){
+				document.forms[i].name.value=N;
 			}
-			if(forms[i].email){
-				forms[i].email.value=E;
+			if(document.forms[i].email){
+				document.forms[i].email.value=E;
 			}
-			if(forms[i].url){
-				forms[i].url.value=U;
+			if(document.forms[i].url){
+				document.forms[i].url.value=U;
 			}
-			if(forms[i].fcolor){
-				if(FC == "") FC = forms[i].fcolor[0].value;
-				for(j = 0; forms[i].fcolor.length > j; j ++) {
-					if(forms[i].fcolor[j].value == FC){
-						forms[i].fcolor[j].checked = true;
-						forms[i].fcolor.selectedIndex = j;
+			if(document.forms[i].fcolor){
+				if(FC == "") FC = document.forms[i].fcolor[0].value;
+				for(j = 0; document.forms[i].fcolor.length > j; j ++) {
+					if(document.forms[i].fcolor[j].value == FC){
+						document.forms[i].fcolor[j].checked = true;
+						document.forms[i].fcolor.selectedIndex = j;
 					}
 				}
 			}
 		}
-	}
 };
 
 /* Function Equivalent to URLDecoder.decode(String, "UTF-8")
