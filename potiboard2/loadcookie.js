@@ -2,19 +2,19 @@ function l(e){
 	var P=loadCookie("pwdc"),N=loadCookie("namec"),E=loadCookie("emailc"),U=loadCookie("urlc"),FC=loadCookie("fcolorc"),i,j;
 	with(document){
 		for(i=0;i<forms.length;i++){
-			if(forms[i].pwd)with(forms[i]){
-				pwd.value=P;
+			if(forms[i].pwd){
+				forms[i].pwd.value=P;
 			}
-			if(forms[i].name)with(forms[i]){
-				name.value=N;
+			if(forms[i].name){
+				forms[i].name.value=N;
 			}
-			if(forms[i].email)with(forms[i]){
-				email.value=E;
+			if(forms[i].email){
+				forms[i].email.value=E;
 			}
-			if(forms[i].url)with(forms[i]){
-				url.value=U;
+			if(forms[i].url){
+				forms[i].url.value=U;
 			}
-			if(forms[i].fcolor)with(forms[i]){
+			if(forms[i].fcolor){
 				if(FC == "") FC = forms[i].fcolor[0].value;
 				for(j = 0; forms[i].fcolor.length > j; j ++) {
 					if(forms[i].fcolor[j].value == FC){
