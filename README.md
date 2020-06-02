@@ -48,6 +48,7 @@ config.phpの設定をし、アップロードしてpotiboard.phpにアクセス
 ### [2020/06/02]
 
 - loadcookie.js with文の見直し
+- テーマ修正
 
 ### [2020/05/30] v2.6.3 lot.200530a
 

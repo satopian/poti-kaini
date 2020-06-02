@@ -6,7 +6,6 @@
 		<link rel="stylesheet" href="<% echo(skindir) %>nee2_main.css" type="text/css">
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.6/css/all.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css">
-		<script type="text/javascript" src="loadcookie.js"></script>
 		<title><% echo(title) %></title>
 	</head>
 	<body>
@@ -95,7 +94,8 @@
 			<hr>
 		</main>
 		<footer>
-			<script type="text/javascript">
+			<script src="loadcookie.js"></script>
+			<script>
 				l(); //LoadCookie
 			</script>
 			<script src="https://code.jquery.com/jquery-1.12.4.min.js" type="text/javascript"></script>
