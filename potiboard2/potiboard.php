@@ -44,8 +44,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.6.4');
-define('POTI_VERLOT' , 'v2.6.4 lot.200602');
+define('POTI_VER' , 'v2.6.5');
+define('POTI_VERLOT' , 'v2.6.5 lot.200603');
 
 if(phpversion()>="5.5.0"){
 //スパム無効化関数
@@ -172,18 +172,6 @@ else{
 	}
 }
 
-//ペイント画面の$pwdの暗号化
-if(!defined('CRYPT_PASS')){//config.phpで未定義なら初期値が入る
-define('CRYPT_PASS','qRyFfhV6nyUggSb');//暗号鍵初期値
-}
-define('CRYPT_METHOD','aes-128-cbc');
-define('CRYPT_IV','T3pkYxNyjN7Wz3pu');//半角英数16文字
-
-//指定した日数を過ぎたスレッドのフォームを閉じる
-if(!defined('ELAPSED_DAYS')){//config.phpで未定義なら0
-	define('ELAPSED_DAYS','0');
-}
-
 //MB関数を使うか？ 使う:1 使わない:0
 define('USE_MB' , '1');
 
@@ -193,14 +181,30 @@ define('USER_DELETES', '3');
 
 //メール通知クラスのファイル名
 define('NOTICEMAIL_FILE' , 'noticemail.inc');
-//アプレットヘルプのファイル名
-// define('SIIHELP_FILE' , 'siihelp.php');
-
-//define('CHARSET_HTML', 'UTF-8');
 
 //タイムゾーン
 date_default_timezone_set('Asia/Tokyo');
 
+//ペイント画面の$pwdの暗号化
+if(!defined('CRYPT_PASS')){//config.phpで未定義なら初期値が入る
+	define('CRYPT_PASS','qRyFfhV6nyUggSb');//暗号鍵初期値
+}
+define('CRYPT_METHOD','aes-128-cbc');
+define('CRYPT_IV','T3pkYxNyjN7Wz3pu');//半角英数16文字
+
+//指定した日数を過ぎたスレッドのフォームを閉じる
+if(!defined('ELAPSED_DAYS')){//config.phpで未定義なら0
+	define('ELAPSED_DAYS','0');
+}
+//テーマに設定が無ければ代入
+if(!defined('DEF_FONTCOLOR')){//文字色選択初期値
+	define('DEF_FONTCOLOR','null');
+}
+
+if(!defined('ADMIN_DELGUSU')||!defined('ADMIN_DELKISU')){//管理画面の色設定
+	define('ADMIN_DELGUSU',null);
+	define('ADMIN_DELKISU',null);
+}
 
 
 //GD版が使えるかチェック
@@ -253,17 +257,13 @@ function head(&$dat){
 	$dat['self']  = PHP_SELF;
 	$dat['self2'] = PHP_SELF2;
 	$dat['paint'] = USE_PAINT ? true : false;
-
 	$dat['applet'] = APPLET ? true : false;
 	$dat['usepbbs'] = APPLET!=1 ? true : false;
-
 	$dat['ver'] = POTI_VER;
 	$dat['verlot'] = POTI_VERLOT;
 	$dat['tver'] = TEMPLATE_VER;
-
 	$dat['userdel'] = USER_DELETES;
 	$dat['charset'] = 'UTF-8';
-
 	$dat['skindir'] = SKIN_DIR;
 
 //OGPイメージ シェアボタン
@@ -283,14 +283,6 @@ function form(&$dat,$resno,$admin="",$tmp=""){
 	$dat['form'] = true;
 	if(USE_PAINT){
 
-		//v1.32のMONO WHITEでコメントアウト、対応テンプレートが無いパレット選択用	データ(selectタグ用option配列)
-		//		$dat['palette'] = '';
-		//		$lines = file(PALETTEFILE);
-		//		foreach ( $lines as $line ) {
-		//			$line=preg_replace("/[\t\r\n]/","",$line);
-		//			list($pid,$pname,) = explode(",", $line);
-		//			$dat['palette'] .= '<option value="'.$pid.'">'.CleanStr($pname)."</option>\n";
-		//		}
 		$dat['pdefw'] = PDEF_W;
 		$dat['pdefh'] = PDEF_H;
 		$dat['anime'] = USE_ANIME ? true : false;
@@ -350,7 +342,6 @@ function form(&$dat,$resno,$admin="",$tmp=""){
 	$dat['maxw']    = $resno ? MAX_RESW : MAX_W;
 	$dat['maxh']    = $resno ? MAX_RESH : MAX_H;
 	$dat['addinfo'] = $addinfo;
-	//$dat['potitag'] = USE_POTITAG ? true : false;
 
 	//文字色
 	if(USE_FONTCOLOR){
@@ -559,15 +550,10 @@ function updatelog($resno=0){
 			//TAB
 			$tab=$oya+1;
 			//文字色
-			if(!defined('DEF_FONTCOLOR')){//DEF_FONTCOLORの設定がないテンプレートの場合
-				define('DEF_FONTCOLOR','null');
-			}
 			$fontcolor = $fcolor ? $fcolor : DEF_FONTCOLOR;
 			// var_dump($fontcolor);
 			//<br />を<br>へ
 			$com = preg_replace("{<br( *)/>}i","<br>",$com);
-			//独自タグ変換
-			//if(USE_POTITAG) $com = potitag($com);
 			//メタタグに使うコメントから
 			//タグを除去
 			$descriptioncom=strip_tags($com);
@@ -1114,7 +1100,6 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 	if($buf==''){error(MSG019,$dest);}
 	$buf = charconvert($buf);
 	$line = explode("\n",$buf);
-//	$countline=count($line);
 	foreach($line as $i =>&$value){//$i必要
 		if($value!==""){//190624
 			list($artno,)=explode(",", rtrim($value));	//逆変換テーブル作成
@@ -1499,7 +1484,8 @@ function usrdel($del,$pwd){
 			set_file_buffer($fp, 0);
 			rewind($fp);
 			$newline = implode('', $line);
-			fwrite($fp, charconvert($newline));
+			// fwrite($fp, charconvert($newline));
+			fwrite($fp,$newline);
 		}
 		fflush($fp);
 		flock($fp, LOCK_UN);
@@ -1565,7 +1551,8 @@ function admindel($pass){
 			set_file_buffer($fp, 0);
 			rewind($fp);
 			$newline = implode('', $line);
-			fwrite($fp, charconvert($newline));
+			// fwrite($fp, charconvert($newline));
+			fwrite($fp,$newline);
 		}
 		fflush($fp);
 		flock($fp, LOCK_UN);
@@ -1605,10 +1592,6 @@ function admindel($pass){
 			$clip = "";
 			$size = 0;
 			$chk= "";
-		}
-		if(!defined('ADMIN_DELGUSU')||!defined('ADMIN_DELKISU')){//テンプレートに設定が無かったら
-			define('ADMIN_DELGUSU',null);
-			define('ADMIN_DELKISU',null);
 		}
 		$bg = ($j % 2) ? ADMIN_DELGUSU : ADMIN_DELKISU;//背景色
 
