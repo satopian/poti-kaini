@@ -2,7 +2,7 @@
 <html lang="ja">
 	<head>
 		<meta charset="<% echo(charset) %>">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+		<meta name="viewport" content="width=device-width">
 		<script>
 			var css = GetCookie("CSS");
 			if(css == ""){css = "<% echo(skindir) %>css/mono_main.css";}
@@ -30,7 +30,6 @@
 			<link rel="stylesheet" href="<% echo(skindir) %>css/mono_main.css" type="text/css">
 		</noscript>
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.6/css/all.css">
-		<link rel="stylesheet" href="<% echo(skindir) %>css/swipebox.css">
 		<title><% echo(title) %></title>
 		<% def(notres) %>
 		<% def(n) %>
@@ -244,6 +243,11 @@
 							<% each(oya/res) %>
 							<hr>
 							<article>
+								<h4>
+									<span class="oyaresno">[<% echo(oya/res/no) %>]</span>
+									<span class="rsub"><% echo(oya/res/sub) %></span> :
+									<span class="name"><% def(oya/res/email) %><a href="mailto:<% echo(oya/res/email) %>"><% /def %><% echo(oya/res/name) %><% def(oya/res/email) %></a><% /def %></span><span class="trip"><% echo(oya/res/trip) %></span> : <% echo(oya/res/now) %><% def(oya/res/id) %> ID : <% echo(oya/res/id) %><% /def %><% def(oya/res/url) %> <span class="url">[<a href="<% echo(oya/res/url) %>" target="_blank" rel="nofollow noopener noreferrer">URL</a>]</span><% /def %><% def(oya/res/updatemark) %> <% echo(oya/res/updatemark) %><% /def %>
+								</h4>
 								<% def(oya/res/src) %>
 								<figure>
 									<figcaption><a href="<% echo(oya/res/src) %>" title="<% echo(oya/res/sub) %>" target="_blank" ><% echo(oya/res/srcname) %></a> (<% echo(oya/res/size) %> B)<% def(oya/res/thumb) %> - サムネイル表示中 - <% /def %><br><% def(oya/res/painttime) %> PaintTime :<% echo(oya/res/painttime) %><% /def %><% def(oya/res/continue) %> <a href="<% echo(self) %>?mode=continue&amp;no=<% echo(oya/res/continue) %>">続きを描く</a><% /def %></figcaption>
@@ -254,11 +258,6 @@
 									<% /def %>
 								</figure>
 								<% /def %>
-								<h4>
-									<span class="oyaresno">[<% echo(oya/res/no) %>]</span>
-									<span class="rsub"><% echo(oya/res/sub) %></span> :
-									<span class="name"><% def(oya/res/email) %><a href="mailto:<% echo(oya/res/email) %>"><% /def %><% echo(oya/res/name) %><% def(oya/res/email) %></a><% /def %></span><span class="trip"><% echo(oya/res/trip) %></span> : <% echo(oya/res/now) %><% def(oya/res/id) %> ID : <% echo(oya/res/id) %><% /def %><% def(oya/res/url) %> <span class="url">[<a href="<% echo(oya/res/url) %>" target="_blank" rel="nofollow noopener noreferrer">URL</a>]</span><% /def %><% def(oya/res/updatemark) %> <% echo(oya/res/updatemark) %><% /def %>
-								</h4>
 								<article>
 									<p><% echo(oya/res/com) %></p>
 								</article>
