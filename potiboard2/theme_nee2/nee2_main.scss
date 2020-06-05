@@ -183,11 +183,11 @@ ul.menu {
 	font-size: smaller;
 }
 #appstage {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	.app {
-		margin: 0px 4px;
+	display: block;
+	text-align: center;
+	> * {
+		display: inline-block;
+		vertical-align: middle;
 	}
 }
 .NEO {
