@@ -2,16 +2,16 @@
 
 
 document.addEventListener("DOMContentLoaded", function() {
-    Neo.init();
-
-    if (!navigator.userAgent.match("Electron")) {
-        Neo.start();
+    if (Neo.init()) {
+        if (!navigator.userAgent.match("Electron")) {
+            Neo.start();
+        }
     }
 });
 
 var Neo = function() {};
 
-Neo.version = "1.5.6";
+Neo.version = "1.5.7";
 Neo.painter;
 Neo.fullScreen = false;
 Neo.uploaded = false;
@@ -77,9 +77,10 @@ Neo.init = function() {
                     }
                 });
             }
-            break;
+            return true;
         }
     }
+    return false;
 };
 
 Neo.init2 = function() {
@@ -214,13 +215,9 @@ Neo.fixConfig = function(value) {
 };
 
 Neo.getStyleSheet = function() {
-    var sheet = document.styleSheets[0];
-    if (!sheet) {
-        var style = document.createElement("style");
-        document.head.appendChild(style); // must append before you can access sheet property
-        sheet = style.sheet;
-    }
-    return sheet;
+    var style = document.createElement("style");
+    document.head.appendChild(style);
+    return  style.sheet;
 };
 
 Neo.initSkin = function() {
@@ -755,7 +752,7 @@ Neo.openURL = function(url) {
 Neo.submit = function(board, blob, thumbnail, thumbnail2) {
     var url = board + Neo.config.url_save;
     var headerString = Neo.str_header || "";
-    console.log("submit url=" + url + " header=" + headerString);
+    // console.log("submit url=" + url + " header=" + headerString);
 
     if (document.paintBBSCallback) {
         var result = document.paintBBSCallback('check')
@@ -893,7 +890,7 @@ Neo.createContainer = function(applet) {
 
     var html =
         '<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>' +
-        '<div id="pageView" style="width:450px; height:470px; margin:auto;">' +
+        '<div id="pageView" style="width:450px; height:470px;">' +
         '<div id="container" style="visibility:hidden;" class="o">' +
         '<div id="center" class="o">' +
         '<div id="painterContainer" class="o">' +
@@ -1012,13 +1009,13 @@ Neo.setToolSide = function(side) {
     Neo.toolSide = !!side;
 
     if (!Neo.toolSide) {
-        Neo.addRule(".NEO #toolsWrapper", "right", "0");
+        Neo.addRule(".NEO #toolsWrapper", "right", "-3px");
         Neo.addRule(".NEO #toolsWrapper", "left", "auto");
         Neo.addRule(".NEO #painterWrapper", "padding", "0 55px 0 0 !important");
         Neo.addRule(".NEO #upper", "padding-right", "75px !important");
     } else {
         Neo.addRule(".NEO #toolsWrapper", "right", "auto");
-        Neo.addRule(".NEO #toolsWrapper", "left", "0");
+        Neo.addRule(".NEO #toolsWrapper", "left", "-3px");
         Neo.addRule(".NEO #painterWrapper", "padding", "0 0 0 55px !important");
         Neo.addRule(".NEO #upper", "padding-right", "20px !important");
     }
@@ -1495,7 +1492,14 @@ Neo.Painter.prototype._initCanvas = function(div, width, height) {
         document.onkeydown = function(e) {ref._keyDownHandler(e)};
         document.onkeyup = function(e) {ref._keyUpHandler(e)};
     }
-    
+
+    if (!(Neo.config.neo_enable_history_back == "true")) {
+        history.pushState(null, document.title, location.href);
+        window.addEventListener("popstate", function (e) {
+          history.pushState(null, document.title, location.href);
+        });
+    }
+  
     this.updateDestCanvas(0, 0, this.canvasWidth, this.canvasHeight);
 };
 
@@ -1634,7 +1638,12 @@ Neo.Painter.prototype._keyDownHandler = function(e) {
     }
 
     //スペース・Shift+スペースででスクロールしないように
-    if (document.activeElement != this.inputText) e.preventDefault();
+    // if (document.activeElement != this.inputText) e.preventDefault();
+    // console.log(document.activeElement.tagName)
+    if ((document.activeElement != this.inputText) &&
+        !(document.activeElement.tagName == "INPUT")) {
+        e.preventDefault();
+    }
 };
 
 Neo.Painter.prototype._keyUpHandler = function(e) {
@@ -5277,7 +5286,6 @@ Neo.SubmitCommand = function(data) {this.data = data};
 Neo.SubmitCommand.prototype = new Neo.CommandBase();
 Neo.SubmitCommand.prototype.execute = function() {
     var board = location.href.replace(/[^/]*$/, '');
-    console.log("submit: " + board);
     this.data.submit(board);
 };
 
@@ -6042,42 +6050,31 @@ Neo.createViewer = function(applet) {
     var neo = document.createElement("div");
     neo.className = "NEO";
     neo.id = "NEO";
-    var html = (function() {/*
-<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 
-<div id="pageView" style="margin:auto;">
-<div id="container" style="visibility:visible;" class="o">
-
-<div id="painter" style="background-color:white;">
-<div id="canvas" style="background-color:white;">
-</div>
-</div>
-
-
-<div id="viewerButtonsWrapper" style="display:block;">
-<div id="viewerButtons" style="display:block;">
-
-<div id="viewerPlay"></div>
-<div id="viewerStop"></div>
-<div id="viewerRewind"></div>
-<div id="viewerSpeed" style="padding-left:2px; margin-top: 1px;">ほ</div>
-<div id="viewerPlus"></div>
-<div id="viewerMinus"></div>
-
-<div id="viewerBar" style="display:inline-block;">
-<!--
-  <div id="viewerBarLeft" style="width:calc(50% - 2px); height:16px; position: absolute; top: 1px; left: 1px;"></div>
-  <div id="viewerBarMark" style="background-color:red; width:1px; height:16px; position:absolute; top:1px; left:1px;"></div>
--->
-</div>
-</div>
-
-</div>
-</div>
-                                 */}).toString().match(/\/\*([^]*)\*\//)[1];
-
+    var html =
+        '<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>' +
+        '<div id="pageView">' +
+        '<div id="container" style="visibility:visible;" class="o">' +
+        '<div id="painter" style="background-color:white;">' +
+        '<div id="canvas" style="background-color:white;">' +
+        '</div>' +
+        '</div>' +
+        '<div id="viewerButtonsWrapper" style="display:block;">' +
+        '<div id="viewerButtons" style="display:block;">' +
+        '<div id="viewerPlay"></div>' +
+        '<div id="viewerStop"></div>' +
+        '<div id="viewerRewind"></div>' +
+        '<div id="viewerSpeed" style="padding-left:2px; margin-top: 1px;"></div>' +
+        '<div id="viewerPlus"></div>' +
+        '<div id="viewerMinus"></div>' +
+        '<div id="viewerBar" style="display:inline-block;">' +
+        '</div>' +
+        '</div>' +
+        '</div>' +
+        '</div>';
+  
     neo.innerHTML = html.replace(/\[(.*?)\]/g, function(match, str) {
-	return Neo.translate(str)
+	      return Neo.translate(str)
     })
     
     var parent = applet.parentNode;
@@ -6161,9 +6158,13 @@ Neo.initViewer = function(pch) {
 };
 
 Neo.startViewer = function() {
-    var name = Neo.applet.attributes.name.value || "pch";
-    if (!document[name]) document[name] = Neo;
-    Neo.applet.parentNode.removeChild(Neo.applet);
+    if (Neo.applet) {
+      var name = Neo.applet.attributes.name.value || "pch";
+      if (!document[name]) document[name] = Neo;
+      if (Neo.applet.parentNode) {
+          Neo.applet.parentNode.removeChild(Neo.applet);
+      }
+    }
 
     Neo.styleSheet = Neo.getStyleSheet();
     var lightBack = Neo.multColor(Neo.config.color_back, 1.3);
@@ -6236,33 +6237,36 @@ Neo.getPCH = function(filename, callback) {
     request.open("GET", filename, true);
     request.responseType = "arraybuffer";
     request.onload = function() {
-        var byteArray = new Uint8Array(request.response);
-//      var data = LZString.decompressFromUint8Array(byteArray.slice(12));
-//      var header = byteArray.slice(0, 12);
-        var data = LZString.decompressFromUint8Array(byteArray.subarray(12));
-        var header = byteArray.subarray(0, 12);
-
-        if ((header[0] == "N".charCodeAt(0)) &&
-            (header[1] == "E".charCodeAt(0)) &&
-            (header[2] == "O".charCodeAt(0))) {
-            var width = header[4] + header[5] * 0x100
-            var height = header[6] + header[7] * 0x100
-
-            //console.log('NEO animation:', width, 'x', height);
-            if (callback) {
-                var items = Neo.fixPCH(JSON.parse(data))
-                callback({
-                    width:width,
-                    height:height,
-                    data:items
-                });
-            }
-            
+        var pch = Neo.decodePCH(request.response);
+        if (pch) {
+            if (callback) callback(pch);
         } else {
-            console.log('not a NEO animation:');
+            console.log('not a NEO animation');
         }
     }
-    request.send();
+  request.send();
+};
+
+Neo.decodePCH = function(rawdata) {
+    var byteArray = new Uint8Array(rawdata);
+    var data = LZString.decompressFromUint8Array(byteArray.subarray(12));
+    var header = byteArray.subarray(0, 12);
+
+    if ((header[0] == "N".charCodeAt(0)) &&
+        (header[1] == "E".charCodeAt(0)) &&
+        (header[2] == "O".charCodeAt(0))) {
+        var width = header[4] + header[5] * 0x100
+        var height = header[6] + header[7] * 0x100
+        var items = Neo.fixPCH(JSON.parse(data))
+        return {
+            width:width,
+            height:height,
+            data:items
+        };
+
+    } else {
+        return null;
+    }
 };
 
 Neo.fixPCH = function(items) {
