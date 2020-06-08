@@ -44,8 +44,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.6.5');
-define('POTI_VERLOT' , 'v2.6.5 lot.200603');
+define('POTI_VER' , 'v2.6.6');
+define('POTI_VERLOT' , 'v2.6.6 lot.200609');
 
 if(phpversion()>="5.5.0"){
 //スパム無効化関数
@@ -2040,7 +2040,7 @@ function paintcom($resto=''){
 /* 動画表示 */
 function openpch($pch,$sp=""){
 	global $shi;
-
+	$stime = time();
 	$picfile = IMG_DIR.$pch;
 	$pch = str_replace( strrchr($pch,"."), "", $pch); //拡張子除去
 	if($shi==1){
@@ -2073,6 +2073,7 @@ function openpch($pch,$sp=""){
 	$dat['pchfile'] = './'.$pchfile;
 	$dat['speed'] = $sp;
 	$dat['datasize'] = $datasize;
+	$dat['stime'] = $stime;
 	htmloutput(SKIN_DIR.PAINTFILE,$dat);
 }
 
