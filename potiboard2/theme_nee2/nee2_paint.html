@@ -17,13 +17,13 @@
 		<% def(pch_mode) %><meta name="viewport" content="width=device-width,initial-scale=1.0"><% /def %>
 		<% def(continue_mode) %><meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0"><% /def %>
 		<% def(useneo) %>
-		<link rel="stylesheet" href="neo.css" type="text/css">
-		<script src="neo.js" charset="UTF-8"></script>
+		<link rel="stylesheet" href="neo.css?<% echo(stime) %>" type="text/css">
+		<script src="neo.js?<% echo(stime) %>" charset="UTF-8"></script>
 		<% /def %>
 		<% def(paintbbs) %>
 		<% def(pch_mode) %>
-		<link rel="stylesheet" href="neo.css" type="text/css" />
-		<script src="neo.js" charset="UTF-8"></script>
+		<link rel="stylesheet" href="neo.css?<% echo(stime) %>" type="text/css" />
+		<script src="neo.js?<% echo(stime) %>" charset="UTF-8"></script>
 		<% /def %>
 		<% elsedef %>
 		<!-- Javaが使えるかどうか判定 使えなければcheerpJをロード -->
