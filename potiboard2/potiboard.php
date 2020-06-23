@@ -38,14 +38,14 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 配布条件はレッツPHP!に準じます。改造、再配布は自由にどうぞ。
 
-このスクリプトの改造部分に関する質問は「レッツPHP!」,
+このスクリプトの改造部分に関する質問は「レッツPHP!」
 「ふたば★ちゃんねる」「ぷにゅねっと」に問い合わせないでください。
 ご質問は、<https://poti-k.info/>までどうぞ。
 */
 
 //バージョン
-define('POTI_VER' , 'v2.6.6');
-define('POTI_VERLOT' , 'v2.6.6 lot.200609');
+define('POTI_VER' , 'v2.6.7');
+define('POTI_VERLOT' , 'v2.6.7 lot.200622');
 
 if(phpversion()>="5.5.0"){
 //スパム無効化関数
@@ -198,7 +198,7 @@ if(!defined('ELAPSED_DAYS')){//config.phpで未定義なら0
 }
 //テーマに設定が無ければ代入
 if(!defined('DEF_FONTCOLOR')){//文字色選択初期値
-	define('DEF_FONTCOLOR','null');
+	define('DEF_FONTCOLOR',null);
 }
 
 if(!defined('ADMIN_DELGUSU')||!defined('ADMIN_DELKISU')){//管理画面の色設定
