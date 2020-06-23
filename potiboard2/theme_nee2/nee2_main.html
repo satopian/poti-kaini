@@ -205,12 +205,12 @@
 							<% each(oya/res) %>
 							<hr>
 							<section>
-								<% def(oya/res/src) %>
 								<h4>
 									<span class="oyaresno"><% echo(oya/res/no) %></span>
 									<span class="rsub"><% echo(oya/res/sub) %></span> :
 									<span class="name"><% def(oya/res/email) %><a href="mailto:<% echo(oya/res/email) %>"><% /def %><% echo(oya/res/name) %><% def(oya/res/email) %></a><% /def %></span><span class="trip"><% echo(oya/res/trip) %></span> : <% echo(oya/res/now) %><% def(oya/res/id) %> ID : <% echo(oya/res/id) %><% /def %><% def(oya/res/url) %> <span class="button"><a href="<% echo(oya/res/url) %>" target="_blank" rel="nofollow noopener noreferrer"><i class="fas fa-flag-checkered"></i> URL</a></span><% /def %><% def(oya/res/updatemark) %> <% echo(oya/res/updatemark) %><% /def %>
 								</h4>
+								<% def(oya/res/src) %>
 								<figure>
 									<figcaption><a href="<% echo(oya/res/src) %>"   data-lightbox="a<% echo(oya/res/no) %>" data-title="<% echo(oya/res/srcname) %>"><% echo(oya/res/srcname) %></a> (<% echo(oya/res/size) %> B)<% def(oya/res/thumb) %> - サムネイル表示中 - <% /def %><br><% def(oya/res/painttime) %> PaintTime :<% echo(oya/res/painttime) %><% /def %><% def(oya/res/continue) %> <a href="<% echo(self) %>?mode=continue&amp;no=<% echo(oya/res/continue) %>">続きを描く</a><% /def %></figcaption>
 									<a href="<% echo(oya/res/src) %>" data-lightbox="b<% echo(oya/res/no) %>" data-title="<% echo(oya/res/srcname) %>"><img src="<% echo(oya/res/imgsrc) %>" alt="<% echo(oya/res/srcname) %>"></a>
