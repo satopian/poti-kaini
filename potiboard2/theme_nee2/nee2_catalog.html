@@ -22,34 +22,6 @@
 				<hr>
 				<h2>カタログモード</h2>
 				<hr>
-				<% def(paint) %>
-				<section class="epost">
-					<form action="<% echo(self) %>" method="post" enctype="multipart/form-data">
-						<p>
-							<% def(applet) %>
-							<!-- しぃペインター通常版 -->
-							<input type="hidden" name="shi" value="1">
-							<% /def %>
-							<label>幅：<input class="form" type="text" name="picw" value="<% echo(pdefw) %>" size="4"></label>
-							<label>高さ：<input class="form" type="text" name="pich" value="<% echo(pdefh) %>" size="3"></label>
-							<% def(resno) %>
-							<input type="hidden" name="resto" value="<% echo(resno) %>">
-							<% /def %>
-							<input type="hidden" name="mode" value="paint">
-							<input class="button" type="submit" value="お絵かき">
-						</p>
-					</form>
-					<% def(paint2) %>
-					<ul>
-						<li>お絵かきできる画像のサイズは横 300～<% echo (pmaxw) %>、縦 300～<% echo (pmaxh) %>の範囲内です。</li>
-						<li>画像は横 <% echo (maxw) %>ピクセル、縦 <% echo (maxh) %>ピクセルを超えると縮小表示されます。</li>
-						<li>USE NEOのチェックが入っていればPaintBBS NEOが起動します。</li>
-						<% def(addinfo) %><% echo (addinfo) %><% /def %>
-					</ul>
-					<% /def %>
-				</section>
-				<% /def %>
-				<hr>
 				<section>
 					<form class="delf" action="<% echo(self) %>" method="post">
 						<p>
