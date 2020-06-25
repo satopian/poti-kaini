@@ -1,6 +1,6 @@
 <?php
 /*
-  * POTI-board改二 v2.6.7 lot.200622
+  * POTI-board改二 v2.6.8 lot.200625
   * by sakots >> https://poti-k.info/
   *
   * POTI-board改二の設定ファイルです。
@@ -189,10 +189,8 @@ define('UNDO', '90');
 //アンドゥを幾つにまとめて保存しておくか(デフォルト)
 define('UNDO_IN_MG', '45');
 
-//画像のデータがこの値より大きくなるとき、
-//・保存タイプが AUTOの場合、JPEGに変換
-//・保存タイプが PNG の場合、減色処理
-//ただし、保存タイプが JPEGの場合は、この値を無視してJPEGに変換
+//画像のデータがこの値より大きくなる時はJPEGに変換
+//アップロードしたpng画像もここの設定値より大きな時はJPEGになります
 define('IMAGE_SIZE', '800');
 
 //PNGの減色率とJPEGの圧縮率
@@ -352,7 +350,7 @@ define('USE_THUMB', '1');
 define('THUMB_SELECT', '0');
 
 //サムネイルの品質  0(品質は最低、サイズは小)～100(品質は最高、サイズは大)の範囲内
-define('THUMB_Q', '75');
+define('THUMB_Q', '92');
 
 //GD2のImageCopyResampledでサムネイルの画質向上 させる:1 させない:0
 //自動判別なので通常は 1 でOK.不具合がある場合のみ 0 にして下さい
