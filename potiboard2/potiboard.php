@@ -332,7 +332,7 @@ function form(&$dat,$resno,$admin="",$tmp=""){
 		$dat['ptime'] = $ptime;
 	}
 
-	$dat['maxbyte'] = 2048 * 1024;//フォームのHTMLによるファイルサイズの規制 2Mまで
+	$dat['maxbyte'] = 2048 * 1024;//フォームのHTMLによるファイルサイズの制限 2Mまで
 	$dat['usename'] = USE_NAME ? ' *' : '';
 	$dat['usesub']  = USE_SUB ? ' *' : '';
 	if(USE_COM||($resno&&!RES_UPLOAD)) $dat['usecom'] = ' *';
