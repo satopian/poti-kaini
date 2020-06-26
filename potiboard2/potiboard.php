@@ -44,8 +44,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.6.7');
-define('POTI_VERLOT' , 'v2.6.7 lot.200622');
+define('POTI_VER' , 'v2.6.8');
+define('POTI_VERLOT' , 'v2.6.8 lot.200625');
 
 if(phpversion()>="5.5.0"){
 //スパム無効化関数
@@ -332,13 +332,13 @@ function form(&$dat,$resno,$admin="",$tmp=""){
 		$dat['ptime'] = $ptime;
 	}
 
-	$dat['maxbyte'] = MAX_KB * 1024;
+	$dat['maxbyte'] = 2048 * 1024;//フォームのHTMLによるファイルサイズの制限 2Mまで
 	$dat['usename'] = USE_NAME ? ' *' : '';
 	$dat['usesub']  = USE_SUB ? ' *' : '';
 	if(USE_COM||($resno&&!RES_UPLOAD)) $dat['usecom'] = ' *';
 	//本文必須の設定では無い時はレスでも画像かコメントがあれば通る
 	if((!$resno && !$tmp) || (RES_UPLOAD && !$tmp)) $dat['upfile'] = true;
-	$dat['maxkb']   = MAX_KB;
+	$dat['maxkb']   = MAX_KB;//実際にアップロードできるファイルサイズ
 	$dat['maxw']    = $resno ? MAX_RESW : MAX_W;
 	$dat['maxh']    = $resno ? MAX_RESH : MAX_H;
 	$dat['addinfo'] = $addinfo;
@@ -889,7 +889,16 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 		else{
 			$is_file_dest=true;
 		} 
-		if(filesize($dest) > MAX_KB * 1024){error(MSG034,$dest);} 	//追加(v1.32)
+		if(filesize($dest) > IMAGE_SIZE * 1024 || filesize($dest) > MAX_KB * 1024){//指定サイズを超えていたら
+			if(mime_content_type($dest)==="image/png" && gd_check()&&function_exists("ImageCreateFromPNG")){//pngならJPEGに変換
+				$im_in=ImageCreateFromPNG($dest);
+				ImageJPEG($im_in,$dest,92);
+			}
+		}
+		clearstatcache();
+		if(filesize($dest) > MAX_KB * 1024){//ファイルサイズ再チェック
+		error(MSG034,$dest);
+		}
 		$size = getimagesize($dest);
 		$img_type=mime_content_type($dest);//190603
 		if($img_type==="image/gif"||$img_type==="image/jpeg"||$img_type==="image/png"){//190603
@@ -2374,7 +2383,7 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 	$com = str_replace("\r", "\n", $com);
 	// 連続する空行を一行
 	$com = preg_replace("#\n((　| )*\n){3,}#","\n",$com);
-	$com = nl2br($com,);		//改行文字の前に<br>を代入する
+	$com = nl2br($com);		//改行文字の前に<br>を代入する
 	$com = str_replace("\n", "", $com);	//\nを文字列から消す
 
 	$name=preg_replace("/◆/","◇",$name);
@@ -2549,12 +2558,19 @@ function replace($no,$pwd,$stime){
 	//画像差し替えに管理パスは使っていない
 		if($eno == $no && (password_verify($pwd,$epwd)||$epwd=== substr(md5($pwd),2,8))){
 			$upfile = $temppath.$file_name.$imgext;
-			$dest = $path.$tim.$imgext;
+			$dest = $path.$tim;//拡張子なし
 			copy($upfile, $dest);
+
+			if(filesize($dest) > IMAGE_SIZE * 1024 || filesize($dest) > MAX_KB * 1024){//指定サイズを超えていたら
+				if(mime_content_type($dest)==="image/png" && gd_check() && function_exists("ImageCreateFromPNG")){//pngならJPEGに変換
+					$im_in=ImageCreateFromPNG($dest);
+					ImageJPEG($im_in,$dest,92);
+				}
+			}
+
 			if(!is_file($dest)) error(MSG003,$dest);
-			// $size = getimagesize($dest);
-			//			if(!is_array($size)) error(MSG004,$dest);
-		$img_type=mime_content_type($dest);//190603
+
+		$img_type=mime_content_type($dest);
 		if($img_type==="image/gif"||$img_type==="image/jpeg"||$img_type==="image/png"){//190603
 			$chk = md5_file($dest);
 			foreach($badfile as $value){
@@ -2562,8 +2578,15 @@ function replace($no,$pwd,$stime){
 				error(MSG005,$dest); //拒絶画像
 				}
 			}
-
+			switch ($img_type) {//拡張子
+				case "image/gif" : $imgext=".gif";break;
+				case "image/jpeg" : $imgext=".jpg";break;
+				case "image/png" : $imgext=".png";break;
+				default : error(MSG004,$dest);
+			}
+	
 			chmod($dest,0606);
+			rename($dest,$dest.$imgext);
 			$mes = "画像のアップロードが成功しました<br><br>";
 			}
 		else{
