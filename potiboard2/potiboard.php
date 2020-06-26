@@ -44,8 +44,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.6.8');
-define('POTI_VERLOT' , 'v2.6.8 lot.200625');
+define('POTI_VER' , 'v2.6.9');
+define('POTI_VERLOT' , 'v2.6.9 lot.200626');
 
 if(phpversion()>="5.5.0"){
 //スパム無効化関数
@@ -890,9 +890,10 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 			$is_file_dest=true;
 		} 
 		if(filesize($dest) > IMAGE_SIZE * 1024 || filesize($dest) > MAX_KB * 1024){//指定サイズを超えていたら
-			if(mime_content_type($dest)==="image/png" && gd_check()&&function_exists("ImageCreateFromPNG")){//pngならJPEGに変換
+			if(mime_content_type($dest)==="image/png" && gd_check() && function_exists("ImageCreateFromPNG")){//pngならJPEGに変換
 				$im_in=ImageCreateFromPNG($dest);
 				ImageJPEG($im_in,$dest,92);
+				ImageDestroy($im_in);// 作成したイメージを破棄
 			}
 		}
 		clearstatcache();
@@ -2558,20 +2559,20 @@ function replace($no,$pwd,$stime){
 	//画像差し替えに管理パスは使っていない
 		if($eno == $no && (password_verify($pwd,$epwd)||$epwd=== substr(md5($pwd),2,8))){
 			$upfile = $temppath.$file_name.$imgext;
-			$dest = $path.$tim;//拡張子なし
+			$dest = $path.$tim.'.tmp';
 			copy($upfile, $dest);
-
+			
+			if(!is_file($dest)) error(MSG003,$dest);
 			if(filesize($dest) > IMAGE_SIZE * 1024 || filesize($dest) > MAX_KB * 1024){//指定サイズを超えていたら
 				if(mime_content_type($dest)==="image/png" && gd_check() && function_exists("ImageCreateFromPNG")){//pngならJPEGに変換
 					$im_in=ImageCreateFromPNG($dest);
 					ImageJPEG($im_in,$dest,92);
+					ImageDestroy($im_in);// 作成したイメージを破棄
 				}
 			}
 
-			if(!is_file($dest)) error(MSG003,$dest);
-
-		$img_type=mime_content_type($dest);
-		if($img_type==="image/gif"||$img_type==="image/jpeg"||$img_type==="image/png"){//190603
+			$img_type=mime_content_type($dest);
+			if($img_type==="image/gif"||$img_type==="image/jpeg"||$img_type==="image/png"){//190603
 			$chk = md5_file($dest);
 			foreach($badfile as $value){
 				if(preg_match("/^$value/",$chk)){
@@ -2586,12 +2587,12 @@ function replace($no,$pwd,$stime){
 			}
 	
 			chmod($dest,0606);
-			rename($dest,$dest.$imgext);
+			rename($dest,$path.$tim.$imgext);
 			$mes = "画像のアップロードが成功しました<br><br>";
 			}
-		else{
-		error(MSG004,$dest);
-		}
+			else{
+			error(MSG004,$dest);
+			}
 			//差し換え前と同じ大きさのサムネイル作成
 			if(USE_THUMB) thumb($path,$tim,$imgext,$W,$H);
 			//ワークファイル削除
