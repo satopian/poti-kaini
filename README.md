@@ -6,7 +6,7 @@ phpお絵かき掲示板スクリプトPOTI-boardをさらに改良していく�
 php5.5～ 対応。
   
 <a href="https://github.com/funige/neo/">PaintBBS NEO</a>  
-<a href="https://github.com/sakots/poti-kai/">POTI-board改</a>  
+~~POTI-board改~~ POTI-board改は保守作業およびサポートを終了しました。
 
 ## ！デジタルインク(windows Ink)の機能について！
 
