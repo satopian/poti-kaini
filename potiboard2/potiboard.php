@@ -44,8 +44,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.6.9');
-define('POTI_VERLOT' , 'v2.6.9 lot.200626');
+define('POTI_VER' , 'v2.7.0');
+define('POTI_VERLOT' , 'v2.7.0 lot.200630');
 
 if(phpversion()>="5.5.0"){
 //スパム無効化関数
@@ -2055,12 +2055,26 @@ function openpch($pch,$sp=""){
 	$pch = str_replace( strrchr($pch,"."), "", $pch); //拡張子除去
 	if($shi==1){
 		$dat['normal'] = true;
-		$pchfile = PCH_DIR.$pch.'.spch';
+		$ext = '.spch';
+		$pchfile = PCH_DIR.$pch.$ext;
 	}else{
 		$dat['paintbbs'] = true;
-		$pchfile = PCH_DIR.$pch.'.pch';
+		$ext = '.pch';
+		$pchfile = PCH_DIR.$pch.$ext;
 	}
 	if(is_file($pchfile)){//動画が無い時は処理しない
+
+		if($ext==='.pch'){//neoのpchかどうか調べる
+			$dat['type_neo']=false;
+			$fp = fopen("$pchfile", "rb");
+				$line = bin2hex(fgets($fp ,4096)) ;
+				$line = substr($line,0,6);
+				if($line==="4e454f"){
+				$dat['type_neo'] = true;//neoのpch
+				}
+			fclose($fp);
+		}
+		
 	$datasize = filesize($pchfile);
 	$size = getimagesize($picfile);
 	if(!$sp) $sp = PCH_SPEED;
