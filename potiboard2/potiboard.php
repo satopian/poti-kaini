@@ -44,8 +44,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.7.0');
-define('POTI_VERLOT' , 'v2.7.0 lot.200630');
+define('POTI_VER' , 'v2.7.1');
+define('POTI_VERLOT' , 'v2.7.1 lot.200701');
 
 if(phpversion()>="5.5.0"){
 //スパム無効化関数
@@ -2062,16 +2062,15 @@ function openpch($pch,$sp=""){
 		$ext = '.pch';
 		$pchfile = PCH_DIR.$pch.$ext;
 	}
+	$dat['type_neo']=false;
 	if(is_file($pchfile)){//動画が無い時は処理しない
 
 		if($ext==='.pch'){//neoのpchかどうか調べる
-			$dat['type_neo']=false;
 			$fp = fopen("$pchfile", "rb");
-				$line = fgets($fp ,4096);
-				$line = substr($line,0,3);
-				if($line==="NEO"){
+			$magic=fread($fp,3);//3byte
+				if($magic==="NEO"){
 				$dat['type_neo'] = true;//neoのpch
-				}
+			}
 			fclose($fp);
 		}
 		
