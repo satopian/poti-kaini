@@ -2067,9 +2067,9 @@ function openpch($pch,$sp=""){
 		if($ext==='.pch'){//neoのpchかどうか調べる
 			$dat['type_neo']=false;
 			$fp = fopen("$pchfile", "rb");
-				$line = bin2hex(fgets($fp ,4096)) ;
-				$line = substr($line,0,6);
-				if($line==="4e454f"){
+				$line = fgets($fp ,4096);
+				$line = substr($line,0,3);
+				if($line==="NEO"){
 				$dat['type_neo'] = true;//neoのpch
 				}
 			fclose($fp);
