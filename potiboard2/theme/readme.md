@@ -87,6 +87,7 @@ Skinnyのタグは[本家](http://skinny.sx68.net/tag/taglist.html)を見てい�
 
 - def(paint_mode) - お絵かきモードの時のチェックです。
 - def(continue_mode) - 続きを描く時のモードのチェックです。
+- def(type_neo) - 動画再生のときにneoのpchでもCheerpJが起動する事があるため、ファイルの中身を確認する処理です。Java版ならFalseになります。
 - echo(w),echo(h) - アプレットスクリプトの幅と高さです。
 - echo(picw),echo(pich) - キャンバスの幅と高さです。
 - 以下アプレットスクリプト内の説明は今は省略させてください…
