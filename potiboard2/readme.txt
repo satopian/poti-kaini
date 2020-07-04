@@ -5,7 +5,7 @@
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-　このスクリプトは「レッツPHP!」<http://php.s3.to/>の gazou.php を改造
+　このスクリプトは「レッツPHP!」<http://php.loglog.jp/>の gazou.php を改造
 した、「ふたば★ちゃんねる」<http://www.2chan.net/>の futaba.php を、
 さらにお絵かきもできるようにして、HTMLテンプレートでデザイン変更できる
 ように改造した「ぷにゅねっと」<http://www.punyu.net/php/>の
@@ -60,9 +60,7 @@ POTI-board改<https://poti-k.info/>を発展させたものです。
 ■設置方法
 
 ※以下、簡易説明
-
-　srcディレクトリとthumbディレクトリを作ります。(さくらでは自動で作成されます)
-　お絵かき機能を使用する場合は同様にtmpディレクトリも作ります。(さくらでは自動で作成されます)
+potiboard.phpにアクセスするとsrcディレクトリ、thumbディレクトリ、tmpディレクトリが作成されます。
 
 　設定は、config.phpを書き換えて行います。
 　各ファイルを置いたらpotiboard.phpをブラウザから呼出します(必要なファイ
@@ -169,9 +167,6 @@ POTI-board改<https://poti-k.info/>を発展させたものです。
 【オリジナルスクリプト】
 　画像BBS v3.0                       (C)TOR「レッツPHP!」
 　 + futaba.php v0.8 lot.031015      (C)futaba「ふたば★ちゃんねる」
-
-【サムネイル側】
-　repng2jpeg                         (C)すが「菅処」
 
 【テンプレートクラス】
 　Skinny                             (C)Kuasuki

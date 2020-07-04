@@ -13,7 +13,7 @@ define('USE_DUMP_FOR_DEBUG','0');
   *   POTI-board v1.32
   *     (C)SakaQ >> http://www.punyu.net/php/
   *   futaba.php v0.8 lot.031015 (gazou.php v3.0 CUSTOM)
-  *     (C)futaba >> http://www.2chan.net/ ((C)ToR >> http://php.s3.to/)
+  *     (C)futaba >> http://www.2chan.net/ ((C)ToR >> http://php.loglog.jp/)
   *
   * OEKAKI APPLET :
   *   PaintBBS   (test by v2.22_8)
@@ -21,16 +21,15 @@ define('USE_DUMP_FOR_DEBUG','0');
   *   PCHViewer  (test by v1.12)
   *     (C)shi-chan >> http://hp.vector.co.jp/authors/VA016309/
   *
-  * PAINTBBS NEO　
+  * PAINTBBS NEO
   *     (C)funige >> https://github.com/funige/neo/
   *
   * USE FUNCTION :
   *   Skinny.php            (C)Kuasuki   >> http://skinny.sx68.net/
   *   DynamicPalette        (C)NoraNeko  >> (http://wondercatstudio.com/)
-  *   repng2jpeg            (C)SUGA      >> http://sugachan.dip.jp/
   *----------------------------------------------------------------------------------
 
-このスクリプトは「レッツPHP!」<http://php.s3.to/>のgazou.phpを改造した、
+このスクリプトは「レッツPHP!」<http://php.loglog.jp/>のgazou.phpを改造した、
 「ふたば★ちゃんねる」<http://www.2chan.net/>のfutaba.phpを
 さらにお絵かきもできるようにして、HTMLテンプレートでデザイン変更できるように改造した
 「ぷにゅねっと」<http://www.punyu.net/php/>のPOTI-boardを、
@@ -44,8 +43,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.7.1');
-define('POTI_VERLOT' , 'v2.7.1 lot.200701');
+define('POTI_VER' , 'v2.7.2');
+define('POTI_VERLOT' , 'v2.7.2 lot.200704');
 
 if(phpversion()>="5.5.0"){
 //スパム無効化関数
@@ -956,7 +955,9 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 	}
 
 	//本文へのURLの書き込みを禁止
-	if(DENY_COMMENTS_URL && $admin!==$ADMIN_PASS && preg_match('/:\/\/|\.co|\.ly|\.gl|\.net|\.org|\.cc|\.ru|\.su|\.ua|\.gd/i', $com)) error(MSG036,$dest);
+	if(!($pwd===$ADMIN_PASS||$admin===$ADMIN_PASS)){//どちらも一致しなければ
+		if(DENY_COMMENTS_URL && preg_match('/:\/\/|\.co|\.ly|\.gl|\.net|\.org|\.cc|\.ru|\.su|\.ua|\.gd/i', $com)) error(MSG036,$dest);
+	}
 
 	foreach($badstring as $value){//拒絶する文字列
 		if($value===''){
@@ -2294,7 +2295,9 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 	}
 
 	//本文へのURLの書き込みを禁止
-	if(DENY_COMMENTS_URL && $admin!==$ADMIN_PASS && preg_match('/:\/\/|\.co|\.ly|\.gl|\.net|\.org|\.cc|\.ru|\.su|\.ua|\.gd/i', $com)) error(MSG036,$dest);
+	if(!($pwd===$ADMIN_PASS||$admin===$ADMIN_PASS)){//どちらも一致しなければ
+		if(DENY_COMMENTS_URL && preg_match('/:\/\/|\.co|\.ly|\.gl|\.net|\.org|\.cc|\.ru|\.su|\.ua|\.gd/i', $com)) error(MSG036,$dest);
+	}
 
 	foreach($badstring as $value){//拒絶する文字列
 		if($value===''){
