@@ -43,8 +43,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.7.2');
-define('POTI_VERLOT' , 'v2.7.2 lot.200704');
+define('POTI_VER' , 'v2.7.3');
+define('POTI_VERLOT' , 'v2.7.3 lot.200708');
 
 if(phpversion()>="5.5.0"){
 //スパム無効化関数
@@ -888,11 +888,14 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 		else{
 			$is_file_dest=true;
 		} 
+		$im_in=false;
 		if(filesize($dest) > IMAGE_SIZE * 1024 || filesize($dest) > MAX_KB * 1024){//指定サイズを超えていたら
 			if(mime_content_type($dest)==="image/png" && gd_check() && function_exists("ImageCreateFromPNG")){//pngならJPEGに変換
 				$im_in=ImageCreateFromPNG($dest);
-				ImageJPEG($im_in,$dest,92);
-				ImageDestroy($im_in);// 作成したイメージを破棄
+				if($im_in){
+					ImageJPEG($im_in,$dest,98);
+					ImageDestroy($im_in);// 作成したイメージを破棄
+				}
 			}
 		}
 		clearstatcache();
@@ -1858,10 +1861,15 @@ if($admin===$ADMIN_PASS){
 			$dat['image_size'] = 1;
 			$savejpeg = ' selected';
 			break;
-		default:
+		case 'AUTO':
 			$dat['image_jpeg'] = 'true';
 			$dat['image_size'] = IMAGE_SIZE;
 			$saveauto = ' selected';
+			break;
+		default://テーマに設定が無い時
+		$dat['image_jpeg'] = 'false';//PNG
+		$dat['image_size'] = 0;//減色処理なし
+		// $savepng = ' selected';
 	}
 	$dat['savetypes'] = '<option value="AUTO"'.$saveauto.'>AUTO</option>';
 	$dat['savetypes'].= '<option value="PNG"'.$savepng.'>PNG</option>';
@@ -2579,11 +2587,14 @@ function replace($no,$pwd,$stime){
 			copy($upfile, $dest);
 			
 			if(!is_file($dest)) error(MSG003,$dest);
+			$im_in=false;
 			if(filesize($dest) > IMAGE_SIZE * 1024 || filesize($dest) > MAX_KB * 1024){//指定サイズを超えていたら
 				if(mime_content_type($dest)==="image/png" && gd_check() && function_exists("ImageCreateFromPNG")){//pngならJPEGに変換
 					$im_in=ImageCreateFromPNG($dest);
-					ImageJPEG($im_in,$dest,92);
-					ImageDestroy($im_in);// 作成したイメージを破棄
+					if($im_in){
+						ImageJPEG($im_in,$dest,98);
+						ImageDestroy($im_in);// 作成したイメージを破棄
+					}
 				}
 			}
 
