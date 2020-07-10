@@ -45,6 +45,10 @@ config.phpの設定をし、アップロードしてpotiboard.phpにアクセス
 
 ## 履歴
 
+### [2020/07/10]
+
+- テーマ開発用のファイルを削除しリポジトリを分離[poti-kaini-themes](https://github.com/sakots/poti-kaini-themes)
+
 ### [2020/07/10] v2.7.3 lot.200708
 
 - 投稿されたPNG画像が指定kbを超えた時にJPEG化する処理の調整(by さとぴあ)
