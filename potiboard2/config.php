@@ -1,6 +1,6 @@
 <?php
 /*
-  * POTI-board改二 v2.7.3 lot.200708
+  * POTI-board改二 v2.7.4 lot.200711
   * by sakots >> https://poti-k.info/
   *
   * POTI-board改二の設定ファイルです。
@@ -189,10 +189,11 @@ define('UNDO', '90');
 //アンドゥを幾つにまとめて保存しておくか(デフォルト)
 define('UNDO_IN_MG', '45');
 
-//投稿されたPNG画像のファイルサイズがこの値より大きな時はJPEGに変換
-//アップロードしたPNG画像もこの設定値より大きな時はJPEGになります
+//PNG画像のファイルサイズが設定値より大きな時はJPEGに変換
+//アップロードしたPNG画像もJPEGに変換します
+//JPEGに変換した画像ともとのPNG画像を比較してファイルサイズが小さなほうを投稿します
 //単位kb
-define('IMAGE_SIZE', '512');
+define('IMAGE_SIZE', '512');	
 
 //PNGの減色率とJPEGの圧縮率
 //要対応テーマ

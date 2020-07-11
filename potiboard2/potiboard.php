@@ -43,8 +43,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.7.3');
-define('POTI_VERLOT' , 'v2.7.3 lot.200708');
+define('POTI_VER' , 'v2.7.4');
+define('POTI_VERLOT' , 'v2.7.4 lot.200711');
 
 if(phpversion()>="5.5.0"){
 //スパム無効化関数
@@ -858,7 +858,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 			if(($ucode != $usercode) && (IP_CHECK && $uip != $userip)){error(MSG007);}
 		}else{error(MSG007);}
 	}
-
+	$dest='';
 	if($upfile&&is_file($upfile)){
 		$dest = $path.$tim.'.tmp';
 		if($pictmp==2){
@@ -866,15 +866,13 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 		}
 		else{
 			if(!preg_match('/\A(jpe?g|jfif|gif|png)\z/i', pathinfo($upfile_name, PATHINFO_EXTENSION))){//もとのファイル名の拡張子190606
-			$dest="";
 			error(MSG004,$dest);
 			}
 			if(move_uploaded_file($upfile, $dest)){
 				$upfile_name = CleanStr($upfile_name);
 			}
 			else{
-				$upfile_name="";
-				$dest="";
+				$upfile_name='';
 				error(MSG003,$dest);
 			}
 
@@ -889,12 +887,20 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 			$is_file_dest=true;
 		} 
 		$im_in=false;
-		if(filesize($dest) > IMAGE_SIZE * 1024 || filesize($dest) > MAX_KB * 1024){//指定サイズを超えていたら
+		$destj=$path.$tim.'.jpg.tmp';
+		$fsize_dest=filesize($dest);
+		if($fsize_dest > IMAGE_SIZE * 1024 || $fsize_dest > MAX_KB * 1024){//指定サイズを超えていたら
 			if(mime_content_type($dest)==="image/png" && gd_check() && function_exists("ImageCreateFromPNG")){//pngならJPEGに変換
 				$im_in=ImageCreateFromPNG($dest);
 				if($im_in){
-					ImageJPEG($im_in,$dest,98);
+					ImageJPEG($im_in,$destj,98);
 					ImageDestroy($im_in);// 作成したイメージを破棄
+					if(filesize($destj)<$fsize_dest){//JPEGのほうが小さい時だけ
+						rename($destj,$dest);//JPEGで保存
+					}
+					else{//PNGよりファイルサイズが大きくなる時は
+						unlink($destj);//作成したJPEG画像を削除
+					}
 				}
 			}
 		}
@@ -2588,16 +2594,24 @@ function replace($no,$pwd,$stime){
 			
 			if(!is_file($dest)) error(MSG003,$dest);
 			$im_in=false;
-			if(filesize($dest) > IMAGE_SIZE * 1024 || filesize($dest) > MAX_KB * 1024){//指定サイズを超えていたら
+			$destj=$path.$tim.'.jpg.tmp';
+			$fsize_dest=filesize($dest);
+			if($fsize_dest > IMAGE_SIZE * 1024 || $fsize_dest > MAX_KB * 1024){//指定サイズを超えていたら
 				if(mime_content_type($dest)==="image/png" && gd_check() && function_exists("ImageCreateFromPNG")){//pngならJPEGに変換
 					$im_in=ImageCreateFromPNG($dest);
 					if($im_in){
-						ImageJPEG($im_in,$dest,98);
+						ImageJPEG($im_in,$destj,98);
 						ImageDestroy($im_in);// 作成したイメージを破棄
+						if(filesize($destj)<$fsize_dest){//JPEGのほうが小さい時だけ
+							rename($destj,$dest);//JPEGで保存
+						}
+						else{//PNGよりファイルサイズが大きくなる時は
+							unlink($destj);//作成したJPEG画像を削除
+						}
 					}
 				}
 			}
-
+	
 			$img_type=mime_content_type($dest);
 			if($img_type==="image/gif"||$img_type==="image/jpeg"||$img_type==="image/png"){//190603
 			$chk = md5_file($dest);
