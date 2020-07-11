@@ -45,6 +45,11 @@ config.phpの設定をし、アップロードしてpotiboard.phpにアクセス
 
 ## 履歴
 
+### [2020/07/12] v2.7.4 lot.200711
+
+- 規定容量を超えるとJPEGに変換、JPEGとPNGを比較してファイルサイズが小さなほうを出力(by さとぴあ)
+  - くわしくは[こちら](https://github.com/sakots/poti-kaini/pull/51)
+
 ### [2020/07/10]
 
 - テーマ開発用のファイルを削除しリポジトリを分離[poti-kaini-themes](https://github.com/sakots/poti-kaini-themes)
