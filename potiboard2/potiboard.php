@@ -43,8 +43,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.7.4');
-define('POTI_VERLOT' , 'v2.7.4 lot.200711');
+define('POTI_VER' , 'v2.7.5');
+define('POTI_VERLOT' , 'v2.7.5 lot.200712');
 
 if(phpversion()>="5.5.0"){
 //スパム無効化関数
@@ -859,7 +859,8 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 		}else{error(MSG007);}
 	}
 	$dest='';
-	if($upfile&&is_file($upfile)){
+	$is_file_dest=false;
+	if($upfile&&is_file($upfile)){//アップロード
 		$dest = $path.$tim.'.tmp';
 		if($pictmp==2){
 			copy($upfile, $dest);
@@ -884,69 +885,8 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 			error(MSG003,$dest);
 		}
 		else{
-			$is_file_dest=true;
+			$is_file_dest=true;//is_file($dest）の変数化
 		} 
-		$im_in=false;
-		$destj=$path.$tim.'.jpg.tmp';
-		$fsize_dest=filesize($dest);
-		if($fsize_dest > IMAGE_SIZE * 1024 || $fsize_dest > MAX_KB * 1024){//指定サイズを超えていたら
-			if(mime_content_type($dest)==="image/png" && gd_check() && function_exists("ImageCreateFromPNG")){//pngならJPEGに変換
-				$im_in=ImageCreateFromPNG($dest);
-				if($im_in){
-					ImageJPEG($im_in,$destj,98);
-					ImageDestroy($im_in);// 作成したイメージを破棄
-					if(filesize($destj)<$fsize_dest){//JPEGのほうが小さい時だけ
-						rename($destj,$dest);//JPEGで保存
-					}
-					else{//PNGよりファイルサイズが大きくなる時は
-						unlink($destj);//作成したJPEG画像を削除
-					}
-				}
-			}
-		}
-		clearstatcache();
-		if(filesize($dest) > MAX_KB * 1024){//ファイルサイズ再チェック
-		error(MSG034,$dest);
-		}
-		$size = getimagesize($dest);
-		$img_type=mime_content_type($dest);//190603
-		if($img_type==="image/gif"||$img_type==="image/jpeg"||$img_type==="image/png"){//190603
-		$chk = md5_file($dest);
-		foreach($badfile as $value){
-			if(preg_match("/^$value/",$chk)){
-			error(MSG005,$dest); //拒絶画像
-			}
-		}
-
-		chmod($dest,0606);
-		$W = $size[0];
-		$H = $size[1];
-
-		switch ($img_type) {
-			case "image/gif" : $ext=".gif";break;
-			case "image/jpeg" : $ext=".jpg";break;
-			case "image/png" : $ext=".png";break;
-			default : error(MSG004,$dest);
-		}
-		// 画像表示縮小
-		$max_w = $resto ? MAX_RESW : MAX_W;
-		$max_h = $resto ? MAX_RESH : MAX_H;
-		if($W > $max_w || $H > $max_h){
-			$W2 = $max_w / $W;
-			$H2 = $max_h / $H;
-			($W2 < $H2) ? $key = $W2 : $key = $H2;
-			$W = ceil($W * $key);
-			$H = ceil($H * $key);
-		}
-		$mes = "画像 $upfile_name のアップロードが成功しました<br><br>";
-		}
-		else{
-		error(MSG004,$dest);
-		}
-	}
-	else{
-		$dest="";
-		$is_file_dest=false;//is_file($dest）の変数化
 	}
 
 	if($REQUEST_METHOD !== "POST") error(MSG006);
@@ -1165,9 +1105,9 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 			if(RENZOKU && $time - $ltime < RENZOKU){error(MSG020,$dest);}
 			if(RENZOKU2 && $time - $ltime < RENZOKU2 && $upfile_name){error(MSG021,$dest);}
 			if($com){
-				if($textonly){//画像なしの時
-				$dest="";
-				}
+				// if($textonly){//画像なしの時
+				// $dest="";
+				// }
 					switch(D_POST_CHECKLEVEL){//190622
 						case 1:	//low
 							if($com === $lcom){error(MSG022,$dest);}
@@ -1193,23 +1133,68 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 	if(!$com) $com=DEF_COM;
 	if(!$sub) $sub=DEF_SUB;
 
-	// ログ行数オーバー
-	$countline = count($line);//必要
-	if($countline >= LOG_MAX){
-		for($d = $countline-1; $d >= LOG_MAX-1; $d--){
-			if($line[$d]!==""){
-			list($dno,,,,,,,,,$dext,,,$dtime,) = explode(",", $line[$d]);
-			if(is_file($path.$dtime.$dext)) unlink($path.$dtime.$dext);
-			if(is_file(THUMB_DIR.$dtime.'s.jpg')) unlink(THUMB_DIR.$dtime.'s.jpg');
-			if(is_file(PCH_DIR.$dtime.'.pch')) unlink(PCH_DIR.$dtime.'.pch');
-			if(is_file(PCH_DIR.$dtime.'.spch')) unlink(PCH_DIR.$dtime.'.spch');
-			$line[$d] = "";
-			treedel($dno);
-				}
-		}
-	}
 	// アップロード処理
 	if($dest&&$is_file_dest){//画像が無い時は処理しない
+	//画像フォーマット	
+		$im_in=false;
+		$im_jpg=$path.$tim.'.jpg.tmp';
+		$fsize_dest=filesize($dest);
+		if($fsize_dest > IMAGE_SIZE * 1024 || $fsize_dest > MAX_KB * 1024){//指定サイズを超えていたら
+			if(mime_content_type($dest)==="image/png" && gd_check() && function_exists("ImageCreateFromPNG")){//pngならJPEGに変換
+				$im_in=ImageCreateFromPNG($dest);
+				if($im_in){
+					ImageJPEG($im_in,$im_jpg,98);
+					ImageDestroy($im_in);// 作成したイメージを破棄
+						chmod($im_jpg,0606);
+					if(filesize($im_jpg)<$fsize_dest){//JPEGのほうが小さい時だけ
+						rename($im_jpg,$dest);//JPEGで保存
+					}
+					else{//PNGよりファイルサイズが大きくなる時は
+						unlink($im_jpg);//作成したJPEG画像を削除
+					}
+				}
+			}
+		}
+		clearstatcache();
+		if(filesize($dest) > MAX_KB * 1024){//ファイルサイズ再チェック
+		error(MSG034,$dest);
+		}
+		$size = getimagesize($dest);
+		$img_type=mime_content_type($dest);//190603
+		if($img_type==="image/gif"||$img_type==="image/jpeg"||$img_type==="image/png"){//190603
+		$chk = md5_file($dest);
+		foreach($badfile as $value){
+			if(preg_match("/^$value/",$chk)){
+			error(MSG005,$dest); //拒絶画像
+			}
+		}
+
+		chmod($dest,0606);
+		$W = $size[0];
+		$H = $size[1];
+
+		switch ($img_type) {
+			case "image/gif" : $ext=".gif";break;
+			case "image/jpeg" : $ext=".jpg";break;
+			case "image/png" : $ext=".png";break;
+			default : error(MSG004,$dest);
+		}
+		// 画像表示縮小
+		$max_w = $resto ? MAX_RESW : MAX_W;
+		$max_h = $resto ? MAX_RESH : MAX_H;
+		if($W > $max_w || $H > $max_h){
+			$W2 = $max_w / $W;
+			$H2 = $max_h / $H;
+			($W2 < $H2) ? $key = $W2 : $key = $H2;
+			$W = ceil($W * $key);
+			$H = ceil($H * $key);
+		}
+		$mes = "画像 $upfile_name のアップロードが成功しました<br><br>";
+		}
+		else{
+		error(MSG004,$dest);
+		}
+		//重複チェック
 		$chkline=200;//チェックする最大行数
 		$j=1;
 		foreach($line as $i => $value){ //画像重複チェック
@@ -1225,11 +1210,26 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 			}
 			if($i>=$chkline){break;}//チェックする最大行数
 		}
+		unset($value,$i,$j);
 	}
-		else{//画像が無い時
-	$ext=$W=$H=$chk="";
+	else{//画像が無い時
+		$ext=$W=$H=$chk="";
 	}
-	unset($value,$i,$j);
+	// ログ行数オーバー
+	$countline = count($line);//必要
+	if($countline >= LOG_MAX){
+		for($d = $countline-1; $d >= LOG_MAX-1; $d--){
+			if($line[$d]!==""){
+			list($dno,,,,,,,,,$dext,,,$dtime,) = explode(",", $line[$d]);
+			if(is_file($path.$dtime.$dext)) unlink($path.$dtime.$dext);
+			if(is_file(THUMB_DIR.$dtime.'s.jpg')) unlink(THUMB_DIR.$dtime.'s.jpg');
+			if(is_file(PCH_DIR.$dtime.'.pch')) unlink(PCH_DIR.$dtime.'.pch');
+			if(is_file(PCH_DIR.$dtime.'.spch')) unlink(PCH_DIR.$dtime.'.spch');
+			$line[$d] = "";
+			treedel($dno);
+				}
+		}
+	}
 		
 	list($lastno,) = explode(",", $line[0]);
 	$no = $lastno + 1;
@@ -2594,24 +2594,25 @@ function replace($no,$pwd,$stime){
 			
 			if(!is_file($dest)) error(MSG003,$dest);
 			$im_in=false;
-			$destj=$path.$tim.'.jpg.tmp';
+			$im_jpg=$path.$tim.'.jpg.tmp';
 			$fsize_dest=filesize($dest);
 			if($fsize_dest > IMAGE_SIZE * 1024 || $fsize_dest > MAX_KB * 1024){//指定サイズを超えていたら
 				if(mime_content_type($dest)==="image/png" && gd_check() && function_exists("ImageCreateFromPNG")){//pngならJPEGに変換
 					$im_in=ImageCreateFromPNG($dest);
 					if($im_in){
-						ImageJPEG($im_in,$destj,98);
+						ImageJPEG($im_in,$im_jpg,98);
 						ImageDestroy($im_in);// 作成したイメージを破棄
-						if(filesize($destj)<$fsize_dest){//JPEGのほうが小さい時だけ
-							rename($destj,$dest);//JPEGで保存
+							chmod($im_jpg,0606);
+						if(filesize($im_jpg)<$fsize_dest){//JPEGのほうが小さい時だけ
+							rename($im_jpg,$dest);//JPEGで保存
 						}
 						else{//PNGよりファイルサイズが大きくなる時は
-							unlink($destj);//作成したJPEG画像を削除
+							unlink($im_jpg);//作成したJPEG画像を削除
 						}
 					}
 				}
 			}
-	
+		
 			$img_type=mime_content_type($dest);
 			if($img_type==="image/gif"||$img_type==="image/jpeg"||$img_type==="image/png"){//190603
 			$chk = md5_file($dest);
