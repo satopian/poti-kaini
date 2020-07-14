@@ -43,8 +43,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.7.5');
-define('POTI_VERLOT' , 'v2.7.5 lot.200712');
+define('POTI_VER' , 'v2.7.6');
+define('POTI_VERLOT' , 'v2.7.6 lot.200714');
 
 if(phpversion()>="5.5.0"){
 //スパム無効化関数
@@ -556,13 +556,14 @@ function updatelog($resno=0){
 			//メタタグに使うコメントから
 			//タグを除去
 			$descriptioncom=strip_tags($com);
-
+			$encoded_name=urlencode($name);
 			$oyaname=$name;//投稿者名をコピー
 
+
 			// 親記事格納
-			$dat['oya'][$oya] = compact('src','srcname','size','painttime','pch','continue','thumb','imgsrc','w','h','no','sub','name','now','com','descriptioncom','limit','skipres','resub','url','email','id','updatemark','trip','tab','fontcolor','disp_resform');
+			$dat['oya'][$oya] = compact('src','srcname','size','painttime','pch','continue','thumb','imgsrc','w','h','no','sub','name','encoded_name','now','com','descriptioncom','limit','skipres','resub','url','email','id','updatemark','trip','tab','fontcolor','disp_resform');
 			// 変数クリア
-			unset($src,$srcname,$size,$painttime,$pch,$continue,$thumb,$imgsrc,$w,$h,$no,$sub,$name,$now,$com,$descriptioncom,$limit,$skipres,$resub,$url,$email,$disp_resform);
+			unset($src,$srcname,$size,$painttime,$pch,$continue,$thumb,$imgsrc,$w,$h,$no,$sub,$name,$encoded_name,$now,$com,$descriptioncom,$limit,$skipres,$resub,$url,$email,$disp_resform);
 
 			//レス作成
 			$rres=array();
@@ -653,15 +654,16 @@ function updatelog($resno=0){
 				$com = preg_replace("{<br( *)/>}i","<br>",$com);
 				//独自タグ変換
 				// if(USE_POTITAG) $com = potitag($com);
+				$encoded_name=urlencode($name);
 
 				// レス記事一時格納
-				$rres[$oya][] = compact('no','sub','name','now','com','url','email','id','updatemark','trip','fontcolor'
+				$rres[$oya][] = compact('no','sub','name','encoded_name','now','com','url','email','id','updatemark','trip','fontcolor'
 								,'src','srcname','size','painttime','pch','continue','thumb','imgsrc','w','h');
 				$rresname[] = $name;//投稿者名を配列にいれる
 
 				
 				// 変数クリア
-				unset($no,$sub,$name,$now,$com,$url,$email
+				unset($no,$sub,$name,$encoded_name,$now,$com,$url,$email
 						,$src,$srcname,$size,$painttime,$pch,$continue,$thumb,$imgsrc,$w,$h);
 			}
 			// レス記事一括格納
