@@ -1,6 +1,6 @@
 <?php
 //POTI-board plugin search(c)2020 さとぴあ
-//v1.1 lot.200714
+//v1.2 lot.200714
 //
 //https://pbbs.sakura.ne.jp/
 //フリーウェアですが著作権は放棄しません。
@@ -27,6 +27,7 @@
 $max_search=120;
 
 //更新履歴
+//v1.2 2020.07.14 last modifiedが表示されないバグを修正。
 //v1.1 2020.07.14 HTMLとCSSをテーマディレクトリに分離。
 //v0.5 2020.07.14 イラストの表示数を1ページあたり20枚、コメントの表示数を30件に。
 //v0.4 2020.07.14 compact()で格納してextract()で展開するようにした。 
@@ -250,7 +251,7 @@ elseif($page>=$disp_count_of_page+1){
 }
 //最終更新日時を取得
 if($arr){
-	list(,,,,,,$postedtime)=explode(",",$arr[0]);
+	$postedtime=$arr[0]['time'];
 	$postedtime=substr($postedtime,-13,10);
 	$dat['lastmodified']=date("Y/m/d G:i", $postedtime);
 }
