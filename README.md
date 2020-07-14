@@ -45,6 +45,11 @@ config.phpの設定をし、アップロードしてpotiboard.phpにアクセス
 
 ## 履歴
 
+### [2020/07/14] v2.7.6 lot.200714
+
+- `<% echo (oya/encoded_name) %>` `<% echo (oya/res/encoded_name) %>`追加(by さとぴあ)
+- search.phpをリポジトリに統合
+
 ### [2020/07/13] v2.7.5 lot.200712
 
 - 文字列のエラーチェックを先に行いGDを使った画像関連の処理はそのあとで(by さとぴあ)
