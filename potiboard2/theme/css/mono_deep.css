@@ -145,6 +145,14 @@ em.thispage {
   font-style: normal;
 }
 
+.name {
+  border: solid 1px #396;
+}
+
+.name a {
+  text-decoration: none;
+}
+
 h2 {
   border-left: solid 1ex #396;
   background-color: #111111;

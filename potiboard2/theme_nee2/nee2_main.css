@@ -125,6 +125,14 @@ em.thispage {
   margin-right: 0.8ex;
 }
 
+.name {
+  border: 1px solid #396;
+}
+
+.name a {
+  text-decoration: none;
+}
+
 figure {
   float: left;
   margin-right: 8px;
