@@ -1,9 +1,34 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" id="search">
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<link rel="stylesheet" href="<% echo(skindir) %>search.css">
+	<script>
+		var css = GetCookie("CSS");
+		if(css == ""){css = "<% echo(skindir) %>css/mono_main.css";}
+		document.write('<link rel="stylesheet" href="' + css + '" type="text/css">');
+		function SetCss(file){
+			SetCookie("CSS", file);
+			window.location.reload();
+		}
+		function GetCookie(key){
+			var tmp = document.cookie + ";";
+			var tmp1 = tmp.indexOf(key, 0);
+			if(tmp1 != -1){
+				tmp = tmp.substring(tmp1, tmp.length);
+				var start = tmp.indexOf("=", 0) + 1;
+				var end = tmp.indexOf(";", start);
+				return(unescape(tmp.substring(start,end)));
+				}
+			return("");
+		}
+		function SetCookie(key, val){
+			document.cookie = key + "=" + escape(val) + ";max-age=31536000;";
+		}
+	</script>
+	<noscript>
+		<link rel="stylesheet" href="<% echo(skindir) %>css/mono_main.css" type="text/css">
+	</noscript>
 	<% def(imgsearch) %>
 	<% else %>
 	<style>

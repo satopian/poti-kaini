@@ -362,4 +362,253 @@ ul.menu {
     display: block;
   }
 }
+
+#search body {
+  margin: 8px 10px;
+  font-family: "Hiragino Sans", meiryo, ヒラギノ角ゴシック, メイリオ, sans-serif;
+  font-size: 16px;
+  line-height: 150%;
+  color: #FFF;
+  background-color: #222;
+  letter-spacing: .08em;
+}
+
+#search h1 {
+  font-size: 16px;
+  display: inline-block;
+  margin: 0;
+}
+
+#search .title {
+  color: #FFF;
+  background-color: #333;
+  border-left: 8px solid #396;
+  padding: 6px 5px 2px;
+  margin: 0 0 10px;
+}
+
+#search a {
+  color: #363;
+  text-decoration: underline;
+}
+
+#search a:hover {
+  text-decoration: none;
+}
+
+#search #main {
+  margin: 0 auto;
+  width: 928px;
+}
+
+#search .newimg ul {
+  margin: 0;
+  padding: 0;
+}
+
+#search .newimg li {
+  display: inline-block;
+}
+
+#search .newimg {
+  margin: 19px 0 10px 0;
+  line-height: 1;
+}
+
+#search .catalog {
+  width: 180px;
+  margin: 0 5px 5px 0;
+}
+
+#search .catalog img {
+  width: 100%;
+  vertical-align: text-top;
+  border: none;
+}
+
+#search .newimg li:nth-of-type(5n) {
+  margin-right: 0;
+}
+
+#search .clear {
+  clear: both;
+}
+
+#search .leftbox {
+  float: left;
+}
+
+#search .rightbox {
+  float: right;
+}
+
+#search .leftbox,
+#search .rightbox {
+  width: auto;
+  /* margin-bottom: 16px; */
+  /* margin-top: 1px; */
+  margin: 1px 0 16px 1px;
+}
+
+#search h3 {
+  font-size: 16px;
+  font-weight: 400;
+  margin: 0;
+}
+
+#search .title_wrap {
+  display: inline-block;
+}
+
+#search input[type=text], #search textarea[type=text], #search select[type=text], #search .se[type=text] {
+  height: 20px;
+  width: 180px;
+  border: 1px solid;
+  color: #FFF;
+  border-color: #6C9;
+  background-color: #030;
+  vertical-align: middle;
+}
+
+#search input[type=submit], #search textarea[type=submit], #search select[type=submit], #search .se[type=submit] {
+  color: #000;
+  border: 1px solid;
+  border-color: #6C9;
+  background-color: #396;
+  vertical-align: middle;
+}
+
+#search .menu {
+  margin: 16px 0 14px;
+}
+
+#search .name {
+  font-weight: 700;
+  color: #FFF;
+  display: inline-block;
+  border: 1px solid #363;
+  border-radius: 6px;
+  line-height: 1em;
+}
+
+#search .name a {
+  color: #030;
+  display: block;
+  padding: 5px;
+}
+
+#search .name:hover {
+  background-color: #696;
+}
+
+#search .comments_title_wrap a {
+  text-decoration: none;
+}
+
+#search .res_button_wrap {
+  text-align: right;
+  margin: 8px 0 -8px;
+}
+
+#search .res_button form {
+  display: inherit;
+}
+
+#search .res_button_wrap form {
+  display: inline-block;
+  width: 200px;
+  vertical-align: inherit;
+}
+
+#search .page_top {
+  display: inline-block;
+  margin: 0 0 0 6px;
+  vertical-align: -webkit-baseline-middle;
+}
+
+#search .res_button {
+  width: 5em;
+}
+
+#search .res_button:hover {
+  background-color: #010;
+}
+
+#search .comments_title_wrap {
+  display: block;
+  line-height: 2em;
+  margin: 0 0 5px;
+}
+
+#search h2 {
+  font-weight: 400;
+  font-size: 16px;
+  display: inline-block;
+  margin: 0 0 8px;
+}
+
+#search input[type=text]:hover, #search textarea[type=text]:hover, #search select[type=text]:hover, #search .se[type=text]:hover {
+  background-color: #010;
+}
+
+#search input[type=radio], #search textarea[type=radio], #search select[type=radio], #search .se[type=radio] {
+  display: none;
+}
+
+#search .label {
+  color: #666;
+  display: inline-block;
+  padding: 0 10px;
+  text-align: center;
+  cursor: pointer;
+  border: 2px solid #6C6;
+  border-radius: 15px;
+}
+
+#search input[type=radio]:checked + label, #search textarea[type=radio]:checked + label, #search select[type=radio]:checked + label, #search .se[type=radio]:checked + label {
+  color: #000;
+  background: #DFD;
+}
+
+#search .label:hover {
+  background-color: #EEF;
+}
+
+#search .radio {
+  display: inline-block;
+  margin: 0 0 16px 0;
+}
+
+@media screen and (max-width: 967px) {
+  #search #main {
+    width: 736px;
+  }
+  #search .newimg li:nth-of-type(5n) {
+    margin-right: 5px;
+  }
+  #search .newimg li:nth-of-type(4n) {
+    margin-right: 0;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  #search #main {
+    width: 100%;
+  }
+  #search .newimg {
+    padding: 5px 0 0 0;
+  }
+  #search .catalog {
+    width: 24.2%;
+  }
+  #search .catalog {
+    margin: 0 1.0666% 3px 0;
+  }
+  #search .newimg li:nth-of-type(5n) {
+    margin-right: 1.0666%;
+  }
+  #search .newimg li:nth-of-type(4n) {
+    margin-right: 0;
+  }
+}
 /*# sourceMappingURL=mono_deep.css.map */
