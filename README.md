@@ -45,6 +45,10 @@ config.phpの設定をし、アップロードしてpotiboard.phpにアクセス
 
 ## 履歴
 
+### [2020/07/15]
+
+- テーマのcss更新
+
 ### [2020/07/14] v2.7.6 lot.200714
 
 - `<% echo (oya/encoded_name) %>` `<% echo (oya/res/encoded_name) %>`追加(by さとぴあ)
