@@ -130,7 +130,8 @@ input[type=submit] {
 }
 
 .name a {
-	color: #030;
+	/* color: #030; */
+	color: #FFF;
 	display: block;
 	padding: 5px;
 }

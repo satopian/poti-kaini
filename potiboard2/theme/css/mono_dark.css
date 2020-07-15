@@ -168,6 +168,7 @@ em.thispage {
 h2 {
   border-left: solid 1ex #99F;
   background-color: #036;
+  padding-left: 5px;
 }
 
 h3 {
@@ -504,7 +505,7 @@ ul.menu {
 }
 
 #search .name a {
-  color: #003;
+  color: #FFF;
   display: block;
   padding: 5px;
 }
@@ -549,7 +550,7 @@ ul.menu {
 #search .comments_title_wrap {
   display: block;
   line-height: 2em;
-  margin: 0 0 5px;
+  margin: 8px 0 5px;
 }
 
 #search h2 {
@@ -557,6 +558,11 @@ ul.menu {
   font-size: 16px;
   display: inline-block;
   margin: 0 0 8px;
+  background-color: inherit;
+}
+
+#search .s_foot {
+  margin: 8px 0 0;
 }
 
 #search input[type=text]:hover, #search textarea[type=text]:hover, #search select[type=text]:hover, #search .se[type=text]:hover {
