@@ -147,10 +147,21 @@ em.thispage {
 
 .name {
   border: solid 1px #69F;
+  border-radius: 5px;
+  padding: 3px;
 }
 
 .name a {
   text-decoration: none;
+  display: inline-block;
+}
+
+.name a:hover {
+  color: #666;
+}
+
+.name:hover {
+  background-color: #EEEEEE;
 }
 
 h2 {
