@@ -106,16 +106,21 @@
 	</div>
 	<% /each %>
 	<% /def %>
-	<p></p>
+	
 
 </article>
+<% def(imgsearch) %>
+<% else %>
+<div class="after"></div>
+<% /def %>
+
 <!-- 最終更新日時 -->
 <% def(lastmodified) %>
 <p>last modified: <% echo(lastmodified) %></p>
 <% /def %>
 <p>掲示板から新規投稿順に<% echo(img_or_com) %>を呼び出しています。</p>
 
-<footer>
+<footer class="s_foot">
 	<nav>
 	<div class="leftbox">
 	<!-- ページング -->

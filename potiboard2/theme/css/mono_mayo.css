@@ -146,6 +146,7 @@ em.thispage {
 }
 
 .name {
+  line-height: 1em;
   border: solid 1px #F96;
   border-radius: 5px;
   display: inline-block;
@@ -154,11 +155,8 @@ em.thispage {
 .name a {
   text-decoration: none;
   display: block;
-  padding: 3px;
-}
-
-.name a:hover {
-  color: #666;
+  padding: 5px;
+  color: inherit;
 }
 
 .name:hover {
@@ -172,7 +170,6 @@ h2 {
 }
 
 h3 {
-  padding-left: 1ex;
   margin-top: 1ex;
 }
 
@@ -460,7 +457,11 @@ ul.menu {
   width: auto;
   /* margin-bottom: 16px; */
   /* margin-top: 1px; */
-  margin: 1px 0 16px 1px;
+  margin: 1px 0 16px;
+}
+
+#search .after {
+  margin: 16px 0 0;
 }
 
 #search h3 {
