@@ -395,7 +395,7 @@ ul.menu {
 
 #search .title {
   color: #FFF;
-  background-color: #333;
+  background-color: #222;
   border-left: 8px solid #396;
   padding: 6px 5px 2px;
   margin: 0 0 10px;
@@ -464,8 +464,8 @@ ul.menu {
   margin: 1px 0 16px;
 }
 
-#search .after {
-  margin: 16px 0 0;
+#search p {
+  margin: 1em 0;
 }
 
 #search h3 {

@@ -460,8 +460,8 @@ ul.menu {
   margin: 1px 0 16px;
 }
 
-#search .after {
-  margin: 16px 0 0;
+#search p {
+  margin: 1em 0;
 }
 
 #search h3 {
