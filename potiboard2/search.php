@@ -1,17 +1,17 @@
 <?php
 //POTI-board plugin search(c)2020 さとぴあ
-//v1.2 lot.200714
+//v1.3 lot.200718
 //
 //https://pbbs.sakura.ne.jp/
 //フリーウェアですが著作権は放棄しません。
 
 //使用条件。
 
-//テンプレートの著作表記のリンクを削除したり見えなくしないでください。
+//著作表記のリンクを削除したり見えなくしないでください。
 
 //免責
 
-//このプログラムを利用した事によるいかなる損害にもさとぴあは一切の責任を負いません。
+//このプログラムを利用した事によって発生したいかなる損害も作者は一切の責任を負いません。
 
 //サポート
 
@@ -27,6 +27,7 @@
 $max_search=120;
 
 //更新履歴
+//v1.3 2020.07.18 イラストの単位を「枚」、コメントの単位を「件」に。
 //v1.2 2020.07.14 last modifiedが表示されないバグを修正。
 //v1.1 2020.07.14 HTMLとCSSをテーマディレクトリに分離。
 //v0.5 2020.07.14 イラストの表示数を1ページあたり20枚、コメントの表示数を30件に。
@@ -44,7 +45,6 @@ require_once(__DIR__.'/Skinny.php');
 
 $dat['skindir']=SKIN_DIR;
 
-// $time_start = microtime(true);
 //タイムゾーン
 date_default_timezone_set('Asia/Tokyo');
 //filter_input
@@ -69,7 +69,7 @@ $dat['radio_chk3']='';//本文題名
 $query_l='&query='.urlencode($query);//クエリを次ページにgetで渡す
 if($query!==''&&$radio===3){//本文題名
 	$query_l.='&radio=3';
-	$dat['radio_chk3']='checked="checked"';//本文題名	
+	$dat['radio_chk3']='checked="checked"';
 }
 elseif($query!==''&&$radio===2){//完全一致
 	$query_l.='&radio=2';
@@ -149,7 +149,7 @@ while ($line = fgets($fp ,4096)) {
 	fclose($fp);
 
 //検索結果の出力
-$j=0;$countimg=0;
+$j=0;
 if($arr){
 	foreach($arr as $i => $val){
 		if($i > $page-2){//カウンタの$iが表示するページになるまで待つ
@@ -196,21 +196,23 @@ unset($i,$val);
 
 $search_type='';
 if($imgsearch){
-$img_or_com='イラスト';
-$search_type='&imgsearch=on';
+	$img_or_com='イラスト';
+	$mai_or_ken='枚';
+	$search_type='&imgsearch=on';
 }
 else{
-$img_or_com='コメント';
+	$img_or_com='コメント';
+	$mai_or_ken='件';
 }
 $dat['img_or_com']=$img_or_com;
 
 
 $dat['pageno']='';
 if($j&&$page>=2){
-	$dat['pageno'] = $page.'-'.$j.'件';
+	$dat['pageno'] = $page.'-'.$j.$mai_or_ken;
 }
 elseif($j){
-		$dat['pageno'] = $j.'件';
+		$dat['pageno'] = $j.$mai_or_ken;
 }
 if($query!==''&&$radio===3){
 	$dat['title']=$query.'の'.$img_or_com;//titleタグに入る
@@ -236,14 +238,14 @@ $dat['nxet']=false;
 if($page<=$disp_count_of_page){
 	$dat['prev']='<a href="./">掲示板にもどる</a>';//前のページ
 if($countarr>=$nxetpage){
-	$dat['nxet']='<a href="?page='.$nxetpage.$search_type.$query_l.'">次の'.$disp_count_of_page.'件≫</a>';//次のページ
+	$dat['nxet']='<a href="?page='.$nxetpage.$search_type.$query_l.'">次の'.$disp_count_of_page.$mai_or_ken.'≫</a>';//次のページ
 }
 }
 
 elseif($page>=$disp_count_of_page+1){
-	$dat['prev']= '<a href="?page='.$prevpage.$search_type.$query_l.'">≪前の'.$disp_count_of_page.'件</a>'; 
+	$dat['prev']= '<a href="?page='.$prevpage.$search_type.$query_l.'">≪前の'.$disp_count_of_page.$mai_or_ken.'</a>'; 
 	if($countarr>=$nxetpage){
-		$dat['nxet']='<a href="?page='.$nxetpage.$search_type.$query_l.'">次の'.$disp_count_of_page.'件≫</a>';
+		$dat['nxet']='<a href="?page='.$nxetpage.$search_type.$query_l.'">次の'.$disp_count_of_page.$mai_or_ken.'≫</a>';
 	}
 	else{
 		$dat['nxet']='<a href="./">掲示板にもどる</a>';
