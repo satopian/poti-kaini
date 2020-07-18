@@ -516,7 +516,7 @@ ul.menu {
 }
 
 #search .name:hover {
-  background-color: #696;
+  background-color: #396;
 }
 
 #search .comments_title_wrap a {
@@ -549,7 +549,7 @@ ul.menu {
 }
 
 #search .res_button:hover {
-  background-color: #010;
+  background-color: #6C9;
 }
 
 #search .comments_title_wrap {
@@ -564,10 +564,6 @@ ul.menu {
   display: inline-block;
   margin: 0 0 8px;
   background-color: inherit;
-}
-
-#search .s_foot {
-  margin: 8px 0 0;
 }
 
 #search input[type=text]:hover, #search textarea[type=text]:hover, #search select[type=text]:hover, #search .se[type=text]:hover {

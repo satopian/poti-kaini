@@ -137,7 +137,7 @@ input[type=submit] {
 }
 
 .name:hover {
-	background-color: #696
+	background-color: #396;
 }
 
 .comments_title_wrap a {
@@ -170,7 +170,7 @@ input[type=submit] {
 }
 
 .res_button:hover {
-	background-color: #010
+	background-color: #6C9;
 }
 
 .comments_title_wrap {

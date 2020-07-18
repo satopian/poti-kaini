@@ -92,16 +92,17 @@
 			<ul><% each(comments) %><li class="catalog"><a href="<% echo(comments/link) %>" target="_blank"><img src="<% echo(comments/img) %>" alt="「<% echo(comments/sub) %>」イラスト/<% echo(comments/name) %><% echo(comments/postedtime) %>" title="「<% echo(comments/sub) %>」by <% echo(comments/name) %> <% echo(comments/postedtime) %>"/></a></li><% /each %></ul>
 		</div>
 		<% else %>
-		<div class="comments_title_wrap">
-			<h2><a href="<% echo(comments/link) %>" target="_blank"><% echo(comments/sub) %></a></h2>
-			 <% echo(comments/postedtime) %><br><span class="name"><a href="?page=1&query=<% echo(comments/encoded_name) %>&radio=2" target="_blank"><% echo(comments/name) %></a></span></div>
+			<div class="comments_title_wrap">
+				<h2><a href="<% echo(comments/link) %>" target="_blank"><% echo(comments/sub) %></a></h2>
+				<% echo(comments/postedtime) %><br><span class="name"><a href="?page=1&query=<% echo(comments/encoded_name) %>&radio=2" target="_blank"><% echo(comments/name) %></a></span>
+			</div>
 			 <% def(comments/img) %>
-			 <a href="<% echo(comments/link) %>" target="_blank"><img src="<% echo(comments/img) %>" alt="<% echo(comments/sub) %> by <% echo(comments/name) %>"></a><br>
+				<a href="<% echo(comments/link) %>" target="_blank"><img src="<% echo(comments/img) %>" alt="<% echo(comments/sub) %> by <% echo(comments/name) %>"></a><br>
 			 <% /def %>
 			 <% echo(comments/com) %>
 			 <div class="res_button_wrap">
 				 <form action="<% echo(comments/link) %>" method="post" target="_blank"><input type="submit" value="返信" class="res_button"></form><span class="page_top"><a href="#top">△</a></span>
-		</div>
+			</div>
 		<% /def %>
 	</div>
 	<% /each %>
@@ -116,7 +117,7 @@
 <% /def %>
 <p>掲示板から新規投稿順に<% echo(img_or_com) %>を呼び出しています。</p>
 
-<footer class="s_foot">
+<footer>
 	<nav>
 	<div class="leftbox">
 	<!-- ページング -->
@@ -126,7 +127,7 @@
 	<div class="rightbox">- <a href="https://github.com/satopian/potiboard_plugin" target="_blank">search</a> -</div>
 	<div class="clear"></div>
 	</nav>
-	</footer>
+</footer>
 
 </div>
 </body>

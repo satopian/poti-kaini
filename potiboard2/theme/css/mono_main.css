@@ -561,10 +561,6 @@ ul.menu {
   background-color: inherit;
 }
 
-#search .s_foot {
-  margin: 8px 0 0;
-}
-
 #search input[type=text]:hover, #search textarea[type=text]:hover, #search select[type=text]:hover, #search .se[type=text]:hover {
   background-color: #EEF;
 }
