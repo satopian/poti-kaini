@@ -1,6 +1,6 @@
 <?php
 //POTI-board plugin search(c)2020 さとぴあ
-//v1.3 lot.200718
+//v1.5 lot.200719
 //
 //https://pbbs.sakura.ne.jp/
 //フリーウェアですが著作権は放棄しません。
@@ -27,6 +27,8 @@
 $max_search=120;
 
 //更新履歴
+//v1.5 2020.07.19 改二以外のPOTI-boardでも使えるようにした。
+//v1.4 2020.07.18 負荷削減。画像のis_fileの処理の見直し。
 //v1.3 2020.07.18 イラストの単位を「枚」、コメントの単位を「件」に。
 //v1.2 2020.07.14 last modifiedが表示されないバグを修正。
 //v1.1 2020.07.14 HTMLとCSSをテーマディレクトリに分離。
@@ -42,6 +44,10 @@ $max_search=120;
 require(__DIR__.'/config.php');
 //HTMLテンプレート Skinny
 require_once(__DIR__.'/Skinny.php');
+
+if(!defined('SKIN_DIR')){//config.php で未定義なら /theme
+	define('SKIN_DIR','theme/');
+}
 
 $dat['skindir']=SKIN_DIR;
 
@@ -108,14 +114,9 @@ $fp = fopen(LOGFILE, "r");
 while ($line = fgets($fp ,4096)) {
 	list($no,,$name,,$sub,$com,,
 	,,$ext,,,$time,,,,) = explode(",", $line);
-	//画像はあるか?
-	$is_img=false;
-	if($ext&&is_file(IMG_DIR.$time.$ext)){
-		$is_img=true;
-	}
 	$continue_to_search=false;
 	if($imgsearch){//画像検索の場合
-		if($is_img){//画像がある
+		if($ext&&is_file(IMG_DIR.$time.$ext)){//画像はあるか?
 			$continue_to_search=true;//画像がある行だけ検索
 		}
 	}
