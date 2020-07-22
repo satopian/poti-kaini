@@ -154,6 +154,7 @@ figure img {
 
 figcaption {
   font-size: smaller;
+  margin: 10px 0;
 }
 
 ul {
@@ -177,6 +178,7 @@ ul.menu {
 
 .res figure {
   float: none;
+  margin: 10px 0;
 }
 
 .resma {

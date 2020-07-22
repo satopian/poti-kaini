@@ -189,6 +189,7 @@ figure img {
 
 figcaption {
   font-size: smaller;
+  margin: 10px 0;
 }
 
 ul {
@@ -212,6 +213,11 @@ ul.menu {
 
 .res figure {
   float: none;
+}
+
+.res article {
+  display: table;
+  min-width: 250px;
 }
 
 .resma {

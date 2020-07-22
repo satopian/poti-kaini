@@ -183,9 +183,11 @@
 					<hr>
 					<section>
 						<% def(oya/src) %>
+						<figcaption><a href="<% echo(oya/src) %>" data-lightbox="a<% echo(oya/no) %>" data-title="<% echo(oya/srcname) %>"><% echo(oya/srcname) %></a> (<% echo(oya/size) %> B) <% def(oya/thumb) %>- サムネイル表示中 -<% /def %><% def(oya/painttime) %> PaintTime : <% echo(oya/painttime) %><% /def %>
+							<br>
+							<% def(oya/continue) %> <a href="<% echo(self) %>?mode=continue&amp;no=<% echo(oya/continue) %>">●続きを描く</a><% /def %><% def(oya/pch) %> <a href="<% echo(self) %>?mode=openpch&amp;pch=<% echo(oya/pch) %>" target="_blank">●動画</a><% /def %>
+						</figcaption>
 						<figure>
-							<figcaption><a href="<% echo(oya/src) %>" data-lightbox="a<% echo(oya/no) %>" data-title="<% echo(oya/srcname) %>"><% echo(oya/srcname) %></a> (<% echo(oya/size) %> B) <% def(oya/thumb) %>- サムネイル表示中 -<% /def %><br><% def(oya/painttime) %>PaintTime : <% echo(oya/painttime) %><% /def %><% def(oya/pch) %><a href="<% echo(self) %>?mode=openpch&amp;pch=<% echo(oya/pch) %>" target="_blank">●動画</a><% /def %>
-							<% def(oya/continue) %> <a href="<% echo(self) %>?mode=continue&amp;no=<% echo(oya/continue) %>">続きを描く</a><% /def %></figcaption>
 							<a href="<% echo(oya/src) %>" data-lightbox="b<% echo(oya/no) %>" tabindex="<% echo(oya/tab) %>"  data-title="<% echo(oya/srcname) %>"><img src="<% echo(oya/imgsrc) %>" alt="<% echo(oya/srcname) %>"></a>
 						</figure>
 						<% /def %>
@@ -212,8 +214,11 @@
 								</h4>
 								<% def(oya/res/src) %>
 								<figure>
-									<figcaption><a href="<% echo(oya/res/src) %>"   data-lightbox="a<% echo(oya/res/no) %>" data-title="<% echo(oya/res/srcname) %>"><% echo(oya/res/srcname) %></a> (<% echo(oya/res/size) %> B)<% def(oya/res/thumb) %> - サムネイル表示中 - <% /def %><br><% def(oya/res/painttime) %> PaintTime :<% echo(oya/res/painttime) %><% /def %><% def(oya/res/continue) %> <a href="<% echo(self) %>?mode=continue&amp;no=<% echo(oya/res/continue) %>">続きを描く</a><% /def %></figcaption>
-									<a href="<% echo(oya/res/src) %>" data-lightbox="b<% echo(oya/res/no) %>" data-title="<% echo(oya/res/srcname) %>"><img src="<% echo(oya/res/imgsrc) %>" alt="<% echo(oya/res/srcname) %>"></a>
+									<figcaption><a href="<% echo(oya/res/src) %>" data-lightbox="a<% echo(oya/res/no) %>" data-title="<% echo(oya/res/srcname) %>"><% echo(oya/res/srcname) %></a> (<% echo(oya/res/size) %> B) <% def(oya/res/thumb) %>- サムネイル表示中 -<% /def %><% def(oya/res/painttime) %> PaintTime : <% echo(oya/res/painttime) %><% /def %>
+										<br>
+										<% def(oya/res/continue) %> <a href="<% echo(self) %>?mode=continue&amp;no=<% echo(oya/res/continue) %>">●続きを描く</a><% /def %><% def(oya/res/pch) %> <a href="<% echo(self) %>?mode=openpch&amp;pch=<% echo(oya/res/pch) %>" target="_blank">●動画</a><% /def %>
+									</figcaption>
+												<a href="<% echo(oya/res/src) %>" data-lightbox="b<% echo(oya/res/no) %>" data-title="<% echo(oya/res/srcname) %>"><img src="<% echo(oya/res/imgsrc) %>" alt="<% echo(oya/res/srcname) %>"></a>
 								</figure>
 								<% /def %>
 								<section>
