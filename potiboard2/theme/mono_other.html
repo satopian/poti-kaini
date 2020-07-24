@@ -149,8 +149,10 @@
 						</table>
 						<% def(regist) %>
 						<ul>
+							<% def(upfile) %>
 							<li>添付可能ファイル：GIF, JPG, PNG ブラウザによっては正常に添付できないことがあります。</li>
 							<li>画像は横 <% echo(maxw) %>ピクセル、縦 <% echo(maxh) %>ピクセルを超えると縮小表示されます。</li>
+							<% /def %>
 							<li>最大投稿データ量は <% echo(maxkb) %> KB までです。sage機能付き。</li>
 							<% def(rewrite) %>
 							<li>編集では クッキーは保存されません。さらにsageを入れても位置は変わりません。</li>

@@ -262,8 +262,9 @@
 								<figure>
 									<figcaption>
 										<a href="<% echo(oya/res/src) %>" title="<% echo(oya/res/sub) %>" target="_blank"><% echo(oya/res/srcname) %></a> (<% echo(oya/res/size) %> B)<% def(oya/res/thumb) %> - サムネイル表示中 -<% /def %><% def(oya/res/painttime) %>  PaintTime :<% echo(oya/res/painttime) %>
+										<% /def %>
 										<br>
-										<% /def %><% def(oya/res/continue) %>
+										<% def(oya/res/continue) %>
 										<a href="<% echo(self) %>?mode=continue&amp;no=<% echo(oya/res/continue) %>">●続きを描く</a><% /def %><% def(oya/res/pch) %> <a href="<% echo(self) %>?mode=openpch&amp;pch=<% echo(oya/res/pch) %>" target="_blank">●動画</a><% /def %>
 										
 									</figcaption>
