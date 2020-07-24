@@ -110,7 +110,7 @@ define('CATALOG_X', '4');
 define('CATALOG_Y', '5');
 
 //カタログの画像幅　これはcssで指定します
-define('CATALOG_W', '200');
+define('CATALOG_W', '150');
 
 //編集したときの目印
 //※記事を編集したら日付の後ろに付きます
