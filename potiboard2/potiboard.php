@@ -43,8 +43,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.7.7');
-define('POTI_VERLOT' , 'v2.7.7 lot.200723');
+define('POTI_VER' , 'v2.7.8');
+define('POTI_VERLOT' , 'v2.7.8 lot.200725');
 
 if(phpversion()>="5.5.0"){
 //スパム無効化関数
@@ -139,17 +139,6 @@ $usercode = filter_input(INPUT_COOKIE, 'usercode');//nullならuser-codeを発�
 
 $REQUEST_METHOD = ( isset($_SERVER["REQUEST_METHOD"]) === true ) ? ($_SERVER["REQUEST_METHOD"]): "";
 //INPUT_SERVER が動作しないサーバがあるので$_SERVERを使う。
-
-//$_FILESから変数を取得
-
-$upfile_name = ( isset( $_FILES["upfile"]["name"]) === true ) ? ($_FILES["upfile"]["name"]): "";//190603
-if (strpos($upfile_name, '/') !== false) {//ファイル名に/がなければ続行
-	$upfile_name="";
-	$upfile ="";
-}
-else{
-	$upfile = ( isset( $_FILES["upfile"]["tmp_name"]) === true ) ? ($_FILES["upfile"]["tmp_name"]): "";}
-
 }
 //設定の読み込み
 require(__DIR__.'/config.php');
@@ -203,6 +192,27 @@ if(!defined('DEF_FONTCOLOR')){//文字色選択初期値
 if(!defined('ADMIN_DELGUSU')||!defined('ADMIN_DELKISU')){//管理画面の色設定
 	define('ADMIN_DELGUSU',null);
 	define('ADMIN_DELKISU',null);
+}
+
+//画像アップロード機能を 0.使わない 1.使う 
+if(!defined('USE_IMG_UPLOAD')){//config.phpで未定義なら1
+	define('USE_IMG_UPLOAD','1');
+}
+
+//$_FILESから変数を取得
+$upfile_name='';
+$upfile='';
+if(USE_IMG_UPLOAD){//アップロード機能を使う時
+
+	$upfile_name = ( isset( $_FILES["upfile"]["name"]) === true ) ? ($_FILES["upfile"]["name"]): "";//190603
+
+	if (strpos($upfile_name, '/') !== false) {//ファイル名に/があったら中断
+		$upfile_name="";
+		$upfile ="";
+	}
+	else{
+		$upfile = ( isset( $_FILES["upfile"]["tmp_name"]) === true ) ? ($_FILES["upfile"]["tmp_name"]): "";}
+
 }
 
 
@@ -336,7 +346,13 @@ function form(&$dat,$resno,$admin="",$tmp=""){
 	$dat['usesub']  = USE_SUB ? ' *' : '';
 	if(USE_COM||($resno&&!RES_UPLOAD)) $dat['usecom'] = ' *';
 	//本文必須の設定では無い時はレスでも画像かコメントがあれば通る
-	if((!$resno && !$tmp) || (RES_UPLOAD && !$tmp)) $dat['upfile'] = true;
+	// if((!$resno && !$tmp) || (RES_UPLOAD && !$tmp)) $dat['upfile'] = true;
+	if(!USE_IMG_UPLOAD){//画像アップロード機能を使わない時
+		$dat['upfile'] = false;
+	}
+	else{
+		if((!$resno && !$tmp) || (RES_UPLOAD && !$tmp)) $dat['upfile'] = true;
+	}
 	$dat['maxkb']   = MAX_KB;//実際にアップロードできるファイルサイズ
 	$dat['maxw']    = $resno ? MAX_RESW : MAX_W;
 	$dat['maxh']    = $resno ? MAX_RESH : MAX_H;
@@ -857,18 +873,20 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 		if($pictmp==2){
 			copy($upfile, $dest);
 		}
-		else{
-			if(!preg_match('/\A(jpe?g|jfif|gif|png)\z/i', pathinfo($upfile_name, PATHINFO_EXTENSION))){//もとのファイル名の拡張子190606
-			error(MSG004,$dest);
-			}
-			if(move_uploaded_file($upfile, $dest)){
-				$upfile_name = CleanStr($upfile_name);
-			}
-			else{
-				$upfile_name='';
-				error(MSG003,$dest);
-			}
+		else{//フォームからのアップロード
 
+			if(USE_IMG_UPLOAD){//画像アップロード許可なら
+				if(!preg_match('/\A(jpe?g|jfif|gif|png)\z/i', pathinfo($upfile_name, PATHINFO_EXTENSION))){//もとのファイル名の拡張子190606
+					error(MSG004,$dest);
+					}
+					if(move_uploaded_file($upfile, $dest)){
+						$upfile_name = CleanStr($upfile_name);
+					}
+					else{
+						$upfile_name='';
+						error(MSG003,$dest);
+					}
+			}
 			//↑でエラーなら↓に変更
 			//copy($upfile, $dest);
 		}
@@ -954,6 +972,9 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 	if(!$sub||preg_match("/\A\s*\z/u",$sub))   $sub="";
 	if(!$email||preg_match("/\A\s*\z|&lt;|</ui",$email)) $email="";
 	if(!$url||!preg_match("/\A *https?:\/\//",$url)||preg_match("/&lt;|</i",$url)) $url="";
+	if(!USE_IMG_UPLOAD){
+		$textonly=true;//画像なし
+	}
 	if(!$resto&&!$textonly&&!$is_file_dest) error(MSG007,$dest);
 	if(RES_UPLOAD&&$resto&&!$textonly&&!$is_file_dest) error(MSG007,$dest);
 
