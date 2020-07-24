@@ -2737,32 +2737,36 @@ function catalog(){
 
 	$tree = file(TREEFILE);
 	$counttree = count($tree);
+	$x = 0;
+	$y = 0;
 	$pagedef = CATALOG_X * CATALOG_Y;//1ページに表示する件数
 	head($dat);
 	form($dat,'');
-	$dat['imgs'] = [];
 	if(!$page) $page=0;
 	for($i = $page; $i < $page+$pagedef; ++$i){
+		//if($tree[$i]==""){
 		//空文字ではなく未定義になっている
 		if(!isset($tree[$i])){
-			$dat['imgs'][] = ['noimg' => true];
-			continue;
-		}
-
+			$dat['y'][$y]['x'][$x]['noimg'] = true;
+		}else{
 			$treeline = explode(",", rtrim($tree[$i]));
 			$disptree = $treeline[0];
 			$j=$lineindex[$disptree] - 1; //該当記事を探して$jにセット
 			if($line[$j]==="") continue; //$jが範囲外なら次の行
-			list($no,$now,$name,,$sub,,,,,$ext,,,$time,,) = explode(",", rtrim($line[$j]));
-
+			list($no,$now,$name,,$sub,,,,,$ext,$w,$h,$time,,) = explode(",", rtrim($line[$j]));
+			// 画像ファイル名
+			$img = $path.$time.$ext;
 			// 画像系変数セット
-			$pch = '';
-			$imgsrc = '';
-			if($ext && is_file($path.$time.$ext)){
-				// 画像があるとき
-				$imgsrc = is_file(THUMB_DIR.$time.'s.jpg')
-					? THUMB_DIR.$time.'s.jpg'
-					: IMG_DIR.$time.$ext; // web上のパス
+			if($ext && is_file($img)){
+				$src = IMG_DIR.$time.$ext;
+				if($w){	//サイズがある時
+					if($w > CATALOG_W) $w=CATALOG_W; //画像幅を揃える
+					if(is_file(THUMB_DIR.$time.'s.jpg')){
+						$imgsrc = THUMB_DIR.$time.'s.jpg';
+					}else{
+						$imgsrc = $src;
+					}
+				}else{$w=CATALOG_W;}
 				//動画リンク
 				if(USE_ANIME){
 					if(is_file(PCH_DIR.$time.'.pch')){
@@ -2771,7 +2775,18 @@ function catalog(){
 					elseif(is_file(PCH_DIR.$time.'.spch')){
 						$pch = $time.$ext.'&amp;shi=1';
 					}
+					else{
+						$pch="";
+					}
 				}
+				else{
+						$pch="";
+					}
+				$txt=false;
+			}
+			else{//画像が無い時
+				$txt=true;
+				$imgsrc=$pch="";
 			}
 			//日付とIDを分離
 			if(preg_match("/( ID:)(.*)/",$now,$regs)){
@@ -2795,10 +2810,13 @@ function catalog(){
 
 
 			// 記事格納
-			$dat['imgs'][] = compact('imgsrc','no','sub','name','now','pch','id','updatemark','trip');
-
+			$dat['y'][$y]['x'][$x] = compact('imgsrc','w','no','sub','name','now','pch','txt','id','updatemark','trip');
 			// 変数クリア
-			unset($imgsrc,$no,$sub,$name,$now,$pch);
+			unset($img,$src,$imgsrc,$w,$no,$sub,$name,$now,$pch,$txt);
+		}
+
+		$x++;
+		if($x == CATALOG_X){$y++; $x=0;}
 	}
 
 	$prev = $page - $pagedef;

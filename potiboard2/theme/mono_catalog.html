@@ -111,18 +111,17 @@
 			<article id="catalog">
 				<hr>
 				<div>
-					<% each(imgs) %><% def(imgs/no) %>
+					<% each(y) %><% each(y/x) %><% def(y/x/no) %>
 					<div>
-						<p><a href="<% echo(self) %>?res=<% echo(imgs/no) %>" title="<% echo(imgs/sub) %> (by <% echo(imgs/name) %><% echo(imgs/trip) %>)">
-						<% def(imgs/imgsrc) %>
-							<img src="<% echo(imgs/imgsrc) %>" alt="<% echo(imgs/sub) %> (by <% echo(imgs/name) %><% echo(imgs/trip) %>)">
-						<% elsedef %>
-							<% echo(imgs/sub) %> (by <% echo(imgs/name) %><% echo(imgs/trip) %>)
+						<% def(y/x/imgsrc) %>
+						<p><a href="<% echo(self) %>?res=<% echo(y/x/no) %>" title="<% echo(y/x/sub) %> (by <% echo(y/x/name) %><% echo(y/x/trip) %>)"><img src="<% echo(y/x/imgsrc) %>" alt="<% echo(y/x/sub) %> (by <% echo(y/x/name) %><% echo(y/x/trip) %>)"></a></p>
 						<% /def %>
-						</a></p>
-						<p>[<% echo(imgs/no) %>] <% echo(imgs/now) %><% def(imgs/updatemark) %><% echo(imgs/updatemark) %><% /def %><% def(imgs/id) %> ID:<% echo(imgs/id) %><% /def %></p>
+						<% def(y/x/txt) %>
+						<p><a href="<% echo(self) %>?res=<% echo(y/x/no) %>" title="<% echo(y/x/sub) %> (by <% echo(y/x/name) %><% echo(y/x/trip) %>)"><% echo(y/x/sub) %> (by <% echo(y/x/name) %><% echo(y/x/trip) %>)</a></p>
+						<% /def %>
+						<p>[<% echo(y/x/no) %>] <% echo(y/x/now) %><% def(y/x/updatemark) %><% echo(y/x/updatemark) %><% /def %><% def(y/x/id) %> ID:<% echo(y/x/id) %><% /def %></p>
 					</div>
-					<% /def %><% /each %>
+				<% /def %><% /each %><% /each %>
 				</div>
 				<hr>
 			</article>
