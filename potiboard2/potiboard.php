@@ -2745,6 +2745,7 @@ function catalog(){
 	for($i = $page; $i < $page+$pagedef; ++$i){
 		//空文字ではなく未定義になっている
 		if(!isset($tree[$i])){
+			$dat['imgs'][] = ['noimg' => true];
 			continue;
 		}
 
@@ -2779,9 +2780,11 @@ function catalog(){
 			}else{$id='';}
 			//日付と編集マークを分離
 			$updatemark='';
-			if(UPDATE_MARK && strpos($now,UPDATE_MARK) !== false){
+			if(UPDATE_MARK){
+				if(strpos($now,UPDATE_MARK)!==false){
 					$updatemark = UPDATE_MARK;
 					$now=str_replace(UPDATE_MARK,"",$now);
+				}
 			}
 			//名前とトリップを分離
 			$name=strip_tags($name);//タグ除去
