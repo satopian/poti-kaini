@@ -43,8 +43,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.7.6');
-define('POTI_VERLOT' , 'v2.7.6 lot.200714');
+define('POTI_VER' , 'v2.7.7');
+define('POTI_VERLOT' , 'v2.7.7 lot.200723');
 
 if(phpversion()>="5.5.0"){
 //スパム無効化関数
@@ -452,6 +452,7 @@ function updatelog($resno=0){
 					$painttime="";
 				}
 				//動画リンク
+				$pch="";
 				if(USE_ANIME){
 					if(is_file(PCH_DIR.$time.'.pch')){
 						$pch = $time.$ext;
@@ -459,13 +460,7 @@ function updatelog($resno=0){
 					elseif(is_file(PCH_DIR.$time.'.spch')){
 						$pch = $time.$ext.'&amp;shi=1';
 					}
-					else{
-						$pch="";
-					}
 				}
-				else{
-						$pch="";
-					}
 				//コンティニュー
 				if(USE_CONTINUE){
 						$continue = $no;
@@ -605,6 +600,7 @@ function updatelog($resno=0){
 						$painttime="";
 					}
 					//動画リンク
+					$pch="";
 					if(USE_ANIME){
 						if(is_file(PCH_DIR.$time.'.pch')){
 							$pch = $time.$ext;
@@ -612,12 +608,6 @@ function updatelog($resno=0){
 						elseif(is_file(PCH_DIR.$time.'.spch')){
 							$pch = $time.$ext.'&amp;shi=1';
 						}
-					else{
-						$pch="";
-					}
-					}
-					else{
-						$pch="";
 					}
 					//コンティニュー
 					if(USE_CONTINUE){
@@ -2768,20 +2758,16 @@ function catalog(){
 					}
 				}else{$w=CATALOG_W;}
 				//動画リンク
-				if(USE_ANIME){
-					if(is_file(PCH_DIR.$time.'.pch')){
-						$pch = $time.$ext;
-					}
-					elseif(is_file(PCH_DIR.$time.'.spch')){
-						$pch = $time.$ext.'&amp;shi=1';
-					}
-					else{
-						$pch="";
-					}
-				}
-				else{
-						$pch="";
-					}
+				$pch="";
+				//カタログモードでアニメを再生するテーマがないのでコメントアウト
+				// if(USE_ANIME){
+				// 	if(is_file(PCH_DIR.$time.'.pch')){
+				// 		$pch = $time.$ext;
+				// 	}
+				// 	elseif(is_file(PCH_DIR.$time.'.spch')){
+				// 		$pch = $time.$ext.'&amp;shi=1';
+				// 	}
+				// }
 				$txt=false;
 			}
 			else{//画像が無い時
