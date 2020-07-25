@@ -43,8 +43,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.7.9');
-define('POTI_VERLOT' , 'v2.7.9 lot.200725');
+define('POTI_VER' , 'v2.8.0');
+define('POTI_VERLOT' , 'v2.8.0 lot.200726');
 
 if(phpversion()>="5.5.0"){
 //スパム無効化関数
@@ -276,10 +276,14 @@ function head(&$dat){
 	$dat['userdel'] = USER_DELETES;
 	$dat['charset'] = 'UTF-8';
 	$dat['skindir'] = SKIN_DIR;
+	$dat['for_new_post'] = true;
+	if(!USE_IMG_UPLOAD&&DENY_COMMENTS_ONLY){
+		$dat['for_new_post'] = false;
+	}
 
 //OGPイメージ シェアボタン
 	$dat['rooturl'] = ROOT_URL;//設置場所url
-	if (defined ('SHARE_BUTTON') && SHARE_BUTTON){
+	if (SHARE_BUTTON){
 		$dat['sharebutton'] = true;//1ならシェアボタンを表示
 	}
 	
@@ -292,6 +296,13 @@ function form(&$dat,$resno,$admin="",$tmp=""){
 	global $ADMIN_PASS;
 
 	$dat['form'] = true;
+	if(!USE_IMG_UPLOAD && DENY_COMMENTS_ONLY && !$resno && !$admin){//コメントのみも画像アップロードも禁止
+		$dat['form'] = false;//トップページのフォームを閉じる
+		if(USE_PAINT==1 && !$resno && !$admin){
+			$dat['paint2'] = true;
+		}
+
+	}
 	if(USE_PAINT){
 
 		$dat['pdefw'] = PDEF_W;
@@ -300,10 +311,12 @@ function form(&$dat,$resno,$admin="",$tmp=""){
 		$dat['animechk'] = DEF_ANIME ? ' checked' : '';
 		$dat['pmaxw'] = PMAX_W;
 		$dat['pmaxh'] = PMAX_H;
+		// $dat['form'] = true;
 		if(USE_PAINT==2 && !$resno && !$admin){
 			$dat['paint2'] = true;
 			$dat['form'] = false;
 		}
+
 	}
 
 	if($resno){
@@ -349,7 +362,7 @@ function form(&$dat,$resno,$admin="",$tmp=""){
 	if(USE_COM||($resno&&!RES_UPLOAD)) $dat['usecom'] = ' *';
 	//本文必須の設定では無い時はレスでも画像かコメントがあれば通る
 	// if((!$resno && !$tmp) || (RES_UPLOAD && !$tmp)) $dat['upfile'] = true;
-	if(!USE_IMG_UPLOAD){//画像アップロード機能を使わない時
+	if(!USE_IMG_UPLOAD && !$admin){//画像アップロード機能を使わない時
 		$dat['upfile'] = false;
 	}
 	else{
@@ -1391,7 +1404,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 	}
 
 	header("Content-type: text/html; charset=UTF-8");
-if(defined('URL_PARAMETER') && URL_PARAMETER){
+if(URL_PARAMETER){
 		$urlparameter = "?$time";//パラメータをつけてキャッシュを表示しないようにする工夫。
 	}else{
 		$urlparameter = "";
@@ -2501,7 +2514,7 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 	updatelog();
 
 	header("Content-type: text/html; charset=UTF-8");
-	if(defined('URL_PARAMETER') && URL_PARAMETER){
+	if(URL_PARAMETER){
 		$urlparameter = "?$time";//パラメータをつけてキャッシュを表示しないようにする工夫。
 	}else{
 		$urlparameter = "";
@@ -2729,7 +2742,7 @@ function replace($no,$pwd,$stime){
 	updatelog();
 
 	header("Content-type: text/html; charset=UTF-8");
-if(defined('URL_PARAMETER') && URL_PARAMETER){
+if(URL_PARAMETER){
 		$urlparameter = "?$time";//パラメータをつけてキャッシュを表示しないようにする工夫。
 	}else{
 		$urlparameter = "";
