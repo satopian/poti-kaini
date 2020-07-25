@@ -980,7 +980,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 		$textonly=true;//画像なし
 	}
 	if(!$resto&&!$textonly&&!$is_file_dest) error(MSG007,$dest);
-	if(!$resto&&DENY_COMMENTS_ONLY&&!$is_file_dest) error(MSG039,$dest);
+	if(!$resto&&DENY_COMMENTS_ONLY&&!$is_file_dest&&$admin!==$ADMIN_PASS) error(MSG039,$dest);
 	if(RES_UPLOAD&&$resto&&!$textonly&&!$is_file_dest) error(MSG007,$dest);
 
 	if(!$com&&!$is_file_dest) error(MSG008,$dest);
