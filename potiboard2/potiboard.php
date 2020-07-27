@@ -43,8 +43,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.8.0');
-define('POTI_VERLOT' , 'v2.8.0 lot.200726');
+define('POTI_VER' , 'v2.8.1');
+define('POTI_VERLOT' , 'v2.8.1 lot.200727');
 
 if(phpversion()>="5.5.0"){
 //スパム無効化関数
@@ -883,15 +883,14 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 	}
 	$dest='';
 	$is_file_dest=false;
-	if($upfile&&is_file($upfile)){//アップロード
+	if($upfile && is_file($upfile) && !$textonly){//アップロード
 		$dest = $path.$tim.'.tmp';
 		if($pictmp==2){
 			copy($upfile, $dest);
 		}
 		else{//フォームからのアップロード
 			if(!USE_IMG_UPLOAD && $admin!==$ADMIN_PASS){//アップロード禁止で管理画面からの投稿ではない時
-				//ワークファイル削除
-				if(is_file($upfile)) unlink($upfile);
+				unlink($upfile);
 				error(MSG006,$dest);
 			}
 			if(!preg_match('/\A(jpe?g|jfif|gif|png)\z/i', pathinfo($upfile_name, PATHINFO_EXTENSION))){//もとのファイル名の拡張子190606
@@ -2944,7 +2943,11 @@ switch($mode){
 			}else{ $admin=$pwd; }
 		}
 	if($textonly){//画像なしの時
-	$upfile=$upfile_name="";
+		if($upfile&&is_file($upfile)){
+			unlink($upfile);
+		}
+		$upfile="";
+		$upfile_name="";
 	}
 regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pictmp,$picfile);
 	//変数クリア
