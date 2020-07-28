@@ -43,8 +43,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.8.1');
-define('POTI_VERLOT' , 'v2.8.1 lot.200727');
+define('POTI_VER' , 'v2.8.2');
+define('POTI_VERLOT' , 'v2.8.2 lot.200728');
 
 if(phpversion()>="5.5.0"){
 //スパム無効化関数
@@ -262,7 +262,7 @@ function get_uip(){
 	}
 
 /* ヘッダ */
-function head(&$dat){
+function head(){
 	$dat['title'] = TITLE;
 	$dat['home']  = HOME;
 	$dat['self']  = PHP_SELF;
@@ -286,14 +286,19 @@ function head(&$dat){
 	if (SHARE_BUTTON){
 		$dat['sharebutton'] = true;//1ならシェアボタンを表示
 	}
-	
+	return $dat;
 }
 
 /* 投稿フォーム */
-function form(&$dat,$resno,$admin="",$tmp=""){
+function form($resno="",$adminin="",$tmp=""){
 	global $addinfo,$stime;
 	global $fontcolors,$undo,$undo_in_mg,$quality,$qualitys;
 	global $ADMIN_PASS;
+
+	$admin=false;
+	if($adminin==='valid'){
+		$admin=true;
+	}
 
 	$dat['form'] = true;
 	if(!USE_IMG_UPLOAD && DENY_COMMENTS_ONLY && !$resno && !$admin){//コメントのみも画像アップロードも禁止
@@ -390,6 +395,8 @@ function form(&$dat,$resno,$admin="",$tmp=""){
 		$qline .= '<option value='.$q.$selq.'>'.$q."</option>\n";
 	}
 	$dat['qualitys'] = $qline;
+
+	return $dat;
 }
 
 /* 記事部分 */
@@ -415,8 +422,8 @@ function updatelog($resno=0){
 	$counttree = count($tree);//190619
 	for($page=0;$page<$counttree;$page+=PAGE_DEF){
 		$oya = 0;	//親記事のメイン添字
-		head($dat);
-		form($dat,$resno);
+		// form($dat,$resno);
+		$dat = form($resno);
 		if(!$resno){
 			$st = $page;
 		}
@@ -838,7 +845,6 @@ function now_date($time){
 function error($mes,$dest=''){
 	if($dest&&is_file($dest)) unlink($dest);
 	$dat['err_mode'] = true;
-	head($dat);
 	$dat['mes'] = $mes;
 	htmloutput(SKIN_DIR.OTHERFILE,$dat);
 	exit;
@@ -1550,7 +1556,6 @@ function valid($pass){
 
 	if(!$pass){
 		$dat['admin_in'] = true;
-		head($dat);
 		htmloutput(SKIN_DIR.OTHERFILE,$dat);
 		exit;
 	}
@@ -1610,7 +1615,6 @@ function admindel($pass){
 	}
 	// 削除画面を表示
 	$dat['admin_del'] = true;
-	head($dat);
 	$dat['pass'] = $pass;
 
 	$line = file(LOGFILE);
@@ -1825,7 +1829,6 @@ if($admin===$ADMIN_PASS){
 	// if($h < 520 && !$useneo && $shi){$h = 520;}
 
 	$dat['paint_mode'] = true;
-	head($dat);
 	//ピンチイン
 	$ipad = false;
 	if(strpos($_SERVER['HTTP_USER_AGENT'],'iPad')!==false){
@@ -1851,7 +1854,9 @@ if($admin===$ADMIN_PASS){
 			}
 		}
 	}
-	form($dat,$resto);
+	// form($dat,$resto);
+	$dat = array_merge($dat,form($resto));
+
 	$dat['mode2'] = $mode;
 	if($mode=="contpaint"){
 		$dat['no'] = $no;
@@ -2071,7 +2076,6 @@ function paintcom($resto=''){
 
 	$dat['post_mode'] = true;
 	$dat['regist'] = true;
-	head($dat);
 	if(IP_CHECK) $dat['ipcheck'] = true;
 	if(count($tmp)==0){
 		$dat['notmp'] = true;
@@ -2088,7 +2092,9 @@ function paintcom($resto=''){
 		}
 	}
 	// if(ADMIN_NEWPOST&&$admin=='picpost') $dat['admin'] = $admin;
-	form($dat,$resto,'',$tmp);
+	// form($dat,$resto,'',$tmp);
+	$dat = array_merge($dat,form($resto,'',$tmp));
+
 	htmloutput(SKIN_DIR.OTHERFILE,$dat);
 }
 
@@ -2133,7 +2139,6 @@ function openpch($pch,$sp=""){
 	$w=$h=$picw=$pich=$datasize="";
 }
 	$dat['pch_mode'] = true;
-	head($dat);
 	$dat['w'] = $w;
 	$dat['h'] = $h;
 	$dat['picw'] = $picw;
@@ -2185,7 +2190,6 @@ function incontinue($no){
 	if(!$flag) error(MSG001);
 
 	$dat['continue_mode'] = true;
-	head($dat);
 //	if(CONTINUE_PASS) $dat['passflag'] = true;
 //コンティニュー時は削除キーを常に表示
 	$dat['passflag'] = true;
@@ -2282,7 +2286,6 @@ function editform($del,$pwd){
 	unset($value);
 		if(!$flag) error(MSG028);
 
-		head($dat);
 		$dat['post_mode'] = true;
 		$dat['rewrite'] = $no;
 		if($ADMIN_PASS == $pwd) $dat['admin'] = $ADMIN_PASS;
@@ -2768,8 +2771,8 @@ function catalog(){
 	$x = 0;
 	$y = 0;
 	$pagedef = CATALOG_X * CATALOG_Y;//1ページに表示する件数
-	head($dat);
-	form($dat,'');
+	// form($dat,'');
+	$dat = form();
 	if(!$page) $page=0;
 	for($i = $page; $i < $page+$pagedef; ++$i){
 		//if($tree[$i]==""){
@@ -2908,7 +2911,7 @@ function charconvert($str){
 /* HTML出力 */
 function htmloutput($template,$dat,$buf_flag=''){
 	global $Skinny;
-		
+	$dat = array_merge($dat, head());	
 	if($buf_flag){
 		$buf=$Skinny->SkinnyFetchHTML($template, $dat );
 		return $buf;
@@ -2961,8 +2964,7 @@ unset($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pictmp,$picf
 		if($admin==="post"){
 			$dat['post_mode'] = true;
 			$dat['regist'] = true;
-			head($dat);
-			form($dat,$res,1);
+			$dat = array_merge($dat,form($res,'valid'));
 			htmloutput(SKIN_DIR.OTHERFILE,$dat);
 		}
 		if($admin==="update"){
@@ -3001,8 +3003,8 @@ paintform($picw,$pich,$palette,$anime);
 	case 'newpost':
 		$dat['post_mode'] = true;
 		$dat['regist'] = true;
-		head($dat);
-		form($dat,'');
+		// form($dat,'');
+		$dat = array_merge($dat,form());
 		htmloutput(SKIN_DIR.OTHERFILE,$dat);
 		break;
 	case 'edit':
