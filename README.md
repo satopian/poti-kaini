@@ -52,6 +52,11 @@ config.phpの設定をし、アップロードしてpotiboard.phpのあるディ
 
 ## 履歴
 
+### [2020/07/29] v2.8.5 lot.200729
+
+- トリップ廃止の後方互換性確保
+- `function head()` → `function basicpart()`
+
 ### [2020/07/29] v2.8.3 lot.200729
 
 - トリップ廃止
