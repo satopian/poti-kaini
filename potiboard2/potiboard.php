@@ -43,8 +43,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.8.2');
-define('POTI_VERLOT' , 'v2.8.2 lot.200728');
+define('POTI_VER' , 'v2.8.3');
+define('POTI_VERLOT' , 'v2.8.3 lot.200729');
 
 if(phpversion()>="5.5.0"){
 //スパム無効化関数
@@ -1040,11 +1040,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 	$pass = ($pwd) ? password_hash($pwd,PASSWORD_BCRYPT,['cost' => 5]) : "*";
 	$now = now_date($time);//日付取得
 	if(DISP_ID){
-		if($email&&DISP_ID==1){
-			$now .= " ID:???";
-		}else{
 			$now .= " ID:".substr(crypt(md5($userip.ID_SEED.date("Ymd", $time)),'id'),-8);
-		}
 	}
 	//カンマを変換
 	$now = str_replace(",", "&#44;", $now);
@@ -1073,20 +1069,20 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 
 	$com = str_replace("\n", "", $com);	//\nを文字列から消す
 
-	$name=preg_replace("/◆/","◇",$name);
+	// $name=preg_replace("/◆/","◇",$name);
 	$name=preg_replace("/[\r\n]/","",$name);
 	$names=$name;
 	$name=CleanStr($name);
-	if(preg_match("/(#|＃)(.*)/",$names,$regs)){
-		$cap = $regs[2];
-		$cap=strtr($cap,"&amp;", "&");
-		$cap=strtr($cap,"&#44;", ",");
-		$name=preg_replace("/(#|＃)(.*)/","",$name);
-		$salt=substr($cap."H.",1,2);
-		$salt=preg_replace("/[^\.-z]/",".",$salt);
-		$salt=strtr($salt,":;<=>?@[\\]^_`","ABCDEFGabcdef");
-		$name.="◆".substr(crypt($cap,$salt),-10);
-	}
+	// if(preg_match("/(#|＃)(.*)/",$names,$regs)){
+	// 	$cap = $regs[2];
+	// 	$cap=strtr($cap,"&amp;", "&");
+	// 	$cap=strtr($cap,"&#44;", ",");
+	// 	$name=preg_replace("/(#|＃)(.*)/","",$name);
+	// 	$salt=substr($cap."H.",1,2);
+	// 	$salt=preg_replace("/[^\.-z]/",".",$salt);
+	// 	$salt=strtr($salt,":;<=>?@[\\]^_`","ABCDEFGabcdef");
+	// 	$name.="◆".substr(crypt($cap,$salt),-10);
+	// }
 
 	//ログ読み込み
 	$fp=fopen(LOGFILE,"r+");
@@ -2420,11 +2416,7 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 	$now = now_date($time);//日付取得
 	$now .= UPDATE_MARK;
 	if(DISP_ID){
-		if($email&&DISP_ID==1){
-			$now .= " ID:???";
-		}else{
 			$now.=" ID:".substr(crypt(md5($userip.ID_SEED.date("Ymd", $time)),'id'),-8);
-		}
 	}
 	$now = str_replace(",", "&#44;", $now);//カンマを変換
 	//テキスト整形
@@ -2450,20 +2442,20 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 	$com = nl2br($com);		//改行文字の前に<br>を代入する
 	$com = str_replace("\n", "", $com);	//\nを文字列から消す
 
-	$name=preg_replace("/◆/","◇",$name);
+	// $name=preg_replace("/◆/","◇",$name);
 	$name=preg_replace("/[\r\n]/","",$name);
 	$names=$name;
 	$name = CleanStr($name);
-	if(preg_match("/(#|＃)(.*)/",$names,$regs)){
-		$cap = $regs[2];
-		$cap=strtr($cap,"&amp;", "&");
-		$cap=strtr($cap,"&#44;", ",");
-		$name=preg_replace("/(#|＃)(.*)/","",$name);
-		$salt=substr($cap."H.",1,2);
-		$salt=preg_replace("/[^\.-z]/",".",$salt);
-		$salt=strtr($salt,":;<=>?@[\\]^_`","ABCDEFGabcdef");
-		$name.="◆".substr(crypt($cap,$salt),-10);
-	}
+	// if(preg_match("/(#|＃)(.*)/",$names,$regs)){
+	// 	$cap = $regs[2];
+	// 	$cap=strtr($cap,"&amp;", "&");
+	// 	$cap=strtr($cap,"&#44;", ",");
+	// 	$name=preg_replace("/(#|＃)(.*)/","",$name);
+	// 	$salt=substr($cap."H.",1,2);
+	// 	$salt=preg_replace("/[^\.-z]/",".",$salt);
+	// 	$salt=strtr($salt,":;<=>?@[\\]^_`","ABCDEFGabcdef");
+	// 	$name.="◆".substr(crypt($cap,$salt),-10);
+	// }
 
 	//ログ読み込み
 	$fp=fopen(LOGFILE,"r+");
@@ -2706,11 +2698,7 @@ function replace($no,$pwd,$stime){
 			
 			//ID付加
 			if(DISP_ID){
-				if($email&&DISP_ID==1){
-					$now .= " ID:???";
-				}else{
 					$now.=" ID:".substr(crypt(md5($userip.ID_SEED.date("Ymd", $time)),'id'),-8);
-				}
 			}
 			//描画時間追加
 			if($eptime) $ptime=$eptime.'+'.$ptime;
