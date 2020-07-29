@@ -43,8 +43,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.8.3');
-define('POTI_VERLOT' , 'v2.8.3 lot.200729');
+define('POTI_VER' , 'v2.8.4');
+define('POTI_VERLOT' , 'v2.8.4 lot.200729');
 
 if(phpversion()>="5.5.0"){
 //スパム無効化関数
@@ -1069,9 +1069,9 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 
 	$com = str_replace("\n", "", $com);	//\nを文字列から消す
 
-	// $name=preg_replace("/◆/","◇",$name);
+	$name=preg_replace("/◆/","◇",$name);
 	$name=preg_replace("/[\r\n]/","",$name);
-	$names=$name;
+	// $names=$name;
 	$name=CleanStr($name);
 	// if(preg_match("/(#|＃)(.*)/",$names,$regs)){
 	// 	$cap = $regs[2];
@@ -1329,7 +1329,8 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 	setcookie ("fcolorc", $fcolor,time()+(SAVE_COOKIE*24*3600));
 
 	//クッキー項目："クッキー名<>クッキー値"　※漢字を含む項目はこちらに追加 //190528
-	$cooks = array("namec<>".$names,"emailc<>".$email,"urlc<>".$url);
+	// $cooks = array("namec<>".$names,"emailc<>".$email,"urlc<>".$url);
+	$cooks = array("namec<>".$name,"emailc<>".$email,"urlc<>".$url);
 
 	foreach ( $cooks as $cook ) {
 		
@@ -2442,9 +2443,9 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 	$com = nl2br($com);		//改行文字の前に<br>を代入する
 	$com = str_replace("\n", "", $com);	//\nを文字列から消す
 
-	// $name=preg_replace("/◆/","◇",$name);
+	$name=preg_replace("/◆/","◇",$name);
 	$name=preg_replace("/[\r\n]/","",$name);
-	$names=$name;
+	// $names=$name;
 	$name = CleanStr($name);
 	// if(preg_match("/(#|＃)(.*)/",$names,$regs)){
 	// 	$cap = $regs[2];
