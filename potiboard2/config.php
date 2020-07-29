@@ -320,7 +320,7 @@ define('RENZOKU2', '20');
 //強制sageレス数( 0 ですべてsage)
 define('MAX_RES', '20');
 
-//IDを表示する 強制:2 する:1 しない:0
+//IDを表示する する:1 しない:0
 define('DISP_ID', '0');
 
 //ID生成の種
