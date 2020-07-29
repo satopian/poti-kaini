@@ -43,8 +43,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.8.4');
-define('POTI_VERLOT' , 'v2.8.4 lot.200729');
+define('POTI_VER' , 'v2.8.5');
+define('POTI_VERLOT' , 'v2.8.5 lot.200729');
 
 if(phpversion()>="5.5.0"){
 //スパム無効化関数
@@ -261,8 +261,8 @@ function get_uip(){
 	return $userip;
 	}
 
-/* ヘッダ */
-function head(){
+/* ベース */
+function basicpart(){
 	$dat['title'] = TITLE;
 	$dat['home']  = HOME;
 	$dat['self']  = PHP_SELF;
@@ -2900,7 +2900,7 @@ function charconvert($str){
 /* HTML出力 */
 function htmloutput($template,$dat,$buf_flag=''){
 	global $Skinny;
-	$dat = array_merge($dat, head());	
+	$dat = array_merge($dat, basicpart());	
 	if($buf_flag){
 		$buf=$Skinny->SkinnyFetchHTML($template, $dat );
 		return $buf;
