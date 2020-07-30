@@ -1382,17 +1382,11 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 		noticemail::send($data);
 	}
 
-	header("Content-type: text/html; charset=UTF-8");
-if(URL_PARAMETER){
-		$urlparameter = "?$time";//パラメータをつけてキャッシュを表示しないようにする工夫。
-	}else{
-		$urlparameter = "";
-}
-	$str = '<!DOCTYPE html>'."\n".'<html lang="ja"><head><meta http-equiv="refresh" content="1; URL='.PHP_SELF2.$urlparameter.'"><meta name="robots" content="noindex,nofollow">'."\n";
-	
-	$str.= '<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">'."\n".'<meta charset="UTF-8"><title></title></head>'."\n";
-	$str.= '<body>'.$mes.'画面を切り替えます</body></html>';
-	echo $str;
+    redirect(
+        PHP_SELF2 . (URL_PARAMETER ? "?{$time}" : ''),
+        1,
+        '画面を切り替えます'
+    );
 }
 
 //ツリー削除
@@ -2485,17 +2479,11 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 
 	updatelog();
 
-	header("Content-type: text/html; charset=UTF-8");
-	if(URL_PARAMETER){
-		$urlparameter = "?$time";//パラメータをつけてキャッシュを表示しないようにする工夫。
-	}else{
-		$urlparameter = "";
-	}
-	$str = '<!DOCTYPE html>'."\n".'<html lang="ja"><head><meta http-equiv="refresh" content="1; URL='.PHP_SELF2.$urlparameter.'"><meta name="robots" content="noindex,nofollow">'."\n";
-	
-	$str.= '<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">'."\n".'<meta charset="UTF-8"><title></title></head>'."\n";
-	$str.= '<body>画面を切り替えます</body></html>';
-	echo $str;
+    redirect(
+        PHP_SELF2 . (URL_PARAMETER ? "?{$time}" : ''),
+        1,
+        '画面を切り替えます'
+    );
 }
 
 /* 画像差し換え */
@@ -2709,16 +2697,11 @@ function replace($no,$pwd,$stime){
 
 	updatelog();
 
-	header("Content-type: text/html; charset=UTF-8");
-if(URL_PARAMETER){
-		$urlparameter = "?$time";//パラメータをつけてキャッシュを表示しないようにする工夫。
-	}else{
-		$urlparameter = "";
-}
-	$str = '<!DOCTYPE html>'."\n".'<html lang="ja"><head><meta http-equiv="refresh" content="1; URL='.PHP_SELF2.$urlparameter.'"><meta name="robots" content="noindex,nofollow">'."\n";
-	$str.= '<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">'."\n".'<meta charset="UTF-8"><title></title></head>'."\n";
-	$str.= '<body>'.$mes.'画面を切り替えます</body></html>';
-	echo $str;
+    redirect(
+    	PHP_SELF2 . (URL_PARAMETER ? "?{$time}" : ''),
+		1,
+		$mes . '画面を切り替えます'
+	);
 }
 
 /* カタログ */
@@ -2893,6 +2876,18 @@ function htmloutput($template,$dat,$buf_flag=''){
 	}
 }
 
+function redirect ($url, $wait = 0, $message = '') {
+    header("Content-type: text/html; charset=UTF-8");
+    echo '<!DOCTYPE html>'
+		. '<html lang="ja"><head>'
+		. '<meta http-equiv="refresh" content="' . $wait . '; URL=' . $url . '">'
+		. '<meta name="robots" content="noindex,nofollow">'
+    	. '<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">'
+		. '<meta charset="UTF-8"><title></title></head>'
+    	. '<body>' . $message . '</body></html>';
+    exit;
+}
+
 /*-----------Main-------------*/
 init();		//←■■初期設定後は不要なので削除可■■
 deltemp();
@@ -2936,14 +2931,14 @@ unset($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pictmp,$picf
 		}
 		if($admin==="update"){
 			updatelog();
-			echo '<!DOCTYPE html>'."\n".'<head><meta http-equiv="refresh" content="0; URL='.PHP_SELF2.'"><title></title></head>';
+            redirect(PHP_SELF2, 0);
 		}
 		break;
 	case 'usrdel':
 		if(USER_DELETES){
 			usrdel($del,$pwd);
 			updatelog();
-			echo '<!DOCTYPE html>'."\n".'<head><meta http-equiv="refresh" content="0; URL='.PHP_SELF2.'"><title></title></head>';
+            redirect(PHP_SELF2, 0);
 		}else{error(MSG033);}
 		break;
 	case 'paint':
@@ -2990,7 +2985,7 @@ paintform($picw,$pich,$palette,$anime);
 	if($res){
 			updatelog($res);
 		}else{
-			echo '<!DOCTYPE html>'."\n".'<head><meta http-equiv="refresh" content="0; URL='.PHP_SELF2.'"><title></title></head>';
+        	redirect(PHP_SELF2, 0);
 		}
 }
 //$time = microtime(true) - $time_start; echo "{$time} 秒";
