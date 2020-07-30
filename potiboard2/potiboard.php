@@ -483,12 +483,7 @@ function updatelog($resno=0){
 					}
 				}
 				//描画時間
-				if(DSP_PAINTTIME){
-				$painttime = $ptime;
-				}
-				else{
-					$painttime="";
-				}
+                $painttime = DSP_PAINTTIME ? $ptime : '';
 				//動画リンク
 				$pch="";
 				if(USE_ANIME){
@@ -500,26 +495,15 @@ function updatelog($resno=0){
 					}
 				}
 				//コンティニュー
-				if(USE_CONTINUE){
-						$continue = $no;
-				}else{$continue="";}
+				$continue = USE_CONTINUE ? $no : '';
 			}
 			else{//画像が無い時
 				$src=$srcname=$imgsrc=$size=$pch=$thumb=$continue=$painttime="";
 			}
 			// そろそろ消える。
-			if($lineindex[$no]-1 >= LOG_MAX*LOG_LIMIT/100) {
-				$limit = true;}
-				else{
-				$limit ="";
-				}
+            $limit = ($lineindex[$no] - 1 >= LOG_MAX * LOG_LIMIT / 100) ? true : '';
 			// ミニフォーム用
-			if(USE_RESUB){
-				$resub = 'Re: '.$sub;
-			}
-			else{
-				$resub = '';
-			}
+            $resub = USE_RESUB ? 'Re: ' . $sub : '';
 			// レス省略
 			$skipres = '';
 			if(!$resno){
@@ -632,11 +616,7 @@ function updatelog($resno=0){
 						}
 					}
 					//描画時間
-					if(DSP_PAINTTIME){ $painttime = $ptime;
-					}
-					else{
-						$painttime="";
-					}
+                    $painttime = DSP_PAINTTIME ? $ptime : '';
 					//動画リンク
 					$pch="";
 					if(USE_ANIME){
@@ -648,10 +628,7 @@ function updatelog($resno=0){
 						}
 					}
 					//コンティニュー
-					if(USE_CONTINUE){
-						//if(is_file(PCH_DIR.$time.'.pch')||is_file(PCH_DIR.$time.'.spch')||$ext=='.jpg')
-							$continue = $no;
-					}else{$continue="";}
+                    $continue = USE_CONTINUE ? $no : '';
 				}
 			else{//画像が無い時
 				$src=$srcname=$imgsrc=$size=$pch=$thumb=$continue=$painttime="";
