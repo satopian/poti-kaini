@@ -7,7 +7,7 @@
 */
 
 //テーマ(テンプレート)のバージョン
-define('TEMPLATE_VER', "v1.5.5 lot.200723");
+define('TEMPLATE_VER', "v1.8.2 lot.200726");
 
 //エラーメッセージ
 define('MSG001', "該当記事がみつかりません[Log is not found.]");
@@ -45,10 +45,10 @@ define('MSG032', "拒絶されました[was rejected.]<br>不正な文字列が�
 define('MSG033', "削除に失敗しました[failed in deletion.]<br>ユーザーに削除権限がありません[user doesn't have deletion authority.]");
 define('MSG034', "アップロードに失敗しました[It failed in up-loading.]<br>規定の画像容量をオーバーしています[size over is picture file.]");
 define('MSG035', "何か日本語で書いてください[Comment should have at least some Japanese characters.]");
-define('MSG036', "本文にそのURLを書く事はできません。[This URL can not be used in text.]");
-define('MSG037', "予備");
-define('MSG038', "予備");
-define('MSG039', "予備");
+define('MSG036', "本文にURLを書く事はできません。[This URL can not be used in text.]");
+define('MSG037', "この名前は使えません [That name cannot be used.]");
+define('MSG038', "このタグは使えません。[This tag cannot be used.]");
+define('MSG039', "コメントだけの新規投稿はできません。［New posts with only comments are not accepted.］");
 define('MSG040', "予備");
 
 //文字色テーブル '値[,名称]'
