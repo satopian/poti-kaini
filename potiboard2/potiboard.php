@@ -43,8 +43,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.8.5');
-define('POTI_VERLOT' , 'v2.8.5 lot.200729');
+define('POTI_VER' , 'v2.8.6');
+define('POTI_VERLOT' , 'v2.8.6 lot.200731');
 
 if(phpversion()>="5.5.0"){
 //スパム無効化関数
@@ -2900,7 +2900,8 @@ function charconvert($str){
 /* HTML出力 */
 function htmloutput($template,$dat,$buf_flag=''){
 	global $Skinny;
-	$dat = array_merge($dat, basicpart());	
+	$dat += basicpart();//basicpart()で上書きしない
+	//array_merge()ならbasicpart(),$datの順
 	if($buf_flag){
 		$buf=$Skinny->SkinnyFetchHTML($template, $dat );
 		return $buf;
