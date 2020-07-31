@@ -684,11 +684,7 @@ function updatelog($resno=0){
 			$next = $st + PAGE_DEF;
 			// 改ページ処理
 			if($prev >= 0){
-				if($prev==0){
-					$dat['prev'] = PHP_SELF2;
-				}else{
-					$dat['prev'] = $prev/PAGE_DEF.PHP_EXT;
-				}
+				$dat['prev'] = $prev == 0 ? PHP_SELF2 : ($prev / PAGE_DEF) . PHP_EXT;
 			}
 			$paging = "";
 
@@ -746,8 +742,9 @@ function updatelog($resno=0){
 		$dat['resform'] = RES_FORM ? true : false;
 
 		$buf = htmloutput(SKIN_DIR.MAINFILE,$dat,true);
-		if($page==0){$logfilename=PHP_SELF2;}
-			else{$logfilename=$page/PAGE_DEF.PHP_EXT;}
+
+		$logfilename = $page == 0 ? PHP_SELF2 : ($page / PAGE_DEF) . PHP_EXT;
+
 		$fp = fopen($logfilename, "w");
 		set_file_buffer($fp, 0);
 		flock($fp, LOCK_EX); //*
