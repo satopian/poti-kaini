@@ -43,8 +43,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.8.9');
-define('POTI_VERLOT' , 'v2.8.9 lot.200731');
+define('POTI_VER' , 'v2.9.0');
+define('POTI_VERLOT' , 'v2.9.0 lot.200731');
 
 if(phpversion()>="5.5.0"){
 //スパム無効化関数
@@ -280,8 +280,7 @@ function basicpart(){
 	if(!USE_IMG_UPLOAD&&DENY_COMMENTS_ONLY){
 		$dat['for_new_post'] = false;
 	}
-
-//OGPイメージ シェアボタン
+	//OGPイメージ シェアボタン
 	$dat['rooturl'] = ROOT_URL;//設置場所url
 	if (SHARE_BUTTON){
 		$dat['sharebutton'] = true;//1ならシェアボタンを表示
@@ -1195,6 +1194,30 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 			if($i>=$chkline){break;}//チェックする最大行数
 		}
 		unset($value,$i,$j);
+		$pchext='';
+		//PCHファイルアップロード
+		$pchupload=false;
+		$pch_ext='.pch';
+		$pchtemp = $temppath.$picfile.$pch_ext;
+		if(is_file($pchtemp)){//pchなら
+			$pchupload=true;
+		}
+		else{//pchファイルが無かったら
+			$pch_ext='.spch';//scph
+			$pchtemp = $temppath.$picfile.$pch_ext;
+			if(is_file($pchtemp)){
+				$pchupload=true;
+			}
+		}
+		$pchext='';
+		if($pchupload){
+			copy($pchtemp, PCH_DIR.$tim.$pch_ext);
+			if(is_file(PCH_DIR.$tim.$pch_ext)){
+				$pchext=$pch_ext;//ログにpchの拡張子を記録できるように
+				chmod(PCH_DIR.$tim.$pch_ext,0606);
+				unlink($pchtemp);
+			}
+		}
 	}
 	else{//画像が無い時
 		$ext=$W=$H=$chk="";
@@ -1299,26 +1322,6 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 		if(is_file($upfile)) unlink($upfile);
 		if(is_file($temppath.$picfile.".dat")) unlink($temppath.$picfile.".dat");
 
-		//PCHファイルアップロード
-		$pchtemp = $temppath.$picfile.'.pch';
-		if(is_file($pchtemp)){
-			copy($pchtemp, PCH_DIR.$tim.'.pch');
-			if(is_file(PCH_DIR.$tim.'.pch')){
-				chmod(PCH_DIR.$tim.'.pch',0606);
-				unlink($pchtemp);
-			}
-		}
-		else{//pchファイルが無かったら
-		//SPCHファイルアップロード
-		$pchtemp = $temppath.$picfile.'.spch';
-			if(is_file($pchtemp)){
-			copy($pchtemp, PCH_DIR.$tim.'.spch');
-			if(is_file(PCH_DIR.$tim.'.spch')){
-				chmod(PCH_DIR.$tim.'.spch',0606);
-				unlink($pchtemp);
-				}
-			}
-		}
 	}
 	updatelog();
 
@@ -2599,26 +2602,29 @@ function replace($no,$pwd,$stime){
 			if(is_file($upfile)) unlink($upfile);
 			if(is_file($temppath.$file_name.".dat")) unlink($temppath.$file_name.".dat");
 			//PCHファイルアップロード
-			$pchtemp = $temppath.$file_name.'.pch';
-			if(is_file($pchtemp)){
-				copy($pchtemp, PCH_DIR.$tim.'.pch');
-				if(is_file(PCH_DIR.$tim.'.pch')){
-					chmod(PCH_DIR.$tim.'.pch',0606);
-					unlink($pchtemp);
-				}
+			$pchupload=false;
+			$pch_ext='.pch';
+			$pchtemp = $temppath.$file_name.$pch_ext;
+			if(is_file($pchtemp)){//pchなら
+				$pchupload=true;
 			}
 			else{//pchファイルが無かったら
-
-			//SPCHファイルアップロード
-			$pchtemp = $temppath.$file_name.'.spch';
+				$pch_ext='.spch';//scph
+				$pchtemp = $temppath.$file_name.$pch_ext;
 				if(is_file($pchtemp)){
-				copy($pchtemp, PCH_DIR.$tim.'.spch');
-				if(is_file(PCH_DIR.$tim.'.spch')){
-					chmod(PCH_DIR.$tim.'.spch',0606);
-					unlink($pchtemp);
-					}
+					$pchupload=true;
 				}
 			}
+			$pchext='';
+			if($pchupload){
+				copy($pchtemp, PCH_DIR.$tim.$pch_ext);
+				if(is_file(PCH_DIR.$tim.$pch_ext)){
+					$pchext=$pch_ext;//ログにpchの拡張子を記録できるように
+					chmod(PCH_DIR.$tim.$pch_ext,0606);
+					unlink($pchtemp);
+				}
+			}
+
 			//旧ファイル削除
 			if(is_file($path.$etim.$ext)) unlink($path.$etim.$ext);
 			if(is_file(THUMB_DIR.$etim.'s.jpg')) unlink(THUMB_DIR.$etim.'s.jpg');
