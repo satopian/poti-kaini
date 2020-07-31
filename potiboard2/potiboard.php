@@ -1182,12 +1182,8 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 		$W = $size[0];
 		$H = $size[1];
 
-		switch ($img_type) {
-			case "image/gif" : $ext=".gif";break;
-			case "image/jpeg" : $ext=".jpg";break;
-			case "image/png" : $ext=".png";break;
-			default : error(MSG004,$dest);
-		}
+		$ext = getImgType($img_type, $dest);
+
 		// 画像表示縮小
 		$max_w = $resto ? MAX_RESW : MAX_W;
 		$max_h = $resto ? MAX_RESH : MAX_H;
@@ -2612,12 +2608,8 @@ function replace($no,$pwd,$stime){
 				error(MSG005,$dest); //拒絶画像
 				}
 			}
-			switch ($img_type) {//拡張子
-				case "image/gif" : $imgext=".gif";break;
-				case "image/jpeg" : $imgext=".jpg";break;
-				case "image/png" : $imgext=".png";break;
-				default : error(MSG004,$dest);
-			}
+
+			$imgext = getImgType($img_type, $dest);
 	
 			chmod($dest,0606);
 			rename($dest,$path.$tim.$imgext);
@@ -2885,6 +2877,16 @@ function redirect ($url, $wait = 0, $message = '') {
 		. '<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">'
 		. '<meta charset="UTF-8"><title></title></head>'
 		. '<body>' . $message . '</body></html>';
+	exit;
+}
+
+function getImgType ($img_type, $dest) {
+	switch ($img_type) {
+		case "image/gif" : return ".gif";
+		case "image/jpeg" : return ".jpg";
+		case "image/png" : return ".png";
+	}
+	error(MSG004, $dest);
 	exit;
 }
 
