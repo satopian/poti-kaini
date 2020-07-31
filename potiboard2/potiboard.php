@@ -483,7 +483,7 @@ function updatelog($resno=0){
 					}
 				}
 				//描画時間
-                $painttime = DSP_PAINTTIME ? $ptime : '';
+				$painttime = DSP_PAINTTIME ? $ptime : '';
 				//動画リンク
 				$pch="";
 				if(USE_ANIME){
@@ -501,9 +501,9 @@ function updatelog($resno=0){
 				$src=$srcname=$imgsrc=$size=$pch=$thumb=$continue=$painttime="";
 			}
 			// そろそろ消える。
-            $limit = ($lineindex[$no] - 1 >= LOG_MAX * LOG_LIMIT / 100) ? true : '';
+			$limit = ($lineindex[$no] - 1 >= LOG_MAX * LOG_LIMIT / 100) ? true : '';
 			// ミニフォーム用
-            $resub = USE_RESUB ? 'Re: ' . $sub : '';
+			$resub = USE_RESUB ? 'Re: ' . $sub : '';
 			// レス省略
 			$skipres = '';
 			if(!$resno){
@@ -616,7 +616,7 @@ function updatelog($resno=0){
 						}
 					}
 					//描画時間
-                    $painttime = DSP_PAINTTIME ? $ptime : '';
+					$painttime = DSP_PAINTTIME ? $ptime : '';
 					//動画リンク
 					$pch="";
 					if(USE_ANIME){
@@ -628,7 +628,7 @@ function updatelog($resno=0){
 						}
 					}
 					//コンティニュー
-                    $continue = USE_CONTINUE ? $no : '';
+					$continue = USE_CONTINUE ? $no : '';
 				}
 			else{//画像が無い時
 				$src=$srcname=$imgsrc=$size=$pch=$thumb=$continue=$painttime="";
@@ -1182,12 +1182,8 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 		$W = $size[0];
 		$H = $size[1];
 
-		switch ($img_type) {
-			case "image/gif" : $ext=".gif";break;
-			case "image/jpeg" : $ext=".jpg";break;
-			case "image/png" : $ext=".png";break;
-			default : error(MSG004,$dest);
-		}
+		$ext = getImgType($img_type, $dest);
+
 		// 画像表示縮小
 		$max_w = $resto ? MAX_RESW : MAX_W;
 		$max_h = $resto ? MAX_RESH : MAX_H;
@@ -1382,11 +1378,11 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 		noticemail::send($data);
 	}
 
-    redirect(
-        PHP_SELF2 . (URL_PARAMETER ? "?{$time}" : ''),
-        1,
-        '画面を切り替えます'
-    );
+	redirect(
+		PHP_SELF2 . (URL_PARAMETER ? "?{$time}" : ''),
+		1,
+		'画面を切り替えます'
+	);
 }
 
 //ツリー削除
@@ -2479,11 +2475,11 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 
 	updatelog();
 
-    redirect(
-        PHP_SELF2 . (URL_PARAMETER ? "?{$time}" : ''),
-        1,
-        '画面を切り替えます'
-    );
+	redirect(
+		PHP_SELF2 . (URL_PARAMETER ? "?{$time}" : ''),
+		1,
+		'画面を切り替えます'
+	);
 }
 
 /* 画像差し換え */
@@ -2612,12 +2608,8 @@ function replace($no,$pwd,$stime){
 				error(MSG005,$dest); //拒絶画像
 				}
 			}
-			switch ($img_type) {//拡張子
-				case "image/gif" : $imgext=".gif";break;
-				case "image/jpeg" : $imgext=".jpg";break;
-				case "image/png" : $imgext=".png";break;
-				default : error(MSG004,$dest);
-			}
+
+			$imgext = getImgType($img_type, $dest);
 	
 			chmod($dest,0606);
 			rename($dest,$path.$tim.$imgext);
@@ -2697,8 +2689,8 @@ function replace($no,$pwd,$stime){
 
 	updatelog();
 
-    redirect(
-    	PHP_SELF2 . (URL_PARAMETER ? "?{$time}" : ''),
+	redirect(
+		PHP_SELF2 . (URL_PARAMETER ? "?{$time}" : ''),
 		1,
 		$mes . '画面を切り替えます'
 	);
@@ -2877,15 +2869,25 @@ function htmloutput($template,$dat,$buf_flag=''){
 }
 
 function redirect ($url, $wait = 0, $message = '') {
-    header("Content-type: text/html; charset=UTF-8");
-    echo '<!DOCTYPE html>'
+	header("Content-type: text/html; charset=UTF-8");
+	echo '<!DOCTYPE html>'
 		. '<html lang="ja"><head>'
 		. '<meta http-equiv="refresh" content="' . $wait . '; URL=' . $url . '">'
 		. '<meta name="robots" content="noindex,nofollow">'
-    	. '<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">'
+		. '<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">'
 		. '<meta charset="UTF-8"><title></title></head>'
-    	. '<body>' . $message . '</body></html>';
-    exit;
+		. '<body>' . $message . '</body></html>';
+	exit;
+}
+
+function getImgType ($img_type, $dest) {
+	switch ($img_type) {
+		case "image/gif" : return ".gif";
+		case "image/jpeg" : return ".jpg";
+		case "image/png" : return ".png";
+	}
+	error(MSG004, $dest);
+	exit;
 }
 
 /*-----------Main-------------*/
@@ -2931,14 +2933,14 @@ unset($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pictmp,$picf
 		}
 		if($admin==="update"){
 			updatelog();
-            redirect(PHP_SELF2, 0);
+			redirect(PHP_SELF2, 0);
 		}
 		break;
 	case 'usrdel':
 		if(USER_DELETES){
 			usrdel($del,$pwd);
 			updatelog();
-            redirect(PHP_SELF2, 0);
+			redirect(PHP_SELF2, 0);
 		}else{error(MSG033);}
 		break;
 	case 'paint':
@@ -2985,7 +2987,7 @@ paintform($picw,$pich,$palette,$anime);
 	if($res){
 			updatelog($res);
 		}else{
-        	redirect(PHP_SELF2, 0);
+			redirect(PHP_SELF2, 0);
 		}
 }
 //$time = microtime(true) - $time_start; echo "{$time} 秒";
