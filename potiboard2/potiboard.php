@@ -43,8 +43,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.8.10');
-define('POTI_VERLOT' , 'v2.8.10 lot.200731');
+define('POTI_VER' , 'v2.8.11');
+define('POTI_VERLOT' , 'v2.8.11 lot.200731');
 
 if(phpversion()>="5.5.0"){
 //スパム無効化関数
@@ -1009,7 +1009,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 	$resto= CleanStr($resto); $resto=preg_replace("/[\r\n]/","",$resto);
 	$url  = CleanStr($url);   $url  =preg_replace("/[\r\n]/","",$url);
 	$url  = str_replace(" ", "", $url);
-	$com  = CleanCom($com);
+	$com  = CleanStr($com,true);
 	$pwd= CleanStr($pwd);
 	$pwd=preg_replace("/[\r\n]/","",$pwd);
 	//管理モードで使用できるタグを制限
@@ -1194,7 +1194,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 			if($i>=$chkline){break;}//チェックする最大行数
 		}
 		unset($value,$i,$j);
-		
+
 		//PCHファイルアップロード
 		$pchupload=false;
 		$pch_ext='.pch';
@@ -1416,15 +1416,15 @@ function treedel($delno){
 }
 
 /* テキスト整形 */
-function CleanStr($str){//コメント以外190603
-	$str = trim($str);//先頭と末尾の空白除去
-	$str = htmlspecialchars($str,ENT_QUOTES,'utf-8');
-	return str_replace(",", "&#44;", $str);//カンマを変換
-}
-function CleanCom($str){//コメントは管理者以外タグ禁止
+function CleanStr($str,$com=''){
 	global $admin,$ADMIN_PASS;
 	$str = trim($str);//先頭と末尾の空白除去
-	if($admin!==$ADMIN_PASS){//管理者はタグ可能
+	if($com){//コメント欄なら
+		if($admin!==$ADMIN_PASS){//管理者はタグ許可
+			$str = htmlspecialchars($str,ENT_QUOTES,'utf-8');//管理者以外タグ禁止
+		}
+	}
+	else{//そのほかの入力欄は
 		$str = htmlspecialchars($str,ENT_QUOTES,'utf-8');//タグ禁止
 	}
 	return str_replace(",", "&#44;", $str);//カンマを変換
@@ -2374,7 +2374,7 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 	$url  = CleanStr($url);
 	$url  =preg_replace("/[\r\n]/","",$url);
 	$url  = str_replace(" ", "", $url);
-	$com  = CleanCom($com);
+	$com  = CleanStr($com,true);
 	$pwd= CleanStr($pwd);
 	$pwd=preg_replace("/[\r\n]/","",$pwd);
 	//管理モードで使用できるタグを制限
