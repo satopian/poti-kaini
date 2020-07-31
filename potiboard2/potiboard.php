@@ -524,7 +524,8 @@ function updatelog($resno=0){
 						if($line[$j]==="") continue;
 						list(,,,,,,,,,$rext,,,$rtime,,,) = explode(",", rtrim($line[$j]));
 						$resimg = $path.$rtime.$rext;
-						if($rext && is_file($resimg)){ $imgline[]='img'; }else{ $imgline[]='0'; }
+
+						$imgline[] = ($rext && is_file($resimg)) ? 'img' : '0';
 					}
 					$resimgs = array_count_values($imgline);
 					if(isset($resimgs['img'])){//未定義エラー対策
@@ -1005,11 +1006,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 	// if($pwd==""){
 	// 	if($pwdc==""){
 	if(!$pwd){//nullでも8桁のパスをセット
-		if(!$pwdc){
-			$pwd=rand();$pwd=substr($pwd,0,8);
-		}else{
-			$pwd=$pwdc;
-		}
+		$pwd = $pwdc ? $pwd : substr(rand(), 0, 8);
 	}
 
 	$c_pass = $pwd;
@@ -1368,12 +1365,8 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 			$data['subject'] = '['.TITLE.'] 新規投稿がありました';
 			$data['option'][] = "\n".'記事URL,'.ROOT_URL.PHP_SELF.'?res='.$no;
 		}
-		if(SEND_COM){
-		$data['comment'] = preg_replace("#<br(( *)|( *)/)>#i","\n", $com);
-		}
-		else{
-		$data['comment'] ="";
-		}
+
+		$data['comment'] = SEND_COM ? preg_replace("#<br(( *)|( *)/)>#i","\n", $com) : '';
 
 		noticemail::send($data);
 	}
