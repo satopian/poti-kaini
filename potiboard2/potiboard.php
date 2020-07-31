@@ -446,26 +446,25 @@ function updatelog($resno=0){
 			list($no,$now,$name,$email,$sub,$com,$url,
 				 $host,$pwd,$ext,$w,$h,$time,$chk,$ptime,$fcolor) = explode(",", rtrim($line[$j]));
 
-				 $r_threads = false;
-				 if(ELAPSED_DAYS){//古いスレッドのフォームを閉じる日数が設定されていたら
-				 $ntime = time();
-				 $ltime=substr($time,-13,-3);
-				 $elapsed_time = ELAPSED_DAYS*86400;
-					 if(($ntime-$ltime) <= $elapsed_time){//指定日数以内
-					 $r_threads = true;//フォームを表示する
-					 }
-				 }
-				 else{//フォームを閉じる日数が未設定なら
-				 $r_threads = true;
-				 }
-				$disp_resform = true;
-				if(!$r_threads){
-					 $disp_resform = false;//ミニレスフォームを閉じる
-					 if($resno){//レスなら
-					 $dat['form'] = false;//フォームを閉じる
-					 $dat['paintform'] = false;
-					 }
-				 }
+			$r_threads = false;
+			if(ELAPSED_DAYS){//古いスレッドのフォームを閉じる日数が設定されていたら
+				$ntime = time();
+				$ltime=substr($time,-13,-3);
+				$elapsed_time = ELAPSED_DAYS*86400;
+				if(($ntime-$ltime) <= $elapsed_time){//指定日数以内
+					$r_threads = true;//フォームを表示する
+				}
+			} else{//フォームを閉じる日数が未設定なら
+				$r_threads = true;
+			}
+			$disp_resform = true;
+			if(!$r_threads){
+				$disp_resform = false;//ミニレスフォームを閉じる
+				if($resno){//レスなら
+					$dat['form'] = false;//フォームを閉じる
+					$dat['paintform'] = false;
+				}
+			}
 				
 			// URLとメールにリンク
 			if(AUTOLINK) $com = auto_link($com);
@@ -755,7 +754,7 @@ function updatelog($resno=0){
 	}
 
 	//改ページ分岐ここまで
-			
+
 			$dat['paging'] = $paging;
 			if($oya >= PAGE_DEF && $counttree > $next){
 				$dat['next'] = $next/PAGE_DEF.PHP_EXT;
