@@ -661,7 +661,6 @@ function updatelog($resno=0){
 				$fontcolor = $fcolor ? $fcolor : DEF_FONTCOLOR;
 				//<br />を<br>へ
 				$com = preg_replace("{<br( *)/>}i","<br>",$com);
-				//独自タグ変換
 				$encoded_name=urlencode($name);
 
 				// レス記事一時格納
