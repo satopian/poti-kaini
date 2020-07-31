@@ -407,18 +407,26 @@ function updatelog($resno=0){
 	$find = false;
 	if($resno){
 		foreach($tree as $i => $value){
-			list($artno,)=explode(",",rtrim($value));
-			if($artno==$resno){$st=$i;$find=true;break;} //レス先検索
+			list($artno,) = explode(",", rtrim($value));
+			if ($artno==$resno){
+				$st = $i;
+				$find = true;
+				break;
+			} //レス先検索
 		}
-	unset($value);
-		if(!$find) error(MSG001);
+		unset($value);
+		if (!$find) {
+			error(MSG001);
+		}
 	}
+
 	$line = file(LOGFILE);
 	foreach($line as $i =>$value){
 		list($no,) = explode(",", $value);
-		$lineindex[$no]=$i + 1; //逆変換テーブル作成
+		$lineindex[$no] = $i + 1; //逆変換テーブル作成
 	}
 	unset($value);
+
 	$counttree = count($tree);//190619
 	for($page=0;$page<$counttree;$page+=PAGE_DEF){
 		$oya = 0;	//親記事のメイン添字
