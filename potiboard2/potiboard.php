@@ -1194,7 +1194,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 			if($i>=$chkline){break;}//チェックする最大行数
 		}
 		unset($value,$i,$j);
-		$pchext='';
+		
 		//PCHファイルアップロード
 		$pchupload=false;
 		$pch_ext='.pch';
