@@ -430,13 +430,11 @@ function updatelog($resno=0){
 	$counttree = count($tree);//190619
 	for($page=0;$page<$counttree;$page+=PAGE_DEF){
 		$oya = 0;	//親記事のメイン添字
-		// form($dat,$resno);
 		$dat = form($resno);
 		if(!$resno){
 			$st = $page;
 		}
 		for($i = $st; $i < $st+PAGE_DEF; ++$i){
-			//if($tree[$i]=="") continue;
 			if(!isset($tree[$i])){
 				continue;
 			}
@@ -470,7 +468,6 @@ function updatelog($resno=0){
 				 }
 				
 			// URLとメールにリンク
-			//if($email) $name = "<a href=\"mailto:$email\">$name</a>";
 			if(AUTOLINK) $com = auto_link($com);
 			// '>'色設定
 			$com = preg_replace("/(^|>)((&gt;|＞)[^<]*)/i", "\\1".RE_START."\\2".RE_END, $com);
@@ -602,7 +599,6 @@ function updatelog($resno=0){
 				list($no,$now,$name,$email,$sub,$com,$url,
 						 $host,$pwd,$ext,$w,$h,$time,$chk,$ptime,$fcolor) = explode(",", rtrim($line[$j]));
 				// URLとメールにリンク
-				//if($email) $name = "<a href=\"mailto:$email\">$name</a>";
 				if(AUTOLINK) $com = auto_link($com);
 				// '>'色設定
 				$com = preg_replace("/(^|>)((&gt;|＞)[^<]*)/i", "\\1".RE_START."\\2".RE_END, $com);
@@ -667,7 +663,6 @@ function updatelog($resno=0){
 				//<br />を<br>へ
 				$com = preg_replace("{<br( *)/>}i","<br>",$com);
 				//独自タグ変換
-				// if(USE_POTITAG) $com = potitag($com);
 				$encoded_name=urlencode($name);
 
 				// レス記事一時格納
@@ -716,20 +711,6 @@ function updatelog($resno=0){
 				}
 			}
 			$paging = "";
-			//for($i = 0; $i < $counttree ; $i+=PAGE_DEF){
-			//	if($st==$i){
-			//		$pformat = str_replace("<PAGE>", $i/PAGE_DEF, NOW_PAGE);
-			//	}else{
-			//		if($i==0){
-			//			$pno = str_replace("<PAGE>", "0", OTHER_PAGE);
-			//			$pformat = str_replace("<PURL>", PHP_SELF2, $pno);
-			//		}else{
-			//			$pno = str_replace("<PAGE>", $i/PAGE_DEF, OTHER_PAGE);
-			//			$pformat = str_replace("<PURL>", ($i/PAGE_DEF).PHP_EXT, $pno);
-			//		}
-			//	}
-			//	$paging.=$pformat;
-			//}
 
 			//表示しているページが20ページ以上または投稿数が少ない時はページ番号のリンクを制限しない
 
@@ -774,7 +755,6 @@ function updatelog($resno=0){
 	}
 
 	//改ページ分岐ここまで
-
 			
 			$dat['paging'] = $paging;
 			if($oya >= PAGE_DEF && $counttree > $next){
@@ -784,10 +764,7 @@ function updatelog($resno=0){
 
 		if($resno){htmloutput(SKIN_DIR.RESFILE,$dat);break;}
 		$dat['resform'] = RES_FORM ? true : false;
-		// $dat['resform'] = false;	
-		// if(RES_FORM && !ELAPSED_DAYS){
-		// 	$dat['resform'] = true;	
-		// }
+
 		$buf = htmloutput(SKIN_DIR.MAINFILE,$dat,true);
 		if($page==0){$logfilename=PHP_SELF2;}
 			else{$logfilename=$page/PAGE_DEF.PHP_EXT;}
@@ -799,7 +776,6 @@ function updatelog($resno=0){
 		fflush($fp);
 		flock($fp, LOCK_UN);
 		fclose($fp);
-		//chmod($logfilename,0606);
 		//拡張子を.phpにした場合、↑で500エラーでるなら↓に変更
 		if(PHP_EXT!='.php'){chmod($logfilename,0606);}
 		unset($dat); //クリア
