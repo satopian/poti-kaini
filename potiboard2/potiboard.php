@@ -549,25 +549,16 @@ function updatelog($resno=0){
 				$s=1;
 				$dat['resub'] = $resub; //レス画面用
 			}
+
 			//日付とIDを分離
-			if(preg_match("/( ID:)(.*)/",$now,$regs)){
-				$id=$regs[2];
-				$now=preg_replace("/( ID:.*)/","",$now);
-			}else{$id='';}
+			list($id, $now) = separateDatetimeAndId($now);
+
 			//日付と編集マークを分離
-			$updatemark='';
-			if(UPDATE_MARK){
-				if(strpos($now,UPDATE_MARK)!==false){
-					$updatemark = UPDATE_MARK;
-					$now=str_replace(UPDATE_MARK,"",$now);
-				}
-			}
+			list($now, $updatemark) = separateDatetimeAndUpdatemark($now);
+
 			//名前とトリップを分離
-			$name=strip_tags($name);//タグ除去
-			if(preg_match("/(◆.*)/",$name,$regs)){
-				$trip=$regs[1];
-				$name=preg_replace("/(◆.*)/","",$name);
-			}else{$trip='';}
+			list($name, $trip) = separateNameAndTrip($name);
+
 			//TAB
 			$tab=$oya+1;
 			//文字色
@@ -639,24 +630,14 @@ function updatelog($resno=0){
 			}
 
 				//日付とIDを分離
-				if(preg_match("/( ID:)(.*)/",$now,$regs)){
-					$id=$regs[2];
-					$now=preg_replace("/( ID:.*)/","",$now);
-				}else{$id='';}
+				list($id, $now) = separateDatetimeAndId($now);
+
 				//日付と編集マークを分離
-				$updatemark='';
-				if(UPDATE_MARK){
-					if(strpos($now,UPDATE_MARK)!==false){
-						$updatemark = UPDATE_MARK;
-						$now=str_replace(UPDATE_MARK,"",$now);
-					}
-				}
+				list($now, $updatemark) = separateDatetimeAndUpdatemark($now);
+
 				//名前とトリップを分離
-				$name=strip_tags($name);//タグ除去
-				if(preg_match("/(◆.*)/",$name,$regs)){
-					$trip=$regs[1];
-					$name=preg_replace("/(◆.*)/","",$name);
-				}else{$trip='';}
+				list($name, $trip) = separateNameAndTrip($name);
+
 				//文字色
 				$fontcolor = $fcolor ? $fcolor : DEF_FONTCOLOR;
 				//<br />を<br>へ
@@ -2732,26 +2713,15 @@ function catalog(){
 				$txt=true;
 				$imgsrc=$pch="";
 			}
-			//日付とIDを分離
-			if(preg_match("/( ID:)(.*)/",$now,$regs)){
-				$id=$regs[2];
-				$now=preg_replace("/( ID:.*)/","",$now);
-			}else{$id='';}
-			//日付と編集マークを分離
-			$updatemark='';
-			if(UPDATE_MARK){
-				if(strpos($now,UPDATE_MARK)!==false){
-					$updatemark = UPDATE_MARK;
-					$now=str_replace(UPDATE_MARK,"",$now);
-				}
-			}
-			//名前とトリップを分離
-			$name=strip_tags($name);//タグ除去
-			if(preg_match("/(◆.*)/",$name,$regs)){
-				$trip=$regs[1];
-				$name=preg_replace("/(◆.*)/","",$name);
-			}else{$trip='';}
 
+			//日付とIDを分離
+			list($id, $now) = separateDatetimeAndId($now);
+
+			//日付と編集マークを分離
+			list($now, $updatemark) = separateDatetimeAndUpdatemark($now);
+
+			//名前とトリップを分離
+			list($name, $trip) = separateNameAndTrip($name);
 
 			// 記事格納
 			$dat['y'][$y]['x'][$x] = compact('imgsrc','w','no','sub','name','now','pch','txt','id','updatemark','trip');
@@ -2864,6 +2834,43 @@ function getImgType ($img_type, $dest) {
 	}
 	error(MSG004, $dest);
 	exit;
+}
+
+/**
+ * 日付とIDを分離
+ * @param $now
+ * @return array
+ */
+function separateDatetimeAndId ($now) {
+	if (preg_match("/( ID:)(.*)/", $now, $regs)){
+		return [$regs[2], preg_replace("/( ID:.*)/","",$now)];
+	}
+	return ['', $now];
+}
+
+/**
+ * 名前とトリップを分離
+ * @param $name
+ * @return array
+ */
+function separateNameAndTrip ($name) {
+	$name=strip_tags($name);//タグ除去
+	if(preg_match("/(◆.*)/", $name, $regs)){
+		return [preg_replace("/(◆.*)/","",$name), $regs[1]];
+	}
+	return [$name, ''];
+}
+
+/**
+ * 日付と編集マークを分離
+ * @param $now
+ * @return array
+ */
+function separateDatetimeAndUpdatemark ($now) {
+	if (UPDATE_MARK && strpos($now, UPDATE_MARK) !== false){
+		return [str_replace(UPDATE_MARK,"",$now), UPDATE_MARK];
+	}
+	return [$now, ''];
 }
 
 /*-----------Main-------------*/
