@@ -407,28 +407,34 @@ function updatelog($resno=0){
 	$find = false;
 	if($resno){
 		foreach($tree as $i => $value){
-			list($artno,)=explode(",",rtrim($value));
-			if($artno==$resno){$st=$i;$find=true;break;} //レス先検索
+			list($artno,) = explode(",", rtrim($value));
+			if ($artno==$resno){
+				$st = $i;
+				$find = true;
+				break;
+			} //レス先検索
 		}
-	unset($value);
-		if(!$find) error(MSG001);
+		unset($value);
+		if (!$find) {
+			error(MSG001);
+		}
 	}
+
 	$line = file(LOGFILE);
 	foreach($line as $i =>$value){
 		list($no,) = explode(",", $value);
-		$lineindex[$no]=$i + 1; //逆変換テーブル作成
+		$lineindex[$no] = $i + 1; //逆変換テーブル作成
 	}
 	unset($value);
+
 	$counttree = count($tree);//190619
 	for($page=0;$page<$counttree;$page+=PAGE_DEF){
 		$oya = 0;	//親記事のメイン添字
-		// form($dat,$resno);
 		$dat = form($resno);
 		if(!$resno){
 			$st = $page;
 		}
 		for($i = $st; $i < $st+PAGE_DEF; ++$i){
-			//if($tree[$i]=="") continue;
 			if(!isset($tree[$i])){
 				continue;
 			}
@@ -440,29 +446,27 @@ function updatelog($resno=0){
 			list($no,$now,$name,$email,$sub,$com,$url,
 				 $host,$pwd,$ext,$w,$h,$time,$chk,$ptime,$fcolor) = explode(",", rtrim($line[$j]));
 
-				 $r_threads = false;
-				 if(ELAPSED_DAYS){//古いスレッドのフォームを閉じる日数が設定されていたら
-				 $ntime = time();
-				 $ltime=substr($time,-13,-3);
-				 $elapsed_time = ELAPSED_DAYS*86400;
-					 if(($ntime-$ltime) <= $elapsed_time){//指定日数以内
-					 $r_threads = true;//フォームを表示する
-					 }
-				 }
-				 else{//フォームを閉じる日数が未設定なら
-				 $r_threads = true;
-				 }
-				$disp_resform = true;
-				if(!$r_threads){
-					 $disp_resform = false;//ミニレスフォームを閉じる
-					 if($resno){//レスなら
-					 $dat['form'] = false;//フォームを閉じる
-					 $dat['paintform'] = false;
-					 }
-				 }
+			$r_threads = false;
+			if(ELAPSED_DAYS){//古いスレッドのフォームを閉じる日数が設定されていたら
+				$ntime = time();
+				$ltime=substr($time,-13,-3);
+				$elapsed_time = ELAPSED_DAYS*86400;
+				if(($ntime-$ltime) <= $elapsed_time){//指定日数以内
+					$r_threads = true;//フォームを表示する
+				}
+			} else{//フォームを閉じる日数が未設定なら
+				$r_threads = true;
+			}
+			$disp_resform = true;
+			if(!$r_threads){
+				$disp_resform = false;//ミニレスフォームを閉じる
+				if($resno){//レスなら
+					$dat['form'] = false;//フォームを閉じる
+					$dat['paintform'] = false;
+				}
+			}
 				
 			// URLとメールにリンク
-			//if($email) $name = "<a href=\"mailto:$email\">$name</a>";
 			if(AUTOLINK) $com = auto_link($com);
 			// '>'色設定
 			$com = preg_replace("/(^|>)((&gt;|＞)[^<]*)/i", "\\1".RE_START."\\2".RE_END, $com);
@@ -524,7 +528,8 @@ function updatelog($resno=0){
 						if($line[$j]==="") continue;
 						list(,,,,,,,,,$rext,,,$rtime,,,) = explode(",", rtrim($line[$j]));
 						$resimg = $path.$rtime.$rext;
-						if($rext && is_file($resimg)){ $imgline[]='img'; }else{ $imgline[]='0'; }
+
+						$imgline[] = ($rext && is_file($resimg)) ? 'img' : '0';
 					}
 					$resimgs = array_count_values($imgline);
 					if(isset($resimgs['img'])){//未定義エラー対策
@@ -593,7 +598,6 @@ function updatelog($resno=0){
 				list($no,$now,$name,$email,$sub,$com,$url,
 						 $host,$pwd,$ext,$w,$h,$time,$chk,$ptime,$fcolor) = explode(",", rtrim($line[$j]));
 				// URLとメールにリンク
-				//if($email) $name = "<a href=\"mailto:$email\">$name</a>";
 				if(AUTOLINK) $com = auto_link($com);
 				// '>'色設定
 				$com = preg_replace("/(^|>)((&gt;|＞)[^<]*)/i", "\\1".RE_START."\\2".RE_END, $com);
@@ -658,7 +662,6 @@ function updatelog($resno=0){
 				//<br />を<br>へ
 				$com = preg_replace("{<br( *)/>}i","<br>",$com);
 				//独自タグ変換
-				// if(USE_POTITAG) $com = potitag($com);
 				$encoded_name=urlencode($name);
 
 				// レス記事一時格納
@@ -707,20 +710,6 @@ function updatelog($resno=0){
 				}
 			}
 			$paging = "";
-			//for($i = 0; $i < $counttree ; $i+=PAGE_DEF){
-			//	if($st==$i){
-			//		$pformat = str_replace("<PAGE>", $i/PAGE_DEF, NOW_PAGE);
-			//	}else{
-			//		if($i==0){
-			//			$pno = str_replace("<PAGE>", "0", OTHER_PAGE);
-			//			$pformat = str_replace("<PURL>", PHP_SELF2, $pno);
-			//		}else{
-			//			$pno = str_replace("<PAGE>", $i/PAGE_DEF, OTHER_PAGE);
-			//			$pformat = str_replace("<PURL>", ($i/PAGE_DEF).PHP_EXT, $pno);
-			//		}
-			//	}
-			//	$paging.=$pformat;
-			//}
 
 			//表示しているページが20ページ以上または投稿数が少ない時はページ番号のリンクを制限しない
 
@@ -766,7 +755,6 @@ function updatelog($resno=0){
 
 	//改ページ分岐ここまで
 
-			
 			$dat['paging'] = $paging;
 			if($oya >= PAGE_DEF && $counttree > $next){
 				$dat['next'] = $next/PAGE_DEF.PHP_EXT;
@@ -775,10 +763,7 @@ function updatelog($resno=0){
 
 		if($resno){htmloutput(SKIN_DIR.RESFILE,$dat);break;}
 		$dat['resform'] = RES_FORM ? true : false;
-		// $dat['resform'] = false;	
-		// if(RES_FORM && !ELAPSED_DAYS){
-		// 	$dat['resform'] = true;	
-		// }
+
 		$buf = htmloutput(SKIN_DIR.MAINFILE,$dat,true);
 		if($page==0){$logfilename=PHP_SELF2;}
 			else{$logfilename=$page/PAGE_DEF.PHP_EXT;}
@@ -790,7 +775,6 @@ function updatelog($resno=0){
 		fflush($fp);
 		flock($fp, LOCK_UN);
 		fclose($fp);
-		//chmod($logfilename,0606);
 		//拡張子を.phpにした場合、↑で500エラーでるなら↓に変更
 		if(PHP_EXT!='.php'){chmod($logfilename,0606);}
 		unset($dat); //クリア
@@ -1005,11 +989,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 	// if($pwd==""){
 	// 	if($pwdc==""){
 	if(!$pwd){//nullでも8桁のパスをセット
-		if(!$pwdc){
-			$pwd=rand();$pwd=substr($pwd,0,8);
-		}else{
-			$pwd=$pwdc;
-		}
+		$pwd = $pwdc ? $pwd : substr(rand(), 0, 8);
 	}
 
 	$c_pass = $pwd;
@@ -1368,12 +1348,8 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 			$data['subject'] = '['.TITLE.'] 新規投稿がありました';
 			$data['option'][] = "\n".'記事URL,'.ROOT_URL.PHP_SELF.'?res='.$no;
 		}
-		if(SEND_COM){
-		$data['comment'] = preg_replace("#<br(( *)|( *)/)>#i","\n", $com);
-		}
-		else{
-		$data['comment'] ="";
-		}
+
+		$data['comment'] = SEND_COM ? preg_replace("#<br(( *)|( *)/)>#i","\n", $com) : '';
 
 		noticemail::send($data);
 	}
