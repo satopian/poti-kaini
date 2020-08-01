@@ -43,8 +43,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.8.6');
-define('POTI_VERLOT' , 'v2.8.6 lot.200731');
+define('POTI_VER' , 'v2.9.2');
+define('POTI_VERLOT' , 'v2.9.2 lot.200802');
 
 if(phpversion()>="5.5.0"){
 //スパム無効化関数
@@ -363,8 +363,7 @@ function basicpart(){
 	if(!USE_IMG_UPLOAD&&DENY_COMMENTS_ONLY){
 		$dat['for_new_post'] = false;
 	}
-
-//OGPイメージ シェアボタン
+	//OGPイメージ シェアボタン
 	$dat['rooturl'] = ROOT_URL;//設置場所url
 	if (SHARE_BUTTON){
 		$dat['sharebutton'] = true;//1ならシェアボタンを表示
@@ -549,7 +548,7 @@ function updatelog($resno=0){
 				}
 			}
 				
-			// URLとメールにリンク
+			// オートリンク
 			if(AUTOLINK) $com = auto_link($com);
 			// '>'色設定
 			$com = preg_replace("/(^|>)((&gt;|＞)[^<]*)/i", "\\1".RE_START."\\2".RE_END, $com);
@@ -670,7 +669,7 @@ function updatelog($resno=0){
 				if($line[$j]==="") continue;
 				list($no,$now,$name,$email,$sub,$com,$url,
 						 $host,$pwd,$ext,$w,$h,$time,$chk,$ptime,$fcolor) = explode(",", rtrim($line[$j]));
-				// URLとメールにリンク
+				// オートリンク
 				if(AUTOLINK) $com = auto_link($com);
 				// '>'色設定
 				$com = preg_replace("/(^|>)((&gt;|＞)[^<]*)/i", "\\1".RE_START."\\2".RE_END, $com);
@@ -724,7 +723,6 @@ function updatelog($resno=0){
 				$fontcolor = $fcolor ? $fcolor : DEF_FONTCOLOR;
 				//<br />を<br>へ
 				$com = preg_replace("{<br( *)/>}i","<br>",$com);
-				//独自タグ変換
 				$encoded_name=urlencode($name);
 
 				// レス記事一時格納
@@ -1041,7 +1039,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 	$resto= CleanStr($resto); $resto=preg_replace("/[\r\n]/","",$resto);
 	$url  = CleanStr($url);   $url  =preg_replace("/[\r\n]/","",$url);
 	$url  = str_replace(" ", "", $url);
-	$com  = CleanCom($com);
+	$com  = CleanStr($com,true);
 	$pwd= CleanStr($pwd);
 	$pwd=preg_replace("/[\r\n]/","",$pwd);
 	//管理モードで使用できるタグを制限
@@ -1226,6 +1224,30 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 			if($i>=$chkline){break;}//チェックする最大行数
 		}
 		unset($value,$i,$j);
+
+		//PCHファイルアップロード
+		$pchupload=false;
+		$pch_ext='.pch';
+		$pchtemp = $temppath.$picfile.$pch_ext;
+		if(is_file($pchtemp)){//pchなら
+			$pchupload=true;
+		}
+		else{//pchファイルが無かったら
+			$pch_ext='.spch';//scph
+			$pchtemp = $temppath.$picfile.$pch_ext;
+			if(is_file($pchtemp)){
+				$pchupload=true;
+			}
+		}
+		$pchext='';
+		if($pchupload){
+			copy($pchtemp, PCH_DIR.$tim.$pch_ext);
+			if(is_file(PCH_DIR.$tim.$pch_ext)){
+				$pchext=$pch_ext;//ログにpchの拡張子を記録できるように
+				chmod(PCH_DIR.$tim.$pch_ext,0606);
+				unlink($pchtemp);
+			}
+		}
 	}
 	else{//画像が無い時
 		$ext=$W=$H=$chk="";
@@ -1330,26 +1352,6 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 		if(is_file($upfile)) unlink($upfile);
 		if(is_file($temppath.$picfile.".dat")) unlink($temppath.$picfile.".dat");
 
-		//PCHファイルアップロード
-		$pchtemp = $temppath.$picfile.'.pch';
-		if(is_file($pchtemp)){
-			copy($pchtemp, PCH_DIR.$tim.'.pch');
-			if(is_file(PCH_DIR.$tim.'.pch')){
-				chmod(PCH_DIR.$tim.'.pch',0606);
-				unlink($pchtemp);
-			}
-		}
-		else{//pchファイルが無かったら
-		//SPCHファイルアップロード
-		$pchtemp = $temppath.$picfile.'.spch';
-			if(is_file($pchtemp)){
-			copy($pchtemp, PCH_DIR.$tim.'.spch');
-			if(is_file(PCH_DIR.$tim.'.spch')){
-				chmod(PCH_DIR.$tim.'.spch',0606);
-				unlink($pchtemp);
-				}
-			}
-		}
 	}
 	updatelog();
 
@@ -1387,7 +1389,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 	redirect(
 		PHP_SELF2 . (URL_PARAMETER ? "?{$time}" : ''),
 		1,
-		'画面を切り替えます'
+		$mes . '画面を切り替えます'
 	);
 }
 
@@ -1444,15 +1446,15 @@ function treedel($delno){
 }
 
 /* テキスト整形 */
-function CleanStr($str){//コメント以外190603
-	$str = trim($str);//先頭と末尾の空白除去
-	$str = htmlspecialchars($str,ENT_QUOTES,'utf-8');
-	return str_replace(",", "&#44;", $str);//カンマを変換
-}
-function CleanCom($str){//コメントは管理者以外タグ禁止
+function CleanStr($str,$com=''){
 	global $admin,$ADMIN_PASS;
 	$str = trim($str);//先頭と末尾の空白除去
-	if($admin!==$ADMIN_PASS){//管理者はタグ可能
+	if($com){//コメント欄なら
+		if($admin!==$ADMIN_PASS){//管理者はタグ許可
+			$str = htmlspecialchars($str,ENT_QUOTES,'utf-8');//管理者以外タグ禁止
+		}
+	}
+	else{//そのほかの入力欄は
 		$str = htmlspecialchars($str,ENT_QUOTES,'utf-8');//タグ禁止
 	}
 	return str_replace(",", "&#44;", $str);//カンマを変換
@@ -1980,16 +1982,6 @@ if($admin===$ADMIN_PASS){
 		$dat['usercode'] = $usercode.'&amp;repcode='.$repcode;
 	}
 	htmloutput(SKIN_DIR.PAINTFILE,$dat);
-
-	// $buf = htmloutput(SKIN_DIR.PAINTFILE,$dat,true);
-
-	// list($buf1,$buf2) = explode('<SIIHELP>', $buf);
-	// echo $buf1;
-	// if(is_file(SKIN_DIR.SIIHELP_FILE)){
-	// 	$help = implode('', file(SKIN_DIR.SIIHELP_FILE));
-	// 	echo charconvert($help);
-	// }
-	// echo $buf2;
 }
 
 /* お絵かきコメント */
@@ -2404,7 +2396,7 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 	$url  = CleanStr($url);
 	$url  =preg_replace("/[\r\n]/","",$url);
 	$url  = str_replace(" ", "", $url);
-	$com  = CleanCom($com);
+	$com  = CleanStr($com,true);
 	$pwd= CleanStr($pwd);
 	$pwd=preg_replace("/[\r\n]/","",$pwd);
 	//管理モードで使用できるタグを制限
@@ -2632,26 +2624,29 @@ function replace($no,$pwd,$stime){
 			if(is_file($upfile)) unlink($upfile);
 			if(is_file($temppath.$file_name.".dat")) unlink($temppath.$file_name.".dat");
 			//PCHファイルアップロード
-			$pchtemp = $temppath.$file_name.'.pch';
-			if(is_file($pchtemp)){
-				copy($pchtemp, PCH_DIR.$tim.'.pch');
-				if(is_file(PCH_DIR.$tim.'.pch')){
-					chmod(PCH_DIR.$tim.'.pch',0606);
-					unlink($pchtemp);
-				}
+			$pchupload=false;
+			$pch_ext='.pch';
+			$pchtemp = $temppath.$file_name.$pch_ext;
+			if(is_file($pchtemp)){//pchなら
+				$pchupload=true;
 			}
 			else{//pchファイルが無かったら
-
-			//SPCHファイルアップロード
-			$pchtemp = $temppath.$file_name.'.spch';
+				$pch_ext='.spch';//scph
+				$pchtemp = $temppath.$file_name.$pch_ext;
 				if(is_file($pchtemp)){
-				copy($pchtemp, PCH_DIR.$tim.'.spch');
-				if(is_file(PCH_DIR.$tim.'.spch')){
-					chmod(PCH_DIR.$tim.'.spch',0606);
-					unlink($pchtemp);
-					}
+					$pchupload=true;
 				}
 			}
+			$pchext='';
+			if($pchupload){
+				copy($pchtemp, PCH_DIR.$tim.$pch_ext);
+				if(is_file(PCH_DIR.$tim.$pch_ext)){
+					$pchext=$pch_ext;//ログにpchの拡張子を記録できるように
+					chmod(PCH_DIR.$tim.$pch_ext,0606);
+					unlink($pchtemp);
+				}
+			}
+
 			//旧ファイル削除
 			if(is_file($path.$etim.$ext)) unlink($path.$etim.$ext);
 			if(is_file(THUMB_DIR.$etim.'s.jpg')) unlink(THUMB_DIR.$etim.'s.jpg');
