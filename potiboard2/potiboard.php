@@ -120,7 +120,6 @@ $usercode = filter_input(INPUT_COOKIE, 'usercode');//nullならuser-codeを発�
 //$_SERVERから変数を取得
 //var_dump($_SERVER);
 
-$REQUEST_METHOD = isset($_SERVER["REQUEST_METHOD"]) ? $_SERVER["REQUEST_METHOD"] : "";
 //INPUT_SERVER が動作しないサーバがあるので$_SERVERを使う。
 
 //$_FILESから変数を取得
@@ -853,7 +852,7 @@ function similar_str($str1,$str2){
 /* 記事書き込み */
 function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pictmp,$picfile){
 	global $path,$badstring,$badfile,$badip,$pwdc,$textonly;
-	global $REQUEST_METHOD,$temppath,$ptime;
+	global $temppath,$ptime;
 	global $fcolor,$usercode;
 	global $admin,$badstr_A,$badstr_B,$badname;
 	global $ADMIN_PASS;
@@ -915,6 +914,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 		} 
 	}
 
+	$REQUEST_METHOD = isset($_SERVER["REQUEST_METHOD"]) ? $_SERVER["REQUEST_METHOD"] : "";
 	if($REQUEST_METHOD !== "POST") error(MSG006);
 
 	//チェックする項目から改行・スペース・タブを消す
@@ -2292,7 +2292,6 @@ function editform($del,$pwd){
 /* 記事上書き */
 function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 	global $badstring,$badip;
-	global $REQUEST_METHOD;
 	global $fcolor,$badstr_A,$badstr_B,$badname;
 	global $ADMIN_PASS;
 	$userip = get_uip();
@@ -2302,6 +2301,7 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 
 	$dest="";
 
+	$REQUEST_METHOD = isset($_SERVER["REQUEST_METHOD"]) ? $_SERVER["REQUEST_METHOD"] : "";
 	if($REQUEST_METHOD !== "POST") error(MSG006);
 
 	//チェックする項目から改行・スペース・タブを消す
