@@ -58,7 +58,8 @@ function newstring($string) {
 //INPUT_POSTから変数を取得
 
 //var_dump($_POST);
-$mode = newstring(filter_input(INPUT_POST, 'mode'));
+//$mode = newstring(filter_input(INPUT_POST, 'mode'));
+$mode = isset($_REQUEST['mode']) ? $_REQUEST['mode'] : '';
 $resto = filter_input(INPUT_POST, 'resto',FILTER_VALIDATE_INT);
 $name = filter_input(INPUT_POST, 'name');
 $email = filter_input(INPUT_POST, 'email');
@@ -99,32 +100,19 @@ $res = filter_input(INPUT_GET, 'res',FILTER_VALIDATE_INT);
 if(filter_input(INPUT_GET, 'mode')==="openpch"){
 $pch = newstring(filter_input(INPUT_GET, 'pch'));
 $shi = filter_input(INPUT_GET, 'shi',FILTER_VALIDATE_INT);
-$mode = "openpch";
 }
 if(filter_input(INPUT_GET, 'mode')==="continue"){
 $no = filter_input(INPUT_GET, 'no',FILTER_VALIDATE_INT);
-$mode = "continue";
-}
-if(filter_input(INPUT_GET, 'mode')==="admin"){
-$mode = "admin";
-}
-if(filter_input(INPUT_GET, 'mode')==="catalog"){
-$mode = "catalog";
 }
 if(filter_input(INPUT_GET, 'mode')==="piccom"){
 $stime = filter_input(INPUT_GET, 'stime',FILTER_VALIDATE_INT);
 $resto = filter_input(INPUT_GET, 'resto',FILTER_VALIDATE_INT);
-$mode = "piccom";
 }
 if(filter_input(INPUT_GET, 'mode')==="picrep"){
 $no = filter_input(INPUT_GET, 'no',FILTER_VALIDATE_INT);
 $pwd = newstring(filter_input(INPUT_GET, 'pwd'));
 $repcode = newstring(filter_input(INPUT_GET, 'repcode'));
 $stime = filter_input(INPUT_GET, 'stime',FILTER_VALIDATE_INT);
-$mode = "picrep";
-}
-if(filter_input(INPUT_GET, 'mode')==="newpost"){
-$mode = "newpost";
 }
 //INPUT_COOKIEから変数を取得
 //var_dump($_COOKIE);
