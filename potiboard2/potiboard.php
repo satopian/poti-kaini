@@ -563,7 +563,6 @@ function updatelog($resno=0){
 			$tab=$oya+1;
 			//文字色
 			$fontcolor = $fcolor ? $fcolor : DEF_FONTCOLOR;
-			// var_dump($fontcolor);
 			//<br />を<br>へ
 			$com = preg_replace("{<br( *)/>}i","<br>",$com);
 			//メタタグに使うコメントから
@@ -2666,11 +2665,9 @@ function catalog(){
 	$x = 0;
 	$y = 0;
 	$pagedef = CATALOG_X * CATALOG_Y;//1ページに表示する件数
-	// form($dat,'');
 	$dat = form();
 	if(!$page) $page=0;
 	for($i = $page; $i < $page+$pagedef; ++$i){
-		//if($tree[$i]==""){
 		//空文字ではなく未定義になっている
 		if(!isset($tree[$i])){
 			$dat['y'][$y]['x'][$x]['noimg'] = true;
@@ -2695,15 +2692,6 @@ function catalog(){
 				}else{$w=CATALOG_W;}
 				//動画リンク
 				$pch="";
-				//カタログモードでアニメを再生するテーマがないのでコメントアウト
-				// if(USE_ANIME){
-				// 	if(is_file(PCH_DIR.$time.'.pch')){
-				// 		$pch = $time.$ext;
-				// 	}
-				// 	elseif(is_file(PCH_DIR.$time.'.spch')){
-				// 		$pch = $time.$ext.'&amp;shi=1';
-				// 	}
-				// }
 				$txt=false;
 			}
 			else{//画像が無い時
@@ -2735,18 +2723,6 @@ function catalog(){
 	// 改ページ処理
 	if($prev >= 0) $dat['prev'] = PHP_SELF.'?mode=catalog&amp;page='.$prev;
 	$paging = "";
-
-	//カタログモードの改ページ
-
-	//	for($i = 0; $i < $counttree ; $i+=$pagedef){
-	//		if($page==$i){
-	//			$pformat = str_replace("<PAGE>", $i/$pagedef, NOW_PAGE);
-	//		}else{
-	//			$pno = str_replace("<PAGE>", $i/$pagedef, OTHER_PAGE);
-	//			$pformat = str_replace("<PURL>", PHP_SELF."?mode=catalog&amp;page=".$i, $pno);
-	//		}
-	//		$paging.=$pformat;
-	//	}
 
 	//表示しているページが20ページ以上または投稿数が少ない時はページ番号のリンクを制限しない
 
