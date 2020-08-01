@@ -203,6 +203,110 @@ if(!defined('DENY_COMMENTS_ONLY')){//config.phpで未定義なら0
 	define('DENY_COMMENTS_ONLY', '0');
 }
 
+/*-----------Main-------------*/
+init();		//←■■初期設定後は不要なので削除可■■
+deltemp();
+
+//user-codeの発行
+if(!$usercode){//falseなら発行
+	$userip = get_uip();
+	$usercode = substr(crypt(md5($userip.ID_SEED.date("Ymd", time())),'id'),-12);
+	//念の為にエスケープ文字があればアルファベットに変換
+	$usercode = strtr($usercode,"!\"#$%&'()+,/:;<=>?@[\\]^`/{|}~","ABCDEFGHIJKLMNOabcdefghijklmn");
+}
+setcookie("usercode", $usercode, time()+86400*365);//1年間
+
+switch($mode){
+	case 'regist':
+		if(ADMIN_NEWPOST && !$resto){
+			if($pwd != $ADMIN_PASS){ error(MSG029);
+			}else{ $admin=$pwd; }
+		}
+		if($textonly){//画像なしの時
+			if($upfile&&is_file($upfile)){
+				unlink($upfile);
+			}
+			$upfile="";
+			$upfile_name="";
+		}
+		regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pictmp,$picfile);
+		//変数クリア
+		unset($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pictmp,$picfile);
+
+		break;
+
+	case 'admin':
+		valid($pass);
+		if($admin==="del") admindel($pass);
+		if($admin==="post"){
+			$dat['post_mode'] = true;
+			$dat['regist'] = true;
+			$dat = array_merge($dat,form($res,'valid'));
+			htmloutput(SKIN_DIR.OTHERFILE,$dat);
+		}
+		if($admin==="update"){
+			updatelog();
+			redirect(PHP_SELF2, 0);
+		}
+		break;
+	case 'usrdel':
+		if(USER_DELETES){
+			usrdel($del,$pwd);
+			updatelog();
+			redirect(PHP_SELF2, 0);
+		}else{error(MSG033);}
+		break;
+	case 'paint':
+		$palette = "";
+		paintform($picw,$pich,$palette,$anime);
+		break;
+	case 'piccom':
+		paintcom($resto);
+		break;
+	case 'openpch':
+		if(!isset($sp)){$sp="";}
+		openpch($pch,$sp);
+		break;
+	case 'continue':
+		incontinue($no);
+		break;
+	case 'contpaint':
+//パスワードが必要なのは差し換えの時だけ
+		if(CONTINUE_PASS||$type==='rep') usrchk($no,$pwd);
+		// if(ADMIN_NEWPOST) $admin=$pwd;
+		$palette="";
+		paintform($picw,$pich,$palette,$anime,$pch);
+		break;
+	case 'newpost':
+		$dat['post_mode'] = true;
+		$dat['regist'] = true;
+		// form($dat,'');
+		$dat = array_merge($dat,form());
+		htmloutput(SKIN_DIR.OTHERFILE,$dat);
+		break;
+	case 'edit':
+		editform($del,$pwd);
+		break;
+	case 'rewrite':
+		rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin);
+		break;
+	case 'picrep':
+		replace($no,$pwd,$stime);
+		break;
+	case 'catalog':
+		catalog();
+		break;
+	default:
+		if($res){
+			updatelog($res);
+		}else{
+			redirect(PHP_SELF2, 0);
+		}
+}
+
+//$time = microtime(true) - $time_start; echo "{$time} 秒";
+
+exit;
 
 //GD版が使えるかチェック
 function gd_check(){
@@ -2785,108 +2889,6 @@ function separateDatetimeAndUpdatemark ($now) {
 	}
 	return [$now, ''];
 }
-
-/*-----------Main-------------*/
-init();		//←■■初期設定後は不要なので削除可■■
-deltemp();
-
-//user-codeの発行
-if(!$usercode){//falseなら発行
-	$userip = get_uip();
-	$usercode = substr(crypt(md5($userip.ID_SEED.date("Ymd", time())),'id'),-12);
-	//念の為にエスケープ文字があればアルファベットに変換
-	$usercode = strtr($usercode,"!\"#$%&'()+,/:;<=>?@[\\]^`/{|}~","ABCDEFGHIJKLMNOabcdefghijklmn");
-}
-setcookie("usercode", $usercode, time()+86400*365);//1年間
-
-switch($mode){
-	case 'regist':
-		if(ADMIN_NEWPOST && !$resto){
-			if($pwd != $ADMIN_PASS){ error(MSG029);
-			}else{ $admin=$pwd; }
-		}
-	if($textonly){//画像なしの時
-		if($upfile&&is_file($upfile)){
-			unlink($upfile);
-		}
-		$upfile="";
-		$upfile_name="";
-	}
-regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pictmp,$picfile);
-	//変数クリア
-unset($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pictmp,$picfile);
-
-		break;
-
-	case 'admin':
-		valid($pass); 
-		if($admin==="del") admindel($pass);
-		if($admin==="post"){
-			$dat['post_mode'] = true;
-			$dat['regist'] = true;
-			$dat = array_merge($dat,form($res,'valid'));
-			htmloutput(SKIN_DIR.OTHERFILE,$dat);
-		}
-		if($admin==="update"){
-			updatelog();
-			redirect(PHP_SELF2, 0);
-		}
-		break;
-	case 'usrdel':
-		if(USER_DELETES){
-			usrdel($del,$pwd);
-			updatelog();
-			redirect(PHP_SELF2, 0);
-		}else{error(MSG033);}
-		break;
-	case 'paint':
-		$palette = "";
-paintform($picw,$pich,$palette,$anime);
-		break;
-	case 'piccom':
-		paintcom($resto);
-		break;
-	case 'openpch':
-		if(!isset($sp)){$sp="";}
-		openpch($pch,$sp);
-		break;
-	case 'continue':
-		incontinue($no);
-		break;
-	case 'contpaint':
-//パスワードが必要なのは差し換えの時だけ
-		if(CONTINUE_PASS||$type==='rep') usrchk($no,$pwd);
-		// if(ADMIN_NEWPOST) $admin=$pwd;
-		$palette="";
-		paintform($picw,$pich,$palette,$anime,$pch);
-		break;
-	case 'newpost':
-		$dat['post_mode'] = true;
-		$dat['regist'] = true;
-		// form($dat,'');
-		$dat = array_merge($dat,form());
-		htmloutput(SKIN_DIR.OTHERFILE,$dat);
-		break;
-	case 'edit':
-		editform($del,$pwd);
-		break;
-	case 'rewrite':
-		rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin);
-		break;
-	case 'picrep':
-		replace($no,$pwd,$stime);
-		break;
-	case 'catalog':
-		catalog();
-		break;
-	default:
-	if($res){
-			updatelog($res);
-		}else{
-			redirect(PHP_SELF2, 0);
-		}
-}
-//$time = microtime(true) - $time_start; echo "{$time} 秒";
 
 ?>
 
