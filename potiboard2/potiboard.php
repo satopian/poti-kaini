@@ -109,7 +109,6 @@ if(filter_input(INPUT_GET, 'mode')==="admin"){
 $mode = "admin";
 }
 if(filter_input(INPUT_GET, 'mode')==="catalog"){
-$page = filter_input(INPUT_GET, 'page',FILTER_VALIDATE_INT);
 $mode = "catalog";
 }
 if(filter_input(INPUT_GET, 'mode')==="piccom"){
@@ -2620,7 +2619,9 @@ function replace($no,$pwd,$stime){
 
 /* カタログ */
 function catalog(){
-	global $path,$page;
+	global $path;
+
+	$page = filter_input(INPUT_GET, 'page',FILTER_VALIDATE_INT);
 
 	$line = file(LOGFILE);
 	foreach($line as $i =>$value){
