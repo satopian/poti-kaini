@@ -43,7 +43,7 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.8.13');
+define('POTI_VER' , 'v2.8.14');
 define('POTI_VERLOT' , 'v2.8.14 lot.200801');
 
 if(phpversion()>="5.5.0"){
