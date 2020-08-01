@@ -465,7 +465,7 @@ function updatelog($resno=0){
 				}
 			}
 				
-			// URLとメールにリンク
+			// オートリンク
 			if(AUTOLINK) $com = auto_link($com);
 			// '>'色設定
 			$com = preg_replace("/(^|>)((&gt;|＞)[^<]*)/i", "\\1".RE_START."\\2".RE_END, $com);
@@ -587,7 +587,7 @@ function updatelog($resno=0){
 				if($line[$j]==="") continue;
 				list($no,$now,$name,$email,$sub,$com,$url,
 						 $host,$pwd,$ext,$w,$h,$time,$chk,$ptime,$fcolor) = explode(",", rtrim($line[$j]));
-				// URLとメールにリンク
+				// オートリンク
 				if(AUTOLINK) $com = auto_link($com);
 				// '>'色設定
 				$com = preg_replace("/(^|>)((&gt;|＞)[^<]*)/i", "\\1".RE_START."\\2".RE_END, $com);
@@ -1337,7 +1337,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pi
 	redirect(
 		PHP_SELF2 . (URL_PARAMETER ? "?{$time}" : ''),
 		1,
-		'画面を切り替えます'
+		$mes . '画面を切り替えます'
 	);
 }
 
@@ -1930,16 +1930,6 @@ if($admin===$ADMIN_PASS){
 		$dat['usercode'] = $usercode.'&amp;repcode='.$repcode;
 	}
 	htmloutput(SKIN_DIR.PAINTFILE,$dat);
-
-	// $buf = htmloutput(SKIN_DIR.PAINTFILE,$dat,true);
-
-	// list($buf1,$buf2) = explode('<SIIHELP>', $buf);
-	// echo $buf1;
-	// if(is_file(SKIN_DIR.SIIHELP_FILE)){
-	// 	$help = implode('', file(SKIN_DIR.SIIHELP_FILE));
-	// 	echo charconvert($help);
-	// }
-	// echo $buf2;
 }
 
 /* お絵かきコメント */
