@@ -695,7 +695,7 @@ function updatelog($resno=0){
 				$paging .= ($st === $i)
 					? str_replace("<PAGE>", $pn, NOW_PAGE) // 現在ページにはリンクを付けない
 					: str_replace("<PURL>", ($i ? $pn.PHP_EXT : PHP_SELF2),
-						str_replace("<PAGE>", $i ? ((!$showAll && $i === PAGE_DEF * 21) ? "≫" : $pn) : $pn, OTHER_PAGE));
+						str_replace("<PAGE>", $i ? ($showAll || $i !== PAGE_DEF * 21 ? $pn : "≫") : $pn, OTHER_PAGE));
 			}
 
 	//改ページ分岐ここまで
@@ -2694,31 +2694,14 @@ function catalog(){
 	$paging = "";
 
 	//表示しているページが20ページ以上または投稿数が少ない時はページ番号のリンクを制限しない
+	$showAll = ($counttree <= $pagedef * 21 || $i >= $pagedef * 22);
 
-	if($counttree <= $pagedef*21||$i >= $pagedef*22){
-		for($i = 0; $i < $counttree ; $i+=$pagedef){
-			if($page===$i){
-				$pformat = str_replace("<PAGE>", $i/$pagedef, NOW_PAGE);
-			}else{
-			$pno = str_replace("<PAGE>", $i/$pagedef, OTHER_PAGE);
-			$pformat = str_replace("<PURL>", PHP_SELF."?mode=catalog&amp;page=".$i, $pno);
-			}
-			$paging.=$pformat;
-		}
-	} 
-	elseif ($i < $pagedef*22 ){ //表示しているページが20ページ以下の時はページ番号のリンクを制限する
-		for($i = 0; $i < $pagedef*22 ; $i+=$pagedef){
-			if($page===$i){
-				$pformat = str_replace("<PAGE>", $i/$pagedef, NOW_PAGE);
-			} elseif ($i===$pagedef*21){
-				$pno = str_replace("<PAGE>", "≫", OTHER_PAGE);
-				$pformat = str_replace("<PURL>", PHP_SELF."?mode=catalog&amp;page=".$i, $pno);
-			}else{
-				$pno = str_replace("<PAGE>", $i/$pagedef, OTHER_PAGE);
-				$pformat = str_replace("<PURL>", PHP_SELF."?mode=catalog&amp;page=".$i, $pno);
-			}
-		$paging.=$pformat;
-		}
+	for($i = 0; $i < ($showAll ? $counttree : $pagedef * 22) ; $i += $pagedef){
+		$pn = $i / $pagedef;
+		$paging .= ($page === $i)
+			? str_replace("<PAGE>", $pn, NOW_PAGE)
+			: str_replace("<PURL>", PHP_SELF."?mode=catalog&amp;page=".$i,
+				str_replace("<PAGE>", $showAll || $i !== $pagedef * 21 ? $pn : "≫", OTHER_PAGE));
 	}
 
 	//改ページ分岐ここまで
