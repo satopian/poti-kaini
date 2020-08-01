@@ -239,8 +239,7 @@ switch($mode){
 		paintcom($resto);
 		break;
 	case 'openpch':
-		if(!isset($sp)){$sp="";}
-		openpch($pch,$sp);
+		openpch($pch);
 		break;
 	case 'continue':
 		incontinue();
@@ -2064,7 +2063,7 @@ function paintcom($resto=''){
 }
 
 /* 動画表示 */
-function openpch($pch,$sp=""){
+function openpch($pch){
 	global $shi;
 	$stime = time();
 	$picfile = IMG_DIR.$pch;
@@ -2092,7 +2091,6 @@ function openpch($pch,$sp=""){
 		
 	$datasize = filesize($pchfile);
 	$size = getimagesize($picfile);
-	if(!$sp) $sp = PCH_SPEED;
 	$picw = $size[0];
 	$pich = $size[1];
 	$w = $picw;
@@ -2109,7 +2107,7 @@ function openpch($pch,$sp=""){
 	$dat['picw'] = $picw;
 	$dat['pich'] = $pich;
 	$dat['pchfile'] = './'.$pchfile;
-	$dat['speed'] = $sp;
+	$dat['speed'] = PCH_SPEED;
 	$dat['datasize'] = $datasize;
 	$dat['stime'] = $stime;
 	htmloutput(SKIN_DIR.PAINTFILE,$dat);
