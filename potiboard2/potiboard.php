@@ -67,7 +67,6 @@ $url = filter_input(INPUT_POST, 'url',FILTER_VALIDATE_URL);
 $sub = filter_input(INPUT_POST, 'sub');
 $com = filter_input(INPUT_POST, 'com');
 $pwd = filter_input(INPUT_POST, 'pwd');
-$textonly = filter_input(INPUT_POST, 'textonly',FILTER_VALIDATE_BOOLEAN);
 $shi = filter_input(INPUT_POST, 'shi',FILTER_VALIDATE_INT);
 $picw = filter_input(INPUT_POST, 'picw',FILTER_VALIDATE_INT);
 $pich = filter_input(INPUT_POST, 'pich',FILTER_VALIDATE_INT);
@@ -123,16 +122,6 @@ $usercode = filter_input(INPUT_COOKIE, 'usercode');//nullならuser-codeを発�
 //INPUT_SERVER が動作しないサーバがあるので$_SERVERを使う。
 
 //$_FILESから変数を取得
-
-	$upfile_name = isset($_FILES["upfile"]["name"]) ? $_FILES["upfile"]["name"] : "";//190603
-
-	if (strpos($upfile_name, '/') !== false) {//ファイル名に/があったら中断
-		$upfile_name="";
-		$upfile ="";
-	}
-	else{
-		$upfile = isset($_FILES["upfile"]["tmp_name"]) ? $_FILES["upfile"]["tmp_name"] : "";
-	}
 
 }
 //設定の読み込み
@@ -218,14 +207,7 @@ switch($mode){
 			if($pwd != $ADMIN_PASS){ error(MSG029);
 			}else{ $admin=$pwd; }
 		}
-		if($textonly){//画像なしの時
-			if($upfile&&is_file($upfile)){
-				unlink($upfile);
-			}
-			$upfile="";
-			$upfile_name="";
-		}
-		regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pictmp,$picfile);
+		regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile);
 		break;
 
 	case 'admin':
@@ -845,12 +827,33 @@ function similar_str($str1,$str2){
 }
 
 /* 記事書き込み */
-function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pictmp,$picfile){
-	global $path,$badstring,$badfile,$badip,$pwdc,$textonly;
+function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
+	global $path,$badstring,$badfile,$badip,$pwdc;
 	global $temppath,$ptime;
 	global $fcolor,$usercode;
 	global $admin,$badstr_A,$badstr_B,$badname;
 	global $ADMIN_PASS;
+
+	$upfile_name = isset($_FILES["upfile"]["name"]) ? $_FILES["upfile"]["name"] : "";//190603
+
+	if (strpos($upfile_name, '/') !== false) {//ファイル名に/があったら中断
+		$upfile_name="";
+		$upfile ="";
+	}
+	else{
+		$upfile = isset($_FILES["upfile"]["tmp_name"]) ? $_FILES["upfile"]["tmp_name"] : "";
+	}
+
+	$textonly = filter_input(INPUT_POST, 'textonly',FILTER_VALIDATE_BOOLEAN);
+
+	if($textonly){//画像なしの時
+		if($upfile&&is_file($upfile)){
+			unlink($upfile);
+		}
+		$upfile="";
+		$upfile_name="";
+	}
+
 	$userip = get_uip();
 	$mes="";
 
