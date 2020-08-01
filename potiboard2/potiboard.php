@@ -717,7 +717,6 @@ function updatelog($resno=0){
 					}else{
 					if($i===PAGE_DEF*21){
 						$pno = str_replace("<PAGE>", "≫", OTHER_PAGE);
-						//$pformat = str_replace("<PURL>", PHP_SELF2, $pno);
 						$pformat = str_replace("<PURL>", ($i/PAGE_DEF).PHP_EXT, $pno);
 					}else{
 						$pno = str_replace("<PAGE>", $i/PAGE_DEF, OTHER_PAGE);
