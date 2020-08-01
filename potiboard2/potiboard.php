@@ -226,9 +226,6 @@ switch($mode){
 			$upfile_name="";
 		}
 		regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pictmp,$picfile);
-		//変数クリア
-		unset($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pictmp,$picfile);
-
 		break;
 
 	case 'admin':
