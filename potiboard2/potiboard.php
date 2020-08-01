@@ -101,9 +101,6 @@ if(filter_input(INPUT_GET, 'mode')==="openpch"){
 $pch = newstring(filter_input(INPUT_GET, 'pch'));
 $shi = filter_input(INPUT_GET, 'shi',FILTER_VALIDATE_INT);
 }
-if(filter_input(INPUT_GET, 'mode')==="continue"){
-$no = filter_input(INPUT_GET, 'no',FILTER_VALIDATE_INT);
-}
 if(filter_input(INPUT_GET, 'mode')==="piccom"){
 $stime = filter_input(INPUT_GET, 'stime',FILTER_VALIDATE_INT);
 $resto = filter_input(INPUT_GET, 'resto',FILTER_VALIDATE_INT);
@@ -268,7 +265,7 @@ switch($mode){
 		openpch($pch,$sp);
 		break;
 	case 'continue':
-		incontinue($no);
+		incontinue();
 		break;
 	case 'contpaint':
 //パスワードが必要なのは差し換えの時だけ
@@ -2151,8 +2148,10 @@ function deltemp(){
 
 
 /* コンティニュー前画面 */
-function incontinue($no){
+function incontinue(){
 	global $addinfo;
+
+	$no = filter_input(INPUT_GET, 'no',FILTER_VALIDATE_INT);
 
 	$lines = file(LOGFILE);
 	$flag = FALSE;
