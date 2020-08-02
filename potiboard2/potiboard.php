@@ -1711,7 +1711,7 @@ if($admin===$ADMIN_PASS){
 				$pchtmp="";
 				echo "アニメファイルをアップしてください。";
 			}
-				unset($pchfilename,$ext);//元のファル名の情報を残さない
+
 			if(move_uploaded_file($pchtmp, $pchup)){//アップロード成功なら続行
 				$pchup=TEMP_DIR.basename($pchup);//ファイルを開くディレクトリを固定
 				if(mime_content_type($pchup)==="application/octet-stream"){//mimetypeが正しければ続行
