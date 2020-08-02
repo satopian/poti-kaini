@@ -1702,7 +1702,6 @@ if($admin===$ADMIN_PASS){
 				$pchtmp=$_FILES['pch_upload']['tmp_name'];
 			}
 			else{//拡張子が一致しなかったら
-				$pchfilename="";
 				$pchup="";
 				$pchtmp="";
 				echo "アニメファイルをアップしてください。";
