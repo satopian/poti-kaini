@@ -1693,31 +1693,21 @@ if($admin===$ADMIN_PASS){
 			$ext=pathinfo($pchfilename, PATHINFO_EXTENSION);
 			$ext=strtolower($ext);//すべて小文字に
 
-			$type_pch=false;
-			$type_spch=false;
-			if($ext==="pch"){
-				$type_pch=true;
-				$pchup = TEMP_DIR.'pchup-'.$tim.'-tmp.pch';//アップロードされるファイル名
+			if ($ext == 'pch' || $ext == 'spch') {
+				$pchup = TEMP_DIR.'pchup-'.$tim.'-tmp.'.$ext;//アップロードされるファイル名
 				$pchtmp=$_FILES['pch_upload']['tmp_name'];
-			}
-			elseif($ext==="spch"){
-				$type_spch=true;
-				$pchup = TEMP_DIR.'pchup-'.$tim.'-tmp.spch';//アップロードされるファイル名
-				$pchtmp=$_FILES['pch_upload']['tmp_name'];
-			}
-			else{//拡張子が一致しなかったら
-				$pchfilename="";
+			} else{//拡張子が一致しなかったら
 				$pchup="";
 				$pchtmp="";
 				echo "アニメファイルをアップしてください。";
 			}
-				unset($pchfilename,$ext);//元のファル名の情報を残さない
+
 			if(move_uploaded_file($pchtmp, $pchup)){//アップロード成功なら続行
 				$pchup=TEMP_DIR.basename($pchup);//ファイルを開くディレクトリを固定
 				if(mime_content_type($pchup)==="application/octet-stream"){//mimetypeが正しければ続行
 					$fp = fopen("$pchup", "rb");
 					$line = bin2hex(fgets($fp ,4096)) ;
-					if($type_pch){
+					if($ext==="pch"){
 						$line = substr($line,0,6);
 						if($line==="4e454f"){
 						$useneo=true;
@@ -1728,7 +1718,7 @@ if($admin===$ADMIN_PASS){
 						unlink($pchup);
 						}
 					}
-					elseif($type_spch){
+					elseif($ext==="spch"){
 						$line = substr($line,0,24);
 						if($line==="6c617965725f636f756e743d"||$line==="000d0a"){
 						$useneo=false;
@@ -2382,13 +2372,7 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 	$buf=fread($fp,5242880);
 	if(!$buf){error(MSG019);}
 	$buf = charconvert($buf);
-	$line = explode("\n",$buf);
-	foreach($line as &$value){
-		if($value!==""){
-		$value.="\n";
-		}
-	}
-	unset($value);
+	$line = explode("\n", trim($buf));
 
 	// 記事上書き
 	$flag = FALSE;
@@ -2400,7 +2384,7 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 			if(!$sub)  $sub  = $esub;
 			if(!$com)  $com  = $ecom;
 			if(!$fcolor) $fcolor = $efcolor;
-			$value = "$no,$now,$name,$email,$sub,$com,$url,$host,$epwd,$ext,$W,$H,$tim,$chk,$ptime,$fcolor\n";
+			$value = "$no,$now,$name,$email,$sub,$com,$url,$host,$epwd,$ext,$W,$H,$tim,$chk,$ptime,$fcolor";
 			$flag = TRUE;
 			break;
 		}
@@ -2416,7 +2400,7 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 	ftruncate($fp,0);
 	set_file_buffer($fp, 0);
 	rewind($fp);
-	$newline = implode('', $line);
+	$newline = implode("\n", $line);
 	// fwrite($fp, charconvert($newline));
 	fwrite($fp, $newline);
 	fflush($fp);
