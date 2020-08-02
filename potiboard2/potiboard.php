@@ -1687,7 +1687,6 @@ if($admin===$ADMIN_PASS){
 		$pchfilename=$_FILES['pch_upload']['name'];
 	}
 	else{
-		$_FILES['pch_upload']['tmp_name']="";
 		$pchfilename='';
 	}
 
