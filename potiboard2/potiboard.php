@@ -353,10 +353,7 @@ function form($resno="",$adminin="",$tmp=""){
 	global $fontcolors,$undo,$undo_in_mg,$quality,$qualitys;
 	global $ADMIN_PASS;
 
-	$admin=false;
-	if($adminin==='valid'){
-		$admin=true;
-	}
+	$admin = ($adminin === 'valid');
 
 	$dat['form'] = true;
 	if(!USE_IMG_UPLOAD && DENY_COMMENTS_ONLY && !$resno && !$admin){//コメントのみも画像アップロードも禁止
@@ -1679,25 +1676,16 @@ function paintform($picw,$pich,$anime,$pch=""){
 	global $resto,$mode,$savetype,$quality,$qualitys,$usercode;
 	global $useneo; //NEOを使う
 	global $ADMIN_PASS;
-	if ($useneo) $dat['useneo'] = true; //NEOを使う
-	$userip = get_uip();
 
 //pchファイルアップロードペイント
 if($admin===$ADMIN_PASS){
-	if(isset($_FILES['pch_upload']['name'])){
-		$pchfilename=$_FILES['pch_upload']['name'];
-	}
-	else{
-		$_FILES['pch_upload']['tmp_name']="";
-		$pchfilename='';
-	}
+	
+	$pchfilename = isset($_FILES['pch_upload']['name']) ? $_FILES['pch_upload']['name'] : '';
 
 	if($pchfilename!==""){//空文字でなければ続行
 		$pchfilename=CleanStr($pchfilename);
 		if (strpos($pchfilename, '/') !== false) {//ファイル名に/がなければ続行
 			echo "不正なファイルです。";
-			$pchfilename="";
-			$pchtmp="";
 		}
 		else{//チェック通過
 			//拡張子チェック
@@ -1727,16 +1715,12 @@ if($admin===$ADMIN_PASS){
 			if(move_uploaded_file($pchtmp, $pchup)){//アップロード成功なら続行
 				$pchup=TEMP_DIR.basename($pchup);//ファイルを開くディレクトリを固定
 				if(mime_content_type($pchup)==="application/octet-stream"){//mimetypeが正しければ続行
-					// var_dump(mime_content_type($pchup));
 					$fp = fopen("$pchup", "rb");
 					$line = bin2hex(fgets($fp ,4096)) ;
-					//var_dump($line);
-					//var_dump(mime_content_type($pchup));
 					if($type_pch){
 						$line = substr($line,0,6);
 						if($line==="4e454f"){
 						$useneo=true;
-						$dat['useneo'] = true;
 						}
 						else{//NEOのpchでなければ
 						echo"NEOのPCHではありません。";
@@ -1746,15 +1730,12 @@ if($admin===$ADMIN_PASS){
 					}
 					elseif($type_spch){
 						$line = substr($line,0,24);
-						// $line2 = substr($line,0,30);
 						if($line==="6c617965725f636f756e743d"||$line==="000d0a"){
 						$useneo=false;
-						$dat['useneo'] = false;
 						}else{//しぃぺのspchでなければ
 						echo"しぃペインターのSPCHではありません。";
 						unlink($pchup);
 						}
-						// var_dump($line);
 					}
 					else{
 					unlink($pchup);
@@ -1770,10 +1751,6 @@ if($admin===$ADMIN_PASS){
 				}
 			}
 		}//不正なファイルでは無い時は
-	}//空文字列でなければ処理続行。
-	else{
-	$pchup="";
-	$pchtmp="";
 	}
 }
 //pchファイルアップロードペイントここまで
@@ -1782,7 +1759,6 @@ if($admin===$ADMIN_PASS){
 	if($pich < 300) $pich = 300;
 	if($picw > PMAX_W) $picw = PMAX_W;
 	if($pich > PMAX_H) $pich = PMAX_H;
-//	$w = $picw + 150;
 	if(!$useneo && $shi){
 	$w = $picw + 510;//しぃぺの時の幅
 	$h = $pich + 120;//しぃぺの時の高さ
@@ -1877,7 +1853,6 @@ if($admin===$ADMIN_PASS){
 		default://テーマに設定が無い時
 		$dat['image_jpeg'] = 'false';//PNG
 		$dat['image_size'] = 0;//減色処理なし
-		// $savepng = ' selected';
 	}
 	$dat['savetypes'] = '<option value="AUTO"'.$saveauto.'>AUTO</option>';
 	$dat['savetypes'].= '<option value="PNG"'.$savepng.'>PNG</option>';
@@ -1915,9 +1890,7 @@ if($admin===$ADMIN_PASS){
 	$dat['h'] = $h;
 	$dat['picw'] = $picw;
 	$dat['pich'] = $pich;
-	$stime = time();
-	$dat['stime'] = $stime;
-	//if($pwd) $pwd = substr(md5($pwd),2,8);
+	$dat['stime'] = time();
 	if($pwd){
 	$pwd=openssl_encrypt ($pwd,CRYPT_METHOD, CRYPT_PASS, true, CRYPT_IV);//暗号化
 	$pwd=bin2hex($pwd);//16進数に
@@ -1939,7 +1912,6 @@ if($admin===$ADMIN_PASS){
 		$dat['anime'] = false;
 		$dat['imgfile'] = './'.PCH_DIR.$pch.$ext;
 	}
-	// if(ADMIN_NEWPOST&&$admin===$ADMIN_PASS) $dat['admin'] = 'picpost';
 
 	$dat['palsize'] = count($DynP) + 1;
 	foreach ($DynP as $p){
@@ -1948,9 +1920,12 @@ if($admin===$ADMIN_PASS){
 	$dat['dynp']=implode('',$arr_dynp);
 	$dat['usercode'] = $usercode;
 
+	$dat['useneo'] = $useneo; //NEOを使う
+
 	//差し換え時の認識コード追加
 	if($type==='rep'){
 		$time=time();
+		$userip = get_uip();
 		$repcode = substr(crypt(md5($no.$userip.$pwd.date("Ymd", $time)),$time),-8);
 		//念の為にエスケープ文字があればアルファベットに変換
 		$repcode = strtr($repcode,"!\"#$%&'()+,/:;<=>?@[\\]^`/{|}~","ABCDEFGHIJKLMNOabcdefghijklmn");
