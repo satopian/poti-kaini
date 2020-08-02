@@ -1679,7 +1679,7 @@ function paintform($picw,$pich,$anime,$pch=""){
 	global $resto,$mode,$savetype,$quality,$qualitys,$usercode;
 	global $useneo; //NEOを使う
 	global $ADMIN_PASS;
-	if ($useneo) $dat['useneo'] = true; //NEOを使う
+	$dat['useneo'] = $useneo; //NEOを使う
 
 //pchファイルアップロードペイント
 if($admin===$ADMIN_PASS){
