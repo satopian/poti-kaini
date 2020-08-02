@@ -1693,15 +1693,10 @@ if($admin===$ADMIN_PASS){
 			$ext=pathinfo($pchfilename, PATHINFO_EXTENSION);
 			$ext=strtolower($ext);//すべて小文字に
 
-			if($ext==="pch"){
-				$pchup = TEMP_DIR.'pchup-'.$tim.'-tmp.pch';//アップロードされるファイル名
+			if ($ext == 'pch' || $ext == 'spch') {
+				$pchup = TEMP_DIR.'pchup-'.$tim.'-tmp.'.$ext;//アップロードされるファイル名
 				$pchtmp=$_FILES['pch_upload']['tmp_name'];
-			}
-			elseif($ext==="spch"){
-				$pchup = TEMP_DIR.'pchup-'.$tim.'-tmp.spch';//アップロードされるファイル名
-				$pchtmp=$_FILES['pch_upload']['tmp_name'];
-			}
-			else{//拡張子が一致しなかったら
+			} else{//拡張子が一致しなかったら
 				$pchup="";
 				$pchtmp="";
 				echo "アニメファイルをアップしてください。";
