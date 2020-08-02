@@ -2491,13 +2491,7 @@ function replace($no,$pwd,$stime){
 	$buf=fread($fp,5242880);
 	if(!$buf){error(MSG019);}
 	$buf = charconvert($buf);
-	$line = explode("\n",$buf);
-	foreach($line as &$value){
-		if($value!==""){
-		$value.="\n";
-		}
-	}
-	unset($value);
+	$line = explode("\n", trim($buf));
 
 	// 記事上書き
 	$flag = false;
@@ -2601,7 +2595,7 @@ function replace($no,$pwd,$stime){
 			$now = str_replace(",", "&#44;", $now);
 			$ptime = str_replace(",", "&#44;", $ptime);
 
-			$value = "$no,$now,".strip_tags($name).",$email,$sub,$com,$url,$host,$epwd,$imgext,$W,$H,$tim,$chk,$ptime,$fcolor\n";
+			$value = "$no,$now,".strip_tags($name).",$email,$sub,$com,$url,$host,$epwd,$imgext,$W,$H,$tim,$chk,$ptime,$fcolor";
 			$flag = true;
 			break;
 		}
@@ -2617,7 +2611,7 @@ function replace($no,$pwd,$stime){
 	ftruncate($fp,0);
 	set_file_buffer($fp, 0);
 	rewind($fp);
-	$newline = implode('', $line);
+	$newline = implode("\n", $line);
 	// fwrite($fp, charconvert($newline));
 	fwrite($fp, $newline);
 	fflush($fp);
