@@ -1679,7 +1679,6 @@ function paintform($picw,$pich,$anime,$pch=""){
 	global $resto,$mode,$savetype,$quality,$qualitys,$usercode;
 	global $useneo; //NEOを使う
 	global $ADMIN_PASS;
-	$dat['useneo'] = $useneo; //NEOを使う
 
 //pchファイルアップロードペイント
 if($admin===$ADMIN_PASS){
@@ -1725,7 +1724,6 @@ if($admin===$ADMIN_PASS){
 						$line = substr($line,0,6);
 						if($line==="4e454f"){
 						$useneo=true;
-						$dat['useneo'] = true;
 						}
 						else{//NEOのpchでなければ
 						echo"NEOのPCHではありません。";
@@ -1737,7 +1735,6 @@ if($admin===$ADMIN_PASS){
 						$line = substr($line,0,24);
 						if($line==="6c617965725f636f756e743d"||$line==="000d0a"){
 						$useneo=false;
-						$dat['useneo'] = false;
 						}else{//しぃぺのspchでなければ
 						echo"しぃペインターのSPCHではありません。";
 						unlink($pchup);
@@ -1926,6 +1923,8 @@ if($admin===$ADMIN_PASS){
 	}
 	$dat['dynp']=implode('',$arr_dynp);
 	$dat['usercode'] = $usercode;
+
+	$dat['useneo'] = $useneo; //NEOを使う
 
 	//差し換え時の認識コード追加
 	if($type==='rep'){
