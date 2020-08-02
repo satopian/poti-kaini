@@ -1726,11 +1726,8 @@ if($admin===$ADMIN_PASS){
 			if(move_uploaded_file($pchtmp, $pchup)){//アップロード成功なら続行
 				$pchup=TEMP_DIR.basename($pchup);//ファイルを開くディレクトリを固定
 				if(mime_content_type($pchup)==="application/octet-stream"){//mimetypeが正しければ続行
-					// var_dump(mime_content_type($pchup));
 					$fp = fopen("$pchup", "rb");
 					$line = bin2hex(fgets($fp ,4096)) ;
-					//var_dump($line);
-					//var_dump(mime_content_type($pchup));
 					if($type_pch){
 						$line = substr($line,0,6);
 						if($line==="4e454f"){
@@ -1745,7 +1742,6 @@ if($admin===$ADMIN_PASS){
 					}
 					elseif($type_spch){
 						$line = substr($line,0,24);
-						// $line2 = substr($line,0,30);
 						if($line==="6c617965725f636f756e743d"||$line==="000d0a"){
 						$useneo=false;
 						$dat['useneo'] = false;
@@ -1753,7 +1749,6 @@ if($admin===$ADMIN_PASS){
 						echo"しぃペインターのSPCHではありません。";
 						unlink($pchup);
 						}
-						// var_dump($line);
 					}
 					else{
 					unlink($pchup);
@@ -1781,7 +1776,6 @@ if($admin===$ADMIN_PASS){
 	if($pich < 300) $pich = 300;
 	if($picw > PMAX_W) $picw = PMAX_W;
 	if($pich > PMAX_H) $pich = PMAX_H;
-//	$w = $picw + 150;
 	if(!$useneo && $shi){
 	$w = $picw + 510;//しぃぺの時の幅
 	$h = $pich + 120;//しぃぺの時の高さ
@@ -1822,7 +1816,6 @@ if($admin===$ADMIN_PASS){
 			}
 		}
 	}
-	// form($dat,$resto);
 	$dat = array_merge($dat,form($resto));
 
 	$dat['mode2'] = $mode;
@@ -1878,7 +1871,6 @@ if($admin===$ADMIN_PASS){
 		default://テーマに設定が無い時
 		$dat['image_jpeg'] = 'false';//PNG
 		$dat['image_size'] = 0;//減色処理なし
-		// $savepng = ' selected';
 	}
 	$dat['savetypes'] = '<option value="AUTO"'.$saveauto.'>AUTO</option>';
 	$dat['savetypes'].= '<option value="PNG"'.$savepng.'>PNG</option>';
@@ -1917,7 +1909,6 @@ if($admin===$ADMIN_PASS){
 	$dat['picw'] = $picw;
 	$dat['pich'] = $pich;
 	$dat['stime'] = time();
-	//if($pwd) $pwd = substr(md5($pwd),2,8);
 	if($pwd){
 	$pwd=openssl_encrypt ($pwd,CRYPT_METHOD, CRYPT_PASS, true, CRYPT_IV);//暗号化
 	$pwd=bin2hex($pwd);//16進数に
@@ -1939,7 +1930,6 @@ if($admin===$ADMIN_PASS){
 		$dat['anime'] = false;
 		$dat['imgfile'] = './'.PCH_DIR.$pch.$ext;
 	}
-	// if(ADMIN_NEWPOST&&$admin===$ADMIN_PASS) $dat['admin'] = 'picpost';
 
 	$dat['palsize'] = count($DynP) + 1;
 	foreach ($DynP as $p){
