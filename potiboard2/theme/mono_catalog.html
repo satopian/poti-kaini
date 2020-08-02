@@ -35,16 +35,22 @@
 	</head>
 	<body>
 		<header>
-			<h1><% echo(title) %></h1>
+			<h1><a href="<% echo(self2) %>"><% echo(title) %></a></h1>
+			<div>
+				<a href="<% echo(home) %>" target="_top">[ホーム]</a>
+				<a href="<% echo(self) %>?mode=admin">[管理モード]</a>
+			</div>
 			<hr>
 			<article>
-				<p class="menu">
-					<a href="<% echo(home) %>" target="_top"><i class="fas fa-home fa-fw fa-lg" title="ホーム"></i>ホーム</a>
-					<a href="<% echo(self) %>?mode=newpost"><i class="fas fa-pen-square fa-fw fa-lg" title="投稿"></i>投稿</a>
-					<a href="<% echo(self) %>?mode=admin"><i class="fas fa-cog fa-fw fa-lg" title="管理モード"></i>管理モード</a>
-					<a href="<% echo(self2) %>"><i class="fas fa-list fa-fw fa-lg" title="標準モード"></i>標準モード</a>
+				<nav class="menu">
+					<% def(for_new_post) %>
+					<a href="<% echo(self) %>?mode=newpost">[投稿]</a>
+					<% /def %>
+					[カタログ]
+					<a href="<% echo(self) %>">[通常モード]</a>
+					<a href="<% echo(self) %>?mode=piccom<% def(resno) %>&amp;resto=<% echo(resno) %><% /def %>">[投稿途中の絵]</a>
 					<a href="#footer"><i class="fas fa-angle-double-down fa-fw fa-lg" title="一番下へ"></i></a>
-				</p>
+				</nav>
 				<hr>
 				<h2>カタログモード</h2>
 				<hr>

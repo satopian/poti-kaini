@@ -7,7 +7,7 @@
 */
 
 //テーマ(テンプレート)のバージョン
-define('TEMPLATE_VER', "v1.8.2 lot.200726");
+define('TEMPLATE_VER', "v1.9.0 lot.200803");
 
 //エラーメッセージ
 define('MSG001', "該当記事がみつかりません[Log is not found.]");
@@ -48,7 +48,7 @@ define('MSG035', "何か日本語で書いてください[Comment should have at
 define('MSG036', "本文にURLを書く事はできません。[This URL can not be used in text.]");
 define('MSG037', "この名前は使えません [That name cannot be used.]");
 define('MSG038', "このタグは使えません。[This tag cannot be used.]");
-define('MSG039', "コメントだけの新規投稿はできません。［New posts with only comments are not accepted.］");
+define('MSG039', "コメントのみの新規投稿はできません。［New posts with only comments are not accepted.］");
 define('MSG040', "予備");
 
 //文字色テーブル '値[,名称]'
