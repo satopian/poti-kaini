@@ -2372,13 +2372,7 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 	$buf=fread($fp,5242880);
 	if(!$buf){error(MSG019);}
 	$buf = charconvert($buf);
-	$line = explode("\n",$buf);
-	foreach($line as &$value){
-		if($value!==""){
-		$value.="\n";
-		}
-	}
-	unset($value);
+	$line = explode("\n", trim($buf));
 
 	// 記事上書き
 	$flag = FALSE;
@@ -2390,7 +2384,7 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 			if(!$sub)  $sub  = $esub;
 			if(!$com)  $com  = $ecom;
 			if(!$fcolor) $fcolor = $efcolor;
-			$value = "$no,$now,$name,$email,$sub,$com,$url,$host,$epwd,$ext,$W,$H,$tim,$chk,$ptime,$fcolor\n";
+			$value = "$no,$now,$name,$email,$sub,$com,$url,$host,$epwd,$ext,$W,$H,$tim,$chk,$ptime,$fcolor";
 			$flag = TRUE;
 			break;
 		}
@@ -2406,7 +2400,7 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 	ftruncate($fp,0);
 	set_file_buffer($fp, 0);
 	rewind($fp);
-	$newline = implode('', $line);
+	$newline = implode("\n", $line) . "\n";
 	// fwrite($fp, charconvert($newline));
 	fwrite($fp, $newline);
 	fflush($fp);
