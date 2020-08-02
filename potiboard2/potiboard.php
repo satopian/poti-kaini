@@ -2,7 +2,6 @@
 define('USE_DUMP_FOR_DEBUG','0');
 //HTML出力の前に$datをdump しない:0 する:1 dumpしてexit：2 
 // ini_set('error_reporting', E_ALL);
-//$time_start = microtime(true);
 /*
   *
   * POTI-board改二 バージョン情報はちょっと下参照
@@ -43,8 +42,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.9.2');
-define('POTI_VERLOT' , 'v2.9.2 lot.200802');
+define('POTI_VER' , 'v2.9.5');
+define('POTI_VERLOT' , 'v2.9.5 lot.200802');
 
 if(phpversion()>="5.5.0"){
 //スパム無効化関数
@@ -275,8 +274,6 @@ switch($mode){
 			redirect(PHP_SELF2, 0);
 		}
 }
-
-//$time = microtime(true) - $time_start; echo "{$time} 秒";
 
 exit;
 
@@ -1071,7 +1068,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 	flock($fp, LOCK_EX);
 	rewind($fp);
 	$buf=fread($fp,5242880);
-	if($buf==''){error(MSG019,$dest);}
+	if(!$buf){error(MSG019,$dest);}
 	$buf = charconvert($buf);
 	$line = explode("\n",$buf);
 	foreach($line as $i =>&$value){//$i必要
@@ -1284,7 +1281,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 	flock($tp, LOCK_EX); //*
 	rewind($tp);
 	$buf=fread($tp,5242880);
-	if($buf==''){error(MSG023,$dest);}
+	if(!$buf){error(MSG023,$dest);}
 	$line = explode("\n",$buf);
 		foreach($line as &$value){
 		if($value!==""){
@@ -1397,7 +1394,7 @@ function treedel($delno){
 	flock($fp, LOCK_EX);
 	rewind($fp);
 	$buf=fread($fp,5242880);
-	if($buf==''){error(MSG024);}
+	if(!$buf){error(MSG024);}
 	$line = explode("\n",$buf);
 	$countline=count($line);//必要
 	$find=false;
@@ -1471,7 +1468,7 @@ function usrdel($del,$pwd){
 		flock($fp, LOCK_EX);
 		rewind($fp);
 		$buf=fread($fp,5242880);
-		if($buf==''){error(MSG027);}
+		if(!$buf){error(MSG027);}
 		$buf = charconvert($buf);
 		$line = explode("\n",$buf);
 		foreach($line as &$value){
@@ -1542,7 +1539,7 @@ function admindel($pass){
 		flock($fp, LOCK_EX);
 		rewind($fp);
 		$buf=fread($fp,5242880);
-		if($buf==''){error(MSG030);}
+		if(!$buf){error(MSG030);}
 		$buf = charconvert($buf);
 		$line = explode("\n",$buf);
 		foreach($line as &$value){
@@ -1803,9 +1800,8 @@ if($admin===$ADMIN_PASS){
 		}
 	}
 	$dat = array_merge($dat,form($resto));
-
-	$dat['mode2'] = $mode;
-	if($mode=="contpaint"){
+		$dat['mode2'] = $mode;
+	if($mode==="contpaint"){
 		$dat['no'] = $no;
 		$dat['pch'] = $pch;
 		$dat['ctype'] = $ctype;
@@ -2181,7 +2177,7 @@ function editform($del,$pwd){
 		fflush($fp);
 		flock($fp, LOCK_UN);
 		fclose($fp);
-		if($buf==''){error(MSG019);}
+		if(!$buf){error(MSG019);}
 		$buf = charconvert($buf);
 		$line = explode("\n",$buf);
 		foreach($line as &$value){
@@ -2384,7 +2380,7 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 	flock($fp, LOCK_EX);
 	rewind($fp);
 	$buf=fread($fp,5242880);
-	if($buf==''){error(MSG019);}
+	if(!$buf){error(MSG019);}
 	$buf = charconvert($buf);
 	$line = explode("\n",$buf);
 	foreach($line as &$value){
@@ -2509,7 +2505,7 @@ function replace($no,$pwd,$stime){
 	flock($fp, LOCK_EX);
 	rewind($fp);
 	$buf=fread($fp,5242880);
-	if($buf==''){error(MSG019);}
+	if(!$buf){error(MSG019);}
 	$buf = charconvert($buf);
 	$line = explode("\n",$buf);
 	foreach($line as &$value){
