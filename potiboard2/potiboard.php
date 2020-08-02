@@ -232,8 +232,7 @@ switch($mode){
 		}else{error(MSG033);}
 		break;
 	case 'paint':
-		$palette = "";
-		paintform($picw,$pich,$palette,$anime);
+		paintform($picw,$pich,$anime);
 		break;
 	case 'piccom':
 		paintcom($resto);
@@ -248,8 +247,7 @@ switch($mode){
 //パスワードが必要なのは差し換えの時だけ
 		if(CONTINUE_PASS||$type==='rep') usrchk($no,$pwd);
 		// if(ADMIN_NEWPOST) $admin=$pwd;
-		$palette="";
-		paintform($picw,$pich,$palette,$anime,$pch);
+		paintform($picw,$pich,$anime,$pch);
 		break;
 	case 'newpost':
 		$dat['post_mode'] = true;
@@ -1679,7 +1677,7 @@ function init(){
 }
 
 /* お絵描き画面 */
-function paintform($picw,$pich,$palette,$anime,$pch=""){
+function paintform($picw,$pich,$anime,$pch=""){
 	global $admin,$shi,$ctype,$type,$no,$pwd,$ext;
 	global $resto,$mode,$savetype,$quality,$qualitys,$usercode;
 	global $useneo; //NEOを使う
@@ -1915,10 +1913,6 @@ if($admin===$ADMIN_PASS){
 		$palettes.='";';//190622
 		$arr_pal[$p_cnt] = $palettes;
 		$p_cnt++;
-		if($pid==$palette){
-			$C_Palette = explode(",", $line);
-			array_shift($C_Palette); array_shift($C_Palette);
-		}
 	}
 	$dat['palettes']=$initial_palette.implode('',$arr_pal);
 
@@ -1951,21 +1945,6 @@ if($admin===$ADMIN_PASS){
 		$dat['imgfile'] = './'.PCH_DIR.$pch.$ext;
 	}
 	// if(ADMIN_NEWPOST&&$admin===$ADMIN_PASS) $dat['admin'] = 'picpost';
-
-	if(isset($C_Palette)){
-		for ($n = 1;$n < 7;++$n)
-			$cpal[$n*2-1] = $C_Palette[$n-1];
-		for ($n = 7;$n < 13;++$n)
-			$cpal[$n-(13-$n)+1] = $C_Palette[$n-1];
-		for ($n = 13;$n < 15;++$n)
-			$cpal[$n] = $C_Palette[$n-1];
-		ksort($cpal);
-		$no = 1;
-		foreach ($cpal as $pal){
-			$dat['cpal'][] = compact('no','pal');
-			$no++;
-		}
-	}
 
 	$dat['palsize'] = count($DynP) + 1;
 	foreach ($DynP as $p){
