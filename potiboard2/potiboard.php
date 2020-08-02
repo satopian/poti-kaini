@@ -1917,8 +1917,7 @@ if($admin===$ADMIN_PASS){
 	$dat['h'] = $h;
 	$dat['picw'] = $picw;
 	$dat['pich'] = $pich;
-	$stime = time();
-	$dat['stime'] = $stime;
+	$dat['stime'] = time();
 	//if($pwd) $pwd = substr(md5($pwd),2,8);
 	if($pwd){
 	$pwd=openssl_encrypt ($pwd,CRYPT_METHOD, CRYPT_PASS, true, CRYPT_IV);//暗号化
