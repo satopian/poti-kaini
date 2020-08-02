@@ -356,10 +356,7 @@ function form($resno="",$adminin="",$tmp=""){
 	global $fontcolors,$undo,$undo_in_mg,$quality,$qualitys;
 	global $ADMIN_PASS;
 
-	$admin=false;
-	if($adminin==='valid'){
-		$admin=true;
-	}
+	$admin = ($adminin === 'valid');
 
 	$dat['form'] = true;
 	if(!USE_IMG_UPLOAD && DENY_COMMENTS_ONLY && !$resno && !$admin){//コメントのみも画像アップロードも禁止
