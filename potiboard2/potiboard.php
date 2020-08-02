@@ -1693,15 +1693,11 @@ if($admin===$ADMIN_PASS){
 			$ext=pathinfo($pchfilename, PATHINFO_EXTENSION);
 			$ext=strtolower($ext);//すべて小文字に
 
-			$type_pch=false;
-			$type_spch=false;
 			if($ext==="pch"){
-				$type_pch=true;
 				$pchup = TEMP_DIR.'pchup-'.$tim.'-tmp.pch';//アップロードされるファイル名
 				$pchtmp=$_FILES['pch_upload']['tmp_name'];
 			}
 			elseif($ext==="spch"){
-				$type_spch=true;
 				$pchup = TEMP_DIR.'pchup-'.$tim.'-tmp.spch';//アップロードされるファイル名
 				$pchtmp=$_FILES['pch_upload']['tmp_name'];
 			}
@@ -1717,7 +1713,7 @@ if($admin===$ADMIN_PASS){
 				if(mime_content_type($pchup)==="application/octet-stream"){//mimetypeが正しければ続行
 					$fp = fopen("$pchup", "rb");
 					$line = bin2hex(fgets($fp ,4096)) ;
-					if($type_pch){
+					if($ext==="pch"){
 						$line = substr($line,0,6);
 						if($line==="4e454f"){
 						$useneo=true;
@@ -1728,7 +1724,7 @@ if($admin===$ADMIN_PASS){
 						unlink($pchup);
 						}
 					}
-					elseif($type_spch){
+					elseif($ext==="spch"){
 						$line = substr($line,0,24);
 						if($line==="6c617965725f636f756e743d"||$line==="000d0a"){
 						$useneo=false;
