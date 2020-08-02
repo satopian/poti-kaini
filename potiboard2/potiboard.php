@@ -2400,7 +2400,7 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 	ftruncate($fp,0);
 	set_file_buffer($fp, 0);
 	rewind($fp);
-	$newline = implode("\n", $line) . "\n";
+	$newline = implode("\n", $line);
 	// fwrite($fp, charconvert($newline));
 	fwrite($fp, $newline);
 	fflush($fp);
