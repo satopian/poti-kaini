@@ -67,7 +67,6 @@ $url = filter_input(INPUT_POST, 'url',FILTER_VALIDATE_URL);
 $sub = filter_input(INPUT_POST, 'sub');
 $com = filter_input(INPUT_POST, 'com');
 $pwd = filter_input(INPUT_POST, 'pwd');
-$textonly = filter_input(INPUT_POST, 'textonly',FILTER_VALIDATE_BOOLEAN);
 $shi = filter_input(INPUT_POST, 'shi',FILTER_VALIDATE_INT);
 $picw = filter_input(INPUT_POST, 'picw',FILTER_VALIDATE_INT);
 $pich = filter_input(INPUT_POST, 'pich',FILTER_VALIDATE_INT);
@@ -123,16 +122,6 @@ $usercode = filter_input(INPUT_COOKIE, 'usercode');//nullならuser-codeを発�
 //INPUT_SERVER が動作しないサーバがあるので$_SERVERを使う。
 
 //$_FILESから変数を取得
-
-	$upfile_name = isset($_FILES["upfile"]["name"]) ? $_FILES["upfile"]["name"] : "";//190603
-
-	if (strpos($upfile_name, '/') !== false) {//ファイル名に/があったら中断
-		$upfile_name="";
-		$upfile ="";
-	}
-	else{
-		$upfile = isset($_FILES["upfile"]["tmp_name"]) ? $_FILES["upfile"]["tmp_name"] : "";
-	}
 
 }
 //設定の読み込み
@@ -218,14 +207,7 @@ switch($mode){
 			if($pwd != $ADMIN_PASS){ error(MSG029);
 			}else{ $admin=$pwd; }
 		}
-		if($textonly){//画像なしの時
-			if($upfile&&is_file($upfile)){
-				unlink($upfile);
-			}
-			$upfile="";
-			$upfile_name="";
-		}
-		regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pictmp,$picfile);
+		regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile);
 		break;
 
 	case 'admin':
@@ -250,15 +232,13 @@ switch($mode){
 		}else{error(MSG033);}
 		break;
 	case 'paint':
-		$palette = "";
-		paintform($picw,$pich,$palette,$anime);
+		paintform($picw,$pich,$anime);
 		break;
 	case 'piccom':
 		paintcom($resto);
 		break;
 	case 'openpch':
-		if(!isset($sp)){$sp="";}
-		openpch($pch,$sp);
+		openpch($pch);
 		break;
 	case 'continue':
 		incontinue();
@@ -267,8 +247,7 @@ switch($mode){
 //パスワードが必要なのは差し換えの時だけ
 		if(CONTINUE_PASS||$type==='rep') usrchk($no,$pwd);
 		// if(ADMIN_NEWPOST) $admin=$pwd;
-		$palette="";
-		paintform($picw,$pich,$palette,$anime,$pch);
+		paintform($picw,$pich,$anime,$pch);
 		break;
 	case 'newpost':
 		$dat['post_mode'] = true;
@@ -845,12 +824,33 @@ function similar_str($str1,$str2){
 }
 
 /* 記事書き込み */
-function regist($name,$email,$sub,$com,$url,$pwd,$upfile,$upfile_name,$resto,$pictmp,$picfile){
-	global $path,$badstring,$badfile,$badip,$pwdc,$textonly;
+function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
+	global $path,$badstring,$badfile,$badip,$pwdc;
 	global $temppath,$ptime;
 	global $fcolor,$usercode;
 	global $admin,$badstr_A,$badstr_B,$badname;
 	global $ADMIN_PASS;
+
+	$upfile_name = isset($_FILES["upfile"]["name"]) ? $_FILES["upfile"]["name"] : "";//190603
+
+	if (strpos($upfile_name, '/') !== false) {//ファイル名に/があったら中断
+		$upfile_name="";
+		$upfile ="";
+	}
+	else{
+		$upfile = isset($_FILES["upfile"]["tmp_name"]) ? $_FILES["upfile"]["tmp_name"] : "";
+	}
+
+	$textonly = filter_input(INPUT_POST, 'textonly',FILTER_VALIDATE_BOOLEAN);
+
+	if($textonly){//画像なしの時
+		if($upfile&&is_file($upfile)){
+			unlink($upfile);
+		}
+		$upfile="";
+		$upfile_name="";
+	}
+
 	$userip = get_uip();
 	$mes="";
 
@@ -1677,7 +1677,7 @@ function init(){
 }
 
 /* お絵描き画面 */
-function paintform($picw,$pich,$palette,$anime,$pch=""){
+function paintform($picw,$pich,$anime,$pch=""){
 	global $admin,$shi,$ctype,$type,$no,$pwd,$ext;
 	global $resto,$mode,$savetype,$quality,$qualitys,$usercode;
 	global $useneo; //NEOを使う
@@ -1913,10 +1913,6 @@ if($admin===$ADMIN_PASS){
 		$palettes.='";';//190622
 		$arr_pal[$p_cnt] = $palettes;
 		$p_cnt++;
-		if($pid==$palette){
-			$C_Palette = explode(",", $line);
-			array_shift($C_Palette); array_shift($C_Palette);
-		}
 	}
 	$dat['palettes']=$initial_palette.implode('',$arr_pal);
 
@@ -1949,21 +1945,6 @@ if($admin===$ADMIN_PASS){
 		$dat['imgfile'] = './'.PCH_DIR.$pch.$ext;
 	}
 	// if(ADMIN_NEWPOST&&$admin===$ADMIN_PASS) $dat['admin'] = 'picpost';
-
-	if(isset($C_Palette)){
-		for ($n = 1;$n < 7;++$n)
-			$cpal[$n*2-1] = $C_Palette[$n-1];
-		for ($n = 7;$n < 13;++$n)
-			$cpal[$n-(13-$n)+1] = $C_Palette[$n-1];
-		for ($n = 13;$n < 15;++$n)
-			$cpal[$n] = $C_Palette[$n-1];
-		ksort($cpal);
-		$no = 1;
-		foreach ($cpal as $pal){
-			$dat['cpal'][] = compact('no','pal');
-			$no++;
-		}
-	}
 
 	$dat['palsize'] = count($DynP) + 1;
 	foreach ($DynP as $p){
@@ -2061,7 +2042,7 @@ function paintcom($resto=''){
 }
 
 /* 動画表示 */
-function openpch($pch,$sp=""){
+function openpch($pch){
 	global $shi;
 	$stime = time();
 	$picfile = IMG_DIR.$pch;
@@ -2089,7 +2070,6 @@ function openpch($pch,$sp=""){
 		
 	$datasize = filesize($pchfile);
 	$size = getimagesize($picfile);
-	if(!$sp) $sp = PCH_SPEED;
 	$picw = $size[0];
 	$pich = $size[1];
 	$w = $picw;
@@ -2106,7 +2086,7 @@ function openpch($pch,$sp=""){
 	$dat['picw'] = $picw;
 	$dat['pich'] = $pich;
 	$dat['pchfile'] = './'.$pchfile;
-	$dat['speed'] = $sp;
+	$dat['speed'] = PCH_SPEED;
 	$dat['datasize'] = $datasize;
 	$dat['stime'] = $stime;
 	htmloutput(SKIN_DIR.PAINTFILE,$dat);
