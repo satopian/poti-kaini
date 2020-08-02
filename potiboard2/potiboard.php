@@ -1690,8 +1690,6 @@ if($admin===$ADMIN_PASS){
 		$pchfilename=CleanStr($pchfilename);
 		if (strpos($pchfilename, '/') !== false) {//ファイル名に/がなければ続行
 			echo "不正なファイルです。";
-			$pchfilename="";
-			$pchtmp="";
 		}
 		else{//チェック通過
 			//拡張子チェック
