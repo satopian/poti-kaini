@@ -1683,12 +1683,8 @@ function paintform($picw,$pich,$anime,$pch=""){
 
 //pchファイルアップロードペイント
 if($admin===$ADMIN_PASS){
-	if(isset($_FILES['pch_upload']['name'])){
-		$pchfilename=$_FILES['pch_upload']['name'];
-	}
-	else{
-		$pchfilename='';
-	}
+	
+	$pchfilename = isset($_FILES['pch_upload']['name']) ? $_FILES['pch_upload']['name'] : '';
 
 	if($pchfilename!==""){//空文字でなければ続行
 		$pchfilename=CleanStr($pchfilename);
