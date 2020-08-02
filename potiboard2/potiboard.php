@@ -1824,9 +1824,7 @@ if($admin===$ADMIN_PASS){
 		}
 	}
 	$dat = array_merge($dat,form($resto));
-	if($mode==='paint'||$mode==='contpaint'){
 		$dat['mode2'] = $mode;
-	}
 	if($mode==="contpaint"){
 		$dat['no'] = $no;
 		$dat['pch'] = $pch;
