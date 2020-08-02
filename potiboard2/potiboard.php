@@ -1680,7 +1680,6 @@ function paintform($picw,$pich,$anime,$pch=""){
 	global $useneo; //NEOを使う
 	global $ADMIN_PASS;
 	if ($useneo) $dat['useneo'] = true; //NEOを使う
-	$userip = get_uip();
 
 //pchファイルアップロードペイント
 if($admin===$ADMIN_PASS){
@@ -1952,6 +1951,7 @@ if($admin===$ADMIN_PASS){
 	//差し換え時の認識コード追加
 	if($type==='rep'){
 		$time=time();
+		$userip = get_uip();
 		$repcode = substr(crypt(md5($no.$userip.$pwd.date("Ymd", $time)),$time),-8);
 		//念の為にエスケープ文字があればアルファベットに変換
 		$repcode = strtr($repcode,"!\"#$%&'()+,/:;<=>?@[\\]^`/{|}~","ABCDEFGHIJKLMNOabcdefghijklmn");
