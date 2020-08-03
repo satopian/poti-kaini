@@ -48,6 +48,8 @@ config.phpの設定をし、アップロードしてpotiboard.phpのあるディ
 このスクリプトはテーマ(テンプレート)機能に対応しています。作り方（変数名）はデフォルトテーマのreadmeに詳しく書いています。  
 [テーマリポジトリ](https://github.com/sakots/poti-kaini-themes)を参照ください。
 
+- [POTI-board改二テーマリンク集](https://poti-k.info/themes.html)
+
 ---
 
 ## 履歴
