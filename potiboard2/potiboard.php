@@ -2659,6 +2659,7 @@ function catalog(){
 			$dat['y'][$y]['x'][$x]['noimg'] = true;
 		}else{
 			$treeline = explode(",", rtrim($tree[$i]));
+			$rescount = count($treeline) - 1;
 			$disptree = $treeline[0];
 			$j=$lineindex[$disptree] - 1; //該当記事を探して$jにセット
 			if($line[$j]==="") continue; //$jが範囲外なら次の行
@@ -2695,7 +2696,7 @@ function catalog(){
 			list($name, $trip) = separateNameAndTrip($name);
 
 			// 記事格納
-			$dat['y'][$y]['x'][$x] = compact('imgsrc','w','no','sub','name','now','pch','txt','id','updatemark','trip');
+			$dat['y'][$y]['x'][$x] = compact('imgsrc','w','no','sub','name','now','pch','txt','id','updatemark','trip','rescount');
 			// 変数クリア
 			unset($img,$src,$imgsrc,$w,$no,$sub,$name,$now,$pch,$txt);
 		}
