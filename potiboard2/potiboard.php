@@ -1395,15 +1395,9 @@ function treedel($delno){
 	rewind($fp);
 	$buf=fread($fp,5242880);
 	if(!$buf){error(MSG024);}
-	$line = explode("\n",$buf);
+	$line = explode("\n", trim($buf));
 	$countline=count($line);//必要
 	$find=false;
-	foreach($line as &$value){
-		if($value!==""){
-			$value.="\n";
-		}
-	}
-	unset($value);
 	foreach($line as $i =>$value){
 		$treeline = explode(",", rtrim($value));
 		foreach($treeline as $j => $value){
@@ -1414,25 +1408,28 @@ function treedel($delno){
 						flock($fp, LOCK_UN);
 						fclose($fp);
 						error(MSG026);
-					}else{$line[$i]='';}
+					}else{
+						unset($line[$i]);
+					}
 				}else{//レス削除
-					$treeline[$j]='';
+					unset($treeline[$j]);
 					$line[$i]=implode(',', $treeline);
 					$line[$i]=preg_replace("/,,/",",",$line[$i]);
 					$line[$i]=preg_replace("/,$/","",$line[$i]);
-					$line[$i].="\n";
+					if (!$line[$i]) {
+						unset($line[$i]);
+					}
 				}
 				$find=true;
 				break 2;
 			}
 		}
-	unset($value);
 	}
 	if($find){//ツリー更新
 		ftruncate($fp,0);
 		set_file_buffer($fp, 0);
 		rewind($fp);
-		fwrite($fp, implode('', $line));
+		fwrite($fp, implode("\n", $line));
 	}
 	fflush($fp);
 	flock($fp, LOCK_UN);
@@ -1470,15 +1467,10 @@ function usrdel($del,$pwd){
 		$buf=fread($fp,5242880);
 		if(!$buf){error(MSG027);}
 		$buf = charconvert($buf);
-		$line = explode("\n",$buf);
-		foreach($line as &$value){
-			if($value!==""){
-				$value.="\n";}
-		}
-		unset($value);
+		$line = explode("\n", trim($buf));
 		$flag = false;
 		$find = false;
-		foreach($line as &$value){//190701
+		foreach($line as $i => $value){//190701
 			if($value!==""){
 				list($no,,,,,,,$dhost,$pass,$ext,,,$tim,,) = explode(",",$value);
 			
@@ -1486,7 +1478,10 @@ function usrdel($del,$pwd){
 			|| $ADMIN_PASS === $pwd)){
 				if(!$onlyimgdel){	//記事削除
 					treedel($no);
-					if(USER_DELETES > 2){$value = "";$find = true;}
+					if(USER_DELETES > 2){
+						unset($line[$i]);
+						$find = true;
+					}
 				}
 				if(USER_DELETES > 1){
 					$delfile = $path.$tim.$ext;	//削除ファイル
@@ -1499,14 +1494,12 @@ function usrdel($del,$pwd){
 				}
 			}
 		}
-		unset($value);
 		if(!$flag)error(MSG028);
 		if($find){//ログ更新
 			ftruncate($fp,0);
 			set_file_buffer($fp, 0);
 			rewind($fp);
-			$newline = implode('', $line);
-			// fwrite($fp, charconvert($newline));
+			$newline = implode("\n", $line);
 			fwrite($fp,$newline);
 		}
 		fflush($fp);
@@ -1541,21 +1534,15 @@ function admindel($pass){
 		$buf=fread($fp,5242880);
 		if(!$buf){error(MSG030);}
 		$buf = charconvert($buf);
-		$line = explode("\n",$buf);
-		foreach($line as &$value){
-			if($value!==""){
-				$value.="\n";
-			}
-		}
-		unset($value);
+		$line = explode("\n", trim($buf));
 		$find = false;
-		foreach($line as &$value){
+		foreach($line as $i => $value){
 			if($value!==""){
 				list($no,,,,,,,,,$ext,,,$tim,,) = explode(",",$value);
 			if(in_array($no,$del)){
 				if(!$onlyimgdel){	//記事削除
 					treedel($no);
-					$value = "";
+					unset($line[$i]);
 					$find = true;
 				}
 				$delfile = $path.$tim.$ext;	//削除ファイル
@@ -1571,7 +1558,7 @@ function admindel($pass){
 			ftruncate($fp,0);
 			set_file_buffer($fp, 0);
 			rewind($fp);
-			$newline = implode('', $line);
+			$newline = implode("\n", $line);
 			// fwrite($fp, charconvert($newline));
 			fwrite($fp,$newline);
 		}
@@ -2169,13 +2156,7 @@ function editform($del,$pwd){
 		fclose($fp);
 		if(!$buf){error(MSG019);}
 		$buf = charconvert($buf);
-		$line = explode("\n",$buf);
-		foreach($line as &$value){
-			if($value!==""){
-				$value.="\n";
-			}
-		}
-		unset($value);
+		$line = explode("\n", trim($buf));
 		$flag = FALSE;
 		foreach($line as $value){
 		if($value){
@@ -2187,7 +2168,6 @@ function editform($del,$pwd){
 			}
 		}
 	}
-	unset($value);
 		if(!$flag) error(MSG028);
 
 		$dat['post_mode'] = true;
@@ -2491,13 +2471,7 @@ function replace($no,$pwd,$stime){
 	$buf=fread($fp,5242880);
 	if(!$buf){error(MSG019);}
 	$buf = charconvert($buf);
-	$line = explode("\n",$buf);
-	foreach($line as &$value){
-		if($value!==""){
-		$value.="\n";
-		}
-	}
-	unset($value);
+	$line = explode("\n", trim($buf));
 
 	// 記事上書き
 	$flag = false;
@@ -2601,7 +2575,7 @@ function replace($no,$pwd,$stime){
 			$now = str_replace(",", "&#44;", $now);
 			$ptime = str_replace(",", "&#44;", $ptime);
 
-			$value = "$no,$now,".strip_tags($name).",$email,$sub,$com,$url,$host,$epwd,$imgext,$W,$H,$tim,$chk,$ptime,$fcolor\n";
+			$value = "$no,$now,".strip_tags($name).",$email,$sub,$com,$url,$host,$epwd,$imgext,$W,$H,$tim,$chk,$ptime,$fcolor";
 			$flag = true;
 			break;
 		}
@@ -2617,7 +2591,7 @@ function replace($no,$pwd,$stime){
 	ftruncate($fp,0);
 	set_file_buffer($fp, 0);
 	rewind($fp);
-	$newline = implode('', $line);
+	$newline = implode("\n", $line);
 	// fwrite($fp, charconvert($newline));
 	fwrite($fp, $newline);
 	fflush($fp);
