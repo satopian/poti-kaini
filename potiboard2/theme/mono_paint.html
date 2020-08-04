@@ -67,16 +67,15 @@
 	</head>
 	<body id="paintmode">
 		<header>
-			<h1><% echo(title) %></h1>
+			<h1><a href="<% echo(self2) %>"><% echo(title) %></a></h1>
+			<div>
+				<a href="<% echo(home) %>" target="_top">[ホーム]</a>
+				<a href="<% echo(self) %>?mode=admin">[管理モード]</a>
+			</div>
 			<hr>
 			<article>
 				<p class="menu">
-					<a href="./"><i class="fas fa-star fa-fw fa-lg" title="トップ"></i>もどる</a>
-					<!-- <a href="<% echo(self2) %>"><i class="fas fa-star fa-fw fa-lg" title="トップ"></i>トップ</a>
-					<a href="<% echo(home) %>" target="_top"><i class="fas fa-home fa-fw fa-lg" title="ホーム"></i>ホーム</a>
-					<a href="<% echo(self) %>?mode=newpost"><i class="fas fa-pen-square fa-fw fa-lg" title="投稿"></i>投稿</a>
-					<a href="<% echo(self) %>?mode=admin"><i class="fas fa-cog fa-fw fa-lg" title="管理モード"></i>管理モード</a>
-					<a href="<% echo(self) %>?mode=piccom<% def(resno) %>&amp;resto=<% echo(resno) %><% /def %>"><i class="fas fa-paste fa-fw fa-lg" title="投稿途中の絵"></i>投稿途中の絵</a> -->
+					<a href="./">[もどる]</a>
 				</p>
 			</article>
 			<hr>
