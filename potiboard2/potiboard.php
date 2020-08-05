@@ -1136,7 +1136,6 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 		}
 		if($i>=$chkline){break;}//チェックする最大行数
 	}//ここまで
-	unset($value);
 
 	// 移動(v1.32)
 	if(!$name) $name=DEF_NAME;
