@@ -1070,15 +1070,14 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 	$buf=fread($fp,5242880);
 	if(!$buf){error(MSG019,$dest);}
 	$buf = charconvert($buf);
-	$line = explode("\n",$buf);
-	foreach($line as $i =>&$value){//$i必要
+	$line = explode("\n", trim($buf));
+	foreach($line as $i => $value){//$i必要
 		if($value!==""){//190624
 			list($artno,)=explode(",", rtrim($value));	//逆変換テーブル作成
 			$lineindex[$artno]=$i+1;
-			$value.="\n";
+			$line[$i] .="\n";
 		}
 	}
-	unset($value);
 
 	// 連続・二重投稿チェック (v1.32:仕様変更)
 	$chkline=20;//チェックする最大行数
