@@ -2355,7 +2355,7 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 
 	// 記事上書き
 	$flag = FALSE;
-	foreach($line as &$value){
+	foreach($line as $i => $value){
 		list($eno,,$ename,,$esub,$ecom,$eurl,$ehost,$epwd,$ext,$W,$H,$tim,$chk,$ptime,$efcolor) = explode(",", rtrim($value));
 	//		if($eno == $no && ($pass == $epwd /*|| $ehost == $host*/ || $ADMIN_PASS == $admin)){
 		if($eno == $no && (password_verify($pwd,$epwd) ||$epwd=== substr(md5($pwd),2,8)|| $ADMIN_PASS === $admin)){
@@ -2363,12 +2363,11 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 			if(!$sub)  $sub  = $esub;
 			if(!$com)  $com  = $ecom;
 			if(!$fcolor) $fcolor = $efcolor;
-			$value = "$no,$now,$name,$email,$sub,$com,$url,$host,$epwd,$ext,$W,$H,$tim,$chk,$ptime,$fcolor";
+			$line[$i] = "$no,$now,$name,$email,$sub,$com,$url,$host,$epwd,$ext,$W,$H,$tim,$chk,$ptime,$fcolor";
 			$flag = TRUE;
 			break;
 		}
 	}
-	unset($value);
 	if(!$flag){
 		fflush($fp);
 		flock($fp, LOCK_UN);
