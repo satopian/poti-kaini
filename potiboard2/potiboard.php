@@ -1070,15 +1070,13 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 	$buf=fread($fp,5242880);
 	if(!$buf){error(MSG019,$dest);}
 	$buf = charconvert($buf);
-	$line = explode("\n",$buf);
-	foreach($line as $i =>&$value){//$i必要
+	$line = explode("\n", trim($buf));
+	foreach($line as $i => $value){//$i必要
 		if($value!==""){//190624
 			list($artno,)=explode(",", rtrim($value));	//逆変換テーブル作成
 			$lineindex[$artno]=$i+1;
-			$value.="\n";
 		}
 	}
-	unset($value);
 
 	// 連続・二重投稿チェック (v1.32:仕様変更)
 	$chkline=20;//チェックする最大行数
@@ -1137,7 +1135,6 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 		}
 		if($i>=$chkline){break;}//チェックする最大行数
 	}//ここまで
-	unset($value);
 
 	// 移動(v1.32)
 	if(!$name) $name=DEF_NAME;
@@ -1265,7 +1262,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 	list($lastno,) = explode(",", $line[0]);
 	$no = $lastno + 1;
 	$newline = "$no,$now,$name,$email,$sub,$com,$url,$host,$pass,$ext,$W,$H,$tim,$chk,$ptime,$fcolor\n";
-	$newline.= implode('', $line);
+	$newline.= implode("\n", $line);
 	ftruncate($fp,0);
 	set_file_buffer($fp, 0);
 	rewind($fp);
@@ -1282,35 +1279,34 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 	rewind($tp);
 	$buf=fread($tp,5242880);
 	if(!$buf){error(MSG023,$dest);}
-	$line = explode("\n",$buf);
-		foreach($line as &$value){
+	$line = explode("\n", trim($buf));
+	foreach($line as $i => $value){
 		if($value!==""){
-			$value.="\n";
 			$j=explode(",", rtrim($value));
 			if($lineindex[$j[0]]==0){
-				$value='';
-				}
+				unset($line[$i]);
 			}
 		}
-	unset($value);
+	}
+
 	if($resto){
-		foreach($line as &$value){
+		foreach($line as $i => $value){
 			$rtno = explode(",", rtrim($value));
 			if($rtno[0]==$resto){
 				$find = TRUE;
-				$value=rtrim($value).','.$no."\n";
-				$j=explode(",", rtrim($value));
+				$line[$i] = rtrim($value).','.$no;
+				$j=explode(",", rtrim($line[$i]));
 				if(!(stripos($email,'sage')!==false || (count($j)>MAX_RES))){
-					$newline=$value;
-					$value='';
+					$newline=$line[$i] . "\n";
+					unset($line[$i]);
 				}
 				break;
 			}
 		}
-	unset($value);
 	}
+
 	if(!$find){if(!$resto){$newline="$no\n";}else{error(MSG025,$dest);}}
-	$newline.=implode('', $line);
+	$newline.=implode("\n", $line);
 	ftruncate($tp,0);
 	set_file_buffer($tp, 0);
 	rewind($tp);
@@ -2356,7 +2352,7 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 
 	// 記事上書き
 	$flag = FALSE;
-	foreach($line as &$value){
+	foreach($line as $i => $value){
 		list($eno,,$ename,,$esub,$ecom,$eurl,$ehost,$epwd,$ext,$W,$H,$tim,$chk,$ptime,$efcolor) = explode(",", rtrim($value));
 	//		if($eno == $no && ($pass == $epwd /*|| $ehost == $host*/ || $ADMIN_PASS == $admin)){
 		if($eno == $no && (password_verify($pwd,$epwd) ||$epwd=== substr(md5($pwd),2,8)|| $ADMIN_PASS === $admin)){
@@ -2364,12 +2360,11 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 			if(!$sub)  $sub  = $esub;
 			if(!$com)  $com  = $ecom;
 			if(!$fcolor) $fcolor = $efcolor;
-			$value = "$no,$now,$name,$email,$sub,$com,$url,$host,$epwd,$ext,$W,$H,$tim,$chk,$ptime,$fcolor";
+			$line[$i] = "$no,$now,$name,$email,$sub,$com,$url,$host,$epwd,$ext,$W,$H,$tim,$chk,$ptime,$fcolor";
 			$flag = TRUE;
 			break;
 		}
 	}
-	unset($value);
 	if(!$flag){
 		fflush($fp);
 		flock($fp, LOCK_UN);
@@ -2478,7 +2473,7 @@ function replace($no,$pwd,$stime){
 	$pwd=hex2bin($pwd);//バイナリに
 	$pwd=openssl_decrypt($pwd,CRYPT_METHOD, CRYPT_PASS, true, CRYPT_IV);//復号化
 
-	foreach($line as &$value){
+	foreach($line as $i => $value){
 		list($eno,,$name,$email,$sub,$com,$url,$ehost,$epwd,$ext,$W,$H,$etim,,$eptime,$fcolor) = explode(",", rtrim($value));
 	//		if($eno == $no && ($pwd == $epwd /*|| $ehost == $host*/ || $pwd == substr(md5($ADMIN_PASS),2,8))){
 	//画像差し替えに管理パスは使っていない
@@ -2575,12 +2570,11 @@ function replace($no,$pwd,$stime){
 			$now = str_replace(",", "&#44;", $now);
 			$ptime = str_replace(",", "&#44;", $ptime);
 
-			$value = "$no,$now,".strip_tags($name).",$email,$sub,$com,$url,$host,$epwd,$imgext,$W,$H,$tim,$chk,$ptime,$fcolor";
+			$line[$i] = "$no,$now,".strip_tags($name).",$email,$sub,$com,$url,$host,$epwd,$imgext,$W,$H,$tim,$chk,$ptime,$fcolor";
 			$flag = true;
 			break;
 		}
 	}
-	unset($value);
 	if(!$flag){
 		fflush($fp);
 		flock($fp, LOCK_UN);
