@@ -1280,35 +1280,34 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 	rewind($tp);
 	$buf=fread($tp,5242880);
 	if(!$buf){error(MSG023,$dest);}
-	$line = explode("\n",$buf);
-		foreach($line as &$value){
+	$line = explode("\n", trim($buf));
+	foreach($line as $i => $value){
 		if($value!==""){
-			$value.="\n";
 			$j=explode(",", rtrim($value));
 			if($lineindex[$j[0]]==0){
-				$value='';
-				}
+				unset($line[$i]);
 			}
 		}
-	unset($value);
+	}
+
 	if($resto){
-		foreach($line as &$value){
+		foreach($line as $i => $value){
 			$rtno = explode(",", rtrim($value));
 			if($rtno[0]==$resto){
 				$find = TRUE;
-				$value=rtrim($value).','.$no."\n";
-				$j=explode(",", rtrim($value));
+				$line[$i] = rtrim($value).','.$no;
+				$j=explode(",", rtrim($line[$i]));
 				if(!(stripos($email,'sage')!==false || (count($j)>MAX_RES))){
-					$newline=$value;
-					$value='';
+					$newline=$line[$i] . "\n";
+					unset($line[$i]);
 				}
 				break;
 			}
 		}
-	unset($value);
 	}
+
 	if(!$find){if(!$resto){$newline="$no\n";}else{error(MSG025,$dest);}}
-	$newline.=implode('', $line);
+	$newline.=implode("\n", $line);
 	ftruncate($tp,0);
 	set_file_buffer($tp, 0);
 	rewind($tp);
