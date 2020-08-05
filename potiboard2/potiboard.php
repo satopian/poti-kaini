@@ -1075,7 +1075,6 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 		if($value!==""){//190624
 			list($artno,)=explode(",", rtrim($value));	//逆変換テーブル作成
 			$lineindex[$artno]=$i+1;
-			$line[$i] .="\n";
 		}
 	}
 
@@ -1263,7 +1262,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 	list($lastno,) = explode(",", $line[0]);
 	$no = $lastno + 1;
 	$newline = "$no,$now,$name,$email,$sub,$com,$url,$host,$pass,$ext,$W,$H,$tim,$chk,$ptime,$fcolor\n";
-	$newline.= implode('', $line);
+	$newline.= implode("\n", $line);
 	ftruncate($fp,0);
 	set_file_buffer($fp, 0);
 	rewind($fp);
