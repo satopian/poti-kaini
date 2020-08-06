@@ -83,8 +83,11 @@
 					レス送信モード
 					<% each(oya) %>
 					<% def(resname) %>
-					<!--コピー対象要素とコピーボタン-->
-					<input class="copy_txt" id="t" type="text" value="<% echo(resname) %>さん" readonly><button class="copy_button" onclick="c()">投稿者名をコピー</button><script>function c(){var copyTarget;document.getElementById("t").select(),document.execCommand("Copy")}</script>
+					<script>function add_to_com(){
+						document.getElementById("p_input_com").value += "<% echo(resname) %>さん";
+						}</script>
+					
+					<% コピーボタン %><button class="copy_button" onclick="add_to_com()">投稿者名をコピー</button>
 					<% /def %>
 					<% /each %>
 				</p>
@@ -184,7 +187,7 @@
 							</tr>
 							<tr>
 								<td>com<% def(usecom) %><% echo(usecom) %><% /def %></td>
-								<td><textarea class="form" name="com" cols="28" rows="4" wrap="soft"></textarea></td>
+								<td><textarea class="form" name="com" cols="28" rows="4" wrap="soft" id="p_input_com"></textarea></td>
 							</tr>
 							<% def(upfile) %>
 							<tr>
