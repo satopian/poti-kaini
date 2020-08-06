@@ -469,7 +469,6 @@ function updatelog($resno=0){
 				break;
 			} //レス先検索
 		}
-		unset($value);
 		if (!$find) {
 			error(MSG001);
 		}
@@ -480,7 +479,6 @@ function updatelog($resno=0){
 		list($no,) = explode(",", $value);
 		$lineindex[$no] = $i + 1; //逆変換テーブル作成
 	}
-	unset($value);
 
 	$counttree = count($tree);//190619
 	for($page=0;$page<$counttree;$page+=PAGE_DEF){
@@ -717,7 +715,6 @@ function updatelog($resno=0){
 						unset($rresname[$key]);
 					}
 				}
-				unset($val);
 				if($rresname){
 
 					$resname=implode('さん ',$rresname);//文字列として結合
@@ -931,7 +928,6 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 			error(MSG032,$dest);
 		}
 	}
-	unset($value);	
 	if(isset($badname)){//使えない名前
 		foreach($badname as $value){
 			if($value===''){
@@ -941,7 +937,6 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 				error(MSG037,$dest);
 			}
 		}
-		unset($value);	
 	}
 
 	$bstr_A_find=false;
@@ -956,7 +951,6 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 		break;
 		}
 	}
-	unset($value);
 	foreach($badstr_B as $value){
 		if($value===''){
 		break;
@@ -966,7 +960,6 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 		break;
 		}
 	}
-	unset($value);
 	if($bstr_A_find && $bstr_B_find){
 		error(MSG032,$dest);
 	}
@@ -1214,7 +1207,6 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 			}
 			if($i>=$chkline){break;}//チェックする最大行数
 		}
-		unset($value,$i,$j);
 
 		//PCHファイルアップロード
 		$pchupload=false;
@@ -1549,7 +1541,6 @@ function admindel($pass){
 				}
 			}
 		}
-		unset($value);
 		if($find){//ログ更新
 			ftruncate($fp,0);
 			set_file_buffer($fp, 0);
@@ -2234,7 +2225,6 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 			error(MSG032,$dest);
 		}
 	}
-	unset($value);	
 	if(isset($badname)){//使えない名前
 		foreach($badname as $value){
 			if($value===''){
@@ -2244,7 +2234,6 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 				error(MSG037,$dest);
 			}
 		}
-		unset($value);	
 	}
 
 	$bstr_A_find=false;
@@ -2259,7 +2248,6 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 		break;
 		}
 	}
-	unset($value);
 	foreach($badstr_B as $value){
 		if($value===''){
 		break;
@@ -2269,7 +2257,6 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 		break;
 		}
 	}
-	unset($value);
 	if($bstr_A_find && $bstr_B_find){
 		error(MSG032,$dest);
 	}
@@ -2612,7 +2599,6 @@ function catalog(){
 		list($no,) = explode(",", $value);
 		$lineindex[$no]=$i + 1; //逆変換テーブル作成
 	}
-	unset($value);
 
 	$tree = file(TREEFILE);
 	$counttree = count($tree);
