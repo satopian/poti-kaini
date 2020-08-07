@@ -37,7 +37,9 @@
 				<ul class="menu">
 					<% def(resno) %><li><a href="<% echo(self2) %>"><i class="fas fa-star fa-fw fa-lg" title="トップ"></i>トップ</a></li><% /def %>
 					<li><a href="<% echo(home) %>" target="_top"><i class="fas fa-home fa-fw fa-lg" title="ホーム"></i>ホーム</a></li>
+					<% def(for_new_post) %>
 					<li><a href="<% echo(self) %>?mode=newpost"><i class="fas fa-pen-square fa-fw fa-lg" title="投稿"></i>投稿</a></li>
+					<% /def %>
 					<li><a href="<% echo(self) %>?mode=admin"><i class="fas fa-cog fa-fw fa-lg" title="管理モード"></i>管理モード</a></li>
 					<li><a href="<% echo(self) %>?mode=catalog"><i class="fas fa-table fa-fw fa-lg" title="カタログ"></i>カタログ</a></li>
 					<li><a href="<% echo(self) %>?mode=piccom<% def(resno) %>&amp;resto=<% echo(resno) %><% /def %>"><i class="fas fa-paste fa-fw fa-lg" title="投稿途中の絵"></i>投稿途中の絵</a></li>
@@ -48,8 +50,10 @@
 					レス送信モード
 					<% each(oya) %>
 					<% def(resname) %>
-					<!--コピー対象要素とコピーボタン-->
-					<input class="copy_txt" id="t" type="text" value="<% echo(resname) %>さん" readonly><button class="copy_button" onclick="c()">投稿者名をコピー</button><script>function c(){var copyTarget;document.getElementById("t").select(),document.execCommand("Copy")}</script>
+					<script>function add_to_com(){
+						document.getElementById("p_input_com").value += "<% echo(resname) %>さん";
+						}</script>
+					<% コピーボタン %><button class="copy_button" onclick="add_to_com()">投稿者名をコピー</button>
 					<% /def %>
 					<% /each %>
 				</p>
@@ -117,7 +121,7 @@
 							</tr>
 							<tr>
 								<td>com<% def(usecom) %><% echo(usecom) %><% /def %></td>
-								<td><textarea class="form" name="com" cols="28" rows="4" wrap="soft"></textarea></td>
+								<td><textarea class="form" name="com" cols="28" rows="4" wrap="soft" id="p_input_com"></textarea></td>
 							</tr>
 							<% def(upfile) %>
 							<tr>
