@@ -1230,7 +1230,6 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 	ftruncate($fp,0);
 	set_file_buffer($fp, 0);
 	rewind($fp);
-	// fwrite($fp, charconvert($newline));
 	fwrite($fp, $newline);
 
 	//ツリー更新
@@ -1516,7 +1515,6 @@ function admindel($pass){
 			set_file_buffer($fp, 0);
 			rewind($fp);
 			$newline = implode("\n", $line);
-			// fwrite($fp, charconvert($newline));
 			fwrite($fp,$newline);
 		}
 		fflush($fp);
@@ -2320,7 +2318,6 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 	set_file_buffer($fp, 0);
 	rewind($fp);
 	$newline = implode("\n", $line);
-	// fwrite($fp, charconvert($newline));
 	fwrite($fp, $newline);
 	fflush($fp);
 	flock($fp, LOCK_UN);
@@ -2530,7 +2527,6 @@ function replace($no,$pwd,$stime){
 	set_file_buffer($fp, 0);
 	rewind($fp);
 	$newline = implode("\n", $line);
-	// fwrite($fp, charconvert($newline));
 	fwrite($fp, $newline);
 	fflush($fp);
 	flock($fp, LOCK_UN);
