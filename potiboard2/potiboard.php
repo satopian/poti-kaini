@@ -1026,18 +1026,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 
 	$name=preg_replace("/◆/","◇",$name);
 	$name=preg_replace("/[\r\n]/","",$name);
-	// $names=$name;
 	$name=CleanStr($name);
-	// if(preg_match("/(#|＃)(.*)/",$names,$regs)){
-	// 	$cap = $regs[2];
-	// 	$cap=strtr($cap,"&amp;", "&");
-	// 	$cap=strtr($cap,"&#44;", ",");
-	// 	$name=preg_replace("/(#|＃)(.*)/","",$name);
-	// 	$salt=substr($cap."H.",1,2);
-	// 	$salt=preg_replace("/[^\.-z]/",".",$salt);
-	// 	$salt=strtr($salt,":;<=>?@[\\]^_`","ABCDEFGabcdef");
-	// 	$name.="◆".substr(crypt($cap,$salt),-10);
-	// }
 
 	//ログ読み込み
 	$fp=fopen(LOGFILE,"r+");
@@ -1298,7 +1287,6 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 	setcookie ("fcolorc", $fcolor,time()+(SAVE_COOKIE*24*3600));
 
 	//クッキー項目："クッキー名<>クッキー値"　※漢字を含む項目はこちらに追加 //190528
-	// $cooks = array("namec<>".$names,"emailc<>".$email,"urlc<>".$url);
 	$cooks = array("namec<>".$name,"emailc<>".$email,"urlc<>".$url);
 
 	foreach ( $cooks as $cook ) {
@@ -2295,18 +2283,7 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 
 	$name=preg_replace("/◆/","◇",$name);
 	$name=preg_replace("/[\r\n]/","",$name);
-	// $names=$name;
 	$name = CleanStr($name);
-	// if(preg_match("/(#|＃)(.*)/",$names,$regs)){
-	// 	$cap = $regs[2];
-	// 	$cap=strtr($cap,"&amp;", "&");
-	// 	$cap=strtr($cap,"&#44;", ",");
-	// 	$name=preg_replace("/(#|＃)(.*)/","",$name);
-	// 	$salt=substr($cap."H.",1,2);
-	// 	$salt=preg_replace("/[^\.-z]/",".",$salt);
-	// 	$salt=strtr($salt,":;<=>?@[\\]^_`","ABCDEFGabcdef");
-	// 	$name.="◆".substr(crypt($cap,$salt),-10);
-	// }
 
 	//ログ読み込み
 	$fp=fopen(LOGFILE,"r+");
