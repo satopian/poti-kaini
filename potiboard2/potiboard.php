@@ -385,31 +385,21 @@ function form($resno="",$adminin="",$tmp=""){
 
 	if($admin) $dat['admin'] = $ADMIN_PASS;
 
+	//描画時間
 	if($stime && DSP_PAINTTIME){
-		//描画時間
-		$ptime = '';
-		if($stime){
-			$psec = time()-$stime;
-			if($psec >= 86400){
-				$D=($psec - ($psec % 86400)) / 86400;
-				$ptime .= $D.PTIME_D;
-				$psec -= $D*86400;
-			}
-			if($psec >= 3600){
-				$H=($psec - ($psec % 3600)) / 3600;
-				$ptime .= $H.PTIME_H;
-				$psec -= $H*3600;
-			}
-			if($psec >= 60){
-				$M=($psec - ($psec % 60)) / 60;
-				$ptime .= $M.PTIME_M;
-				$psec -= $M*60;
-			}
-			if($psec){
-				$ptime .= $psec.PTIME_S;
-			}
-		}
-		$dat['ptime'] = $ptime;
+
+		$psec = time() - $stime;
+
+		$D = floor($psec / 86400);
+		$H = floor($psec % 86400 / 3600);
+		$M = floor($psec % 3600 / 60);
+		$S = $psec % 60;
+
+		$dat['ptime']
+			= ($D ? $D . PTIME_D : '')
+			. ($H ? $H . PTIME_H : '')
+			. ($M ? $M . PTIME_M : '')
+			. ($S ? $S . PTIME_S : '');
 	}
 
 	$dat['maxbyte'] = 2048 * 1024;//フォームのHTMLによるファイルサイズの制限 2Mまで
