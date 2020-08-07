@@ -387,19 +387,7 @@ function form($resno="",$adminin="",$tmp=""){
 
 	//描画時間
 	if($stime && DSP_PAINTTIME){
-
-		$psec = time() - $stime;
-
-		$D = floor($psec / 86400);
-		$H = floor($psec % 86400 / 3600);
-		$M = floor($psec % 3600 / 60);
-		$S = $psec % 60;
-
-		$dat['ptime']
-			= ($D ? $D . PTIME_D : '')
-			. ($H ? $H . PTIME_H : '')
-			. ($M ? $M . PTIME_M : '')
-			. ($S ? $S . PTIME_S : '');
+		$dat['ptime'] = calcPtime($stime);
 	}
 
 	$dat['maxbyte'] = 2048 * 1024;//フォームのHTMLによるファイルサイズの制限 2Mまで
@@ -2376,19 +2364,7 @@ function replace($no,$pwd,$stime){
 	$now .= UPDATE_MARK;
 	//描画時間
 	if($stime && DSP_PAINTTIME){
-
-		$psec = time() - $stime;
-
-		$D = floor($psec / 86400);
-		$H = floor($psec % 86400 / 3600);
-		$M = floor($psec % 3600 / 60);
-		$S = $psec % 60;
-
-		$ptime
-			= ($D ? $D . PTIME_D : '')
-			. ($H ? $H . PTIME_H : '')
-			. ($M ? $M . PTIME_M : '')
-			. ($S ? $S . PTIME_S : '');
+		$ptime = calcPtime($stime);
 	}
 
 	//ログ読み込み
@@ -2714,5 +2690,25 @@ function separateDatetimeAndUpdatemark ($now) {
 	return [$now, ''];
 }
 
+/**
+ * 描写時間を計算
+ * @param $stime
+ * @return string
+ */
+function calcPtime ($stime) {
+
+	$psec = time() - $stime;
+
+	$D = floor($psec / 86400);
+	$H = floor($psec % 86400 / 3600);
+	$M = floor($psec % 3600 / 60);
+	$S = $psec % 60;
+
+	return
+		($D ? $D . PTIME_D : '')
+		. ($H ? $H . PTIME_H : '')
+		. ($M ? $M . PTIME_M : '')
+		. ($S ? $S . PTIME_S : '');
+}
 ?>
 
