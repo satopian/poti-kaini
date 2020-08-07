@@ -292,7 +292,6 @@ function gd_check(){
 	return $flag;
 }
 
-
 //gdのバージョンを調べる
 function get_gd_ver(){
 	if(function_exists("gd_info")){
@@ -361,10 +360,8 @@ function form($resno="",$adminin="",$tmp=""){
 		if(USE_PAINT==1 && !$resno && !$admin){
 			$dat['paint2'] = true;
 		}
-
 	}
 	if(USE_PAINT){
-
 		$dat['pdefw'] = PDEF_W;
 		$dat['pdefh'] = PDEF_H;
 		$dat['anime'] = USE_ANIME ? true : false;
@@ -376,7 +373,6 @@ function form($resno="",$adminin="",$tmp=""){
 			$dat['paint2'] = true;
 			$dat['form'] = false;
 		}
-
 	}
 
 	if($resno){
@@ -624,7 +620,6 @@ function updatelog($resno=0){
 			$encoded_name=urlencode($name);
 			$oyaname=$name;//投稿者名をコピー
 
-
 			// 親記事格納
 			$dat['oya'][$oya] = compact('src','srcname','size','painttime','pch','continue','thumb','imgsrc','w','h','no','sub','name','encoded_name','now','com','descriptioncom','limit','skipres','resub','url','email','id','updatemark','trip','tab','fontcolor','disp_resform');
 			// 変数クリア
@@ -700,7 +695,6 @@ function updatelog($resno=0){
 				$rres[$oya][] = compact('no','sub','name','encoded_name','now','com','url','email','id','updatemark','trip','fontcolor'
 								,'src','srcname','size','painttime','pch','continue','thumb','imgsrc','w','h');
 				$rresname[] = $name;//投稿者名を配列にいれる
-
 				
 				// 変数クリア
 				unset($no,$sub,$name,$encoded_name,$now,$com,$url,$email
@@ -716,7 +710,6 @@ function updatelog($resno=0){
 					}
 				}
 				if($rresname){
-
 					$resname=implode('さん ',$rresname);//文字列として結合
 					$dat['resname']=$resname;//投稿者名一覧
 				}
@@ -1260,7 +1253,6 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 	rewind($fp);
 	// fwrite($fp, charconvert($newline));
 	fwrite($fp, $newline);
-
 
 	//ツリー更新
 	$find = false;
@@ -2046,9 +2038,7 @@ function deltemp(){
 	}
 	
 	closedir($handle);
-
 }
-
 
 /* コンティニュー前画面 */
 function incontinue(){
