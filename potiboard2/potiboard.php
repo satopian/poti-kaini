@@ -387,19 +387,7 @@ function form($resno="",$adminin="",$tmp=""){
 
 	//描画時間
 	if($stime && DSP_PAINTTIME){
-
-		$psec = time() - $stime;
-
-		$D = floor($psec / 86400);
-		$H = floor($psec % 86400 / 3600);
-		$M = floor($psec % 3600 / 60);
-		$S = $psec % 60;
-
-		$dat['ptime']
-			= ($D ? $D . PTIME_D : '')
-			. ($H ? $H . PTIME_H : '')
-			. ($M ? $M . PTIME_M : '')
-			. ($S ? $S . PTIME_S : '');
+		$dat['ptime'] = calcPtime($stime);
 	}
 
 	$dat['maxbyte'] = 2048 * 1024;//フォームのHTMLによるファイルサイズの制限 2Mまで
@@ -1026,18 +1014,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 
 	$name=preg_replace("/◆/","◇",$name);
 	$name=preg_replace("/[\r\n]/","",$name);
-	// $names=$name;
 	$name=CleanStr($name);
-	// if(preg_match("/(#|＃)(.*)/",$names,$regs)){
-	// 	$cap = $regs[2];
-	// 	$cap=strtr($cap,"&amp;", "&");
-	// 	$cap=strtr($cap,"&#44;", ",");
-	// 	$name=preg_replace("/(#|＃)(.*)/","",$name);
-	// 	$salt=substr($cap."H.",1,2);
-	// 	$salt=preg_replace("/[^\.-z]/",".",$salt);
-	// 	$salt=strtr($salt,":;<=>?@[\\]^_`","ABCDEFGabcdef");
-	// 	$name.="◆".substr(crypt($cap,$salt),-10);
-	// }
 
 	//ログ読み込み
 	$fp=fopen(LOGFILE,"r+");
@@ -1241,7 +1218,6 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 	ftruncate($fp,0);
 	set_file_buffer($fp, 0);
 	rewind($fp);
-	// fwrite($fp, charconvert($newline));
 	fwrite($fp, $newline);
 
 	//ツリー更新
@@ -1298,7 +1274,6 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 	setcookie ("fcolorc", $fcolor,time()+(SAVE_COOKIE*24*3600));
 
 	//クッキー項目："クッキー名<>クッキー値"　※漢字を含む項目はこちらに追加 //190528
-	// $cooks = array("namec<>".$names,"emailc<>".$email,"urlc<>".$url);
 	$cooks = array("namec<>".$name,"emailc<>".$email,"urlc<>".$url);
 
 	foreach ( $cooks as $cook ) {
@@ -1528,7 +1503,6 @@ function admindel($pass){
 			set_file_buffer($fp, 0);
 			rewind($fp);
 			$newline = implode("\n", $line);
-			// fwrite($fp, charconvert($newline));
 			fwrite($fp,$newline);
 		}
 		fflush($fp);
@@ -2295,18 +2269,7 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 
 	$name=preg_replace("/◆/","◇",$name);
 	$name=preg_replace("/[\r\n]/","",$name);
-	// $names=$name;
 	$name = CleanStr($name);
-	// if(preg_match("/(#|＃)(.*)/",$names,$regs)){
-	// 	$cap = $regs[2];
-	// 	$cap=strtr($cap,"&amp;", "&");
-	// 	$cap=strtr($cap,"&#44;", ",");
-	// 	$name=preg_replace("/(#|＃)(.*)/","",$name);
-	// 	$salt=substr($cap."H.",1,2);
-	// 	$salt=preg_replace("/[^\.-z]/",".",$salt);
-	// 	$salt=strtr($salt,":;<=>?@[\\]^_`","ABCDEFGabcdef");
-	// 	$name.="◆".substr(crypt($cap,$salt),-10);
-	// }
 
 	//ログ読み込み
 	$fp=fopen(LOGFILE,"r+");
@@ -2343,7 +2306,6 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 	set_file_buffer($fp, 0);
 	rewind($fp);
 	$newline = implode("\n", $line);
-	// fwrite($fp, charconvert($newline));
 	fwrite($fp, $newline);
 	fflush($fp);
 	flock($fp, LOCK_UN);
@@ -2402,28 +2364,7 @@ function replace($no,$pwd,$stime){
 	$now .= UPDATE_MARK;
 	//描画時間
 	if($stime && DSP_PAINTTIME){
-		$ptime = '';
-		if($stime){
-			$psec = $time-$stime;
-			if($psec >= 86400){
-				$D=($psec - ($psec % 86400)) / 86400;
-				$ptime .= $D.PTIME_D;
-				$psec -= $D*86400;
-			}
-			if($psec >= 3600){
-				$H=($psec - ($psec % 3600)) / 3600;
-				$ptime .= $H.PTIME_H;
-				$psec -= $H*3600;
-			}
-			if($psec >= 60){
-				$M=($psec - ($psec % 60)) / 60;
-				$ptime .= $M.PTIME_M;
-				$psec -= $M*60;
-			}
-			if($psec){
-				$ptime .= $psec.PTIME_S;
-			}
-		}
+		$ptime = calcPtime($stime);
 	}
 
 	//ログ読み込み
@@ -2553,7 +2494,6 @@ function replace($no,$pwd,$stime){
 	set_file_buffer($fp, 0);
 	rewind($fp);
 	$newline = implode("\n", $line);
-	// fwrite($fp, charconvert($newline));
 	fwrite($fp, $newline);
 	fflush($fp);
 	flock($fp, LOCK_UN);
@@ -2750,5 +2690,25 @@ function separateDatetimeAndUpdatemark ($now) {
 	return [$now, ''];
 }
 
+/**
+ * 描写時間を計算
+ * @param $stime
+ * @return string
+ */
+function calcPtime ($stime) {
+
+	$psec = time() - $stime;
+
+	$D = floor($psec / 86400);
+	$H = floor($psec % 86400 / 3600);
+	$M = floor($psec % 3600 / 60);
+	$S = $psec % 60;
+
+	return
+		($D ? $D . PTIME_D : '')
+		. ($H ? $H . PTIME_H : '')
+		. ($M ? $M . PTIME_M : '')
+		. ($S ? $S . PTIME_S : '');
+}
 ?>
 
