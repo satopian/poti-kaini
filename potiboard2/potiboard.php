@@ -45,7 +45,10 @@ define('USE_DUMP_FOR_DEBUG','0');
 define('POTI_VER' , 'v2.9.11');
 define('POTI_VERLOT' , 'v2.9.11 lot.200807');
 
-if(phpversion()>="5.5.0"){
+if (($phpver = phpversion()) < "5.5.0") {
+	die("本プログラムの動作には PHPバージョン 5.5.0 以上が必要です。<br>\n（現在のPHPバージョン：{$phpver}）");
+}
+
 //スパム無効化関数
 function newstring($string) {
 	$string = htmlspecialchars($string,ENT_QUOTES,'utf-8');
@@ -122,7 +125,6 @@ $usercode = filter_input(INPUT_COOKIE, 'usercode');//nullならuser-codeを発�
 
 //$_FILESから変数を取得
 
-}
 //設定の読み込み
 require(__DIR__.'/config.php');
 //HTMLテンプレート Skinny
