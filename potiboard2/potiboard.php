@@ -1189,10 +1189,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 		for($d = $countline-1; $d >= LOG_MAX-1; $d--){
 			if($line[$d]!==""){
 			list($dno,,,,,,,,,$dext,,,$dtime,) = explode(",", $line[$d]);
-				safe_unlink($path.$dtime.$dext);
-				safe_unlink(THUMB_DIR.$dtime.'s.jpg');
-				safe_unlink(PCH_DIR.$dtime.'.pch');
-				safe_unlink(PCH_DIR.$dtime.'.spch');
+			delete_files($path, $dtime, $dext);
 			$line[$d] = "";
 			treedel($dno);
 				}
@@ -1416,11 +1413,7 @@ function usrdel($del,$pwd){
 				}
 			}
 			if(USER_DELETES > 1){
-				$delfile = $path.$tim.$ext;	//削除ファイル
-				safe_unlink($delfile);
-				safe_unlink(THUMB_DIR.$tim.'s.jpg');
-				safe_unlink(PCH_DIR.$tim.'.pch');
-				safe_unlink(PCH_DIR.$tim.'.spch');
+				delete_files($path, $tim, $ext);
 				}
 				$flag = true;
 			}
@@ -1476,11 +1469,7 @@ function admindel($pass){
 					unset($line[$i]);
 					$find = true;
 				}
-				$delfile = $path.$tim.$ext;	//削除ファイル
-				safe_unlink($delfile);
-				safe_unlink(THUMB_DIR.$tim.'s.jpg');
-				safe_unlink(PCH_DIR.$tim.'.pch');
-				safe_unlink(PCH_DIR.$tim.'.spch');
+				delete_files($path, $tim, $ext);
 				}
 			}
 		}
@@ -2429,11 +2418,7 @@ function replace($no,$pwd,$stime){
 			}
 
 			//旧ファイル削除
-			safe_unlink($path.$etim.$ext);
-			safe_unlink(THUMB_DIR.$etim.'s.jpg');
-			if ($_pch_ext = check_pch_ext(PCH_DIR.$etim)) {
-				unlink(PCH_DIR.$etim.$_pch_ext);
-			}
+			delete_files($path, $etim, $ext);
 			
 			//ID付加
 			if(DISP_ID){
@@ -2702,6 +2687,19 @@ function safe_unlink ($path) {
 		return unlink($path);
 	}
 	return false;
+}
+
+/**
+ * 一連の画像ファイルを削除（元画像、サムネ、動画）
+ * @param $path
+ * @param $filename
+ * @param $ext
+ */
+function delete_files ($path, $filename, $ext) {
+	safe_unlink($path.$filename.$ext);
+	safe_unlink(THUMB_DIR.$filename.'s.jpg');
+	safe_unlink(PCH_DIR.$filename.'.pch');
+	safe_unlink(PCH_DIR.$filename.'.spch');
 }
 
 ?>
