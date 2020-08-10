@@ -1670,14 +1670,9 @@ if($admin===$ADMIN_PASS){
 
 	$dat['paint_mode'] = true;
 	//ピンチイン
-	$ipad = false;
-	if(strpos($_SERVER['HTTP_USER_AGENT'],'iPad')!==false){
-		$ipad= true;
-	}
-	$mobile = false;
-	if(strpos($_SERVER['HTTP_USER_AGENT'],'Mobile')!==false){
-		$mobile = true;
-	}
+	$ipad = (strpos($_SERVER['HTTP_USER_AGENT'],'iPad') !== false);
+	$mobile = (strpos($_SERVER['HTTP_USER_AGENT'],'Mobile') !== false);
+	
 	if($picw>=700){//横幅700以上だったら
 			$dat['pinchin']=true;
 	//echo 'ピンチインが有効みたい。';
