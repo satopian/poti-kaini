@@ -749,7 +749,9 @@ function updatelog($resno=0){
 		if(PHP_EXT!='.php'){chmod($logfilename,0606);}
 		unset($dat); //クリア
 	}
-	if(!$resno&&is_file(($page/PAGE_DEF+1).PHP_EXT)){unlink(($page/PAGE_DEF+1).PHP_EXT);}
+	if (!$resno) {
+		safe_unlink(($page/PAGE_DEF+1).PHP_EXT);
+	}
 }
 
 /* オートリンク */
@@ -774,7 +776,7 @@ function now_date($time){
 
 /* エラー画面 */
 function error($mes,$dest=''){
-	if($dest&&is_file($dest)) unlink($dest);
+	safe_unlink($dest);
 	$dat['err_mode'] = true;
 	$dat['mes'] = $mes;
 	htmloutput(SKIN_DIR.OTHERFILE,$dat);
@@ -808,9 +810,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 	$textonly = filter_input(INPUT_POST, 'textonly',FILTER_VALIDATE_BOOLEAN);
 
 	if($textonly){//画像なしの時
-		if($upfile&&is_file($upfile)){
-			unlink($upfile);
-		}
+		safe_unlink($upfile);
 		$upfile="";
 		$upfile_name="";
 	}
@@ -1171,26 +1171,12 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 		}
 
 		//PCHファイルアップロード
-		$pchupload=false;
-		$pch_ext='.pch';
-		$pchtemp = $temppath.$picfile.$pch_ext;
-		if(is_file($pchtemp)){//pchなら
-			$pchupload=true;
-		}
-		else{//pchファイルが無かったら
-			$pch_ext='.spch';//scph
-			$pchtemp = $temppath.$picfile.$pch_ext;
-			if(is_file($pchtemp)){
-				$pchupload=true;
-			}
-		}
-		$pchext='';
-		if($pchupload){
-			copy($pchtemp, PCH_DIR.$tim.$pch_ext);
-			if(is_file(PCH_DIR.$tim.$pch_ext)){
-				$pchext=$pch_ext;//ログにpchの拡張子を記録できるように
-				chmod(PCH_DIR.$tim.$pch_ext,0606);
-				unlink($pchtemp);
+		if ($pchext = check_pch_ext($temppath.$picfile)) {
+			$src = $temppath.$picfile.$pchext;
+			$dst = PCH_DIR.$tim.$pchext;
+			if(copy($src, $dst)){
+				chmod($dst,0606);
+				unlink($src);
 			}
 		}
 	}
@@ -1203,10 +1189,10 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 		for($d = $countline-1; $d >= LOG_MAX-1; $d--){
 			if($line[$d]!==""){
 			list($dno,,,,,,,,,$dext,,,$dtime,) = explode(",", $line[$d]);
-			if(is_file($path.$dtime.$dext)) unlink($path.$dtime.$dext);
-			if(is_file(THUMB_DIR.$dtime.'s.jpg')) unlink(THUMB_DIR.$dtime.'s.jpg');
-			if(is_file(PCH_DIR.$dtime.'.pch')) unlink(PCH_DIR.$dtime.'.pch');
-			if(is_file(PCH_DIR.$dtime.'.spch')) unlink(PCH_DIR.$dtime.'.spch');
+				safe_unlink($path.$dtime.$dext);
+				safe_unlink(THUMB_DIR.$dtime.'s.jpg');
+				safe_unlink(PCH_DIR.$dtime.'.pch');
+				safe_unlink(PCH_DIR.$dtime.'.spch');
 			$line[$d] = "";
 			treedel($dno);
 				}
@@ -1290,9 +1276,8 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 		if(USE_THUMB){thumb($path,$tim,$ext,$max_w,$max_h);}
 
 		//ワークファイル削除
-		if(is_file($upfile)) unlink($upfile);
-		if(is_file($temppath.$picfile.".dat")) unlink($temppath.$picfile.".dat");
-
+		safe_unlink($upfile);
+		safe_unlink($temppath.$picfile.".dat");
 	}
 	updatelog();
 
@@ -1308,11 +1293,8 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 		$data['option'][] = '記事題名,'.$sub;
 		if($ext) $data['option'][] = '投稿画像,'.ROOT_URL.IMG_DIR.$tim.$ext;//拡張子があったら
 		if(is_file(THUMB_DIR.$tim.'s.jpg')) $data['option'][] = 'サムネイル画像,'.ROOT_URL.THUMB_DIR.$tim.'s.jpg';
-		if(is_file(__DIR__.'/'.PCH_DIR.$tim.'.pch')) {
-			$data['option'][] = 'アニメファイル,'.ROOT_URL.PCH_DIR.$tim.'.pch';
-		}
-		elseif(is_file(__DIR__.'/'.PCH_DIR.$tim.'.spch')) {
-			$data['option'][] = 'アニメファイル,'.ROOT_URL.PCH_DIR.$tim.'.spch';
+		if ($_pch_ext = check_pch_ext(__DIR__.'/'.PCH_DIR.$tim)) {
+			$data['option'][] = 'アニメファイル,'.ROOT_URL.PCH_DIR.$tim.$_pch_ext;
 		}
 		if($resto){
 			$data['subject'] = '['.TITLE.'] No.'.$resto.'へのレスがありました';
@@ -1432,10 +1414,10 @@ function usrdel($del,$pwd){
 				}
 				if(USER_DELETES > 1){
 					$delfile = $path.$tim.$ext;	//削除ファイル
-					if(is_file($delfile)) unlink($delfile);//削除
-					if(is_file(THUMB_DIR.$tim.'s.jpg')) unlink(THUMB_DIR.$tim.'s.jpg');//削除
-					if(is_file(PCH_DIR.$tim.'.pch')) unlink(PCH_DIR.$tim.'.pch');//削除
-					if(is_file(PCH_DIR.$tim.'.spch')) unlink(PCH_DIR.$tim.'.spch');//削除
+					safe_unlink($delfile);
+					safe_unlink(THUMB_DIR.$tim.'s.jpg');
+					safe_unlink(PCH_DIR.$tim.'.pch');
+					safe_unlink(PCH_DIR.$tim.'.spch');
 					}
 					$flag = true;
 				}
@@ -1493,10 +1475,10 @@ function admindel($pass){
 					$find = true;
 				}
 				$delfile = $path.$tim.$ext;	//削除ファイル
-				if(is_file($delfile)) unlink($delfile);//削除
-				if(is_file(THUMB_DIR.$tim.'s.jpg')) unlink(THUMB_DIR.$tim.'s.jpg');//削除
-				if(is_file(PCH_DIR.$tim.'.pch')) unlink(PCH_DIR.$tim.'.pch');//削除
-				if(is_file(PCH_DIR.$tim.'.spch')) unlink(PCH_DIR.$tim.'.spch');//削除
+				safe_unlink($delfile);
+				safe_unlink(THUMB_DIR.$tim.'s.jpg');
+				safe_unlink(PCH_DIR.$tim.'.pch');
+				safe_unlink(PCH_DIR.$tim.'.spch');
 				}
 			}
 		}
@@ -1822,11 +1804,8 @@ if($admin===$ADMIN_PASS){
 	$dat['animeform'] = true;
 	$dat['anime'] = ($anime) ? true : false;
 	if($ctype=='pch'){
-		if(is_file(__DIR__.'/'.PCH_DIR.$pch.'.pch')){
-			$dat['pchfile'] = './'.PCH_DIR.$pch.'.pch';
-		} 
-		elseif(is_file(__DIR__.'/'.PCH_DIR.$pch.'.spch')){
-			$dat['pchfile'] = './'.PCH_DIR.$pch.'.spch';
+		if ($_pch_ext = check_pch_ext(__DIR__.'/'.PCH_DIR.$pch)) {
+			$dat['pchfile'] = './'.PCH_DIR.$pch.$_pch_ext;
 		}
 	}
 	if($ctype=='img'){
@@ -2434,41 +2413,25 @@ function replace($no,$pwd,$stime){
 			//差し換え前と同じ大きさのサムネイル作成
 			if(USE_THUMB) thumb($path,$tim,$imgext,$W,$H);
 			//ワークファイル削除
-			if(is_file($upfile)) unlink($upfile);
-			if(is_file($temppath.$file_name.".dat")) unlink($temppath.$file_name.".dat");
+			safe_unlink($upfile);
+			safe_unlink($temppath.$file_name.".dat");
 			//PCHファイルアップロード
-			$pchupload=false;
-			$pch_ext='.pch';
-			$pchtemp = $temppath.$file_name.$pch_ext;
-			if(is_file($pchtemp)){//pchなら
-				$pchupload=true;
-			}
-			else{//pchファイルが無かったら
-				$pch_ext='.spch';//scph
-				$pchtemp = $temppath.$file_name.$pch_ext;
-				if(is_file($pchtemp)){
-					$pchupload=true;
-				}
-			}
-			$pchext='';
-			if($pchupload){
-				copy($pchtemp, PCH_DIR.$tim.$pch_ext);
-				if(is_file(PCH_DIR.$tim.$pch_ext)){
-					$pchext=$pch_ext;//ログにpchの拡張子を記録できるように
-					chmod(PCH_DIR.$tim.$pch_ext,0606);
-					unlink($pchtemp);
+			// .pch, .spch, ブランク どれかが返ってくる
+			if ($pchext = check_pch_ext($temppath . $file_name)) {
+				$src = $temppath . $file_name . $pchext;
+				$dst = PCH_DIR . $tim . $pchext;
+				if(copy($src, $dst)){
+					chmod($dst, 0606);
+					unlink($src);
 				}
 			}
 
 			//旧ファイル削除
-			if(is_file($path.$etim.$ext)) unlink($path.$etim.$ext);
-			if(is_file(THUMB_DIR.$etim.'s.jpg')) unlink(THUMB_DIR.$etim.'s.jpg');
-			if(is_file(PCH_DIR.$etim.'.pch')){
-				unlink(PCH_DIR.$etim.'.pch');
+			safe_unlink($path.$etim.$ext);
+			safe_unlink(THUMB_DIR.$etim.'s.jpg');
+			if ($_pch_ext = check_pch_ext(PCH_DIR.$etim)) {
+				unlink(PCH_DIR.$etim.$_pch_ext);
 			}
-			elseif(is_file(PCH_DIR.$etim.'.spch')){
-				unlink(PCH_DIR.$etim.'.spch');
-			} 
 			
 			//ID付加
 			if(DISP_ID){
@@ -2712,5 +2675,32 @@ function calcPtime ($stime) {
 		. ($M ? $M . PTIME_M : '')
 		. ($S ? $S . PTIME_S : '');
 }
+
+/**
+ * pchかspchか、それともファイルが存在しないかチェック
+ * @param $filepath
+ * @return string
+ */
+function check_pch_ext ($filepath) {
+	if (is_file($filepath . ".pch")) {
+		return ".pch";
+	} elseif (is_file($filepath . ".spch")) {
+		return ".spch";
+	}
+	return '';
+}
+
+/**
+ * ファイルがあれば削除
+ * @param $path
+ * @return bool
+ */
+function safe_unlink ($path) {
+	if ($path && is_file($path)) {
+		return unlink($path);
+	}
+	return false;
+}
+
 ?>
 
