@@ -100,7 +100,6 @@ $savetype = newstring(filter_input(INPUT_POST, 'savetype'));
 $res = filter_input(INPUT_GET, 'res',FILTER_VALIDATE_INT);
 if(filter_input(INPUT_GET, 'mode')==="openpch"){
 $pch = newstring(filter_input(INPUT_GET, 'pch'));
-$shi = filter_input(INPUT_GET, 'shi',FILTER_VALIDATE_INT);
 }
 if(filter_input(INPUT_GET, 'mode')==="piccom"){
 $stime = filter_input(INPUT_GET, 'stime',FILTER_VALIDATE_INT);
@@ -1900,52 +1899,34 @@ function paintcom($resto=''){
 
 /* 動画表示 */
 function openpch($pch){
-	global $shi;
-	$stime = time();
-	$picfile = IMG_DIR.$pch;
-	$pch = str_replace( strrchr($pch,"."), "", $pch); //拡張子除去
-	if($shi==1){
-		$dat['normal'] = true;
-		$ext = '.spch';
-		$pchfile = PCH_DIR.$pch.$ext;
-	}else{
-		$dat['paintbbs'] = true;
-		$ext = '.pch';
-		$pchfile = PCH_DIR.$pch.$ext;
-	}
-	$dat['type_neo']=false;
-	if(is_file($pchfile)){//動画が無い時は処理しない
 
-		if($ext==='.pch'){//neoのpchかどうか調べる
-			$fp = fopen("$pchfile", "rb");
-			$magic=fread($fp,3);//3byte
-				if($magic==="NEO"){
-				$dat['type_neo'] = true;//neoのpch
-			}
+	$_pch = pathinfo($pch, PATHINFO_FILENAME); //拡張子除去
+
+	if ($ext = check_pch_ext(PCH_DIR . $_pch)) {
+		$dat['pchfile'] = './' . PCH_DIR . $_pch . $ext;
+		if ($ext == '.spch') {
+			$dat['normal'] = true;
+		} elseif ($ext == '.pch') {
+			$dat['paintbbs'] = true;
+
+			//neoのpchかどうか調べる
+			$fp = fopen($dat['pchfile'], "rb");
+			$dat['type_neo'] = (fread($fp,3)==="NEO"); //先頭3byteを見る
 			fclose($fp);
 		}
-		
-	$datasize = filesize($pchfile);
-	$size = getimagesize($picfile);
-	$picw = $size[0];
-	$pich = $size[1];
-	$w = $picw;
-	$h = $pich + 26;
-	if($w < 200){$w = 200;}
-	if($h < 226){$h = 226;}
+
+		$dat['datasize'] = filesize($dat['pchfile']);
+		list($dat['picw'], $dat['pich']) = getimagesize(IMG_DIR.$pch);
+		$dat['w'] = ($dat['picw'] < 200 ? 200 : $dat['picw']);
+		$dat['h'] = ($dat['pich'] < 200 ? 200 : $dat['pich']) + 26;
+
+	} else {
+		//動画が無い時は処理しない
 	}
-	else{
-	$w=$h=$picw=$pich=$datasize="";
-}
+
 	$dat['pch_mode'] = true;
-	$dat['w'] = $w;
-	$dat['h'] = $h;
-	$dat['picw'] = $picw;
-	$dat['pich'] = $pich;
-	$dat['pchfile'] = './'.$pchfile;
 	$dat['speed'] = PCH_SPEED;
-	$dat['datasize'] = $datasize;
-	$dat['stime'] = $stime;
+	$dat['stime'] = time();
 	htmloutput(SKIN_DIR.PAINTFILE,$dat);
 }
 
