@@ -416,6 +416,7 @@
 			<% def(pch_mode) %>
 			<section id="appstage">
 				<div class="app">
+					<div style="width:<% echo(w) %>px; height:<% echo(h) %>px">
 					<% def(paintbbs) %>
 					<applet-dummy code="pch.PCHViewer.class" archive="PCHViewer.jar,PaintBBS.jar" name="pch" width="<% echo(w) %>" height="<% echo(h) %>" mayscript>
 					<% /def %>
@@ -439,6 +440,7 @@
 					<% def(normal) %>
 					</applet>
 					<% /def %>
+					</div>
 					<p>
 						<a href="<% echo(pchfile) %>" target="_blank">Download</a> - Datasize : <% echo(datasize) %> byte
 					</p>

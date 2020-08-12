@@ -5,7 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 		<link rel="stylesheet" href="<% echo(skindir) %>nee2_main.css" type="text/css">
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.6/css/all.css">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css">
+		<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css"> -->
 		<title><% echo(title) %></title>
 	</head>
 	<body>
@@ -15,7 +15,9 @@
 			<section>
 				<ul class="menu">
 					<li><a href="<% echo(home) %>" target="_top"><i class="fas fa-home fa-fw fa-lg" title="ホーム"></i>ホーム</a></li>
+					<% def(for_new_post) %>
 					<li><a href="<% echo(self) %>?mode=newpost"><i class="fas fa-pen-square fa-fw fa-lg" title="投稿"></i>投稿</a></li>
+					<% /def %>
 					<li><a href="<% echo(self) %>?mode=admin"><i class="fas fa-cog fa-fw fa-lg" title="管理モード"></i>管理モード</a></li>
 					<li><a href="<% echo(self2) %>"><i class="fas fa-list fa-fw fa-lg" title="標準モード"></i>標準モード</a></li>
 				</ul>
