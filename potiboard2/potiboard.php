@@ -788,7 +788,11 @@ function error($mes,$dest=''){
 	safe_unlink($dest);
 	$dat['err_mode'] = true;
 	$dat['mes'] = $mes;
-	htmloutput(SKIN_DIR.OTHERFILE,$dat);
+	if (defined(OTHERFILE)) {
+		htmloutput(SKIN_DIR.OTHERFILE,$dat);
+	} else {
+		print $dat['mes'];
+	}
 	exit;
 }
 
