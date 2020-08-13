@@ -42,8 +42,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.11.0');
-define('POTI_VERLOT' , 'v2.11.0 lot.200812');
+define('POTI_VER' , 'v2.12.0');
+define('POTI_VERLOT' , 'v2.12.0 lot.200813');
 
 if (($phpver = phpversion()) < "5.5.0") {
 	die("本プログラムの動作には PHPバージョン 5.5.0 以上が必要です。<br>\n（現在のPHPバージョン：{$phpver}）");
