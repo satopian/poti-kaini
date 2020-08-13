@@ -28,6 +28,7 @@ $max_search=120;
 
 //更新履歴
 //v1.6 2020.08.13 削除ずみのスレッドのレスが表示されるバグを修正。
+//本文も全角英数、半角英数どちらでも検索できるようにした。
 //v1.5 2020.07.19 改二以外のPOTI-boardでも使えるようにした。
 //v1.4 2020.07.18 負荷削減。画像のis_fileの処理の見直し。
 //v1.3 2020.07.18 イラストの単位を「枚」、コメントの単位を「件」に。
@@ -126,11 +127,17 @@ while ($line = fgets($fp ,4096)) {
 		}
 
 	if($continue_to_search){
+	if($radio===1||$radio===2){
 		$s_name=mb_convert_kana($name, 'rn', 'UTF-8');//全角英数を半角に
 		$s_name=str_replace(array(" ", "　"), "", $s_name);
+	}
+	else{
+		$s_com=mb_convert_kana($com, 'rn', 'UTF-8');//全角英数を半角に
+		$s_com=str_replace(array(" ", "　"), "", $s_com);
+		}
 		//ログとクエリを照合
 		if($query===''||//空白なら
-				$query!==''&&$radio===3&&stripos($com,$query)!==false||//本文を検索
+				$query!==''&&$radio===3&&stripos($s_com,$query)!==false||//本文を検索
 				$query!==''&&$radio===3&&stripos($sub,$query)!==false||//題名を検索
 				$query!==''&&($radio===1||$radio===null)&&stripos($s_name,$query)!==false||//作者名が含まれる
 				$query!==''&&($radio===2&&$s_name===$query)//作者名完全一致
