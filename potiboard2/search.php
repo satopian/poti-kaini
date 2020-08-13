@@ -192,7 +192,7 @@ if($arr){
 			$name=strip_tags($name);
 			$encoded_name=urlencode($name);
 			//変数格納
-				$dat['comments'][]= compact('no','name','encoded_name','sub','img','com','link','postedtime');
+			$dat['comments'][]= compact('no','name','encoded_name','sub','img','com','link','postedtime');
 
 		}
 			$j=$i+1;//表示件数
