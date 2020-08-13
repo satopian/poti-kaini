@@ -1,6 +1,6 @@
 <?php
 //POTI-board plugin search(c)2020 さとぴあ
-//v1.5 lot.200719
+//v1.6 lot.200813
 //
 //https://pbbs.sakura.ne.jp/
 //フリーウェアですが著作権は放棄しません。
@@ -27,6 +27,8 @@
 $max_search=120;
 
 //更新履歴
+//v1.6 2020.08.13 削除ずみのスレッドのレスが表示されるバグを修正。
+//本文も全角英数、半角英数どちらでも検索できるようにした。
 //v1.5 2020.07.19 改二以外のPOTI-boardでも使えるようにした。
 //v1.4 2020.07.18 負荷削減。画像のis_fileの処理の見直し。
 //v1.3 2020.07.18 イラストの単位を「枚」、コメントの単位を「件」に。
@@ -106,7 +108,7 @@ $dat['page']=$page;
 $dat['artist_l']=$artist_l;	
 
 //ログの読み込み
-$i=1;$j=1;$l=1;
+$i=0;$j=0;
 $arr=array();
 // $files=array();
 $tree=file(TREEFILE);
@@ -125,20 +127,36 @@ while ($line = fgets($fp ,4096)) {
 		}
 
 	if($continue_to_search){
+	if($radio===1||$radio===2){
 		$s_name=mb_convert_kana($name, 'rn', 'UTF-8');//全角英数を半角に
 		$s_name=str_replace(array(" ", "　"), "", $s_name);
+	}
+	else{
+		$s_com=mb_convert_kana($com, 'rn', 'UTF-8');//全角英数を半角に
+		$s_com=str_replace(array(" ", "　"), "", $s_com);
+		}
 		//ログとクエリを照合
 		if($query===''||//空白なら
-				$query!==''&&$radio===3&&stripos($com,$query)!==false||//本文を検索
+				$query!==''&&$radio===3&&stripos($s_com,$query)!==false||//本文を検索
 				$query!==''&&$radio===3&&stripos($sub,$query)!==false||//題名を検索
 				$query!==''&&($radio===1||$radio===null)&&stripos($s_name,$query)!==false||//作者名が含まれる
 				$query!==''&&($radio===2&&$s_name===$query)//作者名完全一致
 		){
-						// $arr[]=$no.','.$name.','.$sub.','.$com.','.$ext.','.$time;
-						$arr[]=compact('no','name','sub','com','ext','time');
+			$link='';
+			foreach($tree as $treeline){
+				$treeline=','.rtrim($treeline).',';//行の両端にコンマを追加
+				if(strpos($treeline,','.$no.',')!==false){
+					$treenos=explode(",",$treeline);
+					$no=$treenos[1];//スレッドの親
+						$link=PHP_SELF.'?res='.$no;
+						$arr[]=compact('no','name','sub','com','ext','time','link');
 						++$i;
-		}
-				if($i>$max_search){break;}//1掲示板あたりの最大検索数
+					break;
+				}
+			}
+				
+	}
+			if($i>=$max_search){break;}//1掲示板あたりの最大検索数
 		
 	}
 
@@ -146,7 +164,6 @@ while ($line = fgets($fp ,4096)) {
 	++$j;
 
 }
-
 	fclose($fp);
 
 //検索結果の出力
@@ -155,7 +172,6 @@ if($arr){
 	foreach($arr as $i => $val){
 		if($i > $page-2){//カウンタの$iが表示するページになるまで待つ
 			extract($val);
-			// list($no,$name,$sub,$com,$ext,$time)=explode(",",$val);
 			$img='';
 			if($ext){
 				if(is_file(THUMB_DIR.$time.'s.jpg')){//サムネイルはあるか？
@@ -167,15 +183,6 @@ if($arr){
 					}
 				}
 			}
-			$link='';
-			foreach($tree as $treeline){
-				$treeline=','.rtrim($treeline).',';//行の両端にコンマを追加
-				if(strpos($treeline,','.$no.',')!==false){
-					$treenos=explode(",",$treeline);
-					$no=$treenos[1];//スレッドの親
-						$link=PHP_SELF.'?res='.$no;
-				}
-			}	
 
 			$time=substr($time,-13,10);
 			$postedtime = date ("Y/m/d G:i", $time);

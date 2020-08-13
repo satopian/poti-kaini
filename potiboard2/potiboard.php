@@ -1685,26 +1685,16 @@ if($admin===$ADMIN_PASS){
 	// if($h < 520 && !$useneo && $shi){$h = 520;}
 
 	$dat['paint_mode'] = true;
+
 	//ピンチイン
-	$ipad = (strpos($_SERVER['HTTP_USER_AGENT'],'iPad') !== false);
-	$mobile = (strpos($_SERVER['HTTP_USER_AGENT'],'Mobile') !== false);
-	
 	if($picw>=700){//横幅700以上だったら
-			$dat['pinchin']=true;
-	//echo 'ピンチインが有効みたい。';
-	}
-	elseif($picw>=500){//横幅500以上だったら
-		if(!$ipad){//iPadじゃなかったら
-			//echo "iPadじゃないよ";
-			if($mobile){//スマートフォンだったら
-				$dat['pinchin']=true;
-			//echo 'ピンチインが有効みたい。';
-			}
-			else{//タブレットだったら
-				$dat['pinchin']=false;
-			}
+		$dat['pinchin'] = true;
+	} elseif($picw>=500) {//横幅500以上だったら
+		if (strpos($_SERVER['HTTP_USER_AGENT'],'iPad') === false){//iPadじゃなかったら
+			$dat['pinchin'] = (strpos($_SERVER['HTTP_USER_AGENT'],'Mobile') !== false);
 		}
 	}
+	
 	$dat = array_merge($dat,form($resto));
 		$dat['mode2'] = $mode;
 	if($mode==="contpaint"){
