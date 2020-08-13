@@ -123,12 +123,22 @@ $usercode = filter_input(INPUT_COOKIE, 'usercode');//nullならuser-codeを発�
 //INPUT_SERVER が動作しないサーバがあるので$_SERVERを使う。
 
 //$_FILESから変数を取得
-
 //設定の読み込み
+if ($err = check_file('config.php')) {
+	error($err);
+}
 require(__DIR__.'/config.php');
+
 //HTMLテンプレート Skinny
+if ($err = check_file(__DIR__.'/Skinny.php')) {
+	error($err);
+}
 require_once(__DIR__.'/Skinny.php');
+
 //Template設定ファイル
+if ($err = check_file(__DIR__.'/'.SKIN_DIR.'/template_ini.php')) {
+	error($err);
+}
 require(__DIR__.'/'.SKIN_DIR.'/template_ini.php');
 
 $path = realpath("./").'/'.IMG_DIR;
@@ -778,7 +788,11 @@ function error($mes,$dest=''){
 	safe_unlink($dest);
 	$dat['err_mode'] = true;
 	$dat['mes'] = $mes;
-	htmloutput(SKIN_DIR.OTHERFILE,$dat);
+	if (defined(OTHERFILE)) {
+		htmloutput(SKIN_DIR.OTHERFILE,$dat);
+	} else {
+		print $dat['mes'];
+	}
 	exit;
 }
 
@@ -1529,49 +1543,52 @@ function admindel($pass){
 
 function init(){
 	$err='';
-	$chkfile=array(LOGFILE,TREEFILE);
+
 	if(!is_writable(realpath("./")))error("カレントディレクトリに書けません<br>");
-	foreach($chkfile as $value){
-		if(!is_file(realpath($value))){
-			$fp = fopen($value, "w");
-			set_file_buffer($fp, 0);
-			$now = now_date(time());//日付取得
-			if(DISP_ID) $now .= " ID:???";
-			$time = time();
-			$tim = $time.substr(microtime(),2,3);
-			$testmes="1,".$now.",".DEF_NAME.",,".DEF_SUB.",".DEF_COM.",,,,,,,".$tim.",,,\n";
-			if($value==LOGFILE)fwrite($fp,charconvert($testmes));
-			if($value==TREEFILE)fwrite($fp,"1\n");
-			fclose($fp);
-			if(is_file(realpath($value)))chmod($value,0600);
-		}
-		if(!is_writable(realpath($value)))$err.=$value."を書けません<br>";
-		if(!is_readable(realpath($value)))$err.=$value."を読めません<br>";
+
+	if (!is_file(realpath(LOGFILE))) {
+		$now = now_date(time());//日付取得
+		if(DISP_ID) $now .= " ID:???";
+		$tim = time() . substr(microtime(),2,3);
+		$testmes="1,".$now.",".DEF_NAME.",,".DEF_SUB.",".DEF_COM.",,,,,,,".$tim.",,,\n";
+		file_put_contents(LOGFILE, $testmes);
+		chmod(LOGFILE, 0600);
 	}
-	if(!is_dir(realpath(IMG_DIR))){
-		mkdir(IMG_DIR,0707);chmod(IMG_DIR,0707);
+	$err .= check_file(LOGFILE);
+
+	if (!is_file(realpath(TREEFILE))) {
+		file_put_contents(TREEFILE, "1\n");
+		chmod(TREEFILE, 0600);
 	}
-	if(!is_dir(realpath(IMG_DIR)))$err.=IMG_DIR."がありません<br>";
-	if(!is_writable(realpath(IMG_DIR)))$err.=IMG_DIR."を書けません<br>";
-	if(!is_readable(realpath(IMG_DIR)))$err.=IMG_DIR."を読めません<br>";
-	if(USE_THUMB){
-		if(!is_dir(realpath(THUMB_DIR))){
-		mkdir(THUMB_DIR,0707);chmod(THUMB_DIR,0707);
-	}
-		if(!is_dir(realpath(THUMB_DIR)))$err.=THUMB_DIR."がありません<br>";
-		if(!is_writable(realpath(THUMB_DIR)))$err.=THUMB_DIR."を書けません<br>";
-		if(!is_readable(realpath(THUMB_DIR)))$err.=THUMB_DIR."を読めません<br>";
-	}
-	if(USE_PAINT){
-	if(!is_dir(realpath(TEMP_DIR))){
-		mkdir(TEMP_DIR,0707);chmod(TEMP_DIR,0707);
-	}
-		if(!is_dir(realpath(TEMP_DIR)))$err.=TEMP_DIR."がありません<br>";
-		if(!is_writable(realpath(TEMP_DIR)))$err.=TEMP_DIR."を書けません<br>";
-		if(!is_readable(realpath(TEMP_DIR)))$err.=TEMP_DIR."を読めません<br>";
-	}
+	$err .= check_file(TREEFILE);
+
+	$err .= check_dir(IMG_DIR);
+	USE_THUMB && $err .= check_dir(THUMB_DIR);
+	USE_PAINT && $err .= check_dir(TEMP_DIR);
 	if($err)error($err);
 	if(!is_file(realpath(PHP_SELF2)))updatelog();
+}
+
+// ディレクトリ存在チェック　なければ作る
+function check_dir ($dir, $name = '') {
+	return check_path($dir, $name, true);
+}
+function check_file ($path, $name = '') {
+	return check_path($path, $name, false);
+}
+function check_path ($path, $name, $is_dir = false) {
+	!$name && $name = $path;
+	if ($is_dir) {
+		if (!is_dir($path)) {
+			mkdir($path, 0707);
+			chmod($path, 0707);
+		}
+		if (!is_dir($path)) return $name . "がありません<br>";
+	} else {
+		if (!is_file($path)) return $name . "がありません<br>";
+	}
+	if (!is_writable($path)) return $name . "を書けません<br>";
+	if (!is_readable($path)) return $name . "を読めません<br>";
 }
 
 /* お絵描き画面 */
