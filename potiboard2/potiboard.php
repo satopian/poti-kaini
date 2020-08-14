@@ -214,12 +214,13 @@ setcookie("usercode", $usercode, time()+86400*365);//1年間
 switch($mode){
 	case 'regist':
 		if(ADMIN_NEWPOST && !$resto){
-			if($pwd != $ADMIN_PASS){ error(MSG029);
-			}else{ $admin=$pwd; }
+			if($pwd != $ADMIN_PASS){
+				error(MSG029);
+			}
+			$admin=$pwd;
 		}
 		regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile);
 		break;
-
 	case 'admin':
 		valid($pass);
 		if($admin==="del") admindel($pass);
@@ -235,11 +236,12 @@ switch($mode){
 		}
 		break;
 	case 'usrdel':
-		if(USER_DELETES){
-			usrdel($del,$pwd);
-			updatelog();
-			redirect(PHP_SELF2, 0);
-		}else{error(MSG033);}
+		if (!USER_DELETES) {
+			error(MSG033);
+		}
+		usrdel($del,$pwd);
+		updatelog();
+		redirect(PHP_SELF2, 0);
 		break;
 	case 'paint':
 		paintform($picw,$pich,$anime);
