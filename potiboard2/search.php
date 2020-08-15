@@ -1,6 +1,6 @@
 <?php
 //POTI-board plugin search(c)2020 さとぴあ
-//v1.6 lot.200813
+//v1.6.1 lot.200815
 //
 //https://pbbs.sakura.ne.jp/
 //フリーウェアですが著作権は放棄しません。
@@ -27,6 +27,7 @@
 $max_search=120;
 
 //更新履歴
+//v1.6.1 2020.08.15 radioボタン未チェックの時の動作を修正。
 //v1.6 2020.08.13 削除ずみのスレッドのレスが表示されるバグを修正。
 //本文も全角英数、半角英数どちらでも検索できるようにした。
 //v1.5 2020.07.19 改二以外のPOTI-boardでも使えるようにした。
@@ -66,46 +67,12 @@ $query=mb_convert_kana($query, 'rn', 'UTF-8');
 $query=str_replace(array(" ", "　"), "", $query);
 $radio =filter_input(INPUT_GET,'radio',FILTER_VALIDATE_INT);
 
-// $imgsearch=true;
-
-//クエリを検索窓に入ったままにする
-$dat['query']=$query;
-//ラジオボタンのチェック
-$dat['radio_chk1']='';//作者名
-$dat['radio_chk2']='';//完全一致
-$dat['radio_chk3']='';//本文題名	
-$query_l='&query='.urlencode($query);//クエリを次ページにgetで渡す
-if($query!==''&&$radio===3){//本文題名
-	$query_l.='&radio=3';
-	$dat['radio_chk3']='checked="checked"';
-}
-elseif($query!==''&&$radio===2){//完全一致
-	$query_l.='&radio=2';
-	$dat['radio_chk2']='checked="checked"';	
-}
-elseif($query!==''&&($radio===null||$radio===1)){//作者名
-	$query_l.='&radio=1';
-	$dat['radio_chk1']='checked="checked"';
-}
-else{//作者名	
-	$query_l='';
-	$dat['radio_chk1']='checked="checked"';
-	$radio_chk1='checked="checked"';
-}
-$dat['query_l']=$query_l;
 if($imgsearch){
-	$dat['imgsearch']=true;
 	$disp_count_of_page=20;//画像検索の時の1ページあたりの表示件数
 }
 else{
 	$disp_count_of_page=30;//通常検索の時の1ページあたりの表示件数
 }
-
-if(!$page){
-	$page=1;
-}
-$dat['page']=$page;
-$dat['artist_l']=$artist_l;	
 
 //ログの読み込み
 $i=0;$j=0;
@@ -116,29 +83,27 @@ $fp = fopen(LOGFILE, "r");
 while ($line = fgets($fp ,4096)) {
 	list($no,,$name,,$sub,$com,,
 	,,$ext,,,$time,,,,) = explode(",", $line);
-	$continue_to_search=false;
+	$continue_to_search=true;
 	if($imgsearch){//画像検索の場合
-		if($ext&&is_file(IMG_DIR.$time.$ext)){//画像はあるか?
-			$continue_to_search=true;//画像がある行だけ検索
-		}
+		$continue_to_search=($ext&&is_file(IMG_DIR.$time.$ext));//画像があったら
 	}
-		else{//それ以外
-			$continue_to_search=true;//すべての行を検索
-		}
 
 	if($continue_to_search){
-	if($radio===1||$radio===2){
-		$s_name=mb_convert_kana($name, 'rn', 'UTF-8');//全角英数を半角に
-		$s_name=str_replace(array(" ", "　"), "", $s_name);
-	}
-	else{
-		$s_com=mb_convert_kana($com, 'rn', 'UTF-8');//全角英数を半角に
-		$s_com=str_replace(array(" ", "　"), "", $s_com);
+		if($radio===1||$radio===2||$radio===null){
+			$s_name=mb_convert_kana($name, 'rn', 'UTF-8');//全角英数を半角に
+			$s_name=str_replace(array(" ", "　"), "", $s_name);
 		}
+		else{
+			$s_sub=mb_convert_kana($sub, 'rn', 'UTF-8');//全角英数を半角に
+			$s_sub=str_replace(array(" ", "　"), "", $s_sub);
+			$s_com=mb_convert_kana($com, 'rn', 'UTF-8');//全角英数を半角に
+			$s_com=str_replace(array(" ", "　"), "", $s_com);
+		}
+		
 		//ログとクエリを照合
 		if($query===''||//空白なら
 				$query!==''&&$radio===3&&stripos($s_com,$query)!==false||//本文を検索
-				$query!==''&&$radio===3&&stripos($sub,$query)!==false||//題名を検索
+				$query!==''&&$radio===3&&stripos($s_sub,$query)!==false||//題名を検索
 				$query!==''&&($radio===1||$radio===null)&&stripos($s_name,$query)!==false||//作者名が含まれる
 				$query!==''&&($radio===2&&$s_name===$query)//作者名完全一致
 		){
@@ -170,7 +135,7 @@ while ($line = fgets($fp ,4096)) {
 $j=0;
 if($arr){
 	foreach($arr as $i => $val){
-		if($i > $page-2){//カウンタの$iが表示するページになるまで待つ
+		if($i > $page-2){//$iが表示するページになるまで待つ
 			extract($val);
 			$img='';
 			if($ext){
@@ -204,17 +169,49 @@ unset($i,$val);
 
 $search_type='';
 if($imgsearch){
+	$search_type='&imgsearch=on';
+	$dat['imgsearch']=true;
 	$img_or_com='イラスト';
 	$mai_or_ken='枚';
-	$search_type='&imgsearch=on';
 }
 else{
 	$img_or_com='コメント';
 	$mai_or_ken='件';
 }
+
+//クエリを検索窓に入ったままにする
+$dat['query']=$query;
+//ラジオボタンのチェック
+$dat['radio_chk1']='';//作者名
+$dat['radio_chk2']='';//完全一致
+$dat['radio_chk3']='';//本文題名	
+$query_l='&query='.urlencode($query);//クエリを次ページにgetで渡す
+if($query!==''&&$radio===3){//本文題名
+	$query_l.='&radio=3';
+	$dat['radio_chk3']='checked="checked"';
+}
+elseif($query!==''&&$radio===2){//完全一致
+	$query_l.='&radio=2';
+	$dat['radio_chk2']='checked="checked"';	
+}
+elseif($query!==''&&($radio===null||$radio===1)){//作者名
+	$query_l.='&radio=1';
+	$dat['radio_chk1']='checked="checked"';
+}
+else{//作者名	
+	$query_l='';
+	$dat['radio_chk1']='checked="checked"';
+	$radio_chk1='checked="checked"';
+}
+$dat['query_l']=$query_l;
+
+if(!$page){
+	$page=1;
+}
+$dat['page']=$page;
+$dat['artist_l']=$artist_l;	
+
 $dat['img_or_com']=$img_or_com;
-
-
 $dat['pageno']='';
 if($j&&$page>=2){
 	$dat['pageno'] = $page.'-'.$j.$mai_or_ken;
