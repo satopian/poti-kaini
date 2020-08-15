@@ -42,8 +42,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.12.0');
-define('POTI_VERLOT' , 'v2.12.0 lot.200813');
+define('POTI_VER' , 'v2.12.2');
+define('POTI_VERLOT' , 'v2.12.2 lot.200815');
 
 if (($phpver = phpversion()) < "5.5.0") {
 	die("本プログラムの動作には PHPバージョン 5.5.0 以上が必要です。<br>\n（現在のPHPバージョン：{$phpver}）");
@@ -214,12 +214,13 @@ setcookie("usercode", $usercode, time()+86400*365);//1年間
 switch($mode){
 	case 'regist':
 		if(ADMIN_NEWPOST && !$resto){
-			if($pwd != $ADMIN_PASS){ error(MSG029);
-			}else{ $admin=$pwd; }
+			if($pwd != $ADMIN_PASS){
+				error(MSG029);
+			}
+			$admin=$pwd;
 		}
 		regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile);
 		break;
-
 	case 'admin':
 		valid($pass);
 		if($admin==="del") admindel($pass);
@@ -235,11 +236,12 @@ switch($mode){
 		}
 		break;
 	case 'usrdel':
-		if(USER_DELETES){
-			usrdel($del,$pwd);
-			updatelog();
-			redirect(PHP_SELF2, 0);
-		}else{error(MSG033);}
+		if (!USER_DELETES) {
+			error(MSG033);
+		}
+		usrdel($del,$pwd);
+		updatelog();
+		redirect(PHP_SELF2, 0);
 		break;
 	case 'paint':
 		paintform($picw,$pich,$anime);
@@ -1685,26 +1687,16 @@ if($admin===$ADMIN_PASS){
 	// if($h < 520 && !$useneo && $shi){$h = 520;}
 
 	$dat['paint_mode'] = true;
+
 	//ピンチイン
-	$ipad = (strpos($_SERVER['HTTP_USER_AGENT'],'iPad') !== false);
-	$mobile = (strpos($_SERVER['HTTP_USER_AGENT'],'Mobile') !== false);
-	
 	if($picw>=700){//横幅700以上だったら
-			$dat['pinchin']=true;
-	//echo 'ピンチインが有効みたい。';
-	}
-	elseif($picw>=500){//横幅500以上だったら
-		if(!$ipad){//iPadじゃなかったら
-			//echo "iPadじゃないよ";
-			if($mobile){//スマートフォンだったら
-				$dat['pinchin']=true;
-			//echo 'ピンチインが有効みたい。';
-			}
-			else{//タブレットだったら
-				$dat['pinchin']=false;
-			}
+		$dat['pinchin'] = true;
+	} elseif($picw>=500) {//横幅500以上だったら
+		if (strpos($_SERVER['HTTP_USER_AGENT'],'iPad') === false){//iPadじゃなかったら
+			$dat['pinchin'] = (strpos($_SERVER['HTTP_USER_AGENT'],'Mobile') !== false);
 		}
 	}
+	
 	$dat = array_merge($dat,form($resto));
 		$dat['mode2'] = $mode;
 	if($mode==="contpaint"){
