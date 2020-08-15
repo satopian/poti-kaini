@@ -707,7 +707,6 @@ function updatelog($resno=0){
 
 			$dat['oya'][$oya]['res'] = $rres[$oya];
 			}
-			unset($rres); //クリア
 			clearstatcache(); //ファイルのstatをクリア
 			$oya++;
 			if($resno){break;} //res時はtree1行だけ
