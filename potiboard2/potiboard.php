@@ -758,7 +758,6 @@ function updatelog($resno=0){
 		fclose($fp);
 		//拡張子を.phpにした場合、↑で500エラーでるなら↓に変更
 		if(PHP_EXT!='.php'){chmod($logfilename,0606);}
-		unset($dat); //クリア
 	}
 	if (!$resno) {
 		safe_unlink(($page/PAGE_DEF+1).PHP_EXT);
