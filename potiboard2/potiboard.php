@@ -291,17 +291,20 @@ exit;
 
 //GD版が使えるかチェック
 function gd_check(){
-	$flag = true;
 	$check = array("ImageCreate","ImageCopyResized","ImageCreateFromJPEG","ImageJPEG","ImageDestroy");
 
 	//最低限のGD関数が使えるかチェック
 	if(get_gd_ver() && (ImageTypes() & IMG_JPG)){
 		foreach ( $check as $cmd ) {
-			if(!function_exists($cmd)){$flag=false; break;}
+			if(!function_exists($cmd)){
+				return false;
+			}
 		}
-	}else{$flag=false;}
+	}else{
+		return false;
+	}
 
-	return $flag;
+	return true;
 }
 
 //gdのバージョンを調べる
