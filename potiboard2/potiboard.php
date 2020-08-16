@@ -147,8 +147,7 @@ $temppath = realpath("./").'/'.TEMP_DIR;
 //サムネイルfunction
 if((THUMB_SELECT==0 && gd_check()) || THUMB_SELECT==1){
 	require(__DIR__.'/thumbnail_gd.php');
-}
-else{
+} else{
 	function thumb(){
 		return;
 	}
@@ -315,8 +314,7 @@ function get_gd_ver(){
 	$length = strlen($phpinfo)-1;
 	$phpinfo=substr($phpinfo,$length);
 	return $phpinfo;
-	}
-	else{
+	} else{
 	return false;
 	}
 }
@@ -411,8 +409,7 @@ function form($resno="",$adminin="",$tmp=""){
 	// if((!$resno && !$tmp) || (RES_UPLOAD && !$tmp)) $dat['upfile'] = true;
 	if(!USE_IMG_UPLOAD && !$admin){//画像アップロード機能を使わない時
 		$dat['upfile'] = false;
-	}
-	else{
+	} else{
 		if((!$resno && !$tmp) || (RES_UPLOAD && !$tmp)) $dat['upfile'] = true;
 	}
 	$dat['maxkb']   = MAX_KB;//実際にアップロードできるファイルサイズ
@@ -527,8 +524,7 @@ function updatelog($resno=0){
 				$pch = (USE_ANIME && check_pch_ext(PCH_DIR.$time)) ? $time.$ext : '';
 				//コンティニュー
 				$continue = USE_CONTINUE ? $no : '';
-			}
-			else{//画像が無い時
+			} else{//画像が無い時
 				$src=$srcname=$imgsrc=$size=$pch=$thumb=$continue=$painttime="";
 			}
 			// そろそろ消える。
@@ -637,10 +633,9 @@ function updatelog($resno=0){
 					$pch = (USE_ANIME && check_pch_ext(PCH_DIR.$time)) ? $time.$ext : '';
 					//コンティニュー
 					$continue = USE_CONTINUE ? $no : '';
+				} else{//画像が無い時
+					$src=$srcname=$imgsrc=$size=$pch=$thumb=$continue=$painttime="";
 				}
-			else{//画像が無い時
-				$src=$srcname=$imgsrc=$size=$pch=$thumb=$continue=$painttime="";
-			}
 
 				//日付とIDを分離
 				list($id, $now) = separateDatetimeAndId($now);
@@ -785,8 +780,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 	if (strpos($upfile_name, '/') !== false) {//ファイル名に/があったら中断
 		$upfile_name="";
 		$upfile ="";
-	}
-	else{
+	} else{
 		$upfile = isset($_FILES["upfile"]["tmp_name"]) ? $_FILES["upfile"]["tmp_name"] : "";
 	}
 
@@ -828,8 +822,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 		$dest = $path.$tim.'.tmp';
 		if($pictmp==2){
 			copy($upfile, $dest);
-		}
-		else{//フォームからのアップロード
+		} else{//フォームからのアップロード
 			if(!USE_IMG_UPLOAD && $admin!==$ADMIN_PASS){//アップロード禁止で管理画面からの投稿ではない時
 				unlink($upfile);
 				error(MSG006,$dest);
@@ -839,8 +832,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 				}
 				if(move_uploaded_file($upfile, $dest)){
 					$upfile_name = CleanStr($upfile_name);
-				}
-				else{
+				} else{
 					$upfile_name='';
 					error(MSG003,$dest);
 				}
@@ -850,8 +842,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 
 		if(!is_file($dest)){
 			error(MSG003,$dest);
-		}
-		else{
+		} else{
 			$is_file_dest=true;//is_file($dest）の変数化
 		} 
 	}
@@ -1094,8 +1085,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 						chmod($im_jpg,0606);
 					if(filesize($im_jpg)<$fsize_dest){//JPEGのほうが小さい時だけ
 						rename($im_jpg,$dest);//JPEGで保存
-					}
-					else{//PNGよりファイルサイズが大きくなる時は
+					} else{//PNGよりファイルサイズが大きくなる時は
 						unlink($im_jpg);//作成したJPEG画像を削除
 					}
 				}
@@ -1132,8 +1122,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 			$H = ceil($H * $key);
 		}
 		$mes = "画像 $upfile_name のアップロードが成功しました<br><br>";
-		}
-		else{
+		} else{
 		error(MSG004,$dest);
 		}
 		//重複チェック
@@ -1162,8 +1151,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 				unlink($src);
 			}
 		}
-	}
-	else{//画像が無い時
+	} else{//画像が無い時
 		$ext=$W=$H=$chk="";
 	}
 	// ログ行数オーバー
@@ -1353,8 +1341,7 @@ function CleanStr($str,$com=''){
 		if($admin!==$ADMIN_PASS){//管理者はタグ許可
 			$str = htmlspecialchars($str,ENT_QUOTES,'utf-8');//管理者以外タグ禁止
 		}
-	}
-	else{//そのほかの入力欄は
+	} else{//そのほかの入力欄は
 		$str = htmlspecialchars($str,ENT_QUOTES,'utf-8');//タグ禁止
 	}
 	return str_replace(",", "&#44;", $str);//カンマを変換
@@ -1577,8 +1564,7 @@ if($admin===$ADMIN_PASS){
 		$pchfilename=CleanStr($pchfilename);
 		if (strpos($pchfilename, '/') !== false) {//ファイル名に/がなければ続行
 			echo "不正なファイルです。";
-		}
-		else{//チェック通過
+		} else{//チェック通過
 			//拡張子チェック
 			$tim = time().substr(microtime(),2,3);
 			$ext=pathinfo($pchfilename, PATHINFO_EXTENSION);
@@ -1602,14 +1588,12 @@ if($admin===$ADMIN_PASS){
 						$line = substr($line,0,6);
 						if($line==="4e454f"){
 						$useneo=true;
-						}
-						else{//NEOのpchでなければ
+						} else{//NEOのpchでなければ
 						echo"NEOのPCHではありません。";
 						// var_dump($line);
 						unlink($pchup);
 						}
-					}
-					elseif($ext==="spch"){
+					} elseif($ext==="spch"){
 						$line = substr($line,0,24);
 						if($line==="6c617965725f636f756e743d"||$line==="000d0a"){
 						$useneo=false;
@@ -1617,15 +1601,13 @@ if($admin===$ADMIN_PASS){
 						echo"しぃペインターのSPCHではありません。";
 						unlink($pchup);
 						}
-					}
-					else{
+					} else{
 					unlink($pchup);
 					echo"アニメファイルをアップしてください。";
 					}
 					fclose($fp);
 					$dat['pchfile'] = $pchup;
-				}
-				else{//mime_content_typeが違ったら
+				} else{//mime_content_typeが違ったら
 				unlink($pchup);
 				echo"アニメファイルをアップしてください。";
 				// error(MSG001);
@@ -1643,8 +1625,7 @@ if($admin===$ADMIN_PASS){
 	if(!$useneo && $shi){
 	$w = $picw + 510;//しぃぺの時の幅
 	$h = $pich + 120;//しぃぺの時の高さ
-	}
-	else{
+	} else{
 		$w = $picw + 150;//PaintBBSの時の幅
 		$h = $pich + 172;//PaintBBSの時の高さ
 	}
@@ -2328,8 +2309,7 @@ function replace($no,$pwd,$stime){
 							chmod($im_jpg,0606);
 						if(filesize($im_jpg)<$fsize_dest){//JPEGのほうが小さい時だけ
 							rename($im_jpg,$dest);//JPEGで保存
-						}
-						else{//PNGよりファイルサイズが大きくなる時は
+						} else{//PNGよりファイルサイズが大きくなる時は
 							unlink($im_jpg);//作成したJPEG画像を削除
 						}
 					}
@@ -2350,8 +2330,7 @@ function replace($no,$pwd,$stime){
 			chmod($dest,0606);
 			rename($dest,$path.$tim.$imgext);
 			$mes = "画像のアップロードが成功しました<br><br>";
-			}
-			else{
+			} else{
 			error(MSG004,$dest);
 			}
 			//差し換え前と同じ大きさのサムネイル作成
@@ -2459,8 +2438,7 @@ function catalog(){
 				//動画リンク
 				$pch="";
 				$txt=false;
-			}
-			else{//画像が無い時
+			} else{//画像が無い時
 				$txt=true;
 				$imgsrc=$pch="";
 			}
