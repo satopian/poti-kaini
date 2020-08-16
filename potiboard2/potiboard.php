@@ -733,11 +733,9 @@ function updatelog($resno=0){
 /* オートリンク */
 function auto_link($proto){
 	if(!(stripos($proto,"script")!==false)){//scriptがなければ続行
-	$proto = preg_replace("{(https?|ftp)(://[[:alnum:]\+\$\;\?\.%,!#~*/:@&=_-]+)}","<a href=\"\\1\\2\" target=\"_blank\" rel=\"nofollow noopener noreferrer\">\\1\\2</a>",$proto);
-	return $proto;
-	}else{
-	return $proto;
+		return preg_replace("{(https?|ftp)(://[[:alnum:]\+\$\;\?\.%,!#~*/:@&=_-]+)}","<a href=\"\\1\\2\" target=\"_blank\" rel=\"nofollow noopener noreferrer\">\\1\\2</a>",$proto);
 	}
+	return $proto;
 }
 
 /* 日付 */
