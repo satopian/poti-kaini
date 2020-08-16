@@ -54,6 +54,11 @@ config.phpの設定をし、アップロードしてpotiboard.phpのあるディ
 
 ## 履歴
 
+### [2020/08/17] v.2.12.3 lot.200817
+
+- ソースコード整理(by きつねこ)
+  - くわしくは[こちら](https://github.com/sakots/poti-kaini/pull/107)
+
 ### [2020/08/16]
 
 - search.php radioボタン未チェックの時の動作を修正(by さとぴあ)
