@@ -605,6 +605,7 @@ function updatelog($resno=0){
 
 			//レス作成
 			$rres=array();
+			$rresname = [];
 			foreach($treeline as $k => $disptree){
 				if($k<$s){//レス表示件数
 					continue;
@@ -659,28 +660,23 @@ function updatelog($resno=0){
 				// レス記事一時格納
 				$rres[$oya][] = compact('no','sub','name','encoded_name','now','com','url','email','id','updatemark','trip','fontcolor'
 								,'src','srcname','size','painttime','pch','continue','thumb','imgsrc','w','h');
-				$rresname[] = $name;//投稿者名を配列にいれる
 				
+				// 投稿者名を配列にいれる
+				if ($oyaname != $name && !in_array($name, $rresname)) { // 重複チェックと親投稿者除外
+					$rresname[] = $name;
+				}
+
 				// 変数クリア
 				unset($no,$sub,$name,$encoded_name,$now,$com,$url,$email
 						,$src,$srcname,$size,$painttime,$pch,$continue,$thumb,$imgsrc,$w,$h);
 			}
+
 			// レス記事一括格納
 			if($rres){//レスがある時
-			
-				$rresname=array_unique($rresname);//投稿者名重複削除
-				foreach($rresname as $key=>$val){
-					if($rresname[$key]===$oyaname){
-						unset($rresname[$key]);
-					}
-				}
-				if($rresname){
-					$resname=implode('さん ',$rresname);//文字列として結合
-					$dat['resname']=$resname;//投稿者名一覧
-				}
-
-			$dat['oya'][$oya]['res'] = $rres[$oya];
+				$dat['resname'] = $rresname ? implode('さん ',$rresname) : ''; // レス投稿者一覧
+				$dat['oya'][$oya]['res'] = $rres[$oya];
 			}
+
 			clearstatcache(); //ファイルのstatをクリア
 			$oya++;
 			if($resno){break;} //res時はtree1行だけ
