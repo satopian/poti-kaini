@@ -524,15 +524,7 @@ function updatelog($resno=0){
 				//描画時間
 				$painttime = DSP_PAINTTIME ? $ptime : '';
 				//動画リンク
-				$pch="";
-				if(USE_ANIME){
-					if(is_file(PCH_DIR.$time.'.pch')){
-						$pch = $time.$ext;
-					}
-					elseif(is_file(PCH_DIR.$time.'.spch')){
-						$pch = $time.$ext.'&amp;shi=1';
-					}
-				}
+				$pch = (USE_ANIME && check_pch_ext(PCH_DIR.$time)) ? $time.$ext : '';
 				//コンティニュー
 				$continue = USE_CONTINUE ? $no : '';
 			}
@@ -641,15 +633,7 @@ function updatelog($resno=0){
 					//描画時間
 					$painttime = DSP_PAINTTIME ? $ptime : '';
 					//動画リンク
-					$pch="";
-					if(USE_ANIME){
-						if(is_file(PCH_DIR.$time.'.pch')){
-							$pch = $time.$ext;
-						}
-						elseif(is_file(PCH_DIR.$time.'.spch')){
-							$pch = $time.$ext.'&amp;shi=1';
-						}
-					}
+					$pch = (USE_ANIME && check_pch_ext(PCH_DIR.$time)) ? $time.$ext : '';
 					//コンティニュー
 					$continue = USE_CONTINUE ? $no : '';
 				}
