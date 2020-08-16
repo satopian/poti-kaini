@@ -2429,11 +2429,7 @@ function catalog(){
 				$src = IMG_DIR.$time.$ext;
 				if($w){	//サイズがある時
 					if($w > CATALOG_W) $w=CATALOG_W; //画像幅を揃える
-					if(is_file(THUMB_DIR.$time.'s.jpg')){
-						$imgsrc = THUMB_DIR.$time.'s.jpg';
-					}else{
-						$imgsrc = $src;
-					}
+					$imgsrc = is_file(THUMB_DIR.$time.'s.jpg') ? THUMB_DIR.$time.'s.jpg' : $src;
 				}else{$w=CATALOG_W;}
 				//動画リンク
 				$pch="";
