@@ -867,46 +867,19 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 		if(DENY_COMMENTS_URL && preg_match('/:\/\/|\.co|\.ly|\.gl|\.net|\.org|\.cc|\.ru|\.su|\.ua|\.gd/i', $com)) error(MSG036,$dest);
 	}
 
-	foreach($badstring as $value){//拒絶する文字列
-		if($value===''){
-		break;
-		}
-		if(preg_match("/$value/ui",$chk_com)||preg_match("/$value/ui",$chk_sub)||preg_match("/$value/ui",$chk_name)||preg_match("/$value/ui",$chk_email)){
-			error(MSG032,$dest);
-		}
-	}
-	if(isset($badname)){//使えない名前
-		foreach($badname as $value){
-			if($value===''){
-			break;
-			}
-			if(preg_match("/$value/ui",$chk_name)){
-				error(MSG037,$dest);
-			}
-		}
+	// 使えない文字チェック
+	if (is_ngword($badstring, [$chk_com, $chk_sub, $chk_name, $chk_email])) {
+		error(MSG032,$dest);
 	}
 
-	$bstr_A_find=false;
-	$bstr_B_find=false;
+	// 使えない名前チェック
+	if (is_ngword($badname, $chk_name)) {
+		error(MSG037,$dest);
+	}
 
-	foreach($badstr_A as $value){//指定文字列が2つあると拒絶
-		if($value===''){
-		break;
-		}
-		if(preg_match("/$value/ui",$chk_com)||preg_match("/$value/ui",$chk_sub)||preg_match("/$value/ui",$chk_name)||preg_match("/$value/ui",$chk_email)){
-			$bstr_A_find=true;
-		break;
-		}
-	}
-	foreach($badstr_B as $value){
-		if($value===''){
-		break;
-		}
-		if(preg_match("/$value/ui",$chk_com)||preg_match("/$value/ui",$chk_sub)||preg_match("/$value/ui",$chk_name)||preg_match("/$value/ui",$chk_email)){
-			$bstr_B_find=true;
-		break;
-		}
-	}
+	//指定文字列が2つあると拒絶
+	$bstr_A_find = is_ngword($badstr_A, [$chk_com, $chk_sub, $chk_name, $chk_email]);
+	$bstr_B_find = is_ngword($badstr_B, [$chk_com, $chk_sub, $chk_name, $chk_email]);
 	if($bstr_A_find && $bstr_B_find){
 		error(MSG032,$dest);
 	}
@@ -2077,46 +2050,19 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 		if(DENY_COMMENTS_URL && preg_match('/:\/\/|\.co|\.ly|\.gl|\.net|\.org|\.cc|\.ru|\.su|\.ua|\.gd/i', $com)) error(MSG036,$dest);
 	}
 
-	foreach($badstring as $value){//拒絶する文字列
-		if($value===''){
-		break;
-		}
-		if(preg_match("/$value/ui",$chk_com)||preg_match("/$value/ui",$chk_sub)||preg_match("/$value/ui",$chk_name)||preg_match("/$value/ui",$chk_email)){
-			error(MSG032,$dest);
-		}
-	}
-	if(isset($badname)){//使えない名前
-		foreach($badname as $value){
-			if($value===''){
-			break;
-			}
-			if(preg_match("/$value/ui",$chk_name)){
-				error(MSG037,$dest);
-			}
-		}
+	// 使えない文字チェック
+	if (is_ngword($badstring, [$chk_com, $chk_sub, $chk_name, $chk_email])) {
+		error(MSG032,$dest);
 	}
 
-	$bstr_A_find=false;
-	$bstr_B_find=false;
+	// 使えない名前チェック
+	if (is_ngword($badname, $chk_name)) {
+		error(MSG037,$dest);
+	}
 
-	foreach($badstr_A as $value){//指定文字列が2つあると拒絶
-		if($value===''){
-		break;
-		}
-		if(preg_match("/$value/ui",$chk_com)||preg_match("/$value/ui",$chk_sub)||preg_match("/$value/ui",$chk_name)||preg_match("/$value/ui",$chk_email)){
-			$bstr_A_find=true;
-		break;
-		}
-	}
-	foreach($badstr_B as $value){
-		if($value===''){
-		break;
-		}
-		if(preg_match("/$value/ui",$chk_com)||preg_match("/$value/ui",$chk_sub)||preg_match("/$value/ui",$chk_name)||preg_match("/$value/ui",$chk_email)){
-			$bstr_B_find=true;
-		break;
-		}
-	}
+	//指定文字列が2つあると拒絶
+	$bstr_A_find = is_ngword($badstr_A, [$chk_com, $chk_sub, $chk_name, $chk_email]);
+	$bstr_B_find = is_ngword($badstr_B, [$chk_com, $chk_sub, $chk_name, $chk_email]);
 	if($bstr_A_find && $bstr_B_find){
 		error(MSG032,$dest);
 	}
@@ -2627,6 +2573,29 @@ function delete_files ($path, $filename, $ext) {
 	safe_unlink(THUMB_DIR.$filename.'s.jpg');
 	safe_unlink(PCH_DIR.$filename.'.pch');
 	safe_unlink(PCH_DIR.$filename.'.spch');
+}
+
+/**
+ * NGワードチェック
+ * @param $ngwords
+ * @param string|array $strs
+ * @return bool
+ */
+function is_ngword ($ngwords, $strs) {
+	if (empty($ngwords)) {
+		return false;
+	}
+	if (!is_array($strs)) {
+		$strs = [$strs];
+	}
+	foreach ($strs as $str) {
+		foreach($ngwords as $ngword){//拒絶する文字列
+			if ($ngword !== '' && preg_match("/{$ngword}/ui", $str)){
+				return true;
+			}
+		}
+	}
+	return false;
 }
 
 ?>
