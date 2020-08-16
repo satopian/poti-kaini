@@ -446,17 +446,16 @@ function updatelog($resno=0){
 	global $path;
 
 	$tree = file(TREEFILE);
-	$find = false;
+	$st = 0;
 	if($resno){
 		foreach($tree as $i => $value){
-			list($artno,) = explode(",", rtrim($value));
-			if ($artno==$resno){
+			//レス先検索
+			if (strpos($value . ',', $resno . ',') === 0) {
 				$st = $i;
-				$find = true;
 				break;
-			} //レス先検索
+			}
 		}
-		if (!$find) {
+		if (!$st) {
 			error(MSG001);
 		}
 	}
