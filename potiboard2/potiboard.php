@@ -1964,58 +1964,61 @@ function editform($del,$pwd){
 	global $fontcolors;
 	global $ADMIN_PASS;
 
-	if(is_array($del)){
-		sort($del);
-		reset($del);
-		if($pwd==""&&$pwdc!="") $pwd=$pwdc;
-		$fp=fopen(LOGFILE,"r");
-		flock($fp, LOCK_EX);
-		$buf=fread($fp,5242880);
-		fflush($fp);
-		flock($fp, LOCK_UN);
-		fclose($fp);
-		if(!$buf){error(MSG019);}
-		$buf = charconvert($buf);
-		$line = explode("\n", trim($buf));
-		$flag = FALSE;
-		foreach($line as $value){
+	if (!is_array($del)) {
+		error(MSG031);
+	}
+
+	sort($del);
+	reset($del);
+	if($pwd==""&&$pwdc!="") $pwd=$pwdc;
+	$fp=fopen(LOGFILE,"r");
+	flock($fp, LOCK_EX);
+	$buf=fread($fp,5242880);
+	fflush($fp);
+	flock($fp, LOCK_UN);
+	fclose($fp);
+	if(!$buf){error(MSG019);}
+	$buf = charconvert($buf);
+	$line = explode("\n", trim($buf));
+	$flag = FALSE;
+	foreach($line as $value){
 		if($value){
-		list($no,,$name,$email,$sub,$com,$url,$ehost,$pass,,,,,,,$fcolor) = explode(",", rtrim($value));
-			 if($no == $del[0] && (password_verify($pwd,$pass)||
-			substr(md5($pwd),2,8) === $pass|| $ADMIN_PASS === $pwd)){
+			list($no,,$name,$email,$sub,$com,$url,$ehost,$pass,,,,,,,$fcolor) = explode(",", rtrim($value));
+			if ($no == $del[0] && (password_verify($pwd,$pass) || substr(md5($pwd),2,8) === $pass|| $ADMIN_PASS === $pwd)){
 				$flag = TRUE;
 				break;
 			}
 		}
 	}
-		if(!$flag) error(MSG028);
+	if(!$flag) {
+		error(MSG028);
+	}
 
-		$dat['post_mode'] = true;
-		$dat['rewrite'] = $no;
-		if($ADMIN_PASS == $pwd) $dat['admin'] = $ADMIN_PASS;
-		$dat['maxbyte'] = MAX_KB * 1024;
-		$dat['maxkb']   = MAX_KB;
-		$dat['addinfo'] = $addinfo;
-		$dat['name'] = strip_tags($name);
-		$dat['email'] = $email;
-		$dat['sub'] = $sub;
-		$com = preg_replace("{<br(( *)|( *)/)>}i","\n",$com); // <br>または<br />を改行へ戻す
-		$dat['com'] = $com;
-		$dat['url'] = $url;
-		$dat['pwd'] = $pwd;
+	$dat['post_mode'] = true;
+	$dat['rewrite'] = $no;
+	if($ADMIN_PASS == $pwd) $dat['admin'] = $ADMIN_PASS;
+	$dat['maxbyte'] = MAX_KB * 1024;
+	$dat['maxkb']   = MAX_KB;
+	$dat['addinfo'] = $addinfo;
+	$dat['name'] = strip_tags($name);
+	$dat['email'] = $email;
+	$dat['sub'] = $sub;
+	$com = preg_replace("{<br(( *)|( *)/)>}i","\n",$com); // <br>または<br />を改行へ戻す
+	$dat['com'] = $com;
+	$dat['url'] = $url;
+	$dat['pwd'] = $pwd;
 
-		//文字色
-		if(USE_FONTCOLOR){
-			foreach ( $fontcolors as $fontcolor ){
-				list($color,$name) = explode(",", $fontcolor);
-				$chk = ($color == $fcolor) ? true : false;
-				$dat['fctable'][] = compact('color','name','chk');
-			}
-			if(!$fcolor) $dat['fctable'][0]['chk'] = true; //値が無い場合、先頭にチェック
+	//文字色
+	if(USE_FONTCOLOR){
+		foreach ( $fontcolors as $fontcolor ){
+			list($color,$name) = explode(",", $fontcolor);
+			$chk = ($color == $fcolor) ? true : false;
+			$dat['fctable'][] = compact('color','name','chk');
 		}
+		if(!$fcolor) $dat['fctable'][0]['chk'] = true; //値が無い場合、先頭にチェック
+	}
 
-		htmloutput(SKIN_DIR.OTHERFILE,$dat);
-	}else{ error(MSG031); }
+	htmloutput(SKIN_DIR.OTHERFILE,$dat);
 }
 
 /* 記事上書き */
