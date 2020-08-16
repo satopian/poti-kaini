@@ -518,13 +518,8 @@ function updatelog($resno=0){
 				$srcname = $time.$ext;
 				$size = filesize($img);
 				if($w && $h){	//サイズがある時
-					if(is_file(THUMB_DIR.$time.'s.jpg')){
-						$thumb = true;
-						$imgsrc = THUMB_DIR.$time.'s.jpg';
-					}else{
-						$thumb = "";
-						$imgsrc = $src;
-					}
+					$thumb = is_file(THUMB_DIR.$time.'s.jpg');
+					$imgsrc = $thumb ? THUMB_DIR.$time.'s.jpg' : $src;
 				}
 				//描画時間
 				$painttime = DSP_PAINTTIME ? $ptime : '';
@@ -640,13 +635,8 @@ function updatelog($resno=0){
 					$srcname = $time.$ext;
 					$size = filesize($img);
 					if($w && $h){	//サイズがある時
-						if(is_file(THUMB_DIR.$time.'s.jpg')){
-							$thumb = true;
-							$imgsrc = THUMB_DIR.$time.'s.jpg';
-						}else{
-							$thumb = "";
-							$imgsrc = $src;
-						}
+						$thumb = is_file(THUMB_DIR.$time.'s.jpg');
+						$imgsrc = $thumb ? THUMB_DIR.$time.'s.jpg' : $src;
 					}
 					//描画時間
 					$painttime = DSP_PAINTTIME ? $ptime : '';
