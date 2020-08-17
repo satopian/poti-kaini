@@ -753,7 +753,7 @@ function error($mes,$dest=''){
 	safe_unlink($dest);
 	$dat['err_mode'] = true;
 	$dat['mes'] = $mes;
-	if (defined(OTHERFILE)) {
+	if (defined('OTHERFILE')) {
 		htmloutput(SKIN_DIR.OTHERFILE,$dat);
 	} else {
 		print $dat['mes'];
