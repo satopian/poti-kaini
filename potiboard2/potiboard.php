@@ -136,10 +136,10 @@ if ($err = check_file(__DIR__.'/Skinny.php')) {
 require_once(__DIR__.'/Skinny.php');
 
 //Template設定ファイル
-if ($err = check_file(__DIR__.'/'.SKIN_DIR.'/template_ini.php')) {
+if ($err = check_file(__DIR__.'/'.SKIN_DIR.'template_ini.php')) {
 	error($err);
 }
-require(__DIR__.'/'.SKIN_DIR.'/template_ini.php');
+require(__DIR__.'/'.SKIN_DIR.'template_ini.php');
 
 $path = realpath("./").'/'.IMG_DIR;
 $temppath = realpath("./").'/'.TEMP_DIR;
