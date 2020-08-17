@@ -136,10 +136,10 @@ if ($err = check_file(__DIR__.'/Skinny.php')) {
 require_once(__DIR__.'/Skinny.php');
 
 //Template設定ファイル
-if ($err = check_file(__DIR__.'/'.SKIN_DIR.'/template_ini.php')) {
+if ($err = check_file(__DIR__.'/'.SKIN_DIR.'template_ini.php')) {
 	error($err);
 }
-require(__DIR__.'/'.SKIN_DIR.'/template_ini.php');
+require(__DIR__.'/'.SKIN_DIR.'template_ini.php');
 
 $path = realpath("./").'/'.IMG_DIR;
 $temppath = realpath("./").'/'.TEMP_DIR;
@@ -753,7 +753,7 @@ function error($mes,$dest=''){
 	safe_unlink($dest);
 	$dat['err_mode'] = true;
 	$dat['mes'] = $mes;
-	if (defined(OTHERFILE)) {
+	if (defined('OTHERFILE')) {
 		htmloutput(SKIN_DIR.OTHERFILE,$dat);
 	} else {
 		print $dat['mes'];
