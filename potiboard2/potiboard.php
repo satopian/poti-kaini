@@ -1038,7 +1038,6 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 	// アップロード処理
 	if($dest&&$is_file_dest){//画像が無い時は処理しない
 	//画像フォーマット	
-		$im_in=false;
 		$im_jpg=$path.$tim.'.jpg.tmp';
 		$fsize_dest=filesize($dest);
 		if($fsize_dest > IMAGE_SIZE * 1024 || $fsize_dest > MAX_KB * 1024){//指定サイズを超えていたら
@@ -2231,7 +2230,6 @@ function replace($no,$pwd,$stime){
 			copy($upfile, $dest);
 			
 			if(!is_file($dest)) error(MSG003,$dest);
-			$im_in=false;
 			$im_jpg=$path.$tim.'.jpg.tmp';
 			$fsize_dest=filesize($dest);
 			if($fsize_dest > IMAGE_SIZE * 1024 || $fsize_dest > MAX_KB * 1024){//指定サイズを超えていたら
