@@ -1042,8 +1042,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 		$fsize_dest=filesize($dest);
 		if($fsize_dest > IMAGE_SIZE * 1024 || $fsize_dest > MAX_KB * 1024){//指定サイズを超えていたら
 			if(mime_content_type($dest)==="image/png" && gd_check() && function_exists("ImageCreateFromPNG")){//pngならJPEGに変換
-				$im_in=ImageCreateFromPNG($dest);
-				if($im_in){
+				if($im_in=ImageCreateFromPNG($dest)){
 					ImageJPEG($im_in,$im_jpg,98);
 					ImageDestroy($im_in);// 作成したイメージを破棄
 						chmod($im_jpg,0606);
@@ -2234,8 +2233,7 @@ function replace($no,$pwd,$stime){
 			$fsize_dest=filesize($dest);
 			if($fsize_dest > IMAGE_SIZE * 1024 || $fsize_dest > MAX_KB * 1024){//指定サイズを超えていたら
 				if(mime_content_type($dest)==="image/png" && gd_check() && function_exists("ImageCreateFromPNG")){//pngならJPEGに変換
-					$im_in=ImageCreateFromPNG($dest);
-					if($im_in){
+					if($im_in=ImageCreateFromPNG($dest)){
 						ImageJPEG($im_in,$im_jpg,98);
 						ImageDestroy($im_in);// 作成したイメージを破棄
 							chmod($im_jpg,0606);
