@@ -1037,20 +1037,14 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 
 	// アップロード処理
 	if($dest&&$is_file_dest){//画像が無い時は処理しない
-	//画像フォーマット	
-		$im_jpg=$path.$tim.'.jpg.tmp';
+	//画像フォーマット
 		$fsize_dest=filesize($dest);
 		if($fsize_dest > IMAGE_SIZE * 1024 || $fsize_dest > MAX_KB * 1024){//指定サイズを超えていたら
-			if(mime_content_type($dest)==="image/png" && gd_check() && function_exists("ImageCreateFromPNG")){//pngならJPEGに変換
-				if($im_in=ImageCreateFromPNG($dest)){
-					ImageJPEG($im_in,$im_jpg,98);
-					ImageDestroy($im_in);// 作成したイメージを破棄
-						chmod($im_jpg,0606);
-					if(filesize($im_jpg)<$fsize_dest){//JPEGのほうが小さい時だけ
-						rename($im_jpg,$dest);//JPEGで保存
-					} else{//PNGよりファイルサイズが大きくなる時は
-						unlink($im_jpg);//作成したJPEG画像を削除
-					}
+			if ($im_jpg = png2jpg($dest)) {
+				if(filesize($im_jpg)<$fsize_dest){//JPEGのほうが小さい時だけ
+					rename($im_jpg,$dest);//JPEGで保存
+				} else{//PNGよりファイルサイズが大きくなる時は
+					unlink($im_jpg);//作成したJPEG画像を削除
 				}
 			}
 		}
@@ -2229,19 +2223,13 @@ function replace($no,$pwd,$stime){
 			copy($upfile, $dest);
 			
 			if(!is_file($dest)) error(MSG003,$dest);
-			$im_jpg=$path.$tim.'.jpg.tmp';
 			$fsize_dest=filesize($dest);
 			if($fsize_dest > IMAGE_SIZE * 1024 || $fsize_dest > MAX_KB * 1024){//指定サイズを超えていたら
-				if(mime_content_type($dest)==="image/png" && gd_check() && function_exists("ImageCreateFromPNG")){//pngならJPEGに変換
-					if($im_in=ImageCreateFromPNG($dest)){
-						ImageJPEG($im_in,$im_jpg,98);
-						ImageDestroy($im_in);// 作成したイメージを破棄
-							chmod($im_jpg,0606);
-						if(filesize($im_jpg)<$fsize_dest){//JPEGのほうが小さい時だけ
-							rename($im_jpg,$dest);//JPEGで保存
-						} else{//PNGよりファイルサイズが大きくなる時は
-							unlink($im_jpg);//作成したJPEG画像を削除
-						}
+				if ($im_jpg = png2jpg($dest)) {
+					if(filesize($im_jpg)<$fsize_dest){//JPEGのほうが小さい時だけ
+						rename($im_jpg,$dest);//JPEGで保存
+					} else{//PNGよりファイルサイズが大きくなる時は
+						unlink($im_jpg);//作成したJPEG画像を削除
 					}
 				}
 			}
@@ -2576,6 +2564,20 @@ function is_ngword ($ngwords, $strs) {
 			if ($ngword !== '' && preg_match("/{$ngword}/ui", $str)){
 				return true;
 			}
+		}
+	}
+	return false;
+}
+
+
+function png2jpg ($src) {
+	if(mime_content_type($src)==="image/png" && gd_check() && function_exists("ImageCreateFromPNG")){//pngならJPEGに変換
+		if($im_in=ImageCreateFromPNG($src)){
+			$dst = pathinfo($src, PATHINFO_FILENAME ) . 'jpg.tmp';
+			ImageJPEG($im_in,$dst,98);
+			ImageDestroy($im_in);// 作成したイメージを破棄
+			chmod($dst,0606);
+			return $dst;
 		}
 	}
 	return false;
