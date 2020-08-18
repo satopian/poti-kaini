@@ -778,11 +778,10 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 	$upfile_name = isset($_FILES["upfile"]["name"]) ? $_FILES["upfile"]["name"] : "";//190603
 
 	if (strpos($upfile_name, '/') !== false) {//ファイル名に/があったら中断
-		$upfile_name="";
-		$upfile ="";
-	} else{
-		$upfile = isset($_FILES["upfile"]["tmp_name"]) ? $_FILES["upfile"]["tmp_name"] : "";
+		error(MSG015);
 	}
+
+	$upfile = isset($_FILES["upfile"]["tmp_name"]) ? $_FILES["upfile"]["tmp_name"] : "";
 
 	$textonly = filter_input(INPUT_POST, 'textonly',FILTER_VALIDATE_BOOLEAN);
 
@@ -1512,58 +1511,58 @@ if($admin===$ADMIN_PASS){
 
 	if($pchfilename!==""){//空文字でなければ続行
 		$pchfilename=CleanStr($pchfilename);
-		if (strpos($pchfilename, '/') !== false) {//ファイル名に/がなければ続行
-			echo "不正なファイルです。";
-		} else{//チェック通過
-			//拡張子チェック
-			$tim = time().substr(microtime(),2,3);
-			$ext=pathinfo($pchfilename, PATHINFO_EXTENSION);
-			$ext=strtolower($ext);//すべて小文字に
+		if (strpos($pchfilename, '/') !== false) { //ファイル名に/があったら中断
+			error(MSG015);
+		}
 
-			if ($ext == 'pch' || $ext == 'spch') {
-				$pchup = TEMP_DIR.'pchup-'.$tim.'-tmp.'.$ext;//アップロードされるファイル名
-				$pchtmp=$_FILES['pch_upload']['tmp_name'];
-			} else{//拡張子が一致しなかったら
-				$pchup="";
-				$pchtmp="";
-				echo "アニメファイルをアップしてください。";
-			}
+		//拡張子チェック
+		$tim = time().substr(microtime(),2,3);
+		$ext=pathinfo($pchfilename, PATHINFO_EXTENSION);
+		$ext=strtolower($ext);//すべて小文字に
 
-			if(move_uploaded_file($pchtmp, $pchup)){//アップロード成功なら続行
-				$pchup=TEMP_DIR.basename($pchup);//ファイルを開くディレクトリを固定
-				if(mime_content_type($pchup)==="application/octet-stream"){//mimetypeが正しければ続行
-					$fp = fopen("$pchup", "rb");
-					$line = bin2hex(fgets($fp ,4096)) ;
-					if($ext==="pch"){
-						$line = substr($line,0,6);
-						if($line==="4e454f"){
+		if ($ext == 'pch' || $ext == 'spch') {
+			$pchup = TEMP_DIR.'pchup-'.$tim.'-tmp.'.$ext;//アップロードされるファイル名
+			$pchtmp=$_FILES['pch_upload']['tmp_name'];
+		} else{//拡張子が一致しなかったら
+			$pchup="";
+			$pchtmp="";
+			echo "アニメファイルをアップしてください。";
+		}
+
+		if(move_uploaded_file($pchtmp, $pchup)){//アップロード成功なら続行
+			$pchup=TEMP_DIR.basename($pchup);//ファイルを開くディレクトリを固定
+			if(mime_content_type($pchup)==="application/octet-stream"){//mimetypeが正しければ続行
+				$fp = fopen("$pchup", "rb");
+				$line = bin2hex(fgets($fp ,4096)) ;
+				if($ext==="pch"){
+					$line = substr($line,0,6);
+					if($line==="4e454f"){
 						$useneo=true;
-						} else{//NEOのpchでなければ
+					} else{//NEOのpchでなければ
 						echo"NEOのPCHではありません。";
 						// var_dump($line);
 						unlink($pchup);
-						}
-					} elseif($ext==="spch"){
-						$line = substr($line,0,24);
-						if($line==="6c617965725f636f756e743d"||$line==="000d0a"){
+					}
+				} elseif($ext==="spch"){
+					$line = substr($line,0,24);
+					if($line==="6c617965725f636f756e743d"||$line==="000d0a"){
 						$useneo=false;
-						}else{//しぃぺのspchでなければ
+					}else{//しぃぺのspchでなければ
 						echo"しぃペインターのSPCHではありません。";
 						unlink($pchup);
-						}
-					} else{
+					}
+				} else{
 					unlink($pchup);
 					echo"アニメファイルをアップしてください。";
-					}
-					fclose($fp);
-					$dat['pchfile'] = $pchup;
-				} else{//mime_content_typeが違ったら
+				}
+				fclose($fp);
+				$dat['pchfile'] = $pchup;
+			} else{//mime_content_typeが違ったら
 				unlink($pchup);
 				echo"アニメファイルをアップしてください。";
 				// error(MSG001);
-				}
 			}
-		}//不正なファイルでは無い時は
+		}
 	}
 }
 //pchファイルアップロードペイントここまで
