@@ -1806,8 +1806,7 @@ function paintcom($resto=''){
 			$dat['tmp'][] = compact('src','srcname','date');
 		}
 	}
-	// if(ADMIN_NEWPOST&&$admin=='picpost') $dat['admin'] = $admin;
-	// form($dat,$resto,'',$tmp);
+
 	$dat = array_merge($dat,form($resto,'',$tmp));
 
 	htmloutput(SKIN_DIR.OTHERFILE,$dat);
