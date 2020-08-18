@@ -842,11 +842,10 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 			//copy($upfile, $dest);
 		}
 
-		if(!is_file($dest)){
+		$is_file_dest = is_file($dest);
+		if(!$is_file_dest){
 			error(MSG003,$dest);
-		} else{
-			$is_file_dest=true;//is_file($dest）の変数化
-		} 
+		}
 	}
 
 	$REQUEST_METHOD = isset($_SERVER["REQUEST_METHOD"]) ? $_SERVER["REQUEST_METHOD"] : "";
