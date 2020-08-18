@@ -2370,7 +2370,7 @@ function catalog(){
 			$disptree = $treeline[0];
 			$j=$lineindex[$disptree] - 1; //該当記事を探して$jにセット
 			if($line[$j]==="") continue; //$jが範囲外なら次の行
-			list($no,$now,$name,,$sub,,,,,$ext,$w,$h,$time,,) = explode(",", rtrim($line[$j]));
+			list($no,$now,$name,,$sub,,,,,$ext,$w,,$time,,) = explode(",", rtrim($line[$j]));
 			// 画像ファイル名
 			$img = $path.$time.$ext;
 			// 画像系変数セット
@@ -2380,12 +2380,9 @@ function catalog(){
 					if($w > CATALOG_W) $w=CATALOG_W; //画像幅を揃える
 					$imgsrc = is_file(THUMB_DIR.$time.'s.jpg') ? THUMB_DIR.$time.'s.jpg' : $src;
 				}else{$w=CATALOG_W;}
-				//動画リンク
-				$pch="";
 				$txt=false;
 			} else{//画像が無い時
 				$txt=true;
-				$imgsrc=$pch="";
 			}
 
 			//日付とIDを分離
@@ -2398,9 +2395,10 @@ function catalog(){
 			list($name, $trip) = separateNameAndTrip($name);
 
 			// 記事格納
-			$dat['y'][$y]['x'][$x] = compact('imgsrc','w','no','sub','name','now','pch','txt','id','updatemark','trip','rescount');
+			$dat['y'][$y]['x'][$x] = compact('imgsrc','w','no','sub','name','now','txt','id','updatemark','trip','rescount');
+
 			// 変数クリア
-			unset($img,$src,$imgsrc,$w,$no,$sub,$name,$now,$pch,$txt);
+			unset($src,$imgsrc);
 		}
 
 		$x++;
