@@ -2336,6 +2336,7 @@ function catalog(){
 			list($no,$now,$name,,$sub,,,,,$ext,$w,,$time,,) = explode(",", rtrim($line[$j]));
 			// 画像ファイル名
 			$img = $path.$time.$ext;
+			$imgsrc = '';
 			// 画像系変数セット
 			if($ext && is_file($img)){
 				$src = IMG_DIR.$time.$ext;
@@ -2359,9 +2360,6 @@ function catalog(){
 
 			// 記事格納
 			$dat['y'][$y]['x'][$x] = compact('imgsrc','w','no','sub','name','now','txt','id','updatemark','trip','rescount');
-
-			// 変数クリア
-			unset($src,$imgsrc);
 		}
 
 		$x++;
