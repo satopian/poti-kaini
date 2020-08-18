@@ -1052,7 +1052,6 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 		if(filesize($dest) > MAX_KB * 1024){//ファイルサイズ再チェック
 		error(MSG034,$dest);
 		}
-		$size = getimagesize($dest);
 		$img_type=mime_content_type($dest);//190603
 
 		if (!in_array($img_type, ['image/gif', 'image/jpeg', 'image/png'])) {
@@ -1067,8 +1066,8 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 		}
 
 		chmod($dest,0606);
-		$W = $size[0];
-		$H = $size[1];
+
+		list($W, $H) = getimagesize($dest);
 
 		$ext = getImgType($img_type, $dest);
 
@@ -1885,9 +1884,7 @@ function incontinue(){
 	if(! CONTINUE_PASS) $dat['newpost_nopassword'] = true;
 	if($cext && is_file(IMG_DIR.$ctim.$cext)){//画像が無い時は処理しない
 	$dat['picfile'] = IMG_DIR.$ctim.$cext;
-	$size = getimagesize($dat['picfile']);
-	$dat['picw'] = $size[0];
-	$dat['pich'] = $size[1];
+	list($dat['picw'], $dat['pich']) = getimagesize($dat['picfile']);
 	$dat['no'] = $no;
 	$dat['pch'] = $ctim;
 	$dat['ext'] = $cext;
