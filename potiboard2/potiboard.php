@@ -808,13 +808,15 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 		$picfile = $picfile['filename']; //拡張子除去 190616
 		$tim = KASIRA.$tim;
 		//選択された絵が投稿者の絵か再チェック
-		if($picfile && is_file($temppath.$picfile.".dat")){
-			$fp = fopen($temppath.$picfile.".dat", "r");
-			$userdata = fread($fp, 1024);
-			fclose($fp);
-			list($uip,$uhost,,,$ucode,) = explode("\t", rtrim($userdata));
-			if(($ucode != $usercode) && (IP_CHECK && $uip != $userip)){error(MSG007);}
-		}else{error(MSG007);}
+		if (!$picfile || !is_file($temppath.$picfile.".dat")) {
+			error(MSG007);
+		}
+
+		$fp = fopen($temppath.$picfile.".dat", "r");
+		$userdata = fread($fp, 1024);
+		fclose($fp);
+		list($uip,$uhost,,,$ucode,) = explode("\t", rtrim($userdata));
+		if(($ucode != $usercode) && (IP_CHECK && $uip != $userip)){error(MSG007);}
 	}
 	$dest='';
 	$is_file_dest=false;
