@@ -1433,7 +1433,6 @@ function admindel($pass){
 
 	$line = file(LOGFILE);
 	foreach($line as $j => $value){
-		$img_flag = FALSE;
 		list($no,$now,$name,$email,$sub,$com,$url,
 			 $host,$pw,$ext,$w,$h,$time,$chk,) = explode(",",$value);
 		// フォーマット
@@ -1450,7 +1449,6 @@ function admindel($pass){
 		if(strlen($com) > 20) $com = mb_strcut($com,0,18) . ".";
 		// 画像があるときはリンク
 		if($ext && is_file($path.$time.$ext)){
-			$img_flag = TRUE;
 			$clip = "<a href=\"".IMG_DIR.$time.$ext."\" target=\"_blank\" rel=\"noopener\">".$time.$ext."</a><br>";
 			$size = filesize($path.$time.$ext);
 			if(!isset($all)){$all=0;}
