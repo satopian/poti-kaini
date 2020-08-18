@@ -1061,7 +1061,11 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 		}
 		$size = getimagesize($dest);
 		$img_type=mime_content_type($dest);//190603
-		if($img_type==="image/gif"||$img_type==="image/jpeg"||$img_type==="image/png"){//190603
+
+		if (!in_array($img_type, ['image/gif', 'image/jpeg', 'image/png'])) {
+			error(MSG004,$dest);
+		}
+
 		$chk = md5_file($dest);
 		foreach($badfile as $value){
 			if(preg_match("/^$value/",$chk)){
@@ -1086,9 +1090,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 			$H = ceil($H * $key);
 		}
 		$mes = "画像 $upfile_name のアップロードが成功しました<br><br>";
-		} else{
-		error(MSG004,$dest);
-		}
+
 		//重複チェック
 		$chkline=200;//チェックする最大行数
 		$j=1;
