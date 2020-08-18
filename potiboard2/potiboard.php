@@ -1431,6 +1431,7 @@ function admindel($pass){
 	$dat['admin_del'] = true;
 	$dat['pass'] = $pass;
 
+	$all = 0;
 	$line = file(LOGFILE);
 	foreach($line as $j => $value){
 		list($no,$now,$name,$email,$sub,$com,$url,
@@ -1448,7 +1449,6 @@ function admindel($pass){
 		if($ext && is_file($path.$time.$ext)){
 			$clip = "<a href=\"".IMG_DIR.$time.$ext."\" target=\"_blank\" rel=\"noopener\">".$time.$ext."</a><br>";
 			$size = filesize($path.$time.$ext);
-			if(!isset($all)){$all=0;}
 			$all += $size;	//合計計算
 			$chk= substr($chk,0,10);
 		}else{
@@ -1460,7 +1460,6 @@ function admindel($pass){
 
 		$dat['del'][$j] = compact('bg','no','now','sub','name','com','host','clip','size','chk');
 	}
-			if(!isset($all)){$all=0;}
 	$dat['all'] = ($all - ($all % 1024)) / 1024;
 	htmloutput(SKIN_DIR.OTHERFILE,$dat);
 	exit;
