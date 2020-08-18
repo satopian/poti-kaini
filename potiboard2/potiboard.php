@@ -1551,9 +1551,6 @@ if($admin===$ADMIN_PASS){
 						echo"しぃペインターのSPCHではありません。";
 						unlink($pchup);
 					}
-				} else{
-					unlink($pchup);
-					echo"アニメファイルをアップしてください。";
 				}
 				fclose($fp);
 				$dat['pchfile'] = $pchup;
