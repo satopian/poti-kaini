@@ -903,9 +903,6 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 	if(USE_COM&&!$com) error(MSG008,$dest);
 	if(USE_SUB&&!$sub) error(MSG010,$dest);
 
-	//$name=preg_replace("/管理/","\"管理\"",$name);
-	//$name=preg_replace("/削除/","\"削除\"",$name);
-
 	if(strlen($com) > MAX_COM) error(MSG011,$dest);
 	if(strlen($name) > MAX_NAME) error(MSG012,$dest);
 	if(strlen($email) > MAX_EMAIL) error(MSG013,$dest);
@@ -921,14 +918,11 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 
 	// No.とパスと時間とURLフォーマット
 	srand((double)microtime()*1000000);
-	// if($pwd==""){
-	// 	if($pwdc==""){
 	if(!$pwd){//nullでも8桁のパスをセット
 		$pwd = $pwdc ? $pwd : substr(rand(), 0, 8);
 	}
 
 	$c_pass = $pwd;
-//	$pass = ($pwd) ? substr(md5($pwd),2,8) : "*";
 	$pass = ($pwd) ? password_hash($pwd,PASSWORD_BCRYPT,['cost' => 5]) : "*";
 	$now = now_date($time);//日付取得
 	if(DISP_ID){
@@ -1016,9 +1010,6 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 			if(RENZOKU && $time - $ltime < RENZOKU){error(MSG020,$dest);}
 			if(RENZOKU2 && $time - $ltime < RENZOKU2 && $upfile_name){error(MSG021,$dest);}
 			if($com){
-				// if($textonly){//画像なしの時
-				// $dest="";
-				// }
 					switch(D_POST_CHECKLEVEL){//190622
 						case 1:	//low
 							if($com === $lcom){error(MSG022,$dest);}
@@ -1206,9 +1197,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 	$cooks = array("namec<>".$name,"emailc<>".$email,"urlc<>".$url);
 
 	foreach ( $cooks as $cook ) {
-		
 		list($c_name,$c_cookie) = explode('<>',$cook);
-			// $c_cookie = str_replace("&amp;", "&", $c_cookie);
 		setcookie ($c_name, $c_cookie,time()+(SAVE_COOKIE*24*3600));
 	}
 
