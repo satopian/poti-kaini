@@ -1436,15 +1436,12 @@ function admindel($pass){
 		list($no,$now,$name,$email,$sub,$com,$url,
 			 $host,$pw,$ext,$w,$h,$time,$chk,) = explode(",",$value);
 		// フォーマット
-		//$now=preg_replace('#.{2}/(.*)$#','\1',$now);
-		//$now=preg_replace('/\(.*\)/',' ',$now);
 		$now  = preg_replace("/( ID:.*)/","",$now);//ID以降除去
 		$name = strip_tags($name);//タグ除去
 		if(strlen($name) > 10) $name = mb_strcut($name,0,9).".";
 		if(strlen($sub) > 10) $sub = mb_strcut($sub,0,9).".";
 		if($email) $name="<a href=\"mailto:$email\">$name</a>";
 		$com = preg_replace("{<br(( *)|( *)/)>}i"," ",$com);
-		//$com = str_replace("<br />"," ",$com);
 		$com = htmlspecialchars($com,ENT_QUOTES,'utf-8');
 		if(strlen($com) > 20) $com = mb_strcut($com,0,18) . ".";
 		// 画像があるときはリンク
