@@ -2250,7 +2250,10 @@ function replace($no,$pwd,$stime){
 			}
 		
 			$img_type=mime_content_type($dest);
-			if($img_type==="image/gif"||$img_type==="image/jpeg"||$img_type==="image/png"){//190603
+			if (!in_array($img_type, ['image/gif', 'image/jpeg', 'image/png'])) {
+				error(MSG004,$dest);
+			}
+
 			$chk = md5_file($dest);
 			foreach($badfile as $value){
 				if(preg_match("/^$value/",$chk)){
@@ -2263,9 +2266,7 @@ function replace($no,$pwd,$stime){
 			chmod($dest,0606);
 			rename($dest,$path.$tim.$imgext);
 			$mes = "画像のアップロードが成功しました<br><br>";
-			} else{
-			error(MSG004,$dest);
-			}
+
 			//差し換え前と同じ大きさのサムネイル作成
 			if(USE_THUMB) thumb($path,$tim,$imgext,$W,$H);
 			//ワークファイル削除
