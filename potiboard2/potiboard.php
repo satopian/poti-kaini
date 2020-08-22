@@ -91,7 +91,6 @@ $fcolor = newstring(filter_input(INPUT_POST, 'fcolor'));
 $undo = filter_input(INPUT_POST, 'undo',FILTER_VALIDATE_INT);
 $undo_in_mg = filter_input(INPUT_POST, 'undo_in_mg',FILTER_VALIDATE_INT);
 $quality = filter_input(INPUT_POST, 'quality',FILTER_VALIDATE_INT);
-$savetype = newstring(filter_input(INPUT_POST, 'savetype'));
 
 //INPUT_GETから変数を取得
 
@@ -1498,7 +1497,7 @@ function check_path ($path, $name, $is_dir = false) {
 /* お絵描き画面 */
 function paintform($picw,$pich,$anime,$pch=""){
 	global $admin,$shi,$ctype,$type,$no,$pwd,$ext;
-	global $resto,$mode,$savetype,$quality,$qualitys,$usercode;
+	global $resto,$mode,$quality,$qualitys,$usercode;
 	global $useneo; //NEOを使う
 	global $ADMIN_PASS;
 
@@ -1624,6 +1623,8 @@ if($admin===$ADMIN_PASS){
 			$saveauto = '';
 			$savepng='';
 			$savejpeg='';
+
+	$savetype = newstring(filter_input(INPUT_POST, 'savetype'));
 	switch($savetype){
 		case 'PNG':
 			$dat['image_jpeg'] = 'false';
