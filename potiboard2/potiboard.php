@@ -766,7 +766,7 @@ function similar_str($str1,$str2){
 
 /* 記事書き込み */
 function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
-	global $path,$badstring,$badfile,$pwdc;
+	global $path,$badstring,$pwdc;
 	global $temppath,$ptime;
 	global $fcolor,$usercode;
 	global $admin,$badstr_A,$badstr_B,$badname;
@@ -1052,11 +1052,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 		}
 
 		$chk = md5_file($dest);
-		foreach($badfile as $value){
-			if(preg_match("/^$value/",$chk)){
-			error(MSG005,$dest); //拒絶画像
-			}
-		}
+		check_badfile($chk, $dest); // 拒絶画像チェック
 
 		chmod($dest,0606);
 
@@ -2135,7 +2131,7 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 
 /* 画像差し換え */
 function replace($no,$pwd,$stime){
-	global $path,$temppath,$badfile,$repcode;
+	global $path,$temppath,$repcode;
 	$userip = get_uip();
 	$mes="";
 	
@@ -2218,11 +2214,7 @@ function replace($no,$pwd,$stime){
 			}
 
 			$chk = md5_file($dest);
-			foreach($badfile as $value){
-				if(preg_match("/^$value/",$chk)){
-				error(MSG005,$dest); //拒絶画像
-				}
-			}
+			check_badfile($chk, $dest); // 拒絶画像チェック
 
 			$imgext = getImgType($img_type, $dest);
 	
@@ -2564,6 +2556,15 @@ function check_badip ($host, $dest = '') {
 	foreach($badip as $value){ //拒絶host
 		if (preg_match("/$value$/i",$host)) {
 			error(MSG016, $dest);
+		}
+	}
+}
+
+function check_badfile ($chk, $dest = '') {
+	global $badfile;
+	foreach($badfile as $value){
+		if(preg_match("/^$value/",$chk)){
+			error(MSG005,$dest); //拒絶画像
 		}
 	}
 }
