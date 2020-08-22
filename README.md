@@ -54,6 +54,11 @@ config.phpの設定をし、アップロードしてpotiboard.phpのあるディ
 
 ## 履歴
 
+### [2020/08/23] v.2.12.8 lot.200823
+
+- $pictmp,$picfileを関数内に移動。カタログモードの時の画像のHTMLHTMLの幅と高さを出力できるようにした。(by さとぴあ)
+  - くわしくは[こちら](https://github.com/sakots/poti-kaini/pull/112)
+
 ### [2020/08/22] v.2.12.7 lot.200822
 
 - ソースコード整理(by きつねこ)
