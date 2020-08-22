@@ -766,7 +766,7 @@ function similar_str($str1,$str2){
 
 /* 記事書き込み */
 function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
-	global $path,$badstring,$badfile,$badip,$pwdc;
+	global $path,$badstring,$badfile,$pwdc;
 	global $temppath,$ptime;
 	global $fcolor,$usercode;
 	global $admin,$badstr_A,$badstr_B,$badname;
@@ -908,10 +908,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 
 	//ホスト取得
 	$host = gethostbyaddr($userip);
-
-	foreach($badip as $value){ //拒絶host
-		if(preg_match("/$value$/i",$host)) error(MSG016,$dest);
-	}
+	check_badip($host, $dest);
 
 	// No.とパスと時間とURLフォーマット
 	srand((double)microtime()*1000000);
@@ -1990,7 +1987,7 @@ function editform($del,$pwd){
 
 /* 記事上書き */
 function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
-	global $badstring,$badip;
+	global $badstring;
 	global $fcolor,$badstr_A,$badstr_B,$badname;
 	global $ADMIN_PASS;
 	$userip = get_uip();
@@ -2051,10 +2048,7 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 
 	//ホスト取得
 	$host = gethostbyaddr($userip);
-
-	foreach($badip as $value){ //拒絶host
-		if(preg_match("/$value$/i",$host)) error(MSG016);
-	}
+	check_badip($host);
 
 	// 時間とURLフォーマット
 	$now = now_date($time);//日付取得
@@ -2141,16 +2135,13 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 
 /* 画像差し換え */
 function replace($no,$pwd,$stime){
-	global $path,$temppath,$badip,$badfile,$repcode;
+	global $path,$temppath,$badfile,$repcode;
 	$userip = get_uip();
 	$mes="";
 	
 	//ホスト取得
 	$host = gethostbyaddr($userip);
-
-	foreach($badip as $value){ //拒絶host
-		if(preg_match("/$value$/i",$host)) error(MSG016);
-	}
+	check_badip($host);
 
 	/*--- テンポラリ捜査 ---*/
 	$find=false;
@@ -2566,6 +2557,15 @@ function png2jpg ($src) {
 		}
 	}
 	return false;
+}
+
+function check_badip ($host, $dest = '') {
+	global $badip;
+	foreach($badip as $value){ //拒絶host
+		if (preg_match("/$value$/i",$host)) {
+			error(MSG016, $dest);
+		}
+	}
 }
 
 ?>
