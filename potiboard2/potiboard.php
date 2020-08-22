@@ -60,7 +60,6 @@ function newstring($string) {
 //INPUT_POSTから変数を取得
 
 //var_dump($_POST);
-//$mode = newstring(filter_input(INPUT_POST, 'mode'));
 $mode = isset($_REQUEST['mode']) ? $_REQUEST['mode'] : '';
 $resto = filter_input(INPUT_POST, 'resto',FILTER_VALIDATE_INT);
 $name = filter_input(INPUT_POST, 'name');
@@ -382,7 +381,6 @@ function form($resno="",$adminin="",$tmp=""){
 		$dat['animechk'] = DEF_ANIME ? ' checked' : '';
 		$dat['pmaxw'] = PMAX_W;
 		$dat['pmaxh'] = PMAX_H;
-		// $dat['form'] = true;
 		if(USE_PAINT==2 && !$resno && !$admin){
 			$dat['paint2'] = true;
 			$dat['form'] = false;
@@ -1540,7 +1538,6 @@ if($admin===$ADMIN_PASS){
 						$useneo=true;
 					} else{//NEOのpchでなければ
 						echo"NEOのPCHではありません。";
-						// var_dump($line);
 						unlink($pchup);
 					}
 				} elseif($ext==="spch"){
@@ -1873,7 +1870,6 @@ function incontinue(){
 	if(!$flag) error(MSG001);
 
 	$dat['continue_mode'] = true;
-//	if(CONTINUE_PASS) $dat['passflag'] = true;
 //コンティニュー時は削除キーを常に表示
 	$dat['passflag'] = true;
 //新規投稿で削除キー不要の時 true
@@ -2046,9 +2042,6 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 	if(!$sub||preg_match("/\A\s*\z/u",$sub))   $sub="";
 	if(!$email||preg_match("/\A\s*\z|&lt;|</ui",$email)) $email="";
 	if(!$url||!preg_match("/\A *https?:\/\//",$url)||preg_match("/&lt;|</i",$url)) $url="";
-
-	//$name=preg_replace("/管理/","\"管理\"",$name);
-	//$name=preg_replace("/削除/","\"削除\"",$name);
 
 	if(strlen($com) > MAX_COM) error(MSG011);
 	if(strlen($name) > MAX_NAME) error(MSG012);
