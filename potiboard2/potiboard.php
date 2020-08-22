@@ -1624,7 +1624,7 @@ if($admin===$ADMIN_PASS){
 			$savepng='';
 			$savejpeg='';
 
-	$savetype = newstring(filter_input(INPUT_POST, 'savetype'));
+	$savetype = filter_input(INPUT_POST, 'savetype');
 	switch($savetype){
 		case 'PNG':
 			$dat['image_jpeg'] = 'false';
