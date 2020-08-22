@@ -117,12 +117,6 @@ $stime = filter_input(INPUT_GET, 'stime',FILTER_VALIDATE_INT);
 $pwdc = filter_input(INPUT_COOKIE, 'pwdc');
 $usercode = filter_input(INPUT_COOKIE, 'usercode');//nullならuser-codeを発行
 
-//$_SERVERから変数を取得
-//var_dump($_SERVER);
-
-//INPUT_SERVER が動作しないサーバがあるので$_SERVERを使う。
-
-//$_FILESから変数を取得
 //設定の読み込み
 if ($err = check_file('config.php')) {
 	error($err);
@@ -924,7 +918,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 	// if($pwd==""){
 	// 	if($pwdc==""){
 	if(!$pwd){//nullでも8桁のパスをセット
-		$pwd = $pwdc ? $pwd : substr(rand(), 0, 8);
+		$pwd = $pwdc ? $pwdc : substr(rand(), 0, 8);
 	}
 
 	$c_pass = $pwd;
