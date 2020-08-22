@@ -78,9 +78,7 @@ $pch = newstring(filter_input(INPUT_POST, 'pch'));
 $ext = newstring(filter_input(INPUT_POST, 'ext'));
 $ctype = newstring(filter_input(INPUT_POST, 'ctype'));
 $type = newstring(filter_input(INPUT_POST, 'type'));
-$pictmp = filter_input(INPUT_POST, 'pictmp',FILTER_VALIDATE_INT);
 $ptime = newstring(filter_input(INPUT_POST, 'ptime'));
-$picfile = newstring(filter_input(INPUT_POST, 'picfile'));
 $del = filter_input(INPUT_POST,'del',FILTER_VALIDATE_INT,FILTER_REQUIRE_ARRAY);//$del は配列
 $admin = newstring(filter_input(INPUT_POST, 'admin'));
 $pass = newstring(filter_input(INPUT_POST, 'pass'));
@@ -208,7 +206,7 @@ switch($mode){
 			}
 			$admin=$pwd;
 		}
-		regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile);
+		regist($name,$email,$sub,$com,$url,$pwd,$resto);
 		break;
 	case 'admin':
 		valid($pass);
@@ -759,7 +757,7 @@ function similar_str($str1,$str2){
 }
 
 /* 記事書き込み */
-function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
+function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 	global $path,$badstring,$pwdc;
 	global $temppath,$ptime;
 	global $fcolor,$usercode;
@@ -767,6 +765,8 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 	global $ADMIN_PASS;
 
 	$upfile_name = isset($_FILES["upfile"]["name"]) ? $_FILES["upfile"]["name"] : "";//190603
+	$pictmp = filter_input(INPUT_POST, 'pictmp',FILTER_VALIDATE_INT);
+	$picfile = newstring(filter_input(INPUT_POST, 'picfile'));
 
 	if (strpos($upfile_name, '/') !== false) {//ファイル名に/があったら中断
 		error(MSG015);
@@ -2304,18 +2304,26 @@ function catalog(){
 			$disptree = $treeline[0];
 			$j=$lineindex[$disptree] - 1; //該当記事を探して$jにセット
 			if($line[$j]==="") continue; //$jが範囲外なら次の行
-			list($no,$now,$name,,$sub,,,,,$ext,$w,,$time,,) = explode(",", rtrim($line[$j]));
+			list($no,$now,$name,,$sub,,,,,$ext,$w,$h,$time,,) = explode(",", rtrim($line[$j]));
 			// 画像ファイル名
 			$img = $path.$time.$ext;
 			$imgsrc = '';
 			// 画像系変数セット
 			if($ext && is_file($img)){
-				$src = IMG_DIR.$time.$ext;
-				if($w){	//サイズがある時
-					if($w > CATALOG_W) $w=CATALOG_W; //画像幅を揃える
-					$imgsrc = is_file(THUMB_DIR.$time.'s.jpg') ? THUMB_DIR.$time.'s.jpg' : $src;
-				}else{$w=CATALOG_W;}
 				$txt=false;
+				$src = IMG_DIR.$time.$ext;
+				$imgsrc = is_file(THUMB_DIR.$time.'s.jpg') ? THUMB_DIR.$time.'s.jpg' : $src;
+				if($w && $h){
+					if($w > CATALOG_W){
+						$w = CATALOG_W;
+						$keys = CATALOG_W / $w;
+						$h = ceil($h * $keys);//端数の切り上げ
+					}
+				}else{//ログに幅と高さが記録されていない時
+					$w=CATALOG_W;
+					$h=null;
+				}
+				//上記条件と一致しない時の $W $h は元の値
 			} else{//画像が無い時
 				$txt=true;
 			}
@@ -2330,7 +2338,7 @@ function catalog(){
 			list($name, $trip) = separateNameAndTrip($name);
 
 			// 記事格納
-			$dat['y'][$y]['x'][$x] = compact('imgsrc','w','no','sub','name','now','txt','id','updatemark','trip','rescount');
+			$dat['y'][$y]['x'][$x] = compact('imgsrc','w','h','no','sub','name','now','txt','id','updatemark','trip','rescount');
 		}
 
 		$x++;
