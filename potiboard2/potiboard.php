@@ -89,7 +89,6 @@ $onlyimgdel = filter_input(INPUT_POST, 'onlyimgdel',FILTER_VALIDATE_BOOLEAN);
 //v1.32 MONO WHITE
 $fcolor = newstring(filter_input(INPUT_POST, 'fcolor'));
 $undo = filter_input(INPUT_POST, 'undo',FILTER_VALIDATE_INT);
-$undo_in_mg = filter_input(INPUT_POST, 'undo_in_mg',FILTER_VALIDATE_INT);
 $quality = filter_input(INPUT_POST, 'quality',FILTER_VALIDATE_INT);
 
 //INPUT_GETから変数を取得
@@ -361,7 +360,7 @@ function basicpart(){
 /* 投稿フォーム */
 function form($resno="",$adminin="",$tmp=""){
 	global $addinfo,$stime;
-	global $fontcolors,$undo,$undo_in_mg,$quality,$qualitys;
+	global $fontcolors,$undo,$quality,$qualitys;
 	global $ADMIN_PASS;
 
 	$admin = ($adminin === 'valid');
@@ -427,6 +426,7 @@ function form($resno="",$adminin="",$tmp=""){
 
 	//アプレット設定
 	$dat['undo'] = $undo ? $undo : UNDO;
+	$undo_in_mg = filter_input(INPUT_POST, 'undo_in_mg',FILTER_VALIDATE_INT);
 	$dat['undo_in_mg'] = $undo_in_mg ? $undo_in_mg : UNDO_IN_MG;
 	$qline='';
 	foreach ( $qualitys as $q ){
