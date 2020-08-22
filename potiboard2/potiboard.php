@@ -764,10 +764,9 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 	global $admin,$badstr_A,$badstr_B,$badname;
 	global $ADMIN_PASS;
 
-	$upfile_name = isset($_FILES["upfile"]["name"]) ? $_FILES["upfile"]["name"] : "";//190603
 	$pictmp = filter_input(INPUT_POST, 'pictmp',FILTER_VALIDATE_INT);
 	$picfile = newstring(filter_input(INPUT_POST, 'picfile'));
-
+	$upfile_name = isset($_FILES["upfile"]["name"]) ? $_FILES["upfile"]["name"] : "";//190603
 	if (strpos($upfile_name, '/') !== false) {//ファイル名に/があったら中断
 		error(MSG015);
 	}
