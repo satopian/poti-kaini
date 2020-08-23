@@ -42,8 +42,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.12.1');
-define('POTI_VERLOT' , 'v2.12.1 lot.200814');
+define('POTI_VER' , 'v2.12.8');
+define('POTI_VERLOT' , 'v2.12.8 lot.200823');
 
 if (($phpver = phpversion()) < "5.5.0") {
 	die("本プログラムの動作には PHPバージョン 5.5.0 以上が必要です。<br>\n（現在のPHPバージョン：{$phpver}）");
@@ -78,9 +78,7 @@ $pch = newstring(filter_input(INPUT_POST, 'pch'));
 $ext = newstring(filter_input(INPUT_POST, 'ext'));
 $ctype = newstring(filter_input(INPUT_POST, 'ctype'));
 $type = newstring(filter_input(INPUT_POST, 'type'));
-$pictmp = filter_input(INPUT_POST, 'pictmp',FILTER_VALIDATE_INT);
 $ptime = newstring(filter_input(INPUT_POST, 'ptime'));
-$picfile = newstring(filter_input(INPUT_POST, 'picfile'));
 $del = filter_input(INPUT_POST,'del',FILTER_VALIDATE_INT,FILTER_REQUIRE_ARRAY);//$del は配列
 $admin = newstring(filter_input(INPUT_POST, 'admin'));
 $pass = newstring(filter_input(INPUT_POST, 'pass'));
@@ -113,12 +111,6 @@ $stime = filter_input(INPUT_GET, 'stime',FILTER_VALIDATE_INT);
 $pwdc = filter_input(INPUT_COOKIE, 'pwdc');
 $usercode = filter_input(INPUT_COOKIE, 'usercode');//nullならuser-codeを発行
 
-//$_SERVERから変数を取得
-//var_dump($_SERVER);
-
-//INPUT_SERVER が動作しないサーバがあるので$_SERVERを使う。
-
-//$_FILESから変数を取得
 //設定の読み込み
 if ($err = check_file('config.php')) {
 	error($err);
@@ -132,10 +124,10 @@ if ($err = check_file(__DIR__.'/Skinny.php')) {
 require_once(__DIR__.'/Skinny.php');
 
 //Template設定ファイル
-if ($err = check_file(__DIR__.'/'.SKIN_DIR.'/template_ini.php')) {
+if ($err = check_file(__DIR__.'/'.SKIN_DIR.'template_ini.php')) {
 	error($err);
 }
-require(__DIR__.'/'.SKIN_DIR.'/template_ini.php');
+require(__DIR__.'/'.SKIN_DIR.'template_ini.php');
 
 $path = realpath("./").'/'.IMG_DIR;
 $temppath = realpath("./").'/'.TEMP_DIR;
@@ -214,7 +206,7 @@ switch($mode){
 			}
 			$admin=$pwd;
 		}
-		regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile);
+		regist($name,$email,$sub,$com,$url,$pwd,$resto);
 		break;
 	case 'admin':
 		valid($pass);
@@ -661,7 +653,7 @@ function error($mes,$dest=''){
 	safe_unlink($dest);
 	$dat['err_mode'] = true;
 	$dat['mes'] = $mes;
-	if (defined(OTHERFILE)) {
+	if (defined('OTHERFILE')) {
 		htmloutput(SKIN_DIR.OTHERFILE,$dat);
 	} else {
 		print $dat['mes'];
@@ -676,15 +668,16 @@ function similar_str($str1,$str2){
 }
 
 /* 記事書き込み */
-function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
+function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 	global $path,$badstring,$pwdc;
 	global $temppath,$ptime;
 	global $fcolor,$usercode;
 	global $admin,$badstr_A,$badstr_B,$badname;
 	global $ADMIN_PASS;
 
+	$pictmp = filter_input(INPUT_POST, 'pictmp',FILTER_VALIDATE_INT);
+	$picfile = newstring(filter_input(INPUT_POST, 'picfile'));
 	$upfile_name = isset($_FILES["upfile"]["name"]) ? $_FILES["upfile"]["name"] : "";//190603
-
 	if (strpos($upfile_name, '/') !== false) {//ファイル名に/があったら中断
 		error(MSG015);
 	}
@@ -824,7 +817,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto,$pictmp,$picfile){
 	// No.とパスと時間とURLフォーマット
 	srand((double)microtime()*1000000);
 	if(!$pwd){//nullでも8桁のパスをセット
-		$pwd = $pwdc ? $pwd : substr(rand(), 0, 8);
+		$pwd = $pwdc ? $pwdc : substr(rand(), 0, 8);
 	}
 
 	$c_pass = $pwd;
@@ -2204,9 +2197,18 @@ function catalog(){
 			$res = create_res($path, $line[$j]);
 
 			// カタログ専用ロジック
-			if ($res['img_file_exists'] && (!$res['w'] || $res['w'] > CATALOG_W)) {
-				$res['w'] = CATALOG_W; //画像幅を揃える
+			if ($res['img_file_exists']) {
+				if($res['w'] && $res['h']){
+					if($res['w'] > CATALOG_W){
+						$res['w'] = CATALOG_W; //画像幅を揃える
+						$res['h'] = ceil($res['h'] * (CATALOG_W / $res['w']));//端数の切り上げ
+					}
+				}else{//ログに幅と高さが記録されていない時
+					$res['w'] = CATALOG_W;
+					$res['h'] = null;
+				}
 			}
+			
 			$res['txt'] = !$res['img_file_exists']; // 画像が無い時
 			$res['rescount'] = count($treeline) - 1;
 
