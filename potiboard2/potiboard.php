@@ -2177,7 +2177,7 @@ function replace($no,$pwd,$stime){
 function catalog(){
 	global $path;
 
-	$page = filter_input(INPUT_GET, 'page',FILTER_VALIDATE_INT);
+	$page = filter_input_default(INPUT_GET, 'page',FILTER_VALIDATE_INT, 0);
 
 	$line = file(LOGFILE);
 	foreach($line as $i =>$value){
@@ -2191,7 +2191,6 @@ function catalog(){
 	$y = 0;
 	$pagedef = CATALOG_X * CATALOG_Y;//1ページに表示する件数
 	$dat = form();
-	if(!$page) $page=0;
 	for($i = $page; $i < $page+$pagedef; ++$i){
 		//空文字ではなく未定義になっている
 		if(!isset($tree[$i])){
@@ -2413,6 +2412,17 @@ function is_ngword ($ngwords, $strs) {
 	return false;
 }
 
+/**
+ * @param int $type
+ * @param string $variable_name
+ * @param int $filter
+ * @param mixed $default_value
+ * @return mixed
+ */
+function filter_input_default ($type , $variable_name, $filter = FILTER_DEFAULT, $default_value = null) {
+	$value = filter_input($type, $variable_name, $filter);
+	return ($value !== null || $default_value === null) ? $value : $default_value;
+}
 
 function png2jpg ($src) {
 	if(mime_content_type($src)==="image/png" && gd_check() && function_exists("ImageCreateFromPNG")){//pngならJPEGに変換
