@@ -2480,10 +2480,8 @@ function create_res ($path, $line) {
 		$res['src'] = IMG_DIR.$time.$ext;
 		$res['srcname'] = $time.$ext;
 		$res['size'] = filesize($res['img']);
-		if($res['w'] && $res['h']){	//サイズがある時
-			$res['thumb'] = is_file(THUMB_DIR.$time.'s.jpg');
-			$res['imgsrc'] = $res['thumb'] ? THUMB_DIR.$time.'s.jpg' : $res['src'];
-		}
+		$res['thumb'] = is_file(THUMB_DIR.$time.'s.jpg');
+		$res['imgsrc'] = $res['thumb'] ? THUMB_DIR.$time.'s.jpg' : $res['src'];
 		//描画時間
 		$res['painttime'] = DSP_PAINTTIME ? $ptime : '';
 		//動画リンク
