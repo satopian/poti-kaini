@@ -1524,34 +1524,15 @@ if($admin===$ADMIN_PASS){
 		$dat['newpaint'] = true;
 	}
 	$dat['security_url'] = SECURITY_URL;
-			$saveauto = '';
-			$savepng='';
-			$savejpeg='';
 
-	$savetype = filter_input(INPUT_POST, 'savetype');
-	switch($savetype){
-		case 'PNG':
-			$dat['image_jpeg'] = 'false';
-			$dat['image_size'] = IMAGE_SIZE;
-			$savepng = ' selected';
-			break;
-		case 'JPEG':
-			$dat['image_jpeg'] = 'true';
-			$dat['image_size'] = 1;
-			$savejpeg = ' selected';
-			break;
-		case 'AUTO':
-			$dat['image_jpeg'] = 'true';
-			$dat['image_size'] = IMAGE_SIZE;
-			$saveauto = ' selected';
-			break;
-		default://テーマに設定が無い時
-		$dat['image_jpeg'] = 'false';//PNG
-		$dat['image_size'] = 0;//減色処理なし
-	}
-	$dat['savetypes'] = '<option value="AUTO"'.$saveauto.'>AUTO</option>';
-	$dat['savetypes'].= '<option value="PNG"'.$savepng.'>PNG</option>';
-	$dat['savetypes'].= '<option value="JPEG"'.$savejpeg.'>JPEG</option>';
+	$savetype = filter_input(INPUT_POST, 'savetype'); // JPEG or PNG or AUTO or それ以外 が来ることを想定
+	$dat['image_jpeg'] = in_array($savetype, ['JPEG', 'AUTO']);
+	$dat['image_size'] = in_array($savetype, ['PNG', 'AUTO']) ? IMAGE_SIZE : ($savetype == 'JPEG' ? 1 : 0);
+	$dat['savetypes']
+		= '<option value="AUTO"' . ($savetype == 'AUTO' ? ' selected' : '') . '>AUTO</option>'
+		. '<option value="PNG"' . ($savetype == 'PNG' ? ' selected' : '') . '>PNG</option>'
+		. '<option value="JPEG"' . ($savetype == 'JPEG' ? ' selected' : '') . '>JPEG</option>';
+
 	$dat['compress_level'] = COMPRESS_LEVEL;
 	$dat['layer_count'] = LAYER_COUNT;
 	if($shi) $dat['quality'] = $quality ? $quality : $qualitys[0];
