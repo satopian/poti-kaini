@@ -471,13 +471,13 @@ function updatelog($resno=0){
 			$disptree = $treeline[0];
 			$j=$lineindex[$disptree] - 1; //該当記事を探して$jにセット
 			if($line[$j]==="") continue;   //$jが範囲外なら次の行
-			list($no,$now,$name,$email,$sub,$com,$url,
-				 $host,$pwd,$ext,$w,$h,$time,$chk,$ptime,$fcolor) = explode(",", rtrim($line[$j]));
+
+			$res = create_res($path, $line[$j]);
 
 			$r_threads = false;
 			if(ELAPSED_DAYS){//古いスレッドのフォームを閉じる日数が設定されていたら
 				$ntime = time();
-				$ltime=substr($time,-13,-3);
+				$ltime=substr($res['time'],-13,-3);
 				$elapsed_time = ELAPSED_DAYS*86400;
 				if(($ntime-$ltime) <= $elapsed_time){//指定日数以内
 					$r_threads = true;//フォームを表示する
@@ -493,35 +493,9 @@ function updatelog($resno=0){
 					$dat['paintform'] = false;
 				}
 			}
-				
-			// オートリンク
-			if(AUTOLINK) $com = auto_link($com);
-			// '>'色設定
-			$com = preg_replace("/(^|>)((&gt;|＞)[^<]*)/i", "\\1".RE_START."\\2".RE_END, $com);
-			// 画像ファイル名
-			$img = $path.$time.$ext;
-			// 画像系変数セット
-			if($ext && is_file($img)){
-				$src = IMG_DIR.$time.$ext;
-				$srcname = $time.$ext;
-				$size = filesize($img);
-				if($w && $h){	//サイズがある時
-					$thumb = is_file(THUMB_DIR.$time.'s.jpg');
-					$imgsrc = $thumb ? THUMB_DIR.$time.'s.jpg' : $src;
-				}
-				//描画時間
-				$painttime = DSP_PAINTTIME ? $ptime : '';
-				//動画リンク
-				$pch = (USE_ANIME && check_pch_ext(PCH_DIR.$time)) ? $time.$ext : '';
-				//コンティニュー
-				$continue = USE_CONTINUE ? $no : '';
-			} else{//画像が無い時
-				$src=$srcname=$imgsrc=$size=$pch=$thumb=$continue=$painttime="";
-			}
-			// そろそろ消える。
-			$limit = ($lineindex[$no] - 1 >= LOG_MAX * LOG_LIMIT / 100) ? true : '';
+
 			// ミニフォーム用
-			$resub = USE_RESUB ? 'Re: ' . $sub : '';
+			$resub = USE_RESUB ? 'Re: ' . $res['sub'] : '';
 			// レス省略
 			$skipres = '';
 			if(!$resno){
@@ -564,31 +538,16 @@ function updatelog($resno=0){
 				$dat['resub'] = $resub; //レス画面用
 			}
 
-			//日付とIDを分離
-			list($id, $now) = separateDatetimeAndId($now);
+			// 親レス用の値
+			$res['tab'] = $oya + 1; //TAB
+			$res['disp_resform'] = $disp_resform;
+			$res['limit'] = ($lineindex[$res['no']] - 1 >= LOG_MAX * LOG_LIMIT / 100) ? true : ''; // そろそろ消える。
+			$res['skipres'] = $skipres;
+			$res['resub'] = $resub;
 
-			//日付と編集マークを分離
-			list($now, $updatemark) = separateDatetimeAndUpdatemark($now);
+			$dat['oya'][$oya] = $res;
 
-			//名前とトリップを分離
-			list($name, $trip) = separateNameAndTrip($name);
-
-			//TAB
-			$tab=$oya+1;
-			//文字色
-			$fontcolor = $fcolor ? $fcolor : DEF_FONTCOLOR;
-			//<br />を<br>へ
-			$com = preg_replace("{<br( *)/>}i","<br>",$com);
-			//メタタグに使うコメントから
-			//タグを除去
-			$descriptioncom=strip_tags($com);
-			$encoded_name=urlencode($name);
-			$oyaname=$name;//投稿者名をコピー
-
-			// 親記事格納
-			$dat['oya'][$oya] = compact('src','srcname','size','painttime','pch','continue','thumb','imgsrc','w','h','no','sub','name','encoded_name','now','com','descriptioncom','limit','skipres','resub','url','email','id','updatemark','trip','tab','fontcolor','disp_resform');
-			// 変数クリア
-			unset($src,$srcname,$size,$painttime,$pch,$continue,$thumb,$imgsrc,$w,$h,$no,$sub,$name,$encoded_name,$now,$com,$descriptioncom,$limit,$skipres,$resub,$url,$email,$disp_resform);
+			$oyaname = $res['name']; //投稿者名をコピー
 
 			//レス作成
 			$rres=array();
@@ -599,62 +558,14 @@ function updatelog($resno=0){
 				}
 				$j=$lineindex[$disptree] - 1;
 				if($line[$j]==="") continue;
-				list($no,$now,$name,$email,$sub,$com,$url,
-						 $host,$pwd,$ext,$w,$h,$time,$chk,$ptime,$fcolor) = explode(",", rtrim($line[$j]));
-				// オートリンク
-				if(AUTOLINK) $com = auto_link($com);
-				// '>'色設定
-				$com = preg_replace("/(^|>)((&gt;|＞)[^<]*)/i", "\\1".RE_START."\\2".RE_END, $com);
 
-				// ---------- レス画像対応 ----------
-				// 画像ファイル名
-				$img = $path.$time.$ext;
-				// 画像系変数セット
-				if($ext && is_file($img)){
-					$src = IMG_DIR.$time.$ext;
-					$srcname = $time.$ext;
-					$size = filesize($img);
-					if($w && $h){	//サイズがある時
-						$thumb = is_file(THUMB_DIR.$time.'s.jpg');
-						$imgsrc = $thumb ? THUMB_DIR.$time.'s.jpg' : $src;
-					}
-					//描画時間
-					$painttime = DSP_PAINTTIME ? $ptime : '';
-					//動画リンク
-					$pch = (USE_ANIME && check_pch_ext(PCH_DIR.$time)) ? $time.$ext : '';
-					//コンティニュー
-					$continue = USE_CONTINUE ? $no : '';
-				} else{//画像が無い時
-					$src=$srcname=$imgsrc=$size=$pch=$thumb=$continue=$painttime="";
-				}
-
-				//日付とIDを分離
-				list($id, $now) = separateDatetimeAndId($now);
-
-				//日付と編集マークを分離
-				list($now, $updatemark) = separateDatetimeAndUpdatemark($now);
-
-				//名前とトリップを分離
-				list($name, $trip) = separateNameAndTrip($name);
-
-				//文字色
-				$fontcolor = $fcolor ? $fcolor : DEF_FONTCOLOR;
-				//<br />を<br>へ
-				$com = preg_replace("{<br( *)/>}i","<br>",$com);
-				$encoded_name=urlencode($name);
-
-				// レス記事一時格納
-				$rres[$oya][] = compact('no','sub','name','encoded_name','now','com','url','email','id','updatemark','trip','fontcolor'
-								,'src','srcname','size','painttime','pch','continue','thumb','imgsrc','w','h');
+				$res = create_res($path, $line[$j]);
+				$rres[$oya][] = $res;
 				
 				// 投稿者名を配列にいれる
-				if ($oyaname != $name && !in_array($name, $rresname)) { // 重複チェックと親投稿者除外
-					$rresname[] = $name;
+				if ($oyaname != $res['name'] && !in_array($res['name'], $rresname)) { // 重複チェックと親投稿者除外
+					$rresname[] = $res['name'];
 				}
-
-				// 変数クリア
-				unset($no,$sub,$name,$encoded_name,$now,$com,$url,$email
-						,$src,$srcname,$size,$painttime,$pch,$continue,$thumb,$imgsrc,$w,$h);
 			}
 
 			// レス記事一括格納
@@ -1606,34 +1517,15 @@ if($admin===$ADMIN_PASS){
 		$dat['newpaint'] = true;
 	}
 	$dat['security_url'] = SECURITY_URL;
-			$saveauto = '';
-			$savepng='';
-			$savejpeg='';
 
-	$savetype = filter_input(INPUT_POST, 'savetype');
-	switch($savetype){
-		case 'PNG':
-			$dat['image_jpeg'] = 'false';
-			$dat['image_size'] = IMAGE_SIZE;
-			$savepng = ' selected';
-			break;
-		case 'JPEG':
-			$dat['image_jpeg'] = 'true';
-			$dat['image_size'] = 1;
-			$savejpeg = ' selected';
-			break;
-		case 'AUTO':
-			$dat['image_jpeg'] = 'true';
-			$dat['image_size'] = IMAGE_SIZE;
-			$saveauto = ' selected';
-			break;
-		default://テーマに設定が無い時
-		$dat['image_jpeg'] = 'false';//PNG
-		$dat['image_size'] = 0;//減色処理なし
-	}
-	$dat['savetypes'] = '<option value="AUTO"'.$saveauto.'>AUTO</option>';
-	$dat['savetypes'].= '<option value="PNG"'.$savepng.'>PNG</option>';
-	$dat['savetypes'].= '<option value="JPEG"'.$savejpeg.'>JPEG</option>';
+	$savetype = filter_input(INPUT_POST, 'savetype'); // JPEG or PNG or AUTO or それ以外 が来ることを想定
+	$dat['image_jpeg'] = in_array($savetype, ['JPEG', 'AUTO']);
+	$dat['image_size'] = in_array($savetype, ['PNG', 'AUTO']) ? IMAGE_SIZE : ($savetype == 'JPEG' ? 1 : 0);
+	$dat['savetypes']
+		= '<option value="AUTO"' . ($savetype == 'AUTO' ? ' selected' : '') . '>AUTO</option>'
+		. '<option value="PNG"' . ($savetype == 'PNG' ? ' selected' : '') . '>PNG</option>'
+		. '<option value="JPEG"' . ($savetype == 'JPEG' ? ' selected' : '') . '>JPEG</option>';
+
 	$dat['compress_level'] = COMPRESS_LEVEL;
 	$dat['layer_count'] = LAYER_COUNT;
 	if($shi) $dat['quality'] = $quality ? $quality : $qualitys[0];
@@ -2278,7 +2170,7 @@ function replace($no,$pwd,$stime){
 function catalog(){
 	global $path;
 
-	$page = filter_input(INPUT_GET, 'page',FILTER_VALIDATE_INT);
+	$page = filter_input_default(INPUT_GET, 'page',FILTER_VALIDATE_INT, 0);
 
 	$line = file(LOGFILE);
 	foreach($line as $i =>$value){
@@ -2292,52 +2184,36 @@ function catalog(){
 	$y = 0;
 	$pagedef = CATALOG_X * CATALOG_Y;//1ページに表示する件数
 	$dat = form();
-	if(!$page) $page=0;
 	for($i = $page; $i < $page+$pagedef; ++$i){
 		//空文字ではなく未定義になっている
 		if(!isset($tree[$i])){
 			$dat['y'][$y]['x'][$x]['noimg'] = true;
 		}else{
 			$treeline = explode(",", rtrim($tree[$i]));
-			$rescount = count($treeline) - 1;
 			$disptree = $treeline[0];
 			$j=$lineindex[$disptree] - 1; //該当記事を探して$jにセット
 			if($line[$j]==="") continue; //$jが範囲外なら次の行
-			list($no,$now,$name,,$sub,,,,,$ext,$w,$h,$time,,) = explode(",", rtrim($line[$j]));
-			// 画像ファイル名
-			$img = $path.$time.$ext;
-			$imgsrc = '';
-			// 画像系変数セット
-			if($ext && is_file($img)){
-				$txt=false;
-				$src = IMG_DIR.$time.$ext;
-				$imgsrc = is_file(THUMB_DIR.$time.'s.jpg') ? THUMB_DIR.$time.'s.jpg' : $src;
-				if($w && $h){
-					if($w > CATALOG_W){
-						$w = CATALOG_W;
-						$keys = CATALOG_W / $w;
-						$h = ceil($h * $keys);//端数の切り上げ
+
+			$res = create_res($path, $line[$j]);
+
+			// カタログ専用ロジック
+			if ($res['img_file_exists']) {
+				if($res['w'] && $res['h']){
+					if($res['w'] > CATALOG_W){
+						$res['w'] = CATALOG_W; //画像幅を揃える
+						$res['h'] = ceil($res['h'] * (CATALOG_W / $res['w']));//端数の切り上げ
 					}
 				}else{//ログに幅と高さが記録されていない時
-					$w=CATALOG_W;
-					$h=null;
+					$res['w'] = CATALOG_W;
+					$res['h'] = null;
 				}
-				//上記条件と一致しない時の $W $h は元の値
-			} else{//画像が無い時
-				$txt=true;
 			}
-
-			//日付とIDを分離
-			list($id, $now) = separateDatetimeAndId($now);
-
-			//日付と編集マークを分離
-			list($now, $updatemark) = separateDatetimeAndUpdatemark($now);
-
-			//名前とトリップを分離
-			list($name, $trip) = separateNameAndTrip($name);
+			
+			$res['txt'] = !$res['img_file_exists']; // 画像が無い時
+			$res['rescount'] = count($treeline) - 1;
 
 			// 記事格納
-			$dat['y'][$y]['x'][$x] = compact('imgsrc','w','h','no','sub','name','now','txt','id','updatemark','trip','rescount');
+			$dat['y'][$y]['x'][$x] = $res;
 		}
 
 		$x++;
@@ -2538,6 +2414,17 @@ function is_ngword ($ngwords, $strs) {
 	return false;
 }
 
+/**
+ * @param int $type
+ * @param string $variable_name
+ * @param int $filter
+ * @param mixed $default_value
+ * @return mixed
+ */
+function filter_input_default ($type , $variable_name, $filter = FILTER_DEFAULT, $default_value = null) {
+	$value = filter_input($type, $variable_name, $filter);
+	return ($value !== null || $default_value === null) ? $value : $default_value;
+}
 
 function png2jpg ($src) {
 	if(mime_content_type($src)==="image/png" && gd_check() && function_exists("ImageCreateFromPNG")){//pngならJPEGに変換
@@ -2568,6 +2455,62 @@ function check_badfile ($chk, $dest = '') {
 			error(MSG005,$dest); //拒絶画像
 		}
 	}
+}
+
+function create_res ($path, $line) {
+
+	list($no,$now,$name,$email,$sub,$com,$url,$host,$pwd,$ext,$w,$h,$time,$chk,$ptime,$fcolor)
+		= explode(",", rtrim($line));
+
+	$res = [
+		'w' => $w,
+		'h' => $h,
+		'no' => $no,
+		'sub' => $sub,
+		'url' => $url,
+		'email' => $email,
+		'ext' => $ext,
+		'time' => $time,
+		'fontcolor' => ($fcolor ? $fcolor : DEF_FONTCOLOR), //文字色
+	];
+
+	// 画像系変数セット
+	$res['img'] = $path.$time.$ext; // 画像ファイル名
+	if ($res['img_file_exists'] = ($ext && is_file($res['img']))) { // 画像ファイルがある場合
+		$res['src'] = IMG_DIR.$time.$ext;
+		$res['srcname'] = $time.$ext;
+		$res['size'] = filesize($res['img']);
+		if($res['w'] && $res['h']){	//サイズがある時
+			$res['thumb'] = is_file(THUMB_DIR.$time.'s.jpg');
+			$res['imgsrc'] = $res['thumb'] ? THUMB_DIR.$time.'s.jpg' : $res['src'];
+		}
+		//描画時間
+		$res['painttime'] = DSP_PAINTTIME ? $ptime : '';
+		//動画リンク
+		$res['pch'] = (USE_ANIME && check_pch_ext(PCH_DIR.$time)) ? $time.$ext : '';
+		//コンティニュー
+		$res['continue'] = USE_CONTINUE ? $res['no'] : '';
+	}
+
+	//日付とIDを分離
+	list($res['id'], $res['now']) = separateDatetimeAndId($now);
+	//日付と編集マークを分離
+	list($res['now'], $res['updatemark']) = separateDatetimeAndUpdatemark($res['now']);
+	//名前とトリップを分離
+	list($res['name'], $res['trip']) = separateNameAndTrip($name);
+
+	$res['encoded_name'] = urlencode($res['name']);
+
+	// オートリンク
+	if(AUTOLINK) {
+		$com = auto_link($com);
+	}
+	$com = preg_replace("/(^|>)((&gt;|＞)[^<]*)/i", "\\1".RE_START."\\2".RE_END, $com); // '>'色設定
+	$res['com'] = preg_replace("{<br( *)/>}i","<br>",$com); //<br />を<br>へ
+
+	$res['descriptioncom'] = strip_tags($res['com']); //メタタグに使うコメントからタグを除去
+
+	return $res;
 }
 
 ?>
