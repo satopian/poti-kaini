@@ -472,7 +472,7 @@ function updatelog($resno=0){
 			$j=$lineindex[$disptree] - 1; //該当記事を探して$jにセット
 			if($line[$j]==="") continue;   //$jが範囲外なら次の行
 
-			$res = create_res($path, $line[$j]);
+			$res = create_res($path, $line[$j], ['pch' => 1]);
 
 			$r_threads = false;
 			if(ELAPSED_DAYS){//古いスレッドのフォームを閉じる日数が設定されていたら
@@ -544,6 +544,7 @@ function updatelog($resno=0){
 			$res['limit'] = ($lineindex[$res['no']] - 1 >= LOG_MAX * LOG_LIMIT / 100) ? true : ''; // そろそろ消える。
 			$res['skipres'] = $skipres;
 			$res['resub'] = $resub;
+			$res['descriptioncom'] = strip_tags($res['com']); //メタタグに使うコメントからタグを除去
 
 			$dat['oya'][$oya] = $res;
 
@@ -559,7 +560,7 @@ function updatelog($resno=0){
 				$j=$lineindex[$disptree] - 1;
 				if($line[$j]==="") continue;
 
-				$res = create_res($path, $line[$j]);
+				$res = create_res($path, $line[$j], ['pch' => 1]);
 				$rres[$oya][] = $res;
 				
 				// 投稿者名を配列にいれる
@@ -2457,7 +2458,7 @@ function check_badfile ($chk, $dest = '') {
 	}
 }
 
-function create_res ($path, $line) {
+function create_res ($path, $line, $options = []) {
 
 	list($no,$now,$name,$email,$sub,$com,$url,$host,$pwd,$ext,$w,$h,$time,$chk,$ptime,$fcolor)
 		= explode(",", rtrim($line));
@@ -2487,7 +2488,7 @@ function create_res ($path, $line) {
 		//描画時間
 		$res['painttime'] = DSP_PAINTTIME ? $ptime : '';
 		//動画リンク
-		$res['pch'] = (USE_ANIME && check_pch_ext(PCH_DIR.$time)) ? $time.$ext : '';
+		$res['pch'] = (isset($options['pch']) && USE_ANIME && check_pch_ext(PCH_DIR.$time)) ? $time.$ext : '';
 		//コンティニュー
 		$res['continue'] = USE_CONTINUE ? $res['no'] : '';
 	}
@@ -2507,8 +2508,6 @@ function create_res ($path, $line) {
 	}
 	$com = preg_replace("/(^|>)((&gt;|＞)[^<]*)/i", "\\1".RE_START."\\2".RE_END, $com); // '>'色設定
 	$res['com'] = preg_replace("{<br( *)/>}i","<br>",$com); //<br />を<br>へ
-
-	$res['descriptioncom'] = strip_tags($res['com']); //メタタグに使うコメントからタグを除去
 
 	return $res;
 }
