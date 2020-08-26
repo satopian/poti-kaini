@@ -821,7 +821,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 	$pass = ($pwd) ? password_hash($pwd,PASSWORD_BCRYPT,['cost' => 5]) : "*";
 	$now = now_date($time);//日付取得
 	if(DISP_ID){
-			$now .= " ID:".substr(crypt(md5($userip.ID_SEED.date("Ymd", $time)),'id'),-8);
+		$now .= " ID:" . getId($userip, $time);
 	}
 	//カンマを変換
 	$now = str_replace(",", "&#44;", $now);
@@ -1898,7 +1898,7 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 	$now = now_date($time);//日付取得
 	$now .= UPDATE_MARK;
 	if(DISP_ID){
-			$now.=" ID:".substr(crypt(md5($userip.ID_SEED.date("Ymd", $time)),'id'),-8);
+		$now .= " ID:" . getId($userip, $time);
 	}
 	$now = str_replace(",", "&#44;", $now);//カンマを変換
 	//テキスト整形
@@ -2082,7 +2082,7 @@ function replace($no,$pwd,$stime){
 			
 			//ID付加
 			if(DISP_ID){
-					$now.=" ID:".substr(crypt(md5($userip.ID_SEED.date("Ymd", $time)),'id'),-8);
+				$now .= " ID:" . getId($userip, $time);
 			}
 			//描画時間追加
 			if($eptime) $ptime=$eptime.'+'.$ptime;
@@ -2472,5 +2472,8 @@ function closeFile ($fp) {
 	fclose($fp);
 }
 
+function getId ($userip, $time) {
+	return substr(crypt(md5($userip.ID_SEED.date("Ymd", $time)),'id'),-8);
+}
 ?>
 
