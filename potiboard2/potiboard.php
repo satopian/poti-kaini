@@ -473,20 +473,8 @@ function updatelog($resno=0){
 
 			$res = create_res($path, $line[$j], ['pch' => 1]);
 
-			$r_threads = false;
-			if(ELAPSED_DAYS){//古いスレッドのフォームを閉じる日数が設定されていたら
-				$ntime = time();
-				$ltime=substr($res['time'],-13,-3);
-				$elapsed_time = ELAPSED_DAYS*86400;
-				if(($ntime-$ltime) <= $elapsed_time){//指定日数以内
-					$r_threads = true;//フォームを表示する
-				}
-			} else{//フォームを閉じる日数が未設定なら
-				$r_threads = true;
-			}
-			$disp_resform = true;
-			if(!$r_threads){
-				$disp_resform = false;//ミニレスフォームを閉じる
+			$res['disp_resform'] = check_disp_resform($res); // ミニレスフォームの表示有無
+			if(!$res['disp_resform']){
 				if($resno){//レスなら
 					$dat['form'] = false;//フォームを閉じる
 					$dat['paintform'] = false;
@@ -539,7 +527,6 @@ function updatelog($resno=0){
 
 			// 親レス用の値
 			$res['tab'] = $oya + 1; //TAB
-			$res['disp_resform'] = $disp_resform;
 			$res['limit'] = ($lineindex[$res['no']] - 1 >= LOG_MAX * LOG_LIMIT / 100) ? true : ''; // そろそろ消える。
 			$res['skipres'] = $skipres;
 			$res['resub'] = $resub;
@@ -2475,5 +2462,13 @@ function closeFile ($fp) {
 function getId ($userip, $time) {
 	return substr(crypt(md5($userip.ID_SEED.date("Ymd", $time)),'id'),-8);
 }
+
+// ミニレスフォームを表示するかどうか
+function check_disp_resform ($res) {
+	return ELAPSED_DAYS //古いスレッドのフォームを閉じる日数が設定されていたら
+		? ((time() - (substr($res['time'], -13, -3))) <= ( ELAPSED_DAYS * 86400)) // 指定日数以内なら表示
+		: true; // フォームを閉じる日数が未設定なら表示
+}
+
 ?>
 
