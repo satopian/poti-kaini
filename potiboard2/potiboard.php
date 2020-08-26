@@ -2105,8 +2105,14 @@ function replace($no,$pwd,$stime){
 			rename($dest,$path.$tim.$imgext);
 			$mes = "画像のアップロードが成功しました<br><br>";
 
-			//差し換え前と同じ大きさのサムネイル作成
-			if(USE_THUMB) thumb($path,$tim,$imgext,$W,$H);
+			//元のサイズを基準にサムネイルを作成
+			if(USE_THUMB){
+				$thumbnail_size=array();
+					if($thumbnail_size=thumb($path,$tim,$imgext,$W,$H)){//作成されたサムネイルのサイズ
+						$W=$thumbnail_size['w'];
+						$H=$thumbnail_size['h'];
+					}
+				} 
 			//ワークファイル削除
 			safe_unlink($upfile);
 			safe_unlink($temppath.$file_name.".dat");
