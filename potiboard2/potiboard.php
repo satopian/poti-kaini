@@ -712,15 +712,11 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 			}
 			if(!preg_match('/\A(jpe?g|jfif|gif|png)\z/i', pathinfo($upfile_name, PATHINFO_EXTENSION))){//もとのファイル名の拡張子190606
 				error(MSG004,$dest);
-				}
-				if(move_uploaded_file($upfile, $dest)){
-					$upfile_name = CleanStr($upfile_name);
-				} else{
-					$upfile_name='';
-					error(MSG003,$dest);
-				}
-			//↑でエラーなら↓に変更
-			//copy($upfile, $dest);
+			}
+			if(!move_uploaded_file($upfile, $dest)){
+				error(MSG003,$dest);
+			}
+			$upfile_name = CleanStr($upfile_name);
 		}
 
 		$is_file_dest = is_file($dest);
