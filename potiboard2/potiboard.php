@@ -1019,10 +1019,8 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 	$no = $lastno + 1;
 	$newline = "$no,$now,$name,$email,$sub,$com,$url,$host,$pass,$ext,$W,$H,$tim,$chk,$ptime,$fcolor\n";
 	$newline.= implode("\n", $line);
-	ftruncate($fp,0);
-	set_file_buffer($fp, 0);
-	rewind($fp);
-	fwrite($fp, $newline);
+
+	writeFile($fp, $newline);
 
 	//ツリー更新
 	$find = false;
@@ -1060,10 +1058,9 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 
 	if(!$find){if(!$resto){$newline="$no\n";}else{error(MSG025,$dest);}}
 	$newline.=implode("\n", $line);
-	ftruncate($tp,0);
-	set_file_buffer($tp, 0);
-	rewind($tp);
-	fwrite($tp, $newline);
+
+	writeFile($tp, $newline);
+
 	closeFile($tp);
 	closeFile($fp);
 
@@ -1160,10 +1157,7 @@ function treedel($delno){
 		}
 	}
 	if($find){//ツリー更新
-		ftruncate($fp,0);
-		set_file_buffer($fp, 0);
-		rewind($fp);
-		fwrite($fp, implode("\n", $line));
+		writeFile($fp, implode("\n", $line));
 	}
 	closeFile($fp);
 }
@@ -1225,11 +1219,7 @@ function usrdel($del,$pwd){
 	}
 	if(!$flag)error(MSG028);
 	if($find){//ログ更新
-		ftruncate($fp,0);
-		set_file_buffer($fp, 0);
-		rewind($fp);
-		$newline = implode("\n", $line);
-		fwrite($fp,$newline);
+		writeFile($fp, implode("\n", $line));
 	}
 	floseFile($fp);
 }
@@ -1275,11 +1265,7 @@ function admindel($pass){
 			}
 		}
 		if($find){//ログ更新
-			ftruncate($fp,0);
-			set_file_buffer($fp, 0);
-			rewind($fp);
-			$newline = implode("\n", $line);
-			fwrite($fp,$newline);
+			writeFile($fp, implode("\n", $line));
 		}
 		closeFile($fp);
 	}
@@ -1971,11 +1957,7 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 		error(MSG028);
 	}
 
-	ftruncate($fp,0);
-	set_file_buffer($fp, 0);
-	rewind($fp);
-	$newline = implode("\n", $line);
-	fwrite($fp, $newline);
+	writeFile($fp, implode("\n", $line));
 
 	closeFile($fp);
 
@@ -2119,11 +2101,7 @@ function replace($no,$pwd,$stime){
 		error(MSG028);
 	}
 
-	ftruncate($fp,0);
-	set_file_buffer($fp, 0);
-	rewind($fp);
-	$newline = implode("\n", $line);
-	fwrite($fp, $newline);
+	writeFile($fp, implode("\n", $line));
 
 	closeFile($fp);
 
@@ -2479,6 +2457,14 @@ function create_res ($path, $line, $options = []) {
 	$res['com'] = preg_replace("{<br( *)/>}i","<br>",$com); //<br />を<br>へ
 
 	return $res;
+}
+
+// 一括書き込み（上書き）
+function writeFile ($fp, $data) {
+	ftruncate($fp,0);
+	set_file_buffer($fp, 0);
+	rewind($fp);
+	fwrite($fp, $data);
 }
 
 function closeFile ($fp) {
