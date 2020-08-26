@@ -618,7 +618,6 @@ function updatelog($resno=0){
 		$fp = fopen($logfilename, "w");
 		set_file_buffer($fp, 0);
 		flock($fp, LOCK_EX); //*
-		rewind($fp);
 		fwrite($fp, $buf);
 		fflush($fp);
 		flock($fp, LOCK_UN);
@@ -861,7 +860,6 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 	//ログ読み込み
 	$fp=fopen(LOGFILE,"r+");
 	flock($fp, LOCK_EX);
-	rewind($fp);
 	$buf=fread($fp,5242880);
 	if(!$buf){error(MSG019,$dest);}
 	$buf = charconvert($buf);
@@ -1034,7 +1032,6 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 	$tp=fopen(TREEFILE,"r+");
 	set_file_buffer($tp, 0);
 	flock($tp, LOCK_EX); //*
-	rewind($tp);
 	$buf=fread($tp,5242880);
 	if(!$buf){error(MSG023,$dest);}
 	$line = explode("\n", trim($buf));
@@ -1139,7 +1136,6 @@ function treedel($delno){
 	$fp=fopen(TREEFILE,"r+");
 	set_file_buffer($fp, 0);
 	flock($fp, LOCK_EX);
-	rewind($fp);
 	$buf=fread($fp,5242880);
 	if(!$buf){error(MSG024);}
 	$line = explode("\n", trim($buf));
@@ -1211,7 +1207,6 @@ function usrdel($del,$pwd){
 	$fp=fopen(LOGFILE,"r+");
 	set_file_buffer($fp, 0);
 	flock($fp, LOCK_EX);
-	rewind($fp);
 	$buf=fread($fp,5242880);
 	if(!$buf){error(MSG027);}
 	$buf = charconvert($buf);
@@ -1273,7 +1268,6 @@ function admindel($pass){
 		$fp=fopen(LOGFILE,"r+");
 		set_file_buffer($fp, 0);
 		flock($fp, LOCK_EX);
-		rewind($fp);
 		$buf=fread($fp,5242880);
 		if(!$buf){error(MSG030);}
 		$buf = charconvert($buf);
@@ -1968,7 +1962,6 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 	//ログ読み込み
 	$fp=fopen(LOGFILE,"r+");
 	flock($fp, LOCK_EX);
-	rewind($fp);
 	$buf=fread($fp,5242880);
 	if(!$buf){error(MSG019);}
 	$buf = charconvert($buf);
@@ -2061,7 +2054,6 @@ function replace($no,$pwd,$stime){
 	//ログ読み込み
 	$fp=fopen(LOGFILE,"r+");
 	flock($fp, LOCK_EX);
-	rewind($fp);
 	$buf=fread($fp,5242880);
 	if(!$buf){error(MSG019);}
 	$buf = charconvert($buf);
