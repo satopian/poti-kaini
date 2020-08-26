@@ -1233,13 +1233,13 @@ function admindel($pass){
 		foreach($line as $i => $value){
 			if($value!==""){
 				list($no,,,,,,,,,$ext,,,$tim,,) = explode(",",$value);
-			if(in_array($no,$del)){
-				if(!$onlyimgdel){	//記事削除
-					treedel($no);
-					unset($line[$i]);
-					$find = true;
-				}
-				delete_files($path, $tim, $ext);
+				if(in_array($no,$del)){
+					if(!$onlyimgdel){	//記事削除
+						treedel($no);
+						unset($line[$i]);
+						$find = true;
+					}
+					delete_files($path, $tim, $ext);
 				}
 			}
 		}
