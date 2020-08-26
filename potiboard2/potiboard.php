@@ -1143,14 +1143,13 @@ function treedel($delno){
 	$buf=fread($fp,5242880);
 	if(!$buf){error(MSG024);}
 	$line = explode("\n", trim($buf));
-	$countline=count($line);//必要
 	$find=false;
 	foreach($line as $i =>$value){
 		$treeline = explode(",", rtrim($value));
 		foreach($treeline as $j => $value){
 			if($value == $delno){
 				if($j==0){//スレ削除
-					if($countline<3){//スレが1つしかない場合、エラー防止の為に削除不可
+					if(count($line) <= 1){//スレが1つしかない場合、エラー防止の為に削除不可
 						fflush($fp);
 						flock($fp, LOCK_UN);
 						fclose($fp);
