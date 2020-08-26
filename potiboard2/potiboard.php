@@ -309,17 +309,16 @@ function get_gd_ver(){
 	return false;
 	}
 }
+
 //ユーザーip
 function get_uip(){
-	$userip = getenv("HTTP_CLIENT_IP");
-	if(!$userip){
-		$userip = getenv("HTTP_X_FORWARDED_FOR");
-	} 
-	if(!$userip){
-		$userip = getenv("REMOTE_ADDR");
-	} 
-	return $userip;
+	if ($ip = getenv("HTTP_CLIENT_IP")) {
+		return $ip;
+	} elseif ($ip = getenv("HTTP_X_FORWARDED_FOR")) {
+		return $ip;
 	}
+	return getenv("REMOTE_ADDR");
+}
 
 /* ベース */
 function basicpart(){
