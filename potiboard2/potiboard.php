@@ -1221,7 +1221,7 @@ function usrdel($del,$pwd){
 	if($find){//ログ更新
 		writeFile($fp, implode("\n", $line));
 	}
-	floseFile($fp);
+	closeFile($fp);
 }
 
 /* パス認証 */
