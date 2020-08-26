@@ -42,8 +42,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.12.8');
-define('POTI_VERLOT' , 'v2.12.8 lot.200823');
+define('POTI_VER' , 'v2.12.11');
+define('POTI_VERLOT' , 'v2.12.11 lot.200825');
 
 if (($phpver = phpversion()) < "5.5.0") {
 	die("本プログラムの動作には PHPバージョン 5.5.0 以上が必要です。<br>\n（現在のPHPバージョン：{$phpver}）");
@@ -140,9 +140,6 @@ if((THUMB_SELECT==0 && gd_check()) || THUMB_SELECT==1){
 		return;
 	}
 }
-
-//MB関数を使うか？ 使う:1 使わない:0
-define('USE_MB' , '1');
 
 //ユーザー削除権限 (0:不可 1:treeのみ許可 2:treeと画像のみ許可 3:tree,log,画像全て許可)
 //※treeのみを消して後に残ったlogは管理者のみ削除可能
@@ -2134,8 +2131,8 @@ function catalog(){
 			if ($res['img_file_exists']) {
 				if($res['w'] && $res['h']){
 					if($res['w'] > CATALOG_W){
-						$res['w'] = CATALOG_W; //画像幅を揃える
 						$res['h'] = ceil($res['h'] * (CATALOG_W / $res['w']));//端数の切り上げ
+						$res['w'] = CATALOG_W; //画像幅を揃える
 					}
 				}else{//ログに幅と高さが記録されていない時
 					$res['w'] = CATALOG_W;
@@ -2414,10 +2411,8 @@ function create_res ($path, $line, $options = []) {
 		$res['src'] = IMG_DIR.$time.$ext;
 		$res['srcname'] = $time.$ext;
 		$res['size'] = filesize($res['img']);
-		if($res['w'] && $res['h']){	//サイズがある時
-			$res['thumb'] = is_file(THUMB_DIR.$time.'s.jpg');
-			$res['imgsrc'] = $res['thumb'] ? THUMB_DIR.$time.'s.jpg' : $res['src'];
-		}
+		$res['thumb'] = is_file(THUMB_DIR.$time.'s.jpg');
+		$res['imgsrc'] = $res['thumb'] ? THUMB_DIR.$time.'s.jpg' : $res['src'];
 		//描画時間
 		$res['painttime'] = DSP_PAINTTIME ? $ptime : '';
 		//動画リンク
