@@ -619,9 +619,7 @@ function updatelog($resno=0){
 		set_file_buffer($fp, 0);
 		flock($fp, LOCK_EX); //*
 		fwrite($fp, $buf);
-		fflush($fp);
-		flock($fp, LOCK_UN);
-		fclose($fp);
+		closeFile($fp);
 		//拡張子を.phpにした場合、↑で500エラーでるなら↓に変更
 		if(PHP_EXT!='.php'){chmod($logfilename,0606);}
 	}
@@ -1066,12 +1064,8 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 	set_file_buffer($tp, 0);
 	rewind($tp);
 	fwrite($tp, $newline);
-	fflush($tp);
-	flock($tp, LOCK_UN);
-	fclose($tp);
-	fflush($fp);
-	flock($fp, LOCK_UN);
-	fclose($fp);
+	closeFile($tp);
+	closeFile($fp);
 
 	//-- クッキー保存 --
 	//漢字を含まない項目はこちらの形式で追加
@@ -1146,9 +1140,7 @@ function treedel($delno){
 			if($value == $delno){
 				if($j==0){//スレ削除
 					if(count($line) <= 1){//スレが1つしかない場合、エラー防止の為に削除不可
-						fflush($fp);
-						flock($fp, LOCK_UN);
-						fclose($fp);
+						closeFile($fp);
 						error(MSG026);
 					}else{
 						unset($line[$i]);
@@ -1173,9 +1165,7 @@ function treedel($delno){
 		rewind($fp);
 		fwrite($fp, implode("\n", $line));
 	}
-	fflush($fp);
-	flock($fp, LOCK_UN);
-	fclose($fp);
+	closeFile($fp);
 }
 
 /* テキスト整形 */
@@ -1241,9 +1231,7 @@ function usrdel($del,$pwd){
 		$newline = implode("\n", $line);
 		fwrite($fp,$newline);
 	}
-	fflush($fp);
-	flock($fp, LOCK_UN);
-	fclose($fp);
+	floseFile($fp);
 }
 
 /* パス認証 */
@@ -1293,9 +1281,7 @@ function admindel($pass){
 			$newline = implode("\n", $line);
 			fwrite($fp,$newline);
 		}
-		fflush($fp);
-		flock($fp, LOCK_UN);
-		fclose($fp);
+		closeFile($fp);
 	}
 	// 削除画面を表示
 	$dat['admin_del'] = true;
@@ -1813,9 +1799,7 @@ function editform($del,$pwd){
 	$fp=fopen(LOGFILE,"r");
 	flock($fp, LOCK_EX);
 	$buf=fread($fp,5242880);
-	fflush($fp);
-	flock($fp, LOCK_UN);
-	fclose($fp);
+	closeFile($fp);
 	if(!$buf){error(MSG019);}
 	$buf = charconvert($buf);
 	$line = explode("\n", trim($buf));
@@ -1983,9 +1967,7 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 		}
 	}
 	if(!$flag){
-		fflush($fp);
-		flock($fp, LOCK_UN);
-		fclose($fp);
+		closeFile($fp);
 		error(MSG028);
 	}
 
@@ -1994,9 +1976,8 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 	rewind($fp);
 	$newline = implode("\n", $line);
 	fwrite($fp, $newline);
-	fflush($fp);
-	flock($fp, LOCK_UN);
-	fclose($fp);
+
+	closeFile($fp);
 
 	updatelog();
 
@@ -2134,9 +2115,7 @@ function replace($no,$pwd,$stime){
 		}
 	}
 	if(!$flag){
-		fflush($fp);
-		flock($fp, LOCK_UN);
-		fclose($fp);
+		closeFile($fp);
 		error(MSG028);
 	}
 
@@ -2145,9 +2124,8 @@ function replace($no,$pwd,$stime){
 	rewind($fp);
 	$newline = implode("\n", $line);
 	fwrite($fp, $newline);
-	fflush($fp);
-	flock($fp, LOCK_UN);
-	fclose($fp);
+
+	closeFile($fp);
 
 	updatelog();
 
@@ -2501,6 +2479,12 @@ function create_res ($path, $line, $options = []) {
 	$res['com'] = preg_replace("{<br( *)/>}i","<br>",$com); //<br />を<br>へ
 
 	return $res;
+}
+
+function closeFile ($fp) {
+	fflush($fp);
+	flock($fp, LOCK_UN);
+	fclose($fp);
 }
 
 ?>
