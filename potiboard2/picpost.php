@@ -1,6 +1,6 @@
 <?php
 //----------------------------------------------------------------------
-// picpost.php lot.200625  by SakaQ >> http://www.punyu.net/php/
+// picpost.php lot.200828  by SakaQ >> http://www.punyu.net/php/
 // & sakots >> https://poti-k.info/
 //
 // しぃからPOSTされたお絵かき画像をTEMPに保存
@@ -8,6 +8,7 @@
 // このスクリプトはPaintBBS（藍珠CGI）のPNG保存ルーチンを参考に
 // PHP用に作成したものです。
 //----------------------------------------------------------------------
+// 2020/08/28 描画時間の記録に対応
 // 2020/05/25 投稿容量制限の設定項目を追加 従来はconfigのMAX_KB
 // 2020/02/25 flock()修正タイムゾーンを'Asia/Tokyo'に
 // 2020/01/25 REMOTE_ADDRが取得できないサーバに対応
@@ -201,8 +202,9 @@ if($sendheader){
 		list($name,$value) = explode("=", $query_s);
 		$$name = $value;
 	}
-	//usercodeと差し換え認識コード追加
-	$userdata .= "\t$usercode\t$repcode";
+	//usercode 差し換え認識コード 描画開始 完了時間 を追加
+	$userdata .= "\t$usercode\t$repcode\t$stime\t$time";
+
 }
 $userdata .= "\n";
 if(is_file(TEMP_DIR.$imgfile.".dat")){
