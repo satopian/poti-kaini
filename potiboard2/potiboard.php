@@ -42,8 +42,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.12.11');
-define('POTI_VERLOT' , 'v2.12.11 lot.200825');
+define('POTI_VER' , 'v2.14.0');
+define('POTI_VERLOT' , 'v2.14.0 lot.200828');
 
 if (($phpver = phpversion()) < "5.5.0") {
 	die("本プログラムの動作には PHPバージョン 5.5.0 以上が必要です。<br>\n（現在のPHPバージョン：{$phpver}）");
@@ -259,7 +259,7 @@ switch($mode){
 		rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin);
 		break;
 	case 'picrep':
-		replace($no,$pwd,$stime);
+		replace($no,$pwd);
 		break;
 	case 'catalog':
 		catalog();
@@ -651,7 +651,7 @@ function similar_str($str1,$str2){
 /* 記事書き込み */
 function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 	global $path,$badstring,$pwdc;
-	global $temppath,$ptime;
+	global $temppath;
 	global $fcolor,$usercode;
 	global $admin,$badstr_A,$badstr_B,$badname;
 	global $ADMIN_PASS;
@@ -696,8 +696,14 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 		$fp = fopen($temppath.$picfile.".dat", "r");
 		$userdata = fread($fp, 1024);
 		fclose($fp);
-		list($uip,$uhost,,,$ucode,) = explode("\t", rtrim($userdata));
+		list($uip,$uhost,,,$ucode,,$starttime,$postedtime) = explode("\t", rtrim($userdata));
 		if(($ucode != $usercode) && (IP_CHECK && $uip != $userip)){error(MSG007);}
+
+		//描画時間を$userdataをもとに計算
+		if($starttime && DSP_PAINTTIME){
+			$ptime = calcPtime($starttime,$postedtime);
+		}
+	
 	}
 	$dest='';
 	$is_file_dest=false;
@@ -1529,6 +1535,7 @@ if($admin===$ADMIN_PASS){
 		$arr_dynp[] = '<option>'.$p.'</option>';
 	}
 	$dat['dynp']=implode('',$arr_dynp);
+	$usercode.='&amp;stime='.time();
 	$dat['usercode'] = $usercode;
 
 	$dat['useneo'] = $useneo; //NEOを使う
@@ -1950,7 +1957,7 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 }
 
 /* 画像差し換え */
-function replace($no,$pwd,$stime){
+function replace($no,$pwd){
 	global $path,$temppath,$repcode;
 	$userip = get_uip();
 	$mes="";
@@ -1967,7 +1974,7 @@ function replace($no,$pwd,$stime){
 			$fp = fopen(TEMP_DIR.$file, "r");
 			$userdata = fread($fp, 1024);
 			fclose($fp);
-			list($uip,$uhost,$uagent,$imgext,$ucode,$urepcode) = explode("\t", rtrim($userdata)."\t");//区切りの"\t"を行末に190610
+			list($uip,$uhost,$uagent,$imgext,$ucode,$urepcode,$starttime,$postedtime) = explode("\t", rtrim($userdata)."\t");//区切りの"\t"を行末に190610
 			$file_name = preg_replace("/\.(dat)$/i","",$file);
 			//画像があり、認識コードがhitすれば抜ける
 			if($file_name && is_file(TEMP_DIR.$file_name.$imgext) && $urepcode === $repcode){$find=true;break;}
@@ -1988,9 +1995,9 @@ function replace($no,$pwd,$stime){
 	$tim = KASIRA.$time.substr(microtime(),2,3);
 	$now = now_date($time);//日付取得
 	$now .= UPDATE_MARK;
-	//描画時間
-	if($stime && DSP_PAINTTIME){
-		$ptime = calcPtime($stime);
+	//描画時間を$userdataをもとに計算
+	if($starttime && DSP_PAINTTIME){
+		$ptime = calcPtime($starttime,$postedtime);
 	}
 
 	//ログ読み込み
@@ -2041,8 +2048,14 @@ function replace($no,$pwd,$stime){
 			rename($dest,$path.$tim.$imgext);
 			$mes = "画像のアップロードが成功しました<br><br>";
 
-			//差し換え前と同じ大きさのサムネイル作成
-			if(USE_THUMB) thumb($path,$tim,$imgext,$W,$H);
+			//元のサイズを基準にサムネイルを作成
+			if(USE_THUMB){
+				$thumbnail_size=array();
+					if($thumbnail_size=thumb($path,$tim,$imgext,$W,$H)){//作成されたサムネイルのサイズ
+						$W=$thumbnail_size['w'];
+						$H=$thumbnail_size['h'];
+					}
+				} 
 			//ワークファイル削除
 			safe_unlink($upfile);
 			safe_unlink($temppath.$file_name.".dat");
@@ -2260,12 +2273,13 @@ function separateDatetimeAndUpdatemark ($now) {
 
 /**
  * 描写時間を計算
- * @param $stime
+ * @param $starttime
  * @return string
  */
-function calcPtime ($stime) {
+function calcPtime ($starttime,$postedtime='') {
 
-	$psec = time() - $stime;
+	$postedtime = $postedtime ? $postedtime : time();
+	$psec = $postedtime - $starttime;
 
 	$D = floor($psec / 86400);
 	$H = floor($psec % 86400 / 3600);

@@ -63,5 +63,11 @@ function thumb($path,$tim,$ext,$max_w,$max_h){
 	// 作成したイメージを破棄
 	ImageDestroy($im_in);
 	ImageDestroy($im_out);
+	$thumbnail_size = [
+		'w' => $out_w,
+		'h' => $out_h,
+	];
+return $thumbnail_size;
+
 }
 ?>

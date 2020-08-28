@@ -1,6 +1,6 @@
 <?php
 //POTI-board plugin search(c)2020 さとぴあ
-//v1.6.1 lot.200815
+//v1.6.2 lot.200826
 //
 //https://pbbs.sakura.ne.jp/
 //フリーウェアですが著作権は放棄しません。
@@ -27,6 +27,7 @@
 $max_search=120;
 
 //更新履歴
+//v1.6.2 2020.08.26 画像検索でis_file()のチェックが２重になっていたのを修正。
 //v1.6.1 2020.08.15 radioボタン未チェックの時の動作を修正。
 //v1.6 2020.08.13 削除ずみのスレッドのレスが表示されるバグを修正。
 //本文も全角英数、半角英数どちらでも検索できるようにした。
@@ -142,12 +143,10 @@ if($arr){
 				if(is_file(THUMB_DIR.$time.'s.jpg')){//サムネイルはあるか？
 					$img=THUMB_DIR.$time.'s.jpg';
 				}
-				else{
-					if(is_file(IMG_DIR.$time.$ext)){
-						$img=IMG_DIR.$time.$ext;
+				elseif($imgsearch||is_file(IMG_DIR.$time.$ext)){
+					$img=IMG_DIR.$time.$ext;
 					}
 				}
-			}
 
 			$time=substr($time,-13,10);
 			$postedtime = date ("Y/m/d G:i", $time);
