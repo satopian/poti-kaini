@@ -438,7 +438,7 @@ function updatelog(){
 			$j=$lineindex[$disptree] - 1; //該当記事を探して$jにセット
 			if($line[$j]==="") continue;   //$jが範囲外なら次の行
 
-			$res = create_res($path, $line[$j], ['pch' => 1]);
+			$res = create_res($line[$j], ['pch' => 1]);
 
 			$res['disp_resform'] = check_disp_resform($res); // ミニレスフォームの表示有無
 
@@ -503,7 +503,7 @@ function updatelog(){
 				$j=$lineindex[$disptree] - 1;
 				if($line[$j]==="") continue;
 
-				$res = create_res($path, $line[$j], ['pch' => 1]);
+				$res = create_res($line[$j], ['pch' => 1]);
 				$rres[$oya][] = $res;
 				
 				// 投稿者名を配列にいれる
@@ -569,7 +569,6 @@ function updatelog(){
 
 /* 記事部分 */
 function res($resno = 0){
-	global $path;
 
 	$tree = file(TREEFILE);
 	foreach($tree as $i => $value){
@@ -591,7 +590,7 @@ function res($resno = 0){
 
 	$_line = $line[$lineindex[$resno + 1]];
 
-	$res = create_res($path, $_line, ['pch' => 1]);
+	$res = create_res($_line, ['pch' => 1]);
 
 	$res['disp_resform'] = check_disp_resform($res); // ミニレスフォームの表示有無
 	if(!$res['disp_resform']){
@@ -621,7 +620,7 @@ function res($resno = 0){
 		$j=$lineindex[$disptree] - 1;
 		if($line[$j]==="") continue;
 
-		$res = create_res($path, $line[$j], ['pch' => 1]);
+		$res = create_res($line[$j], ['pch' => 1]);
 		$rres[0][] = $res;
 
 		// 投稿者名を配列にいれる
@@ -2143,7 +2142,6 @@ function replace(){
 
 /* カタログ */
 function catalog(){
-	global $path;
 
 	$page = filter_input_default(INPUT_GET, 'page',FILTER_VALIDATE_INT, 0);
 
@@ -2169,7 +2167,7 @@ function catalog(){
 			$j=$lineindex[$disptree] - 1; //該当記事を探して$jにセット
 			if($line[$j]==="") continue; //$jが範囲外なら次の行
 
-			$res = create_res($path, $line[$j]);
+			$res = create_res($line[$j]);
 
 			// カタログ専用ロジック
 			if ($res['img_file_exists']) {
@@ -2433,7 +2431,8 @@ function check_badfile ($chk, $dest = '') {
 	}
 }
 
-function create_res ($path, $line, $options = []) {
+function create_res ($line, $options = []) {
+	global $path;
 
 	list($no,$now,$name,$email,$sub,$com,$url,$host,$pwd,$ext,$w,$h,$time,$chk,$ptime,$fcolor)
 		= explode(",", rtrim($line));
