@@ -1768,15 +1768,13 @@ function incontinue(){
 /* コンティニュー認証 */
 function usrchk($no,$pwd){
 	$lines = file(LOGFILE);
-	$flag = FALSE;
 	foreach($lines as $line){
 		list($cno,,,,,,,,$cpwd,) = explode(",", $line);
-		if($cno == $no && (password_verify($pwd,$cpwd)||substr(md5($pwd),2,8) === $cpwd)){
-			$flag = TRUE;
-			break;
+		if($cno == $no && check_password($pwd, $cpwd)){
+			return true;
 		}
 	}
-	if(!$flag) error(MSG028);
+	error(MSG028);
 }
 
 /* 編集画面 */
