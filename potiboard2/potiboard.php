@@ -377,7 +377,6 @@ function form($resno="",$adminin="",$tmp=""){
 	$dat['usesub']  = USE_SUB ? ' *' : '';
 	if(USE_COM||($resno&&!RES_UPLOAD)) $dat['usecom'] = ' *';
 	//本文必須の設定では無い時はレスでも画像かコメントがあれば通る
-	// if((!$resno && !$tmp) || (RES_UPLOAD && !$tmp)) $dat['upfile'] = true;
 	if(!USE_IMG_UPLOAD && !$admin){//画像アップロード機能を使わない時
 		$dat['upfile'] = false;
 	} else{
@@ -1918,7 +1917,6 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 	$flag = FALSE;
 	foreach($line as $i => $value){
 		list($eno,,$ename,,$esub,$ecom,$eurl,$ehost,$epwd,$ext,$W,$H,$tim,$chk,$ptime,$efcolor) = explode(",", rtrim($value));
-	//		if($eno == $no && ($pass == $epwd /*|| $ehost == $host*/ || $ADMIN_PASS == $admin)){
 		if($eno == $no && (password_verify($pwd,$epwd) ||$epwd=== substr(md5($pwd),2,8)|| $ADMIN_PASS === $admin)){
 			if(!$name) $name = $ename;
 			if(!$sub)  $sub  = $esub;
@@ -2010,7 +2008,6 @@ function replace(){
 
 	foreach($line as $i => $value){
 		list($eno,,$name,$email,$sub,$com,$url,$ehost,$epwd,$ext,$W,$H,$etim,,$eptime,$fcolor) = explode(",", rtrim($value));
-	//		if($eno == $no && ($pwd == $epwd /*|| $ehost == $host*/ || $pwd == substr(md5($ADMIN_PASS),2,8))){
 	//画像差し替えに管理パスは使っていない
 		if($eno == $no && (password_verify($pwd,$epwd)||$epwd=== substr(md5($pwd),2,8))){
 			$upfile = $temppath.$file_name.$imgext;
@@ -2045,7 +2042,6 @@ function replace(){
 
 			//元のサイズを基準にサムネイルを作成
 			if(USE_THUMB){
-				$thumbnail_size=array();
 					if($thumbnail_size=thumb($path,$tim,$imgext,$W,$H)){//作成されたサムネイルのサイズ
 						$W=$thumbnail_size['w'];
 						$H=$thumbnail_size['h'];
