@@ -54,7 +54,16 @@ config.phpの設定をし、アップロードしてpotiboard.phpのあるディ
 
 ## 履歴
 
-### [2020/08/28] v2.14.1 lot.200829
+### [2020/08/30] v2.15.0 lot.200830
+
+- 投稿途中の画像の本人確認の処理を修正 (by さとぴあ)
+  - config.phpの設定に変更があります。詳しくは[こちら](https://github.com/sakots/poti-kaini/pull/122)
+  - thumbnail_gd.phpも更新。
+
+- コード整理 (by きつねこ)
+  - 詳しくは[こちら](https://github.com/sakots/poti-kaini/pull/123)
+
+### [2020/08/29] v2.14.1 lot.200829
 
 - コード整理(by さとぴあ)
   -「お絵かきコメント」「画像差し換え」のglobal変数をローカル変数に。

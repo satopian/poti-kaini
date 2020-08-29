@@ -42,8 +42,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.14.1');
-define('POTI_VERLOT' , 'v2.14.1 lot.200829');
+define('POTI_VER' , 'v2.15.0');
+define('POTI_VERLOT' , 'v2.15.0 lot.200830');
 
 if (($phpver = phpversion()) < "5.5.0") {
 	die("本プログラムの動作には PHPバージョン 5.5.0 以上が必要です。<br>\n（現在のPHPバージョン：{$phpver}）");
@@ -718,7 +718,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 		$userdata = fread($fp, 1024);
 		fclose($fp);
 		list($uip,$uhost,,,$ucode,,$starttime,$postedtime) = explode("\t", rtrim($userdata));
-		if(($ucode != $usercode) && (IP_CHECK && $uip != $userip)){error(MSG007);}
+		if(($ucode != $usercode) && ($uip != $userip)){error(MSG007);}
 
 		//描画時間を$userdataをもとに計算
 		if($starttime && DSP_PAINTTIME){
@@ -1613,25 +1613,18 @@ function paintcom(){
 	closedir($handle);
 	$tmp = array();
 	if(count($tmplist)!=0){
-		//user-codeでチェック
+		//user-codeどipアドレスでチェック
 		foreach($tmplist as $tmpimg){
 			list($ucode,$uip,$ufilename) = explode("\t", $tmpimg);
-			if($ucode == $usercode)
+			if($ucode == $usercode||$uip == $userip){
 				$tmp[] = $ufilename;
-		}
-		//user-codeでhitしなければIPで再チェック
-		if(count($tmp)==0){
-			foreach($tmplist as $tmpimg){
-				list($ucode,$uip,$ufilename) = explode("\t", $tmpimg);
-				if(!IP_CHECK || $uip == $userip)
-					$tmp[] = $ufilename;
 			}
 		}
 	}
 
 	$dat['post_mode'] = true;
 	$dat['regist'] = true;
-	if(IP_CHECK) $dat['ipcheck'] = true;
+	$dat['ipcheck'] = true;//常にtrue
 	if(count($tmp)==0){
 		$dat['notmp'] = true;
 		$dat['pictmp'] = 1;
