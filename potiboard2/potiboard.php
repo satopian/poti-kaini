@@ -42,8 +42,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.14.0');
-define('POTI_VERLOT' , 'v2.14.0 lot.200828');
+define('POTI_VER' , 'v2.14.1');
+define('POTI_VERLOT' , 'v2.14.1 lot.200829');
 
 if (($phpver = phpversion()) < "5.5.0") {
 	die("本プログラムの動作には PHPバージョン 5.5.0 以上が必要です。<br>\n（現在のPHPバージョン：{$phpver}）");
@@ -94,16 +94,6 @@ $quality = filter_input(INPUT_POST, 'quality',FILTER_VALIDATE_INT);
 $res = filter_input(INPUT_GET, 'res',FILTER_VALIDATE_INT);
 if(filter_input(INPUT_GET, 'mode')==="openpch"){
 $pch = newstring(filter_input(INPUT_GET, 'pch'));
-}
-if(filter_input(INPUT_GET, 'mode')==="piccom"){
-$stime = filter_input(INPUT_GET, 'stime',FILTER_VALIDATE_INT);
-$resto = filter_input(INPUT_GET, 'resto',FILTER_VALIDATE_INT);
-}
-if(filter_input(INPUT_GET, 'mode')==="picrep"){
-$no = filter_input(INPUT_GET, 'no',FILTER_VALIDATE_INT);
-$pwd = newstring(filter_input(INPUT_GET, 'pwd'));
-$repcode = newstring(filter_input(INPUT_GET, 'repcode'));
-$stime = filter_input(INPUT_GET, 'stime',FILTER_VALIDATE_INT);
 }
 //INPUT_COOKIEから変数を取得
 //var_dump($_COOKIE);
@@ -231,7 +221,7 @@ switch($mode){
 		paintform($picw,$pich,$anime);
 		break;
 	case 'piccom':
-		paintcom($resto);
+		paintcom();
 		break;
 	case 'openpch':
 		openpch($pch);
@@ -259,7 +249,7 @@ switch($mode){
 		rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin);
 		break;
 	case 'picrep':
-		replace($no,$pwd);
+		replace();
 		break;
 	case 'catalog':
 		catalog();
@@ -346,7 +336,7 @@ function basicpart(){
 
 /* 投稿フォーム */
 function form($resno="",$adminin="",$tmp=""){
-	global $addinfo,$stime;
+	global $addinfo;
 	global $fontcolors,$quality,$qualitys;
 	global $ADMIN_PASS;
 
@@ -381,11 +371,6 @@ function form($resno="",$adminin="",$tmp=""){
 	}
 
 	if($admin) $dat['admin'] = $ADMIN_PASS;
-
-	//描画時間
-	if($stime && DSP_PAINTTIME){
-		$dat['ptime'] = calcPtime($stime);
-	}
 
 	$dat['maxbyte'] = 2048 * 1024;//フォームのHTMLによるファイルサイズの制限 2Mまで
 	$dat['usename'] = USE_NAME ? ' *' : '';
@@ -1554,10 +1539,16 @@ if($admin===$ADMIN_PASS){
 }
 
 /* お絵かきコメント */
-function paintcom($resto=''){
-	global $admin,$usercode;
+function paintcom(){
+	global $usercode;
 	$userip = get_uip();
-	
+	$resto = filter_input(INPUT_GET, 'resto',FILTER_VALIDATE_INT);
+	$stime = filter_input(INPUT_GET, 'stime',FILTER_VALIDATE_INT);
+	//描画時間
+	if($stime && DSP_PAINTTIME){
+		$dat['ptime'] = calcPtime($stime);
+	}
+
 	if(USE_RESUB && $resto) {
 		$lines = file(LOGFILE);
 		$flag = FALSE;
@@ -1957,10 +1948,14 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 }
 
 /* 画像差し換え */
-function replace($no,$pwd){
-	global $path,$temppath,$repcode;
+function replace(){
+	global $path,$temppath;
+	$no = filter_input(INPUT_GET, 'no',FILTER_VALIDATE_INT);
+	$pwd = newstring(filter_input(INPUT_GET, 'pwd'));
+	$repcode = newstring(filter_input(INPUT_GET, 'repcode'));
 	$userip = get_uip();
 	$mes="";
+
 	
 	//ホスト取得
 	$host = gethostbyaddr($userip);
