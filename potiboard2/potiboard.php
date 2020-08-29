@@ -1185,7 +1185,6 @@ function CleanStr($str,$com=''){
 /* ユーザー削除 */
 function usrdel($del,$pwd){
 	global $path,$pwdc,$onlyimgdel;
-	global $ADMIN_PASS;
 
 	if(!is_array($del)){
 		return;
@@ -1206,9 +1205,7 @@ function usrdel($del,$pwd){
 	foreach($line as $i => $value){//190701
 		if($value!==""){
 			list($no,,,,,,,$dhost,$pass,$ext,,,$tim,,) = explode(",",$value);
-
-		if(in_array($no,$del) && (password_verify($pwd,$pass)||substr(md5($pwd),2,8) === $pass
-		|| $ADMIN_PASS === $pwd)){
+			if(in_array($no,$del) && check_password($pwd, $pass, $pwd)){
 			if(!$onlyimgdel){	//記事削除
 				treedel($no);
 				if(USER_DELETES > 2){
@@ -1806,7 +1803,7 @@ function editform($del,$pwd){
 	foreach($line as $value){
 		if($value){
 			list($no,,$name,$email,$sub,$com,$url,$ehost,$pass,,,,,,,$fcolor) = explode(",", rtrim($value));
-			if ($no == $del[0] && (password_verify($pwd,$pass) || substr(md5($pwd),2,8) === $pass|| $ADMIN_PASS === $pwd)){
+			if ($no == $del[0] && check_password($pwd, $pass, $pwd)){
 				$flag = TRUE;
 				break;
 			}
@@ -1954,7 +1951,7 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 	$flag = FALSE;
 	foreach($line as $i => $value){
 		list($eno,,$ename,,$esub,$ecom,$eurl,$ehost,$epwd,$ext,$W,$H,$tim,$chk,$ptime,$efcolor) = explode(",", rtrim($value));
-		if($eno == $no && (password_verify($pwd,$epwd) ||$epwd=== substr(md5($pwd),2,8)|| $ADMIN_PASS === $admin)){
+		if($eno == $no && check_password($pwd, $epwd, $admin)){
 			if(!$name) $name = $ename;
 			if(!$sub)  $sub  = $esub;
 			if(!$com)  $com  = $ecom;
@@ -2046,7 +2043,7 @@ function replace(){
 	foreach($line as $i => $value){
 		list($eno,,$name,$email,$sub,$com,$url,$ehost,$epwd,$ext,$W,$H,$etim,,$eptime,$fcolor) = explode(",", rtrim($value));
 	//画像差し替えに管理パスは使っていない
-		if($eno == $no && (password_verify($pwd,$epwd)||$epwd=== substr(md5($pwd),2,8))){
+		if($eno == $no && check_password($pwd, $epwd)){
 			$upfile = $temppath.$file_name.$imgext;
 			$dest = $path.$tim.'.tmp';
 			copy($upfile, $dest);
@@ -2507,6 +2504,14 @@ function get_lineindex ($line){
 		$lineindex[$no] = $i + 1; //逆変換テーブル作成
 	}
 	return $lineindex;
+}
+
+function check_password ($pwd, $epwd, $adminPass = false) {
+	global $ADMIN_PASS;
+	return
+		password_verify($pwd, $epwd)
+		|| $epwd === substr(md5($pwd), 2, 8)
+		|| ($adminPass ? ($adminPass == $ADMIN_PASS) : false); // 管理パスを許可する場合
 }
 
 ?>
