@@ -256,7 +256,7 @@ switch($mode){
 		break;
 	default:
 		if($res){
-			updatelog($res);
+			res($res);
 		}else{
 			redirect(PHP_SELF2, 0);
 		}
@@ -296,17 +296,16 @@ function get_gd_ver(){
 	return false;
 	}
 }
+
 //ユーザーip
 function get_uip(){
-	$userip = getenv("HTTP_CLIENT_IP");
-	if(!$userip){
-		$userip = getenv("HTTP_X_FORWARDED_FOR");
-	} 
-	if(!$userip){
-		$userip = getenv("REMOTE_ADDR");
-	} 
-	return $userip;
+	if ($ip = getenv("HTTP_CLIENT_IP")) {
+		return $ip;
+	} elseif ($ip = getenv("HTTP_X_FORWARDED_FOR")) {
+		return $ip;
 	}
+	return getenv("REMOTE_ADDR");
+}
 
 /* ベース */
 function basicpart(){
@@ -378,7 +377,6 @@ function form($resno="",$adminin="",$tmp=""){
 	$dat['usesub']  = USE_SUB ? ' *' : '';
 	if(USE_COM||($resno&&!RES_UPLOAD)) $dat['usecom'] = ' *';
 	//本文必須の設定では無い時はレスでも画像かコメントがあれば通る
-	// if((!$resno && !$tmp) || (RES_UPLOAD && !$tmp)) $dat['upfile'] = true;
 	if(!USE_IMG_UPLOAD && !$admin){//画像アップロード機能を使わない時
 		$dat['upfile'] = false;
 	} else{
@@ -413,37 +411,20 @@ function form($resno="",$adminin="",$tmp=""){
 }
 
 /* 記事部分 */
-function updatelog($resno=0){
+function updatelog(){
 	global $path;
 
 	$tree = file(TREEFILE);
 	$st = null;
-	if($resno){
-		foreach($tree as $i => $value){
-			//レス先検索
-			if (strpos(trim($value) . ',', $resno . ',') === 0) {
-				$st = $i;
-				break;
-			}
-		}
-		if ($st === null) {
-			error(MSG001);
-		}
-	}
 
 	$line = file(LOGFILE);
-	foreach($line as $i =>$value){
-		list($no,) = explode(",", $value);
-		$lineindex[$no] = $i + 1; //逆変換テーブル作成
-	}
+	$lineindex = get_lineindex($line); // 逆変換テーブル作成
 
 	$counttree = count($tree);//190619
 	for($page=0;$page<$counttree;$page+=PAGE_DEF){
 		$oya = 0;	//親記事のメイン添字
-		$dat = form($resno);
-		if(!$resno){
-			$st = $page;
-		}
+		$dat = form();
+		$st = $page;
 		for($i = $st; $i < $st+PAGE_DEF; ++$i){
 			if(!isset($tree[$i])){
 				continue;
@@ -454,75 +435,52 @@ function updatelog($resno=0){
 			$j=$lineindex[$disptree] - 1; //該当記事を探して$jにセット
 			if($line[$j]==="") continue;   //$jが範囲外なら次の行
 
-			$res = create_res($path, $line[$j], ['pch' => 1]);
+			$res = create_res($line[$j], ['pch' => 1]);
 
-			$r_threads = false;
-			if(ELAPSED_DAYS){//古いスレッドのフォームを閉じる日数が設定されていたら
-				$ntime = time();
-				$ltime=substr($res['time'],-13,-3);
-				$elapsed_time = ELAPSED_DAYS*86400;
-				if(($ntime-$ltime) <= $elapsed_time){//指定日数以内
-					$r_threads = true;//フォームを表示する
-				}
-			} else{//フォームを閉じる日数が未設定なら
-				$r_threads = true;
-			}
-			$disp_resform = true;
-			if(!$r_threads){
-				$disp_resform = false;//ミニレスフォームを閉じる
-				if($resno){//レスなら
-					$dat['form'] = false;//フォームを閉じる
-					$dat['paintform'] = false;
-				}
-			}
+			$res['disp_resform'] = check_disp_resform($res); // ミニレスフォームの表示有無
 
 			// ミニフォーム用
 			$resub = USE_RESUB ? 'Re: ' . $res['sub'] : '';
 			// レス省略
 			$skipres = '';
-			if(!$resno){
-				$counttreeline = count($treeline);//190619
-				$s=$counttreeline - DSP_RES;
-				if(ADMIN_NEWPOST&&!DSP_RES) {$skipres = $s - 1;}
-				elseif($s<1 || !DSP_RES) {$s=1;}
-				elseif($s>1) {$skipres = $s - 1;}
-				//レス画像数調整
-				if(RES_UPLOAD){
-					//画像テーブル作成
-					$imgline=array();
-					foreach($treeline as $k => $disptree){
-						if($k<$s){//レス表示件数
-							continue;
-						}
-						$j=$lineindex[$disptree] - 1;
-						if($line[$j]==="") continue;
-						list(,,,,,,,,,$rext,,,$rtime,,,) = explode(",", rtrim($line[$j]));
-						$resimg = $path.$rtime.$rext;
 
-						$imgline[] = ($rext && is_file($resimg)) ? 'img' : '0';
+			$counttreeline = count($treeline);//190619
+			$s=$counttreeline - DSP_RES;
+			if(ADMIN_NEWPOST&&!DSP_RES) {$skipres = $s - 1;}
+			elseif($s<1 || !DSP_RES) {$s=1;}
+			elseif($s>1) {$skipres = $s - 1;}
+			//レス画像数調整
+			if(RES_UPLOAD){
+				//画像テーブル作成
+				$imgline=array();
+				foreach($treeline as $k => $disptree){
+					if($k<$s){//レス表示件数
+						continue;
 					}
-					$resimgs = array_count_values($imgline);
-					if(isset($resimgs['img'])){//未定義エラー対策
-					while($resimgs['img'] > DSP_RESIMG){
-						while($imgline[0]='0'){ //画像付きレスが出るまでシフト
-							array_shift($imgline);
-							$s++;
-						}
-						array_shift($imgline); //画像付きレス1つシフト
-						$s++;
-						$resimgs = array_count_values($imgline);
-					}
-					}
-					if($s>1) {$skipres = $s - 1;}//再計算
+					$j=$lineindex[$disptree] - 1;
+					if($line[$j]==="") continue;
+					list(,,,,,,,,,$rext,,,$rtime,,,) = explode(",", rtrim($line[$j]));
+					$resimg = $path.$rtime.$rext;
+
+					$imgline[] = ($rext && is_file($resimg)) ? 'img' : '0';
 				}
-			}else{
-				$s=1;
-				$dat['resub'] = $resub; //レス画面用
+				$resimgs = array_count_values($imgline);
+				if(isset($resimgs['img'])){//未定義エラー対策
+				while($resimgs['img'] > DSP_RESIMG){
+					while($imgline[0]='0'){ //画像付きレスが出るまでシフト
+						array_shift($imgline);
+						$s++;
+					}
+					array_shift($imgline); //画像付きレス1つシフト
+					$s++;
+					$resimgs = array_count_values($imgline);
+				}
+				}
+				if($s>1) {$skipres = $s - 1;}//再計算
 			}
 
 			// 親レス用の値
 			$res['tab'] = $oya + 1; //TAB
-			$res['disp_resform'] = $disp_resform;
 			$res['limit'] = ($lineindex[$res['no']] - 1 >= LOG_MAX * LOG_LIMIT / 100) ? true : ''; // そろそろ消える。
 			$res['skipres'] = $skipres;
 			$res['resub'] = $resub;
@@ -542,7 +500,7 @@ function updatelog($resno=0){
 				$j=$lineindex[$disptree] - 1;
 				if($line[$j]==="") continue;
 
-				$res = create_res($path, $line[$j], ['pch' => 1]);
+				$res = create_res($line[$j], ['pch' => 1]);
 				$rres[$oya][] = $res;
 				
 				// 投稿者名を配列にいれる
@@ -559,35 +517,32 @@ function updatelog($resno=0){
 
 			clearstatcache(); //ファイルのstatをクリア
 			$oya++;
-			if($resno){break;} //res時はtree1行だけ
 		}
 
-		if(!$resno){ //res時は表示しない
-			$prev = $st - PAGE_DEF;
-			$next = $st + PAGE_DEF;
-			// 改ページ処理
-			if($prev >= 0){
-				$dat['prev'] = $prev == 0 ? PHP_SELF2 : ($prev / PAGE_DEF) . PHP_EXT;
-			}
-			$paging = "";
+		$prev = $st - PAGE_DEF;
+		$next = $st + PAGE_DEF;
+		// 改ページ処理
+		if($prev >= 0){
+			$dat['prev'] = $prev == 0 ? PHP_SELF2 : ($prev / PAGE_DEF) . PHP_EXT;
+		}
+		$paging = "";
 
-			//表示しているページが20ページ以上または投稿数が少ない時はページ番号のリンクを制限しない
-			$showAll = ($counttree <= PAGE_DEF * 21 || $i >= PAGE_DEF * 22);
+		//表示しているページが20ページ以上または投稿数が少ない時はページ番号のリンクを制限しない
+		$showAll = ($counttree <= PAGE_DEF * 21 || $i >= PAGE_DEF * 22);
 
-			for($i = 0; $i < ($showAll ? $counttree : PAGE_DEF * 22); $i += PAGE_DEF){
-				$pn = $i ? $i / PAGE_DEF : 0; // page_number
-				$paging .= ($st === $i)
-					? str_replace("<PAGE>", $pn, NOW_PAGE) // 現在ページにはリンクを付けない
-					: str_replace("<PURL>", ($i ? $pn.PHP_EXT : PHP_SELF2),
-						str_replace("<PAGE>", $i ? ($showAll || $i !== PAGE_DEF * 21 ? $pn : "≫") : $pn, OTHER_PAGE));
-			}
+		for($i = 0; $i < ($showAll ? $counttree : PAGE_DEF * 22); $i += PAGE_DEF){
+			$pn = $i ? $i / PAGE_DEF : 0; // page_number
+			$paging .= ($st === $i)
+				? str_replace("<PAGE>", $pn, NOW_PAGE) // 現在ページにはリンクを付けない
+				: str_replace("<PURL>", ($i ? $pn.PHP_EXT : PHP_SELF2),
+					str_replace("<PAGE>", $i ? ($showAll || $i !== PAGE_DEF * 21 ? $pn : "≫") : $pn, OTHER_PAGE));
+		}
 
-	//改ページ分岐ここまで
+		//改ページ分岐ここまで
 
-			$dat['paging'] = $paging;
-			if($oya >= PAGE_DEF && $counttree > $next){
-				$dat['next'] = $next/PAGE_DEF.PHP_EXT;
-			}
+		$dat['paging'] = $paging;
+		if($oya >= PAGE_DEF && $counttree > $next){
+			$dat['next'] = $next/PAGE_DEF.PHP_EXT;
 		}
 
 		if($resno){htmloutput(SKIN_DIR.RESFILE,$dat);break;}
@@ -600,17 +555,81 @@ function updatelog($resno=0){
 		$fp = fopen($logfilename, "w");
 		set_file_buffer($fp, 0);
 		flock($fp, LOCK_EX); //*
-		rewind($fp);
 		fwrite($fp, $buf);
-		fflush($fp);
-		flock($fp, LOCK_UN);
-		fclose($fp);
+		closeFile($fp);
 		//拡張子を.phpにした場合、↑で500エラーでるなら↓に変更
 		if(PHP_EXT!='.php'){chmod($logfilename,0606);}
 	}
-	if (!$resno) {
-		safe_unlink(($page/PAGE_DEF+1).PHP_EXT);
+
+	safe_unlink(($page/PAGE_DEF+1).PHP_EXT);
+}
+
+/* 記事部分 */
+function res($resno = 0){
+
+	$tree = file(TREEFILE);
+	foreach($tree as $i => $value){
+		//レス先検索
+		if (strpos(trim($value) . ',', $resno . ',') === 0) {
+			$treeline = explode(",", trim($value));
+			break;
+		}
 	}
+	if (!isset($treeline)) {
+		error(MSG001);
+	}
+
+	$line = file(LOGFILE);
+	$lineindex = get_lineindex($line); // 逆変換テーブル作成
+
+	$_line = $line[$lineindex[$resno + 1]];
+
+	$res = create_res($_line, ['pch' => 1]);
+
+	$res['disp_resform'] = check_disp_resform($res); // ミニレスフォームの表示有無
+	if(!$res['disp_resform']){
+		$dat['form'] = false;//フォームを閉じる
+		$dat['paintform'] = false;
+	}
+
+	// ミニフォーム用
+	$resub = USE_RESUB ? 'Re: ' . $res['sub'] : '';
+	$dat['resub'] = $resub; //レス画面用
+
+	// 親レス用の値
+	$res['tab'] = 1; //TAB
+	$res['limit'] = ($lineindex[$res['no']] - 1 >= LOG_MAX * LOG_LIMIT / 100) ? true : ''; // そろそろ消える。
+	$res['resub'] = $resub;
+	$res['descriptioncom'] = strip_tags($res['com']); //メタタグに使うコメントからタグを除去
+
+	$dat['oya'][0] = $res;
+
+	$oyaname = $res['name']; //投稿者名をコピー
+
+	//レス作成
+	$rres = [];
+	$rresname = [];
+	array_shift($treeline); // 親レス番号を除去
+	foreach($treeline as $disptree){ // 子レスだけ回す
+		$j=$lineindex[$disptree] - 1;
+		if($line[$j]==="") continue;
+
+		$res = create_res($line[$j], ['pch' => 1]);
+		$rres[0][] = $res;
+
+		// 投稿者名を配列にいれる
+		if ($oyaname != $res['name'] && !in_array($res['name'], $rresname)) { // 重複チェックと親投稿者除外
+			$rresname[] = $res['name'];
+		}
+	}
+
+	// レス記事一括格納
+	if($rres){//レスがある時
+		$dat['resname'] = $rresname ? implode('さん ',$rresname) : ''; // レス投稿者一覧
+		$dat['oya'][0]['res'] = $rres[0];
+	}
+
+	htmloutput(SKIN_DIR.RESFILE,$dat);
 }
 
 /* オートリンク */
@@ -720,15 +739,11 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 			}
 			if(!preg_match('/\A(jpe?g|jfif|gif|png)\z/i', pathinfo($upfile_name, PATHINFO_EXTENSION))){//もとのファイル名の拡張子190606
 				error(MSG004,$dest);
-				}
-				if(move_uploaded_file($upfile, $dest)){
-					$upfile_name = CleanStr($upfile_name);
-				} else{
-					$upfile_name='';
-					error(MSG003,$dest);
-				}
-			//↑でエラーなら↓に変更
-			//copy($upfile, $dest);
+			}
+			if(!move_uploaded_file($upfile, $dest)){
+				error(MSG003,$dest);
+			}
+			$upfile_name = CleanStr($upfile_name);
 		}
 
 		$is_file_dest = is_file($dest);
@@ -813,7 +828,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 	$pass = ($pwd) ? password_hash($pwd,PASSWORD_BCRYPT,['cost' => 5]) : "*";
 	$now = now_date($time);//日付取得
 	if(DISP_ID){
-			$now .= " ID:".substr(crypt(md5($userip.ID_SEED.date("Ymd", $time)),'id'),-8);
+		$now .= " ID:" . getId($userip, $time);
 	}
 	//カンマを変換
 	$now = str_replace(",", "&#44;", $now);
@@ -849,7 +864,6 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 	//ログ読み込み
 	$fp=fopen(LOGFILE,"r+");
 	flock($fp, LOCK_EX);
-	rewind($fp);
 	$buf=fread($fp,5242880);
 	if(!$buf){error(MSG019,$dest);}
 	$buf = charconvert($buf);
@@ -1011,10 +1025,8 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 	$no = $lastno + 1;
 	$newline = "$no,$now,$name,$email,$sub,$com,$url,$host,$pass,$ext,$W,$H,$tim,$chk,$ptime,$fcolor\n";
 	$newline.= implode("\n", $line);
-	ftruncate($fp,0);
-	set_file_buffer($fp, 0);
-	rewind($fp);
-	fwrite($fp, $newline);
+
+	writeFile($fp, $newline);
 
 	//ツリー更新
 	$find = false;
@@ -1022,7 +1034,6 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 	$tp=fopen(TREEFILE,"r+");
 	set_file_buffer($tp, 0);
 	flock($tp, LOCK_EX); //*
-	rewind($tp);
 	$buf=fread($tp,5242880);
 	if(!$buf){error(MSG023,$dest);}
 	$line = explode("\n", trim($buf));
@@ -1053,16 +1064,11 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 
 	if(!$find){if(!$resto){$newline="$no\n";}else{error(MSG025,$dest);}}
 	$newline.=implode("\n", $line);
-	ftruncate($tp,0);
-	set_file_buffer($tp, 0);
-	rewind($tp);
-	fwrite($tp, $newline);
-	fflush($tp);
-	flock($tp, LOCK_UN);
-	fclose($tp);
-	fflush($fp);
-	flock($fp, LOCK_UN);
-	fclose($fp);
+
+	writeFile($tp, $newline);
+
+	closeFile($tp);
+	closeFile($fp);
 
 	//-- クッキー保存 --
 	//漢字を含まない項目はこちらの形式で追加
@@ -1127,21 +1133,17 @@ function treedel($delno){
 	$fp=fopen(TREEFILE,"r+");
 	set_file_buffer($fp, 0);
 	flock($fp, LOCK_EX);
-	rewind($fp);
 	$buf=fread($fp,5242880);
 	if(!$buf){error(MSG024);}
 	$line = explode("\n", trim($buf));
-	$countline=count($line);//必要
 	$find=false;
 	foreach($line as $i =>$value){
 		$treeline = explode(",", rtrim($value));
 		foreach($treeline as $j => $value){
 			if($value == $delno){
 				if($j==0){//スレ削除
-					if($countline<3){//スレが1つしかない場合、エラー防止の為に削除不可
-						fflush($fp);
-						flock($fp, LOCK_UN);
-						fclose($fp);
+					if(count($line) <= 1){//スレが1つしかない場合、エラー防止の為に削除不可
+						closeFile($fp);
 						error(MSG026);
 					}else{
 						unset($line[$i]);
@@ -1161,14 +1163,9 @@ function treedel($delno){
 		}
 	}
 	if($find){//ツリー更新
-		ftruncate($fp,0);
-		set_file_buffer($fp, 0);
-		rewind($fp);
-		fwrite($fp, implode("\n", $line));
+		writeFile($fp, implode("\n", $line));
 	}
-	fflush($fp);
-	flock($fp, LOCK_UN);
-	fclose($fp);
+	closeFile($fp);
 }
 
 /* テキスト整形 */
@@ -1200,7 +1197,6 @@ function usrdel($del,$pwd){
 	$fp=fopen(LOGFILE,"r+");
 	set_file_buffer($fp, 0);
 	flock($fp, LOCK_EX);
-	rewind($fp);
 	$buf=fread($fp,5242880);
 	if(!$buf){error(MSG027);}
 	$buf = charconvert($buf);
@@ -1229,15 +1225,9 @@ function usrdel($del,$pwd){
 	}
 	if(!$flag)error(MSG028);
 	if($find){//ログ更新
-		ftruncate($fp,0);
-		set_file_buffer($fp, 0);
-		rewind($fp);
-		$newline = implode("\n", $line);
-		fwrite($fp,$newline);
+		writeFile($fp, implode("\n", $line));
 	}
-	fflush($fp);
-	flock($fp, LOCK_UN);
-	fclose($fp);
+	closeFile($fp);
 }
 
 /* パス認証 */
@@ -1262,7 +1252,6 @@ function admindel($pass){
 		$fp=fopen(LOGFILE,"r+");
 		set_file_buffer($fp, 0);
 		flock($fp, LOCK_EX);
-		rewind($fp);
 		$buf=fread($fp,5242880);
 		if(!$buf){error(MSG030);}
 		$buf = charconvert($buf);
@@ -1271,26 +1260,20 @@ function admindel($pass){
 		foreach($line as $i => $value){
 			if($value!==""){
 				list($no,,,,,,,,,$ext,,,$tim,,) = explode(",",$value);
-			if(in_array($no,$del)){
-				if(!$onlyimgdel){	//記事削除
-					treedel($no);
-					unset($line[$i]);
-					$find = true;
-				}
-				delete_files($path, $tim, $ext);
+				if(in_array($no,$del)){
+					if(!$onlyimgdel){	//記事削除
+						treedel($no);
+						unset($line[$i]);
+						$find = true;
+					}
+					delete_files($path, $tim, $ext);
 				}
 			}
 		}
 		if($find){//ログ更新
-			ftruncate($fp,0);
-			set_file_buffer($fp, 0);
-			rewind($fp);
-			$newline = implode("\n", $line);
-			fwrite($fp,$newline);
+			writeFile($fp, implode("\n", $line));
 		}
-		fflush($fp);
-		flock($fp, LOCK_UN);
-		fclose($fp);
+		closeFile($fp);
 	}
 	// 削除画面を表示
 	$dat['admin_del'] = true;
@@ -1808,9 +1791,7 @@ function editform($del,$pwd){
 	$fp=fopen(LOGFILE,"r");
 	flock($fp, LOCK_EX);
 	$buf=fread($fp,5242880);
-	fflush($fp);
-	flock($fp, LOCK_UN);
-	fclose($fp);
+	closeFile($fp);
 	if(!$buf){error(MSG019);}
 	$buf = charconvert($buf);
 	$line = explode("\n", trim($buf));
@@ -1924,7 +1905,7 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 	$now = now_date($time);//日付取得
 	$now .= UPDATE_MARK;
 	if(DISP_ID){
-			$now.=" ID:".substr(crypt(md5($userip.ID_SEED.date("Ymd", $time)),'id'),-8);
+		$now .= " ID:" . getId($userip, $time);
 	}
 	$now = str_replace(",", "&#44;", $now);//カンマを変換
 	//テキスト整形
@@ -1957,7 +1938,6 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 	//ログ読み込み
 	$fp=fopen(LOGFILE,"r+");
 	flock($fp, LOCK_EX);
-	rewind($fp);
 	$buf=fread($fp,5242880);
 	if(!$buf){error(MSG019);}
 	$buf = charconvert($buf);
@@ -1967,7 +1947,6 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 	$flag = FALSE;
 	foreach($line as $i => $value){
 		list($eno,,$ename,,$esub,$ecom,$eurl,$ehost,$epwd,$ext,$W,$H,$tim,$chk,$ptime,$efcolor) = explode(",", rtrim($value));
-	//		if($eno == $no && ($pass == $epwd /*|| $ehost == $host*/ || $ADMIN_PASS == $admin)){
 		if($eno == $no && (password_verify($pwd,$epwd) ||$epwd=== substr(md5($pwd),2,8)|| $ADMIN_PASS === $admin)){
 			if(!$name) $name = $ename;
 			if(!$sub)  $sub  = $esub;
@@ -1979,20 +1958,13 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 		}
 	}
 	if(!$flag){
-		fflush($fp);
-		flock($fp, LOCK_UN);
-		fclose($fp);
+		closeFile($fp);
 		error(MSG028);
 	}
 
-	ftruncate($fp,0);
-	set_file_buffer($fp, 0);
-	rewind($fp);
-	$newline = implode("\n", $line);
-	fwrite($fp, $newline);
-	fflush($fp);
-	flock($fp, LOCK_UN);
-	fclose($fp);
+	writeFile($fp, implode("\n", $line));
+
+	closeFile($fp);
 
 	updatelog();
 
@@ -2054,7 +2026,6 @@ function replace(){
 	//ログ読み込み
 	$fp=fopen(LOGFILE,"r+");
 	flock($fp, LOCK_EX);
-	rewind($fp);
 	$buf=fread($fp,5242880);
 	if(!$buf){error(MSG019);}
 	$buf = charconvert($buf);
@@ -2067,7 +2038,6 @@ function replace(){
 
 	foreach($line as $i => $value){
 		list($eno,,$name,$email,$sub,$com,$url,$ehost,$epwd,$ext,$W,$H,$etim,,$eptime,$fcolor) = explode(",", rtrim($value));
-	//		if($eno == $no && ($pwd == $epwd /*|| $ehost == $host*/ || $pwd == substr(md5($ADMIN_PASS),2,8))){
 	//画像差し替えに管理パスは使っていない
 		if($eno == $no && (password_verify($pwd,$epwd)||$epwd=== substr(md5($pwd),2,8))){
 			$upfile = $temppath.$file_name.$imgext;
@@ -2102,7 +2072,6 @@ function replace(){
 
 			//元のサイズを基準にサムネイルを作成
 			if(USE_THUMB){
-				$thumbnail_size=array();
 					if($thumbnail_size=thumb($path,$tim,$imgext,$W,$H)){//作成されたサムネイルのサイズ
 						$W=$thumbnail_size['w'];
 						$H=$thumbnail_size['h'];
@@ -2127,7 +2096,7 @@ function replace(){
 			
 			//ID付加
 			if(DISP_ID){
-					$now.=" ID:".substr(crypt(md5($userip.ID_SEED.date("Ymd", $time)),'id'),-8);
+				$now .= " ID:" . getId($userip, $time);
 			}
 			//描画時間追加
 			if($eptime) $ptime=$eptime.'+'.$ptime;
@@ -2141,20 +2110,13 @@ function replace(){
 		}
 	}
 	if(!$flag){
-		fflush($fp);
-		flock($fp, LOCK_UN);
-		fclose($fp);
+		closeFile($fp);
 		error(MSG028);
 	}
 
-	ftruncate($fp,0);
-	set_file_buffer($fp, 0);
-	rewind($fp);
-	$newline = implode("\n", $line);
-	fwrite($fp, $newline);
-	fflush($fp);
-	flock($fp, LOCK_UN);
-	fclose($fp);
+	writeFile($fp, implode("\n", $line));
+
+	closeFile($fp);
 
 	updatelog();
 
@@ -2167,15 +2129,11 @@ function replace(){
 
 /* カタログ */
 function catalog(){
-	global $path;
 
 	$page = filter_input_default(INPUT_GET, 'page',FILTER_VALIDATE_INT, 0);
 
 	$line = file(LOGFILE);
-	foreach($line as $i =>$value){
-		list($no,) = explode(",", $value);
-		$lineindex[$no]=$i + 1; //逆変換テーブル作成
-	}
+	$lineindex = get_lineindex($line); // 逆変換テーブル作成
 
 	$tree = file(TREEFILE);
 	$counttree = count($tree);
@@ -2193,7 +2151,7 @@ function catalog(){
 			$j=$lineindex[$disptree] - 1; //該当記事を探して$jにセット
 			if($line[$j]==="") continue; //$jが範囲外なら次の行
 
-			$res = create_res($path, $line[$j]);
+			$res = create_res($line[$j]);
 
 			// カタログ専用ロジック
 			if ($res['img_file_exists']) {
@@ -2457,7 +2415,8 @@ function check_badfile ($chk, $dest = '') {
 	}
 }
 
-function create_res ($path, $line, $options = []) {
+function create_res ($line, $options = []) {
+	global $path;
 
 	list($no,$now,$name,$email,$sub,$com,$url,$host,$pwd,$ext,$w,$h,$time,$chk,$ptime,$fcolor)
 		= explode(",", rtrim($line));
@@ -2507,6 +2466,40 @@ function create_res ($path, $line, $options = []) {
 	$res['com'] = preg_replace("{<br( *)/>}i","<br>",$com); //<br />を<br>へ
 
 	return $res;
+}
+
+// 一括書き込み（上書き）
+function writeFile ($fp, $data) {
+	ftruncate($fp,0);
+	set_file_buffer($fp, 0);
+	rewind($fp);
+	fwrite($fp, $data);
+}
+
+function closeFile ($fp) {
+	fflush($fp);
+	flock($fp, LOCK_UN);
+	fclose($fp);
+}
+
+function getId ($userip, $time) {
+	return substr(crypt(md5($userip.ID_SEED.date("Ymd", $time)),'id'),-8);
+}
+
+// ミニレスフォームを表示するかどうか
+function check_disp_resform ($res) {
+	return ELAPSED_DAYS //古いスレッドのフォームを閉じる日数が設定されていたら
+		? ((time() - (substr($res['time'], -13, -3))) <= ( ELAPSED_DAYS * 86400)) // 指定日数以内なら表示
+		: true; // フォームを閉じる日数が未設定なら表示
+}
+
+function get_lineindex ($line){
+	$lineindex = [];
+	foreach($line as $i =>$value){
+		list($no,) = explode(",", $value);
+		$lineindex[$no] = $i + 1; //逆変換テーブル作成
+	}
+	return $lineindex;
 }
 
 ?>
