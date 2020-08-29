@@ -418,10 +418,7 @@ function updatelog(){
 	$st = null;
 
 	$line = file(LOGFILE);
-	foreach($line as $i =>$value){
-		list($no,) = explode(",", $value);
-		$lineindex[$no] = $i + 1; //逆変換テーブル作成
-	}
+	$lineindex = get_lineindex($line); // 逆変換テーブル作成
 
 	$counttree = count($tree);//190619
 	for($page=0;$page<$counttree;$page+=PAGE_DEF){
@@ -583,10 +580,7 @@ function res($resno = 0){
 	}
 
 	$line = file(LOGFILE);
-	foreach($line as $i =>$value){
-		list($no,) = explode(",", $value);
-		$lineindex[$no] = $i + 1; //逆変換テーブル作成
-	}
+	$lineindex = get_lineindex($line); // 逆変換テーブル作成
 
 	$_line = $line[$lineindex[$resno + 1]];
 
@@ -2146,10 +2140,7 @@ function catalog(){
 	$page = filter_input_default(INPUT_GET, 'page',FILTER_VALIDATE_INT, 0);
 
 	$line = file(LOGFILE);
-	foreach($line as $i =>$value){
-		list($no,) = explode(",", $value);
-		$lineindex[$no]=$i + 1; //逆変換テーブル作成
-	}
+	$lineindex = get_lineindex($line); // 逆変換テーブル作成
 
 	$tree = file(TREEFILE);
 	$counttree = count($tree);
@@ -2507,6 +2498,15 @@ function check_disp_resform ($res) {
 	return ELAPSED_DAYS //古いスレッドのフォームを閉じる日数が設定されていたら
 		? ((time() - (substr($res['time'], -13, -3))) <= ( ELAPSED_DAYS * 86400)) // 指定日数以内なら表示
 		: true; // フォームを閉じる日数が未設定なら表示
+}
+
+function get_lineindex ($line){
+	$lineindex = [];
+	foreach($line as $i =>$value){
+		list($no,) = explode(",", $value);
+		$lineindex[$no] = $i + 1; //逆変換テーブル作成
+	}
+	return $lineindex;
 }
 
 ?>
