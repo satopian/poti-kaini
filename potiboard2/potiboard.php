@@ -256,7 +256,7 @@ switch($mode){
 		break;
 	default:
 		if($res){
-			updatelog($res);
+			res($res);
 		}else{
 			redirect(PHP_SELF2, 0);
 		}
@@ -411,23 +411,11 @@ function form($resno="",$adminin="",$tmp=""){
 }
 
 /* 記事部分 */
-function updatelog($resno=0){
+function updatelog(){
 	global $path;
 
 	$tree = file(TREEFILE);
 	$st = null;
-	if($resno){
-		foreach($tree as $i => $value){
-			//レス先検索
-			if (strpos(trim($value) . ',', $resno . ',') === 0) {
-				$st = $i;
-				break;
-			}
-		}
-		if ($st === null) {
-			error(MSG001);
-		}
-	}
 
 	$line = file(LOGFILE);
 	foreach($line as $i =>$value){
@@ -438,10 +426,8 @@ function updatelog($resno=0){
 	$counttree = count($tree);//190619
 	for($page=0;$page<$counttree;$page+=PAGE_DEF){
 		$oya = 0;	//親記事のメイン添字
-		$dat = form($resno);
-		if(!$resno){
-			$st = $page;
-		}
+		$dat = form();
+		$st = $page;
 		for($i = $st; $i < $st+PAGE_DEF; ++$i){
 			if(!isset($tree[$i])){
 				continue;
@@ -455,55 +441,45 @@ function updatelog($resno=0){
 			$res = create_res($path, $line[$j], ['pch' => 1]);
 
 			$res['disp_resform'] = check_disp_resform($res); // ミニレスフォームの表示有無
-			if(!$res['disp_resform']){
-				if($resno){//レスなら
-					$dat['form'] = false;//フォームを閉じる
-					$dat['paintform'] = false;
-				}
-			}
 
 			// ミニフォーム用
 			$resub = USE_RESUB ? 'Re: ' . $res['sub'] : '';
 			// レス省略
 			$skipres = '';
-			if(!$resno){
-				$counttreeline = count($treeline);//190619
-				$s=$counttreeline - DSP_RES;
-				if(ADMIN_NEWPOST&&!DSP_RES) {$skipres = $s - 1;}
-				elseif($s<1 || !DSP_RES) {$s=1;}
-				elseif($s>1) {$skipres = $s - 1;}
-				//レス画像数調整
-				if(RES_UPLOAD){
-					//画像テーブル作成
-					$imgline=array();
-					foreach($treeline as $k => $disptree){
-						if($k<$s){//レス表示件数
-							continue;
-						}
-						$j=$lineindex[$disptree] - 1;
-						if($line[$j]==="") continue;
-						list(,,,,,,,,,$rext,,,$rtime,,,) = explode(",", rtrim($line[$j]));
-						$resimg = $path.$rtime.$rext;
 
-						$imgline[] = ($rext && is_file($resimg)) ? 'img' : '0';
+			$counttreeline = count($treeline);//190619
+			$s=$counttreeline - DSP_RES;
+			if(ADMIN_NEWPOST&&!DSP_RES) {$skipres = $s - 1;}
+			elseif($s<1 || !DSP_RES) {$s=1;}
+			elseif($s>1) {$skipres = $s - 1;}
+			//レス画像数調整
+			if(RES_UPLOAD){
+				//画像テーブル作成
+				$imgline=array();
+				foreach($treeline as $k => $disptree){
+					if($k<$s){//レス表示件数
+						continue;
 					}
-					$resimgs = array_count_values($imgline);
-					if(isset($resimgs['img'])){//未定義エラー対策
-					while($resimgs['img'] > DSP_RESIMG){
-						while($imgline[0]='0'){ //画像付きレスが出るまでシフト
-							array_shift($imgline);
-							$s++;
-						}
-						array_shift($imgline); //画像付きレス1つシフト
-						$s++;
-						$resimgs = array_count_values($imgline);
-					}
-					}
-					if($s>1) {$skipres = $s - 1;}//再計算
+					$j=$lineindex[$disptree] - 1;
+					if($line[$j]==="") continue;
+					list(,,,,,,,,,$rext,,,$rtime,,,) = explode(",", rtrim($line[$j]));
+					$resimg = $path.$rtime.$rext;
+
+					$imgline[] = ($rext && is_file($resimg)) ? 'img' : '0';
 				}
-			}else{
-				$s=1;
-				$dat['resub'] = $resub; //レス画面用
+				$resimgs = array_count_values($imgline);
+				if(isset($resimgs['img'])){//未定義エラー対策
+				while($resimgs['img'] > DSP_RESIMG){
+					while($imgline[0]='0'){ //画像付きレスが出るまでシフト
+						array_shift($imgline);
+						$s++;
+					}
+					array_shift($imgline); //画像付きレス1つシフト
+					$s++;
+					$resimgs = array_count_values($imgline);
+				}
+				}
+				if($s>1) {$skipres = $s - 1;}//再計算
 			}
 
 			// 親レス用の値
@@ -544,35 +520,32 @@ function updatelog($resno=0){
 
 			clearstatcache(); //ファイルのstatをクリア
 			$oya++;
-			if($resno){break;} //res時はtree1行だけ
 		}
 
-		if(!$resno){ //res時は表示しない
-			$prev = $st - PAGE_DEF;
-			$next = $st + PAGE_DEF;
-			// 改ページ処理
-			if($prev >= 0){
-				$dat['prev'] = $prev == 0 ? PHP_SELF2 : ($prev / PAGE_DEF) . PHP_EXT;
-			}
-			$paging = "";
+		$prev = $st - PAGE_DEF;
+		$next = $st + PAGE_DEF;
+		// 改ページ処理
+		if($prev >= 0){
+			$dat['prev'] = $prev == 0 ? PHP_SELF2 : ($prev / PAGE_DEF) . PHP_EXT;
+		}
+		$paging = "";
 
-			//表示しているページが20ページ以上または投稿数が少ない時はページ番号のリンクを制限しない
-			$showAll = ($counttree <= PAGE_DEF * 21 || $i >= PAGE_DEF * 22);
+		//表示しているページが20ページ以上または投稿数が少ない時はページ番号のリンクを制限しない
+		$showAll = ($counttree <= PAGE_DEF * 21 || $i >= PAGE_DEF * 22);
 
-			for($i = 0; $i < ($showAll ? $counttree : PAGE_DEF * 22); $i += PAGE_DEF){
-				$pn = $i ? $i / PAGE_DEF : 0; // page_number
-				$paging .= ($st === $i)
-					? str_replace("<PAGE>", $pn, NOW_PAGE) // 現在ページにはリンクを付けない
-					: str_replace("<PURL>", ($i ? $pn.PHP_EXT : PHP_SELF2),
-						str_replace("<PAGE>", $i ? ($showAll || $i !== PAGE_DEF * 21 ? $pn : "≫") : $pn, OTHER_PAGE));
-			}
+		for($i = 0; $i < ($showAll ? $counttree : PAGE_DEF * 22); $i += PAGE_DEF){
+			$pn = $i ? $i / PAGE_DEF : 0; // page_number
+			$paging .= ($st === $i)
+				? str_replace("<PAGE>", $pn, NOW_PAGE) // 現在ページにはリンクを付けない
+				: str_replace("<PURL>", ($i ? $pn.PHP_EXT : PHP_SELF2),
+					str_replace("<PAGE>", $i ? ($showAll || $i !== PAGE_DEF * 21 ? $pn : "≫") : $pn, OTHER_PAGE));
+		}
 
-	//改ページ分岐ここまで
+		//改ページ分岐ここまで
 
-			$dat['paging'] = $paging;
-			if($oya >= PAGE_DEF && $counttree > $next){
-				$dat['next'] = $next/PAGE_DEF.PHP_EXT;
-			}
+		$dat['paging'] = $paging;
+		if($oya >= PAGE_DEF && $counttree > $next){
+			$dat['next'] = $next/PAGE_DEF.PHP_EXT;
 		}
 
 		if($resno){htmloutput(SKIN_DIR.RESFILE,$dat);break;}
@@ -590,9 +563,80 @@ function updatelog($resno=0){
 		//拡張子を.phpにした場合、↑で500エラーでるなら↓に変更
 		if(PHP_EXT!='.php'){chmod($logfilename,0606);}
 	}
-	if (!$resno) {
-		safe_unlink(($page/PAGE_DEF+1).PHP_EXT);
+
+	safe_unlink(($page/PAGE_DEF+1).PHP_EXT);
+}
+
+/* 記事部分 */
+function res($resno = 0){
+	global $path;
+
+	$tree = file(TREEFILE);
+	foreach($tree as $i => $value){
+		//レス先検索
+		if (strpos(trim($value) . ',', $resno . ',') === 0) {
+			$treeline = explode(",", trim($value));
+			break;
+		}
 	}
+	if (!isset($treeline)) {
+		error(MSG001);
+	}
+
+	$line = file(LOGFILE);
+	foreach($line as $i =>$value){
+		list($no,) = explode(",", $value);
+		$lineindex[$no] = $i + 1; //逆変換テーブル作成
+	}
+
+	$_line = $line[$lineindex[$resno + 1]];
+
+	$res = create_res($path, $_line, ['pch' => 1]);
+
+	$res['disp_resform'] = check_disp_resform($res); // ミニレスフォームの表示有無
+	if(!$res['disp_resform']){
+		$dat['form'] = false;//フォームを閉じる
+		$dat['paintform'] = false;
+	}
+
+	// ミニフォーム用
+	$resub = USE_RESUB ? 'Re: ' . $res['sub'] : '';
+	$dat['resub'] = $resub; //レス画面用
+
+	// 親レス用の値
+	$res['tab'] = 1; //TAB
+	$res['limit'] = ($lineindex[$res['no']] - 1 >= LOG_MAX * LOG_LIMIT / 100) ? true : ''; // そろそろ消える。
+	$res['resub'] = $resub;
+	$res['descriptioncom'] = strip_tags($res['com']); //メタタグに使うコメントからタグを除去
+
+	$dat['oya'][0] = $res;
+
+	$oyaname = $res['name']; //投稿者名をコピー
+
+	//レス作成
+	$rres = [];
+	$rresname = [];
+	array_shift($treeline); // 親レス番号を除去
+	foreach($treeline as $disptree){ // 子レスだけ回す
+		$j=$lineindex[$disptree] - 1;
+		if($line[$j]==="") continue;
+
+		$res = create_res($path, $line[$j], ['pch' => 1]);
+		$rres[0][] = $res;
+
+		// 投稿者名を配列にいれる
+		if ($oyaname != $res['name'] && !in_array($res['name'], $rresname)) { // 重複チェックと親投稿者除外
+			$rresname[] = $res['name'];
+		}
+	}
+
+	// レス記事一括格納
+	if($rres){//レスがある時
+		$dat['resname'] = $rresname ? implode('さん ',$rresname) : ''; // レス投稿者一覧
+		$dat['oya'][0]['res'] = $rres[0];
+	}
+
+	htmloutput(SKIN_DIR.RESFILE,$dat);
 }
 
 /* オートリンク */
