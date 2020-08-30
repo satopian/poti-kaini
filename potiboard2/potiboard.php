@@ -583,6 +583,8 @@ function res($resno = 0){
 
 	$_line = $line[$lineindex[$resno] - 1];
 
+	$dat = form();
+
 	$res = create_res($_line, ['pch' => 1]);
 
 	$res['disp_resform'] = check_disp_resform($res); // ミニレスフォームの表示有無
