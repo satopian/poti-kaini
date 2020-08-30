@@ -545,7 +545,6 @@ function updatelog(){
 			$dat['next'] = $next/PAGE_DEF.PHP_EXT;
 		}
 
-		if($resno){htmloutput(SKIN_DIR.RESFILE,$dat);break;}
 		$dat['resform'] = RES_FORM ? true : false;
 
 		$buf = htmloutput(SKIN_DIR.MAINFILE,$dat,true);
