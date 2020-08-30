@@ -581,7 +581,7 @@ function res($resno = 0){
 	$line = file(LOGFILE);
 	$lineindex = get_lineindex($line); // 逆変換テーブル作成
 
-	$_line = $line[$lineindex[$resno + 1]];
+	$_line = $line[$lineindex[$resno] - 1];
 
 	$res = create_res($_line, ['pch' => 1]);
 
