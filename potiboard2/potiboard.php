@@ -583,7 +583,7 @@ function res($resno = 0){
 
 	$_line = $line[$lineindex[$resno] - 1];
 
-	$dat = form();
+	$dat = form($resno);
 
 	$res = create_res($_line, ['pch' => 1]);
 
