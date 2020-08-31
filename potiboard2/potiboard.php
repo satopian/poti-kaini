@@ -484,15 +484,11 @@ function updatelog(){
 			$res['limit'] = ($lineindex[$res['no']] - 1 >= LOG_MAX * LOG_LIMIT / 100) ? true : ''; // そろそろ消える。
 			$res['skipres'] = $skipres;
 			$res['resub'] = $resub;
-			$res['descriptioncom'] = strip_tags($res['com']); //メタタグに使うコメントからタグを除去
-
 			$dat['oya'][$oya] = $res;
 
-			$oyaname = $res['name']; //投稿者名をコピー
 
 			//レス作成
 			$rres=array();
-			$rresname = [];
 			foreach($treeline as $k => $disptree){
 				if($k<$s){//レス表示件数
 					continue;
@@ -502,16 +498,10 @@ function updatelog(){
 
 				$res = create_res($line[$j], ['pch' => 1]);
 				$rres[$oya][] = $res;
-				
-				// 投稿者名を配列にいれる
-				if ($oyaname != $res['name'] && !in_array($res['name'], $rresname)) { // 重複チェックと親投稿者除外
-					$rresname[] = $res['name'];
-				}
 			}
 
 			// レス記事一括格納
 			if($rres){//レスがある時
-				$dat['resname'] = $rresname ? implode('さん ',$rresname) : ''; // レス投稿者一覧
 				$dat['oya'][$oya]['res'] = $rres[$oya];
 			}
 
@@ -587,13 +577,12 @@ function res($resno = 0){
 
 	$res = create_res($_line, ['pch' => 1]);
 
-	$res['disp_resform'] = check_disp_resform($res); // ミニレスフォームの表示有無
-	if(!$res['disp_resform']){
+	if(!check_disp_resform($res)){// レスフォームの表示有無
 		$dat['form'] = false;//フォームを閉じる
 		$dat['paintform'] = false;
 	}
 
-	// ミニフォーム用
+	// レスフォーム用
 	$resub = USE_RESUB ? 'Re: ' . $res['sub'] : '';
 	$dat['resub'] = $resub; //レス画面用
 
@@ -1193,7 +1182,7 @@ function usrdel($del,$pwd){
 
 	sort($del);
 	reset($del);
-	if($pwd==""&&$pwdc!="") $pwd=$pwdc;
+	if(!$pwd && $pwdc) $pwd=$pwdc;
 	$fp=fopen(LOGFILE,"r+");
 	set_file_buffer($fp, 0);
 	flock($fp, LOCK_EX);
@@ -1438,11 +1427,7 @@ if($admin===$ADMIN_PASS){
 		$w = $picw + 150;//PaintBBSの時の幅
 		$h = $pich + 172;//PaintBBSの時の高さ
 	}
-	// if($w < 400){$w = 400;}//PaintBBSの時の最低幅
 	if($h < 560){$h = 560;}//共通の最低高
-	//NEOを使う時はPaintBBSの設定
-	// if($w < 610 && !$useneo && $shi){$w = 610;}//しぃぺの時の最低幅
-	// if($h < 520 && !$useneo && $shi){$h = 520;}
 
 	$dat['paint_mode'] = true;
 
@@ -2482,7 +2467,7 @@ function getId ($userip, $time) {
 	return substr(crypt(md5($userip.ID_SEED.date("Ymd", $time)),'id'),-8);
 }
 
-// ミニレスフォームを表示するかどうか
+// レスフォームを表示するかどうか
 function check_disp_resform ($res) {
 	return ELAPSED_DAYS //古いスレッドのフォームを閉じる日数が設定されていたら
 		? ((time() - (substr($res['time'], -13, -3))) <= ( ELAPSED_DAYS * 86400)) // 指定日数以内なら表示
