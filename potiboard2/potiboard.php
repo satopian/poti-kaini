@@ -172,6 +172,13 @@ if(!defined('DENY_COMMENTS_ONLY')){//config.phpで未定義なら0
 	define('DENY_COMMENTS_ONLY', '0');
 }
 
+//パレット切り替え機能を使用する しない:0 する:1 
+if(!defined('USE_SELECT_PALETTES')){//config.phpで未定義なら0
+	define('USE_SELECT_PALETTES', '0');
+}
+// $pallets=['palette.txt','palette.dat','palette.txt'];
+
+
 /*-----------Main-------------*/
 init();		//←■■初期設定後は不要なので削除可■■
 deltemp();
@@ -309,6 +316,7 @@ function get_uip(){
 
 /* ベース */
 function basicpart(){
+	global $pallets_dat; 
 	$dat['title'] = TITLE;
 	$dat['home']  = HOME;
 	$dat['self']  = PHP_SELF;
@@ -331,6 +339,14 @@ function basicpart(){
 	if (SHARE_BUTTON){
 		$dat['sharebutton'] = true;//1ならシェアボタンを表示
 	}
+	if(USE_SELECT_PALETTES){
+		$dat['use_select_palettes']=true;
+		foreach($pallets_dat as $i=>$value){
+			$arr_palettes_select_tags[$i]='<option value="'.$i.'">'.$i.'</option>';
+		}
+		$dat['palette_select_tags']=implode($arr_palettes_select_tags);
+	}
+
 	return $dat;
 }
 
@@ -1355,7 +1371,7 @@ function paintform($picw,$pich,$anime,$pch=""){
 	global $admin,$shi,$ctype,$type,$no,$pwd,$ext;
 	global $resto,$mode,$quality,$qualitys,$usercode;
 	global $useneo; //NEOを使う
-	global $ADMIN_PASS;
+	global $ADMIN_PASS,$pallets_dat;
 
 //pchファイルアップロードペイント
 if($admin===$ADMIN_PASS){
@@ -1493,9 +1509,19 @@ if($admin===$ADMIN_PASS){
 	$pal=array();
 	$DynP=array();
 	$p_cnt=1;
-	$lines = file(PALETTEFILE);
+	if(USE_SELECT_PALETTES){//パレット切り替え機能を使う時
+		foreach($pallets_dat as $i=>$value){
+			if($i==filter_input(INPUT_POST, 'selected_palette_no',FILTER_VALIDATE_INT)){//キーと入力された数字が同じなら
+				$lines=file($pallets_dat[$i]);
+			break;
+			}
+		}
+	}else{
+		$lines=file(PALETTEFILE);//初期パレット
+	}
+	
 	foreach ( $lines as $line ) {
-		$line=preg_replace("/[\t\r\n]/","",$line);
+		$line=charconvert(preg_replace("/[\t\r\n]/","",$line));
 		list($pid,$pname,$pal[0],$pal[2],$pal[4],$pal[6],$pal[8],$pal[10],$pal[1],$pal[3],$pal[5],$pal[7],$pal[9],$pal[11],$pal[12],$pal[13]) = explode(",", $line);
 		$DynP[]=CleanStr($pname);
 		$palettes = 'Palettes['.$p_cnt.'] = "#'.$pal[0];
