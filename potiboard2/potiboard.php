@@ -55,11 +55,9 @@ function newstring($string) {
 	$string = str_replace(",","，",$string);
 	return $string;
 }
-//無効化ここまで
 
 //INPUT_POSTから変数を取得
 
-//var_dump($_POST);
 $mode = isset($_REQUEST['mode']) ? $_REQUEST['mode'] : '';
 $resto = filter_input(INPUT_POST, 'resto',FILTER_VALIDATE_INT);
 $name = filter_input(INPUT_POST, 'name');
@@ -68,13 +66,11 @@ $url = filter_input(INPUT_POST, 'url',FILTER_VALIDATE_URL);
 $sub = filter_input(INPUT_POST, 'sub');
 $com = filter_input(INPUT_POST, 'com');
 $pwd = filter_input(INPUT_POST, 'pwd');
-$shi = filter_input(INPUT_POST, 'shi',FILTER_VALIDATE_INT);
 $picw = filter_input(INPUT_POST, 'picw',FILTER_VALIDATE_INT);
 $pich = filter_input(INPUT_POST, 'pich',FILTER_VALIDATE_INT);
 $anime = filter_input(INPUT_POST, 'anime',FILTER_VALIDATE_BOOLEAN);
 $useneo = filter_input(INPUT_POST, 'useneo',FILTER_VALIDATE_BOOLEAN);
 $no = filter_input(INPUT_POST, 'no',FILTER_VALIDATE_INT);
-$pch = newstring(filter_input(INPUT_POST, 'pch'));
 $ext = newstring(filter_input(INPUT_POST, 'ext'));
 $ctype = newstring(filter_input(INPUT_POST, 'ctype'));
 $type = newstring(filter_input(INPUT_POST, 'type'));
@@ -90,13 +86,9 @@ $quality = filter_input(INPUT_POST, 'quality',FILTER_VALIDATE_INT);
 
 //INPUT_GETから変数を取得
 
-//var_dump($_GET);
 $res = filter_input(INPUT_GET, 'res',FILTER_VALIDATE_INT);
-if(filter_input(INPUT_GET, 'mode')==="openpch"){
-$pch = newstring(filter_input(INPUT_GET, 'pch'));
-}
+
 //INPUT_COOKIEから変数を取得
-//var_dump($_COOKIE);
 
 $pwdc = filter_input(INPUT_COOKIE, 'pwdc');
 $usercode = filter_input(INPUT_COOKIE, 'usercode');//nullならuser-codeを発行
@@ -231,7 +223,7 @@ switch($mode){
 		paintcom();
 		break;
 	case 'openpch':
-		openpch($pch);
+		openpch();
 		break;
 	case 'continue':
 		incontinue();
@@ -240,7 +232,7 @@ switch($mode){
 //パスワードが必要なのは差し換えの時だけ
 		if(CONTINUE_PASS||$type==='rep') usrchk($no,$pwd);
 		// if(ADMIN_NEWPOST) $admin=$pwd;
-		paintform($picw,$pich,$anime,$pch);
+		paintform($picw,$pich,$anime);
 		break;
 	case 'newpost':
 		$dat['post_mode'] = true;
@@ -342,9 +334,9 @@ function basicpart(){
 	if(USE_SELECT_PALETTES){
 		$dat['use_select_palettes']=true;
 		foreach($pallets_dat as $i=>$value){
-			$arr_palettes_select_tags[$i]='<option value="'.$i.'">'.$i.'</option>';
+			$arr_palette_select_tags[$i]='<option value="'.$i.'">'.$i.'</option>';
 		}
-		$dat['palette_select_tags']=implode($arr_palettes_select_tags);
+		$dat['palette_select_tags']=implode($arr_palette_select_tags);
 	}
 
 	return $dat;
@@ -1367,11 +1359,14 @@ function check_path ($path, $name, $is_dir = false) {
 }
 
 /* お絵描き画面 */
-function paintform($picw,$pich,$anime,$pch=""){
-	global $admin,$shi,$ctype,$type,$no,$pwd,$ext;
+function paintform($picw,$pich,$anime){
+	global $admin,$ctype,$type,$no,$pwd,$ext;
 	global $resto,$mode,$quality,$qualitys,$usercode;
 	global $useneo; //NEOを使う
 	global $ADMIN_PASS,$pallets_dat;
+
+	$shi = filter_input(INPUT_POST, 'shi',FILTER_VALIDATE_INT);
+	$pch = newstring(filter_input(INPUT_POST, 'pch'));
 
 //pchファイルアップロードペイント
 if($admin===$ADMIN_PASS){
@@ -1658,8 +1653,9 @@ function paintcom(){
 }
 
 /* 動画表示 */
-function openpch($pch){
+function openpch(){
 
+	$pch = newstring(filter_input(INPUT_GET, 'pch'));
 	$_pch = pathinfo($pch, PATHINFO_FILENAME); //拡張子除去
 
 	if ($ext = check_pch_ext(PCH_DIR . $_pch)) {
@@ -1717,7 +1713,6 @@ function incontinue(){
 	global $addinfo;
 
 	$no = filter_input(INPUT_GET, 'no',FILTER_VALIDATE_INT);
-
 	$lines = file(LOGFILE);
 	$flag = FALSE;
 	foreach($lines as $line){
