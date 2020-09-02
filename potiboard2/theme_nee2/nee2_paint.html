@@ -477,6 +477,9 @@
 							<option value="rep">replace</option>
 							<option value="new">newpost</option>
 						</select>
+						<% def(use_select_palettes) %>
+							P/L：<select name="selected_palette_no" title="パレット" class="form"><% echo(palette_select_tags) %></select>
+							<% /def %>
 						<% def(passflag) %>Pass<input class="form" type="password" name="pwd" size="8" value=""> <% /def %>
 						<input class="button" type="submit" value="続きを描く">
 						<!-- NEOを使う -->

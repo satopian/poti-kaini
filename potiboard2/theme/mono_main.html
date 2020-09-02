@@ -105,7 +105,6 @@
 							<% def(applet) %>
 							<input type="hidden" name="shi" value="1">
 							<% /def %>
-							<label>
 								幅：<select name="picw" title="幅" class="form">
 									<?php
 									//幅 300から、PMAX_W で設定した最大値まで。
@@ -119,8 +118,6 @@
 										}
 									?>
 								</select>
-							</label>
-							<label>
 								高さ：<select name="pich" title="高さ" class="form">
 									<?php
 									//高さ 300から、PMAX_H で設定した最大値まで。
@@ -134,7 +131,9 @@
 										}
 									?>
 								</select>
-							</label>
+							<% def(use_select_palettes) %>
+							パレット：<select name="selected_palette_no" title="パレット" class="form"><% echo(palette_select_tags) %></select>
+							<% /def %>
 							<% def(resno) %>
 							<input type="hidden" name="resto" value="<% echo(resno) %>">
 							<% /def %>

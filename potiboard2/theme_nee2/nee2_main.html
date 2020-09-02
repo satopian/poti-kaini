@@ -70,8 +70,12 @@
 						<p>
 							<!-- しぃペインター通常版 -->
 							<input type="hidden" name="shi" value="1">
-							<label>幅：<input class="form" type="text" name="picw" value="<% echo(pdefw) %>"></label>
-							<label>高さ：<input class="form" type="text" name="pich" value="<% echo(pdefh) %>"></label>
+							幅：<input class="form" type="text" name="picw" value="<% echo(pdefw) %>">
+							高さ：<input class="form" type="text" name="pich" value="<% echo(pdefh) %>">
+							<% def(use_select_palettes) %>
+							P/L：<select name="selected_palette_no" title="パレット" class="form"><% echo(palette_select_tags) %></select>
+							<% /def %>
+
 							<% def(resno) %>
 							<input type="hidden" name="resto" value="<% echo(resno) %>">
 							<% /def %>
