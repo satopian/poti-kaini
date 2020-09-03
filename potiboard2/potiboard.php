@@ -168,8 +168,6 @@ if(!defined('DENY_COMMENTS_ONLY')){//config.phpで未定義なら0
 if(!defined('USE_SELECT_PALETTES')){//config.phpで未定義なら0
 	define('USE_SELECT_PALETTES', '0');
 }
-// $pallets=['palette.txt','palette.dat','palette.txt'];
-
 
 /*-----------Main-------------*/
 init();		//←■■初期設定後は不要なので削除可■■
@@ -231,7 +229,6 @@ switch($mode){
 	case 'contpaint':
 //パスワードが必要なのは差し換えの時だけ
 		if(CONTINUE_PASS||$type==='rep') usrchk($no,$pwd);
-		// if(ADMIN_NEWPOST) $admin=$pwd;
 		paintform($picw,$pich,$anime);
 		break;
 	case 'newpost':
@@ -322,15 +319,10 @@ function basicpart(){
 	$dat['userdel'] = USER_DELETES;
 	$dat['charset'] = 'UTF-8';
 	$dat['skindir'] = SKIN_DIR;
-	$dat['for_new_post'] = true;
-	if(!USE_IMG_UPLOAD&&DENY_COMMENTS_ONLY){
-		$dat['for_new_post'] = false;
-	}
+	$dat['for_new_post'] = (!USE_IMG_UPLOAD && DENY_COMMENTS_ONLY) ? false : true;
 	//OGPイメージ シェアボタン
 	$dat['rooturl'] = ROOT_URL;//設置場所url
-	if (SHARE_BUTTON){
-		$dat['sharebutton'] = true;//1ならシェアボタンを表示
-	}
+	$dat['sharebutton'] = SHARE_BUTTON ? true : false;
 	if(USE_SELECT_PALETTES){
 		$dat['use_select_palettes']=true;
 		foreach($pallets_dat as $i=>$value){
@@ -585,7 +577,7 @@ function res($resno = 0){
 
 	$res = create_res($_line, ['pch' => 1]);
 
-	if(!check_disp_resform($res)){// レスフォームの表示有無
+	if(!check_disp_resform($res)){//レスフォームの表示有無
 		$dat['form'] = false;//フォームを閉じる
 		$dat['paintform'] = false;
 	}
@@ -1003,6 +995,13 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 				unlink($src);
 			}
 		}
+		rename($dest,$path.$tim.$ext);
+		if(USE_THUMB){thumb($path,$tim,$ext,$max_w,$max_h);}
+
+		//ワークファイル削除
+		safe_unlink($upfile);
+		safe_unlink($temppath.$picfile.".dat");
+
 	} else{//画像が無い時
 		$ext=$W=$H=$chk="";
 	}
@@ -1081,14 +1080,6 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 		setcookie ($c_name, $c_cookie,time()+(SAVE_COOKIE*24*3600));
 	}
 
-	if($dest&&$is_file_dest){
-		rename($dest,$path.$tim.$ext);
-		if(USE_THUMB){thumb($path,$tim,$ext,$max_w,$max_h);}
-
-		//ワークファイル削除
-		safe_unlink($upfile);
-		safe_unlink($temppath.$picfile.".dat");
-	}
 	updatelog();
 
 	//メール通知
