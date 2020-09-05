@@ -71,10 +71,7 @@ $pich = filter_input(INPUT_POST, 'pich',FILTER_VALIDATE_INT);
 $anime = filter_input(INPUT_POST, 'anime',FILTER_VALIDATE_BOOLEAN);
 $useneo = filter_input(INPUT_POST, 'useneo',FILTER_VALIDATE_BOOLEAN);
 $no = filter_input(INPUT_POST, 'no',FILTER_VALIDATE_INT);
-$ext = newstring(filter_input(INPUT_POST, 'ext'));
-$ctype = newstring(filter_input(INPUT_POST, 'ctype'));
 $type = newstring(filter_input(INPUT_POST, 'type'));
-$ptime = newstring(filter_input(INPUT_POST, 'ptime'));
 $del = filter_input(INPUT_POST,'del',FILTER_VALIDATE_INT,FILTER_REQUIRE_ARRAY);//$del は配列
 $admin = newstring(filter_input(INPUT_POST, 'admin'));
 $pass = newstring(filter_input(INPUT_POST, 'pass'));
@@ -234,7 +231,6 @@ switch($mode){
 	case 'newpost':
 		$dat['post_mode'] = true;
 		$dat['regist'] = true;
-		// form($dat,'');
 		$dat = array_merge($dat,form());
 		htmloutput(SKIN_DIR.OTHERFILE,$dat);
 		break;
@@ -557,7 +553,7 @@ function updatelog(){
 function res($resno = 0){
 
 	$tree = file(TREEFILE);
-	foreach($tree as $i => $value){
+	foreach($tree as $value){
 		//レス先検索
 		if (strpos(trim($value) . ',', $resno . ',') === 0) {
 			$treeline = explode(",", trim($value));
@@ -1351,72 +1347,74 @@ function check_path ($path, $name, $is_dir = false) {
 
 /* お絵描き画面 */
 function paintform($picw,$pich,$anime){
-	global $admin,$ctype,$type,$no,$pwd,$ext;
+	global $admin,$type,$no,$pwd;
 	global $resto,$mode,$quality,$qualitys,$usercode;
 	global $useneo; //NEOを使う
 	global $ADMIN_PASS,$pallets_dat;
 
 	$shi = filter_input(INPUT_POST, 'shi',FILTER_VALIDATE_INT);
 	$pch = newstring(filter_input(INPUT_POST, 'pch'));
+	$ext = newstring(filter_input(INPUT_POST, 'ext'));
+	$ctype = newstring(filter_input(INPUT_POST, 'ctype'));
 
-//pchファイルアップロードペイント
-if($admin===$ADMIN_PASS){
-	
-	$pchfilename = isset($_FILES['pch_upload']['name']) ? $_FILES['pch_upload']['name'] : '';
+	//pchファイルアップロードペイント
+	if($admin===$ADMIN_PASS){
+		
+		$pchfilename = isset($_FILES['pch_upload']['name']) ? $_FILES['pch_upload']['name'] : '';
 
-	if($pchfilename!==""){//空文字でなければ続行
-		$pchfilename=CleanStr($pchfilename);
-		if (strpos($pchfilename, '/') !== false) { //ファイル名に/があったら中断
-			error(MSG015);
-		}
+		if($pchfilename!==""){//空文字でなければ続行
+			$pchfilename=CleanStr($pchfilename);
+			if (strpos($pchfilename, '/') !== false) { //ファイル名に/があったら中断
+				error(MSG015);
+			}
 
-		//拡張子チェック
-		$tim = time().substr(microtime(),2,3);
-		$ext=pathinfo($pchfilename, PATHINFO_EXTENSION);
-		$ext=strtolower($ext);//すべて小文字に
+			//拡張子チェック
+			$tim = time().substr(microtime(),2,3);
+			$ext=pathinfo($pchfilename, PATHINFO_EXTENSION);
+			$ext=strtolower($ext);//すべて小文字に
 
-		if ($ext == 'pch' || $ext == 'spch') {
-			$pchup = TEMP_DIR.'pchup-'.$tim.'-tmp.'.$ext;//アップロードされるファイル名
-			$pchtmp=$_FILES['pch_upload']['tmp_name'];
-		} else{//拡張子が一致しなかったら
-			$pchup="";
-			$pchtmp="";
-			echo "アニメファイルをアップしてください。";
-		}
+			if ($ext == 'pch' || $ext == 'spch') {
+				$pchup = TEMP_DIR.'pchup-'.$tim.'-tmp.'.$ext;//アップロードされるファイル名
+				$pchtmp=$_FILES['pch_upload']['tmp_name'];
+			} else{//拡張子が一致しなかったら
+				$pchup="";
+				$pchtmp="";
+				echo "アニメファイルをアップしてください。";
+			}
 
-		if(move_uploaded_file($pchtmp, $pchup)){//アップロード成功なら続行
-			$pchup=TEMP_DIR.basename($pchup);//ファイルを開くディレクトリを固定
-			if(mime_content_type($pchup)==="application/octet-stream"){//mimetypeが正しければ続行
-				$fp = fopen("$pchup", "rb");
-				$line = bin2hex(fgets($fp ,4096)) ;
-				if($ext==="pch"){
-					$line = substr($line,0,6);
-					if($line==="4e454f"){
-						$useneo=true;
-					} else{//NEOのpchでなければ
-						echo"NEOのPCHではありません。";
-						unlink($pchup);
+			if(move_uploaded_file($pchtmp, $pchup)){//アップロード成功なら続行
+				$pchup=TEMP_DIR.basename($pchup);//ファイルを開くディレクトリを固定
+				if(mime_content_type($pchup)==="application/octet-stream"){//mimetypeが正しければ続行
+					$fp = fopen("$pchup", "rb");
+					$line = bin2hex(fgets($fp ,4096)) ;
+					if($ext==="pch"){
+						$line = substr($line,0,6);
+						if($line==="4e454f"){
+							$useneo=true;
+						} else{//NEOのpchでなければ
+							echo"NEOのPCHではありません。";
+							unlink($pchup);
+						}
+					} elseif($ext==="spch"){
+						$line = substr($line,0,24);
+						if($line==="6c617965725f636f756e743d"||$line==="000d0a"){
+							$useneo=false;
+						}else{//しぃぺのspchでなければ
+							echo"しぃペインターのSPCHではありません。";
+							unlink($pchup);
+						}
 					}
-				} elseif($ext==="spch"){
-					$line = substr($line,0,24);
-					if($line==="6c617965725f636f756e743d"||$line==="000d0a"){
-						$useneo=false;
-					}else{//しぃぺのspchでなければ
-						echo"しぃペインターのSPCHではありません。";
-						unlink($pchup);
-					}
+					fclose($fp);
+					$dat['pchfile'] = $pchup;
+				} else{//mime_content_typeが違ったら
+					unlink($pchup);
+					echo"アニメファイルをアップしてください。";
+					// error(MSG001);
 				}
-				fclose($fp);
-				$dat['pchfile'] = $pchup;
-			} else{//mime_content_typeが違ったら
-				unlink($pchup);
-				echo"アニメファイルをアップしてください。";
-				// error(MSG001);
 			}
 		}
 	}
-}
-//pchファイルアップロードペイントここまで
+	//pchファイルアップロードペイントここまで
 
 	if($picw < 300) $picw = 300;
 	if($pich < 300) $pich = 300;
@@ -1551,11 +1549,8 @@ if($admin===$ADMIN_PASS){
 		$arr_dynp[] = '<option>'.$p.'</option>';
 	}
 	$dat['dynp']=implode('',$arr_dynp);
-	$usercode.='&amp;stime='.time();
-	$dat['usercode'] = $usercode;
-
 	$dat['useneo'] = $useneo; //NEOを使う
-
+	$usercode.='&amp;stime='.time();
 	//差し換え時の認識コード追加
 	if($type==='rep'){
 		$time=time();
@@ -1564,8 +1559,9 @@ if($admin===$ADMIN_PASS){
 		//念の為にエスケープ文字があればアルファベットに変換
 		$repcode = strtr($repcode,"!\"#$%&'()+,/:;<=>?@[\\]^`/{|}~","ABCDEFGHIJKLMNOabcdefghijklmn");
 		$dat['mode'] = 'picrep&amp;no='.$no.'&amp;pwd='.$pwd.'&amp;repcode='.$repcode;
-		$dat['usercode'] = $usercode.'&amp;repcode='.$repcode;
+		$usercode.='&amp;repcode='.$repcode;
 	}
+	$dat['usercode'] = $usercode;
 	htmloutput(SKIN_DIR.PAINTFILE,$dat);
 }
 
@@ -1611,7 +1607,7 @@ function paintcom(){
 	closedir($handle);
 	$tmp = array();
 	if(count($tmplist)!=0){
-		//user-codeどipアドレスでチェック
+		//user-codeとipアドレスでチェック
 		foreach($tmplist as $tmpimg){
 			list($ucode,$uip,$ufilename) = explode("\t", $tmpimg);
 			if($ucode == $usercode||$uip == $userip){
@@ -1976,7 +1972,6 @@ function replace(){
 	$repcode = newstring(filter_input(INPUT_GET, 'repcode'));
 	$userip = get_uip();
 	$mes="";
-
 	
 	//ホスト取得
 	$host = gethostbyaddr($userip);
@@ -2065,11 +2060,11 @@ function replace(){
 
 			//元のサイズを基準にサムネイルを作成
 			if(USE_THUMB){
-					if($thumbnail_size=thumb($path,$tim,$imgext,$W,$H)){//作成されたサムネイルのサイズ
-						$W=$thumbnail_size['w'];
-						$H=$thumbnail_size['h'];
-					}
-				} 
+				if($thumbnail_size=thumb($path,$tim,$imgext,$W,$H)){//作成されたサムネイルのサイズ
+					$W=$thumbnail_size['w'];
+					$H=$thumbnail_size['h'];
+				}
+			} 
 			//ワークファイル削除
 			safe_unlink($upfile);
 			safe_unlink($temppath.$file_name.".dat");
@@ -2123,8 +2118,8 @@ function replace(){
 /* カタログ */
 function catalog(){
 
-	$page = filter_input_default(INPUT_GET, 'page',FILTER_VALIDATE_INT, 0);
-
+	$page = filter_input(INPUT_GET, 'page',FILTER_VALIDATE_INT);
+	$page===null ? $page=0 : $page=$page;
 	$line = file(LOGFILE);
 	$lineindex = get_lineindex($line); // 逆変換テーブル作成
 
@@ -2365,18 +2360,6 @@ function is_ngword ($ngwords, $strs) {
 	return false;
 }
 
-/**
- * @param int $type
- * @param string $variable_name
- * @param int $filter
- * @param mixed $default_value
- * @return mixed
- */
-function filter_input_default ($type , $variable_name, $filter = FILTER_DEFAULT, $default_value = null) {
-	$value = filter_input($type, $variable_name, $filter);
-	return ($value !== null || $default_value === null) ? $value : $default_value;
-}
-
 function png2jpg ($src) {
 	if(mime_content_type($src)==="image/png" && gd_check() && function_exists("ImageCreateFromPNG")){//pngならJPEGに変換
 		if($im_in=ImageCreateFromPNG($src)){
@@ -2504,4 +2487,3 @@ function check_password ($pwd, $epwd, $adminPass = false) {
 }
 
 ?>
-
