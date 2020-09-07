@@ -56,7 +56,7 @@ function thumb($path,$tim,$ext,$max_w,$max_h){
 	ImageDestroy($im_in);
 	ImageDestroy($im_out);
 	if(!chmod(THUMB_DIR.$tim.'s.jpg',0606)){
-		return false;
+		return;
 	}
 
 	$thumbnail_size = [
