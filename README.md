@@ -58,6 +58,7 @@ config.phpの設定をし、アップロードしてpotiboard.phpのあるディ
 
 - 記事編集しても投稿日時を変更しないようにする設定をconfig.phpに追加他(by さとぴあ)
   - 詳しくは[こちら](https://github.com/sakots/poti-kaini/pull/130)
+  - potiboard.php、config.php、thumbnail_gd.php に変更があります。
 
 ### [2020/09/06] v2.16.3 lot.200906
 
