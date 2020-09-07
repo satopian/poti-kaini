@@ -156,7 +156,7 @@ if(!defined('USE_IMG_UPLOAD')){//config.phpで未定義なら1
 	define('USE_IMG_UPLOAD','1');
 }
 
-//画像のないコメントのみの新規投稿を拒否 する:1 しない:0 
+//画像のないコメントのみの新規投稿を拒否する する:1 しない:0
 if(!defined('DENY_COMMENTS_ONLY')){//config.phpで未定義なら0
 	define('DENY_COMMENTS_ONLY', '0');
 }
