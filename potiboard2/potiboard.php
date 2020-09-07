@@ -156,14 +156,19 @@ if(!defined('USE_IMG_UPLOAD')){//config.phpで未定義なら1
 	define('USE_IMG_UPLOAD','1');
 }
 
-//画像のないコメントのみの新規投稿を拒否 しない:0 する:1 
+//画像のないコメントのみの新規投稿を拒否 する:1 しない:0 
 if(!defined('DENY_COMMENTS_ONLY')){//config.phpで未定義なら0
 	define('DENY_COMMENTS_ONLY', '0');
 }
 
-//パレット切り替え機能を使用する しない:0 する:1 
+//パレット切り替え機能を使用する する:1 しない:0
 if(!defined('USE_SELECT_PALETTES')){//config.phpで未定義なら0
 	define('USE_SELECT_PALETTES', '0');
+}
+
+//編集しても投稿日時を変更しないようにする する:1 しない:0 
+if(!defined('DO_NOT_CHANGE_POSTS_TIME')){//config.phpで未定義なら0
+	define('DO_NOT_CHANGE_POSTS_TIME', '0');
 }
 
 /*-----------Main-------------*/
@@ -1935,8 +1940,9 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 	// 記事上書き
 	$flag = FALSE;
 	foreach($line as $i => $value){
-		list($eno,,$ename,,$esub,$ecom,$eurl,$ehost,$epwd,$ext,$W,$H,$tim,$chk,$ptime,$efcolor) = explode(",", rtrim($value));
+		list($eno,$enow,$ename,,$esub,$ecom,$eurl,$ehost,$epwd,$ext,$W,$H,$tim,$chk,$ptime,$efcolor) = explode(",", rtrim($value));
 		if($eno == $no && check_password($pwd, $epwd, $admin)){
+			$now=DO_NOT_CHANGE_POSTS_TIME ? $enow : $now;
 			if(!$name) $name = $ename;
 			if(!$sub)  $sub  = $esub;
 			if(!$com)  $com  = $ecom;
@@ -2025,7 +2031,7 @@ function replace(){
 	$pwd=openssl_decrypt($pwd,CRYPT_METHOD, CRYPT_PASS, true, CRYPT_IV);//復号化
 
 	foreach($line as $i => $value){
-		list($eno,,$name,$email,$sub,$com,$url,$ehost,$epwd,$ext,$W,$H,$etim,,$eptime,$fcolor) = explode(",", rtrim($value));
+		list($eno,$enow,$name,$email,$sub,$com,$url,$ehost,$epwd,$ext,$W,$H,$etim,,$eptime,$fcolor) = explode(",", rtrim($value));
 	//画像差し替えに管理パスは使っていない
 		if($eno == $no && check_password($pwd, $epwd)){
 			$upfile = $temppath.$file_name.$imgext;
@@ -2091,8 +2097,8 @@ function replace(){
 			//カンマを変換
 			$now = str_replace(",", "&#44;", $now);
 			$ptime = str_replace(",", "&#44;", $ptime);
-
-			$line[$i] = "$no,$now,".strip_tags($name).",$email,$sub,$com,$url,$host,$epwd,$imgext,$W,$H,$tim,$chk,$ptime,$fcolor";
+			$now=DO_NOT_CHANGE_POSTS_TIME ? $enow : $now;
+			$line[$i] = "$no,$now,$name,$email,$sub,$com,$url,$host,$epwd,$imgext,$W,$H,$tim,$chk,$ptime,$fcolor";
 			$flag = true;
 			break;
 		}
@@ -2119,7 +2125,7 @@ function replace(){
 function catalog(){
 
 	$page = filter_input(INPUT_GET, 'page',FILTER_VALIDATE_INT);
-	$page===null ? $page=0 : $page=$page;
+	$page=($page===null) ? 0 : $page;
 	$line = file(LOGFILE);
 	$lineindex = get_lineindex($line); // 逆変換テーブル作成
 
