@@ -1,6 +1,6 @@
 <?php
 /*
-  * POTI-board改二 v2.16 lot.200907
+  * POTI-board改二 v2.17 lot.200908
   * by sakots >> https://poti-k.info/
   *
   * POTI-board改二の設定ファイルです。
@@ -413,9 +413,11 @@ define('USE_SELECT_PALETTES', '0');
 //パレットデータファイル切り替え機能を使用する する:1 の時のパレットデーターファイル名
 //初期パレットpalette.txtとやこうさんパレットpalette.datを切り替えて使う時
 //↓
-$pallets_dat=['palette.txt','palette.dat'];
-//コンマ区切りで複数登録できます。ファイル名は '' で囲ってください。
-// 例 $pallets_dat=['0.txt','1.txt','2.txt'];
+$pallets_dat=array(['標準','palette.txt'],['プロ','palette.dat']);
+// ['パレット名','ファイル名']でひとつ。それをコンマで区切ります。
+//パレット名とファイル名は''で囲ってください。
+//設定例
+//$pallets_dat=array(['パレット1','1.txt'],['パレット2','2.txt'],['パレット3','3.txt']);
 
 //動画機能を使用する する:1 しない:0
 define('USE_ANIME', '1');

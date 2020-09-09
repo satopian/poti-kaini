@@ -66,10 +66,6 @@ $url = filter_input(INPUT_POST, 'url',FILTER_VALIDATE_URL);
 $sub = filter_input(INPUT_POST, 'sub');
 $com = filter_input(INPUT_POST, 'com');
 $pwd = filter_input(INPUT_POST, 'pwd');
-$picw = filter_input(INPUT_POST, 'picw',FILTER_VALIDATE_INT);
-$pich = filter_input(INPUT_POST, 'pich',FILTER_VALIDATE_INT);
-$anime = filter_input(INPUT_POST, 'anime',FILTER_VALIDATE_BOOLEAN);
-$useneo = filter_input(INPUT_POST, 'useneo',FILTER_VALIDATE_BOOLEAN);
 $no = filter_input(INPUT_POST, 'no',FILTER_VALIDATE_INT);
 $type = newstring(filter_input(INPUT_POST, 'type'));
 $del = filter_input(INPUT_POST,'del',FILTER_VALIDATE_INT,FILTER_REQUIRE_ARRAY);//$del は配列
@@ -217,7 +213,7 @@ switch($mode){
 		redirect(PHP_SELF2, 0);
 		break;
 	case 'paint':
-		paintform($picw,$pich,$anime);
+		paintform();
 		break;
 	case 'piccom':
 		paintcom();
@@ -231,7 +227,7 @@ switch($mode){
 	case 'contpaint':
 //パスワードが必要なのは差し換えの時だけ
 		if(CONTINUE_PASS||$type==='rep') usrchk($no,$pwd);
-		paintform($picw,$pich,$anime);
+		paintform();
 		break;
 	case 'newpost':
 		$dat['post_mode'] = true;
@@ -306,7 +302,7 @@ function get_uip(){
 
 /* ベース */
 function basicpart(){
-	global $pallets_dat; 
+	global $pallets_dat;
 	$dat['title'] = TITLE;
 	$dat['home']  = HOME;
 	$dat['self']  = PHP_SELF;
@@ -327,7 +323,12 @@ function basicpart(){
 	if(USE_SELECT_PALETTES){
 		$dat['use_select_palettes']=true;
 		foreach($pallets_dat as $i=>$value){
-			$arr_palette_select_tags[$i]='<option value="'.$i.'">'.$i.'</option>';
+			if(is_array($value)){
+				list($p_name,$p_dat)=$value;
+			}else{
+				$p_name=$i;
+			}
+			$arr_palette_select_tags[$i]='<option value="'.$i.'">'.$p_name.'</option>';
 		}
 		$dat['palette_select_tags']=implode($arr_palette_select_tags);
 	}
@@ -1351,12 +1352,15 @@ function check_path ($path, $name, $is_dir = false) {
 }
 
 /* お絵描き画面 */
-function paintform($picw,$pich,$anime){
+function paintform(){
 	global $admin,$type,$no,$pwd;
 	global $resto,$mode,$quality,$qualitys,$usercode;
-	global $useneo; //NEOを使う
 	global $ADMIN_PASS,$pallets_dat;
 
+	$picw = filter_input(INPUT_POST, 'picw',FILTER_VALIDATE_INT);
+	$pich = filter_input(INPUT_POST, 'pich',FILTER_VALIDATE_INT);
+	$anime = filter_input(INPUT_POST, 'anime',FILTER_VALIDATE_BOOLEAN);
+	$useneo = filter_input(INPUT_POST, 'useneo',FILTER_VALIDATE_BOOLEAN);
 	$shi = filter_input(INPUT_POST, 'shi',FILTER_VALIDATE_INT);
 	$pch = newstring(filter_input(INPUT_POST, 'pch'));
 	$ext = newstring(filter_input(INPUT_POST, 'ext'));
@@ -1501,8 +1505,13 @@ function paintform($picw,$pich,$anime){
 	if(USE_SELECT_PALETTES){//パレット切り替え機能を使う時
 		foreach($pallets_dat as $i=>$value){
 			if($i==filter_input(INPUT_POST, 'selected_palette_no',FILTER_VALIDATE_INT)){//キーと入力された数字が同じなら
-				$lines=file($pallets_dat[$i]);
-			break;
+				if(is_array($value)){
+					list($p_name,$p_dat)=$value;
+					$lines=file($p_dat);
+				}else{
+					$lines=file($value);
+				}
+				break;
 			}
 		}
 	}else{
