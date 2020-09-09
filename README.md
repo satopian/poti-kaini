@@ -54,6 +54,12 @@ config.phpの設定をし、アップロードしてpotiboard.phpのあるディ
 
 ## 履歴
 
+### [2020/09/10] v2.18.0 lot.200910
+
+- パレット切り替え機能でパレット名を任意に設定できるように(by さとぴあ)
+  - potiboard.phpとconfig.phpに変更があります
+  - 詳しくは[こちら](https://github.com/sakots/poti-kaini/pull/131)
+
 ### [2020/09/08] v2.17.0 lot.200908
 
 - 記事編集しても投稿日時を変更しないようにする設定をconfig.phpに追加他(by さとぴあ)
