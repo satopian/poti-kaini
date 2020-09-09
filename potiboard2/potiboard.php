@@ -1505,13 +1505,13 @@ function paintform(){
 	if(USE_SELECT_PALETTES){//パレット切り替え機能を使う時
 		foreach($pallets_dat as $i=>$value){
 			if($i==filter_input(INPUT_POST, 'selected_palette_no',FILTER_VALIDATE_INT)){//キーと入力された数字が同じなら
-					if(is_array($value)){
-						list($p_name,$p_dat)=$value;
-						$lines=file($p_dat);
-					}else{
-						$lines=file($value);
-					}
-					break;
+				if(is_array($value)){
+					list($p_name,$p_dat)=$value;
+					$lines=file($p_dat);
+				}else{
+					$lines=file($value);
+				}
+				break;
 			}
 		}
 	}else{
