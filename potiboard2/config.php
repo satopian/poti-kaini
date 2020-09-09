@@ -417,7 +417,7 @@ $pallets_dat=array(['標準','palette.txt'],['プロ','palette.dat']);
 // ['パレット名','ファイル名']でひとつ。それをコンマで区切ります。
 //パレット名とファイル名は''で囲ってください。
 //設定例
-//$pallets=array(['パレット名1','palette1.txt'],['パレット名2','palette2.txt'],['パレット名3','palette3.txt']);
+//$pallets_dat=array(['パレット1','1.txt'],['パレット2','2.txt'],['パレット3','3.txt']);
 
 //動画機能を使用する する:1 しない:0
 define('USE_ANIME', '1');
