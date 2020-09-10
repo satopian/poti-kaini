@@ -742,7 +742,6 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 			if(!move_uploaded_file($upfile, $dest)){
 				error(MSG003,$dest);
 			}
-			$upfile_name = CleanStr($upfile_name);
 		}
 
 		$is_file_dest = is_file($dest);
@@ -935,6 +934,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 			$W = ceil($W * $key);
 			$H = ceil($H * $key);
 		}
+		CleanStr($upfile_name);
 		$mes = "画像 $upfile_name のアップロードが成功しました<br><br>";
 
 		//重複チェック
