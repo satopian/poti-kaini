@@ -667,6 +667,16 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 	global $temppath;
 	global $fcolor,$usercode;
 	global $admin,$ADMIN_PASS;
+	
+	$REQUEST_METHOD = isset($_SERVER["REQUEST_METHOD"]) ? $_SERVER["REQUEST_METHOD"] : "";
+	if($REQUEST_METHOD !== "POST") error(MSG006);
+	
+	$userip = get_uip();
+	//ホスト取得
+	$host = gethostbyaddr($userip);
+	check_badip($host);
+	//NGワードがあれば拒絶
+	Reject_if_NGword_exists_in_the_post($com,$name,$email,$url,$sub);
 
 	$pictmp = filter_input(INPUT_POST, 'pictmp',FILTER_VALIDATE_INT);
 	$picfile = newstring(filter_input(INPUT_POST, 'picfile'));
@@ -685,7 +695,6 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 		$upfile_name="";
 	}
 
-	$userip = get_uip();
 	$mes="";
 
 	// 時間
@@ -715,7 +724,6 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 		if($starttime && DSP_PAINTTIME){
 			$ptime = calcPtime($starttime,$postedtime);
 		}
-	
 	}
 	$dest='';
 	$is_file_dest=false;
@@ -743,11 +751,6 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 		}
 	}
 
-	$REQUEST_METHOD = isset($_SERVER["REQUEST_METHOD"]) ? $_SERVER["REQUEST_METHOD"] : "";
-	if($REQUEST_METHOD !== "POST") error(MSG006);
-
-	filter_posts_by_ngwords($com,$name,$email,$url,$sub,$dest);
-	
 	// フォーム内容をチェック
 	if(!$name||preg_match("/\A\s*\z/u",$name)) $name="";
 	if(!$com||preg_match("/\A\s*\z/u",$com)) $com="";
@@ -772,10 +775,6 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 	if(strlen($email) > MAX_EMAIL) error(MSG013,$dest);
 	if(strlen($sub) > MAX_SUB) error(MSG014,$dest);
 	if(strlen($resto) > 10) error(MSG015,$dest);
-
-	//ホスト取得
-	$host = gethostbyaddr($userip);
-	check_badip($host, $dest);
 
 	// No.とパスと時間とURLフォーマット
 	srand((double)microtime()*1000000);
@@ -1809,7 +1808,6 @@ function editform($del,$pwd){
 /* 記事上書き */
 function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 	global $fcolor;
-	$userip = get_uip();
 	
 	// 時間
 	$time = time();
@@ -1819,8 +1817,13 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 	$REQUEST_METHOD = isset($_SERVER["REQUEST_METHOD"]) ? $_SERVER["REQUEST_METHOD"] : "";
 	if($REQUEST_METHOD !== "POST") error(MSG006);
 
-	filter_posts_by_ngwords($com,$name,$email,$url,$sub);
-	
+	$userip = get_uip();
+	//ホスト取得
+	$host = gethostbyaddr($userip);
+	check_badip($host);
+	//NGワードがあれば拒絶
+	Reject_if_NGword_exists_in_the_post($com,$name,$email,$url,$sub);
+
 	// フォーム内容をチェック
 	if(!$name||preg_match("/\A\s*\z/u",$name)) $name="";
 	if(!$com||preg_match("/\A\s*\z/u",$com)) $com="";
@@ -1832,10 +1835,6 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 	if(strlen($name) > MAX_NAME) error(MSG012);
 	if(strlen($email) > MAX_EMAIL) error(MSG013);
 	if(strlen($sub) > MAX_SUB) error(MSG014);
-
-	//ホスト取得
-	$host = gethostbyaddr($userip);
-	check_badip($host);
 
 	// 時間とURLフォーマット
 	$now = now_date($time);//日付取得
@@ -1918,9 +1917,8 @@ function replace(){
 	$no = filter_input(INPUT_GET, 'no',FILTER_VALIDATE_INT);
 	$pwd = newstring(filter_input(INPUT_GET, 'pwd'));
 	$repcode = newstring(filter_input(INPUT_GET, 'repcode'));
-	$userip = get_uip();
 	$mes="";
-	
+	$userip = get_uip();
 	//ホスト取得
 	$host = gethostbyaddr($userip);
 	check_badip($host);
@@ -2146,10 +2144,10 @@ function charconvert($str){
 		return mb_convert_encoding($str, "UTF-8", "auto");
 }
 
-/* NGワードでフィルタリング */
-function filter_posts_by_ngwords($com,$name,$email,$url,$sub,$dest=''){
-	global $ADMIN_PASS,$badstring,$badname,$badstr_A,$badstr_B,$pwd,$admin;
-
+/* NGワードがあれば拒絶 */
+function Reject_if_NGword_exists_in_the_post($com,$name,$email,$url,$sub){
+	global $badstring,$badname,$badstr_A,$badstr_B,$pwd,$ADMIN_PASS,$admin;
+	$dest='';
 	//チェックする項目から改行・スペース・タブを消す
 	$chk_com  = preg_replace("/\s/u", "", $com );
 	$chk_name = preg_replace("/\s/u", "", $name );
