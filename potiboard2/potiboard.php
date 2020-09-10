@@ -934,7 +934,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 			$W = ceil($W * $key);
 			$H = ceil($H * $key);
 		}
-		CleanStr($upfile_name);
+		$upfile_name=CleanStr($upfile_name);
 		$mes = "画像 $upfile_name のアップロードが成功しました<br><br>";
 
 		//重複チェック
