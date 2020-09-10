@@ -663,11 +663,10 @@ function similar_str($str1,$str2){
 
 /* 記事書き込み */
 function regist($name,$email,$sub,$com,$url,$pwd,$resto){
-	global $path,$badstring,$pwdc;
+	global $path,$pwdc;
 	global $temppath;
 	global $fcolor,$usercode;
-	global $admin,$badstr_A,$badstr_B,$badname;
-	global $ADMIN_PASS;
+	global $admin,$ADMIN_PASS;
 
 	$pictmp = filter_input(INPUT_POST, 'pictmp',FILTER_VALIDATE_INT);
 	$picfile = newstring(filter_input(INPUT_POST, 'picfile'));
@@ -747,40 +746,8 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 	$REQUEST_METHOD = isset($_SERVER["REQUEST_METHOD"]) ? $_SERVER["REQUEST_METHOD"] : "";
 	if($REQUEST_METHOD !== "POST") error(MSG006);
 
-	//チェックする項目から改行・スペース・タブを消す
-	$chk_com  = preg_replace("/\s/u", "", $com );
-	$chk_name = preg_replace("/\s/u", "", $name );
-	$chk_sub = preg_replace("/\s/u", "", $sub );
-	$chk_email = preg_replace("/\s/u", "", $email );
-
-	//本文に日本語がなければ拒絶
-	if (USE_JAPANESEFILTER) {
-		mb_regex_encoding("UTF-8");
-		if (strlen($com) > 0 && !preg_match("/[ぁ-んァ-ヶー一-龠]+/u",$chk_com)) error(MSG035,$dest);
-	}
-
-	//本文へのURLの書き込みを禁止
-	if(!($pwd===$ADMIN_PASS||$admin===$ADMIN_PASS)){//どちらも一致しなければ
-		if(DENY_COMMENTS_URL && preg_match('/:\/\/|\.co|\.ly|\.gl|\.net|\.org|\.cc|\.ru|\.su|\.ua|\.gd/i', $com)) error(MSG036,$dest);
-	}
-
-	// 使えない文字チェック
-	if (is_ngword($badstring, [$chk_com, $chk_sub, $chk_name, $chk_email])) {
-		error(MSG032,$dest);
-	}
-
-	// 使えない名前チェック
-	if (is_ngword($badname, $chk_name)) {
-		error(MSG037,$dest);
-	}
-
-	//指定文字列が2つあると拒絶
-	$bstr_A_find = is_ngword($badstr_A, [$chk_com, $chk_sub, $chk_name, $chk_email]);
-	$bstr_B_find = is_ngword($badstr_B, [$chk_com, $chk_sub, $chk_name, $chk_email]);
-	if($bstr_A_find && $bstr_B_find){
-		error(MSG032,$dest);
-	}
-
+	filter_posts_by_ngwords($com,$name,$email,$url,$sub,$dest);
+	
 	// フォーム内容をチェック
 	if(!$name||preg_match("/\A\s*\z/u",$name)) $name="";
 	if(!$com||preg_match("/\A\s*\z/u",$com)) $com="";
@@ -1841,9 +1808,7 @@ function editform($del,$pwd){
 
 /* 記事上書き */
 function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
-	global $badstring;
-	global $fcolor,$badstr_A,$badstr_B,$badname;
-	global $ADMIN_PASS;
+	global $fcolor;
 	$userip = get_uip();
 	
 	// 時間
@@ -1854,40 +1819,8 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 	$REQUEST_METHOD = isset($_SERVER["REQUEST_METHOD"]) ? $_SERVER["REQUEST_METHOD"] : "";
 	if($REQUEST_METHOD !== "POST") error(MSG006);
 
-	//チェックする項目から改行・スペース・タブを消す
-	$chk_com  = preg_replace("/\s/u", "", $com );
-	$chk_name = preg_replace("/\s/u", "", $name );
-	$chk_sub = preg_replace("/\s/u", "", $sub );
-	$chk_email = preg_replace("/\s/u", "", $email );
-
-	//本文に日本語がなければ拒絶
-	if (USE_JAPANESEFILTER) {
-		mb_regex_encoding("UTF-8");
-		if (strlen($com) > 0 && !preg_match("/[ぁ-んァ-ヶー一-龠]+/u",$chk_com)) error(MSG035,$dest);
-	}
-
-	//本文へのURLの書き込みを禁止
-	if(!($pwd===$ADMIN_PASS||$admin===$ADMIN_PASS)){//どちらも一致しなければ
-		if(DENY_COMMENTS_URL && preg_match('/:\/\/|\.co|\.ly|\.gl|\.net|\.org|\.cc|\.ru|\.su|\.ua|\.gd/i', $com)) error(MSG036,$dest);
-	}
-
-	// 使えない文字チェック
-	if (is_ngword($badstring, [$chk_com, $chk_sub, $chk_name, $chk_email])) {
-		error(MSG032,$dest);
-	}
-
-	// 使えない名前チェック
-	if (is_ngword($badname, $chk_name)) {
-		error(MSG037,$dest);
-	}
-
-	//指定文字列が2つあると拒絶
-	$bstr_A_find = is_ngword($badstr_A, [$chk_com, $chk_sub, $chk_name, $chk_email]);
-	$bstr_B_find = is_ngword($badstr_B, [$chk_com, $chk_sub, $chk_name, $chk_email]);
-	if($bstr_A_find && $bstr_B_find){
-		error(MSG032,$dest);
-	}
-
+	filter_posts_by_ngwords($com,$name,$email,$url,$sub);
+	
 	// フォーム内容をチェック
 	if(!$name||preg_match("/\A\s*\z/u",$name)) $name="";
 	if(!$com||preg_match("/\A\s*\z/u",$com)) $com="";
@@ -2211,6 +2144,45 @@ function catalog(){
 function charconvert($str){
 	mb_language(LANG);
 		return mb_convert_encoding($str, "UTF-8", "auto");
+}
+
+/* NGワードでフィルタリング */
+function filter_posts_by_ngwords($com,$name,$email,$url,$sub,$dest=''){
+	global $ADMIN_PASS,$badstring,$badname,$badstr_A,$badstr_B,$pwd,$admin;
+
+	//チェックする項目から改行・スペース・タブを消す
+	$chk_com  = preg_replace("/\s/u", "", $com );
+	$chk_name = preg_replace("/\s/u", "", $name );
+	$chk_email = preg_replace("/\s/u", "", $email );
+	$chk_sub = preg_replace("/\s/u", "", $sub );
+
+	//本文に日本語がなければ拒絶
+	if (USE_JAPANESEFILTER) {
+		mb_regex_encoding("UTF-8");
+		if (strlen($com) > 0 && !preg_match("/[ぁ-んァ-ヶー一-龠]+/u",$chk_com)) error(MSG035,$dest);
+	}
+
+	//本文へのURLの書き込みを禁止
+	if(!($pwd===$ADMIN_PASS||$admin===$ADMIN_PASS)){//どちらも一致しなければ
+		if(DENY_COMMENTS_URL && preg_match('/:\/\/|\.co|\.ly|\.gl|\.net|\.org|\.cc|\.ru|\.su|\.ua|\.gd/i', $com)) error(MSG036,$dest);
+	}
+
+	// 使えない文字チェック
+	if (is_ngword($badstring, [$chk_com, $chk_sub, $chk_name, $chk_email])) {
+		error(MSG032,$dest);
+	}
+
+	// 使えない名前チェック
+	if (is_ngword($badname, $chk_name)) {
+		error(MSG037,$dest);
+	}
+
+	//指定文字列が2つあると拒絶
+	$bstr_A_find = is_ngword($badstr_A, [$chk_com, $chk_sub, $chk_name, $chk_email]);
+	$bstr_B_find = is_ngword($badstr_B, [$chk_com, $chk_sub, $chk_name, $chk_email]);
+	if($bstr_A_find && $bstr_B_find){
+		error(MSG032,$dest);
+	}
 }
 
 /* HTML出力 */
