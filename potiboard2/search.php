@@ -1,6 +1,6 @@
 <?php
 //POTI-board plugin search(c)2020 さとぴあ
-//v1.6.2 lot.200826
+//v1.6.3 lot.200911
 //
 //https://pbbs.sakura.ne.jp/
 //フリーウェアですが著作権は放棄しません。
@@ -27,6 +27,8 @@
 $max_search=120;
 
 //更新履歴
+
+//v1.6.3 2020.09.11 1ページ目の画像の表示枚数が19枚になっていたのを修正。
 //v1.6.2 2020.08.26 画像検索でis_file()のチェックが２重になっていたのを修正。
 //v1.6.1 2020.08.15 radioボタン未チェックの時の動作を修正。
 //v1.6 2020.08.13 削除ずみのスレッドのレスが表示されるバグを修正。
@@ -61,6 +63,7 @@ date_default_timezone_set('Asia/Tokyo');
 
 $imgsearch=filter_input(INPUT_GET,'imgsearch',FILTER_VALIDATE_BOOLEAN);
 $page=filter_input(INPUT_GET,'page',FILTER_VALIDATE_INT);
+$page= $page ? $page : 1;
 $query=filter_input(INPUT_GET,'query');
 $query=urldecode($query);
 $query=htmlspecialchars($query,ENT_QUOTES,'utf-8');
@@ -204,9 +207,6 @@ else{//作者名
 }
 $dat['query_l']=$query_l;
 
-if(!$page){
-	$page=1;
-}
 $dat['page']=$page;
 $dat['artist_l']=$artist_l;	
 
