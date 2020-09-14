@@ -83,33 +83,32 @@
 </form>
 <p></p>
 <!-- 反復 -->
-<article>
 	<% def(comments) %>
+	<% def(imgsearch) %>
+	<div class="newimg">
+		<ul><% each(comments) %><li class="catalog"><a href="<% echo(comments/link) %>" target="_blank"><img src="<% echo(comments/img) %>" alt="「<% echo(comments/sub) %>」イラスト/<% echo(comments/name) %><% echo(comments/postedtime) %>" title="「<% echo(comments/sub) %>」by <% echo(comments/name) %> <% echo(comments/postedtime) %>"/></a></li><% /each %></ul>
+	</div>
+	<% else %>
 	<% each(comments) %>
-	<div class="article">
-		<% def(imgsearch) %>
-		<div class="newimg">
-			<ul><% each(comments) %><li class="catalog"><a href="<% echo(comments/link) %>" target="_blank"><img src="<% echo(comments/img) %>" alt="「<% echo(comments/sub) %>」イラスト/<% echo(comments/name) %><% echo(comments/postedtime) %>" title="「<% echo(comments/sub) %>」by <% echo(comments/name) %> <% echo(comments/postedtime) %>"/></a></li><% /each %></ul>
-		</div>
-		<% else %>
-			<div class="comments_title_wrap">
-				<h2><a href="<% echo(comments/link) %>" target="_blank"><% echo(comments/sub) %></a></h2>
-				<% echo(comments/postedtime) %><br><span class="name"><a href="?page=1&query=<% echo(comments/encoded_name) %>&radio=2" target="_blank"><% echo(comments/name) %></a></span>
-			</div>
+	<article>
+		<div class="article">
+		<div class="comments_title_wrap">
+			<h2><a href="<% echo(comments/link) %>" target="_blank"><% echo(comments/sub) %></a></h2>
+			 <% echo(comments/postedtime) %><br><span class="name"><a href="?page=1&query=<% echo(comments/encoded_name) %>&radio=2" target="_blank"><% echo(comments/name) %></a></span></div>
 			 <% def(comments/img) %>
-				<a href="<% echo(comments/link) %>" target="_blank"><img src="<% echo(comments/img) %>" alt="<% echo(comments/sub) %> by <% echo(comments/name) %>"></a><br>
+			 <a href="<% echo(comments/link) %>" target="_blank"><img src="<% echo(comments/img) %>" alt="<% echo(comments/sub) %> by <% echo(comments/name) %>"></a><br>
 			 <% /def %>
 			 <% echo(comments/com) %>
 			 <div class="res_button_wrap">
 				 <form action="<% echo(comments/link) %>" method="post" target="_blank"><input type="submit" value="返信" class="res_button"></form><span class="page_top"><a href="#top">△</a></span>
-			</div>
+		</div>
+		</div>
+	</article>
 		<% /def %>
-	</div>
 	<% /each %>
 	<% /def %>
+	<p></p>
 	
-
-</article>
 
 <!-- 最終更新日時 -->
 <% def(lastmodified) %>
