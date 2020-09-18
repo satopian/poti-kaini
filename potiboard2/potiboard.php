@@ -42,8 +42,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.18.0');
-define('POTI_VERLOT' , 'v2.18.0 lot.200910');
+define('POTI_VER' , 'v2.18.1');
+define('POTI_VERLOT' , 'v2.18.1 lot.200915');
 
 if (($phpver = phpversion()) < "5.5.0") {
 	die("本プログラムの動作には PHPバージョン 5.5.0 以上が必要です。<br>\n（現在のPHPバージョン：{$phpver}）");
@@ -663,11 +663,20 @@ function similar_str($str1,$str2){
 
 /* 記事書き込み */
 function regist($name,$email,$sub,$com,$url,$pwd,$resto){
-	global $path,$badstring,$pwdc;
+	global $path,$pwdc;
 	global $temppath;
 	global $fcolor,$usercode;
-	global $admin,$badstr_A,$badstr_B,$badname;
-	global $ADMIN_PASS;
+	global $admin,$ADMIN_PASS;
+	
+	$REQUEST_METHOD = isset($_SERVER["REQUEST_METHOD"]) ? $_SERVER["REQUEST_METHOD"] : "";
+	if($REQUEST_METHOD !== "POST") error(MSG006);
+	
+	$userip = get_uip();
+	//ホスト取得
+	$host = gethostbyaddr($userip);
+	check_badip($host);
+	//NGワードがあれば拒絶
+	Reject_if_NGword_exists_in_the_post($com,$name,$email,$url,$sub);
 
 	$pictmp = filter_input(INPUT_POST, 'pictmp',FILTER_VALIDATE_INT);
 	$picfile = newstring(filter_input(INPUT_POST, 'picfile'));
@@ -686,7 +695,6 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 		$upfile_name="";
 	}
 
-	$userip = get_uip();
 	$mes="";
 
 	// 時間
@@ -716,7 +724,6 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 		if($starttime && DSP_PAINTTIME){
 			$ptime = calcPtime($starttime,$postedtime);
 		}
-	
 	}
 	$dest='';
 	$is_file_dest=false;
@@ -735,50 +742,12 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 			if(!move_uploaded_file($upfile, $dest)){
 				error(MSG003,$dest);
 			}
-			$upfile_name = CleanStr($upfile_name);
 		}
 
 		$is_file_dest = is_file($dest);
 		if(!$is_file_dest){
 			error(MSG003,$dest);
 		}
-	}
-
-	$REQUEST_METHOD = isset($_SERVER["REQUEST_METHOD"]) ? $_SERVER["REQUEST_METHOD"] : "";
-	if($REQUEST_METHOD !== "POST") error(MSG006);
-
-	//チェックする項目から改行・スペース・タブを消す
-	$chk_com  = preg_replace("/\s/u", "", $com );
-	$chk_name = preg_replace("/\s/u", "", $name );
-	$chk_sub = preg_replace("/\s/u", "", $sub );
-	$chk_email = preg_replace("/\s/u", "", $email );
-
-	//本文に日本語がなければ拒絶
-	if (USE_JAPANESEFILTER) {
-		mb_regex_encoding("UTF-8");
-		if (strlen($com) > 0 && !preg_match("/[ぁ-んァ-ヶー一-龠]+/u",$chk_com)) error(MSG035,$dest);
-	}
-
-	//本文へのURLの書き込みを禁止
-	if(!($pwd===$ADMIN_PASS||$admin===$ADMIN_PASS)){//どちらも一致しなければ
-		if(DENY_COMMENTS_URL && preg_match('/:\/\/|\.co|\.ly|\.gl|\.net|\.org|\.cc|\.ru|\.su|\.ua|\.gd/i', $com)) error(MSG036,$dest);
-	}
-
-	// 使えない文字チェック
-	if (is_ngword($badstring, [$chk_com, $chk_sub, $chk_name, $chk_email])) {
-		error(MSG032,$dest);
-	}
-
-	// 使えない名前チェック
-	if (is_ngword($badname, $chk_name)) {
-		error(MSG037,$dest);
-	}
-
-	//指定文字列が2つあると拒絶
-	$bstr_A_find = is_ngword($badstr_A, [$chk_com, $chk_sub, $chk_name, $chk_email]);
-	$bstr_B_find = is_ngword($badstr_B, [$chk_com, $chk_sub, $chk_name, $chk_email]);
-	if($bstr_A_find && $bstr_B_find){
-		error(MSG032,$dest);
 	}
 
 	// フォーム内容をチェック
@@ -805,10 +774,6 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 	if(strlen($email) > MAX_EMAIL) error(MSG013,$dest);
 	if(strlen($sub) > MAX_SUB) error(MSG014,$dest);
 	if(strlen($resto) > 10) error(MSG015,$dest);
-
-	//ホスト取得
-	$host = gethostbyaddr($userip);
-	check_badip($host, $dest);
 
 	// No.とパスと時間とURLフォーマット
 	srand((double)microtime()*1000000);
@@ -969,6 +934,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 			$W = ceil($W * $key);
 			$H = ceil($H * $key);
 		}
+		$upfile_name=CleanStr($upfile_name);
 		$mes = "画像 $upfile_name のアップロードが成功しました<br><br>";
 
 		//重複チェック
@@ -1841,10 +1807,7 @@ function editform($del,$pwd){
 
 /* 記事上書き */
 function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
-	global $badstring;
-	global $fcolor,$badstr_A,$badstr_B,$badname;
-	global $ADMIN_PASS;
-	$userip = get_uip();
+	global $fcolor;
 	
 	// 時間
 	$time = time();
@@ -1854,39 +1817,12 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 	$REQUEST_METHOD = isset($_SERVER["REQUEST_METHOD"]) ? $_SERVER["REQUEST_METHOD"] : "";
 	if($REQUEST_METHOD !== "POST") error(MSG006);
 
-	//チェックする項目から改行・スペース・タブを消す
-	$chk_com  = preg_replace("/\s/u", "", $com );
-	$chk_name = preg_replace("/\s/u", "", $name );
-	$chk_sub = preg_replace("/\s/u", "", $sub );
-	$chk_email = preg_replace("/\s/u", "", $email );
-
-	//本文に日本語がなければ拒絶
-	if (USE_JAPANESEFILTER) {
-		mb_regex_encoding("UTF-8");
-		if (strlen($com) > 0 && !preg_match("/[ぁ-んァ-ヶー一-龠]+/u",$chk_com)) error(MSG035,$dest);
-	}
-
-	//本文へのURLの書き込みを禁止
-	if(!($pwd===$ADMIN_PASS||$admin===$ADMIN_PASS)){//どちらも一致しなければ
-		if(DENY_COMMENTS_URL && preg_match('/:\/\/|\.co|\.ly|\.gl|\.net|\.org|\.cc|\.ru|\.su|\.ua|\.gd/i', $com)) error(MSG036,$dest);
-	}
-
-	// 使えない文字チェック
-	if (is_ngword($badstring, [$chk_com, $chk_sub, $chk_name, $chk_email])) {
-		error(MSG032,$dest);
-	}
-
-	// 使えない名前チェック
-	if (is_ngword($badname, $chk_name)) {
-		error(MSG037,$dest);
-	}
-
-	//指定文字列が2つあると拒絶
-	$bstr_A_find = is_ngword($badstr_A, [$chk_com, $chk_sub, $chk_name, $chk_email]);
-	$bstr_B_find = is_ngword($badstr_B, [$chk_com, $chk_sub, $chk_name, $chk_email]);
-	if($bstr_A_find && $bstr_B_find){
-		error(MSG032,$dest);
-	}
+	$userip = get_uip();
+	//ホスト取得
+	$host = gethostbyaddr($userip);
+	check_badip($host);
+	//NGワードがあれば拒絶
+	Reject_if_NGword_exists_in_the_post($com,$name,$email,$url,$sub);
 
 	// フォーム内容をチェック
 	if(!$name||preg_match("/\A\s*\z/u",$name)) $name="";
@@ -1899,10 +1835,6 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 	if(strlen($name) > MAX_NAME) error(MSG012);
 	if(strlen($email) > MAX_EMAIL) error(MSG013);
 	if(strlen($sub) > MAX_SUB) error(MSG014);
-
-	//ホスト取得
-	$host = gethostbyaddr($userip);
-	check_badip($host);
 
 	// 時間とURLフォーマット
 	$now = now_date($time);//日付取得
@@ -1985,9 +1917,8 @@ function replace(){
 	$no = filter_input(INPUT_GET, 'no',FILTER_VALIDATE_INT);
 	$pwd = newstring(filter_input(INPUT_GET, 'pwd'));
 	$repcode = newstring(filter_input(INPUT_GET, 'repcode'));
-	$userip = get_uip();
 	$mes="";
-	
+	$userip = get_uip();
 	//ホスト取得
 	$host = gethostbyaddr($userip);
 	check_badip($host);
@@ -2211,6 +2142,45 @@ function catalog(){
 function charconvert($str){
 	mb_language(LANG);
 		return mb_convert_encoding($str, "UTF-8", "auto");
+}
+
+/* NGワードがあれば拒絶 */
+function Reject_if_NGword_exists_in_the_post($com,$name,$email,$url,$sub){
+	global $badstring,$badname,$badstr_A,$badstr_B,$pwd,$ADMIN_PASS,$admin;
+	$dest='';
+	//チェックする項目から改行・スペース・タブを消す
+	$chk_com  = preg_replace("/\s/u", "", $com );
+	$chk_name = preg_replace("/\s/u", "", $name );
+	$chk_email = preg_replace("/\s/u", "", $email );
+	$chk_sub = preg_replace("/\s/u", "", $sub );
+
+	//本文に日本語がなければ拒絶
+	if (USE_JAPANESEFILTER) {
+		mb_regex_encoding("UTF-8");
+		if (strlen($com) > 0 && !preg_match("/[ぁ-んァ-ヶー一-龠]+/u",$chk_com)) error(MSG035,$dest);
+	}
+
+	//本文へのURLの書き込みを禁止
+	if(!($pwd===$ADMIN_PASS||$admin===$ADMIN_PASS)){//どちらも一致しなければ
+		if(DENY_COMMENTS_URL && preg_match('/:\/\/|\.co|\.ly|\.gl|\.net|\.org|\.cc|\.ru|\.su|\.ua|\.gd/i', $com)) error(MSG036,$dest);
+	}
+
+	// 使えない文字チェック
+	if (is_ngword($badstring, [$chk_com, $chk_sub, $chk_name, $chk_email])) {
+		error(MSG032,$dest);
+	}
+
+	// 使えない名前チェック
+	if (is_ngword($badname, $chk_name)) {
+		error(MSG037,$dest);
+	}
+
+	//指定文字列が2つあると拒絶
+	$bstr_A_find = is_ngword($badstr_A, [$chk_com, $chk_sub, $chk_name, $chk_email]);
+	$bstr_B_find = is_ngword($badstr_B, [$chk_com, $chk_sub, $chk_name, $chk_email]);
+	if($bstr_A_find && $bstr_B_find){
+		error(MSG032,$dest);
+	}
 }
 
 /* HTML出力 */
