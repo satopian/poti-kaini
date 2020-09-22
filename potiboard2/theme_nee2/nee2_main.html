@@ -308,5 +308,14 @@
 				<a href="https://github.com/funige/neo/" target="_top" title="by ImageCanvas">PaintBBS NEO</a>
 			</p>
 		</footer>
+		<script src="<% echo(skindir) %>jquery-3.5.1.min.js"></script>
+		<script>
+			$(function(){//2度押し対策
+				$('[type="submit"]').click(function(){
+					$(this).prop('disabled',true);
+					$(this).closest('form').submit();
+				});
+			});
+		</script>
 	</body>
 </html>
