@@ -2222,43 +2222,6 @@ function getImgType ($img_type, $dest) {
 }
 
 /**
- * 日付とIDを分離
- * @param $now
- * @return array
- */
-function separateDatetimeAndId ($now) {
-	if (preg_match("/( ID:)(.*)/", $now, $regs)){
-		return [$regs[2], preg_replace("/( ID:.*)/","",$now)];
-	}
-	return ['', $now];
-}
-
-/**
- * 名前とトリップを分離
- * @param $name
- * @return array
- */
-function separateNameAndTrip ($name) {
-	$name=strip_tags($name);//タグ除去
-	if(preg_match("/(◆.*)/", $name, $regs)){
-		return [preg_replace("/(◆.*)/","",$name), $regs[1]];
-	}
-	return [$name, ''];
-}
-
-/**
- * 日付と編集マークを分離
- * @param $now
- * @return array
- */
-function separateDatetimeAndUpdatemark ($now) {
-	if (UPDATE_MARK && strpos($now, UPDATE_MARK) !== false){
-		return [str_replace(UPDATE_MARK,"",$now), UPDATE_MARK];
-	}
-	return [$now, ''];
-}
-
-/**
  * 描写時間を計算
  * @param $starttime
  * @return string
@@ -2425,6 +2388,43 @@ function create_res ($line, $options = []) {
 
 	return $res;
 }
+/**
+ * 日付とIDを分離
+ * @param $now
+ * @return array
+ */
+function separateDatetimeAndId ($now) {
+	if (preg_match("/( ID:)(.*)/", $now, $regs)){
+		return [$regs[2], preg_replace("/( ID:.*)/","",$now)];
+	}
+	return ['', $now];
+}
+
+/**
+ * 名前とトリップを分離
+ * @param $name
+ * @return array
+ */
+function separateNameAndTrip ($name) {
+	$name=strip_tags($name);//タグ除去
+	if(preg_match("/(◆.*)/", $name, $regs)){
+		return [preg_replace("/(◆.*)/","",$name), $regs[1]];
+	}
+	return [$name, ''];
+}
+
+/**
+ * 日付と編集マークを分離
+ * @param $now
+ * @return array
+ */
+function separateDatetimeAndUpdatemark ($now) {
+	if (UPDATE_MARK && strpos($now, UPDATE_MARK) !== false){
+		return [str_replace(UPDATE_MARK,"",$now), UPDATE_MARK];
+	}
+	return [$now, ''];
+}
+
 
 // 一括書き込み（上書き）
 function writeFile ($fp, $data) {
