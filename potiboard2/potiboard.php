@@ -65,7 +65,7 @@ $email = filter_input(INPUT_POST, 'email');
 $url = filter_input(INPUT_POST, 'url',FILTER_VALIDATE_URL);
 $sub = filter_input(INPUT_POST, 'sub');
 $com = filter_input(INPUT_POST, 'com');
-$pwd = filter_input(INPUT_POST, 'pwd');
+$pwd = newstring(filter_input(INPUT_POST, 'pwd'));
 $no = filter_input(INPUT_POST, 'no',FILTER_VALIDATE_INT);
 $type = newstring(filter_input(INPUT_POST, 'type'));
 $del = filter_input(INPUT_POST,'del',FILTER_VALIDATE_INT,FILTER_REQUIRE_ARRAY);//$del は配列
@@ -446,8 +446,7 @@ function updatelog(){
 			// レス省略
 			$skipres = '';
 
-			$counttreeline = count($treeline);//190619
-			$s=$counttreeline - DSP_RES;
+			$s=count($treeline) - DSP_RES;
 			if(ADMIN_NEWPOST&&!DSP_RES) {$skipres = $s - 1;}
 			elseif($s<1 || !DSP_RES) {$s=1;}
 			elseif($s>1) {$skipres = $s - 1;}
@@ -1853,8 +1852,6 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 	$url  =preg_replace("/[\r\n]/","",$url);
 	$url  = str_replace(" ", "", $url);
 	$com  = CleanStr($com,true);
-	$pwd= CleanStr($pwd);
-	$pwd=preg_replace("/[\r\n]/","",$pwd);
 	//管理モードで使用できるタグを制限
 	if(preg_match('/< *?script|< *?\? *?php|< *?img|< *?a  *?onmouseover|< *?iframe|< *?frame|< *?div|< *?table|< *?meta|< *?base|< *?object|< *?embed|< *?input|< *?body|< *?style/i', $com)) error(MSG038,$dest);
 
