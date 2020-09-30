@@ -42,8 +42,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.18.1');
-define('POTI_VERLOT' , 'v2.18.1 lot.200915');
+define('POTI_VER' , 'v2.18.2');
+define('POTI_VERLOT' , 'v2.18.2 lot.200930');
 
 if (($phpver = phpversion()) < "5.5.0") {
 	die("本プログラムの動作には PHPバージョン 5.5.0 以上が必要です。<br>\n（現在のPHPバージョン：{$phpver}）");
@@ -1345,7 +1345,7 @@ function paintform(){
 			$ext=pathinfo($pchfilename, PATHINFO_EXTENSION);
 			$ext=strtolower($ext);//すべて小文字に
 
-			if ($ext == 'pch' || $ext == 'spch') {
+			if ($ext === 'pch' || $ext === 'spch') {
 				$pchup = TEMP_DIR.'pchup-'.$tim.'-tmp.'.$ext;//アップロードされるファイル名
 				$pchtmp=$_FILES['pch_upload']['tmp_name'];
 			} else{//拡張子が一致しなかったら
@@ -2462,7 +2462,7 @@ function check_password ($pwd, $epwd, $adminPass = false) {
 	return
 		password_verify($pwd, $epwd)
 		|| $epwd === substr(md5($pwd), 2, 8)
-		|| ($adminPass ? ($adminPass == $ADMIN_PASS) : false); // 管理パスを許可する場合
+		|| ($adminPass ? ($adminPass === $ADMIN_PASS) : false); // 管理パスを許可する場合
 }
 
 ?>
