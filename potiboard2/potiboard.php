@@ -799,8 +799,6 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 	$url  = CleanStr($url);   $url  =preg_replace("/[\r\n]/","",$url);
 	$url  = str_replace(" ", "", $url);
 	$com  = CleanStr($com,true);
-	$pwd= CleanStr($pwd);
-	$pwd=preg_replace("/[\r\n]/","",$pwd);
 	//管理モードで使用できるタグを制限
 	if(preg_match('/< *?script|< *?\? *?php|< *?img|< *?a  *?onmouseover|< *?iframe|< *?frame|< *?div|< *?table|< *?meta|< *?base|< *?object|< *?embed|< *?input|< *?body|< *?style/i', $com)) error(MSG038,$dest);
 
@@ -2424,7 +2422,6 @@ function separateDatetimeAndUpdatemark ($now) {
 	}
 	return [$now, ''];
 }
-
 
 // 一括書き込み（上書き）
 function writeFile ($fp, $data) {
