@@ -65,8 +65,7 @@ $email = filter_input(INPUT_POST, 'email');
 $url = filter_input(INPUT_POST, 'url',FILTER_VALIDATE_URL);
 $sub = filter_input(INPUT_POST, 'sub');
 $com = filter_input(INPUT_POST, 'com');
-$pwd = filter_input(INPUT_POST, 'pwd');
-$pwd = str_replace("<","",$pwd);
+$pwd = newstring(filter_input(INPUT_POST, 'pwd'));
 $no = filter_input(INPUT_POST, 'no',FILTER_VALIDATE_INT);
 $type = newstring(filter_input(INPUT_POST, 'type'));
 $del = filter_input(INPUT_POST,'del',FILTER_VALIDATE_INT,FILTER_REQUIRE_ARRAY);//$del は配列
@@ -184,7 +183,7 @@ setcookie("usercode", $usercode, time()+86400*365);//1年間
 switch($mode){
 	case 'regist':
 		if(ADMIN_NEWPOST && !$resto){
-			if($pwd != $ADMIN_PASS){
+			if($pwd !== $ADMIN_PASS){
 				error(MSG029);
 			}
 			$admin=$pwd;
@@ -776,13 +775,20 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 	if(strlen($resto) > 10) error(MSG015,$dest);
 
 	// No.とパスと時間とURLフォーマット
-	srand((double)microtime()*1000000);
 	if(!$pwd){//nullでも8桁のパスをセット
-		$pwd = $pwdc ? $pwdc : substr(rand(), 0, 8);
+	if($pwdc){//Cookieがあれば
+		$pwd=newstring($pwdc);
+		$c_pass=$pwd;//エンコード前の値をセット
+	}else{
+		$pwd = substr(rand(), 0, 8);
+		$c_pass=filter_input(INPUT_POST, 'pwd');//Cookieにエンコード前の値をセット
 	}
+	// $pwd = $pwdc ? newstring($pwdc) : substr(rand(), 0, 8);
+	// }else{
+	// 	$c_pass=filter_input(INPUT_POST, 'pwd');//Cookieにエンコード前の入力値
+	// }
 
-	$c_pass = $pwd;
-	$pass = ($pwd) ? password_hash($pwd,PASSWORD_BCRYPT,['cost' => 5]) : "*";
+	$pass = $pwd ? password_hash($pwd,PASSWORD_BCRYPT,['cost' => 5]) : "*";
 	$now = now_date($time);//日付取得
 	if(DISP_ID){
 		$now .= " ID:" . getId($userip, $time);
@@ -1050,7 +1056,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 
 	//メール通知
 	if(is_file(NOTICEMAIL_FILE)	//メール通知クラスがある場合
-	&& !(NOTICE_NOADMIN && $pwd == $ADMIN_PASS)){//管理者の投稿の場合メール出さない
+	&& !(NOTICE_NOADMIN && $pwd === $ADMIN_PASS)){//管理者の投稿の場合メール出さない
 		require(__DIR__.'/'.NOTICEMAIL_FILE);
 
 		$data['to'] = TO_MAIL;
@@ -1185,7 +1191,7 @@ function usrdel($del,$pwd){
 /* パス認証 */
 function valid($pass){
 	global $ADMIN_PASS;
-	if($pass && $pass != $ADMIN_PASS) error(MSG029);
+	if($pass && $pass !== $ADMIN_PASS) error(MSG029);
 
 	if(!$pass){
 		$dat['admin_in'] = true;
@@ -1778,7 +1784,7 @@ function editform($del,$pwd){
 
 	$dat['post_mode'] = true;
 	$dat['rewrite'] = $no;
-	if($ADMIN_PASS == $pwd) $dat['admin'] = $ADMIN_PASS;
+	if($ADMIN_PASS === $pwd) $dat['admin'] = $ADMIN_PASS;
 	$dat['maxbyte'] = MAX_KB * 1024;
 	$dat['maxkb']   = MAX_KB;
 	$dat['addinfo'] = $addinfo;
