@@ -42,8 +42,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.18.1');
-define('POTI_VERLOT' , 'v2.18.1 lot.200915');
+define('POTI_VER' , 'v2.18.2');
+define('POTI_VERLOT' , 'v2.18.2 lot.201002');
 
 if (($phpver = phpversion()) < "5.5.0") {
 	die("本プログラムの動作には PHPバージョン 5.5.0 以上が必要です。<br>\n（現在のPHPバージョン：{$phpver}）");
@@ -52,7 +52,7 @@ if (($phpver = phpversion()) < "5.5.0") {
 //スパム無効化関数
 function newstring($string) {
 	$string = htmlspecialchars($string,ENT_QUOTES,'utf-8');
-	$string = str_replace(",","，",$string);
+	$string = str_replace(",","&#44;",$string);
 	return $string;
 }
 
@@ -65,7 +65,7 @@ $email = filter_input(INPUT_POST, 'email');
 $url = filter_input(INPUT_POST, 'url',FILTER_VALIDATE_URL);
 $sub = filter_input(INPUT_POST, 'sub');
 $com = filter_input(INPUT_POST, 'com');
-$pwd = filter_input(INPUT_POST, 'pwd');
+$pwd = newstring(filter_input(INPUT_POST, 'pwd'));
 $no = filter_input(INPUT_POST, 'no',FILTER_VALIDATE_INT);
 $type = newstring(filter_input(INPUT_POST, 'type'));
 $del = filter_input(INPUT_POST,'del',FILTER_VALIDATE_INT,FILTER_REQUIRE_ARRAY);//$del は配列
@@ -183,7 +183,7 @@ setcookie("usercode", $usercode, time()+86400*365);//1年間
 switch($mode){
 	case 'regist':
 		if(ADMIN_NEWPOST && !$resto){
-			if($pwd != $ADMIN_PASS){
+			if($pwd !== $ADMIN_PASS){
 				error(MSG029);
 			}
 			$admin=$pwd;
@@ -446,8 +446,7 @@ function updatelog(){
 			// レス省略
 			$skipres = '';
 
-			$counttreeline = count($treeline);//190619
-			$s=$counttreeline - DSP_RES;
+			$s=count($treeline) - DSP_RES;
 			if(ADMIN_NEWPOST&&!DSP_RES) {$skipres = $s - 1;}
 			elseif($s<1 || !DSP_RES) {$s=1;}
 			elseif($s>1) {$skipres = $s - 1;}
@@ -776,13 +775,18 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 	if(strlen($resto) > 10) error(MSG015,$dest);
 
 	// No.とパスと時間とURLフォーマット
-	srand((double)microtime()*1000000);
-	if(!$pwd){//nullでも8桁のパスをセット
-		$pwd = $pwdc ? $pwdc : substr(rand(), 0, 8);
+	$c_pass=filter_input(INPUT_POST, 'pwd');//エスケープ前の値をCookieにセット
+	if($pwd===''){
+		if($pwdc){//Cookieはnullの可能性があるので厳密な型でチェックしない
+			$pwd=newstring($pwdc);
+			$c_pass=$pwdc;//エスケープ前の値
+		}else{
+			srand((double)microtime()*1000000);
+			$pwd = substr(rand(), 0, 8);
+			$c_pass=$pwd;
+		}
 	}
-
-	$c_pass = $pwd;
-	$pass = ($pwd) ? password_hash($pwd,PASSWORD_BCRYPT,['cost' => 5]) : "*";
+	$pass = $pwd ? password_hash($pwd,PASSWORD_BCRYPT,['cost' => 5]) : "*";
 	$now = now_date($time);//日付取得
 	if(DISP_ID){
 		$now .= " ID:" . getId($userip, $time);
@@ -800,8 +804,6 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 	$url  = CleanStr($url);   $url  =preg_replace("/[\r\n]/","",$url);
 	$url  = str_replace(" ", "", $url);
 	$com  = CleanStr($com,true);
-	$pwd= CleanStr($pwd);
-	$pwd=preg_replace("/[\r\n]/","",$pwd);
 	//管理モードで使用できるタグを制限
 	if(preg_match('/< *?script|< *?\? *?php|< *?img|< *?a  *?onmouseover|< *?iframe|< *?frame|< *?div|< *?table|< *?meta|< *?base|< *?object|< *?embed|< *?input|< *?body|< *?style/i', $com)) error(MSG038,$dest);
 
@@ -1052,7 +1054,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 
 	//メール通知
 	if(is_file(NOTICEMAIL_FILE)	//メール通知クラスがある場合
-	&& !(NOTICE_NOADMIN && $pwd == $ADMIN_PASS)){//管理者の投稿の場合メール出さない
+	&& !(NOTICE_NOADMIN && $pwd === $ADMIN_PASS)){//管理者の投稿の場合メール出さない
 		require(__DIR__.'/'.NOTICEMAIL_FILE);
 
 		$data['to'] = TO_MAIL;
@@ -1149,7 +1151,7 @@ function usrdel($del,$pwd){
 
 	sort($del);
 	reset($del);
-	if(!$pwd && $pwdc) $pwd=$pwdc;
+	if($pwd===""&&$pwdc) $pwd=newstring($pwdc);
 	$fp=fopen(LOGFILE,"r+");
 	set_file_buffer($fp, 0);
 	flock($fp, LOCK_EX);
@@ -1187,7 +1189,7 @@ function usrdel($del,$pwd){
 /* パス認証 */
 function valid($pass){
 	global $ADMIN_PASS;
-	if($pass && $pass != $ADMIN_PASS) error(MSG029);
+	if($pass && $pass !== $ADMIN_PASS) error(MSG029);
 
 	if(!$pass){
 		$dat['admin_in'] = true;
@@ -1348,7 +1350,7 @@ function paintform(){
 			$ext=pathinfo($pchfilename, PATHINFO_EXTENSION);
 			$ext=strtolower($ext);//すべて小文字に
 
-			if ($ext == 'pch' || $ext == 'spch') {
+			if ($ext === 'pch' || $ext === 'spch') {
 				$pchup = TEMP_DIR.'pchup-'.$tim.'-tmp.'.$ext;//アップロードされるファイル名
 				$pchtmp=$_FILES['pch_upload']['tmp_name'];
 			} else{//拡張子が一致しなかったら
@@ -1756,7 +1758,7 @@ function editform($del,$pwd){
 
 	sort($del);
 	reset($del);
-	if($pwd==""&&$pwdc!="") $pwd=$pwdc;
+	if($pwd===""&&$pwdc) $pwd=newstring($pwdc);
 	$fp=fopen(LOGFILE,"r");
 	flock($fp, LOCK_EX);
 	$buf=fread($fp,5242880);
@@ -1780,7 +1782,7 @@ function editform($del,$pwd){
 
 	$dat['post_mode'] = true;
 	$dat['rewrite'] = $no;
-	if($ADMIN_PASS == $pwd) $dat['admin'] = $ADMIN_PASS;
+	if($ADMIN_PASS === $pwd) $dat['admin'] = $ADMIN_PASS;
 	$dat['maxbyte'] = MAX_KB * 1024;
 	$dat['maxkb']   = MAX_KB;
 	$dat['addinfo'] = $addinfo;
@@ -1853,8 +1855,6 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 	$url  =preg_replace("/[\r\n]/","",$url);
 	$url  = str_replace(" ", "", $url);
 	$com  = CleanStr($com,true);
-	$pwd= CleanStr($pwd);
-	$pwd=preg_replace("/[\r\n]/","",$pwd);
 	//管理モードで使用できるタグを制限
 	if(preg_match('/< *?script|< *?\? *?php|< *?img|< *?a  *?onmouseover|< *?iframe|< *?frame|< *?div|< *?table|< *?meta|< *?base|< *?object|< *?embed|< *?input|< *?body|< *?style/i', $com)) error(MSG038,$dest);
 
@@ -2191,15 +2191,14 @@ function htmloutput($template,$dat,$buf_flag=''){
 	if($buf_flag){
 		$buf=$Skinny->SkinnyFetchHTML($template, $dat );
 		return $buf;
-	}else{
-		if(USE_DUMP_FOR_DEBUG){//Skinnyで出力する前にdump
-			var_dump($dat);
-			if(USE_DUMP_FOR_DEBUG==='2'){
-				exit;
-			}
-		}
-		$Skinny->SkinnyDisplay( $template, $dat );
 	}
+	if(USE_DUMP_FOR_DEBUG){//Skinnyで出力する前にdump
+		var_dump($dat);
+		if(USE_DUMP_FOR_DEBUG==='2'){
+			exit;
+		}
+	}
+	$Skinny->SkinnyDisplay( $template, $dat );
 }
 
 function redirect ($url, $wait = 0, $message = '') {
@@ -2222,43 +2221,6 @@ function getImgType ($img_type, $dest) {
 	}
 	error(MSG004, $dest);
 	exit;
-}
-
-/**
- * 日付とIDを分離
- * @param $now
- * @return array
- */
-function separateDatetimeAndId ($now) {
-	if (preg_match("/( ID:)(.*)/", $now, $regs)){
-		return [$regs[2], preg_replace("/( ID:.*)/","",$now)];
-	}
-	return ['', $now];
-}
-
-/**
- * 名前とトリップを分離
- * @param $name
- * @return array
- */
-function separateNameAndTrip ($name) {
-	$name=strip_tags($name);//タグ除去
-	if(preg_match("/(◆.*)/", $name, $regs)){
-		return [preg_replace("/(◆.*)/","",$name), $regs[1]];
-	}
-	return [$name, ''];
-}
-
-/**
- * 日付と編集マークを分離
- * @param $now
- * @return array
- */
-function separateDatetimeAndUpdatemark ($now) {
-	if (UPDATE_MARK && strpos($now, UPDATE_MARK) !== false){
-		return [str_replace(UPDATE_MARK,"",$now), UPDATE_MARK];
-	}
-	return [$now, ''];
 }
 
 /**
@@ -2429,6 +2391,43 @@ function create_res ($line, $options = []) {
 	return $res;
 }
 
+/**
+ * 日付とIDを分離
+ * @param $now
+ * @return array
+ */
+function separateDatetimeAndId ($now) {
+	if (preg_match("/( ID:)(.*)/", $now, $regs)){
+		return [$regs[2], preg_replace("/( ID:.*)/","",$now)];
+	}
+	return ['', $now];
+}
+
+/**
+ * 名前とトリップを分離
+ * @param $name
+ * @return array
+ */
+function separateNameAndTrip ($name) {
+	$name=strip_tags($name);//タグ除去
+	if(preg_match("/(◆.*)/", $name, $regs)){
+		return [preg_replace("/(◆.*)/","",$name), $regs[1]];
+	}
+	return [$name, ''];
+}
+
+/**
+ * 日付と編集マークを分離
+ * @param $now
+ * @return array
+ */
+function separateDatetimeAndUpdatemark ($now) {
+	if (UPDATE_MARK && strpos($now, UPDATE_MARK) !== false){
+		return [str_replace(UPDATE_MARK,"",$now), UPDATE_MARK];
+	}
+	return [$now, ''];
+}
+
 // 一括書き込み（上書き）
 function writeFile ($fp, $data) {
 	ftruncate($fp,0);
@@ -2468,7 +2467,7 @@ function check_password ($pwd, $epwd, $adminPass = false) {
 	return
 		password_verify($pwd, $epwd)
 		|| $epwd === substr(md5($pwd), 2, 8)
-		|| ($adminPass ? ($adminPass == $ADMIN_PASS) : false); // 管理パスを許可する場合
+		|| ($adminPass ? ($adminPass === $ADMIN_PASS) : false); // 管理パスを許可する場合
 }
 
 ?>

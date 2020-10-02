@@ -1,6 +1,6 @@
 <?php
 /*
-  * POTI-board改二 v2.18 lot.200910
+  * POTI-board改二 v2.18 lot.200930
   * by sakots >> https://poti-k.info/
   *
   * POTI-board改二の設定ファイルです。
@@ -13,7 +13,7 @@ $ADMIN_PASS = 'kanripass';
 
 //最大ログ数
 //古いログから順番に消えます
-define('LOG_MAX', '1000');
+define('LOG_MAX', '2000');
 
 //テーマ(テンプレート)のディレクトリ。'/'まで
 //themeディレクトリに使いたいtemplateをいれて使ってください。(推奨)
