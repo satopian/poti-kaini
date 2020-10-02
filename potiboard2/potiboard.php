@@ -43,7 +43,7 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 //バージョン
 define('POTI_VER' , 'v2.18.2');
-define('POTI_VERLOT' , 'v2.18.2 lot.200930');
+define('POTI_VERLOT' , 'v2.18.2 lot.201002');
 
 if (($phpver = phpversion()) < "5.5.0") {
 	die("本プログラムの動作には PHPバージョン 5.5.0 以上が必要です。<br>\n（現在のPHPバージョン：{$phpver}）");
@@ -52,7 +52,7 @@ if (($phpver = phpversion()) < "5.5.0") {
 //スパム無効化関数
 function newstring($string) {
 	$string = htmlspecialchars($string,ENT_QUOTES,'utf-8');
-	$string = str_replace(",","，",$string);
+	$string = str_replace(",","&#44;",$string);
 	return $string;
 }
 
@@ -775,19 +775,17 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 	if(strlen($resto) > 10) error(MSG015,$dest);
 
 	// No.とパスと時間とURLフォーマット
-	if(!$pwd){//nullでも8桁のパスをセット
-	if($pwdc){//Cookieがあれば
-		$pwd=newstring($pwdc);
-		$c_pass=$pwd;//エンコード前の値をセット
-	}else{
-		$pwd = substr(rand(), 0, 8);
-		$c_pass=filter_input(INPUT_POST, 'pwd');//Cookieにエンコード前の値をセット
+	$c_pass=filter_input(INPUT_POST, 'pwd');//エスケープ前の値をCookieにセット
+	if($pwd===''){
+		if($pwdc){//Cookieはnullの可能性があるので厳密な型でチェックしない
+			$pwd=newstring($pwdc);
+			$c_pass=$pwdc;//エスケープ前の値
+		}else{
+			srand((double)microtime()*1000000);
+			$pwd = substr(rand(), 0, 8);
+			$c_pass=$pwd;
+		}
 	}
-	// $pwd = $pwdc ? newstring($pwdc) : substr(rand(), 0, 8);
-	// }else{
-	// 	$c_pass=filter_input(INPUT_POST, 'pwd');//Cookieにエンコード前の入力値
-	// }
-
 	$pass = $pwd ? password_hash($pwd,PASSWORD_BCRYPT,['cost' => 5]) : "*";
 	$now = now_date($time);//日付取得
 	if(DISP_ID){
@@ -1153,7 +1151,7 @@ function usrdel($del,$pwd){
 
 	sort($del);
 	reset($del);
-	if(!$pwd && $pwdc) $pwd=$pwdc;
+	if($pwd===""&&$pwdc) $pwd=newstring($pwdc);
 	$fp=fopen(LOGFILE,"r+");
 	set_file_buffer($fp, 0);
 	flock($fp, LOCK_EX);
@@ -1760,7 +1758,7 @@ function editform($del,$pwd){
 
 	sort($del);
 	reset($del);
-	if($pwd==""&&$pwdc!="") $pwd=$pwdc;
+	if($pwd===""&&$pwdc) $pwd=newstring($pwdc);
 	$fp=fopen(LOGFILE,"r");
 	flock($fp, LOCK_EX);
 	$buf=fread($fp,5242880);
@@ -2193,15 +2191,14 @@ function htmloutput($template,$dat,$buf_flag=''){
 	if($buf_flag){
 		$buf=$Skinny->SkinnyFetchHTML($template, $dat );
 		return $buf;
-	}else{
-		if(USE_DUMP_FOR_DEBUG){//Skinnyで出力する前にdump
-			var_dump($dat);
-			if(USE_DUMP_FOR_DEBUG==='2'){
-				exit;
-			}
-		}
-		$Skinny->SkinnyDisplay( $template, $dat );
 	}
+	if(USE_DUMP_FOR_DEBUG){//Skinnyで出力する前にdump
+		var_dump($dat);
+		if(USE_DUMP_FOR_DEBUG==='2'){
+			exit;
+		}
+	}
+	$Skinny->SkinnyDisplay( $template, $dat );
 }
 
 function redirect ($url, $wait = 0, $message = '') {
@@ -2393,6 +2390,7 @@ function create_res ($line, $options = []) {
 
 	return $res;
 }
+
 /**
  * 日付とIDを分離
  * @param $now
