@@ -1,6 +1,6 @@
 <?php
 //POTI-board plugin search(c)2020 さとぴあ
-//v1.6.3 lot.200911
+//v1.6.5 lot.201002
 //
 //https://pbbs.sakura.ne.jp/
 //フリーウェアですが著作権は放棄しません。
@@ -28,6 +28,7 @@ $max_search=120;
 
 //更新履歴
 
+//v1.6.5 2020.10.02 波ダッシュと全角チルダを区別しない。
 //v1.6.3 2020.09.11 1ページ目の画像の表示枚数が19枚になっていたのを修正。
 //v1.6.2 2020.08.26 画像検索でis_file()のチェックが２重になっていたのを修正。
 //v1.6.1 2020.08.15 radioボタン未チェックの時の動作を修正。
@@ -69,6 +70,7 @@ $query=urldecode($query);
 $query=htmlspecialchars($query,ENT_QUOTES,'utf-8');
 $query=mb_convert_kana($query, 'rn', 'UTF-8');
 $query=str_replace(array(" ", "　"), "", $query);
+$query=str_replace("〜","～",$query);//波ダッシュを全角チルダに
 $radio =filter_input(INPUT_GET,'radio',FILTER_VALIDATE_INT);
 
 if($imgsearch){
@@ -85,8 +87,7 @@ $arr=array();
 $tree=file(TREEFILE);
 $fp = fopen(LOGFILE, "r");
 while ($line = fgets($fp ,4096)) {
-	list($no,,$name,,$sub,$com,,
-	,,$ext,,,$time,,,,) = explode(",", $line);
+	list($no,,$name,,$sub,$com,,,,$ext,,,$time,,,) = explode(",", $line);
 	$continue_to_search=true;
 	if($imgsearch){//画像検索の場合
 		$continue_to_search=($ext&&is_file(IMG_DIR.$time.$ext));//画像があったら
@@ -96,12 +97,15 @@ while ($line = fgets($fp ,4096)) {
 		if($radio===1||$radio===2||$radio===null){
 			$s_name=mb_convert_kana($name, 'rn', 'UTF-8');//全角英数を半角に
 			$s_name=str_replace(array(" ", "　"), "", $s_name);
+			$s_name=str_replace("〜","～", $s_name);//波ダッシュを全角チルダに
 		}
 		else{
 			$s_sub=mb_convert_kana($sub, 'rn', 'UTF-8');//全角英数を半角に
 			$s_sub=str_replace(array(" ", "　"), "", $s_sub);
+			$s_sub=str_replace("〜","～", $s_sub);//波ダッシュを全角チルダに
 			$s_com=mb_convert_kana($com, 'rn', 'UTF-8');//全角英数を半角に
 			$s_com=str_replace(array(" ", "　"), "", $s_com);
+			$s_com=str_replace("〜","～", $s_com);//波ダッシュを全角チルダに
 		}
 		
 		//ログとクエリを照合
@@ -154,6 +158,7 @@ if($arr){
 			$time=substr($time,-13,10);
 			$postedtime = date ("Y/m/d G:i", $time);
 			$sub=strip_tags($sub);
+			$com=str_replace('<br />',' ',$com);
 			$com=strip_tags($com);
 			$com=mb_strcut($com,0,180);
 			$name=strip_tags($name);
