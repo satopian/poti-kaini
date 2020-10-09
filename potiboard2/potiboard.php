@@ -42,8 +42,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.18.2');
-define('POTI_VERLOT' , 'v2.18.2 lot.201002');
+define('POTI_VER' , 'v2.18.3');
+define('POTI_VERLOT' , 'v2.18.3 lot.201008');
 
 if (($phpver = phpversion()) < "5.5.0") {
 	die("本プログラムの動作には PHPバージョン 5.5.0 以上が必要です。<br>\n（現在のPHPバージョン：{$phpver}）");
@@ -147,7 +147,7 @@ if(!defined('ADMIN_DELGUSU')||!defined('ADMIN_DELKISU')){//管理画面の色設
 	define('ADMIN_DELKISU',null);
 }
 
-//画像アップロード機能を 0.使わない 1.使う 
+//画像アップロード機能を 1.使う 0.使わない  
 if(!defined('USE_IMG_UPLOAD')){//config.phpで未定義なら1
 	define('USE_IMG_UPLOAD','1');
 }
@@ -165,6 +165,10 @@ if(!defined('USE_SELECT_PALETTES')){//config.phpで未定義なら0
 //編集しても投稿日時を変更しないようにする する:1 しない:0 
 if(!defined('DO_NOT_CHANGE_POSTS_TIME')){//config.phpで未定義なら0
 	define('DO_NOT_CHANGE_POSTS_TIME', '0');
+}
+//画像なしのチェックボックスを使用する する:1 しない:0 
+if(!defined('USE_CHECK_NO_FILE')){//config.phpで未定義なら1
+	define('USE_CHECK_NO_FILE', '1');
 }
 
 /*-----------Main-------------*/
@@ -331,6 +335,10 @@ function basicpart(){
 			$arr_palette_select_tags[$i]='<option value="'.$i.'">'.$p_name.'</option>';
 		}
 		$dat['palette_select_tags']=implode($arr_palette_select_tags);
+	}
+	$dat['hide_the_checkbox_for_nofile']=true;//poti本体が古い時はfalse→画像なしのチェックが出る
+	if(USE_CHECK_NO_FILE){
+		$dat['hide_the_checkbox_for_nofile']=false;
 	}
 
 	return $dat;
@@ -686,12 +694,13 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 
 	$upfile = isset($_FILES["upfile"]["tmp_name"]) ? $_FILES["upfile"]["tmp_name"] : "";
 
-	$textonly = filter_input(INPUT_POST, 'textonly',FILTER_VALIDATE_BOOLEAN);
-
-	if($textonly){//画像なしの時
-		safe_unlink($upfile);
-		$upfile="";
-		$upfile_name="";
+	if(USE_CHECK_NO_FILE){
+		$textonly = filter_input(INPUT_POST, 'textonly',FILTER_VALIDATE_BOOLEAN);
+		if($textonly){//画像なしの時
+			safe_unlink($upfile);
+			$upfile="";
+			$upfile_name="";
+		}
 	}
 
 	$mes="";
@@ -726,7 +735,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 	}
 	$dest='';
 	$is_file_dest=false;
-	if($upfile && is_file($upfile) && !$textonly){//アップロード
+	if($upfile && is_file($upfile)){//アップロード
 		$dest = $path.$tim.'.tmp';
 		if($pictmp==2){
 			copy($upfile, $dest);
@@ -755,12 +764,14 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 	if(!$sub||preg_match("/\A\s*\z/u",$sub))   $sub="";
 	if(!$email||preg_match("/\A\s*\z|&lt;|</ui",$email)) $email="";
 	if(!$url||!preg_match("/\A *https?:\/\//",$url)||preg_match("/&lt;|</i",$url)) $url="";
-	if(!USE_IMG_UPLOAD && $admin!==$ADMIN_PASS){
-		$textonly=true;//画像なし
+	if(USE_CHECK_NO_FILE){
+		if(!USE_IMG_UPLOAD && $admin!==$ADMIN_PASS){
+			$textonly=true;//画像なし
+		}
+		if(!$resto&&!$textonly&&!$is_file_dest) error(MSG007,$dest);
+		if(RES_UPLOAD&&$resto&&!$textonly&&!$is_file_dest) error(MSG007,$dest);
 	}
-	if(!$resto&&!$textonly&&!$is_file_dest) error(MSG007,$dest);
 	if(!$resto&&DENY_COMMENTS_ONLY&&!$is_file_dest&&$admin!==$ADMIN_PASS) error(MSG039,$dest);
-	if(RES_UPLOAD&&$resto&&!$textonly&&!$is_file_dest) error(MSG007,$dest);
 
 	if(!$com&&!$is_file_dest) error(MSG008,$dest);
 

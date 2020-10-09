@@ -137,7 +137,12 @@
 							<% def(upfile) %>
 							<tr>
 								<td>UpFile</td>
-								<td><input class="form" type="file" name="upfile" size="35"> [<label><input type="checkbox" name="textonly" value="on">No File</label>]</td>
+								<td><input class="form" type="file" name="upfile" size="35" accept="image/*">
+									<% def(hide_the_checkbox_for_nofile) %>
+									<% elsedef %>
+									[<label><input type="checkbox" name="textonly" value="on">No File</label>]
+									<% /def %>
+							</td>
 							</tr>
 							<% /def %>
 							<% def(tmp) %>
@@ -161,12 +166,6 @@
 							<li>添付可能ファイル：GIF, JPG, PNG ブラウザによっては正常に添付できないことがあります。</li>
 							<li>画像は横 <% echo(maxw) %>ピクセル、縦 <% echo(maxh) %>ピクセルを超えると縮小表示されます。</li>
 							<li>最大投稿データ量は <% echo(maxkb) %> KB までです。sage機能付き。</li>
-							<% elsedef %>
-							<% def(admin) %>
-							<li>添付可能ファイル：GIF, JPG, PNG ブラウザによっては正常に添付できないことがあります。</li>
-							<li>画像は横 <% echo(maxw) %>ピクセル、縦 <% echo(maxh) %>ピクセルを超えると縮小表示されます。</li>
-							<li>最大投稿データ量は <% echo(maxkb) %> KB までです。sage機能付き。</li>
-							<% /def %>
 							<% /def %>
 							<% def(rewrite) %>
 							<li>編集では クッキーは保存されません。さらにsageを入れても位置は変わりません。</li>
