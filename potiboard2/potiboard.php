@@ -42,8 +42,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.18.3');
-define('POTI_VERLOT' , 'v2.18.3 lot.201008');
+define('POTI_VER' , 'v2.18.5');
+define('POTI_VERLOT' , 'v2.18.5 lot.201023');
 
 if (($phpver = phpversion()) < "5.5.0") {
 	die("本プログラムの動作には PHPバージョン 5.5.0 以上が必要です。<br>\n（現在のPHPバージョン：{$phpver}）");
@@ -1293,13 +1293,13 @@ function init(){
 		file_put_contents(LOGFILE, $testmes);
 		chmod(LOGFILE, 0600);
 	}
-	$err .= check_file(LOGFILE);
+	$err .= check_file(LOGFILE,true);
 
 	if (!is_file(realpath(TREEFILE))) {
 		file_put_contents(TREEFILE, "1\n");
 		chmod(TREEFILE, 0600);
 	}
-	$err .= check_file(TREEFILE);
+	$err .= check_file(TREEFILE,true);
 
 	$err .= check_dir(IMG_DIR);
 	USE_THUMB && $err .= check_dir(THUMB_DIR);
@@ -1308,26 +1308,25 @@ function init(){
 	if(!is_file(realpath(PHP_SELF2)))updatelog();
 }
 
+// ファイル存在チェック
+function check_file ($path,$is_writable='') {
+	
+	if (!is_file($path)) return $path . "がありません<br>";
+	if (!is_readable($path)) return $path . "を読めません<br>";
+	if($is_writable){//書き込みが必要なファイルのチェック
+		if (!is_writable($path)) return $path . "を書けません<br>";
+	}
+}
 // ディレクトリ存在チェック　なければ作る
-function check_dir ($dir, $name = '') {
-	return check_path($dir, $name, true);
-}
-function check_file ($path, $name = '') {
-	return check_path($path, $name, false);
-}
-function check_path ($path, $name, $is_dir = false) {
-	!$name && $name = $path;
-	if ($is_dir) {
-		if (!is_dir($path)) {
+function check_dir ($path) {
+
+	if (!is_dir($path)) {
 			mkdir($path, 0707);
 			chmod($path, 0707);
-		}
-		if (!is_dir($path)) return $name . "がありません<br>";
-	} else {
-		if (!is_file($path)) return $name . "がありません<br>";
 	}
-	if (!is_writable($path)) return $name . "を書けません<br>";
-	if (!is_readable($path)) return $name . "を読めません<br>";
+	if (!is_dir($path)) return $path . "がありません<br>";
+	if (!is_readable($path)) return $path . "を読めません<br>";
+	if (!is_writable($path)) return $path . "を書けません<br>";
 }
 
 /* お絵描き画面 */
