@@ -42,8 +42,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.18.5');
-define('POTI_VERLOT' , 'v2.18.5 lot.201023');
+define('POTI_VER' , 'v2.18.6');
+define('POTI_VERLOT' , 'v2.18.6 lot.201024');
 
 if (($phpver = phpversion()) < "5.5.0") {
 	die("本プログラムの動作には PHPバージョン 5.5.0 以上が必要です。<br>\n（現在のPHPバージョン：{$phpver}）");
@@ -727,7 +727,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 		fclose($fp);
 		list($uip,$uhost,,,$ucode,,$starttime,$postedtime) = explode("\t", rtrim($userdata));
 		if(($ucode != $usercode) && ($uip != $userip)){error(MSG007);}
-
+		$ptime='';
 		//描画時間を$userdataをもとに計算
 		if($starttime && DSP_PAINTTIME){
 			$ptime = calcPtime($starttime,$postedtime);
@@ -1963,6 +1963,7 @@ function replace(){
 	$now = now_date($time);//日付取得
 	$now .= UPDATE_MARK;
 	//描画時間を$userdataをもとに計算
+	$ptime='';
 	if($starttime && DSP_PAINTTIME){
 		$ptime = calcPtime($starttime,$postedtime);
 	}
@@ -2234,7 +2235,7 @@ function getImgType ($img_type, $dest) {
 }
 
 /**
- * 描写時間を計算
+ * 描画時間を計算
  * @param $starttime
  * @return string
  */
