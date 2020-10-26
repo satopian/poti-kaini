@@ -714,8 +714,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 		if(!$picfile) error(MSG002);
 		$upfile = $temppath.$picfile;
 		$upfile_name = $picfile;
-		$picfile=pathinfo($picfile);
-		$picfile = $picfile['filename']; //拡張子除去 190616
+		$picfile=pathinfo($picfile, PATHINFO_FILENAME );//拡張子除去
 		$tim = KASIRA.$tim;
 		//選択された絵が投稿者の絵か再チェック
 		if (!$picfile || !is_file($temppath.$picfile.".dat")) {
@@ -1942,7 +1941,7 @@ function replace(){
 			$userdata = fread($fp, 1024);
 			fclose($fp);
 			list($uip,$uhost,$uagent,$imgext,$ucode,$urepcode,$starttime,$postedtime) = explode("\t", rtrim($userdata)."\t");//区切りの"\t"を行末に190610
-			$file_name = preg_replace("/\.(dat)$/i","",$file);
+			$file_name = pathinfo($file, PATHINFO_FILENAME );//拡張子除去
 			//画像があり、認識コードがhitすれば抜ける
 			if($file_name && is_file(TEMP_DIR.$file_name.$imgext) && $urepcode === $repcode){$find=true;break;}
 		}
