@@ -839,8 +839,8 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 	$line = explode("\n", trim($buf));
 	foreach($line as $i => $value){//$i必要
 		if($value!==""){//190624
-			list($artno,)=explode(",", rtrim($value));	//逆変換テーブル作成
-			$lineindex[$artno]=$i+1;
+			list($_no,)=explode(",", rtrim($value));	//逆変換テーブル作成
+			$lineindex[$_no]=$i+1;
 		}
 	}
 
@@ -1016,17 +1016,17 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 	$line = explode("\n", trim($buf));
 	foreach($line as $i => $value){
 		if($value!==""){
-			$treeline=explode(",", rtrim($value));
-			if($lineindex[$treeline[0]]==0){
-				unset($line[$i]);
+			list($oyano,) = explode(",", rtrim($value));
+			if(!isset($lineindex[$oyano])){//親のログが存在しないときは
+				unset($line[$i]);//ツリーを削除
 			}
 		}
 	}
 
 	if($resto){
 		foreach($line as $i => $value){
-			$rtno = explode(",", rtrim($value));
-			if($rtno[0]==$resto){
+			list($_oyano,) = explode(",", rtrim($value));
+			if($_oyano==$resto){
 				$find = TRUE;
 				$line[$i] = rtrim($value).','.$no;
 				$treeline=explode(",", rtrim($line[$i]));
@@ -1308,11 +1308,11 @@ function init(){
 }
 
 // ファイル存在チェック
-function check_file ($path,$is_writable='') {
+function check_file ($path,$check_writable='') {
 	
 	if (!is_file($path)) return $path . "がありません<br>";
 	if (!is_readable($path)) return $path . "を読めません<br>";
-	if($is_writable){//書き込みが必要なファイルのチェック
+	if($check_writable){//書き込みが必要なファイルのチェック
 		if (!is_writable($path)) return $path . "を書けません<br>";
 	}
 }
