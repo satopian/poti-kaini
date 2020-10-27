@@ -42,8 +42,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.18.6');
-define('POTI_VERLOT' , 'v2.18.6 lot.201024');
+define('POTI_VER' , 'v2.18.7');
+define('POTI_VERLOT' , 'v2.18.7 lot.201027');
 
 if (($phpver = phpversion()) < "5.5.0") {
 	die("本プログラムの動作には PHPバージョン 5.5.0 以上が必要です。<br>\n（現在のPHPバージョン：{$phpver}）");
@@ -1016,8 +1016,8 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 	$line = explode("\n", trim($buf));
 	foreach($line as $i => $value){
 		if($value!==""){
-			$j=explode(",", rtrim($value));
-			if($lineindex[$j[0]]==0){
+			$treeline=explode(",", rtrim($value));
+			if($lineindex[$treeline[0]]==0){
 				unset($line[$i]);
 			}
 		}
@@ -1029,8 +1029,8 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 			if($rtno[0]==$resto){
 				$find = TRUE;
 				$line[$i] = rtrim($value).','.$no;
-				$j=explode(",", rtrim($line[$i]));
-				if(!(stripos($email,'sage')!==false || (count($j)>MAX_RES))){
+				$treeline=explode(",", rtrim($line[$i]));
+				if(!(stripos($email,'sage')!==false || (count($treeline)>MAX_RES))){
 					$newline=$line[$i] . "\n";
 					unset($line[$i]);
 				}
