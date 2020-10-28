@@ -42,8 +42,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.18.7');
-define('POTI_VERLOT' , 'v2.18.7 lot.201027');
+define('POTI_VER' , 'v2.18.8');
+define('POTI_VERLOT' , 'v2.18.8 lot.201028');
 
 if (($phpver = phpversion()) < "5.5.0") {
 	die("本プログラムの動作には PHPバージョン 5.5.0 以上が必要です。<br>\n（現在のPHPバージョン：{$phpver}）");
@@ -443,7 +443,7 @@ function updatelog(){
 			$treeline = explode(",", rtrim($tree[$i]));
 			$disptree = $treeline[0];
 			$j=$lineindex[$disptree]; //該当記事を探して$jにセット
-			if(!$line[$j]) continue;   //$jが範囲外なら次の行
+			if(!isset($line[$j])) continue;   //$jが範囲外なら次の行
 
 			$res = create_res($line[$j], ['pch' => 1]);
 
@@ -467,7 +467,7 @@ function updatelog(){
 						continue;
 					}
 					$j=$lineindex[$disptree];
-					if(!$line[$j]) continue;
+					if(!isset($line[$j])) continue;
 					list(,,,,,,,,,$rext,,,$rtime,,,) = explode(",", rtrim($line[$j]));
 					$resimg = $path.$rtime.$rext;
 
@@ -503,7 +503,7 @@ function updatelog(){
 					continue;
 				}
 				$j=$lineindex[$disptree];
-				if(!$line[$j]) continue;
+				if(!isset($line[$j])) continue;
 
 				$res = create_res($line[$j], ['pch' => 1]);
 				$rres[$oya][] = $res;
@@ -611,7 +611,7 @@ function res($resno = 0){
 	array_shift($treeline); // 親レス番号を除去
 	foreach($treeline as $disptree){ // 子レスだけ回す
 		$j=$lineindex[$disptree];
-		if($line[$j]==="") continue;
+		if(!isset($line[$j])) continue;
 
 		$res = create_res($line[$j], ['pch' => 1]);
 		$rres[0][] = $res;
@@ -2093,7 +2093,7 @@ function catalog(){
 			$treeline = explode(",", rtrim($tree[$i]));
 			$disptree = $treeline[0];
 			$j=$lineindex[$disptree]; //該当記事を探して$jにセット
-			if(!$line[$j]) continue; //$jが範囲外なら次の行
+			if(!isset($line[$j])) continue; //$jが範囲外なら次の行
 
 			$res = create_res($line[$j]);
 
