@@ -425,7 +425,6 @@ function updatelog(){
 	global $path;
 
 	$tree = file(TREEFILE);
-	$st = null;
 
 	$line = file(LOGFILE);
 	$lineindex = get_lineindex($line); // 逆変換テーブル作成
@@ -434,8 +433,7 @@ function updatelog(){
 	for($page=0;$page<$counttree;$page+=PAGE_DEF){
 		$oya = 0;	//親記事のメイン添字
 		$dat = form();
-		$st = $page;
-		for($i = $st; $i < $st+PAGE_DEF; ++$i){
+		for($i = $page; $i < $page+PAGE_DEF; ++$i){
 			if(!isset($tree[$i])){
 				continue;
 			}
@@ -518,8 +516,8 @@ function updatelog(){
 			$oya++;
 		}
 
-		$prev = $st - PAGE_DEF;
-		$next = $st + PAGE_DEF;
+		$prev = $page - PAGE_DEF;
+		$next = $page + PAGE_DEF;
 		// 改ページ処理
 		if($prev >= 0){
 			$dat['prev'] = $prev == 0 ? PHP_SELF2 : ($prev / PAGE_DEF) . PHP_EXT;
@@ -531,7 +529,7 @@ function updatelog(){
 
 		for($i = 0; $i < ($showAll ? $counttree : PAGE_DEF * 22); $i += PAGE_DEF){
 			$pn = $i ? $i / PAGE_DEF : 0; // page_number
-			$paging .= ($st === $i)
+			$paging .= ($page === $i)
 				? str_replace("<PAGE>", $pn, NOW_PAGE) // 現在ページにはリンクを付けない
 				: str_replace("<PURL>", ($i ? $pn.PHP_EXT : PHP_SELF2),
 					str_replace("<PAGE>", $i ? ($showAll || $i !== PAGE_DEF * 21 ? $pn : "≫") : $pn, OTHER_PAGE));
