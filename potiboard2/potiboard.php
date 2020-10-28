@@ -42,8 +42,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.18.6');
-define('POTI_VERLOT' , 'v2.18.6 lot.201024');
+define('POTI_VER' , 'v2.18.7');
+define('POTI_VERLOT' , 'v2.18.7 lot.201027');
 
 if (($phpver = phpversion()) < "5.5.0") {
 	die("本プログラムの動作には PHPバージョン 5.5.0 以上が必要です。<br>\n（現在のPHPバージョン：{$phpver}）");
@@ -714,8 +714,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 		if(!$picfile) error(MSG002);
 		$upfile = $temppath.$picfile;
 		$upfile_name = $picfile;
-		$picfile=pathinfo($picfile);
-		$picfile = $picfile['filename']; //拡張子除去 190616
+		$picfile=pathinfo($picfile, PATHINFO_FILENAME );//拡張子除去
 		$tim = KASIRA.$tim;
 		//選択された絵が投稿者の絵か再チェック
 		if (!$picfile || !is_file($temppath.$picfile.".dat")) {
@@ -840,8 +839,8 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 	$line = explode("\n", trim($buf));
 	foreach($line as $i => $value){//$i必要
 		if($value!==""){//190624
-			list($artno,)=explode(",", rtrim($value));	//逆変換テーブル作成
-			$lineindex[$artno]=$i+1;
+			list($_no,)=explode(",", rtrim($value));	//逆変換テーブル作成
+			$lineindex[$_no]=$i+1;
 		}
 	}
 
@@ -1017,21 +1016,21 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 	$line = explode("\n", trim($buf));
 	foreach($line as $i => $value){
 		if($value!==""){
-			$j=explode(",", rtrim($value));
-			if($lineindex[$j[0]]==0){
-				unset($line[$i]);
+			list($oyano,) = explode(",", rtrim($value));
+			if(!isset($lineindex[$oyano])){//親のログが存在しないときは
+				unset($line[$i]);//ツリーを削除
 			}
 		}
 	}
 
 	if($resto){
 		foreach($line as $i => $value){
-			$rtno = explode(",", rtrim($value));
-			if($rtno[0]==$resto){
+			list($_oyano,) = explode(",", rtrim($value));
+			if($_oyano==$resto){
 				$find = TRUE;
 				$line[$i] = rtrim($value).','.$no;
-				$j=explode(",", rtrim($line[$i]));
-				if(!(stripos($email,'sage')!==false || (count($j)>MAX_RES))){
+				$treeline=explode(",", rtrim($line[$i]));
+				if(!(stripos($email,'sage')!==false || (count($treeline)>MAX_RES))){
 					$newline=$line[$i] . "\n";
 					unset($line[$i]);
 				}
@@ -1309,11 +1308,11 @@ function init(){
 }
 
 // ファイル存在チェック
-function check_file ($path,$is_writable='') {
+function check_file ($path,$check_writable='') {
 	
 	if (!is_file($path)) return $path . "がありません<br>";
 	if (!is_readable($path)) return $path . "を読めません<br>";
-	if($is_writable){//書き込みが必要なファイルのチェック
+	if($check_writable){//書き込みが必要なファイルのチェック
 		if (!is_writable($path)) return $path . "を書けません<br>";
 	}
 }
@@ -1942,7 +1941,7 @@ function replace(){
 			$userdata = fread($fp, 1024);
 			fclose($fp);
 			list($uip,$uhost,$uagent,$imgext,$ucode,$urepcode,$starttime,$postedtime) = explode("\t", rtrim($userdata)."\t");//区切りの"\t"を行末に190610
-			$file_name = preg_replace("/\.(dat)$/i","",$file);
+			$file_name = pathinfo($file, PATHINFO_FILENAME );//拡張子除去
 			//画像があり、認識コードがhitすれば抜ける
 			if($file_name && is_file(TEMP_DIR.$file_name.$imgext) && $urepcode === $repcode){$find=true;break;}
 		}
