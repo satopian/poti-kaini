@@ -442,8 +442,8 @@ function updatelog(){
 
 			$treeline = explode(",", rtrim($tree[$i]));
 			$disptree = $treeline[0];
-			$j=$lineindex[$disptree] - 1; //該当記事を探して$jにセット
-			if($line[$j]==="") continue;   //$jが範囲外なら次の行
+			$j=$lineindex[$disptree]; //該当記事を探して$jにセット
+			if(!$line[$j]) continue;   //$jが範囲外なら次の行
 
 			$res = create_res($line[$j], ['pch' => 1]);
 
@@ -466,8 +466,8 @@ function updatelog(){
 					if($k<$s){//レス表示件数
 						continue;
 					}
-					$j=$lineindex[$disptree] - 1;
-					if($line[$j]==="") continue;
+					$j=$lineindex[$disptree];
+					if(!$line[$j]) continue;
 					list(,,,,,,,,,$rext,,,$rtime,,,) = explode(",", rtrim($line[$j]));
 					$resimg = $path.$rtime.$rext;
 
@@ -490,7 +490,7 @@ function updatelog(){
 
 			// 親レス用の値
 			$res['tab'] = $oya + 1; //TAB
-			$res['limit'] = ($lineindex[$res['no']] - 1 >= LOG_MAX * LOG_LIMIT / 100) ? true : ''; // そろそろ消える。
+			$res['limit'] = ($lineindex[$res['no']] >= LOG_MAX * LOG_LIMIT / 100) ? true : ''; // そろそろ消える。
 			$res['skipres'] = $skipres;
 			$res['resub'] = $resub;
 			$dat['oya'][$oya] = $res;
@@ -502,8 +502,8 @@ function updatelog(){
 				if($k<$s){//レス表示件数
 					continue;
 				}
-				$j=$lineindex[$disptree] - 1;
-				if($line[$j]==="") continue;
+				$j=$lineindex[$disptree];
+				if(!$line[$j]) continue;
 
 				$res = create_res($line[$j], ['pch' => 1]);
 				$rres[$oya][] = $res;
@@ -580,7 +580,7 @@ function res($resno = 0){
 	$line = file(LOGFILE);
 	$lineindex = get_lineindex($line); // 逆変換テーブル作成
 
-	$_line = $line[$lineindex[$resno] - 1];
+	$_line = $line[$lineindex[$resno]];
 
 	$dat = form($resno);
 
@@ -597,7 +597,7 @@ function res($resno = 0){
 
 	// 親レス用の値
 	$res['tab'] = 1; //TAB
-	$res['limit'] = ($lineindex[$res['no']] - 1 >= LOG_MAX * LOG_LIMIT / 100) ? true : ''; // そろそろ消える。
+	$res['limit'] = ($lineindex[$res['no']] >= LOG_MAX * LOG_LIMIT / 100) ? true : ''; // そろそろ消える。
 	$res['resub'] = $resub;
 	$res['descriptioncom'] = strip_tags($res['com']); //メタタグに使うコメントからタグを除去
 
@@ -610,7 +610,7 @@ function res($resno = 0){
 	$rresname = [];
 	array_shift($treeline); // 親レス番号を除去
 	foreach($treeline as $disptree){ // 子レスだけ回す
-		$j=$lineindex[$disptree] - 1;
+		$j=$lineindex[$disptree];
 		if($line[$j]==="") continue;
 
 		$res = create_res($line[$j], ['pch' => 1]);
@@ -840,7 +840,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 	foreach($line as $i => $value){//$i必要
 		if($value!==""){//190624
 			list($_no,)=explode(",", rtrim($value));	//逆変換テーブル作成
-			$lineindex[$_no]=$i+1;
+			$lineindex[$_no]=$i;
 		}
 	}
 
@@ -1175,15 +1175,15 @@ function usrdel($del,$pwd){
 		if($value!==""){
 			list($no,,,,,,,$dhost,$pass,$ext,,,$tim,,) = explode(",",$value);
 			if(in_array($no,$del) && check_password($pwd, $pass, $pwd)){
-			if(!$onlyimgdel){	//記事削除
-				treedel($no);
-				if(USER_DELETES > 2){
-					unset($line[$i]);
-					$find = true;
+				if(!$onlyimgdel){	//記事削除
+					treedel($no);
+					if(USER_DELETES > 2){
+						unset($line[$i]);
+						$find = true;
+					}
 				}
-			}
-			if(USER_DELETES > 1){
-				delete_files($path, $tim, $ext);
+				if(USER_DELETES > 1){
+					delete_files($path, $tim, $ext);
 				}
 				$flag = true;
 			}
@@ -2092,8 +2092,8 @@ function catalog(){
 		}else{
 			$treeline = explode(",", rtrim($tree[$i]));
 			$disptree = $treeline[0];
-			$j=$lineindex[$disptree] - 1; //該当記事を探して$jにセット
-			if($line[$j]==="") continue; //$jが範囲外なら次の行
+			$j=$lineindex[$disptree]; //該当記事を探して$jにセット
+			if(!$line[$j]) continue; //$jが範囲外なら次の行
 
 			$res = create_res($line[$j]);
 
@@ -2463,11 +2463,12 @@ function check_disp_resform ($res) {
 		: true; // フォームを閉じる日数が未設定なら表示
 }
 
+//逆変換テーブル作成
 function get_lineindex ($line){
 	$lineindex = [];
 	foreach($line as $i =>$value){
 		list($no,) = explode(",", $value);
-		$lineindex[$no] = $i + 1; //逆変換テーブル作成
+		$lineindex[$no] = $i; // 値にkey keyに記事no
 	}
 	return $lineindex;
 }
