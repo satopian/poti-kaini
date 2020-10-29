@@ -428,6 +428,9 @@ function updatelog(){
 
 	$line = file(LOGFILE);
 	$lineindex = get_lineindex($line); // 逆変換テーブル作成
+	if(!$lineindex){
+		error(MSG019);
+	}
 
 	$counttree = count($tree);//190619
 	for($page=0;$page<$counttree;$page+=PAGE_DEF){
@@ -525,7 +528,7 @@ function updatelog(){
 		$paging = "";
 
 		//表示しているページが20ページ以上または投稿数が少ない時はページ番号のリンクを制限しない
-		$showAll = ($counttree <= PAGE_DEF * 21 || $i >= PAGE_DEF * 22);
+		$showAll = ($counttree <= PAGE_DEF * 21 || ($page / PAGE_DEF) >= 21);
 
 		for($i = 0; $i < ($showAll ? $counttree : PAGE_DEF * 22); $i += PAGE_DEF){
 			$pn = $i ? $i / PAGE_DEF : 0; // page_number
@@ -579,6 +582,9 @@ function res($resno = 0){
 	$lineindex = get_lineindex($line); // 逆変換テーブル作成
 
 	$_line = $line[$lineindex[$resno]];
+	if(!isset($_line)){
+		error(MSG001);
+	}
 
 	$dat = form($resno);
 
