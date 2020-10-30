@@ -42,8 +42,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.18.7');
-define('POTI_VERLOT' , 'v2.18.7 lot.201027');
+define('POTI_VER' , 'v2.18.8');
+define('POTI_VERLOT' , 'v2.18.8 lot.201028');
 
 if (($phpver = phpversion()) < "5.5.0") {
 	die("本プログラムの動作には PHPバージョン 5.5.0 以上が必要です。<br>\n（現在のPHPバージョン：{$phpver}）");
@@ -425,25 +425,26 @@ function updatelog(){
 	global $path;
 
 	$tree = file(TREEFILE);
-	$st = null;
 
 	$line = file(LOGFILE);
 	$lineindex = get_lineindex($line); // 逆変換テーブル作成
+	if(!$lineindex){
+		error(MSG019);
+	}
 
 	$counttree = count($tree);//190619
-	for($page=0;$page<$counttree;$page+=PAGE_DEF){
+	for($page=0;$page<$counttree;$page+=PAGE_DEF){//PAGE_DEF単位で全件ループ
 		$oya = 0;	//親記事のメイン添字
 		$dat = form();
-		$st = $page;
-		for($i = $st; $i < $st+PAGE_DEF; ++$i){
+		for($i = $page; $i < $page+PAGE_DEF; ++$i){//PAGE_DEF分のスレッドを表示
 			if(!isset($tree[$i])){
 				continue;
 			}
 
 			$treeline = explode(",", rtrim($tree[$i]));
 			$disptree = $treeline[0];
-			$j=$lineindex[$disptree] - 1; //該当記事を探して$jにセット
-			if($line[$j]==="") continue;   //$jが範囲外なら次の行
+			$j=$lineindex[$disptree]; //該当記事を探して$jにセット
+			if(!isset($line[$j])) continue;   //$jが範囲外なら次の行
 
 			$res = create_res($line[$j], ['pch' => 1]);
 
@@ -466,8 +467,8 @@ function updatelog(){
 					if($k<$s){//レス表示件数
 						continue;
 					}
-					$j=$lineindex[$disptree] - 1;
-					if($line[$j]==="") continue;
+					$j=$lineindex[$disptree];
+					if(!isset($line[$j])) continue;
 					list(,,,,,,,,,$rext,,,$rtime,,,) = explode(",", rtrim($line[$j]));
 					$resimg = $path.$rtime.$rext;
 
@@ -490,7 +491,7 @@ function updatelog(){
 
 			// 親レス用の値
 			$res['tab'] = $oya + 1; //TAB
-			$res['limit'] = ($lineindex[$res['no']] - 1 >= LOG_MAX * LOG_LIMIT / 100) ? true : ''; // そろそろ消える。
+			$res['limit'] = ($lineindex[$res['no']] >= LOG_MAX * LOG_LIMIT / 100) ? true : ''; // そろそろ消える。
 			$res['skipres'] = $skipres;
 			$res['resub'] = $resub;
 			$dat['oya'][$oya] = $res;
@@ -502,8 +503,8 @@ function updatelog(){
 				if($k<$s){//レス表示件数
 					continue;
 				}
-				$j=$lineindex[$disptree] - 1;
-				if($line[$j]==="") continue;
+				$j=$lineindex[$disptree];
+				if(!isset($line[$j])) continue;
 
 				$res = create_res($line[$j], ['pch' => 1]);
 				$rres[$oya][] = $res;
@@ -518,8 +519,8 @@ function updatelog(){
 			$oya++;
 		}
 
-		$prev = $st - PAGE_DEF;
-		$next = $st + PAGE_DEF;
+		$prev = $page - PAGE_DEF;
+		$next = $page + PAGE_DEF;
 		// 改ページ処理
 		if($prev >= 0){
 			$dat['prev'] = $prev == 0 ? PHP_SELF2 : ($prev / PAGE_DEF) . PHP_EXT;
@@ -527,11 +528,11 @@ function updatelog(){
 		$paging = "";
 
 		//表示しているページが20ページ以上または投稿数が少ない時はページ番号のリンクを制限しない
-		$showAll = ($counttree <= PAGE_DEF * 21 || $i >= PAGE_DEF * 22);
+		$showAll = ($counttree <= PAGE_DEF * 21 || $page >= PAGE_DEF*21);
 
 		for($i = 0; $i < ($showAll ? $counttree : PAGE_DEF * 22); $i += PAGE_DEF){
 			$pn = $i ? $i / PAGE_DEF : 0; // page_number
-			$paging .= ($st === $i)
+			$paging .= ($page === $i)
 				? str_replace("<PAGE>", $pn, NOW_PAGE) // 現在ページにはリンクを付けない
 				: str_replace("<PURL>", ($i ? $pn.PHP_EXT : PHP_SELF2),
 					str_replace("<PAGE>", $i ? ($showAll || $i !== PAGE_DEF * 21 ? $pn : "≫") : $pn, OTHER_PAGE));
@@ -580,7 +581,10 @@ function res($resno = 0){
 	$line = file(LOGFILE);
 	$lineindex = get_lineindex($line); // 逆変換テーブル作成
 
-	$_line = $line[$lineindex[$resno] - 1];
+	$_line = $line[$lineindex[$resno]];
+	if(!isset($_line)){
+		error(MSG001);
+	}
 
 	$dat = form($resno);
 
@@ -597,7 +601,7 @@ function res($resno = 0){
 
 	// 親レス用の値
 	$res['tab'] = 1; //TAB
-	$res['limit'] = ($lineindex[$res['no']] - 1 >= LOG_MAX * LOG_LIMIT / 100) ? true : ''; // そろそろ消える。
+	$res['limit'] = ($lineindex[$res['no']] >= LOG_MAX * LOG_LIMIT / 100) ? true : ''; // そろそろ消える。
 	$res['resub'] = $resub;
 	$res['descriptioncom'] = strip_tags($res['com']); //メタタグに使うコメントからタグを除去
 
@@ -610,8 +614,8 @@ function res($resno = 0){
 	$rresname = [];
 	array_shift($treeline); // 親レス番号を除去
 	foreach($treeline as $disptree){ // 子レスだけ回す
-		$j=$lineindex[$disptree] - 1;
-		if($line[$j]==="") continue;
+		$j=$lineindex[$disptree];
+		if(!isset($line[$j])) continue;
 
 		$res = create_res($line[$j], ['pch' => 1]);
 		$rres[0][] = $res;
@@ -840,7 +844,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 	foreach($line as $i => $value){//$i必要
 		if($value!==""){//190624
 			list($_no,)=explode(",", rtrim($value));	//逆変換テーブル作成
-			$lineindex[$_no]=$i+1;
+			$lineindex[$_no]=$i;
 		}
 	}
 
@@ -1175,15 +1179,15 @@ function usrdel($del,$pwd){
 		if($value!==""){
 			list($no,,,,,,,$dhost,$pass,$ext,,,$tim,,) = explode(",",$value);
 			if(in_array($no,$del) && check_password($pwd, $pass, $pwd)){
-			if(!$onlyimgdel){	//記事削除
-				treedel($no);
-				if(USER_DELETES > 2){
-					unset($line[$i]);
-					$find = true;
+				if(!$onlyimgdel){	//記事削除
+					treedel($no);
+					if(USER_DELETES > 2){
+						unset($line[$i]);
+						$find = true;
+					}
 				}
-			}
-			if(USER_DELETES > 1){
-				delete_files($path, $tim, $ext);
+				if(USER_DELETES > 1){
+					delete_files($path, $tim, $ext);
 				}
 				$flag = true;
 			}
@@ -2092,8 +2096,8 @@ function catalog(){
 		}else{
 			$treeline = explode(",", rtrim($tree[$i]));
 			$disptree = $treeline[0];
-			$j=$lineindex[$disptree] - 1; //該当記事を探して$jにセット
-			if($line[$j]==="") continue; //$jが範囲外なら次の行
+			$j=$lineindex[$disptree]; //該当記事を探して$jにセット
+			if(!isset($line[$j])) continue; //$jが範囲外なら次の行
 
 			$res = create_res($line[$j]);
 
@@ -2128,7 +2132,7 @@ function catalog(){
 	$paging = "";
 
 	//表示しているページが20ページ以上または投稿数が少ない時はページ番号のリンクを制限しない
-	$showAll = ($counttree <= $pagedef * 21 || $i >= $pagedef * 22);
+	$showAll = ($counttree <= $pagedef * 21 || $page >= $pagedef * 21);
 
 	for($i = 0; $i < ($showAll ? $counttree : $pagedef * 22) ; $i += $pagedef){
 		$pn = $i / $pagedef;
@@ -2463,11 +2467,12 @@ function check_disp_resform ($res) {
 		: true; // フォームを閉じる日数が未設定なら表示
 }
 
+//逆変換テーブル作成
 function get_lineindex ($line){
 	$lineindex = [];
 	foreach($line as $i =>$value){
 		list($no,) = explode(",", $value);
-		$lineindex[$no] = $i + 1; //逆変換テーブル作成
+		$lineindex[$no] = $i; // 値にkey keyに記事no
 	}
 	return $lineindex;
 }
