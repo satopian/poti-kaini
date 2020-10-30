@@ -433,10 +433,10 @@ function updatelog(){
 	}
 
 	$counttree = count($tree);//190619
-	for($page=0;$page<$counttree;$page+=PAGE_DEF){
+	for($page=0;$page<$counttree;$page+=PAGE_DEF){//PAGE_DEF単位で全件ループ
 		$oya = 0;	//親記事のメイン添字
 		$dat = form();
-		for($i = $page; $i < $page+PAGE_DEF; ++$i){
+		for($i = $page; $i < $page+PAGE_DEF; ++$i){//PAGE_DEF分のスレッドを表示
 			if(!isset($tree[$i])){
 				continue;
 			}
@@ -528,7 +528,7 @@ function updatelog(){
 		$paging = "";
 
 		//表示しているページが20ページ以上または投稿数が少ない時はページ番号のリンクを制限しない
-		$showAll = ($counttree <= PAGE_DEF * 21 || ($page / PAGE_DEF) >= 21);
+		$showAll = ($counttree <= PAGE_DEF * 21 || $page >= PAGE_DEF*21);
 
 		for($i = 0; $i < ($showAll ? $counttree : PAGE_DEF * 22); $i += PAGE_DEF){
 			$pn = $i ? $i / PAGE_DEF : 0; // page_number
@@ -2132,7 +2132,7 @@ function catalog(){
 	$paging = "";
 
 	//表示しているページが20ページ以上または投稿数が少ない時はページ番号のリンクを制限しない
-	$showAll = ($counttree <= $pagedef * 21 || $i >= $pagedef * 22);
+	$showAll = ($counttree <= $pagedef * 21 || $page >= $pagedef * 21);
 
 	for($i = 0; $i < ($showAll ? $counttree : $pagedef * 22) ; $i += $pagedef){
 		$pn = $i / $pagedef;
