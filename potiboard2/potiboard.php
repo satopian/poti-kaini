@@ -42,8 +42,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.18.8');
-define('POTI_VERLOT' , 'v2.18.8 lot.201028');
+define('POTI_VER' , 'v2.18.9');
+define('POTI_VERLOT' , 'v2.18.8 lot.201031');
 
 if (($phpver = phpversion()) < "5.5.0") {
 	die("本プログラムの動作には PHPバージョン 5.5.0 以上が必要です。<br>\n（現在のPHPバージョン：{$phpver}）");
@@ -195,7 +195,7 @@ switch($mode){
 		regist($name,$email,$sub,$com,$url,$pwd,$resto);
 		break;
 	case 'admin':
-		valid($pass);
+		admin_in($pass);
 		if($admin==="del") admindel($pass);
 		if($admin==="post"){
 			$dat['post_mode'] = true;
@@ -230,7 +230,7 @@ switch($mode){
 		break;
 	case 'contpaint':
 //パスワードが必要なのは差し換えの時だけ
-		if(CONTINUE_PASS||$type==='rep') usrchk($no,$pwd);
+		if(CONTINUE_PASS||$type==='rep') check_cont_pass($no,$pwd);
 		paintform();
 		break;
 	case 'newpost':
@@ -808,31 +808,14 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 	//カンマを変換
 	$now = str_replace(",", "&#44;", $now);
 	$ptime = str_replace(",", "&#44;", $ptime);
+
 	//テキスト整形
-	$email=strip_tags($email);
-	$email= CleanStr($email);
-	$email=preg_replace("/[\r\n]/","",$email);
-	$sub  = CleanStr($sub);
-	$sub  =preg_replace("/[\r\n]/","",$sub);
-	$resto= CleanStr($resto); $resto=preg_replace("/[\r\n]/","",$resto);
-	$url  = CleanStr($url);   $url  =preg_replace("/[\r\n]/","",$url);
-	$url  = str_replace(" ", "", $url);
-	$com  = CleanStr($com,true);
-	//管理モードで使用できるタグを制限
-	if(preg_match('/< *?script|< *?\? *?php|< *?img|< *?a  *?onmouseover|< *?iframe|< *?frame|< *?div|< *?table|< *?meta|< *?base|< *?object|< *?embed|< *?input|< *?body|< *?style/i', $com)) error(MSG038,$dest);
-
-	// 改行文字の統一。
-	$com = str_replace("\r\n", "\n", $com);
-	$com = str_replace("\r", "\n", $com);
-	// 連続する空行を一行
-	$com = preg_replace("/\n((　| )*\n){3,}/","\n",$com);
-	$com = nl2br($com);		//改行文字の前に<br>を代入する
-
-	$com = str_replace("\n", "", $com);	//\nを文字列から消す
-
-	$name=preg_replace("/◆/","◇",$name);
-	$name=preg_replace("/[\r\n]/","",$name);
-	$name=CleanStr($name);
+	$formatted_text = create_formatted_text_from_post($com,$name,$email,$url,$sub);
+	$com=$formatted_text['com'];
+	$name=$formatted_text['name'];
+	$email=$formatted_text['email'];
+	$url=$formatted_text['url'];
+	$sub=$formatted_text['sub'];
 
 	//ログ読み込み
 	$fp=fopen(LOGFILE,"r+");
@@ -1052,12 +1035,11 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 	closeFile($fp);
 
 	//-- クッキー保存 --
-	//漢字を含まない項目はこちらの形式で追加
+	//パスワード
 	setcookie ("pwdc", $c_pass,time()+(SAVE_COOKIE*24*3600));
-	setcookie ("fcolorc", $fcolor,time()+(SAVE_COOKIE*24*3600));
 
-	//クッキー項目："クッキー名<>クッキー値"　※漢字を含む項目はこちらに追加 //190528
-	$cooks = array("namec<>".$name,"emailc<>".$email,"urlc<>".$url);
+	//クッキー項目："クッキー名 クッキー値"
+	$cooks = ["namec<>".$name,"emailc<>".$email,"urlc<>".$url,"fcolorc<>".$fcolor];
 
 	foreach ( $cooks as $cook ) {
 		list($c_name,$c_cookie) = explode('<>',$cook);
@@ -1201,7 +1183,7 @@ function usrdel($del,$pwd){
 }
 
 /* パス認証 */
-function valid($pass){
+function admin_in($pass){
 	global $ADMIN_PASS;
 	if($pass && $pass !== $ADMIN_PASS) error(MSG029);
 
@@ -1748,7 +1730,7 @@ function incontinue(){
 }
 
 /* コンティニュー認証 */
-function usrchk($no,$pwd){
+function check_cont_pass($no,$pwd){
 	$lines = file(LOGFILE);
 	foreach($lines as $line){
 		list($cno,,,,,,,,$cpwd,) = explode(",", $line);
@@ -1811,7 +1793,7 @@ function editform($del,$pwd){
 	if(USE_FONTCOLOR){
 		foreach ( $fontcolors as $fontcolor ){
 			list($color,$name) = explode(",", $fontcolor);
-			$chk = ($color == $fcolor) ? true : false;
+			$chk = ($color == $fcolor);
 			$dat['fctable'][] = compact('color','name','chk');
 		}
 		if(!$fcolor) $dat['fctable'][0]['chk'] = true; //値が無い場合、先頭にチェック
@@ -1858,31 +1840,15 @@ function rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin){
 		$now .= " ID:" . getId($userip, $time);
 	}
 	$now = str_replace(",", "&#44;", $now);//カンマを変換
+	
 	//テキスト整形
-	$email=strip_tags($email);
-	$email= CleanStr($email); 
-	$email=preg_replace("/[\r\n]/","",$email);
-	$sub  = CleanStr($sub);
-	$sub  =preg_replace("/[\r\n]/","",$sub);
-	$url  = CleanStr($url);
-	$url  =preg_replace("/[\r\n]/","",$url);
-	$url  = str_replace(" ", "", $url);
-	$com  = CleanStr($com,true);
-	//管理モードで使用できるタグを制限
-	if(preg_match('/< *?script|< *?\? *?php|< *?img|< *?a  *?onmouseover|< *?iframe|< *?frame|< *?div|< *?table|< *?meta|< *?base|< *?object|< *?embed|< *?input|< *?body|< *?style/i', $com)) error(MSG038,$dest);
-
-	// 改行文字の統一。
-	$com = str_replace("\r\n", "\n", $com);
-	$com = str_replace("\r", "\n", $com);
-	// 連続する空行を一行
-	$com = preg_replace("#\n((　| )*\n){3,}#","\n",$com);
-	$com = nl2br($com);		//改行文字の前に<br>を代入する
-	$com = str_replace("\n", "", $com);	//\nを文字列から消す
-
-	$name=preg_replace("/◆/","◇",$name);
-	$name=preg_replace("/[\r\n]/","",$name);
-	$name = CleanStr($name);
-
+	$formatted_text = create_formatted_text_from_post($com,$name,$email,$url,$sub);
+	$com = $formatted_text['com'];
+	$name = $formatted_text['name'];
+	$email = $formatted_text['email'];
+	$url = $formatted_text['url'];
+	$sub = $formatted_text['sub'];
+	
 	//ログ読み込み
 	$fp=fopen(LOGFILE,"r+");
 	flock($fp, LOCK_EX);
@@ -2195,6 +2161,44 @@ function Reject_if_NGword_exists_in_the_post($com,$name,$email,$url,$sub){
 	if($bstr_A_find && $bstr_B_find){
 		error(MSG032,$dest);
 	}
+	
+	//管理モードで使用できるタグを制限
+	$chk_com  = CleanStr($chk_com,true);//管理者はタグ有効
+	if(preg_match('/<script|<\?php|<img|<a onmouseover|<iframe|<frame|<div|<table|<meta|<base|<object|<embed|<input|<body|<style/i', $chk_com)) error(MSG038);
+
+}
+
+function create_formatted_text_from_post ($com,$name,$email,$url,$sub){
+	//テキスト整形
+	$email=strip_tags($email);
+	$email= CleanStr($email); 
+	$email=preg_replace("/[\r\n]/","",$email);
+	$sub  = CleanStr($sub);
+	$sub  =preg_replace("/[\r\n]/","",$sub);
+	$url  = CleanStr($url);
+	$url  =preg_replace("/[\r\n]/","",$url);
+	$url  = str_replace(" ", "", $url);
+	$com  = CleanStr($com,true);
+
+	// 改行文字の統一。
+	$com = str_replace("\r\n", "\n", $com);
+	$com = str_replace("\r", "\n", $com);
+	// 連続する空行を一行
+	$com = preg_replace("#\n((　| )*\n){3,}#","\n",$com);
+	$com = nl2br($com);		//改行文字の前に<br>を代入する
+	$com = str_replace("\n", "", $com);	//\nを文字列から消す
+
+	$name=preg_replace("/◆/","◇",$name);
+	$name=preg_replace("/[\r\n]/","",$name);
+	$name = CleanStr($name);
+	$formatted_text = [
+		'com' => $com,
+		'name' => $name,
+		'email' => $email,
+		'url' => $url,
+		'sub' => $sub,
+	];
+	return $formatted_text;
 }
 
 /* HTML出力 */
