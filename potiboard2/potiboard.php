@@ -2172,19 +2172,18 @@ function create_formatted_text_from_post ($com,$name,$email,$url,$sub){
 	$sub = newstring($sub);
 	$sub = preg_replace("/[\r\n]/","",$sub);
 	$url = newstring($url);
-	$url = preg_replace("/[\r\n]/","",$url);
-	$url = str_replace(array(" ", "　"), "", $url);
+	$url = preg_replace("/\s/u","",$url);//空白と改行を消す
 	$com = newcomment($com);
 
 	// 改行文字の統一。
 	$com = str_replace("\r\n", "\n", $com);
 	$com = str_replace("\r", "\n", $com);
 	// 連続する空行を一行
-	$com = preg_replace("#\n(\s*\n){3,}#","\n",$com);
+	$com = preg_replace("#\n(\s*\n){3,}#u","\n",$com);
 	$com = nl2br($com);		//改行文字の前に<br>を代入する
 	$com = str_replace("\n", "", $com);	//\nを文字列から消す
 
-	$name = preg_replace("/◆/","◇",$name);
+	$name = str_replace("◆", "◇", $name);
 	$name = preg_replace("/[\r\n]/","",$name);
 	$name = newstring($name);
 	$formatted_text = [
