@@ -42,8 +42,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.18.9');
-define('POTI_VERLOT' , 'v2.18.9 lot.201101');
+define('POTI_VER' , 'v2.18.10');
+define('POTI_VERLOT' , 'v2.18.10 lot.201103');
 
 if (($phpver = phpversion()) < "5.5.0") {
 	die("本プログラムの動作には PHPバージョン 5.5.0 以上が必要です。<br>\n（現在のPHPバージョン：{$phpver}）");
@@ -1324,6 +1324,11 @@ function paintform(){
 	$ext = newstring(filter_input(INPUT_POST, 'ext'));
 	$ctype = newstring(filter_input(INPUT_POST, 'ctype'));
 
+	//Cookie保存
+	setcookie("appletc", $shi , time()+86400*SAVE_COOKIE);//アプレット選択
+	setcookie("picwc", $picw , time()+86400*SAVE_COOKIE);//幅
+	setcookie("pichc", $pich , time()+86400*SAVE_COOKIE);//高さ
+
 	//pchファイルアップロードペイント
 	if($admin===$ADMIN_PASS){
 		
@@ -1463,6 +1468,7 @@ function paintform(){
 	if(USE_SELECT_PALETTES){//パレット切り替え機能を使う時
 		foreach($pallets_dat as $i=>$value){
 			if($i==filter_input(INPUT_POST, 'selected_palette_no',FILTER_VALIDATE_INT)){//キーと入力された数字が同じなら
+				setcookie("palettec", $i, time()+86400*SAVE_COOKIE);//Cookie保存
 				if(is_array($value)){
 					list($p_name,$p_dat)=$value;
 					$lines=file($p_dat);

@@ -1,5 +1,6 @@
-function l(e){
-	var P=loadCookie("pwdc"),N=loadCookie("namec"),E=loadCookie("emailc"),U=loadCookie("urlc"),FC=loadCookie("fcolorc"),i,j;
+function l(){
+	var P=loadCookie("pwdc"),N=loadCookie("namec"),E=loadCookie("emailc"),U=loadCookie("urlc"),
+	FC=loadCookie("fcolorc"),AP=loadCookie("appletc"),PW=loadCookie("picwc"),PH=loadCookie("pichc"),PL=loadCookie("palettec"),i;
 		for(i=0;i<document.forms.length;i++){
 			if(document.forms[i].pwd){
 				document.forms[i].pwd.value=P;
@@ -15,15 +16,51 @@ function l(e){
 			}
 			if(document.forms[i].fcolor){
 				if(FC == "") FC = document.forms[i].fcolor[0].value;
-				for(j = 0; document.forms[i].fcolor.length > j; j ++) {
-					if(document.forms[i].fcolor[j].value == FC){
-						document.forms[i].fcolor[j].checked = true;
-						document.forms[i].fcolor.selectedIndex = j;
-					}
-				}
+
+				checkd_if_formval_equal_cookieval(document.forms[i].fcolor,FC);
+
 			}
+			if(document.forms[i].shi){
+				if(AP == "") AP = document.forms[i].shi[0].value;
+
+				checkd_if_formval_equal_cookieval(document.forms[i].shi,AP);
+
+			}
+			if(document.forms[i].picw){
+				if(PW != ""){
+					document.forms[i].picw.value=PW;
+				}
+
+				checkd_if_formval_equal_cookieval(document.forms[i].picw,PW);
+
+			}
+
+			if(document.forms[i].pich){
+				if(PH != ""){
+					document.forms[i].pich.value=PH;
+				}
+
+				checkd_if_formval_equal_cookieval(document.forms[i].pich,PH);
+
+			}
+
+			if(document.forms[i].selected_palette_no){
+				document.forms[i].selected_palette_no.selectedIndex = PL;
+			}
+
 		}
 };
+
+//Cookieと一致したらcheckd
+function checkd_if_formval_equal_cookieval(docformsname,cookieval) {
+var j;
+	for(j = 0; docformsname.length > j; j ++) {
+	if(docformsname[j].value == cookieval){
+		docformsname[j].checked = true;//チェックボックス
+		docformsname.selectedIndex = j;//プルダウンメニュー
+	}
+}
+}
 
 /* Function to get cookie parameter value string with specified name
    Copyright (C) 2002 Cresc Corp. http://www.cresc.co.jp/
