@@ -42,8 +42,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.18.10');
-define('POTI_VERLOT' , 'v2.18.10 lot.201103');
+define('POTI_VER' , 'v2.18.11');
+define('POTI_VERLOT' , 'v2.18.11 lot.201108');
 
 if (($phpver = phpversion()) < "5.5.0") {
 	die("本プログラムの動作には PHPバージョン 5.5.0 以上が必要です。<br>\n（現在のPHPバージョン：{$phpver}）");
@@ -684,19 +684,23 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 
 	$pictmp = filter_input(INPUT_POST, 'pictmp',FILTER_VALIDATE_INT);
 	$picfile = newstring(filter_input(INPUT_POST, 'picfile'));
-	$upfile_name = isset($_FILES["upfile"]["name"]) ? $_FILES["upfile"]["name"] : "";//190603
-	if (strpos($upfile_name, '/') !== false) {//ファイル名に/があったら中断
-		error(MSG015);
-	}
 
+	//画像アップロード
+	$upfile_name = isset($_FILES["upfile"]["name"]) ? basename($_FILES["upfile"]["name"]) : "";
 	$upfile = isset($_FILES["upfile"]["tmp_name"]) ? $_FILES["upfile"]["tmp_name"] : "";
+
+	if($upfile_name && isset($_FILES["upfile"]["error"])){//エラーチェック
+		$upfile_error = $_FILES["upfile"]["error"];
+		if($upfile_error==1||$upfile_error==2){
+			error(MSG034);//容量オーバー
+		} 
+	}
 
 	if(USE_CHECK_NO_FILE){
 		$textonly = filter_input(INPUT_POST, 'textonly',FILTER_VALIDATE_BOOLEAN);
 		if($textonly){//画像なしの時
 			safe_unlink($upfile);
 			$upfile="";
-			$upfile_name="";
 		}
 	}
 
@@ -717,7 +721,6 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 		if (!$picfile || !is_file($temppath.$picfile.".dat")) {
 			error(MSG007);
 		}
-
 		$fp = fopen($temppath.$picfile.".dat", "r");
 		$userdata = fread($fp, 1024);
 		fclose($fp);
@@ -738,10 +741,11 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 		} else{//フォームからのアップロード
 			if(!USE_IMG_UPLOAD && $admin!==$ADMIN_PASS){//アップロード禁止で管理画面からの投稿ではない時
 				unlink($upfile);
-				error(MSG006,$dest);
+				error(MSG006);
 			}
 			if(!preg_match('/\A(jpe?g|jfif|gif|png)\z/i', pathinfo($upfile_name, PATHINFO_EXTENSION))){//もとのファイル名の拡張子190606
-				error(MSG004,$dest);
+				unlink($upfile);
+				error(MSG004);
 			}
 			if(!move_uploaded_file($upfile, $dest)){
 				error(MSG003,$dest);
@@ -1332,26 +1336,24 @@ function paintform(){
 	//pchファイルアップロードペイント
 	if($admin===$ADMIN_PASS){
 		
-		$pchfilename = isset($_FILES['pch_upload']['name']) ? $_FILES['pch_upload']['name'] : '';
-
+		$pchfilename = isset($_FILES['pch_upload']['name']) ? newstring(basename($_FILES['pch_upload']['name'])) : '';
+		
 		if($pchfilename!==""){//空文字でなければ続行
-			$pchfilename=newstring($pchfilename);
-			if (strpos($pchfilename, '/') !== false) { //ファイル名に/があったら中断
-				error(MSG015);
-			}
-
+			$pchtmp=$_FILES['pch_upload']['tmp_name'];
+			$pch_upload_error = $_FILES["pch_upload"]["error"];
+			if($pch_upload_error==1||$pch_upload_error==2){//容量オーバー
+				error(MSG034);
+			} 
 			//拡張子チェック
 			$tim = time().substr(microtime(),2,3);
 			$ext=pathinfo($pchfilename, PATHINFO_EXTENSION);
 			$ext=strtolower($ext);//すべて小文字に
-
+			
 			if ($ext === 'pch' || $ext === 'spch') {
 				$pchup = TEMP_DIR.'pchup-'.$tim.'-tmp.'.$ext;//アップロードされるファイル名
-				$pchtmp=$_FILES['pch_upload']['tmp_name'];
 			} else{//拡張子が一致しなかったら
-				$pchup="";
-				$pchtmp="";
-				echo "アニメファイルをアップしてください。";
+				safe_unlink($pchtmp);
+				error("アニメファイルをアップしてください。");
 			}
 
 			if(move_uploaded_file($pchtmp, $pchup)){//アップロード成功なら続行
@@ -1364,24 +1366,23 @@ function paintform(){
 						if($line==="4e454f"){
 							$useneo=true;
 						} else{//NEOのpchでなければ
-							echo"NEOのPCHではありません。";
 							unlink($pchup);
+							error("NEOのPCHではありません。");
 						}
 					} elseif($ext==="spch"){
 						$line = substr($line,0,24);
 						if($line==="6c617965725f636f756e743d"||$line==="000d0a"){
 							$useneo=false;
 						}else{//しぃぺのspchでなければ
-							echo"しぃペインターのSPCHではありません。";
 							unlink($pchup);
+							error("しぃペインターのSPCHではありません。");
 						}
 					}
 					fclose($fp);
 					$dat['pchfile'] = $pchup;
 				} else{//mime_content_typeが違ったら
 					unlink($pchup);
-					echo"アニメファイルをアップしてください。";
-					// error(MSG001);
+					error("アニメファイルをアップしてください。");
 				}
 			}
 		}
