@@ -42,8 +42,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.18.11');
-define('POTI_VERLOT' , 'v2.18.11 lot.201108');
+define('POTI_VER' , 'v2.18.12');
+define('POTI_VERLOT' , 'v2.18.12 lot.201109');
 
 if (($phpver = phpversion()) < "5.5.0") {
 	die("本プログラムの動作には PHPバージョン 5.5.0 以上が必要です。<br>\n（現在のPHPバージョン：{$phpver}）");
@@ -2175,16 +2175,15 @@ function create_formatted_text_from_post ($com,$name,$email,$url,$sub){
 
 	$email = strip_tags($email);
 	$email = newstring($email); 
-	$email = preg_replace("/[\r\n]/","",$email);
+	$email = str_replace(["\r\n","\n","\r"],"",$email);
 	$sub = newstring($sub);
-	$sub = preg_replace("/[\r\n]/","",$sub);
+	$sub = str_replace(["\r\n","\n","\r"],"",$sub);
 	$url = newstring($url);
 	$url = preg_replace("/\s/u","",$url);//空白と改行を消す
 	$com = newcomment($com);
 
 	// 改行文字の統一。
-	$com = str_replace("\r\n", "\n", $com);
-	$com = str_replace("\r", "\n", $com);
+	$com = str_replace(["\r\n","\r"], "\n", $com);
 	// 連続する空行を一行
 	$com = preg_replace("#\n(\s*\n){3,}#u","\n",$com);
 	$com = nl2br($com);		//改行文字の前に<br>を代入する
