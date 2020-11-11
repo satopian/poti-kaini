@@ -8,6 +8,7 @@
 // このスクリプトはPaintBBS（藍珠CGI）のPNG保存ルーチンを参考に
 // PHP用に作成したものです。
 //----------------------------------------------------------------------
+// 2020/11/10 レス先の記録に対応。拡張ヘッダの取得を可変変数から連想配列に変更。
 // 2020/08/28 描画時間の記録に対応
 // 2020/05/25 投稿容量制限の設定項目を追加 従来はconfigのMAX_KB
 // 2020/02/25 flock()修正タイムゾーンを'Asia/Tokyo'に
@@ -200,11 +201,15 @@ if($sendheader){
 	$query_str = explode("&", $sendheader);
 	foreach($query_str as $query_s){
 		list($name,$value) = explode("=", $query_s);
-		$$name = $value;
+		$u[$name] = $value;
 	}
+	$usercode = isset($u['usercode']) ? $u['usercode'] : '';
+	$repcode = isset($u['repcode']) ? $u['repcode'] : '';
+	$stime = isset($u['stime']) ? $u['stime'] : '';
+	$time = isset($u['time']) ? $u['time'] : '';
+	$resto = isset($u['resto']) ? $u['resto'] : '';
 	//usercode 差し換え認識コード 描画開始 完了時間 を追加
-	$userdata .= "\t$usercode\t$repcode\t$stime\t$time";
-
+	$userdata .= "\t$usercode\t$repcode\t$stime\t$time\t$resto";
 }
 $userdata .= "\n";
 if(is_file(TEMP_DIR.$imgfile.".dat")){
@@ -217,6 +222,7 @@ if(!$fp){
 	exit;
 }else{
 	flock($fp, LOCK_EX);
+	// fwrite($fp, $userdata);
 	fwrite($fp, $userdata);
 	fflush($fp);
 	flock($fp, LOCK_UN);

@@ -42,8 +42,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.18.11');
-define('POTI_VERLOT' , 'v2.18.11 lot.201108');
+define('POTI_VER' , 'v2.19.0');
+define('POTI_VERLOT' , 'v2.19.0 lot.201110');
 
 if (($phpver = phpversion()) < "5.5.0") {
 	die("本プログラムの動作には PHPバージョン 5.5.0 以上が必要です。<br>\n（現在のPHPバージョン：{$phpver}）");
@@ -724,13 +724,15 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 		$fp = fopen($temppath.$picfile.".dat", "r");
 		$userdata = fread($fp, 1024);
 		fclose($fp);
-		list($uip,$uhost,,,$ucode,,$starttime,$postedtime) = explode("\t", rtrim($userdata));
+		list($uip,$uhost,,,$ucode,,$starttime,$postedtime,$uresto) = explode("\t", rtrim($userdata));
 		if(($ucode != $usercode) && ($uip != $userip)){error(MSG007);}
 		$ptime='';
 		//描画時間を$userdataをもとに計算
 		if($starttime && DSP_PAINTTIME){
 			$ptime = calcPtime($starttime,$postedtime);
 		}
+		$uresto=filter_var($uresto,FILTER_VALIDATE_INT);
+		$resto = $uresto ? $uresto : $resto;//変数上書き$userdataのレス先を優先する
 	}
 	$dest='';
 	$is_file_dest=false;
@@ -740,15 +742,13 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 			copy($upfile, $dest);
 		} else{//フォームからのアップロード
 			if(!USE_IMG_UPLOAD && $admin!==$ADMIN_PASS){//アップロード禁止で管理画面からの投稿ではない時
-				unlink($upfile);
-				error(MSG006);
+				error(MSG006,$upfile);
 			}
 			if(!preg_match('/\A(jpe?g|jfif|gif|png)\z/i', pathinfo($upfile_name, PATHINFO_EXTENSION))){//もとのファイル名の拡張子190606
-				unlink($upfile);
-				error(MSG004);
+				error(MSG004,$upfile);
 			}
 			if(!move_uploaded_file($upfile, $dest)){
-				error(MSG003,$dest);
+				error(MSG003,$upfile);
 			}
 		}
 
@@ -1023,7 +1023,9 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 			}
 		}
 	}
-
+	if($pictmp==2 && !$find ){//お絵かきでレス先が無い時は新規投稿
+		$resto='';
+	}
 	if(!$find){if(!$resto){$newline="$no\n";}else{error(MSG025,$dest);}}
 	$newline.=implode("\n", $line);
 
@@ -1352,8 +1354,7 @@ function paintform(){
 			if ($ext === 'pch' || $ext === 'spch') {
 				$pchup = TEMP_DIR.'pchup-'.$tim.'-tmp.'.$ext;//アップロードされるファイル名
 			} else{//拡張子が一致しなかったら
-				safe_unlink($pchtmp);
-				error("アニメファイルをアップしてください。");
+				error("アニメファイルをアップしてください。",$pchtmp);
 			}
 
 			if(move_uploaded_file($pchtmp, $pchup)){//アップロード成功なら続行
@@ -1366,23 +1367,20 @@ function paintform(){
 						if($line==="4e454f"){
 							$useneo=true;
 						} else{//NEOのpchでなければ
-							unlink($pchup);
-							error("NEOのPCHではありません。");
+							error("NEOのPCHではありません。",$pchup);
 						}
 					} elseif($ext==="spch"){
 						$line = substr($line,0,24);
 						if($line==="6c617965725f636f756e743d"||$line==="000d0a"){
 							$useneo=false;
 						}else{//しぃぺのspchでなければ
-							unlink($pchup);
-							error("しぃペインターのSPCHではありません。");
+							error("しぃペインターのSPCHではありません。",$pchup);
 						}
 					}
 					fclose($fp);
 					$dat['pchfile'] = $pchup;
 				} else{//mime_content_typeが違ったら
-					unlink($pchup);
-					error("アニメファイルをアップしてください。");
+					error("アニメファイルをアップしてください。",$pchup);
 				}
 			}
 		}
@@ -1529,7 +1527,7 @@ function paintform(){
 	}
 	$dat['dynp']=implode('',$arr_dynp);
 	$dat['useneo'] = $useneo; //NEOを使う
-	$usercode.='&amp;stime='.time();
+	$usercode.='&amp;stime='.time().$resto;
 	//差し換え時の認識コード追加
 	if($type==='rep'){
 		$time=time();
@@ -1557,16 +1555,13 @@ function paintcom(){
 
 	if(USE_RESUB && $resto) {
 		$lines = file(LOGFILE);
-		$flag = FALSE;
 		foreach($lines as $line){
 			list($cno,,,,$sub,,,,,,,,,,) = explode(",", charconvert($line));
 			if($cno == $resto){
 				$dat['sub'] = 'Re: '.$sub;
-				$flag = TRUE;
 				break;
 			}
 		}
-		if(!$flag) $resto=''; //スレが削除されていた場合、新規投稿
 	}
 
 	//テンポラリ画像リスト作成
@@ -2175,23 +2170,21 @@ function create_formatted_text_from_post ($com,$name,$email,$url,$sub){
 
 	$email = strip_tags($email);
 	$email = newstring($email); 
-	$email = preg_replace("/[\r\n]/","",$email);
+	$email = str_replace(["\r\n","\n","\r"],"",$email);
 	$sub = newstring($sub);
-	$sub = preg_replace("/[\r\n]/","",$sub);
+	$sub = str_replace(["\r\n","\n","\r"],"",$sub);
 	$url = newstring($url);
 	$url = preg_replace("/\s/u","",$url);//空白と改行を消す
 	$com = newcomment($com);
 
-	// 改行文字の統一。
-	$com = str_replace("\r\n", "\n", $com);
-	$com = str_replace("\r", "\n", $com);
+	// 改行文字の統一
+	$com = str_replace(["\r\n","\r"], "\n", $com);
 	// 連続する空行を一行
-	$com = preg_replace("#\n(\s*\n){3,}#u","\n",$com);
+	$com = preg_replace("/(\s*\n){4,}/u","\n",$com);
 	$com = nl2br($com);		//改行文字の前に<br>を代入する
 	$com = str_replace("\n", "", $com);	//\nを文字列から消す
-
 	$name = str_replace("◆", "◇", $name);
-	$name = preg_replace("/[\r\n]/","",$name);
+	$name = str_replace(["\r\n","\n","\r"],"",$name);
 	$name = newstring($name);
 	$formatted_text = [
 		'com' => $com,
