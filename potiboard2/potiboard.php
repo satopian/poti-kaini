@@ -42,8 +42,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.19.0');
-define('POTI_VERLOT' , 'v2.19.0 lot.201110');
+define('POTI_VER' , 'v2.19.1');
+define('POTI_VERLOT' , 'v2.19.1 lot.201112');
 
 if (($phpver = phpversion()) < "5.5.0") {
 	die("本プログラムの動作には PHPバージョン 5.5.0 以上が必要です。<br>\n（現在のPHPバージョン：{$phpver}）");
@@ -441,7 +441,7 @@ function updatelog(){
 
 			$res = create_res($line[$j], ['pch' => 1]);
 
-			$res['disp_resform'] = check_disp_resform($res); // ミニレスフォームの表示有無
+			$res['disp_resform'] = check_elapsed_days($res); // ミニレスフォームの表示有無
 
 			// ミニフォーム用
 			$resub = USE_RESUB ? 'Re: ' . $res['sub'] : '';
@@ -583,7 +583,7 @@ function res($resno = 0){
 
 	$res = create_res($_line, ['pch' => 1]);
 
-	if(!check_disp_resform($res)){//レスフォームの表示有無
+	if(!check_elapsed_days($res)){//レスフォームの表示有無
 		$dat['form'] = false;//フォームを閉じる
 		$dat['paintform'] = false;
 	}
@@ -822,10 +822,24 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 	if(!$buf){error(MSG019,$dest);}
 	$buf = charconvert($buf);
 	$line = explode("\n", trim($buf));
-	foreach($line as $i => $value){//$i必要
-		if($value!==""){//190624
-			list($_no,)=explode(",", rtrim($value));	//逆変換テーブル作成
-			$lineindex[$_no]=$i;
+
+	$lineindex=get_lineindex($line);//逆変換テーブル作成
+
+	if($resto && !isset($line[$lineindex[$resto]])){//レス先のログが存在しない時
+		if($pictmp==2){//お絵かきは
+			$resto = '';//新規投稿
+		}else{
+			error(MSG025,$dest);//テキストはエラー
+		}
+	}
+	if($resto && isset($line[$lineindex[$resto]])){
+		list(,,,,,,,,,,,,$res['time'],) = explode(",", $line[$lineindex[$resto]]);
+		if(!check_elapsed_days($res)){//フォームが閉じられていたら
+			if($pictmp==2){//お絵かきは
+				$resto = '';//新規投稿
+			}else{
+				error(MSG001,$dest);//テキストはエラー
+			}
 		}
 	}
 
@@ -2459,19 +2473,21 @@ function getId ($userip, $time) {
 	return substr(crypt(md5($userip.ID_SEED.date("Ymd", $time)),'id'),-8);
 }
 
-// レスフォームを表示するかどうか
-function check_disp_resform ($res) {
+// 古いスレッドへの投稿を許可するかどうか
+function check_elapsed_days ($res) {
 	return ELAPSED_DAYS //古いスレッドのフォームを閉じる日数が設定されていたら
-		? ((time() - (substr($res['time'], -13, -3))) <= ( ELAPSED_DAYS * 86400)) // 指定日数以内なら表示
-		: true; // フォームを閉じる日数が未設定なら表示
+		? ((time() - (substr($res['time'], -13, -3))) <= ( ELAPSED_DAYS * 86400)) // 指定日数以内なら許可
+		: true; // フォームを閉じる日数が未設定なら許可
 }
 
 //逆変換テーブル作成
 function get_lineindex ($line){
 	$lineindex = [];
 	foreach($line as $i =>$value){
-		list($no,) = explode(",", $value);
-		$lineindex[$no] = $i; // 値にkey keyに記事no
+		if($value !==''){
+			list($no,) = explode(",", $value);
+			$lineindex[$no] = $i; // 値にkey keyに記事no
+		}
 	}
 	return $lineindex;
 }
