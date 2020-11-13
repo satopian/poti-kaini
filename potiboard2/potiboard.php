@@ -829,7 +829,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 		if($pictmp==2){//お絵かきは
 			$resto = '';//新規投稿
 		}else{
-			error(MSG025,$dest);//テキストはエラー
+			error(MSG025,$dest);
 		}
 	}
 	if($resto && isset($line[$lineindex[$resto]])){
@@ -838,7 +838,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 			if($pictmp==2){//お絵かきは
 				$resto = '';//新規投稿
 			}else{
-				error(MSG001,$dest);//テキストはエラー
+				error(MSG001,$dest);
 			}
 		}
 	}
