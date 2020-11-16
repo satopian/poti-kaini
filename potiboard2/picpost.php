@@ -1,6 +1,6 @@
 <?php
 //----------------------------------------------------------------------
-// picpost.php lot.200828  by SakaQ >> http://www.punyu.net/php/
+// picpost.php lot.201116  by SakaQ >> http://www.punyu.net/php/
 // & sakots >> https://poti-k.info/
 //
 // しぃからPOSTされたお絵かき画像をTEMPに保存
@@ -8,7 +8,8 @@
 // このスクリプトはPaintBBS（藍珠CGI）のPNG保存ルーチンを参考に
 // PHP用に作成したものです。
 //----------------------------------------------------------------------
-// 2020/11/10 レス先の記録に対応。拡張ヘッダの取得を可変変数から連想配列に変更。
+// 2020/11/16 lot.201110の投稿完了時間が記録されないバグを修正。
+// 2020/11/10 レス先の記録に対応。拡張ヘッダの値の取得を可変変数から連想配列に変更。
 // 2020/08/28 描画時間の記録に対応
 // 2020/05/25 投稿容量制限の設定項目を追加 従来はconfigのMAX_KB
 // 2020/02/25 flock()修正タイムゾーンを'Asia/Tokyo'に
@@ -206,7 +207,6 @@ if($sendheader){
 	$usercode = isset($u['usercode']) ? $u['usercode'] : '';
 	$repcode = isset($u['repcode']) ? $u['repcode'] : '';
 	$stime = isset($u['stime']) ? $u['stime'] : '';
-	$time = isset($u['time']) ? $u['time'] : '';
 	$resto = isset($u['resto']) ? $u['resto'] : '';
 	//usercode 差し換え認識コード 描画開始 完了時間 を追加
 	$userdata .= "\t$usercode\t$repcode\t$stime\t$time\t$resto";
