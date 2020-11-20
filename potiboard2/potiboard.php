@@ -42,8 +42,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.19.2');
-define('POTI_VERLOT' , 'v2.19.2 lot.201117');
+define('POTI_VER' , 'v2.19.3');
+define('POTI_VERLOT' , 'v2.19.3 lot.201120');
 
 if (($phpver = phpversion()) < "5.5.0") {
 	die("本プログラムの動作には PHPバージョン 5.5.0 以上が必要です。<br>\n（現在のPHPバージョン：{$phpver}）");
@@ -1400,20 +1400,6 @@ function paintform(){
 		}
 	}
 	//pchファイルアップロードペイントここまで
-
-	if($picw < 300) $picw = 300;
-	if($pich < 300) $pich = 300;
-	if($picw > PMAX_W) $picw = PMAX_W;
-	if($pich > PMAX_H) $pich = PMAX_H;
-	if(!$useneo && $shi){
-	$w = $picw + 510;//しぃぺの時の幅
-	$h = $pich + 120;//しぃぺの時の高さ
-	} else{
-		$w = $picw + 150;//PaintBBSの時の幅
-		$h = $pich + 172;//PaintBBSの時の高さ
-	}
-	if($h < 560){$h = 560;}//共通の最低高
-
 	$dat['paint_mode'] = true;
 
 	//ピンチイン
@@ -1434,14 +1420,14 @@ function paintform(){
 		$dat['type'] = $type;
 		$dat['pwd'] = $pwd;
 		$dat['ext'] = $ext;
-		if(is_file(PCH_DIR.$pch.'.pch')){
-			$dat['applet'] = false;
-		}elseif(is_file(PCH_DIR.$pch.'.spch')){
-			$dat['applet'] = true;
-			$dat['usepbbs'] = false;
-		}elseif(is_file(IMG_DIR.$pch.$ext)){
+		if(is_file(IMG_DIR.$pch.$ext)){
 			$dat['applet'] = true;
 			$dat['usepbbs'] = true;
+			list($picw,$pich)=getimagesize(IMG_DIR.$pch.$ext);//キャンバスサイズ
+		}elseif(is_file(PCH_DIR.$pch.'.pch')){
+			$dat['applet'] = false;
+		}elseif(is_file(PCH_DIR.$pch.'.spch')){
+			$dat['usepbbs'] = false;
 		}
 		if((C_SECURITY_CLICK || C_SECURITY_TIMER) && SECURITY_URL){
 			$dat['security'] = true;
@@ -1456,6 +1442,20 @@ function paintform(){
 		}
 		$dat['newpaint'] = true;
 	}
+
+	if($picw < 300) $picw = 300;
+	if($pich < 300) $pich = 300;
+	if($picw > PMAX_W) $picw = PMAX_W;
+	if($pich > PMAX_H) $pich = PMAX_H;
+	if(!$useneo && $shi){
+	$w = $picw + 510;//しぃぺの時の幅
+	$h = $pich + 120;//しぃぺの時の高さ
+	} else{
+		$w = $picw + 150;//PaintBBSの時の幅
+		$h = $pich + 172;//PaintBBSの時の高さ
+	}
+	if($h < 560){$h = 560;}//共通の最低高
+
 	$dat['security_url'] = SECURITY_URL;
 
 	$savetype = filter_input(INPUT_POST, 'savetype'); // JPEG or PNG or AUTO or それ以外 が来ることを想定
