@@ -42,8 +42,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.19.3');
-define('POTI_VERLOT' , 'v2.19.3 lot.201120');
+define('POTI_VER' , 'v2.19.5');
+define('POTI_VERLOT' , 'v2.19.5 lot.201121');
 
 if (($phpver = phpversion()) < "5.5.0") {
 	die("本プログラムの動作には PHPバージョン 5.5.0 以上が必要です。<br>\n（現在のPHPバージョン：{$phpver}）");
@@ -1424,7 +1424,8 @@ function paintform(){
 			$dat['applet'] = true;
 			$dat['usepbbs'] = true;
 			list($picw,$pich)=getimagesize(IMG_DIR.$pch.$ext);//キャンバスサイズ
-		}elseif(is_file(PCH_DIR.$pch.'.pch')){
+		}
+		if(is_file(PCH_DIR.$pch.'.pch')){
 			$dat['applet'] = false;
 		}elseif(is_file(PCH_DIR.$pch.'.spch')){
 			$dat['usepbbs'] = false;
