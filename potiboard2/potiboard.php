@@ -1425,14 +1425,16 @@ function paintform(){
 			$dat['usepbbs'] = true;
 			list($picw,$pich)=getimagesize(IMG_DIR.$pch.$ext);//キャンバスサイズ
 		}
-		if(($ctype=='pch') && is_file(PCH_DIR.$pch.'.pch')){
+		if(($ctype=='pch') && is_file(PCH_DIR.$pch.'.pch')){//動画から続き
 			$fp = fopen(PCH_DIR.$pch.'.pch', "rb");
 			$useneo = (fread($fp,3)==="NEO"); //先頭3byteを見る
 			fclose($fp);
+			$anime=true;
 			$dat['applet'] = false;
 		}elseif(($ctype=='pch') && is_file(PCH_DIR.$pch.'.spch')){
 			$dat['usepbbs'] = false;
 			$useneo=false;
+			$anime=true;
 		}
 		if((C_SECURITY_CLICK || C_SECURITY_TIMER) && SECURITY_URL){
 			$dat['security'] = true;
@@ -1528,7 +1530,7 @@ function paintform(){
 	$resto = ($resto) ? '&amp;resto='.$resto : '';
 	$dat['mode'] = 'piccom'.$resto;
 	$dat['animeform'] = true;
-	$dat['anime'] = ($anime) ? true : false;
+	$dat['anime'] = $anime ? true : false;
 	if($ctype=='pch'){
 		if ($_pch_ext = check_pch_ext(__DIR__.'/'.PCH_DIR.$pch)) {
 			$dat['pchfile'] = './'.PCH_DIR.$pch.$_pch_ext;
