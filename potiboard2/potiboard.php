@@ -1425,10 +1425,14 @@ function paintform(){
 			$dat['usepbbs'] = true;
 			list($picw,$pich)=getimagesize(IMG_DIR.$pch.$ext);//キャンバスサイズ
 		}
-		if(is_file(PCH_DIR.$pch.'.pch')){
+		if(($ctype=='pch') && is_file(PCH_DIR.$pch.'.pch')){
+			$fp = fopen(PCH_DIR.$pch.'.pch', "rb");
+			$useneo = (fread($fp,3)==="NEO"); //先頭3byteを見る
+			fclose($fp);
 			$dat['applet'] = false;
-		}elseif(is_file(PCH_DIR.$pch.'.spch')){
+		}elseif(($ctype=='pch') && is_file(PCH_DIR.$pch.'.spch')){
 			$dat['usepbbs'] = false;
+			$useneo=false;
 		}
 		if((C_SECURITY_CLICK || C_SECURITY_TIMER) && SECURITY_URL){
 			$dat['security'] = true;
