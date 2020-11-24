@@ -43,7 +43,7 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 //バージョン
 define('POTI_VER' , 'v2.19.5');
-define('POTI_VERLOT' , 'v2.19.5 lot.201121');
+define('POTI_VERLOT' , 'v2.19.5 lot.201123');
 
 if (($phpver = phpversion()) < "5.5.0") {
 	die("本プログラムの動作には PHPバージョン 5.5.0 以上が必要です。<br>\n（現在のPHPバージョン：{$phpver}）");
@@ -80,7 +80,7 @@ $pwdc = filter_input(INPUT_COOKIE, 'pwdc');
 $usercode = filter_input(INPUT_COOKIE, 'usercode');//nullならuser-codeを発行
 
 //設定の読み込み
-if ($err = check_file('config.php')) {
+if ($err = check_file(__DIR__.'/config.php')) {
 	error($err);
 }
 require(__DIR__.'/config.php');
@@ -101,13 +101,10 @@ $path = realpath("./").'/'.IMG_DIR;
 $temppath = realpath("./").'/'.TEMP_DIR;
 
 //サムネイルfunction
-if((THUMB_SELECT==0 && gd_check()) || THUMB_SELECT==1){
-	require(__DIR__.'/thumbnail_gd.php');
-} else{
-	function thumb(){
-		return;
-	}
+if ($err = check_file(__DIR__.'/thumbnail_gd.php')) {
+	error($err);
 }
+require(__DIR__.'/thumbnail_gd.php');
 
 //ユーザー削除権限 (0:不可 1:treeのみ許可 2:treeと画像のみ許可 3:tree,log,画像全て許可)
 //※treeのみを消して後に残ったlogは管理者のみ削除可能
@@ -282,9 +279,8 @@ function get_gd_ver(){
 	$length = strlen($phpinfo)-1;
 	$phpinfo=substr($phpinfo,$length);
 	return $phpinfo;
-	} else{
+	} 
 	return false;
-	}
 }
 
 //ユーザーip
