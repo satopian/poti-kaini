@@ -1954,8 +1954,7 @@ function replace(){
 	//描画時間を$userdataをもとに計算
 	$psec='';
 	$_ptime = '';
-	if($starttime && DSP_PAINTTIME){
-		$psec=$postedtime-$starttime;
+	if($psec=$postedtime-$starttime){
 		$_ptime = calcPtime($psec);
 	}
 
@@ -2035,7 +2034,7 @@ function replace(){
 				$now .= " ID:" . getId($userip, $time);
 			}
 			//描画時間追加
-			if($eptime){
+			if($eptime && $_ptime){
 				$ptime = is_numeric($eptime) ? $eptime+$psec : $eptime.'+'.$_ptime;
 			}
 			//カンマを変換
