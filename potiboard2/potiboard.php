@@ -42,8 +42,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.19.5');
-define('POTI_VERLOT' , 'v2.19.5 lot.201123');
+define('POTI_VER' , 'v2.20.0');
+define('POTI_VERLOT' , 'v2.20.0 lot.201123');
 
 if (($phpver = phpversion()) < "5.5.0") {
 	die("本プログラムの動作には PHPバージョン 5.5.0 以上が必要です。<br>\n（現在のPHPバージョン：{$phpver}）");
@@ -159,6 +159,10 @@ if(!defined('DO_NOT_CHANGE_POSTS_TIME')){//config.phpで未定義なら0
 //画像なしのチェックボックスを使用する する:1 しない:0 
 if(!defined('USE_CHECK_NO_FILE')){//config.phpで未定義なら1
 	define('USE_CHECK_NO_FILE', '1');
+}
+//描画時間を合計表示に する:1 しない:0 
+if(!defined('TOTAL_PAINTTIME')){//config.phpで未定義なら1
+	define('TOTAL_PAINTTIME', '1');
 }
 
 /*-----------Main-------------*/
@@ -725,7 +729,8 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 		$ptime='';
 		//描画時間を$userdataをもとに計算
 		if($starttime && DSP_PAINTTIME){
-			$ptime = calcPtime($starttime,$postedtime);
+			$psec=$postedtime-$starttime;
+			$ptime = TOTAL_PAINTTIME ? $psec : calcPtime($psec);
 		}
 		$uresto=filter_var($uresto,FILTER_VALIDATE_INT);
 		$resto = $uresto ? $uresto : $resto;//変数上書き$userdataのレス先を優先する
@@ -1567,7 +1572,7 @@ function paintcom(){
 	$stime = filter_input(INPUT_GET, 'stime',FILTER_VALIDATE_INT);
 	//描画時間
 	if($stime && DSP_PAINTTIME){
-		$dat['ptime'] = calcPtime($stime);
+		$dat['ptime'] = calcPtime(time()-$stime);
 	}
 
 	if(USE_RESUB && $resto) {
@@ -1714,6 +1719,7 @@ function incontinue(){
 	$dat['pch'] = $ctim;
 	$dat['ext'] = $cext;
 	//描画時間
+	$cptime=is_numeric($cptime) ? calcPtime($cptime) : $cptime; 
 	if(DSP_PAINTTIME) $dat['painttime'] = $cptime;
 	if(is_file(PCH_DIR.$ctim.'.pch')){
 		$dat['applet'] = false;
@@ -1946,9 +1952,11 @@ function replace(){
 	$now = now_date($time);//日付取得
 	$now .= UPDATE_MARK;
 	//描画時間を$userdataをもとに計算
-	$ptime='';
+	$psec='';
+	$_ptime = '';
 	if($starttime && DSP_PAINTTIME){
-		$ptime = calcPtime($starttime,$postedtime);
+		$psec=$postedtime-$starttime;
+		$_ptime = calcPtime($psec);
 	}
 
 	//ログ読み込み
@@ -2027,7 +2035,9 @@ function replace(){
 				$now .= " ID:" . getId($userip, $time);
 			}
 			//描画時間追加
-			if($eptime) $ptime=$eptime.'+'.$ptime;
+			if($eptime){
+				$ptime = is_numeric($eptime) ? $eptime+$psec : $eptime.'+'.$_ptime;
+			}
 			//カンマを変換
 			$now = str_replace(",", "&#44;", $now);
 			$ptime = str_replace(",", "&#44;", $ptime);
@@ -2258,10 +2268,7 @@ function getImgType ($img_type, $dest) {
  * @param $starttime
  * @return string
  */
-function calcPtime ($starttime,$postedtime='') {
-
-	$postedtime = $postedtime ? $postedtime : time();
-	$psec = $postedtime - $starttime;
+function calcPtime ($psec) {
 
 	$D = floor($psec / 86400);
 	$H = floor($psec % 86400 / 3600);
@@ -2395,6 +2402,7 @@ function create_res ($line, $options = []) {
 		$res['thumb'] = is_file(THUMB_DIR.$time.'s.jpg');
 		$res['imgsrc'] = $res['thumb'] ? THUMB_DIR.$time.'s.jpg' : $res['src'];
 		//描画時間
+		$ptime=is_numeric($ptime) ? calcPtime($ptime) : $ptime; 
 		$res['painttime'] = DSP_PAINTTIME ? $ptime : '';
 		//動画リンク
 		$res['pch'] = (isset($options['pch']) && USE_ANIME && check_pch_ext(PCH_DIR.$time)) ? $time.$ext : '';
