@@ -1,27 +1,28 @@
 # POTI-board改二
 
-<img width="300" alt="0z674" src="https://user-images.githubusercontent.com/31465648/83109430-5ebf0080-a0fc-11ea-8acc-87f2fbbd2070.PNG">
+![POTI-board改二](https://user-images.githubusercontent.com/31465648/83109430-5ebf0080-a0fc-11ea-8acc-87f2fbbd2070.PNG)
 
 phpお絵かき掲示板スクリプトPOTI-boardをさらに改良していくプロジェクトです。  
 php5.5～ 対応。
   
-<a href="https://github.com/funige/neo/">PaintBBS NEO</a>  
+[PaintBBS NEO](https://github.com/funige/neo/)
 ~~POTI-board改~~ POTI-board改は保守作業およびサポートを終了しました。
 
-## ！デジタルインク(windows Ink)の機能について！
+## ！デジタルインク(windows Ink)の機能について
 
 デジタルインク(Window Ink)がオンの状態でPaintBBS NEO / しぃペインターを操作すると、
 例えばペンを左から右に大きくスライドさせるとブラウザが前の画面に戻る、などの誤動作が発生する可能性が大きくあります。PaintBBS NEO / しぃペインターご利用の際はデジタルインク(Window Ink)をオフにお願いいたします。
 
-<img width="200" alt="0z676" src="https://user-images.githubusercontent.com/31465648/83109254-0c7ddf80-a0fc-11ea-9627-7b4afe5ae193.PNG">  
+![デジタルインク](https://user-images.githubusercontent.com/31465648/83109254-0c7ddf80-a0fc-11ea-9627-7b4afe5ae193.PNG)
 
 また、マウスジェスチャーの拡張機能とも競合する可能性があります。不具合を感じたらオフにしてみてください。
   
 ## 概要
-POTI-board改で使用しているテンプレートエンジン「htmltemplate.inc」は老朽化が進んでいる… 
+
+POTI-board改で使用しているテンプレートエンジン「htmltemplate.inc」は老朽化が進んでいる…
 ということでなんか新しいテンプレートエンジンはないか探したところ、
   
-<a href="http://skinny.sx68.net/">Skinny</a>  
+[Skinny](http://skinny.sx68.net/)
   
 見つけました！これに移植します！ → できました！
 
@@ -30,17 +31,20 @@ POTI-board改で使用しているテンプレートエンジン「htmltemplate.
 [POTI改公式サイト](https://poti-k.info/) をオープンしました。質問や動作確認にご利用ください。
 
 ## 使い方
-基本的に <a href="https://github.com/sakots/poti-kai/">POTI-board改</a> と同じですが、テーマ(スキン/テンプレート機能)を置くフォルダができました。  
+
+基本的に [POTI-board改](https://github.com/sakots/poti-kai/) と同じですが、テーマ(スキン/テンプレート機能)を置くフォルダができました。  
 config.phpの設定をし、アップロードしてpotiboard.phpのあるディレクトリにアクセスするだけです。  
 さとぴあさんの[詳しい記事](http://stp.sblo.jp/article/185357941.html)
 
 ## ちょっとした注意
+
 2020/07/23以降のバージョンにはindex.phpというファイルが同梱されています。  
 これは、potiboardの設置をより簡単にするためのものです。  
 念のため、potiboard.phpをindex.phpにリネームしてお使いの方は、上書きしないようお願いいたします。  
 また、新規設置される方はできるだけpotiboard.phpのリネームを行わないようにお願いいたします。
 
 ## 古いpotiboardから改二へのバージョンアップ
+
 ログの形式は同じですが、config.phpが若干違います。また、テーマ(テンプレート)の形式は全く違います。configを同じように設定して、対応したテーマをテーマフォルダに入れてpotiboard.php、config.php、テーマフォルダをアップロードすればOKのはずです。質問はPOTI改公式まで！！
 
 ## テーマ(テンプレート)機能について
@@ -55,6 +59,12 @@ config.phpの設定をし、アップロードしてpotiboard.phpのあるディ
 
 ## 履歴
 
+### [2020/11/25] v2.20.0 lot.201123
+
+- 続きを描いた時の描画時間を合計表示に
+  - 従来は1時間10分2秒+2分6秒のように+で描画時間をつないでいましたが、1時間12分8秒のような描画時間の合計になります。従来の表記も選択可能です。くわしくは[こちら](https://github.com/sakots/poti-kaini/pull/151)
+- 今回更新が必要なファイルは、`potiboard.php`、`thumbnail_gd.php`（できれば）、`config.php`（設定を変更したい場合のみ）です。
+
 ### [2020/11/22] v2.19.5 lot.201121
 
 - 動画から続きを描く時に動画ファイルをしらべて、元のアプレットで開くようにする処理を追加しました。
@@ -63,6 +73,7 @@ config.phpの設定をし、アップロードしてpotiboard.phpのあるディ
 ### [2020/11/21] v2.19.3 lot.201120
 
 - 続きを描く時にCookieのキャンバスサイズがセットされるバグを修正（by さとぴあ）
+
 ### [2020/11/17] v2.19.2 lot.201117
 
 - lot.201110（2.19.0～）の投稿完了時間が記録されないバグを修正。
@@ -109,7 +120,6 @@ config.phpの設定をし、アップロードしてpotiboard.phpのあるディ
 
 - 書き込み可能かどうかのチェックの必要がないファイルをチェックから除外。関数整理。（by さとぴあ）
 
-
 ### [2020/10/09] v2.18.3 lot.201008
 
 - 画像なしのチェックボックスによるチェックは面倒なので、その機能を使用しないオプションを追加(by さとぴあ)
@@ -124,7 +134,6 @@ config.phpの設定をし、アップロードしてpotiboard.phpのあるディ
 - config.php
   - ログ保存件数1000は少なすぎるので2000に増やした
 
-
 ### [2020/09/22] theme、NEO
 
 - 一度投稿ボタンを押すと2度目は無効になる、jQueryを使ったスクリプトをthemeに追加。
@@ -136,12 +145,13 @@ config.phpの設定をし、アップロードしてpotiboard.phpのあるディ
 - v2.18.1で、一旦開発の速度を落とすことにしました。バグ等の修正は行います。
 
 ### [2020/09/15] v2.18.1 lot.200915
+
 - potiboardphp search.php search.htmlに変更があります。
   - potiboard.php コード整理。行数を30行短縮。
   - search.php search.htmlの不具合の修正
   - ページ番号未入力の時にページ数が正しく認識されていなかったバグを修正。
   - 反復処理が入れ子になっていた箇所を修正。
- 
+
 ### [2020/09/10] v2.18.0 lot.200910
 
 - パレット切り替え機能でパレット名を任意に設定できるように(by さとぴあ)
@@ -287,7 +297,6 @@ config.phpの設定をし、アップロードしてpotiboard.phpのあるディ
 - ソースコード整理(by きつねこ)
   - コードのスリム化
   - 動画表示時には `$shi` がなくても動画ファイルの存在で種類をチェックするよう修正
-
 
 ### [2020/08/10] v2.10.2 lot.200810
 
@@ -470,9 +479,6 @@ config.phpの設定をし、アップロードしてpotiboard.phpのあるディ
 
 - index.php(初期動作用)を同梱
   - 設置がより簡単になりました。
-
-### [2020/07/23]
-
 - テーマ更新
 
 ### [2020/07/22]
@@ -552,7 +558,7 @@ config.phpの設定をし、アップロードしてpotiboard.phpのあるディ
 
 - 動画表示モード時の修正
 
-### [2020/06/09] 
+### [2020/06/09]
 
 - neo更新
   - に伴ってテーマ更新
@@ -616,9 +622,6 @@ config.phpの設定をし、アップロードしてpotiboard.phpのあるディ
 ### [2020/05/22] v2.6.0 lot.200522a
 
 - `<SIIHELP>` 廃止
-
-### [2020/05/22]
-
 - config整理
 
 ### [2020/05/22] v2.5.2 lot.200522
@@ -645,9 +648,6 @@ config.phpの設定をし、アップロードしてpotiboard.phpのあるディ
 
 - デフォルトスキン更新
 - configに説明追加
-
-### [2020/05/19]
-
 - noticemailをpotiboard2ディレクトリから分離
 
 ### [2020/05/19] v2.4.0 lot.200519
@@ -689,7 +689,7 @@ config.phpの設定をし、アップロードしてpotiboard.phpのあるディ
 
 - デフォルトスキン修正
 
-### [2020/05/17] 
+### [2020/05/17]
 
 - skinディレクトリの.htaccess設定変更
 - おまけスキンnee2更新
