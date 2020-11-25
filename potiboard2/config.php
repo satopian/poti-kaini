@@ -1,6 +1,6 @@
 <?php
 /*
-  * POTI-board改二 v2.18.3 lot.201008
+  * POTI-board改二 v2.20.0 lot.201123
   * by sakots >> https://poti-k.info/
   *
   * POTI-board改二の設定ファイルです。
@@ -368,9 +368,6 @@ $addinfo='';
 //サムネイルを作成する する:1 しない:0
 define('USE_THUMB', '1');
 
-//サムネイルルーチンの指定 自動判別:0 GD版:1 
-define('THUMB_SELECT', '0');
-
 //サムネイルの品質  0(品質は最低、サイズは小)～100(品質は最高、サイズは大)の範囲内
 define('THUMB_Q', '92');
 
@@ -407,6 +404,14 @@ define('PDEF_H', '300');	//高さ
 
 //描画時間の表示 する:1 しない:0
 define('DSP_PAINTTIME', '1');
+
+//描画時間を合計表示に する:1 しない:0 
+define('TOTAL_PAINTTIME', '1');
+//描画時間:8分12秒+18分36秒
+//のように+でつなぎたい時は 
+//しない:0
+//描画時間:26分48秒のように描画時間の合計を表示する時は
+//する:1
 
 //パレットデータファイル名
 define('PALETTEFILE', 'palette.txt');

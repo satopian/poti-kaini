@@ -1,7 +1,7 @@
 <?php
 //サムネイル作成
 function thumb($path,$tim,$ext,$max_w,$max_h){
-	if(!function_exists("ImageCreate")||!function_exists("ImageCreateFromJPEG"))return;
+	if(!gd_check()||!function_exists("ImageCreate")||!function_exists("ImageCreateFromJPEG"))return;
 	$fname=$path.$tim.$ext;
 	$size = GetImageSize($fname); // 画像の幅と高さとタイプを取得
 	// リサイズ
