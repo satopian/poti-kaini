@@ -2035,7 +2035,7 @@ function replace(){
 			}
 			//描画時間追加
 			if($eptime && $_ptime){
-				$ptime = is_numeric($eptime) ? $eptime+$psec : $eptime.'+'.$_ptime;
+				$ptime = is_numeric($eptime) ? ($eptime+$psec) : $eptime.'+'.$_ptime;
 			}
 			//カンマを変換
 			$now = str_replace(",", "&#44;", $now);
