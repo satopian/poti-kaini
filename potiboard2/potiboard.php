@@ -42,8 +42,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.20.0');
-define('POTI_VERLOT' , 'v2.20.0 lot.201123');
+define('POTI_VER' , 'v2.20.1');
+define('POTI_VERLOT' , 'v2.20.1 lot.201127');
 
 if (($phpver = phpversion()) < "5.5.0") {
 	die("本プログラムの動作には PHPバージョン 5.5.0 以上が必要です。<br>\n（現在のPHPバージョン：{$phpver}）");
@@ -1972,7 +1972,7 @@ function replace(){
 	$pwd=openssl_decrypt($pwd,CRYPT_METHOD, CRYPT_PASS, true, CRYPT_IV);//復号化
 
 	foreach($line as $i => $value){
-		list($eno,$enow,$name,$email,$sub,$com,$url,$ehost,$epwd,$ext,$W,$H,$etim,,$eptime,$fcolor) = explode(",", rtrim($value));
+		list($eno,$enow,$name,$email,$sub,$com,$url,$ehost,$epwd,$ext,$W,$H,$etim,,$ptime,$fcolor) = explode(",", rtrim($value));
 	//画像差し替えに管理パスは使っていない
 		if($eno == $no && check_password($pwd, $epwd)){
 			$upfile = $temppath.$file_name.$imgext;
@@ -2034,8 +2034,8 @@ function replace(){
 				$now .= " ID:" . getId($userip, $time);
 			}
 			//描画時間追加
-			if($eptime && $_ptime){
-				$ptime = is_numeric($eptime) ? ($eptime+$psec) : $eptime.'+'.$_ptime;
+			if($ptime && $_ptime){
+				$ptime = is_numeric($ptime) ? ($ptime+$psec) : $ptime.'+'.$_ptime;
 			}
 			//カンマを変換
 			$now = str_replace(",", "&#44;", $now);
