@@ -42,8 +42,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.20.1');
-define('POTI_VERLOT' , 'v2.20.1 lot.201127');
+define('POTI_VER' , 'v2.20.2');
+define('POTI_VERLOT' , 'v2.20.2 lot.201130');
 
 if (($phpver = phpversion()) < "5.5.0") {
 	die("本プログラムの動作には PHPバージョン 5.5.0 以上が必要です。<br>\n（現在のPHPバージョン：{$phpver}）");
@@ -1357,46 +1357,34 @@ function paintform(){
 		
 		if($pchfilename!==""){//空文字でなければ続行
 			$pchtmp=$_FILES['pch_upload']['tmp_name'];
-			$pch_upload_error = $_FILES["pch_upload"]["error"];
-			if($pch_upload_error==1||$pch_upload_error==2){//容量オーバー
+			if(in_array($_FILES['pch_upload']['error'],[1,2])){//容量オーバー
 				error(MSG034);
 			} 
-			//拡張子チェック
 			$tim = time().substr(microtime(),2,3);
 			$ext=pathinfo($pchfilename, PATHINFO_EXTENSION);
 			$ext=strtolower($ext);//すべて小文字に
-			
-			if ($ext === 'pch' || $ext === 'spch') {
-				$pchup = TEMP_DIR.'pchup-'.$tim.'-tmp.'.$ext;//アップロードされるファイル名
-			} else{//拡張子が一致しなかったら
+			//拡張子チェック
+			if ($ext !== 'pch' && $ext !== 'spch') {
 				error("アニメファイルをアップしてください。",$pchtmp);
 			}
+			$pchup = TEMP_DIR.'pchup-'.$tim.'-tmp.'.$ext;//アップロードされるファイル名
 
 			if(move_uploaded_file($pchtmp, $pchup)){//アップロード成功なら続行
+
 				$pchup=TEMP_DIR.basename($pchup);//ファイルを開くディレクトリを固定
-				if(mime_content_type($pchup)==="application/octet-stream"){//mimetypeが正しければ続行
-					$fp = fopen("$pchup", "rb");
-					$line = bin2hex(fgets($fp ,4096)) ;
-					if($ext==="pch"){
-						$line = substr($line,0,6);
-						if($line==="4e454f"){
-							$useneo=true;
-						} else{//NEOのpchでなければ
-							error("NEOのPCHではありません。",$pchup);
-						}
-					} elseif($ext==="spch"){
-						$line = substr($line,0,24);
-						if($line==="6c617965725f636f756e743d"||$line==="000d0a"){
-							$useneo=false;
-						}else{//しぃぺのspchでなければ
-							error("しぃペインターのSPCHではありません。",$pchup);
-						}
-					}
-					fclose($fp);
-					$dat['pchfile'] = $pchup;
-				} else{//mime_content_typeが違ったら
-					error("アニメファイルをアップしてください。",$pchup);
+				if(!in_array(mime_content_type($pchup),["application/octet-stream","application/gzip"])){
+					error("アニメファイルをアップしてください",$pchup);
 				}
+				if($ext==="pch"){
+					$shi=0;
+					$fp = fopen("$pchup", "rb");
+					$useneo=(fread($fp,3)==="NEO");
+					fclose($fp);
+				} elseif($ext==="spch"){
+					$shi=$shi ? $shi : 1;
+					$useneo=false;
+				}
+				$dat['pchfile'] = $pchup;
 			}
 		}
 	}
