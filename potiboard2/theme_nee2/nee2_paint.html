@@ -15,12 +15,10 @@
 		<link rel="stylesheet" href="neo.css?<% echo(stime) %>" type="text/css">
 		<script src="neo.js?<% echo(stime) %>" charset="UTF-8"></script>
 		<% /def %>
-		<% def(paintbbs) %>
 		<% def(pch_mode) %>
 		<link rel="stylesheet" href="neo.css?<% echo(stime) %>" type="text/css" />
 		<script src="neo.js?<% echo(stime) %>" charset="UTF-8"></script>
 		<% /def %>
-		<% elsedef %>
 		<!-- Javaが使えるかどうか判定 使えなければcheerpJをロード -->
 		<script>
 		function cheerpJLoad() {
@@ -35,7 +33,6 @@
 		}
 		window.addEventListener("load", function() { cheerpJLoad(); }, false);
 		</script>
-		<% /def %>
 		<link rel="stylesheet" href="<% echo(skindir) %>nee2_main.css" type="text/css">
 		<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
 		<title><% echo(title) %></title>
@@ -132,12 +129,12 @@
 			</noscript>
 			<section id="appstage">
 				<div class="app">
+					<% def(paintbbs) %>
 					<% def(useneo) %>
 					<applet-dummy code="pbbs.PaintBBS.class" archive="./PaintBBS.jar" name="paintbbs" width="<% echo(w) %>" height="<% echo(h) %>" mayscript>
 					<% elsedef %>
-					<% if(applet,!=,true) %>
 					<applet code="pbbs.PaintBBS.class" archive="./PaintBBS.jar" name="paintbbs" width="<% echo(w) %>" height="<% echo(h) %>" mayscript>
-					<% /if %>
+					<% /def %>
 					<% /def %>
 					<!--(========== しぃペインター個別設定 ==========)-->
 					<% def(normal) %>
@@ -192,14 +189,6 @@
 						<param name="neo_confirm_unload" value="true">
 					</applet-dummy>
 					<% elsedef %>
-					<% if(applet,!=,true) %>
-					</applet>
-					<% /if %>
-					<% /def %>
-					<% def(normal) %>
-					</applet>
-					<% /def %>
-					<% def(pro) %>
 					</applet>
 					<% /def %>
 				</div>
@@ -418,7 +407,11 @@
 				<div class="app">
 					<div style="width:<% echo(w) %>px; height:<% echo(h) %>px">
 					<% def(paintbbs) %>
+					<% def(type_neo) %>
 					<applet-dummy code="pch.PCHViewer.class" archive="PCHViewer.jar,PaintBBS.jar" name="pch" width="<% echo(w) %>" height="<% echo(h) %>" mayscript>
+						<% elsedef %>
+					<applet code="pch.PCHViewer.class" archive="PCHViewer.jar,PaintBBS.jar" name="pch" width="<% echo(w) %>" height="<% echo(h) %>" mayscript>
+					<% /def %>
 					<% /def %>
 					<% def(normal) %>
 					<applet name="pch" code="pch2.PCHViewer.class" archive="PCHViewer.jar,spainter_all.jar" codebase="./" width="<% echo(w) %>" height="<% echo(h) %>">
@@ -434,13 +427,12 @@
 						<param name="speed" value="<% echo(speed) %>">
 						<param name="buffer_progress" value="false">
 						<param name="buffer_canvas" value="false">
-					<% def(paintbbs) %>
-					</applet-dummy>
-					<% /def %>
-					<% def(normal) %>
-					</applet>
-					<% /def %>
-					</div>
+						<% def(type_neo) %>
+						</applet-dummy>
+						<% elsedef %>
+						</applet>
+						<% /def %>
+						</div>
 					<p>
 						<a href="<% echo(pchfile) %>" target="_blank">Download</a> - Datasize : <% echo(datasize) %> byte
 					</p>
