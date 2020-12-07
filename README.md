@@ -59,6 +59,11 @@ config.phpの設定をし、アップロードしてpotiboard.phpのあるディ
 
 ## 履歴
 
+### [2020/12/07] v2.20.3 lot.201207
+
+- php8ではE_WARNINGレベルのエラーになるUndefined offsetを修正（by さとぴあ）
+- `palette.txt` せぴあ→セピア(ひらがなからカタカナへ)
+
 ### [2020/12/02] v2.20.2 lot.201130
 
 - 旧PaintBBSのPCHファイルの動画再生と続きを描くに対応
