@@ -5,14 +5,14 @@
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-　このスクリプトは「レッツPHP!」<http://php.loglog.jp/>の gazou.php を改造
-した、「ふたば★ちゃんねる」<http://www.2chan.net/>の futaba.php を、
+　このスクリプトは「レッツPHP!」 http://php.loglog.jp/ の gazou.php を改造
+した、「ふたば★ちゃんねる」 http://www.2chan.net/ の futaba.php を、
 さらにお絵かきもできるようにして、HTMLテンプレートでデザイン変更できる
-ように改造した「ぷにゅねっと」<http://www.punyu.net/php/>の
+ように改造した「ぷにゅねっと」 http://www.punyu.net/php/ の
 POTI-board v1.32 をさらにphp7に対応させて改造した
-POTI-board改<https://poti-k.info/>を発展させたものです。
+POTI-board改 https://poti-k.info/ を発展させたものです。
 
-　「Skinny」<http://skinny.sx68.net/>
+　「Skinny」 http://skinny.sx68.net/ 
 のおかげで、自由にデザインできるようになってます。
 
 　ちなみに、名前は　Punyu.net　Oekaki　Template　Image　の頭文字を取っ
@@ -105,14 +105,14 @@ potiboard.phpにアクセスするとsrcディレクトリ、thumbディレク�
   ＋--./tmp/       ディレクトリ
   ｜
 ＝＝＝以下のファイルはしぃちゃんのホームページ（Vector）より入手してください＝＝＝＝
-  ｜            <http://hp.vector.co.jp/authors/VA016309/>
+  ｜             http://hp.vector.co.jp/authors/VA016309/ 
   ｜
   ｜PaintBBS.jar     バイナリ ※PaintBBSを使用する場合
   ｜spainter_all.jar バイナリ ※しぃペインターを使用する場合
   ｜PCHViewer.jar    バイナリ ※しぃペインター対応版
   ｜
 ＝＝＝NEOを使用する場合以下をfunigeさんのところから入手してください＝＝＝＝
-  ｜           <https://github.com/funige/neo/>
+  ｜            https://github.com/funige/neo/ 
   ｜
   ｜neo.js
   ｜neo.css
@@ -126,7 +126,7 @@ potiboard.phpにアクセスするとsrcディレクトリ、thumbディレク�
 
 ■thanks!!
 
-　　【ぷにゅねっと<https://www.punyu.net/>SakaQさん】
+　　【ぷにゅねっと https://www.punyu.net/ SakaQさん】
 　POTI改二の親です。
 
 　　【さとぴあさん】
@@ -135,7 +135,7 @@ potiboard.phpにアクセスするとsrcディレクトリ、thumbディレク�
 
 以下SakaQさんのthanks
 
-　　【ちょむ工房<http://www.chomkoubou.com/>のTakeponG殿】
+　　【ちょむ工房 https://chomstudio.com/ のTakeponG殿】
 　picpost.cgi のPHP化ありがとうございます。これのおかげで開発する意欲が
 沸きました。
 
@@ -175,7 +175,7 @@ potiboard.phpにアクセスするとsrcディレクトリ、thumbディレク�
 　PaintBBS(test by v2.22_8)
 　しぃペインター(test by v1.071all)
 　PCH Viewer(test by v1.12)          (C)しぃちゃん「しぃ堂」
-　WCS 動的パレットコントロールセット (C)のらネコ「WonderCatStudio」<http://wondercatstudio.com/>
+　WCS 動的パレットコントロールセット (C)のらネコ「WonderCatStudio」 http://wondercatstudio.com/ 
 
 
 ■変更履歴はgithub参照

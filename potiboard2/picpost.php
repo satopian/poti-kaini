@@ -26,7 +26,7 @@
 // 2003/09/10 IPアドレス取得方法変更
 // 2003/09/09 PCHファイルに対応.投稿者情報の記録機能追加
 // 2003/09/01 PHP風(?)に整理
-// 2003/08/28 perl -> php 移植  by TakeponG >> http://www.chomkoubou.com/
+// 2003/08/28 perl -> php 移植  by TakeponG >> https://chomstudio.com/
 // 2003/07/11 perl版初公開
 
 //設定
@@ -208,7 +208,7 @@ if($sendheader){
 	$repcode = isset($u['repcode']) ? $u['repcode'] : '';
 	$stime = isset($u['stime']) ? $u['stime'] : '';
 	$resto = isset($u['resto']) ? $u['resto'] : '';
-	//usercode 差し換え認識コード 描画開始 完了時間 を追加
+	//usercode 差し換え認識コード 描画開始 完了時間 レス先 を追加
 	$userdata .= "\t$usercode\t$repcode\t$stime\t$time\t$resto";
 }
 $userdata .= "\n";
