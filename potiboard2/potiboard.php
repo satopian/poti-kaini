@@ -42,8 +42,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.20.3');
-define('POTI_VERLOT' , 'v2.20.3 lot.201207');
+define('POTI_VER' , 'v2.20.5');
+define('POTI_VERLOT' , 'v2.20.5 lot.201209');
 
 if (($phpver = phpversion()) < "5.5.0") {
 	die("本プログラムの動作には PHPバージョン 5.5.0 以上が必要です。<br>\n（現在のPHPバージョン：{$phpver}）");
@@ -2137,7 +2137,6 @@ function charconvert($str){
 /* NGワードがあれば拒絶 */
 function Reject_if_NGword_exists_in_the_post($com,$name,$email,$url,$sub){
 	global $badstring,$badname,$badstr_A,$badstr_B,$pwd,$ADMIN_PASS,$admin;
-	$dest='';
 	//チェックする項目から改行・スペース・タブを消す
 	$chk_com  = preg_replace("/\s/u", "", $com );
 	$chk_name = preg_replace("/\s/u", "", $name );
@@ -2147,29 +2146,29 @@ function Reject_if_NGword_exists_in_the_post($com,$name,$email,$url,$sub){
 	//本文に日本語がなければ拒絶
 	if (USE_JAPANESEFILTER) {
 		mb_regex_encoding("UTF-8");
-		if (strlen($com) > 0 && !preg_match("/[ぁ-んァ-ヶー一-龠]+/u",$chk_com)) error(MSG035,$dest);
+		if (strlen($com) > 0 && !preg_match("/[ぁ-んァ-ヶー一-龠]+/u",$chk_com)) error(MSG035);
 	}
 
 	//本文へのURLの書き込みを禁止
 	if(!($pwd===$ADMIN_PASS||$admin===$ADMIN_PASS)){//どちらも一致しなければ
-		if(DENY_COMMENTS_URL && preg_match('/:\/\/|\.co|\.ly|\.gl|\.net|\.org|\.cc|\.ru|\.su|\.ua|\.gd/i', $com)) error(MSG036,$dest);
+		if(DENY_COMMENTS_URL && preg_match('/:\/\/|\.co|\.ly|\.gl|\.net|\.org|\.cc|\.ru|\.su|\.ua|\.gd/i', $com)) error(MSG036);
 	}
 
 	// 使えない文字チェック
 	if (is_ngword($badstring, [$chk_com, $chk_sub, $chk_name, $chk_email])) {
-		error(MSG032,$dest);
+		error(MSG032);
 	}
 
 	// 使えない名前チェック
 	if (is_ngword($badname, $chk_name)) {
-		error(MSG037,$dest);
+		error(MSG037);
 	}
 
 	//指定文字列が2つあると拒絶
 	$bstr_A_find = is_ngword($badstr_A, [$chk_com, $chk_sub, $chk_name, $chk_email]);
 	$bstr_B_find = is_ngword($badstr_B, [$chk_com, $chk_sub, $chk_name, $chk_email]);
 	if($bstr_A_find && $bstr_B_find){
-		error(MSG032,$dest);
+		error(MSG032);
 	}
 	
 	//管理モードで使用できるタグを制限

@@ -1,6 +1,6 @@
 <?php
 /*
-  * POTI-board改二 v2.20.0 lot.201123
+  * POTI-board改二 v2.20.5 lot.201209
   * by sakots >> https://poti-k.info/
   *
   * POTI-board改二の設定ファイルです。
@@ -447,7 +447,7 @@ define('USE_CONTINUE', '1');
 
 //新規投稿でコンティニューする時にも削除キーが必要 必要:1 不要:0
 //不要:0 で新規投稿なら誰でも続きを描く事ができるようになります。
-define('CONTINUE_PASS', '1');
+define('CONTINUE_PASS', '0');
 
 /* ---------- picpost.php用設定 ---------- */
 //システムログファイル名
