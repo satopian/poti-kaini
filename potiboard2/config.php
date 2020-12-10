@@ -454,3 +454,5 @@ define('CONTINUE_PASS', '0');
 $syslog = "picpost.systemlog";
 //システムログ保存件数
 $syslogmax = '100';
+
+?>

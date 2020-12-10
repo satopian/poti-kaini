@@ -2495,3 +2495,5 @@ function check_password ($pwd, $epwd, $adminPass = false) {
 		|| $epwd === substr(md5($pwd), 2, 8)
 		|| ($adminPass ? ($adminPass === $ADMIN_PASS) : false); // 管理パスを許可する場合
 }
+
+?>
