@@ -66,4 +66,5 @@ function thumb($path,$tim,$ext,$max_w,$max_h){
 return $thumbnail_size;
 
 }
-?>
+
+
