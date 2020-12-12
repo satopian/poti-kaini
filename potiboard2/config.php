@@ -1,6 +1,6 @@
 <?php
 /*
-  * POTI-board改二 v2.20.5 lot.201209
+  * POTI-board改二 v2.20.6lot.201212
   * by sakots >> https://poti-k.info/
   *
   * POTI-board改二の設定ファイルです。
@@ -455,4 +455,3 @@ $syslog = "picpost.systemlog";
 //システムログ保存件数
 $syslogmax = '100';
 
-?>
