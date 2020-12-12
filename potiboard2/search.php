@@ -271,4 +271,5 @@ unset($arr);
 //HTML出力
 $Skinny->SkinnyDisplay(SKIN_DIR.'search.html', $dat );
 
-?>
+
+

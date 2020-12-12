@@ -124,4 +124,4 @@ define('UPDATE_MARK', ' *');
 //define(DATE_FORMAT, 'Y/m/d(<1>) H:i');
 define('DATE_FORMAT', 'Y/m/d(D) H:i');
 
-?>
+
