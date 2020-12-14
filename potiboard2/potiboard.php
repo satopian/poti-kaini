@@ -42,8 +42,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.20.7');
-define('POTI_VERLOT' , 'v2.20.7 lot.201213');
+define('POTI_VER' , 'v2.20.8');
+define('POTI_VERLOT' , 'v2.20.8 lot.201214');
 
 if (($phpver = phpversion()) < "5.5.0") {
 	die("本プログラムの動作には PHPバージョン 5.5.0 以上が必要です。<br>\n（現在のPHPバージョン：{$phpver}）");
@@ -51,7 +51,8 @@ if (($phpver = phpversion()) < "5.5.0") {
 
 //INPUT_POSTから変数を取得
 
-$mode = isset($_REQUEST['mode']) ? $_REQUEST['mode'] : '';
+$mode = filter_input(INPUT_POST, 'mode');
+$mode = $mode ? $mode : filter_input(INPUT_GET, 'mode');
 $resto = filter_input(INPUT_POST, 'resto',FILTER_VALIDATE_INT);
 $name = filter_input(INPUT_POST, 'name');
 $email = filter_input(INPUT_POST, 'email');
@@ -1332,9 +1333,10 @@ function check_dir ($path) {
 /* お絵描き画面 */
 function paintform(){
 	global $admin,$type,$no,$pwd;
-	global $resto,$mode,$quality,$qualitys,$usercode;
+	global $resto,$quality,$qualitys,$usercode;
 	global $ADMIN_PASS,$pallets_dat;
 
+	$mode = filter_input(INPUT_POST, 'mode');
 	$picw = filter_input(INPUT_POST, 'picw',FILTER_VALIDATE_INT);
 	$pich = filter_input(INPUT_POST, 'pich',FILTER_VALIDATE_INT);
 	$anime = filter_input(INPUT_POST, 'anime',FILTER_VALIDATE_BOOLEAN);
