@@ -177,7 +177,7 @@ if(!$usercode){//falseなら発行
 	//念の為にエスケープ文字があればアルファベットに変換
 	$usercode = strtr($usercode,"!\"#$%&'()+,/:;<=>?@[\\]^`/{|}~","ABCDEFGHIJKLMNOabcdefghijklmn");
 }
-setcookie("usercode", $usercode, time()+86400*365);//1年間
+setcookie("usercode", $usercode, time()+(86400*365));//1年間
 
 switch($mode){
 	case 'regist':
@@ -877,8 +877,8 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 			if($pchk){
 			//KASIRAが入らない10桁のUNIX timeを取り出す
 			if(strlen($ltime)>10){$ltime=substr($ltime,-13,-3);}
-			if(RENZOKU && $time - $ltime < RENZOKU){error(MSG020,$dest);}
-			if(RENZOKU2 && $time - $ltime < RENZOKU2 && $upfile_name){error(MSG021,$dest);}
+			if(RENZOKU && ($time - $ltime) < RENZOKU){error(MSG020,$dest);}
+			if(RENZOKU2 && ($time - $ltime) < RENZOKU2 && $upfile_name){error(MSG021,$dest);}
 			if($com){
 					switch(D_POST_CHECKLEVEL){//190622
 						case 1:	//low
@@ -1347,9 +1347,9 @@ function paintform(){
 	$ctype = newstring(filter_input(INPUT_POST, 'ctype'));
 
 	//Cookie保存
-	setcookie("appletc", $shi , time()+86400*SAVE_COOKIE);//アプレット選択
-	setcookie("picwc", $picw , time()+86400*SAVE_COOKIE);//幅
-	setcookie("pichc", $pich , time()+86400*SAVE_COOKIE);//高さ
+	setcookie("appletc", $shi , time()+(86400*SAVE_COOKIE));//アプレット選択
+	setcookie("picwc", $picw , time()+(86400*SAVE_COOKIE));//幅
+	setcookie("pichc", $pich , time()+(86400*SAVE_COOKIE));//高さ
 
 	//pchファイルアップロードペイント
 	if($admin===$ADMIN_PASS){
@@ -1472,13 +1472,10 @@ function paintform(){
 	else{ $dat['paintbbs'] = true; }
 
 	$initial_palette = 'Palettes[0] = "#000000\n#FFFFFF\n#B47575\n#888888\n#FA9696\n#C096C0\n#FFB6FF\n#8080FF\n#25C7C9\n#E7E58D\n#E7962D\n#99CB7B\n#FCECE2\n#F9DDCF";';
-	$pal=array();
-	$DynP=array();
-	$p_cnt=1;
 	if(USE_SELECT_PALETTES){//パレット切り替え機能を使う時
 		foreach($pallets_dat as $i=>$value){
 			if($i==filter_input(INPUT_POST, 'selected_palette_no',FILTER_VALIDATE_INT)){//キーと入力された数字が同じなら
-				setcookie("palettec", $i, time()+86400*SAVE_COOKIE);//Cookie保存
+				setcookie("palettec", $i, time()+(86400*SAVE_COOKIE));//Cookie保存
 				if(is_array($value)){
 					list($p_name,$p_dat)=$value;
 					$lines=file($p_dat);
@@ -1491,11 +1488,14 @@ function paintform(){
 	}else{
 		$lines=file(PALETTEFILE);//初期パレット
 	}
-	
-	foreach ( $lines as $line ) {
+
+	$pal=array();
+	$DynP=array();
+	foreach ( $lines as $i => $line ) {
 		$line=charconvert(preg_replace("/[\t\r\n]/","",$line));
 		list($pid,$pname,$pal[0],$pal[2],$pal[4],$pal[6],$pal[8],$pal[10],$pal[1],$pal[3],$pal[5],$pal[7],$pal[9],$pal[11],$pal[12],$pal[13]) = explode(",", $line);
 		$DynP[]=newstring($pname);
+		$p_cnt=$i+1;
 		$palettes = 'Palettes['.$p_cnt.'] = "#'.$pal[0];
 		ksort($pal);
 		array_shift($pal);
@@ -1503,8 +1503,7 @@ function paintform(){
 			$palettes.='\n#'.$p;
 		}
 		$palettes.='";';//190622
-		$arr_pal[$p_cnt] = $palettes;
-		$p_cnt++;
+		$arr_pal[$i] = $palettes;
 	}
 	$dat['palettes']=$initial_palette.implode('',$arr_pal);
 
@@ -1647,10 +1646,7 @@ function openpch(){
 		list($dat['picw'], $dat['pich']) = getimagesize(IMG_DIR.$pch);
 		$dat['w'] = ($dat['picw'] < 200 ? 200 : $dat['picw']);
 		$dat['h'] = ($dat['pich'] < 200 ? 200 : $dat['pich']) + 26;
-
-	} else {
-		//動画が無い時は処理しない
-	}
+	} 
 
 	$dat['pch_mode'] = true;
 	$dat['speed'] = PCH_SPEED;
@@ -2247,7 +2243,6 @@ function getImgType ($img_type, $dest) {
 		case "image/png" : return ".png";
 	}
 	error(MSG004, $dest);
-	exit;
 }
 
 /**
