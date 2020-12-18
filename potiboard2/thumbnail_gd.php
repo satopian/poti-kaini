@@ -40,7 +40,7 @@ function thumb($path,$tim,$ext,$max_w,$max_h){
 			}
 			break;
 		case "image/webp";
-		if(function_exists("ImageCreateFromWEBP")){//png
+		if(function_exists("ImageCreateFromWEBP")){//webp
 			$im_in = @ImageCreateFromWEBP($fname);
 			if(!$im_in)return;
 		}
