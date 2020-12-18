@@ -1,6 +1,6 @@
 <?php
 //POTI-board plugin search(c)2020 さとぴあ
-//v1.6.5 lot.201002
+//v1.6.5 lot.201218
 //
 //https://pbbs.sakura.ne.jp/
 //フリーウェアですが著作権は放棄しません。
@@ -25,6 +25,7 @@
 //何件までしらべるか？
 //初期値120 あまり大きくしないでください。
 $max_search=120;
+//設定を変更すればより多く検索できるようになりますが、サーバの負荷が高くなります。
 
 //更新履歴
 
@@ -45,7 +46,6 @@ $max_search=120;
 //v0.2 2020.07.14 負荷削減。ページングで表示している記事の分だけレス先を探して見つけるようにした。
 //v0.1 2020.07.13 GitHubに公開
 
-//設定を変更すればより多く検索できるようになりますが、サーバの負荷が高くなります。
 
 //設定の読み込み
 require(__DIR__.'/config.php');
@@ -208,7 +208,6 @@ elseif($query!==''&&($radio===null||$radio===1)){//作者名
 else{//作者名	
 	$query_l='';
 	$dat['radio_chk1']='checked="checked"';
-	$radio_chk1='checked="checked"';
 }
 $dat['query_l']=$query_l;
 
@@ -270,6 +269,4 @@ if($arr){
 unset($arr);
 //HTML出力
 $Skinny->SkinnyDisplay(SKIN_DIR.'search.html', $dat );
-
-
 

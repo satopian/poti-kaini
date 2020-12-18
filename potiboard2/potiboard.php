@@ -42,8 +42,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.20.8');
-define('POTI_VERLOT' , 'v2.20.8 lot.201214');
+define('POTI_VER' , 'v2.21.0');
+define('POTI_VERLOT' , 'v2.21.0 lot.201218');
 
 if (($phpver = phpversion()) < "5.5.0") {
 	die("本プログラムの動作には PHPバージョン 5.5.0 以上が必要です。<br>\n（現在のPHPバージョン：{$phpver}）");
@@ -177,7 +177,7 @@ if(!$usercode){//falseなら発行
 	//念の為にエスケープ文字があればアルファベットに変換
 	$usercode = strtr($usercode,"!\"#$%&'()+,/:;<=>?@[\\]^`/{|}~","ABCDEFGHIJKLMNOabcdefghijklmn");
 }
-setcookie("usercode", $usercode, time()+86400*365);//1年間
+setcookie("usercode", $usercode, time()+(86400*365));//1年間
 
 switch($mode){
 	case 'regist':
@@ -745,7 +745,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 			if(!USE_IMG_UPLOAD && $admin!==$ADMIN_PASS){//アップロード禁止で管理画面からの投稿ではない時
 				error(MSG006,$upfile);
 			}
-			if(!preg_match('/\A(jpe?g|jfif|gif|png)\z/i', pathinfo($upfile_name, PATHINFO_EXTENSION))){//もとのファイル名の拡張子190606
+			if(!preg_match('/\A(jpe?g|jfif|gif|png|webp)\z/i', pathinfo($upfile_name, PATHINFO_EXTENSION))){//もとのファイル名の拡張子190606
 				error(MSG004,$upfile);
 			}
 			if(!move_uploaded_file($upfile, $dest)){
@@ -877,8 +877,8 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 			if($pchk){
 			//KASIRAが入らない10桁のUNIX timeを取り出す
 			if(strlen($ltime)>10){$ltime=substr($ltime,-13,-3);}
-			if(RENZOKU && $time - $ltime < RENZOKU){error(MSG020,$dest);}
-			if(RENZOKU2 && $time - $ltime < RENZOKU2 && $upfile_name){error(MSG021,$dest);}
+			if(RENZOKU && ($time - $ltime) < RENZOKU){error(MSG020,$dest);}
+			if(RENZOKU2 && ($time - $ltime) < RENZOKU2 && $upfile_name){error(MSG021,$dest);}
 			if($com){
 					switch(D_POST_CHECKLEVEL){//190622
 						case 1:	//low
@@ -923,7 +923,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 		}
 		$img_type=mime_content_type($dest);//190603
 
-		if (!in_array($img_type, ['image/gif', 'image/jpeg', 'image/png'])) {
+		if (!in_array($img_type, ['image/gif', 'image/jpeg', 'image/png','image/webp'])) {
 			error(MSG004,$dest);
 		}
 
@@ -1347,9 +1347,9 @@ function paintform(){
 	$ctype = newstring(filter_input(INPUT_POST, 'ctype'));
 
 	//Cookie保存
-	setcookie("appletc", $shi , time()+86400*SAVE_COOKIE);//アプレット選択
-	setcookie("picwc", $picw , time()+86400*SAVE_COOKIE);//幅
-	setcookie("pichc", $pich , time()+86400*SAVE_COOKIE);//高さ
+	setcookie("appletc", $shi , time()+(86400*SAVE_COOKIE));//アプレット選択
+	setcookie("picwc", $picw , time()+(86400*SAVE_COOKIE));//幅
+	setcookie("pichc", $pich , time()+(86400*SAVE_COOKIE));//高さ
 
 	//pchファイルアップロードペイント
 	if($admin===$ADMIN_PASS){
@@ -1411,10 +1411,12 @@ function paintform(){
 		$dat['pwd'] = $pwd;
 		$dat['ext'] = $ext;
 		if(is_file(IMG_DIR.$pch.$ext)){
-			$dat['applet'] = true;
-			$dat['usepbbs'] = true;
 			list($picw,$pich)=getimagesize(IMG_DIR.$pch.$ext);//キャンバスサイズ
+			if(mime_content_type(IMG_DIR.$pch.$ext)==='image/webp'){
+				$useneo=true;
+			}
 		}
+		$dat['applet'] = true;
 		if(($ctype=='pch') && is_file(PCH_DIR.$pch.'.pch')){//動画から続き
 			$fp = fopen(PCH_DIR.$pch.'.pch', "rb");
 			$useneo = (fread($fp,3)==="NEO"); //先頭3byteを見る
@@ -1472,13 +1474,10 @@ function paintform(){
 	else{ $dat['paintbbs'] = true; }
 
 	$initial_palette = 'Palettes[0] = "#000000\n#FFFFFF\n#B47575\n#888888\n#FA9696\n#C096C0\n#FFB6FF\n#8080FF\n#25C7C9\n#E7E58D\n#E7962D\n#99CB7B\n#FCECE2\n#F9DDCF";';
-	$pal=array();
-	$DynP=array();
-	$p_cnt=1;
 	if(USE_SELECT_PALETTES){//パレット切り替え機能を使う時
 		foreach($pallets_dat as $i=>$value){
 			if($i==filter_input(INPUT_POST, 'selected_palette_no',FILTER_VALIDATE_INT)){//キーと入力された数字が同じなら
-				setcookie("palettec", $i, time()+86400*SAVE_COOKIE);//Cookie保存
+				setcookie("palettec", $i, time()+(86400*SAVE_COOKIE));//Cookie保存
 				if(is_array($value)){
 					list($p_name,$p_dat)=$value;
 					$lines=file($p_dat);
@@ -1491,11 +1490,14 @@ function paintform(){
 	}else{
 		$lines=file(PALETTEFILE);//初期パレット
 	}
-	
-	foreach ( $lines as $line ) {
+
+	$pal=array();
+	$DynP=array();
+	foreach ( $lines as $i => $line ) {
 		$line=charconvert(preg_replace("/[\t\r\n]/","",$line));
 		list($pid,$pname,$pal[0],$pal[2],$pal[4],$pal[6],$pal[8],$pal[10],$pal[1],$pal[3],$pal[5],$pal[7],$pal[9],$pal[11],$pal[12],$pal[13]) = explode(",", $line);
 		$DynP[]=newstring($pname);
+		$p_cnt=$i+1;
 		$palettes = 'Palettes['.$p_cnt.'] = "#'.$pal[0];
 		ksort($pal);
 		array_shift($pal);
@@ -1503,8 +1505,7 @@ function paintform(){
 			$palettes.='\n#'.$p;
 		}
 		$palettes.='";';//190622
-		$arr_pal[$p_cnt] = $palettes;
-		$p_cnt++;
+		$arr_pal[$i] = $palettes;
 	}
 	$dat['palettes']=$initial_palette.implode('',$arr_pal);
 
@@ -1630,8 +1631,11 @@ function openpch(){
 	$pch = newstring(filter_input(INPUT_GET, 'pch'));
 	$_pch = pathinfo($pch, PATHINFO_FILENAME); //拡張子除去
 
-	if ($ext = check_pch_ext(PCH_DIR . $_pch)) {
-		$dat['pchfile'] = './' . PCH_DIR . $_pch . $ext;
+	$ext = check_pch_ext(PCH_DIR . $_pch);
+	if(!$ext){
+		error(MSG001);
+	}
+	$dat['pchfile'] = './' . PCH_DIR . $_pch . $ext;
 		if ($ext == '.spch') {
 			$dat['normal'] = true;
 		} elseif ($ext == '.pch') {
@@ -1643,14 +1647,10 @@ function openpch(){
 			fclose($fp);
 		}
 
-		$dat['datasize'] = filesize($dat['pchfile']);
-		list($dat['picw'], $dat['pich']) = getimagesize(IMG_DIR.$pch);
-		$dat['w'] = ($dat['picw'] < 200 ? 200 : $dat['picw']);
-		$dat['h'] = ($dat['pich'] < 200 ? 200 : $dat['pich']) + 26;
-
-	} else {
-		//動画が無い時は処理しない
-	}
+	$dat['datasize'] = filesize($dat['pchfile']);
+	list($dat['picw'], $dat['pich']) = getimagesize(IMG_DIR.$pch);
+	$dat['w'] = ($dat['picw'] < 200 ? 200 : $dat['picw']);
+	$dat['h'] = ($dat['pich'] < 200 ? 200 : $dat['pich']) + 26;
 
 	$dat['pch_mode'] = true;
 	$dat['speed'] = PCH_SPEED;
@@ -1697,44 +1697,34 @@ function incontinue(){
 	if(!$flag) error(MSG001);
 
 	$dat['continue_mode'] = true;
-//コンティニュー時は削除キーを常に表示
+	if(!$cext || !is_file(IMG_DIR.$ctim.$cext)){//画像が無い時は処理しない
+		error(MSG001);
+	}
+	//コンティニュー時は削除キーを常に表示
 	$dat['passflag'] = true;
-//新規投稿で削除キー不要の時 true
+	//新規投稿で削除キー不要の時 true
 	if(! CONTINUE_PASS) $dat['newpost_nopassword'] = true;
-	if($cext && is_file(IMG_DIR.$ctim.$cext)){//画像が無い時は処理しない
 	$dat['picfile'] = IMG_DIR.$ctim.$cext;
 	list($dat['picw'], $dat['pich']) = getimagesize($dat['picfile']);
 	$dat['no'] = $no;
 	$dat['pch'] = $ctim;
 	$dat['ext'] = $cext;
+	$dat['ctype_img'] = true;
 	//描画時間
 	$cptime=is_numeric($cptime) ? calcPtime($cptime) : $cptime; 
 	if(DSP_PAINTTIME) $dat['painttime'] = $cptime;
+	$dat['applet'] = true;
 	if(is_file(PCH_DIR.$ctim.'.pch')){
+		$dat['ctype_pch'] = true;
 		$dat['applet'] = false;
-		$dat['ctype_pch'] = true;
 	}elseif(is_file(PCH_DIR.$ctim.'.spch')){
-		$dat['applet'] = true;
-		$dat['usepbbs'] = false;
 		$dat['ctype_pch'] = true;
-	}else{//画像しか無かった時
-		$dat['applet'] = true;
-		$dat['usepbbs'] = true;
+		$dat['usepbbs'] = false;
 	}
-	}else{//画像が無かった時
-	$dat['picfile'] = '';
-	$dat['picw'] = '';
-	$dat['pich'] = '';
-	$dat['no'] = '';
-	$dat['pch'] = '';
-	$dat['ext'] = '';
-	$dat['applet'] = false;
-	$dat['usepbbs'] = false;
-	$dat['ctype_pch'] = false;
+	if(mime_content_type(IMG_DIR.$ctim.$cext)==='image/webp'){
+		$dat['applet'] = false;
 	}
-	$dat['ctype_img'] = true;
 	$dat['addinfo'] = $addinfo;
-
 	htmloutput(SKIN_DIR.PAINTFILE,$dat);
 }
 
@@ -1981,7 +1971,7 @@ function replace(){
 			}
 		
 			$img_type=mime_content_type($dest);
-			if (!in_array($img_type, ['image/gif', 'image/jpeg', 'image/png'])) {
+			if (!in_array($img_type, ['image/gif', 'image/jpeg', 'image/png','image/webp'])) {
 				error(MSG004,$dest);
 			}
 
@@ -2245,9 +2235,9 @@ function getImgType ($img_type, $dest) {
 		case "image/gif" : return ".gif";
 		case "image/jpeg" : return ".jpg";
 		case "image/png" : return ".png";
+		case "image/webp" : return ".webp";
 	}
 	error(MSG004, $dest);
-	exit;
 }
 
 /**
