@@ -43,7 +43,7 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 //バージョン
 define('POTI_VER' , 'v2.20.9');
-define('POTI_VERLOT' , 'v2.20.9 lot.201217');
+define('POTI_VERLOT' , 'v2.20.9 lot.201218');
 
 if (($phpver = phpversion()) < "5.5.0") {
 	die("本プログラムの動作には PHPバージョン 5.5.0 以上が必要です。<br>\n（現在のPHPバージョン：{$phpver}）");
@@ -745,7 +745,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 			if(!USE_IMG_UPLOAD && $admin!==$ADMIN_PASS){//アップロード禁止で管理画面からの投稿ではない時
 				error(MSG006,$upfile);
 			}
-			if(!preg_match('/\A(jpe?g|jfif|gif|png)\z/i', pathinfo($upfile_name, PATHINFO_EXTENSION))){//もとのファイル名の拡張子190606
+			if(!preg_match('/\A(jpe?g|jfif|gif|png|webp)\z/i', pathinfo($upfile_name, PATHINFO_EXTENSION))){//もとのファイル名の拡張子190606
 				error(MSG004,$upfile);
 			}
 			if(!move_uploaded_file($upfile, $dest)){
@@ -923,7 +923,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 		}
 		$img_type=mime_content_type($dest);//190603
 
-		if (!in_array($img_type, ['image/gif', 'image/jpeg', 'image/png'])) {
+		if (!in_array($img_type, ['image/gif', 'image/jpeg', 'image/png','image/webp'])) {
 			error(MSG004,$dest);
 		}
 
@@ -1977,7 +1977,7 @@ function replace(){
 			}
 		
 			$img_type=mime_content_type($dest);
-			if (!in_array($img_type, ['image/gif', 'image/jpeg', 'image/png'])) {
+			if (!in_array($img_type, ['image/gif', 'image/jpeg', 'image/png','image/webp'])) {
 				error(MSG004,$dest);
 			}
 
@@ -2241,6 +2241,7 @@ function getImgType ($img_type, $dest) {
 		case "image/gif" : return ".gif";
 		case "image/jpeg" : return ".jpg";
 		case "image/png" : return ".png";
+		case "image/webp" : return ".webp";
 	}
 	error(MSG004, $dest);
 }
