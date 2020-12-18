@@ -1,5 +1,6 @@
 <?php
 //サムネイル作成
+//201218 webp形式対応
 function thumb($path,$tim,$ext,$max_w,$max_h){
 	if(!gd_check()||!function_exists("ImageCreate")||!function_exists("ImageCreateFromJPEG"))return;
 	$fname=$path.$tim.$ext;
