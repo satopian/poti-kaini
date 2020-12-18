@@ -42,8 +42,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.20.9');
-define('POTI_VERLOT' , 'v2.20.9 lot.201218');
+define('POTI_VER' , 'v2.21.0');
+define('POTI_VERLOT' , 'v2.21.0 lot.201218');
 
 if (($phpver = phpversion()) < "5.5.0") {
 	die("本プログラムの動作には PHPバージョン 5.5.0 以上が必要です。<br>\n（現在のPHPバージョン：{$phpver}）");
@@ -1411,10 +1411,12 @@ function paintform(){
 		$dat['pwd'] = $pwd;
 		$dat['ext'] = $ext;
 		if(is_file(IMG_DIR.$pch.$ext)){
-			$dat['applet'] = true;
-			$dat['usepbbs'] = true;
 			list($picw,$pich)=getimagesize(IMG_DIR.$pch.$ext);//キャンバスサイズ
+			if(mime_content_type(IMG_DIR.$pch.$ext)==='image/webp'){
+				$useneo=true;
+			}
 		}
+		$dat['applet'] = true;
 		if(($ctype=='pch') && is_file(PCH_DIR.$pch.'.pch')){//動画から続き
 			$fp = fopen(PCH_DIR.$pch.'.pch', "rb");
 			$useneo = (fread($fp,3)==="NEO"); //先頭3byteを見る
@@ -1629,8 +1631,11 @@ function openpch(){
 	$pch = newstring(filter_input(INPUT_GET, 'pch'));
 	$_pch = pathinfo($pch, PATHINFO_FILENAME); //拡張子除去
 
-	if ($ext = check_pch_ext(PCH_DIR . $_pch)) {
-		$dat['pchfile'] = './' . PCH_DIR . $_pch . $ext;
+	$ext = check_pch_ext(PCH_DIR . $_pch);
+	if(!$ext){
+		error(MSG001);
+	}
+	$dat['pchfile'] = './' . PCH_DIR . $_pch . $ext;
 		if ($ext == '.spch') {
 			$dat['normal'] = true;
 		} elseif ($ext == '.pch') {
@@ -1642,11 +1647,10 @@ function openpch(){
 			fclose($fp);
 		}
 
-		$dat['datasize'] = filesize($dat['pchfile']);
-		list($dat['picw'], $dat['pich']) = getimagesize(IMG_DIR.$pch);
-		$dat['w'] = ($dat['picw'] < 200 ? 200 : $dat['picw']);
-		$dat['h'] = ($dat['pich'] < 200 ? 200 : $dat['pich']) + 26;
-	} 
+	$dat['datasize'] = filesize($dat['pchfile']);
+	list($dat['picw'], $dat['pich']) = getimagesize(IMG_DIR.$pch);
+	$dat['w'] = ($dat['picw'] < 200 ? 200 : $dat['picw']);
+	$dat['h'] = ($dat['pich'] < 200 ? 200 : $dat['pich']) + 26;
 
 	$dat['pch_mode'] = true;
 	$dat['speed'] = PCH_SPEED;
@@ -1693,44 +1697,34 @@ function incontinue(){
 	if(!$flag) error(MSG001);
 
 	$dat['continue_mode'] = true;
-//コンティニュー時は削除キーを常に表示
+	if(!$cext || !is_file(IMG_DIR.$ctim.$cext)){//画像が無い時は処理しない
+		error(MSG001);
+	}
+	//コンティニュー時は削除キーを常に表示
 	$dat['passflag'] = true;
-//新規投稿で削除キー不要の時 true
+	//新規投稿で削除キー不要の時 true
 	if(! CONTINUE_PASS) $dat['newpost_nopassword'] = true;
-	if($cext && is_file(IMG_DIR.$ctim.$cext)){//画像が無い時は処理しない
 	$dat['picfile'] = IMG_DIR.$ctim.$cext;
 	list($dat['picw'], $dat['pich']) = getimagesize($dat['picfile']);
 	$dat['no'] = $no;
 	$dat['pch'] = $ctim;
 	$dat['ext'] = $cext;
+	$dat['ctype_img'] = true;
 	//描画時間
 	$cptime=is_numeric($cptime) ? calcPtime($cptime) : $cptime; 
 	if(DSP_PAINTTIME) $dat['painttime'] = $cptime;
+	$dat['applet'] = true;
 	if(is_file(PCH_DIR.$ctim.'.pch')){
+		$dat['ctype_pch'] = true;
 		$dat['applet'] = false;
-		$dat['ctype_pch'] = true;
 	}elseif(is_file(PCH_DIR.$ctim.'.spch')){
-		$dat['applet'] = true;
-		$dat['usepbbs'] = false;
 		$dat['ctype_pch'] = true;
-	}else{//画像しか無かった時
-		$dat['applet'] = true;
-		$dat['usepbbs'] = true;
+		$dat['usepbbs'] = false;
 	}
-	}else{//画像が無かった時
-	$dat['picfile'] = '';
-	$dat['picw'] = '';
-	$dat['pich'] = '';
-	$dat['no'] = '';
-	$dat['pch'] = '';
-	$dat['ext'] = '';
-	$dat['applet'] = false;
-	$dat['usepbbs'] = false;
-	$dat['ctype_pch'] = false;
+	if(mime_content_type(IMG_DIR.$ctim.$cext)==='image/webp'){
+		$dat['applet'] = false;
 	}
-	$dat['ctype_img'] = true;
 	$dat['addinfo'] = $addinfo;
-
 	htmloutput(SKIN_DIR.PAINTFILE,$dat);
 }
 
