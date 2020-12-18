@@ -14,9 +14,11 @@ function thumb($path,$tim,$ext,$max_w,$max_h){
 	}
 	else{return;}
 
-	switch ($size[2]) {
-		case 1 :
-			if(function_exists("ImageCreateFromGIF")){//gif
+
+	
+	switch (mime_content_type($fname)) {
+		case "image/gif";
+		if(function_exists("ImageCreateFromGIF")){//gif
 				$im_in = @ImageCreateFromGIF($fname);
 				if(!$im_in)return;
 			}
@@ -24,19 +26,29 @@ function thumb($path,$tim,$ext,$max_w,$max_h){
 				return;
 			}
 		break;
-		case 2 :
-			$im_in = @ImageCreateFromJPEG($fname);//jpg
+		case "image/jpeg";
+		$im_in = @ImageCreateFromJPEG($fname);//jpg
 			if(!$im_in)return;
 		break;
-		case 3 :
-			if(function_exists("ImageCreateFromPNG")){//png
+		case "image/png";
+		if(function_exists("ImageCreateFromPNG")){//png
 				$im_in = @ImageCreateFromPNG($fname);
 				if(!$im_in)return;
 			}
 			else{
 				return;
 			}
+			break;
+		case "image/webp";
+		if(function_exists("ImageCreateFromWEBP")){//png
+			$im_in = @ImageCreateFromWEBP($fname);
+			if(!$im_in)return;
+		}
+		else{
+			return;
+		}
 		break;
+
 		default : return;
 	}
 	// 出力画像（サムネイル）のイメージを作成
