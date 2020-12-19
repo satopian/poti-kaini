@@ -59,6 +59,11 @@ config.phpの設定をし、アップロードしてpotiboard.phpのあるディ
 
 ## 履歴
 
+### [2020/12/20]
+
+- 英訳作業開始（POTI-board Kai Ni-EN）
+- template.iniの英文エラーメッセージの翻訳改善
+
 ### [2020/12/18] thumbnail_gd.php
 
 - webp形式からのサムネイル作成に対応（by さとぴあ）
