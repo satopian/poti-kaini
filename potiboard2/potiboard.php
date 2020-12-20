@@ -42,8 +42,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.21.1');
-define('POTI_VERLOT' , 'v2.21.1 lot.201220');
+define('POTI_VER' , 'v2.21.2');
+define('POTI_VERLOT' , 'v2.21.2 lot.201220a');
 
 if (($phpver = phpversion()) < "5.5.0") {
 	die("本プログラムの動作には PHPバージョン 5.5.0 以上が必要です。<br>\n（現在のPHPバージョン：{$phpver}）");
@@ -2473,6 +2473,9 @@ function getId ($userip, $time) {
 
 // 古いスレッドへの投稿を許可するかどうか
 function check_elapsed_days ($res) {
+	if(ELAPSED_DAYS && !$res['time']){
+			return;
+	}
 	return ELAPSED_DAYS //古いスレッドのフォームを閉じる日数が設定されていたら
 		? ((time() - (substr($res['time'], -13, -3))) <= ( ELAPSED_DAYS * 86400)) // 指定日数以内なら許可
 		: true; // フォームを閉じる日数が未設定なら許可
