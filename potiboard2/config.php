@@ -1,6 +1,6 @@
 <?php
 /*
-  * POTI-board改二 v2.20.6lot.201212
+  * POTI-board改二 v2.21.1 lot.201220
   * by sakots >> https://poti-k.info/
   *
   * POTI-board改二の設定ファイルです。
@@ -449,6 +449,19 @@ define('USE_CONTINUE', '1');
 //不要:0 で新規投稿なら誰でも続きを描く事ができるようになります。
 define('CONTINUE_PASS', '0');
 
+/* ------------- パーミッション設定 ------------- */
+//PHPが自動的に変更するパーミッションの値。
+//問題なく動作している時は変更しない。
+
+//画像やHTMLファイルのパーミッション。
+define('PERMISSION_FOR_DEST', 0606);//初期値 0606
+//ブラウザから直接呼び出さないログファイルのパーミッション
+define('PERMISSION_FOR_LOG', 0600);//初期値 0600
+//画像や動画ファイルを保存するディレクトリのパーミッション
+define('PERMISSION_FOR_DIR', 0707);//初期値 0707
+
+// Skinny.phpのキャッシュやディレクトリのパーミッションは、
+// Skinny.phpで設定。
 /* ---------- picpost.php用設定 ---------- */
 //システムログファイル名
 $syslog = "picpost.systemlog";
