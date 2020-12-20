@@ -1,6 +1,6 @@
 <?php
 //----------------------------------------------------------------------
-// picpost.php lot.201218  by SakaQ >> http://www.punyu.net/php/
+// picpost.php lot.201220  by SakaQ >> http://www.punyu.net/php/
 // & sakots >> https://poti-k.info/
 //
 // しぃからPOSTされたお絵かき画像をTEMPに保存
@@ -8,6 +8,7 @@
 // このスクリプトはPaintBBS（藍珠CGI）のPNG保存ルーチンを参考に
 // PHP用に作成したものです。
 //----------------------------------------------------------------------
+// 2020/12/20 config.phpでパーミッションを設定できるようにした。
 // 2020/12/18 php8対応。画像から続きを描くと投稿できなくなる問題を修正。
 // 2020/11/16 lot.201110の投稿完了時間が記録されないバグを修正。
 // 2020/11/10 レス先の記録に対応。拡張ヘッダの値の取得を可変変数から連想配列に変更。
@@ -32,6 +33,11 @@
 
 //設定
 include(__DIR__.'/config.php');
+
+if(!defined('PERMISSION_FOR_LOG')){//config.phpで未定義なら0600
+	define('PERMISSION_FOR_LOG', 0600);
+}
+
 //タイムゾーン
 date_default_timezone_set('Asia/Tokyo');
 //容量違反チェックをする する:1 しない:0
@@ -228,7 +234,7 @@ if(!$fp){
 	fflush($fp);
 	flock($fp, LOCK_UN);
 	fclose($fp);
-	chmod(TEMP_DIR.$imgfile.'.dat',0600);
+	chmod(TEMP_DIR.$imgfile.'.dat',PERMISSION_FOR_LOG);
 }
 
 die("ok");
