@@ -3,7 +3,8 @@
 ![POTI-board改二](https://user-images.githubusercontent.com/31465648/83109430-5ebf0080-a0fc-11ea-8acc-87f2fbbd2070.PNG)
 
 phpお絵かき掲示板スクリプトPOTI-boardをさらに改良していくプロジェクトです。  
-php5.5～ 対応。
+php5.5～ 対応。  
+English translated version is here. [POTI-board Kai Ni-EN](https://github.com/sakots/poti-kaini-EN)
   
 [PaintBBS NEO](https://github.com/funige/neo/)
 ~~POTI-board改~~ POTI-board改は保守作業およびサポートを終了しました。
@@ -16,7 +17,7 @@ php5.5～ 対応。
 ![デジタルインク](https://user-images.githubusercontent.com/31465648/83109254-0c7ddf80-a0fc-11ea-9627-7b4afe5ae193.PNG)
 
 また、マウスジェスチャーの拡張機能とも競合する可能性があります。不具合を感じたらオフにしてみてください。
-  
+
 ## 概要
 
 POTI-board改で使用しているテンプレートエンジン「htmltemplate.inc」は老朽化が進んでいる…
@@ -58,6 +59,11 @@ config.phpの設定をし、アップロードしてpotiboard.phpのあるディ
   - v2.18.10 lot.201103でキャンバスサイズをCookieに記録するようになりましたが、そのキャンバスサイズが続きを描く時のキャンバスサイズにも反映されてしまうバグが見つかり報告がありました。続きを描く時のキャンバスにCookieのキャンバスサイズは使用されなくなります。
 
 ## 履歴
+
+### [2020/12/20]
+
+- 英訳作業開始（POTI-board Kai Ni-EN）
+- template.iniの英文エラーメッセージの翻訳改善
 
 ### [2020/12/18] thumbnail_gd.php
 
