@@ -39,7 +39,11 @@ if(!defined('PERMISSION_FOR_LOG')){//config.phpで未定義なら0600
 }
 
 //タイムゾーン
-date_default_timezone_set('Asia/Tokyo');
+if(!defined('DEFAULT_TIMEZONE')){//config.phpで未定義ならAsia/Tokyo
+	define('DEFAULT_TIMEZONE','Asia/Tokyo');
+}
+date_default_timezone_set(DEFAULT_TIMEZONE);
+
 //容量違反チェックをする する:1 しない:0
 define('SIZE_CHECK', '1');
 //投稿容量制限 KB

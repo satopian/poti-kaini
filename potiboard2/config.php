@@ -462,6 +462,11 @@ define('PERMISSION_FOR_DIR', 0707);//初期値 0707
 
 // Skinny.phpのキャッシュやディレクトリのパーミッションは、
 // Skinny.phpで設定。
+
+/* ------------- タイムゾーン ------------- */
+
+define('DEFAULT_TIMEZONE','Asia/Tokyo');
+
 /* ---------- picpost.php用設定 ---------- */
 //システムログファイル名
 $syslog = "picpost.systemlog";
