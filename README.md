@@ -62,6 +62,8 @@ config.phpの設定をし、アップロードしてpotiboard.phpのあるディ
 - タイムゾーンをconfig.phpで設定できるようにした (by さとぴあ)
 - 安全のため著作表示から wondercatstudio のhttpを削除 (by さこつ)
 
+`potiboard.php` `picpsot.php` を上書き、`config.php` に設定追加。
+
 ### [2020/12/21] v2.21.5 lot.201221.2
 
 - 定数が2重定義になるバグを修正 (by さとぴあ)
