@@ -984,7 +984,7 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 			$H = ceil($H * $key);
 		}
 		$upfile_name=newstring($upfile_name);
-		$mes = UPLOADED_OBJECT_NAME." $upfile_name の".UPLOAD_SUCCESSFUL."<br><br>";
+		$mes = UPLOADED_OBJECT_NAME." $upfile_name ".UPLOAD_SUCCESSFUL."<br><br>";
 
 		//重複チェック
 		$chkline=200;//チェックする最大行数
