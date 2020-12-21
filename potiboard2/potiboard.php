@@ -145,8 +145,10 @@ if(!defined('DEF_FONTCOLOR')){//文字色選択初期値
 	define('DEF_FONTCOLOR',null);
 }
 
-if(!defined('ADMIN_DELGUSU')||!defined('ADMIN_DELKISU')){//管理画面の色設定
+if(!defined('ADMIN_DELGUSU')){//管理画面の色設定
 	define('ADMIN_DELGUSU',null);
+}
+if(!defined('ADMIN_DELKISU')){//管理画面の色設定
 	define('ADMIN_DELKISU',null);
 }
 
@@ -371,6 +373,7 @@ function basicpart(){
 	if(USE_CHECK_NO_FILE){
 		$dat['hide_the_checkbox_for_nofile']=false;
 	}
+	$dat['_san']=HONORIFIC_SUFFIX;
 
 	return $dat;
 }
