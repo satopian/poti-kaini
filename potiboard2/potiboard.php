@@ -42,8 +42,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 */
 
 //バージョン
-define('POTI_VER' , 'v2.21.4');
-define('POTI_VERLOT' , 'v2.21.4 lot.201221.1');
+define('POTI_VER' , 'v2.21.5');
+define('POTI_VERLOT' , 'v2.21.5 lot.201221.2');
 
 if (($phpver = phpversion()) < "5.5.0") {
 	die("PHP version 5.5.0 or higher is required for this program to work. <br>\n（Current PHP version:{$phpver}）");
@@ -82,15 +82,6 @@ $usercode = filter_input(INPUT_COOKIE, 'usercode');//nullならuser-codeを発�
 
 //エラーメッセージ
 //template_ini.phpで未定義の時入る
-if(!defined('MSG041')){
-	define('MSG041', "がありません");
-}
-if(!defined('MSG042')){
-	define('MSG042', "を読めません");
-}
-if(!defined('MSG043')){
-	define('MSG043', "を書けません");
-}
 
 //設定の読み込み
 if ($err = check_file(__DIR__.'/config.php')) {
@@ -1351,23 +1342,31 @@ function init(){
 
 // ファイル存在チェック
 function check_file ($path,$check_writable='') {
-	
-	if (!is_file($path)) return $path . MSG041."<br>";
-	if (!is_readable($path)) return $path . MSG042."<br>";
+
+	$msg041=defined('MSG041') ? MSG041 : "がありません"; 
+	$msg042=defined('MSG042') ? MSG042 : "を読めません"; 
+	$msg043=defined('MSG043') ? MSG043 : "を書けません"; 
+
+	if (!is_file($path)) return $path . $msg041."<br>";
+	if (!is_readable($path)) return $path . $msg042."<br>";
 	if($check_writable){//書き込みが必要なファイルのチェック
-		if (!is_writable($path)) return $path . MSG043."<br>";
+		if (!is_writable($path)) return $path . $msg043."<br>";
 	}
 }
 // ディレクトリ存在チェック　なければ作る
 function check_dir ($path) {
 
+	$msg041=defined('MSG041') ? MSG041 : "がありません"; 
+	$msg042=defined('MSG042') ? MSG042 : "を読めません"; 
+	$msg043=defined('MSG043') ? MSG043 : "を書けません"; 
+
 	if (!is_dir($path)) {
 			mkdir($path, PERMISSION_FOR_DIR);
 			chmod($path, PERMISSION_FOR_DIR);
 	}
-	if (!is_dir($path)) return $path . MSG041."<br>";
-	if (!is_readable($path)) return $path . MSG042."<br>";
-	if (!is_writable($path)) return $path . MSG043."<br>";
+	if (!is_dir($path)) return $path . $msg041."<br>";
+	if (!is_readable($path)) return $path . $msg042."<br>";
+	if (!is_writable($path)) return $path . $msg043."<br>";
 }
 
 /* お絵描き画面 */
