@@ -121,7 +121,7 @@ define('NOTICEMAIL_FILE' , 'noticemail.inc');
 if(!defined('DEFAULT_TIMEZONE')){//config.phpで未定義ならAsia/Tokyo
 	define('DEFAULT_TIMEZONE','Asia/Tokyo');
 }
-date_default_timezone_set('DEFAULT_TIMEZONE');
+date_default_timezone_set(DEFAULT_TIMEZONE);
 
 //ペイント画面の$pwdの暗号化
 if(!defined('CRYPT_PASS')){//config.phpで未定義なら初期値が入る
