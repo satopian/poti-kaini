@@ -51,7 +51,7 @@
 					<% each(oya) %>
 					<% def(resname) %>
 					<script>function add_to_com(){
-						document.getElementById("p_input_com").value += "<% echo(resname) %>さん";
+						document.getElementById("p_input_com").value += "<% echo(resname) %><% def(_san)%><% echo(_san) %><% elsedef %>さん<% /def %>";
 						}</script>
 					<% コピーボタン %><button class="copy_button" onclick="add_to_com()">投稿者名をコピー</button>
 					<% /def %>

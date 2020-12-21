@@ -2,54 +2,68 @@
 /*
   * Template - nee2 by sakots  >> https://poti-k.info/
   *
-  * potiboard.php(v2.5.0～)のテーマ(テンプレート)設定ファイルです。
+  * potiboard.php(v2.21.4～)のテーマ(テンプレート)設定ファイルです。
   *
 */
 
 //テーマ(テンプレート)のバージョン
-define('TEMPLATE_VER', "v1.12.0 lot.200902");
+define('TEMPLATE_VER', "v1.13.0 lot.201221.0");
+
+//一般的なメッセージ
+
+//投稿者名を引用する時の敬称、ただし名前の末尾に入る
+define('HONORIFIC_SUFFIX', 'さん');
+//アップロードした画像の呼称
+define('UPLOADED_OBJECT_NAME', '画像');
+//アップロードに成功した時のメッセージ
+define('UPLOAD_SUCCESSFUL', 'のアップロードが成功しました');
+//投稿が終了して画面が切り替わる時のメッセージ
+define('THE_SCREEN_CHANGES', '画面を切り替えます');
 
 //エラーメッセージ
 define('MSG001', "該当記事がみつかりません[Log is not found.]");
-define('MSG002', "絵が選択されていません[Picture has not been selected.]");
-define('MSG003', "アップロードに失敗しました[It failed in up-loading.]<br>サーバーがサポートしていない可能性があります[There is a possibility that the server doesn't support it.]");
-define('MSG004', "アップロードに失敗しました[It failed in up-loading.]<br>画像ファイル以外は受け付けません[It is not accepted excluding the picture file.]");
-define('MSG005', "アップロードに失敗しました[It failed in up-loading.]<br>同じ画像がありました[The same image existed.]");
+define('MSG002', "絵が選択されていません[You haven't selected a picture. You must upload a picture!.]");
+define('MSG003', "アップロードに失敗しました[Failed to upload picture.]<br>サーバーがサポートしていない可能性があります[There is a possibility that the server doesn't support it.]");
+define('MSG004', "アップロードに失敗しました[Failed to upload picture.]<br>画像ファイル以外は受け付けません[The image is not valid and it was excluded.]");
+define('MSG005', "アップロードに失敗しました[Failed to upload picture.]<br>同じ画像がありました[Image already exists.]");
 define('MSG006', "不正な投稿をしないで下さい[Please do not do an illegal contribution.]<br>POST以外での投稿は受け付けません[The contribution excluding 'POST' is not accepted.]");
-define('MSG007', "画像がありません[no image.]");
-define('MSG008', "何か書いて下さい[write something.]");
-define('MSG009', "名前がありません[no name.]");
-define('MSG010', "題名がありません[no subject]");
+define('MSG007', "画像がありません[Image does not exist.]");
+define('MSG008', "何か書いて下さい[Please write something.]");
+define('MSG009', "名前がありません[Please enter your name.]");
+define('MSG010', "題名がありません[Please enter a title.]");
 define('MSG011', "本文が長すぎますっ！[comment is too long.]");
 define('MSG012', "名前が長すぎますっ！[name is too long.]");
 define('MSG013', "メールアドレスが長すぎますっ！[email is too long.]");
 define('MSG014', "題名が長すぎますっ！[subject is too long.]");
-define('MSG015', "異常です[Abnormality]");
-define('MSG016', "拒絶されました[was rejected.]<br>そのHOSTからの投稿は受け付けません[Post from the 'HOST' is not accepted.]");
+define('MSG015', "異常です[Unknown error]");
+define('MSG016', "拒絶されました[Post was rejected.]<br>そのHOSTからの投稿は受け付けません[This HOST has been banned from posting.]");
 define('MSG017', "ＥＲＲＯＲ！[Error]　公開ＰＲＯＸＹ規制中！！[Open-PROXY is limited.](80)");
 define('MSG018', "ＥＲＲＯＲ！[Error]　公開ＰＲＯＸＹ規制中！！[Open-PROXY is limited.](8080)");
 define('MSG019', "ログの読み込みに失敗しました[It failed in reading the log.]");
-define('MSG020', "連続投稿はもうしばらく時間を置いてからお願い致します[Please wait for a continuous post for a while.]");
-define('MSG021', "画像連続投稿はもうしばらく時間を置いてからお願い致します[Please wait for a continuous post of the image for a while.]");
+define('MSG020', "連続投稿はもうしばらく時間を置いてからお願い致します[Please wait a little bit before posting again.]");
+define('MSG021', "画像連続投稿はもうしばらく時間を置いてからお願い致します[Please wait a little bit before posting again.]");
 define('MSG022', "このコメントで一度投稿しています[Post once by this comment.]<br>別のコメントでお願い致します[Please put another comment.]");
 define('MSG023', "ツリーの更新に失敗しました[It failed in the renewal of the tree.]");
 define('MSG024', "ツリーの削除に失敗しました[It failed in the deletion of the tree.]");
-define('MSG025', "スレッドがありません[no thread.]");
-define('MSG026', "スレッドが最後の1つなので削除できません[thread is the last one, not delete.]");
+define('MSG025', "スレッドがありません[Thread does not exist.]");
+define('MSG026', "スレッドが最後の1つなので削除できません[This is the last thread, it can not be deleted.]");
 define('MSG027', "削除に失敗しました(ユーザー)[failed in deletion.(User)]");
 define('MSG028', "該当記事が見つからないかパスワードが間違っています[article is not found or password is wrong.]");
 define('MSG029', "パスワードが違います[password is wrong.]");
 define('MSG030', "削除に失敗しました(管理者権限)[failed in deletion.(Admin)]");
 define('MSG031', "記事Noが未入力です[Please input No.]");
-define('MSG032', "拒絶されました[was rejected.]<br>不正な文字列があります[illegal character string.]");
+define('MSG032', "拒絶されました[Post was rejected.]<br>不正な文字列があります[illegal character string.]");
 define('MSG033', "削除に失敗しました[failed in deletion.]<br>ユーザーに削除権限がありません[user doesn't have deletion authority.]");
-define('MSG034', "アップロードに失敗しました[It failed in up-loading.]<br>規定の画像容量をオーバーしています[size over is picture file.]");
+define('MSG034', "アップロードに失敗しました[Failed to upload picture.]<br>規定の画像容量をオーバーしています[The size of the picture is too big.]");
 define('MSG035', "何か日本語で書いてください[Comment should have at least some Japanese characters.]");
 define('MSG036', "本文にURLを書く事はできません。[This URL can not be used in text.]");
-define('MSG037', "この名前は使えません [That name cannot be used.]");
+define('MSG037', "この名前は使えません [This name cannot be used.]");
 define('MSG038', "このタグは使えません。[This tag cannot be used.]");
 define('MSG039', "コメントのみの新規投稿はできません。［New posts with only comments are not accepted.］");
-define('MSG040', "予備");
+define('MSG040', "予備");//しらばく間予備のまま
+define('MSG041', "がありません");
+define('MSG042', "を読めません");
+define('MSG043', "を書けません");
 
 //文字色テーブル '値[,名称]'
 $fontcolors = array('white,White'

@@ -2,12 +2,12 @@
 /*
   * Template - MONO by sakots  >> https://poti-k.info/
   *
-  * potiboard.php(v2.5.0～)のテーマ(テンプレート)設定ファイルです。
+  * potiboard.php(v2.21.4～)のテーマ(テンプレート)設定ファイルです。
   *
 */
 
 //テーマ(テンプレート)のバージョン
-define('TEMPLATE_VER', "v1.12.0 lot.201219");
+define('TEMPLATE_VER', "v1.13.0 lot.201221.0");
 
 //一般的なメッセージ
 
