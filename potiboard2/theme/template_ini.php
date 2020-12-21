@@ -9,6 +9,17 @@
 //テーマ(テンプレート)のバージョン
 define('TEMPLATE_VER', "v1.12.0 lot.201219");
 
+//一般的なメッセージ
+
+//投稿者名を引用する時の敬称、ただし名前の末尾に入る
+define('HONORIFIC_SUFFIX', 'さん');
+//アップロードした画像の呼称
+define('UPLOADED_OBJECT_NAME', '画像');
+//アップロードに成功した時のメッセージ
+define('UPLOAD_SUCCESSFUL', 'のアップロードが成功しました');
+//投稿が終了して画面が切り替わる時のメッセージ
+define('THE_SCREEN_CHANGES', '画面を切り替えます');
+
 //エラーメッセージ
 define('MSG001', "該当記事がみつかりません[Log is not found.]");
 define('MSG002', "絵が選択されていません[You haven't selected a picture. You must upload a picture!.]");
@@ -49,7 +60,10 @@ define('MSG036', "本文にURLを書く事はできません。[This URL can not
 define('MSG037', "この名前は使えません [This name cannot be used.]");
 define('MSG038', "このタグは使えません。[This tag cannot be used.]");
 define('MSG039', "コメントのみの新規投稿はできません。［New posts with only comments are not accepted.］");
-define('MSG040', "予備");
+define('MSG040', "予備");//しらばく間予備のまま
+define('MSG041', "がありません");
+define('MSG042', "を読めません");
+define('MSG043', "を書けません");
 
 //文字色テーブル '値[,名称]'
 $fontcolors = array('white,White'
