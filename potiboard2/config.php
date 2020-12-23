@@ -362,7 +362,6 @@ define('COMMENT_LIMIT_MIDDLE', '90');
 // 二重投稿セキュリティレベルが 高 のときの類似率(単位％)
 define('COMMENT_LIMIT_HIGH', '80');
 
-
 //言語設定
 //ファイルのエンコードshift-jisやeucのときのための設定。
 //utf-8の時は何を設定しても同じ。
