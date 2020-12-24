@@ -57,6 +57,11 @@ config.phpの設定をし、アップロードしてpotiboard.phpのあるディ
 
 ## 履歴
 
+### [2020/12/24] v2.22.0 lot.201224.0
+
+- config.phpの設定項目を分類しなおし (by さとぴあ)
+  - くわしくは[こちら](https://github.com/sakots/poti-kaini/pull/168)
+
 ### [2020/12/22] v2.21.6 lot.201222.0
 
 - タイムゾーンをconfig.phpで設定できるようにした (by さとぴあ)
