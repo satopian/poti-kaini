@@ -25,7 +25,7 @@ define('USE_DUMP_FOR_DEBUG','0');
   *
   * USE FUNCTION :
   *   Skinny.php            (C)Kuasuki   >> http://skinny.sx68.net/
-  *   DynamicPalette        (C)NoraNeko  >> (http://wondercatstudio.com/)
+  *   DynamicPalette        (C)NoraNeko  >> wondercatstudio
   *----------------------------------------------------------------------------------
 
 このスクリプトは「レッツPHP!」<http://php.loglog.jp/>のgazou.phpを改造した、
