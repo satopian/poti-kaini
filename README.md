@@ -57,6 +57,10 @@ config.phpの設定をし、アップロードしてpotiboard.phpのあるディ
 
 ## 履歴
 
+### [2020/12/25] LICENSE
+
+- LICENSEを改訂。CC BY-NC-SA 3.0 の「継承」を誤解していたため (by さこつ)
+
 ### [2020/12/24] v2.22.0 lot.201224.0
 
 - config.phpの設定項目を分類しなおし (by さとぴあ)
