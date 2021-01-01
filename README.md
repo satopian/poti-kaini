@@ -57,6 +57,10 @@ config.phpの設定をし、アップロードしてpotiboard.phpのあるディ
 
 ## 履歴
 
+### [2021/01/01] picpost.php
+
+- picpost.systemlogのパーミッションもconfig.phpで設定できるようにした。(前回の作業の漏れ)
+
 ### [2020/12/25] LICENSE
 
 - LICENSEを改訂。CC BY-NC-SA 3.0 の「継承」を誤解していたため (by さこつ)
