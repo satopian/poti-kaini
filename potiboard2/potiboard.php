@@ -918,8 +918,8 @@ function regist($name,$email,$sub,$com,$url,$pwd,$resto){
 			if($pchk){
 			//KASIRAが入らない10桁のUNIX timeを取り出す
 			if(strlen($ltime)>10){$ltime=substr($ltime,-13,-3);}
-			if(RENZOKU && ($time - $ltime) < RENZOKU){error(MSG020,$dest);}
-			if(RENZOKU2 && ($time - $ltime) < RENZOKU2 && $upfile_name){error(MSG021,$dest);}
+			if(RENZOKU && ($time - (int)$ltime) < RENZOKU){error(MSG020,$dest);}
+			if(RENZOKU2 && ($time - (int)$ltime) < RENZOKU2 && $upfile_name){error(MSG021,$dest);}
 			if($com){
 					switch(D_POST_CHECKLEVEL){//190622
 						case 1:	//low
@@ -2507,11 +2507,8 @@ function getId ($userip, $time) {
 
 // 古いスレッドへの投稿を許可するかどうか
 function check_elapsed_days ($res) {
-	if(ELAPSED_DAYS && !$res['time']){
-			return;
-	}
 	return ELAPSED_DAYS //古いスレッドのフォームを閉じる日数が設定されていたら
-		? ((time() - (substr($res['time'], -13, -3))) <= ( ELAPSED_DAYS * 86400)) // 指定日数以内なら許可
+		? ((time() - (int)(substr($res['time'], -13, -3))) <= ( ELAPSED_DAYS * 86400)) // 指定日数以内なら許可
 		: true; // フォームを閉じる日数が未設定なら許可
 }
 
