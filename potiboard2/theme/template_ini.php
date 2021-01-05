@@ -20,6 +20,15 @@ define('UPLOAD_SUCCESSFUL', 'のアップロードが成功しました');
 //投稿が終了して画面が切り替わる時のメッセージ
 define('THE_SCREEN_CHANGES', '画面を切り替えます');
 
+//メール通知
+define('NOTICE_MAIL_TITLE', '記事題名');
+define('NOTICE_MAIL_IMG', '投稿画像');
+define('NOTICE_MAIL_THUMBNAIL', 'サムネイル画像');
+define('NOTICE_MAIL_ANIME', 'アニメファイル');
+define('NOTICE_MAIL_URL', '記事URL');
+define('NOTICE_MAIL_REPLY', 'へのレスがありました');
+define('NOTICE_MAIL_NEWPOST', '新規投稿がありました');
+
 //エラーメッセージ
 define('MSG001', "該当記事がみつかりません[Log is not found.]");
 define('MSG002', "絵が選択されていません[You haven't selected a picture. You must upload a picture!.]");
