@@ -201,7 +201,7 @@ switch($mode){
 			updatelog();
 			redirect(PHP_SELF2, 0);
 		}
-		break;
+		return;
 	case 'usrdel':
 		if (!USER_DELETES) {
 			error(MSG033);
@@ -209,7 +209,7 @@ switch($mode){
 		usrdel($del,$pwd);
 		updatelog();
 		redirect(PHP_SELF2, 0);
-		break;
+		return;
 	case 'paint':
 		return paintform();
 	case 'piccom':
@@ -241,6 +241,7 @@ switch($mode){
 		}else{
 			redirect(PHP_SELF2, 0);
 		}
+		return;
 }
 
 exit;
