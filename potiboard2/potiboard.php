@@ -43,7 +43,7 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 //バージョン
 define('POTI_VER' , 'v2.22.6');
-define('POTI_VERLOT' , 'v2.22.6 lot.210130');
+define('POTI_VERLOT' , 'v2.22.6 lot.210130.0');
 
 if (($phpver = phpversion()) < "5.5.0") {
 	die("PHP version 5.5.0 or higher is required for this program to work. <br>\n（Current PHP version:{$phpver}）");
@@ -187,8 +187,7 @@ switch($mode){
 			}
 			$admin=$pwd;
 		}
-		regist($name,$email,$sub,$com,$url,$pwd,$resto);
-		break;
+		return regist($name,$email,$sub,$com,$url,$pwd,$resto);
 	case 'admin':
 		admin_in($pass);
 		if($admin==="del") admindel($pass);
@@ -212,40 +211,30 @@ switch($mode){
 		redirect(PHP_SELF2, 0);
 		break;
 	case 'paint':
-		paintform();
-		break;
+		return paintform();
 	case 'piccom':
-		paintcom();
-		break;
+		return paintcom();
 	case 'openpch':
-		openpch();
-		break;
+		return openpch();
 	case 'continue':
-		incontinue();
-		break;
+		return incontinue();
 	case 'contpaint':
-//パスワードが必要なのは差し換えの時だけ
+		//パスワードが必要なのは差し換えの時だけ
 		if(CONTINUE_PASS||$type==='rep') check_cont_pass($no,$pwd);
-		paintform();
-		break;
+		return paintform();
 	case 'newpost':
 		$dat['post_mode'] = true;
 		$dat['regist'] = true;
 		$dat = array_merge($dat,form());
-		htmloutput(SKIN_DIR.OTHERFILE,$dat);
-		break;
+		return htmloutput(SKIN_DIR.OTHERFILE,$dat);
 	case 'edit':
-		editform($del,$pwd);
-		break;
+		return editform($del,$pwd);
 	case 'rewrite':
-		rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin);
-		break;
+		return rewrite($no,$name,$email,$sub,$com,$url,$pwd,$admin);
 	case 'picrep':
-		replace();
-		break;
+		return replace();
 	case 'catalog':
-		catalog();
-		break;
+		return catalog();
 	default:
 		if($res){
 			res($res);

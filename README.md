@@ -57,6 +57,12 @@ config.phpの設定をし、アップロードしてpotiboard.phpのあるディ
 
 ## 履歴
 
+### [2021/01/30] v2.22.6 lot.210130.0
+
+- picpost.systemlogの設定をpicpost.phpに移動 (by さとぴあ)
+  - 詳しくは[こちら](https://github.com/sakots/poti-kaini/pull/175)
+- コード整理 (by さこつ)
+
 ### [2021/01/27] v2.22.5 lot.210127.0
 
 - コード整理 (by さとぴあ)
