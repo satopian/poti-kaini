@@ -2,12 +2,14 @@
 define('USE_DUMP_FOR_DEBUG','0');
 //HTML出力の前に$datをdump しない:0 する:1 dumpしてexit：2 
 // ini_set('error_reporting', E_ALL);
+
+// POTI-board改二 
+// バージョン :
+define('POTI_VER','v2.22.7');
+define('POTI_LOT','lot.210131.1'); 
 /*
-  *
-  * POTI-board改二 
-  *   version : */ define('POTI_VER','v2.22.6');define('POTI_LOT','lot.210131.0'); /*
-  *   (C)sakots >> https://poti-k.info/
-  *
+  (C)sakots >> https://poti-k.info/
+
   *----------------------------------------------------------------------------------
   * ORIGINAL SCRIPT
   *   POTI-board v1.32
@@ -183,33 +185,32 @@ switch($mode){
 	case 'regist':
 		if(ADMIN_NEWPOST && !$resto){
 			if($pwd !== $ADMIN_PASS){
-				error(MSG029);
+				return error(MSG029);
 			}
 			$admin=$pwd;
 		}
 		return regist($name,$email,$sub,$com,$url,$pwd,$resto);
 	case 'admin':
 		admin_in($pass);
-		if($admin==="del") admindel($pass);
+		if($admin==="del") return admindel($pass);
 		if($admin==="post"){
 			$dat['post_mode'] = true;
 			$dat['regist'] = true;
 			$dat = array_merge($dat,form($res,'valid'));
-			htmloutput(SKIN_DIR.OTHERFILE,$dat);
+			return htmloutput(SKIN_DIR.OTHERFILE,$dat);
 		}
 		if($admin==="update"){
 			updatelog();
-			redirect(PHP_SELF2, 0);
+			return redirect(PHP_SELF2, 0);
 		}
 		return;
 	case 'usrdel':
 		if (!USER_DELETES) {
-			error(MSG033);
+			return error(MSG033);
 		}
 		usrdel($del,$pwd);
 		updatelog();
-		redirect(PHP_SELF2, 0);
-		return;
+		return redirect(PHP_SELF2, 0);
 	case 'paint':
 		return paintform();
 	case 'piccom':
@@ -237,11 +238,9 @@ switch($mode){
 		return catalog();
 	default:
 		if($res){
-			res($res);
-		}else{
-			redirect(PHP_SELF2, 0);
+			return res($res);
 		}
-		return;
+		return redirect(PHP_SELF2, 0);
 }
 
 exit;
