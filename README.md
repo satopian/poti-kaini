@@ -57,6 +57,12 @@ config.phpの設定をし、アップロードしてpotiboard.phpのあるディ
 
 ## 履歴
 
+### [2021/01/31] v2.22.7 lot.210131.1
+
+- コード整理
+  - バージョン表記の位置変更など (by さこつ)
+  - modeのSwitch文のreturnの見直し (by さとぴあ)
+
 ### [2021/01/30] v2.22.6 lot.210130.0
 
 - picpost.systemlogの設定をpicpost.phpに移動 (by さとぴあ)

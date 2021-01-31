@@ -2,12 +2,14 @@
 define('USE_DUMP_FOR_DEBUG','0');
 //HTML出力の前に$datをdump しない:0 する:1 dumpしてexit：2 
 // ini_set('error_reporting', E_ALL);
-/*POTI-board改二 
-バージョン : */ 
+
+// POTI-board改二 
+// バージョン :
 define('POTI_VER','v2.22.7');
-define('POTI_LOT','lot.210131.1'); /*
-(C)sakots >> https://poti-k.info/
+define('POTI_LOT','lot.210131.1'); 
 /*
+  (C)sakots >> https://poti-k.info/
+
   *----------------------------------------------------------------------------------
   * ORIGINAL SCRIPT
   *   POTI-board v1.32
