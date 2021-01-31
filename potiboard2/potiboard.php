@@ -4,7 +4,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 // ini_set('error_reporting', E_ALL);
 /*
   *
-  * POTI-board改二 バージョン情報はちょっと下参照
+  * POTI-board改二 
+  *   version : */ define('POTI_VER','v2.22.6');define('POTI_LOT','lot.210131.0'); /*
   *   (C)sakots >> https://poti-k.info/
   *
   *----------------------------------------------------------------------------------
@@ -40,10 +41,6 @@ define('USE_DUMP_FOR_DEBUG','0');
 「ふたば★ちゃんねる」「ぷにゅねっと」に問い合わせないでください。
 ご質問は、<https://poti-k.info/>までどうぞ。
 */
-
-//バージョン
-define('POTI_VER' , 'v2.22.6');
-define('POTI_VERLOT' , 'v2.22.6 lot.210130.1');
 
 if (($phpver = phpversion()) < "5.5.0") {
 	die("PHP version 5.5.0 or higher is required for this program to work. <br>\n（Current PHP version:{$phpver}）");
@@ -109,6 +106,9 @@ if ($err = check_file(__DIR__.'/thumbnail_gd.php')) {
 	error($err);
 }
 require(__DIR__.'/thumbnail_gd.php');
+
+//POTI_VERLOT定義
+define('POTI_VERLOT', POTI_VER.' '.POTI_LOT);
 
 //ユーザー削除権限 (0:不可 1:treeのみ許可 2:treeと画像のみ許可 3:tree,log,画像全て許可)
 //※treeのみを消して後に残ったlogは管理者のみ削除可能
