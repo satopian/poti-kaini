@@ -126,4 +126,6 @@ PaintBBS(test by v2.22_8)
 PCH Viewer(test by v1.12)          (C)しぃちゃん「しぃ堂」
 WCS 動的パレットコントロールセット  (C)のらネコ「WonderCatStudio」
 
+PaintBBS NEO                      (c)funige
+
 ■変更履歴はgithub参照
