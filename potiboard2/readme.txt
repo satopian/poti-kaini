@@ -45,7 +45,7 @@ config.php に設定したい追加項目があれば $ADMIN_PASS = 'kanripass';
 ./-- ルート
   ｜.htaccess
   ｜config.php
-  ｜htmltemplate.inc
+  ｜Skinny.php
   ｜potiboard.php
   ｜thumbnail_gd.php
   ｜loadcookie.js
