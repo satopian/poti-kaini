@@ -35,6 +35,7 @@ config.php に設定したい追加項目があれば $ADMIN_PASS = 'kanripass';
 
 ※以下、簡易説明
 ログのない状態からの場合、設置したURLにアクセスすると初期設定が行われます。
+（※2020年7月23日以前のバージョンのPOTI-boardはpotiboard.phpを手動で呼び出す必要があります）
 
 設定は、config.phpを書き換えて行います。
 各ファイルを置いたらpotiboard.phpをブラウザから呼出します
