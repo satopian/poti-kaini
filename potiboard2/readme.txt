@@ -12,8 +12,8 @@ POTI-board改 https://poti-k.info/ を発展させたものです。
 「Skinny.php」 http://skinny.sx68.net/ 
 のおかげで、自由にデザインできるようになってます。
 
-ちなみに、名前は　Punyu.net　Oekaki　Template　Image　の頭文字を取っ
-て「POTI」らしいです。
+ちなみに、名前は
+Punyu.net　Oekaki　Template　Image　の頭文字を取って「POTI」らしいです。
 
 ■ご注意
 
