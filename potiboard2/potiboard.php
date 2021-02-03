@@ -180,7 +180,14 @@ switch($mode){
 		}
 		return regist();
 	case 'admin':
-		admin_in($pass);
+
+		if(!$pass){
+			$dat['admin_in'] = true;
+			return htmloutput(SKIN_DIR.OTHERFILE,$dat);
+		}
+		if($pass && $pass !== $ADMIN_PASS) 
+		return error(MSG029);
+	
 		if($admin==="del") return admindel($pass);
 		if($admin==="post"){
 			$dat['post_mode'] = true;
@@ -193,6 +200,7 @@ switch($mode){
 			return redirect(PHP_SELF2, 0);
 		}
 		return;
+
 	case 'usrdel':
 		if (!USER_DELETES) {
 			return error(MSG033);
@@ -606,11 +614,11 @@ function res($resno = 0){
 }
 
 // 自動リンク
-function auto_link($proto){
-	if(!(stripos($proto,"script")!==false||stripos($proto,"<a")!==false)){//scriptがなければ続行
-		return preg_replace("{(https?|ftp)(://[[:alnum:]\+\$\;\?\.%,!#~*/:@&=_-]+)}","<a href=\"\\1\\2\" target=\"_blank\" rel=\"nofollow noopener noreferrer\">\\1\\2</a>",$proto);
+function auto_link($str){
+	if(!(stripos($str,"script")!==false||stripos($str,"<a")!==false)){//scriptがなければ続行
+		return preg_replace("{(https?)(://[[:alnum:]\+\$\;\?\.%,!#~*/:@&=_-]+)}","<a href=\"\\1\\2\" target=\"_blank\" rel=\"nofollow noopener noreferrer\">\\1\\2</a>",$str);
 	}
-	return $proto;
+	return $str;
 }
 
 // 日付
@@ -790,9 +798,11 @@ function regist(){
 	$ptime = str_replace(",", "&#44;", $ptime);
 
 	//改行コード
-	$formatted_text = create_formatted_text_from_post($com,$name,$sub);
+	$formatted_text = create_formatted_text_from_post($com,$name,$email,$url,$sub);
 	$com=$formatted_text['com'];
 	$name=$formatted_text['name'];
+	$email=$formatted_text['email'];
+	$url=$formatted_text['url'];
 	$sub=$formatted_text['sub'];
 
 	//ログ読み込み
@@ -1193,18 +1203,6 @@ function userdel(){
 		writeFile($fp, implode("\n", $line));
 	}
 	closeFile($fp);
-}
-
-// 管理パス認証
-function admin_in($pass){
-	global $ADMIN_PASS;
-	if($pass && $pass !== $ADMIN_PASS) error(MSG029);
-
-	if(!$pass){
-		$dat['admin_in'] = true;
-		htmloutput(SKIN_DIR.OTHERFILE,$dat);
-		exit;
-	}
 }
 
 // 管理者削除
@@ -1853,10 +1851,12 @@ function rewrite(){
 	$date = str_replace(",", "&#44;", $date);//カンマをエスケープ
 	
 	//改行コード
-	$formatted_text = create_formatted_text_from_post($com,$name,$sub);
-	$com = $formatted_text['com'];
-	$name = $formatted_text['name'];
-	$sub = $formatted_text['sub'];
+	$formatted_text = create_formatted_text_from_post($com,$name,$email,$url,$sub);
+	$com=$formatted_text['com'];
+	$name=$formatted_text['name'];
+	$email=$formatted_text['email'];
+	$url=$formatted_text['url'];
+	$sub=$formatted_text['sub'];
 	
 	//ログ読み込み
 	$fp=fopen(LOGFILE,"r+");
@@ -2172,16 +2172,17 @@ function Reject_if_NGword_exists_in_the_post($com,$name,$email,$url,$sub){
 
 //入力チェック
 function check_post($com,$name,$email,$sub,$dest=''){
+	
 	if(!$com||preg_match("/\A\s*\z/u",$com)) $com="";
 	if(!$name||preg_match("/\A\s*\z/u",$name)) $name="";
-	$sage=false;
-	if(stripos($email,'sage')!==false) $sage=true;
+	$sage=(stripos($email,'sage')!==false);
 	$email = filter_var($email, FILTER_VALIDATE_EMAIL);
 	if(!$sub||preg_match("/\A\s*\z/u",$sub))   $sub="";
 	if(strlen($com) > MAX_COM) error(MSG011,$dest);
 	if(strlen($name) > MAX_NAME) error(MSG012,$dest);
 	if(strlen($email) > MAX_EMAIL) error(MSG013,$dest);
 	if(strlen($sub) > MAX_SUB) error(MSG014,$dest);
+	$name = str_replace("◆", "◇", $name);
 
 	$checkd_post = [
 		'com' => $com,
@@ -2194,21 +2195,22 @@ function check_post($com,$name,$email,$sub,$dest=''){
 }
 
 //改行コード
-function create_formatted_text_from_post ($com,$name,$sub){
+function create_formatted_text_from_post($com,$name,$email,$url,$sub){
 
-	//メールとURLはphpの除去フィルタで処理済
-	$name = str_replace(["\r\n","\n","\r"],"",$name);//改行コード除去
-	$name = str_replace("◆", "◇", $name);
-	$sub = str_replace(["\r\n","\n","\r"],"",$sub);
-	$com = str_replace(["\r\n","\r"], "\n", $com);//改行コードの統一
+	
+	$com = str_replace(["\r\n","\r"], "\n", $com);
 	$com = preg_replace("/(\s*\n){4,}/u","\n",$com); //不要改行カット
 	$com = nl2br($com);	//改行文字の前に HTMLの改行タグ
-	$com = str_replace("\n", "", $com);	//改行文字を消す
 	$formatted_text = [
 		'com' => $com,
 		'name' => $name,
+		'email' => $email,
+		'url' => $url,
 		'sub' => $sub,
 	];
+	foreach($formatted_text as $key => $val){//改行コード除去
+		$formatted_text[$key]=str_replace(["\r\n","\n","\r"],"",$val);
+	}
 	return $formatted_text;
 }
 
