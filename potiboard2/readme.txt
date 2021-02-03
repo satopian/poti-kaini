@@ -49,10 +49,23 @@ config.php に設定したい追加項目があれば $ADMIN_PASS = 'kanripass';
   ｜potiboard.php
   ｜thumbnail_gd.php
   ｜loadcookie.js
+  ｜index.php
+  ｜picpost.php
+  ｜search.php
+  ｜security_c.html
+  ｜palette.txt
   ｜
   ｜※NEO本体 (最新版ではない可能性はあります)
   ｜neo.js
   ｜neo.css
+  ｜
+  ｜※しぃちゃん
+  ｜PaintBBS.jar
+  ｜PCHViewer.jar
+  ｜spainter_all.jar
+  ｜
+  ｜readme_pch.html
+  ｜Readme_Shichan.html
   ｜
 　＋--./theme/     ディレクトリ(テーマのディレクトリはconfigで設定できます)
     ｜.htaccess
@@ -110,6 +123,8 @@ POTI改二の親です。
 ■著作権
 
 POTI-boaed改二                     (c)sakots
+
+search.php                         (c)satopian
 
 POTI-board v1.32                   (C)SakaQ「ぷにゅねっと」
 
