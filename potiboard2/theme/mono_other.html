@@ -53,20 +53,51 @@
 				</nav>
 			</article>
 			<hr>
+			<% def(n) %>
+			<!-- 変則的に管理者お絵かきモードをここにも挿入 -->
+			<% /def %>
+			<% def(post_mode) %>
+			<% def(regist) %>
+			<script type="text/javascript" src="loadcookie.js"></script>
+			<% /def %>
+			<% def(admin) %>
+			<article class="epost">
+				<form action="<% echo(self) %>" method="post" enctype="multipart/form-data">
+					<p>
+						<% def(applet) %>
+						<input type="hidden" name="shi" value="1">
+						<% /def %>
+						幅：<input name="picw" type="number" title="幅" class="form" value="<% echo(pdefw) %>" min="300" max="<% echo(pmaxw) %>">
+						高さ：<input name="pich" type="number" title="高さ" class="form" value="<% echo(pdefh) %>" min="300" max="<% echo(pmaxh) %>">
+						<% def(use_select_palettes) %>
+						パレット：<select name="selected_palette_no" title="パレット" class="form"><% echo(palette_select_tags) %></select>
+						<% /def %>
+						<% def(anime) %><label><input type="checkbox" value="true" name="anime" title="動画記録" <% def(animechk) %><% echo(animechk) %><% /def %>>アニメーション記録</label><% /def %>
+						<!-- NEOを使う -->
+						<label><input type="checkbox" name="useneo" checked>USE NEO</label>
+						<input name="pch_upload" type="file" accept=".pch, .spch" title="pch upload">
+						<input type="hidden" name="mode" value="paint">
+						<input type="hidden" name="admin" value="<% echo(admin) %>">
+						<input class="button" type="submit" value="お絵かき">
+					</p>
+				</form>
+			</article>
+			<% /def %>
+			<% /def %>
+			<% def(n) %>
+			<!-- 管理者お絵かきモードおわり -->
+			<% /def %>
 		</header>
 		<main>
 			<% def(post_mode) %>
 			<!-- (========== POST MODE(投稿モード) start ==========
 			// 【NEW(新規投稿)、OEKAKI(お絵かき投稿)、UPDATE(編集)】
 			) -->
-			<% def(regist) %>
-			<script type="text/javascript" src="loadcookie.js"></script>
-			<% /def %>
 			<section>
 				<div class="thread">
 					<h1 class="oekaki">投稿フォーム<% def(admin) %> - ADMIN MODE-<% /def %></h1>
 					<% def(admin) %>
-					<p>tag can be used</p>
+					<p>You are able to use html tags.</p>
 					<% /def %>
 					<% def(pictmp) %>
 					<div class="tmpimg">
@@ -127,7 +158,7 @@
 									<input type="hidden" name="resto" value="<% echo(resno) %>">
 									<% /def %>
 									<input type="hidden" name="MAX_FILE_SIZE" value="<% echo(maxbyte) %>">
-									<% def(ipcheck) %>IP address check ... ON<% /def %>
+									<% def(ipcheck) %>Checking IP address ...<% /def %>
 								</td>
 							</tr>
 							<tr>
@@ -163,7 +194,7 @@
 						<% def(regist) %>
 						<ul>
 							<% def(upfile) %>
-							<li>添付可能ファイル：GIF, JPG, PNG ブラウザによっては正常に添付できないことがあります。</li>
+							<li>添付可能ファイル：GIF, JPG, PNG, WEBP ブラウザによっては正常に添付できないかもしれません。</li>
 							<li>画像は横 <% echo(maxw) %>ピクセル、縦 <% echo(maxh) %>ピクセルを超えると縮小表示されます。</li>
 							<li>最大投稿データ量は <% echo(maxkb) %> KB までです。sage機能付き。</li>
 							<% /def %>
@@ -175,6 +206,15 @@
 						</ul>
 						<% /def %>
 					</form>
+					<script src="<% echo(skindir) %>jquery-3.5.1.min.js"></script>
+					<script>
+						$(function(){//2度押し対策
+							$('[type="submit"]').click(function(){
+								$(this).prop('disabled',true);
+								$(this).closest('form').submit();
+							});
+						});
+					</script>
 					<% def(regist) %>
 					<script type="text/javascript">
 						l(); //LoadCookie

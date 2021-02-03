@@ -86,7 +86,6 @@
 					<script>function add_to_com(){
 						document.getElementById("p_input_com").value += "<% echo(resname) %><% def(_san)%><% echo(_san) %><% elsedef %>さん<% /def %>";
 						}</script>
-					
 					<% コピーボタン %><button class="copy_button" onclick="add_to_com()">投稿者名をコピー</button>
 					<% /def %>
 					<% /each %>
@@ -105,32 +104,8 @@
 							<% def(applet) %>
 							<input type="hidden" name="shi" value="1">
 							<% /def %>
-								幅：<select name="picw" title="幅" class="form">
-									<?php
-									//幅 300から、PMAX_W で設定した最大値まで。
-										for($i = 300; $i <=PMAX_W ; $i+=50){//50ずつ増える
-										if(PDEF_W==$i){//デフォルトサイズ
-										echo'<option value="'.$i.'" selected>'.$i.'</option>';
-										}
-										else{
-										echo'<option value="'.$i.'">'.$i.'</option>';
-										}
-										}
-									?>
-								</select>
-								高さ：<select name="pich" title="高さ" class="form">
-									<?php
-									//高さ 300から、PMAX_H で設定した最大値まで。
-										for($i = 300; $i <=PMAX_H ; $i+=50){//50ずつ増える
-										if(PDEF_H==$i){//デフォルトサイズ
-										echo'<option value="'.$i.'" selected>'.$i.'</option>';
-										}
-										else{
-										echo'<option value="'.$i.'">'.$i.'</option>';
-										}
-										}
-									?>
-								</select>
+							幅：<input name="picw" type="number" title="幅" class="form" value="<% echo(pdefw) %>" min="300" max="<% echo(pmaxw) %>">
+							高さ：<input name="pich" type="number" title="高さ" class="form" value="<% echo(pdefh) %>" min="300" max="<% echo(pmaxh) %>">
 							<% def(use_select_palettes) %>
 							パレット：<select name="selected_palette_no" title="パレット" class="form"><% echo(palette_select_tags) %></select>
 							<% /def %>
@@ -236,18 +211,12 @@
 					<hr>
 					<article>
 						<% def(oya/src) %>
-						
 						<figcaption>
 							<a href="<% echo(oya/src) %>" title="<% echo(oya/sub) %>" target="_blank"><% echo(oya/srcname) %></a> (<% echo(oya/size) %> B)<% def(oya/thumb) %> - サムネイル表示中 -<% /def %><% def(oya/painttime) %> PaintTime : <% echo(oya/painttime) %><% /def %>
 							<br>
 							<% def(oya/continue) %> <a href="<% echo(self) %>?mode=continue&amp;no=<% echo(oya/continue) %>">●続きを描く</a><% /def %><% def(oya/pch) %> <a href="<% echo(self) %>?mode=openpch&amp;pch=<% echo(oya/pch) %>" target="_blank">●動画</a><% /def %>
-							
-							
-							
 						</figcaption>
-
 						<figure>
-							
 							<% def(oya/thumb) %>
 							<a href="<% echo(oya/src) %>" target="_blank" title="<% echo(oya/sub) %>"><img src="<% echo(oya/imgsrc) %>" alt="<% echo(oya/srcname) %>"></a>
 							<% elsedef %>
