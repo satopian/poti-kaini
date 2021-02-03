@@ -68,15 +68,6 @@ config.php に設定したい追加項目があれば $ADMIN_PASS = 'kanripass';
       ｜mono_main.css
       ｜mono_mayo.css
 
-※お絵かき機能を使用する場合、下記を追加
-./-- 同ルート
-  ｜picpost.php
-  ｜palette.txt
-  ｜
-  ｜PaintBBS.jar     バイナリ ※PaintBBSを使用する場合
-  ｜spainter_all.jar バイナリ ※しぃペインターを使用する場合
-  ｜PCHViewer.jar    バイナリ ※しぃペインター対応版
-
 ※メール通知機能を使用する場合、下記を追加
 ./-- 同ルート
   ｜noticemail.inc
