@@ -57,6 +57,10 @@ config.phpの設定をし、アップロードしてpotiboard.phpのあるディ
 
 ## 履歴
 
+### [2021/02/03] picpsot.php, thumbnail.php
+
+- コード整理 (by さこつ)
+
 ### [2021/02/02] v2.23.0 lot.210202.0
 
 - filter_input()で取得可能な変数を関数の引数に使用しない (by さとぴあ)
