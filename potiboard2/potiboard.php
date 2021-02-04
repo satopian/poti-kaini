@@ -5,8 +5,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board改二 
 // バージョン :
-define('POTI_VER','v2.23.1');
-define('POTI_LOT','lot.210203.0'); 
+define('POTI_VER','v2.23.2');
+define('POTI_LOT','lot.210204'); 
 /*
   (C)sakots >> https://poti-k.info/
 
@@ -660,15 +660,15 @@ function regist(){
 	if(($_SERVER["REQUEST_METHOD"]) !== "POST") error(MSG006);
 
 	$resto = filter_input(INPUT_POST, 'resto',FILTER_VALIDATE_INT);
-	$name = newstring(filter_input(INPUT_POST, 'name'));
-	$email = newstring(filter_input(INPUT_POST, 'email'));
-	$url = newstring(filter_input(INPUT_POST, 'url',FILTER_VALIDATE_URL));
-	$sub = newstring(filter_input(INPUT_POST, 'sub'));
-	$com = newcomment(filter_input(INPUT_POST, 'com'));
-	$fcolor = newstring(filter_input(INPUT_POST, 'fcolor'));
+	$com = filter_input(INPUT_POST, 'com');
+	$name = filter_input(INPUT_POST, 'name');
+	$email = filter_input(INPUT_POST, 'email');
+	$url = filter_input(INPUT_POST, 'url',FILTER_VALIDATE_URL);
+	$sub = filter_input(INPUT_POST, 'sub');
+	$fcolor = filter_input(INPUT_POST, 'fcolor');
 	$pwd = newstring(filter_input(INPUT_POST, 'pwd'));
 	$pwdc = filter_input(INPUT_COOKIE, 'pwdc');
-	
+
 	$userip = get_uip();
 	//ホスト取得
 	$host = gethostbyaddr($userip);
@@ -752,29 +752,6 @@ function regist(){
 		}
 	}
 
-	//入力チェック
-	$checkd_post = check_post($com,$name,$email,$sub,$dest);
-	$com = $checkd_post['com'];
-	$name = $checkd_post['name'];
-	$email = $checkd_post['email'];
-	$sage = $checkd_post['sage'];
-	$sub = $checkd_post['sub'];
-	if(strlen($resto) > 10) error(MSG015,$dest);
-	if(USE_NAME&&!$name) error(MSG009,$dest);
-	if(USE_COM&&!$com) error(MSG008,$dest);
-	if(USE_SUB&&!$sub) error(MSG010,$dest);
-
-	if(USE_CHECK_NO_FILE){
-		if(!USE_IMG_UPLOAD && $admin!==$ADMIN_PASS){
-			$textonly=true;//画像なし
-		}
-		if(!$resto&&!$textonly&&!$is_file_dest) error(MSG007,$dest);
-		if(RES_UPLOAD&&$resto&&!$textonly&&!$is_file_dest) error(MSG007,$dest);
-	}
-	if(!$resto&&DENY_COMMENTS_ONLY&&!$is_file_dest&&$admin!==$ADMIN_PASS) error(MSG039,$dest);
-
-	if(!$com&&!$is_file_dest) error(MSG008,$dest);
-
 	// パスワード未入力の時はパスワードを生成してクッキーにセット
 	$c_pass=filter_input(INPUT_POST, 'pwd');//エスケープ前の値をCookieにセット
 	if($pwd===''){
@@ -797,13 +774,27 @@ function regist(){
 	$date = str_replace(",", "&#44;", $date);
 	$ptime = str_replace(",", "&#44;", $ptime);
 
-	//改行コード
-	$formatted_text = create_formatted_text_from_post($com,$name,$email,$url,$sub);
-	$com=$formatted_text['com'];
-	$name=$formatted_text['name'];
-	$email=$formatted_text['email'];
-	$url=$formatted_text['url'];
-	$sub=$formatted_text['sub'];
+	if(USE_CHECK_NO_FILE){
+		if(!USE_IMG_UPLOAD && $admin!==$ADMIN_PASS){
+			$textonly=true;//画像なし
+		}
+		if(!$resto&&!$textonly&&!$is_file_dest) error(MSG007,$dest);
+		if(RES_UPLOAD&&$resto&&!$textonly&&!$is_file_dest) error(MSG007,$dest);
+	}
+	if(!$resto&&DENY_COMMENTS_ONLY&&!$is_file_dest&&$admin!==$ADMIN_PASS) error(MSG039,$dest);
+	if(strlen($resto) > 10) error(MSG015,$dest);
+
+	//フォーマット
+	$formatted_post = create_formatted_text_from_post($com,$name,$email,$url,$sub,$fcolor,$dest);
+	$com = $formatted_post['com'];
+	$name = $formatted_post['name'];
+	$email = $formatted_post['email'];
+	$url = $formatted_post['url'];
+	$sub = $formatted_post['sub'];
+	$fcolor = $formatted_post['fcolor'];
+	$sage = $formatted_post['sage'];
+
+	if(!$com&&!$is_file_dest) error(MSG008,$dest);
 
 	//ログ読み込み
 	$fp=fopen(LOGFILE,"r+");
@@ -1143,16 +1134,8 @@ function treedel($delno){
 
 // HTMLの特殊文字をエスケープ
 function newstring($str){
-	$str = trim($str);//先頭と末尾の空白除去
+	$str = trim($str);
 	$str = htmlspecialchars($str,ENT_QUOTES,'utf-8');
-	return str_replace(",", "&#44;", $str);//カンマをエスケープ
-}
-function newcomment($str){
-	global $admin,$ADMIN_PASS;
-	$str = trim($str);//先頭と末尾の空白除去
-	if($admin!==$ADMIN_PASS){//管理者以外タグ無効
-		$str = htmlspecialchars($str,ENT_QUOTES,'utf-8');
-	}
 	return str_replace(",", "&#44;", $str);//カンマをエスケープ
 }
 
@@ -1818,15 +1801,15 @@ function rewrite(){
 
 	if(($_SERVER["REQUEST_METHOD"]) !== "POST") error(MSG006);
 	
-	$name = newstring(filter_input(INPUT_POST, 'name'));
-	$email = newstring(filter_input(INPUT_POST, 'email'));
-	$url = newstring(filter_input(INPUT_POST, 'url',FILTER_VALIDATE_URL));
-	$sub = newstring(filter_input(INPUT_POST, 'sub'));
-	$com = newcomment(filter_input(INPUT_POST, 'com'));
+	$com = filter_input(INPUT_POST, 'com');
+	$name = filter_input(INPUT_POST, 'name');
+	$email = filter_input(INPUT_POST, 'email');
+	$url = filter_input(INPUT_POST, 'url',FILTER_VALIDATE_URL);
+	$sub = filter_input(INPUT_POST, 'sub');
+	$fcolor = filter_input(INPUT_POST, 'fcolor');
 	$no = filter_input(INPUT_POST, 'no',FILTER_VALIDATE_INT);
 	$pwd = newstring(filter_input(INPUT_POST, 'pwd'));
 	$admin = newstring(filter_input(INPUT_POST, 'admin'));
-	$fcolor = newstring(filter_input(INPUT_POST, 'fcolor'));
 
 	$userip = get_uip();
 	//ホスト取得
@@ -1835,13 +1818,6 @@ function rewrite(){
 	//NGワードがあれば拒絶
 	Reject_if_NGword_exists_in_the_post($com,$name,$email,$url,$sub);
 
-	//入力チェック
-	$checkd_post = check_post($com,$name,$email,$sub,$dest='');
-	$com = $checkd_post['com'];
-	$name = $checkd_post['name'];
-	$email = $checkd_post['email'];
-	$sub = $checkd_post['sub'];
-
 	// 時間
 	$date = now_date(time());//日付取得
 	$date .= UPDATE_MARK;
@@ -1849,14 +1825,15 @@ function rewrite(){
 		$date .= " ID:" . getId($userip, time());
 	}
 	$date = str_replace(",", "&#44;", $date);//カンマをエスケープ
-	
-	//改行コード
-	$formatted_text = create_formatted_text_from_post($com,$name,$email,$url,$sub);
-	$com=$formatted_text['com'];
-	$name=$formatted_text['name'];
-	$email=$formatted_text['email'];
-	$url=$formatted_text['url'];
-	$sub=$formatted_text['sub'];
+
+	//フォーマット
+	$formatted_post = create_formatted_text_from_post($com,$name,$email,$url,$sub,$fcolor,$dest='');
+	$com = $formatted_post['com'];
+	$name = $formatted_post['name'];
+	$email = $formatted_post['email'];
+	$url = $formatted_post['url'];
+	$sub = $formatted_post['sub'];
+	$fcolor = $formatted_post['fcolor'];
 	
 	//ログ読み込み
 	$fp=fopen(LOGFILE,"r+");
@@ -2165,53 +2142,55 @@ function Reject_if_NGword_exists_in_the_post($com,$name,$email,$url,$sub){
 	}
 	
 	//管理モードで使用できるタグを制限
-	$chk_com  = newcomment($chk_com);//管理者はタグ有効
 	if(preg_match('/<script|<\?php|<img|<a onmouseover|<iframe|<frame|<div|<table|<meta|<base|<object|<embed|<input|<body|<style/i', $chk_com)) error(MSG038);
 
 }
 
-//入力チェック
-function check_post($com,$name,$email,$sub,$dest=''){
-	
+//POSTされた入力をチェックしてログファイルに格納する書式にフォーマット
+function create_formatted_text_from_post($com,$name,$email,$url,$sub,$fcolor,$dest=''){
+
+	//入力チェック
 	if(!$com||preg_match("/\A\s*\z/u",$com)) $com="";
 	if(!$name||preg_match("/\A\s*\z/u",$name)) $name="";
-	$sage=(stripos($email,'sage')!==false);
-	$email = filter_var($email, FILTER_VALIDATE_EMAIL);
 	if(!$sub||preg_match("/\A\s*\z/u",$sub))   $sub="";
+	$name = str_replace("◆", "◇", $name);
+	$sage=(stripos($email,'sage')!==false);//メールをバリデートする前にsage判定
+	$email = filter_var($email, FILTER_VALIDATE_EMAIL);
 	if(strlen($com) > MAX_COM) error(MSG011,$dest);
 	if(strlen($name) > MAX_NAME) error(MSG012,$dest);
 	if(strlen($email) > MAX_EMAIL) error(MSG013,$dest);
 	if(strlen($sub) > MAX_SUB) error(MSG014,$dest);
-	$name = str_replace("◆", "◇", $name);
-
-	$checkd_post = [
-		'com' => $com,
-		'name' => $name,
-		'email' => $email,
-		'sage' => $sage,
-		'sub' => $sub,
-	];
-	return $checkd_post;
-}
-
-//改行コード
-function create_formatted_text_from_post($com,$name,$email,$url,$sub){
-
+	if(USE_NAME&&!$name) error(MSG009,$dest);
+	if(USE_COM&&!$com) error(MSG008,$dest);
+	if(USE_SUB&&!$sub) error(MSG010,$dest);
 	
+	//コメントのエスケープ
+	global $ADMIN_PASS;
+	$admin=filter_input(INPUT_POST,'admin');
+	if($com && $admin!==$ADMIN_PASS){//管理者以外タグ無効
+		$com = htmlspecialchars($com,ENT_QUOTES,'utf-8');
+	}
+	$com = str_replace(",", "&#44;", $com);
+	
+	// 改行コード
 	$com = str_replace(["\r\n","\r"], "\n", $com);
 	$com = preg_replace("/(\s*\n){4,}/u","\n",$com); //不要改行カット
 	$com = nl2br($com);	//改行文字の前に HTMLの改行タグ
-	$formatted_text = [
+	
+	$formatted_post = [//コメント以外のエスケープと配列への格納
 		'com' => $com,
-		'name' => $name,
-		'email' => $email,
-		'url' => $url,
-		'sub' => $sub,
+		'name' => newstring($name),
+		'email' => newstring($email),
+		'sage' => newstring($sage),
+		'url' => newstring($url),
+		'sub' => newstring($sub),
+		'fcolor' => newstring($fcolor),
 	];
-	foreach($formatted_text as $key => $val){//改行コード除去
-		$formatted_text[$key]=str_replace(["\r\n","\n","\r"],"",$val);
+	foreach($formatted_post as $key => $val){
+		$formatted_post[$key]=str_replace(["\r\n","\n","\r"],"",$val);//改行コード一括除去
 	}
-	return $formatted_text;
+	
+	return $formatted_post;
 }
 
 // HTML出力
