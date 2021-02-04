@@ -29,7 +29,6 @@
 		<noscript>
 			<link rel="stylesheet" href="<% echo(skindir) %>css/mono_main.css" type="text/css">
 		</noscript>
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.6/css/all.css">
 		<title><% echo(title) %></title>
 	</head>
 	<body>
@@ -49,7 +48,7 @@
 					<a href="<% echo(self) %>?mode=catalog">[カタログ]</a>
 					<a href="<% echo(self) %>">[通常モード]</a>
 					<a href="<% echo(self) %>?mode=piccom<% def(resno) %>&amp;resto=<% echo(resno) %><% /def %>">[投稿途中の絵]</a>
-					<a href="#footer"><i class="fas fa-angle-double-down fa-fw fa-lg" title="一番下へ"></i></a>
+					<a href="#footer" title="一番下へ">[↓]</a>
 				</nav>
 			</article>
 			<hr>
@@ -187,7 +186,7 @@
 							<% def(regist) %>
 							<tr>
 								<td>Pass</td>
-								<td><input class="form" type="password" name="pwd" size="8" value="" autocomplete="current-password"><small>(投稿の削除に使います)</small></td>
+								<td><input class="form" type="password" name="pwd" size="8" value="" autocomplete="current-password"> <small>(投稿の削除に使います)</small></td>
 							</tr>
 							<% /def %>
 						</table>
@@ -195,7 +194,7 @@
 						<ul>
 							<% def(upfile) %>
 							<li>添付可能ファイル：GIF, JPG, PNG, WEBP ブラウザによっては正常に添付できないかもしれません。</li>
-							<li>画像は横 <% echo(maxw) %>ピクセル、縦 <% echo(maxh) %>ピクセルを超えると縮小表示されます。</li>
+							<li>画像は幅 <% echo(maxw) %>px、高さ <% echo(maxh) %>pxを超えると縮小表示されます。</li>
 							<li>最大投稿データ量は <% echo(maxkb) %> KB までです。sage機能付き。</li>
 							<% /def %>
 							<% def(rewrite) %>
@@ -235,7 +234,7 @@
 						<label><input type="radio" name="admin" value="post">ADMIN POST</label>
 						<input type="hidden" name="mode" value="admin">
 						<input class="form" type="password" name="pass" size="8">
-						<input class="button" type="submit" value="SUBMIT">
+						<input class="button" type="submit" value="ADMIN IN">
 					</form>
 				</div>
 			</section>
@@ -253,7 +252,8 @@
 						<input type="submit" value="UPDATE" class="button">
 						htmlファイルの更新を行います
 					</form>
-					<form action="<% echo(self) %>" method="post">
+					<hr>
+					<form action="<% echo(self) %>" method="post" class="delmode">
 						<input type="hidden" name="mode" value="admin">
 						<input type="hidden" name="admin" value="del">
 						<input type="hidden" name="pass" value="<% echo(pass) %>">
@@ -270,7 +270,8 @@
 								<th>名前</th>
 								<th>コメント</th>
 								<th>Host</th>
-								<th>Image (Bytes) md5</th>
+								<th>Image (size)</th>
+								<th>md5</th>
 							</tr>
 							<% def(del) %><% each(del) %>
 							<tr>
@@ -281,7 +282,8 @@
 								<td><% echo(del/name) %></td>
 								<td><% echo(del/com) %></td>
 								<td><% echo(del/host) %></td>
-								<td><% def(del/clip) %><% echo(del/clip) %>(<% echo(del/size) %>)<br><% echo(del/chk) %><% /def %></td>
+								<td><% def(del/clip) %><% echo(del/clip) %>(<% echo(del/size) %>)byte<% /def %></td>
+								<td><% def(del/clip) %><% echo(del/chk) %><% /def %></td>
 							</tr>
 							<% /each %><% /def %>
 						</table>
@@ -312,7 +314,7 @@
 				<!-- GazouBBS v3.0 --><!-- ふたば改0.8 --><!-- POTI-board -->
 				<p>
 					<a href="https://poti-k.info/" target="_top" title="POTI-board改二 <% echo(verlot) 	%>">POTI-board改二 <% echo(ver) %></a>
-					Web Style by <a href="https://poti-k.info/" target="_top" title="nee2 <% echo(tver) %>">MONO</a>
+					Web Style by <a href="https://poti-k.info/" target="_top" title="MONO <% echo(tver) %>">MONO</a>
 				</p>
 				<p>
 					OriginalScript -

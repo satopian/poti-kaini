@@ -29,7 +29,6 @@
 		<noscript>
 			<link rel="stylesheet" href="<% echo(skindir) %>css/mono_main.css" type="text/css">
 		</noscript>
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.6/css/all.css">
 		<title><% echo(title) %></title>
 		<% def(notres) %>
 		<% def(n) %>
@@ -75,7 +74,7 @@
 					<a href="<% echo(self) %>?mode=catalog">[カタログ]</a>
 					[通常モード]
 					<a href="<% echo(self) %>?mode=piccom<% def(resno) %>&amp;resto=<% echo(resno) %><% /def %>">[投稿途中の絵]</a>
-					<a href="#footer"><i class="fas fa-angle-double-down fa-fw fa-lg" title="一番下へ"></i></a>
+					<a href="#footer" title="一番下へ">[↓]</a>
 				</nav>
 				<hr>
 				<% def(resno) %>
@@ -124,9 +123,9 @@
 					</form>
 					<% def(paint2) %>
 					<ul>
-						<li>お絵かきできる画像のサイズは横 300～<% echo (pmaxw) %>、縦 300～<% echo (pmaxh) %>の範囲内です。</li>
-						<li>画像は横 <% echo (maxw) %>ピクセル、縦 <% echo (maxh) %>ピクセルを超えると縮小表示されます。</li>
-						<li>USE NEOのチェックが入っていればPaintBBS NEOが起動します。</li>
+						<li>お絵かきできる画像のサイズは幅 300～<% echo (pmaxw) %>、高さ 300～<% echo (pmaxh) %>の範囲内です。</li>
+						<li>画像は幅 <% echo (maxw) %>px、高さ <% echo (maxh) %>pxを超えると縮小表示されます。</li>
+						<li>USE NEOのチェックが入っていればPaintBBS NEOが、外せばしぃペインターが起動します。</li>
 						<% def(addinfo) %><% echo (addinfo) %><% /def %>
 					</ul>
 					<% /def %>
@@ -276,11 +275,11 @@
 									(function(){
 										var url = encodeURIComponent('<% echo(rooturl) %><% echo(self) %>?res=<% echo(oya/no) %>'); //ページURL。一応エンコード
 										var title = encodeURIComponent('[<% echo(oya/no) %>] <% echo(oya/sub) %> by <% echo(oya/name) %> - <% echo(title) %>'); //ページタイトル。同上。
-									document.write( '<a target="_blank" href="https://twitter.com/intent/tweet?&text=' + title + '&url=' + url + '"><span class="icon-twitter button"><i class="fab fa-twitter"></i> tweet</span></a> <a target="_blank" class="fb btn" href="http://www.facebook.com/share.php?u=' + url + '"><span class="icon-facebook2 button"><i class="fab fa-facebook-square"></i> share</span></a>' );})();
+									document.write( '<a target="_blank" href="https://twitter.com/intent/tweet?&text=' + title + '&url=' + url + '"><span class="icon-twitter button"><img src="<% echo(skindir) %>img/twitter.svg" alt=""> tweet</span></a> <a target="_blank" class="fb btn" href="http://www.facebook.com/share.php?u=' + url + '"><span class="icon-facebook2 button"><img src="<% echo(skindir) %>img/facebook.svg" alt=""> share</span></a>' );})();
 								</script>
 							</span>
 							<% /def %>
-							<% def(notres) %><span class="button"><a href="<% echo(self) %>?res=<% echo(oya/no) %>"><i class="fas fa-reply-all"></i> 返信</a></span> <a href="#header"><i class="fas fa-angle-double-up fa-fw fa-lg" title="一番上へ"></i></a><% /def %>
+							<% def(notres) %><span class="button"><a href="<% echo(self) %>?res=<% echo(oya/no) %>"><img src="<% echo(skindir) %>img/rep.svg" alt=""> 返信</a></span> <a href="#header" title="一番上へ">[↑]</a><% /def %>
 							<% /if %>
 							<% def(resform) %>
 							<% def(oya/disp_resform) %>
@@ -295,11 +294,11 @@
 								<textarea class="form" name="com" cols="56" rows="3" wrap="soft"></textarea><br>
 								<label>Pass <input class="form" type="password" name="pwd" size="8" value="" autocomplete="current-password"></label>
 								<input class="button" type="submit" value="返信">
-								<a href="#header"><i class="fas fa-angle-double-up fa-fw fa-lg" title="一番上へ"></i></a>
+								<a href="#header" title="一番上へ">[↑]</a>
 							</form>
 							<% elsedef %>
 							<p class="resform">
-								<a href="#header"><i class="fas fa-angle-double-up fa-fw fa-lg" title="一番上へ"></i></a>
+								<a href="#header" title="一番上へ">[↑]</a>
 							</p>
 							<% /def %>
 							<% /def %>

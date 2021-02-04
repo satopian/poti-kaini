@@ -29,8 +29,6 @@
 		<noscript>
 			<link rel="stylesheet" href="<% echo(skindir) %>css/mono_main.css" type="text/css">
 		</noscript>
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.6/css/all.css">
-		<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css"> -->
 		<title><% echo(title) %></title>
 	</head>
 	<body>
@@ -50,7 +48,7 @@
 					[カタログ]
 					<a href="<% echo(self) %>">[通常モード]</a>
 					<a href="<% echo(self) %>?mode=piccom<% def(resno) %>&amp;resto=<% echo(resno) %><% /def %>">[投稿途中の絵]</a>
-					<a href="#footer"><i class="fas fa-angle-double-down fa-fw fa-lg" title="一番下へ"></i></a>
+					<a href="#footer" title="一番下へ">[↓]</a>
 				</nav>
 				<hr>
 				<h2>カタログモード</h2>
@@ -62,36 +60,8 @@
 							<% def(applet) %>
 							<input type="hidden" name="shi" value="1">
 							<% /def %>
-							<label>
-								幅：<select name="picw" title="幅" class="form">
-									<?php
-									//幅 300から、PMAX_W で設定した最大値まで。
-										for($i = 300; $i <=PMAX_W ; $i+=50){//50ずつ増える
-										if(PDEF_W==$i){//デフォルトサイズ
-										echo'<option value="'.$i.'" selected>'.$i.'</option>';
-										}
-										else{
-										echo'<option value="'.$i.'">'.$i.'</option>';
-										}
-										}
-									?>
-								</select>
-							</label>
-							<label>
-								高さ：<select name="pich" title="高さ" class="form">
-									<?php
-									//高さ 300から、PMAX_H で設定した最大値まで。
-										for($i = 300; $i <=PMAX_H ; $i+=50){//50ずつ増える
-										if(PDEF_H==$i){//デフォルトサイズ
-										echo'<option value="'.$i.'" selected>'.$i.'</option>';
-										}
-										else{
-										echo'<option value="'.$i.'">'.$i.'</option>';
-										}
-										}
-									?>
-								</select>
-							</label>
+							幅：<input name="picw" type="number" title="幅" class="form" value="<% echo(pdefw) %>" min="300" max="<% echo(pmaxw) %>">
+							高さ：<input name="pich" type="number" title="高さ" class="form" value="<% echo(pdefh) %>" min="300" max="<% echo(pmaxh) %>">
 							<% def(resno) %>
 							<input type="hidden" name="resto" value="<% echo(resno) %>">
 							<% /def %>
@@ -104,9 +74,9 @@
 					</form>
 					<% def(paint2) %>
 					<ul>
-						<li>お絵かきできる画像のサイズは横 300～<% echo (pmaxw) %>、縦 300～<% echo (pmaxh) %>の範囲内です。</li>
-						<li>画像は横 <% echo (maxw) %>ピクセル、縦 <% echo (maxh) %>ピクセルを超えると縮小表示されます。</li>
-						<li>USE NEOのチェックが入っていればPaintBBS NEOが起動します。</li>
+						<li>お絵かきできる画像のサイズは幅 300～<% echo (pmaxw) %>、高さ 300～<% echo (pmaxh) %>の範囲内です。</li>
+						<li>画像は幅 <% echo (maxw) %>px、高さ <% echo (maxh) %>pxを超えると縮小表示されます。</li>
+						<li>USE NEOのチェックが入っていればPaintBBS NEOが、外せばしぃペインターが起動します。</li>
 						<% def(addinfo) %><% echo (addinfo) %><% /def %>
 					</ul>
 					<% /def %>
