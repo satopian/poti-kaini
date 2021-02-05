@@ -59,7 +59,7 @@
 			<% def(regist) %>
 			<script type="text/javascript" src="loadcookie.js"></script>
 			<% /def %>
-			<% def(admin) %>
+			<% def(admin) %><% def(rewrite) %><% elsedef %>
 			<article class="epost">
 				<form action="<% echo(self) %>" method="post" enctype="multipart/form-data">
 					<p>
@@ -81,7 +81,7 @@
 					</p>
 				</form>
 			</article>
-			<% /def %>
+			<% /def %><% /def %>
 			<% /def %>
 			<% def(n) %>
 			<!-- 管理者お絵かきモードおわり -->
@@ -193,7 +193,7 @@
 						<% def(regist) %>
 						<ul>
 							<% def(upfile) %>
-							<li>添付可能ファイル：GIF, JPG, PNG, WEBP ブラウザによっては正常に添付できないかもしれません。</li>
+							<li>添付可能ファイルはGIF, JPG, PNG, WEBPです。ブラウザによっては正常に画像が添付できないことがあるかもしれません。</li>
 							<li>画像は幅 <% echo(maxw) %>px、高さ <% echo(maxh) %>pxを超えると縮小表示されます。</li>
 							<li>最大投稿データ量は <% echo(maxkb) %> KB までです。sage機能付き。</li>
 							<% /def %>
@@ -314,7 +314,7 @@
 				<!-- GazouBBS v3.0 --><!-- ふたば改0.8 --><!-- POTI-board -->
 				<p>
 					<a href="https://poti-k.info/" target="_top" title="POTI-board改二 <% echo(verlot) 	%>">POTI-board改二 <% echo(ver) %></a>
-					Web Style by <a href="https://poti-k.info/" target="_top" title="MONO <% echo(tver) %>">MONO</a>
+					Web Style by <a href="https://poti-k.info/" target="_top" title="nee2 <% echo(tver) %>">MONO</a>
 				</p>
 				<p>
 					OriginalScript -
