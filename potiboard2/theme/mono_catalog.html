@@ -60,8 +60,11 @@
 							<% def(applet) %>
 							<input type="hidden" name="shi" value="1">
 							<% /def %>
-							幅：<input name="picw" type="number" title="幅" class="form" value="<% echo(pdefw) %>" min="300" max="<% echo(pmaxw) %>">
-							高さ：<input name="pich" type="number" title="高さ" class="form" value="<% echo(pdefh) %>" min="300" max="<% echo(pmaxh) %>">
+							<label>幅：<input name="picw" type="number" title="幅" class="form" value="<% echo(pdefw) %>" min="300" max="<% echo(pmaxw) %>"></label>
+							<label>高さ：<input name="pich" type="number" title="高さ" class="form" value="<% echo(pdefh) %>" min="300" max="<% echo(pmaxh) %>"></label>
+							<% def(use_select_palettes) %>
+							パレット：<select name="selected_palette_no" title="パレット" class="form"><% echo(palette_select_tags) %></select>
+							<% /def %>
 							<% def(resno) %>
 							<input type="hidden" name="resto" value="<% echo(resno) %>">
 							<% /def %>
