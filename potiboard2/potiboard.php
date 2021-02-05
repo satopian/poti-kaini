@@ -5,8 +5,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board改二 
 // バージョン :
-define('POTI_VER','v2.23.2');
-define('POTI_LOT','lot.210204'); 
+define('POTI_VER','v2.25.0');
+define('POTI_LOT','lot.210205'); 
 /*
   (C)sakots >> https://poti-k.info/
 
@@ -176,7 +176,6 @@ switch($mode){
 			if($pwd !== $ADMIN_PASS){
 				return error(MSG029);
 			}
-			$admin=$pwd;
 		}
 		return regist();
 	case 'admin':
@@ -331,13 +330,13 @@ function form($resno="",$adminin="",$tmp=""){
 	global $fontcolors,$qualitys;
 	global $ADMIN_PASS;
 
-	$admin = ($adminin === 'valid');
+	$admin_valid = ($adminin === 'valid');
 	$quality = filter_input(INPUT_POST, 'quality',FILTER_VALIDATE_INT);
 
 	$dat['form'] = true;
-	if(!USE_IMG_UPLOAD && DENY_COMMENTS_ONLY && !$resno && !$admin){//コメントのみも画像アップロードも禁止
+	if(!USE_IMG_UPLOAD && DENY_COMMENTS_ONLY && !$resno && !$admin_valid){//コメントのみも画像アップロードも禁止
 		$dat['form'] = false;//トップページのフォームを閉じる
-		if(USE_PAINT==1 && !$resno && !$admin){
+		if(USE_PAINT==1 && !$resno && !$admin_valid){
 			$dat['paint2'] = true;
 		}
 	}
@@ -348,7 +347,7 @@ function form($resno="",$adminin="",$tmp=""){
 		$dat['animechk'] = DEF_ANIME ? ' checked' : '';
 		$dat['pmaxw'] = PMAX_W;
 		$dat['pmaxh'] = PMAX_H;
-		if(USE_PAINT==2 && !$resno && !$admin){
+		if(USE_PAINT==2 && !$resno && !$admin_valid){
 			$dat['paint2'] = true;
 			$dat['form'] = false;
 		}
@@ -362,14 +361,16 @@ function form($resno="",$adminin="",$tmp=""){
 		$dat['notres'] = true;
 	}
 
-	if($admin) $dat['admin'] = $ADMIN_PASS;
+	if($admin_valid) {
+		$dat = array_merge($dat,admin_valid());//セッションによる管理者認証
+	}
 
 	$dat['maxbyte'] = 2048 * 1024;//フォームのHTMLによるファイルサイズの制限 2Mまで
 	$dat['usename'] = USE_NAME ? ' *' : '';
 	$dat['usesub']  = USE_SUB ? ' *' : '';
 	if(USE_COM||($resno&&!RES_UPLOAD)) $dat['usecom'] = ' *';
 	//本文必須の設定では無い時はレスでも画像かコメントがあれば通る
-	if(!USE_IMG_UPLOAD && !$admin){//画像アップロード機能を使わない時
+	if(!USE_IMG_UPLOAD && !$admin_valid){//画像アップロード機能を使わない時
 		$dat['upfile'] = false;
 	} else{
 		if((!$resno && !$tmp) || (RES_UPLOAD && !$tmp)) $dat['upfile'] = true;
@@ -399,6 +400,16 @@ function form($resno="",$adminin="",$tmp=""){
 	}
 	$dat['qualitys'] = $qline;
 
+	return $dat;
+}
+
+//セッションによる管理者認証
+function admin_valid(){//この関数を呼ぶのは管理パスが一致したときだけ
+	session_start();
+	$token = openssl_random_pseudo_bytes(16);
+	$token = bin2hex($token);
+	$_SESSION['admin_in'] = $token;//ワンタイムトークンの発行
+	$dat['admin'] = $token;//hiddenにトークン、管理モード(admin)をtrueに。
 	return $dat;
 }
 
@@ -659,6 +670,8 @@ function regist(){
 	
 	if(($_SERVER["REQUEST_METHOD"]) !== "POST") error(MSG006);
 
+	session_start();
+
 	$resto = filter_input(INPUT_POST, 'resto',FILTER_VALIDATE_INT);
 	$com = filter_input(INPUT_POST, 'com');
 	$name = filter_input(INPUT_POST, 'name');
@@ -735,7 +748,7 @@ function regist(){
 		if($pictmp==2){
 			copy($upfile, $dest);
 		} else{//フォームからのアップロード
-			if(!USE_IMG_UPLOAD && $admin!==$ADMIN_PASS){//アップロード禁止で管理画面からの投稿ではない時
+			if(!USE_IMG_UPLOAD && $_SESSION['admin_in']!==$admin){//アップロード禁止で管理画面からの投稿ではない時
 				error(MSG006,$upfile);
 			}
 			if(!preg_match('/\A(jpe?g|jfif|gif|png|webp)\z/i', pathinfo($upfile_name, PATHINFO_EXTENSION))){//もとのファイル名の拡張子
@@ -775,13 +788,13 @@ function regist(){
 	$ptime = str_replace(",", "&#44;", $ptime);
 
 	if(USE_CHECK_NO_FILE){
-		if(!USE_IMG_UPLOAD && $admin!==$ADMIN_PASS){
+		if(!USE_IMG_UPLOAD && $_SESSION['admin_in']!==$admin){
 			$textonly=true;//画像なし
 		}
 		if(!$resto&&!$textonly&&!$is_file_dest) error(MSG007,$dest);
 		if(RES_UPLOAD&&$resto&&!$textonly&&!$is_file_dest) error(MSG007,$dest);
 	}
-	if(!$resto&&DENY_COMMENTS_ONLY&&!$is_file_dest&&$admin!==$ADMIN_PASS) error(MSG039,$dest);
+	if(!$resto&&DENY_COMMENTS_ONLY&&!$is_file_dest&&$_SESSION['admin_in']!==$admin) error(MSG039,$dest);
 	if(strlen($resto) > 10) error(MSG015,$dest);
 
 	//フォーマット
@@ -1141,7 +1154,7 @@ function newstring($str){
 
 // ユーザー削除
 function userdel(){
-	global $path,$onlyimgdel;
+	global $path,$onlyimgdel,$ADMIN_PASS;
 
 	$del = filter_input(INPUT_POST,'del',FILTER_VALIDATE_INT,FILTER_REQUIRE_ARRAY);//$del は配列
 	$pwd = newstring(filter_input(INPUT_POST, 'pwd'));
@@ -1166,7 +1179,7 @@ function userdel(){
 	foreach($line as $i => $value){//190701
 		if($value!==""){
 			list($no,,,,,,,$dhost,$pass,$ext,,,$time,,) = explode(",",$value);
-			if(in_array($no,$del) && check_password($pwd, $pass, $pwd)){
+			if(in_array($no,$del) && (check_password($pwd, $pass)||$pwd===$ADMIN_PASS)){
 				if(!$onlyimgdel){	//記事削除
 					treedel($no);
 					if(USER_DELETES > 2){
@@ -1322,6 +1335,8 @@ function paintform(){
 	global $resto,$qualitys,$usercode;
 	global $ADMIN_PASS,$pallets_dat;
 
+	session_start();
+
 	$mode = filter_input(INPUT_POST, 'mode');
 	$picw = filter_input(INPUT_POST, 'picw',FILTER_VALIDATE_INT);
 	$pich = filter_input(INPUT_POST, 'pich',FILTER_VALIDATE_INT);
@@ -1340,7 +1355,7 @@ function paintform(){
 	setcookie("pichc", $pich , time()+(86400*SAVE_COOKIE));//高さ
 
 	//pchファイルアップロードペイント
-	if($admin===$ADMIN_PASS){
+	if($_SESSION['admin_in']===$admin){
 		
 		$pchfilename = isset($_FILES['pch_upload']['name']) ? newstring(basename($_FILES['pch_upload']['name'])) : '';
 		
@@ -1759,7 +1774,7 @@ function editform(){
 	foreach($line as $value){
 		if($value){
 			list($no,,$name,$email,$sub,$com,$url,$ehost,$pass,,,,,,,$fcolor) = explode(",", rtrim($value));
-			if ($no == $del[0] && check_password($pwd, $pass, $pwd)){
+			if ($no == $del[0] && (check_password($pwd, $pass)||$pwd===$ADMIN_PASS)){
 				$flag = TRUE;
 				break;
 			}
@@ -1771,7 +1786,11 @@ function editform(){
 
 	$dat['post_mode'] = true;
 	$dat['rewrite'] = $no;
-	if($ADMIN_PASS === $pwd) $dat['admin'] = $ADMIN_PASS;
+	if($ADMIN_PASS === $pwd) {
+		$dat = array_merge($dat,admin_valid());//セッションによる管理者認証
+	}else{
+		$dat['pwd'] = $pwd;//編集画面に管理パスをださない
+	}
 	$dat['maxbyte'] = MAX_KB * 1024;
 	$dat['maxkb']   = MAX_KB;
 	$dat['addinfo'] = $addinfo;
@@ -1781,7 +1800,6 @@ function editform(){
 	$com = preg_replace("#<br */?>#i","\n",$com); // <br>または<br />を改行へ戻す
 	$dat['com'] = $com;
 	$dat['url'] = $url;
-	$dat['pwd'] = $pwd;
 
 	//文字色
 	if(USE_FONTCOLOR){
@@ -2107,6 +2125,8 @@ function charconvert($str){
 // NGワードがあれば拒絶
 function Reject_if_NGword_exists_in_the_post($com,$name,$email,$url,$sub){
 	global $badstring,$badname,$badstr_A,$badstr_B,$pwd,$ADMIN_PASS,$admin;
+	session_start();
+
 	//チェックする項目から改行・スペース・タブを消す
 	$chk_com  = preg_replace("/\s/u", "", $com );
 	$chk_name = preg_replace("/\s/u", "", $name );
@@ -2120,7 +2140,7 @@ function Reject_if_NGword_exists_in_the_post($com,$name,$email,$url,$sub){
 	}
 
 	//本文へのURLの書き込みを禁止
-	if(!($pwd===$ADMIN_PASS||$admin===$ADMIN_PASS)){//どちらも一致しなければ
+	if(!($pwd===$ADMIN_PASS||$_SESSION['admin_in']===$admin)){//どちらも一致しなければ
 		if(DENY_COMMENTS_URL && preg_match('/:\/\/|\.co|\.ly|\.gl|\.net|\.org|\.cc|\.ru|\.su|\.ua|\.gd/i', $com)) error(MSG036);
 	}
 
@@ -2165,11 +2185,13 @@ function create_formatted_text_from_post($com,$name,$email,$url,$sub,$fcolor,$de
 	if(USE_SUB&&!$sub) error(MSG010,$dest);
 	
 	//コメントのエスケープ
-	global $ADMIN_PASS;
+	session_start();
+
 	$admin=filter_input(INPUT_POST,'admin');
-	if($com && $admin!==$ADMIN_PASS){//管理者以外タグ無効
+	if($com && $_SESSION['admin_in']!==$admin){//管理者以外タグ無効
 		$com = htmlspecialchars($com,ENT_QUOTES,'utf-8');
 	}
+	$com = trim($com);
 	$com = str_replace(",", "&#44;", $com);
 	
 	// 改行コード
@@ -2475,11 +2497,12 @@ function get_lineindex ($line){
 	return $lineindex;
 }
 
-function check_password ($pwd, $epwd, $adminPass = false) {
-	global $ADMIN_PASS;
+function check_password ($pwd, $epwd, $admin = false) {
+
+	session_start();
 	return
 		password_verify($pwd, $epwd)
 		|| $epwd === substr(md5($pwd), 2, 8)
-		|| ($adminPass ? ($adminPass === $ADMIN_PASS) : false); // 管理パスを許可する場合
+		|| ($admin ? ($_SESSION['admin_in']===$admin) : false); // 管理者モード
 }
 
