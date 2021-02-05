@@ -166,7 +166,8 @@
 							<tr>
 								<td>UpFile</td>
 								<td>
-									<input class="form" type="file" name="upfile" size="20" accept="image/*">
+									<input class="form" type="file" name="upfile" accept="image/*">
+									<span class="preview"></span>
 									<% def(hide_the_checkbox_for_nofile) %>
 									<% elsedef %>
 									[<label><input type="checkbox" name="textonly" value="on"<% def(resno) %> checked<% /def %>>No File</label>]
@@ -187,7 +188,7 @@
 							<li>画像を添付する場合は、'No File'のチェックを外して下さい。</li>
 							<% /def %>
 							<% /def %>
-							<li>添付可能ファイル：GIF, JPG, PNG ブラウザによっては正常に添付できないことがあります。</li>
+							<li>添付可能ファイルはGIF, JPG, PNG, WEBPです。ブラウザによっては正常に画像が添付できないことがあるかもしれません。</li>
 							<li>画像は横 <% echo(maxw) %>ピクセル、縦 <% echo(maxh) %>ピクセルを超えると縮小表示されます。</li>
 							<% /def %>
 							<li>最大投稿データ量は <% echo(maxkb) %> KB までです。sage機能付き。</li>

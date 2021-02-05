@@ -6,7 +6,7 @@ define('USE_DUMP_FOR_DEBUG','0');
 // POTI-board改二 
 // バージョン :
 define('POTI_VER','v2.25.0');
-define('POTI_LOT','lot.210205'); 
+define('POTI_LOT','lot.210205.0'); 
 /*
   (C)sakots >> https://poti-k.info/
 
