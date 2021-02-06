@@ -218,9 +218,9 @@
 						</figcaption>
 						<figure>
 							<% def(oya/thumb) %>
-							<a href="<% echo(oya/src) %>" target="_blank" title="<% echo(oya/sub) %>"><img src="<% echo(oya/imgsrc) %>" alt="<% echo(oya/srcname) %>"></a>
+							<a href="<% echo(oya/src) %>" target="_blank" title="<% echo(oya/sub) %>" rel="noopener"><img src="<% echo(oya/imgsrc) %>" alt="<% echo(oya/srcname) %>" width="<% echo (oya/w) %>" height="<% echo (oya/h) %>"></a>
 							<% elsedef %>
-							<img src="<% echo(oya/imgsrc) %>" alt="<% echo(oya/srcname) %>" title="<% echo(oya/sub) %>">
+							<img src="<% echo(oya/imgsrc) %>" alt="<% echo(oya/srcname) %>" title="<% echo(oya/sub) %>" width="<% echo (oya/w) %>" height="<% echo (oya/h) %>">
 							<% /def %>
 						</figure>
 						<% /def %>
@@ -248,12 +248,11 @@
 										<br>
 										<% def(oya/res/continue) %>
 										<a href="<% echo(self) %>?mode=continue&amp;no=<% echo(oya/res/continue) %>">●続きを描く</a><% /def %><% def(oya/res/pch) %> <a href="<% echo(self) %>?mode=openpch&amp;pch=<% echo(oya/res/pch) %>" target="_blank">●動画</a><% /def %>
-										
 									</figcaption>
 									<% def(oya/res/thumb) %>
-									<a href="<% echo(oya/res/src) %>" title="<% echo(oya/res/sub) %>" target="_blank"><img src="<% echo(oya/res/imgsrc) %>" alt="<% echo(oya/res/srcname) %>"></a>
+									<a href="<% echo(oya/res/src) %>" title="<% echo(oya/res/sub) %>" target="_blank"><img src="<% echo(oya/res/imgsrc) %>" width="<% echo (oya/res/w) %>" height="<% echo (oya/res/h) %>" alt="<% echo(oya/res/srcname) %>"></a>
 									<% elsedef %>
-									<img src="<% echo(oya/res/imgsrc) %>" alt="<% echo(oya/res/srcname) %>" title="<% echo(oya/res/sub) %>">
+									<img src="<% echo(oya/res/imgsrc) %>" alt="<% echo(oya/res/srcname) %>" title="<% echo(oya/res/sub) %>" width="<% echo (oya/res/w) %>" height="<% echo (oya/res/h) %>">
 									<% /def %>
 								</figure>
 								<% /def %>
