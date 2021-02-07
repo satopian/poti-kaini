@@ -21,7 +21,6 @@ function l(){
 
 			}
 			if(document.forms[i].shi){
-				if(AP == "") AP = document.forms[i].shi[0].value;
 
 				checkd_if_formval_equal_cookieval(document.forms[i].shi,AP);
 

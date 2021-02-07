@@ -5,8 +5,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board改二 
 // バージョン :
-define('POTI_VER','v2.23.2');
-define('POTI_LOT','lot.210204.0'); 
+define('POTI_VER','v2.23.3');
+define('POTI_LOT','lot.210207'); 
 /*
   (C)sakots >> https://poti-k.info/
 
@@ -331,13 +331,13 @@ function form($resno="",$adminin="",$tmp=""){
 	global $fontcolors,$qualitys;
 	global $ADMIN_PASS;
 
-	$admin = ($adminin === 'valid');
+	$admin_valid = ($adminin === 'valid');
 	$quality = filter_input(INPUT_POST, 'quality',FILTER_VALIDATE_INT);
 
 	$dat['form'] = true;
-	if(!USE_IMG_UPLOAD && DENY_COMMENTS_ONLY && !$resno && !$admin){//コメントのみも画像アップロードも禁止
+	if(!USE_IMG_UPLOAD && DENY_COMMENTS_ONLY && !$resno && !$admin_valid){//コメントのみも画像アップロードも禁止
 		$dat['form'] = false;//トップページのフォームを閉じる
-		if(USE_PAINT==1 && !$resno && !$admin){
+		if(USE_PAINT==1 && !$resno && !$admin_valid){
 			$dat['paint2'] = true;
 		}
 	}
@@ -348,7 +348,7 @@ function form($resno="",$adminin="",$tmp=""){
 		$dat['animechk'] = DEF_ANIME ? ' checked' : '';
 		$dat['pmaxw'] = PMAX_W;
 		$dat['pmaxh'] = PMAX_H;
-		if(USE_PAINT==2 && !$resno && !$admin){
+		if(USE_PAINT==2 && !$resno && !$admin_valid){
 			$dat['paint2'] = true;
 			$dat['form'] = false;
 		}
@@ -362,14 +362,14 @@ function form($resno="",$adminin="",$tmp=""){
 		$dat['notres'] = true;
 	}
 
-	if($admin) $dat['admin'] = $ADMIN_PASS;
+	if($admin_valid) $dat['admin'] = $ADMIN_PASS;
 
 	$dat['maxbyte'] = 2048 * 1024;//フォームのHTMLによるファイルサイズの制限 2Mまで
 	$dat['usename'] = USE_NAME ? ' *' : '';
 	$dat['usesub']  = USE_SUB ? ' *' : '';
 	if(USE_COM||($resno&&!RES_UPLOAD)) $dat['usecom'] = ' *';
 	//本文必須の設定では無い時はレスでも画像かコメントがあれば通る
-	if(!USE_IMG_UPLOAD && !$admin){//画像アップロード機能を使わない時
+	if(!USE_IMG_UPLOAD && !$admin_valid){//画像アップロード機能を使わない時
 		$dat['upfile'] = false;
 	} else{
 		if((!$resno && !$tmp) || (RES_UPLOAD && !$tmp)) $dat['upfile'] = true;
@@ -1034,9 +1034,9 @@ function regist(){
 
 	//-- クッキー保存 --
 	//パスワード
-	setcookie ("pwdc", $c_pass,time()+(SAVE_COOKIE*24*3600));
+	setcookie ("pwdc", $c_pass,time()+(SAVE_COOKIE*24*3600));//<>で分割できない
 	$email = $email ? $email : ($sage ? 'sage' : '') ;
-	$name=filter_input(INPUT_POST, 'name');
+	$name=filter_input(INPUT_POST, 'name');//エスケープ前の値をセット
 		//クッキー項目："クッキー名 クッキー値"
 	$cooks = ["namec<>".$name,"emailc<>".$email,"urlc<>".$url,"fcolorc<>".$fcolor];
 
