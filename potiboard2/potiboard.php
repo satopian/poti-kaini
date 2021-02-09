@@ -5,8 +5,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board改二 
 // バージョン :
-define('POTI_VER','v2.23.5');
-define('POTI_LOT','lot.210209.0'); 
+define('POTI_VER','v2.23.6');
+define('POTI_LOT','lot.210209.1'); 
 /*
   (C)sakots >> https://poti-k.info/
 
@@ -173,7 +173,7 @@ setcookie("usercode", $usercode, time()+(86400*365));//1年間
 switch($mode){
 	case 'regist':
 		if(ADMIN_NEWPOST && !$resto){
-			if($pwd !== $ADMIN_PASS){
+			if($pwd && ($pwd !== $ADMIN_PASS)){
 				return error(MSG029);
 			}
 			$admin=$pwd;
@@ -185,7 +185,7 @@ switch($mode){
 			$dat['admin_in'] = true;
 			return htmloutput(SKIN_DIR.OTHERFILE,$dat);
 		}
-		if($pass && $pass !== $ADMIN_PASS) 
+		if($pass && ($pass !== $ADMIN_PASS)) 
 		return error(MSG029);
 	
 		if($admin==="del") return admindel($pass);
@@ -1059,7 +1059,7 @@ function regist(){
 	defined('NOTICE_MAIL_NEWPOST') or define('NOTICE_MAIL_NEWPOST', '新規投稿がありました');
 
 	if(is_file(NOTICEMAIL_FILE)	//メール通知クラスがある場合
-	&& !(NOTICE_NOADMIN && $pwd === $ADMIN_PASS)){//管理者の投稿の場合メール出さない
+	&& !(NOTICE_NOADMIN && $pwd && ($pwd === $ADMIN_PASS))){//管理者の投稿の場合メール出さない
 		require(__DIR__.'/'.NOTICEMAIL_FILE);
 
 		$data['to'] = TO_MAIL;
@@ -1770,7 +1770,7 @@ function editform(){
 
 	$dat['post_mode'] = true;
 	$dat['rewrite'] = $no;
-	if($ADMIN_PASS === $pwd) $dat['admin'] = $ADMIN_PASS;
+	if($pwd && ($pwd===$ADMIN_PASS)) $dat['admin'] = $ADMIN_PASS;
 	$dat['maxbyte'] = MAX_KB * 1024;
 	$dat['maxkb']   = MAX_KB;
 	$dat['addinfo'] = $addinfo;
@@ -2165,7 +2165,7 @@ function create_formatted_text_from_post($com,$name,$email,$url,$sub,$fcolor,$de
 	
 	//コメントのエスケープ
 	global $ADMIN_PASS;
-	$admin=filter_input(INPUT_POST,'admin');
+	$admin=newstring(filter_input(INPUT_POST,'admin'));
 	if(!$admin || $admin!==$ADMIN_PASS){//管理者以外タグ無効
 		$com = htmlspecialchars($com,ENT_QUOTES,'utf-8');
 	}
@@ -2479,6 +2479,6 @@ function check_password ($pwd, $epwd, $adminPass = false) {
 	return
 		password_verify($pwd, $epwd)
 		|| $epwd === substr(md5($pwd), 2, 8)
-		|| ($adminPass ? ($adminPass && ($adminPass === $ADMIN_PASS)) : false); // 管理パスを許可する場合
+		|| ($adminPass ? ($adminPass === $ADMIN_PASS) : false); // 管理パスを許可する場合
 }
 
