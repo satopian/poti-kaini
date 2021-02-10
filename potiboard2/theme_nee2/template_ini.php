@@ -69,7 +69,7 @@ define('MSG036', "本文にURLを書く事はできません。[This URL can not
 define('MSG037', "この名前は使えません [This name cannot be used.]");
 define('MSG038', "このタグは使えません。[This tag cannot be used.]");
 define('MSG039', "コメントのみの新規投稿はできません。［New posts with only comments are not accepted.］");
-define('MSG040', "予備");//しらばく間予備のまま
+define('MSG040', "管理者パスワードが設定されていません。[admin password is not set.]");
 define('MSG041', "がありません");
 define('MSG042', "を読めません");
 define('MSG043', "を書けません");
