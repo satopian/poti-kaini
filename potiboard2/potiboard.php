@@ -413,7 +413,6 @@ function form($resno="",$adminin="",$tmp=""){
 function updatelog(){
 	global $path;
 
-	$dat = form();
 	$tree = file(TREEFILE);
 	$line = file(LOGFILE);
 	$lineindex = get_lineindex($line); // 逆変換テーブル作成
@@ -423,6 +422,7 @@ function updatelog(){
 	$counttree = count($tree);//190619
 	for($page=0;$page<$counttree;$page+=PAGE_DEF){//PAGE_DEF単位で全件ループ
 		$oya = 0;	//親記事のメイン添字
+		$dat = form();
 		for($i = $page; $i < $page+PAGE_DEF; ++$i){//PAGE_DEF分のスレッドを表示
 			if(!isset($tree[$i])){
 				continue;
