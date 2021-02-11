@@ -73,7 +73,7 @@ define('MSG040', "管理者パスワードが設定されていません。[admi
 define('MSG041', "がありません");
 define('MSG042', "を読めません");
 define('MSG043', "を書けません");
-define('MSG044', "最大ログ数の設定が間違っています。[The MAX LOG setting is incorrect.]");
+define('MSG044', "最大ログ数が設定されていないか、数字以外の文字列が入っています。[Either the MAX LOG is not set, or it contains a non-numeric string.]");
 
 //文字色テーブル '値[,名称]'
 $fontcolors = array('white,White'
