@@ -56,7 +56,7 @@ $mode = $mode ? $mode : filter_input(INPUT_GET, 'mode');
 $resto = filter_input(INPUT_POST, 'resto',FILTER_VALIDATE_INT);
 $pwd = newstring(filter_input(INPUT_POST, 'pwd'));
 $type = newstring(filter_input(INPUT_POST, 'type'));
-$admin = filter_input(INPUT_POST, 'admin');
+$admin = (string)filter_input(INPUT_POST, 'admin');
 $pass = newstring(filter_input(INPUT_POST, 'pass'));
 $onlyimgdel = filter_input(INPUT_POST, 'onlyimgdel',FILTER_VALIDATE_BOOLEAN);
 
@@ -1819,7 +1819,7 @@ function rewrite(){
 	$fcolor = filter_input(INPUT_POST, 'fcolor');
 	$no = filter_input(INPUT_POST, 'no',FILTER_VALIDATE_INT);
 	$pwd = newstring(filter_input(INPUT_POST, 'pwd'));
-	$admin = filter_input(INPUT_POST, 'admin');
+	$admin = (string)filter_input(INPUT_POST, 'admin');
 
 	$userip = get_uip();
 	//ホスト取得
@@ -2179,7 +2179,7 @@ function create_formatted_text_from_post($com,$name,$email,$url,$sub,$fcolor,$de
 	
 	//コメントのエスケープ
 	global $ADMIN_PASS;
-	$admin=filter_input(INPUT_POST,'admin');
+	$admin=(string)filter_input(INPUT_POST,'admin');
 	if(!$admin || $admin!==$ADMIN_PASS){//管理者以外タグ無効
 		$com = htmlspecialchars($com,ENT_QUOTES,'utf-8');
 	}
