@@ -61,6 +61,7 @@ config.phpの設定をし、アップロードしてpotiboard.phpのあるディ
 
 - E_WARNINGレベルのエラーが発生していたのを修正 (by さとぴあ)
   - いまのところは些細な問題ですが今後のために。詳しくは[こちら](https://github.com/sakots/poti-kaini/pull/192)
+  - `potiboard.php`のほかに`picpsot.php`に変更があります。
 
 ### [2021/02/15] v2.26.1 lot.210215.0
 
