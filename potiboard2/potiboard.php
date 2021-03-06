@@ -5,8 +5,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board改二 
 // バージョン :
-define('POTI_VER','v2.26.2');
-define('POTI_LOT','lot.210217.0'); 
+define('POTI_VER','v2.26.3');
+define('POTI_LOT','lot.210305'); 
 
 /*
   (C)sakots >> https://poti-k.info/
@@ -568,11 +568,10 @@ function res($resno = 0){
 
 	$line = file(LOGFILE);
 	$lineindex = get_lineindex($line); // 逆変換テーブル作成
-
-	$_line = $line[$lineindex[$resno]];
-	if(!isset($_line)){
+	if(!isset($lineindex[$resno])){
 		error(MSG001);
 	}
+	$_line = $line[$lineindex[$resno]];
 
 	$dat = form($resno);
 
@@ -816,14 +815,14 @@ function regist(){
 
 	$lineindex=get_lineindex($line);//逆変換テーブル作成
 
-	if($resto && !isset($line[$lineindex[$resto]])){//レス先のログが存在しない時
+	if($resto && !isset($lineindex[$resto])){//レス先のログが存在しない時
 		if($pictmp==2){//お絵かきは
 			$resto = '';//新規投稿
 		}else{
 			error(MSG025,$dest);
 		}
 	}
-	if($resto && isset($line[$lineindex[$resto]])){
+	if($resto && isset($lineindex[$resto])){
 		list(,,,,,,,,,,,,$res['time'],) = explode(",", $line[$lineindex[$resto]]);
 		if(!check_elapsed_days($res)){//フォームが閉じられていたら
 			if($pictmp==2){//お絵かきは
@@ -992,11 +991,10 @@ function regist(){
 	$newline = "$no,$date,$name,$email,$sub,$com,$url,$host,$pass,$ext,$w,$h,$time,$chk,$ptime,$fcolor\n";
 	$newline.= implode("\n", $line);
 
-	writeFile($fp, $newline);
 
 	//ツリー更新
 	$find = false;
-	$newline = '';
+	$new_treeline = '';
 	$tp=fopen(TREEFILE,"r+");
 	set_file_buffer($tp, 0);
 	flock($tp, LOCK_EX); //*
@@ -1018,9 +1016,9 @@ function regist(){
 			if($_oyano==$resto){
 				$find = TRUE;
 				$line[$i] = rtrim($value).','.$no;
-				$treeline=explode(",", rtrim($line[$i]));
-				if(!$sage || (count($treeline)>MAX_RES)){
-					$newline=$line[$i] . "\n";
+				$treelines=explode(",", rtrim($line[$i]));
+				if(!$sage || (count($treelines)>MAX_RES)){
+					$new_treeline=$line[$i] . "\n";
 					unset($line[$i]);
 				}
 				break;
@@ -1031,14 +1029,16 @@ function regist(){
 		$resto='';
 	}
 	if(!$resto){
-		$newline="$no\n";
+		$new_treeline="$no\n";
 	}
 	if($resto && !$find){
 		error(MSG025,$dest);
 	}
-	$newline.=implode("\n", $line);
+	$new_treeline.=implode("\n", $line);
 
-	writeFile($tp, $newline);
+	writeFile($tp, $new_treeline);
+	writeFile($fp, $newline);
+
 
 	closeFile($tp);
 	closeFile($fp);
@@ -1492,16 +1492,13 @@ function paintform(){
 	$pal=array();
 	$DynP=array();
 	foreach ( $lines as $i => $line ) {
-		$line=charconvert(preg_replace("/[\t\r\n]/","",$line));
+		$line=charconvert(str_replace(["\r","\n","\t"],"",$line));
 		list($pid,$pname,$pal[0],$pal[2],$pal[4],$pal[6],$pal[8],$pal[10],$pal[1],$pal[3],$pal[5],$pal[7],$pal[9],$pal[11],$pal[12],$pal[13]) = explode(",", $line);
 		$DynP[]=newstring($pname);
 		$p_cnt=$i+1;
-		$palettes = 'Palettes['.$p_cnt.'] = "#'.$pal[0];
+		$palettes = 'Palettes['.$p_cnt.'] = "#';
 		ksort($pal);
-		array_shift($pal);
-		foreach ( $pal as $p ) {
-			$palettes.='\n#'.$p;
-		}
+		$palettes.=implode('\n#',$pal);
 		$palettes.='";';//190622
 		$arr_pal[$i] = $palettes;
 	}
