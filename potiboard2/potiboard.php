@@ -1125,7 +1125,7 @@ function treedel($delno){
 				}else{//レス削除
 					unset($treeline[$j]);
 					$line[$i]=implode(',', $treeline);
-					$line[$i]=preg_replace("/,,/",",",$line[$i]);
+					$line[$i]=str_replace(",,",",",$line[$i]);
 					$line[$i]=preg_replace("/,\z/","",$line[$i]);
 					if (!$line[$i]) {
 						unset($line[$i]);
@@ -1220,18 +1220,23 @@ function admindel($pass){
 		$name = strip_tags($name);//タグ除去
 		if(strlen($name) > 10) $name = mb_strcut($name,0,9).".";
 		if(strlen($sub) > 10) $sub = mb_strcut($sub,0,9).".";
-		if($email) $name='<a href="mailto:'.$email.'">'.$name.'</a>';
+		if($email){
+			$email=filter_var($email, FILTER_VALIDATE_EMAIL);
+			$name='<a href="mailto:'.$email.'">'.$name.'</a>';
+		}
 		$com = preg_replace("#<br */?>#i"," ",$com);
 		$com = newstring($com);
 		if(strlen($com) > 20) $com = mb_strcut($com,0,18) . ".";
 		$clip = "";
 		$size = 0;
-		$chk= "";
+		// $chk= "";
 		if($ext && is_file($path.$time.$ext)){
 		$clip = '<a href="'.IMG_DIR.$time.$ext.'" target="_blank" rel="noopener">'.$time.$ext.'</a><br>';
 		$size = filesize($path.$time.$ext);
 		$all += $size;	//ファイルサイズ加算
 		$chk= substr($chk,0,10);//md5
+		}else{
+			$chk= "";
 		}
 		$bg = ($j % 2) ? ADMIN_DELGUSU : ADMIN_DELKISU;//背景色
 
