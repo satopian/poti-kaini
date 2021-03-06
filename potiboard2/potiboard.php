@@ -6,7 +6,7 @@ define('USE_DUMP_FOR_DEBUG','0');
 // POTI-board改二 
 // バージョン :
 define('POTI_VER','v2.26.3');
-define('POTI_LOT','lot.210305'); 
+define('POTI_LOT','lot.210306'); 
 
 /*
   (C)sakots >> https://poti-k.info/
@@ -1229,7 +1229,6 @@ function admindel($pass){
 		if(strlen($com) > 20) $com = mb_strcut($com,0,18) . ".";
 		$clip = "";
 		$size = 0;
-		// $chk= "";
 		if($ext && is_file($path.$time.$ext)){
 		$clip = '<a href="'.IMG_DIR.$time.$ext.'" target="_blank" rel="noopener">'.$time.$ext.'</a><br>';
 		$size = filesize($path.$time.$ext);
