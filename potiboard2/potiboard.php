@@ -1191,7 +1191,10 @@ function userdel(){
 			}
 		}
 	}
-	if(!$flag)error(MSG028);
+	if(!$flag){
+		closeFile($fp);
+		error(MSG028);
+	}
 	if($find){//ログ更新
 		writeFile($fp, implode("\n", $line));
 	}
