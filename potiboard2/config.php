@@ -1,6 +1,6 @@
 <?php
 /*
-  * POTI-board Kai Ni v2.26.6 lot.210318
+  * POTI-board改二 v2.26.6 lot.210320
   * by sakots >> https://poti-k.info/
   *
   * POTI-board改二の設定ファイルです。
