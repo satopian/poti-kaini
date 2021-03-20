@@ -1,6 +1,6 @@
 <?php
 /*
-  * POTI-board改二 v2.23.8 lot.210211
+  * POTI-board改二 v2.26.6 lot.210320
   * by sakots >> https://poti-k.info/
   *
   * POTI-board改二の設定ファイルです。
@@ -23,7 +23,7 @@ define('SKIN_DIR', 'theme/');
 
 //メール通知のほか、シェアボタンなどで使用
 //設置場所のURL。phpのあるディレクトリの'/'まで
-define('ROOT_URL', 'http://www.hoge.ne.jp/oekaki/');
+define('ROOT_URL', 'http://example.com/oekaki/');
 
 
 //掲示板のタイトルタイトル（<title>とTOP）
@@ -122,7 +122,7 @@ $badip = array("addr.dummy.com","addr2.dummy.com");
 define('NOTICE_NOADMIN', '0');
 
 //メール通知先
-define('TO_MAIL', 'root@xxx.xxx');
+define('TO_MAIL', 'xxx@example.com');
 
 //メール通知に本文を付ける 付ける:1 付けない:0
 define('SEND_COM', '1');
