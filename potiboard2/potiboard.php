@@ -2356,9 +2356,10 @@ function is_ngword ($ngwords, $strs) {
 }
 
 function png2jpg ($src) {
+	global $path;
 	if(mime_content_type($src)==="image/png" && gd_check() && function_exists("ImageCreateFromPNG")){//pngならJPEGに変換
 		if($im_in=ImageCreateFromPNG($src)){
-			$dst = TEMP_DIR.pathinfo($src, PATHINFO_FILENAME ).'.jpg.tmp';
+			$dst = $path.pathinfo($src, PATHINFO_FILENAME ).'.jpg.tmp';
 			ImageJPEG($im_in,$dst,98);
 			ImageDestroy($im_in);// 作成したイメージを破棄
 			chmod($dst,PERMISSION_FOR_DEST);
