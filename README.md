@@ -32,7 +32,7 @@ POTI-board改のテンプレートエンジン「htmltemplate.inc」が古くな
 
 ## 使い方
 
-基本的に [POTI-board改](https://github.com/sakots/poti-kai/) と同じですが、テーマ(スキン/テンプレート機能)を置くフォルダができました。  
+基本的に [POTI-board改](https://github.com/satopian/poti-kai/) と同じですが、テーマ(スキン/テンプレート機能)を置くフォルダができました。  
 config.phpの設定をし、アップロードしてpotiboard.phpのあるディレクトリにアクセスするだけです。  
 [お絵かき掲示板簡単設置方法](http://stp.sblo.jp/article/185357941.html)
 
@@ -48,11 +48,14 @@ config.phpの設定をし、アップロードしてpotiboard.phpのあるディ
 
 ## テーマ(テンプレート)機能について
 
-テーマを入れ替えて使う事ができます。
+この掲示板はテーマを入れ替える事ができます。
 デフォルトthemeのほか、[COOL SOLID](https://draclaw.com/)、[PINK](https://github.com/satopian/pink_for_poti-kaini)などがあります。
 
 ## 履歴
 
+### [2021/04/13] v2.26.7 lot.210410
+
+- png2jpgの作業ディレクトリをsrcのリアルパスに。関数化される前と同じ動作になるようにしました。
 ### [2021/03/20] v2.26.6 lot.210320.0
 
 - レス先が無い投稿の時に添付ファイルでアップロードした画像が画像ディレクトリに残るバグを修正。
