@@ -51,6 +51,11 @@ config.phpの設定をし、アップロードしてpotiboard.phpのあるディ
 この掲示板はテーマを入れ替える事ができます。
 デフォルトthemeのほか、[COOL SOLID](https://draclaw.com/)、[PINK](https://github.com/satopian/pink_for_poti-kaini)などがあります。
 
+## 外部プログラム
+[potiboard_plugin: お絵かき掲示板 POTI-boardのための外部phpプログラム](https://github.com/satopian/potiboard_plugin)
+パレットデータ(やこうさんパレット)、BBSNoteのログファイルをPOTI-board形式に変換するログコンバータもあります。
+
+
 ## 履歴
 
 ### [2021/04/13] v2.26.7 lot.210410
