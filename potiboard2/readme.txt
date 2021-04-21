@@ -1,13 +1,13 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   POTI-board改二
-  by sakots >> https://poti-k.info/
+  by sakots & satopian
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 このスクリプトは「ぷにゅねっと」 http://www.punyu.net/php/ の
 POTI-board v1.32 をさらにphp7に対応させて改造した
-POTI-board改 https://poti-k.info/ を発展させたものです。
+POTI-board改 を発展させたものです。
 
 「Skinny.php」 http://skinny.sx68.net/ 
 のおかげで、自由にデザインできるようになってます。
@@ -122,7 +122,7 @@ POTI改二の親です。
 
 ■著作権
 
-POTI-boaed改二                     (c)sakots
+POTI-boaed改二                     (c)sakots & satopian
 
 search.php                         (c)satopian
 
