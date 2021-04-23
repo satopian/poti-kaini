@@ -9,7 +9,7 @@ define('POTI_VER','v2.26.7');
 define('POTI_LOT','lot.210403'); 
 
 /*
-  (C)sakots >> https://poti-k.info/
+  (C)POTI改 >> https://pbbs.sakura.ne.jp/poti/
 
   *----------------------------------------------------------------------------------
   * ORIGINAL SCRIPT
@@ -42,7 +42,7 @@ define('POTI_LOT','lot.210403');
 
 このスクリプトの改造部分に関する質問は「レッツPHP!」
 「ふたば★ちゃんねる」「ぷにゅねっと」に問い合わせないでください。
-ご質問は、<https://poti-k.info/>までどうぞ。
+ご質問は、<https://pbbs.sakura.ne.jp/poti/>までどうぞ。
 */
 
 if (($phpver = phpversion()) < "5.5.0") {

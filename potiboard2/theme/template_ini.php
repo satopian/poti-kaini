@@ -1,6 +1,6 @@
 <?php
 /*
-  * Template - MONO by sakots  >> https://poti-k.info/
+  * Template - MONO by sakots  >> https://github.com/satopian/poti-kaini-themes
   *
   * potiboard.php(v2.21.4～)のテーマ(テンプレート)設定ファイルです。
   *

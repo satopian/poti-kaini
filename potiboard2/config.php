@@ -1,7 +1,7 @@
 <?php
 /*
   * POTI-board改二 v2.26.6 lot.210320
-  * by sakots >> https://poti-k.info/
+  * by POTI改 >> https://pbbs.sakura.ne.jp/poti/
   *
   * POTI-board改二の設定ファイルです。
   *
