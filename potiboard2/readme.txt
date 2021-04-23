@@ -1,21 +1,13 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   POTI-board改二
-<<<<<<< HEAD
   by POTI改 >> https://pbbs.sakura.ne.jp/poti/
-=======
-  by sakots & satopian
->>>>>>> bdee9575740be878d75566951e396e193adb5e14
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 このスクリプトは「ぷにゅねっと」 http://www.punyu.net/php/ の
-POTI-board v1.32 をさらにphp7に対応させて改造した
-<<<<<<< HEAD
-POTI-board改 https://pbbs.sakura.ne.jp/poti/ を発展させたものです。
-=======
-POTI-board改 を発展させたものです。
->>>>>>> bdee9575740be878d75566951e396e193adb5e14
+POTI-board v1.32 をphp7に対応させて改造した
+POTI-board改 をさらに発展させたものです。
 
 「Skinny.php」 http://skinny.sx68.net/ 
 のおかげで、自由にデザインできるようになってます。
@@ -101,7 +93,7 @@ config.php に設定したい追加項目があれば $ADMIN_PASS = 'kanripass';
 POTI改二の親です。
 
 【sakotsさん】
-POTI-boardの再開発の企画立案者であり各種テーマの作者です。
+POTI-boardの再開発の企画立案者であり各種テーマの作者。
 この人がいなかったら、POTI-boardは消えていたかもしれません。
 【さとぴあさん】
 バグ修正、セキュリティ向上、スピードアップ等していただいています。大感謝。
@@ -133,11 +125,7 @@ POTI-boardの再開発の企画立案者であり各種テーマの作者です�
 
 ■著作権
 
-<<<<<<< HEAD
 POTI-boaed改二                     (c)POTI改
-=======
-POTI-boaed改二                     (c)sakots & satopian
->>>>>>> bdee9575740be878d75566951e396e193adb5e14
 
 search.php                         (c)satopian
 
