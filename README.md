@@ -27,7 +27,7 @@ POTI-board改のテンプレートエンジン「htmltemplate.inc」が古くな
 
 ## サンプル/サポート
 
-[POTI改設置サポート掲示板](https://pbbs.sakura.ne.jp/cgi/neosample/support/) をオープンしました。ご利用ください。
+[お絵かき掲示板PHPスクリプトPOTI-board改公式サイト](https://pbbs.sakura.ne.jp/poti/)と、[POTI改設置サポート掲示板](https://pbbs.sakura.ne.jp/cgi/neosample/support/) をオープンしました。ご利用ください。  
 設置サポート掲示板にはさとぴあが常駐しています。
 
 ## 使い方
@@ -65,7 +65,7 @@ config.phpの設定をし、アップロードしてpotiboard.phpのあるディ
 
 - レス先が無い投稿の時に添付ファイルでアップロードした画像が画像ディレクトリに残るバグを修正。
 - 続きから描いた時に画像の縦横比が正しくセットされないバグを修正。
-- v2.12.7 lot.200822 から関数化されたpng2jpgの作業ディレクトリが、srcやtmpではなく、potiboard.phpと同じディ- レクトリだったのを変更。
+- v2.12.7 lot.200822 から関数化されたpng2jpgの作業ディレクトリが、srcやtmpではなく、potiboard.phpと同じディレクトリだったのを変更。
 - `config.php`の設定例にドメイン名の例示のために予約されているセカンドレベルドメインexample.comを使用。
 - テーマのcss修正。
 
