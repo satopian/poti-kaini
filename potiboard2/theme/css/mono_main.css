@@ -15,6 +15,7 @@ body {
   font-family: sans-serif;
   word-wrap: break-word;
   overflow-wrap: break-word;
+  margin: 10.5px;
 }
 
 a:link {
@@ -48,9 +49,9 @@ header, main > section > .thread, main > article#catalog, footer > article, foot
 }
 
 header, main > section > .thread, main > article#catalog, footer > article, footer > article.copy {
-  margin: 12px auto;
+  margin: 0px auto;
   display: block;
-  width: 70%;
+  max-width: 1350px;
   border: solid 1px #33F;
 }
 
@@ -374,11 +375,14 @@ ul.menu {
 }
 
 @media screen and (max-width: 1024px) {
-  header, main > section > .thread, main > article#catalog, footer > article, footer > article.copy, main > section > .thread, main > article#catalog, footer > article {
-    width: 90%;
-  }
   .res {
     clear: left;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  body {
+    margin: 6px;
   }
 }
 
@@ -640,3 +644,4 @@ ul.menu {
     margin-right: 0;
   }
 }
+/*# sourceMappingURL=mono_main.css.map */
