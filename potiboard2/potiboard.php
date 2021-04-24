@@ -9,8 +9,8 @@ define('POTI_VER','v2.26.7');
 define('POTI_LOT','lot.210403'); 
 
 /*
-  (C)POTI改 >> https://pbbs.sakura.ne.jp/poti/
-
+  (c) 2018-2021 POTI改 POTI-Board redevelopment team
+  >> https://pbbs.sakura.ne.jp/poti/
   *----------------------------------------------------------------------------------
   * ORIGINAL SCRIPT
   *   POTI-board v1.32
