@@ -4,8 +4,8 @@
 **
 ** http://www.punyu.net/php/
 ** by SakaQ
-** https://poti-k.info/
-** by sakots
+** https://pbbs.sakura.ne.jp/poti/
+** by POTI改
 **
 ** 2020/07/12 軽微なエラーを修正。
 ** 2020/05/11 説明追加、POTI改のURL変更。
