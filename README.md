@@ -40,7 +40,7 @@ config.phpの設定をし、アップロードしてpotiboard.phpのあるディ
 
 2020/07/23以降のバージョンにはindex.phpというファイルが同梱されています。  
 これは、potiboardの設置をより簡単にするためのものです。  
-念のため、potiboard.phpをindex.phpにリネームしてお使いの方は、上書きしないようお願いいたします。  
+potiboard.phpをindex.phpにリネームしてお使いの方は、上書きしないようお願いいたします。  
 
 ## 古いpotiboardから改二へのバージョンアップ
 
