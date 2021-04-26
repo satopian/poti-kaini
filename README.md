@@ -52,8 +52,8 @@ potiboard.phpをindex.phpにリネームしてお使いの方は、上書きし�
 デフォルトthemeのほか、[COOL SOLID](https://draclaw.com/)、[PINK](https://github.com/satopian/pink_for_poti-kaini)などがあります。
 
 ## 外部プログラム
-[potiboard_plugin: お絵かき掲示板 POTI-boardのための外部phpプログラム](https://github.com/satopian/potiboard_plugin)
-パレットデータ(やこうさんパレット)、BBSNoteのログファイルをPOTI-board形式に変換するログコンバータもあります。
+[potiboard_plugin: お絵かき掲示板 POTI-boardのための外部phpプログラム](https://github.com/satopian/potiboard_plugin)  
+パレットデータ(やこうさんパレット)、BBSNoteのログファイルをPOTI-board形式に変換するログコンバータなどがあります。
 
 
 ## 履歴
