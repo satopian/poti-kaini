@@ -1,0 +1,440 @@
+<% def(n) %>
+<!--********** その他テンプレート **********
+// このテンプレートは、以下のモード用テンプレートです
+// ・投稿モード
+// ・管理モード(認証)モード
+// ・管理モード(削除)モード
+// ・エラーモード
+-->
+<% /def %>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<link rel="stylesheet" href="<% echo(skindir) %>pink.css">
+<title><% def(post_mode) %><% def(rewrite) %><% elsedef %><% def(admin_del) %><% elsedef %><% def(admin) %><% elsedef %>投稿フォーム<% /def %><% /def %><% /def %><% /def %><% def(rewrite) %>編集モード<% /def %><% def(admin_in) %>管理用<% /def %><% def(admin) %><% def(rewrite) %> - <% /def %><% /def %><% def(admin) %> 管理人による投稿<% /def %><% def(admin_del) %>記事削除<% /def %><% def(err_mode) %>エラー！<% /def %> - <% echo(title) %></title>
+<% def(n) %>
+<!-- 
+// title…掲示板タイトル
+// charset…文字コード
+-->
+<% /def %>
+</head>
+<body>
+<div id="body">
+<header>
+<h1 id="bbs_title"><% def(post_mode) %><% def(rewrite) %><% elsedef %><% def(admin_del) %><% elsedef %><% def(admin) %><% elsedef %>投稿フォーム<% /def %><% /def %><% /def %><% /def %><% def(rewrite) %>編集モード<% /def %><% def(admin_in) %>管理用<% /def %><% def(admin) %><% def(rewrite) %> - <% /def %><% /def %><% def(admin) %> 管理人による投稿<% /def %><% def(admin_del) %>記事削除<% /def %><% def(err_mode) %>エラー！<% /def %> - <span class="title_name_wrap"><% echo(title) %></span></h1>
+<% def(n) %>
+<!-- 
+投稿モード
+// 【新規投稿、お絵かき投稿、編集】
+//
+// post_mode…投稿モードのとき true が入る
+// regist…新規投稿のとき true が入る
+// admin…管理モードのとき 管理者パスワード が入る
+// home…ホームページURL
+// self…POTI-boardのスクリプト名
+// self2…入口(TOP)ページのURL
+// pictmp…お絵かき投稿モードフラグ。通常投稿:0、お絵かき絵なし:1、お絵かき絵あり:2
+// notmp…お絵かき投稿時に絵がなかったとき true が入る
+// tmp…一時保存絵用配列
+// tmp/src…一時保存絵URL
+// tmp/srcname…一時保存絵ファイル名
+// tmp/date…一時保存絵保存日
+// ptime…描画時間
+// rewrite…編集のとき 記事No が入る
+// pwd…編集のとき 記事Pass が入る
+// resno…お絵かきレス時 レス記事No が入る
+// maxbyte…最大投稿サイズ(Byte)
+// maxkb…最大投稿サイズ(KB)
+// ipcheck…IPチェック機能がONのとき true が入る
+// usename…名前が必須だと ' *' が入る
+// usesub…題名が必須だと ' *' が入る
+// usecom…本文が必須だと ' *' が入る
+// name…編集用の投稿者名
+// email…編集用のメールアドレス
+// url…編集用のURL
+// sub…編集用の題名
+// com…編集用の本文
+// fctable…文字色配列
+// fctable/color…色コードまたは色名
+// fctable/chk…編集時、指定文字色なら true が入る
+// upfile…添付ファイル入力フォームを表示させたいとき true が入る
+-->
+<% /def %>
+<% def(post_mode) %>
+<% ========== クッキー読込みは新規投稿のみ ========== %>
+<% def(regist) %>
+<script src="loadcookie.js"></script>
+<% /def %>
+<nav>
+   <div id="self2">
+    [<a href="<% echo(self2) %>"><% echo(title) %></a>] </div>
+    </nav>
+</header>
+<% def(admin) %>
+<% def(regist) %>
+<form action="<% echo(self) %>" method="post" enctype="multipart/form-data">
+
+<input type="submit" value="PAINT" class="paint_button">
+<input type="hidden" name="shi" value="1">
+<% ===キャンバスサイズ 設定はconfig.phpで === %>
+<% def(n) %>
+<!-- 
+
+config.phpで設定した
+//お絵描きデフォルトサイズ(最初に選択される数値)
+PDEF_W //幅
+PDEF_H// 高さ
+//お絵描き最大サイズ
+PMAX_W //幅
+PMAX_H //高さ
+が入ります。
+-->
+<% /def %>
+<span class="canvas_size">Size</span>：<select name="picw" title="幅" class="canvas_select">
+	<?php
+	//幅 300から、PMAX_W で設定した最大値まで。
+		for($i = 300; $i <=PMAX_W ; $i+=50){//50ずつ増える
+		if(PDEF_W==$i){//デフォルトサイズ
+		echo'<option value="'.$i.'" selected>'.$i.'</option>';
+		}
+		else{
+		echo'<option value="'.$i.'">'.$i.'</option>';
+		}
+		}
+	?>
+	</select>
+	x
+	<select name="pich" title="高さ" class="canvas_select">
+	<?php
+	//高さ 300から、PMAX_H で設定した最大値まで。
+		for($i = 300; $i <=PMAX_H ; $i+=50){//50ずつ増える
+		if(PDEF_H==$i){//デフォルトサイズ
+		echo'<option value="'.$i.'" selected>'.$i.'</option>';
+		}
+		else{
+		echo'<option value="'.$i.'">'.$i.'</option>';
+		}
+		}
+	?>
+	</select>&nbsp;
+<% ===キャンバスサイズ ここまで === %>
+<label class="checkbox use_neo"><input type="checkbox" name="useneo" checked="checked" />NEOを使う</label>
+<% def(anime) %><label class="checkbox use_animation"><input type="checkbox" value="true" name="anime"<% echo (animechk) %>>動画記録</label>
+<% /def %>
+<input name="pch_upload" type="file" />
+<input type="hidden" name="admin" value="<% echo(admin) %>">
+<input type="hidden" name="mode" value="paint"></form>
+<% /def %>
+
+<div class="centering">タグがつかえます</div>
+<% /def %>
+<% ========== 投稿待ちのお絵かき画像表示 ========== %>
+<% def(pictmp) %>
+<div class="centering">
+<% def(notmp) %>
+画像が見当たりません
+<% /def %>
+<% def(tmp) %>
+<% each(tmp) %>
+<div class="posted_img_form"><img src="<% echo(tmp/src) %>" border="0" alt="<% echo(tmp/srcname) %>"></div>
+<% echo(tmp/srcname) %><br>
+[<% echo(tmp/date) %>]
+<% /each %>
+<% /def %>
+</div>
+<% /def %>
+<% def(ptime) %>
+<div class="centering">
+描画時間： <% echo(ptime) %>
+</div>
+<% /def %>
+<form action="<% echo(self) %>" method="POST" enctype="multipart/form-data">
+<% ========== モード指定:新規投稿 ========== %>
+<% def(regist) %>
+<input type="hidden" name="mode" value="regist">
+<% /def %>
+<% ========== モード指定:編集 ========== %>
+<% def(rewrite) %>
+<input type="hidden" name="mode" value="rewrite">
+<input type="hidden" name="no" value="<% echo(rewrite) %>">
+<input type="hidden" name="pwd" value="<% echo(pwd) %>">
+<% /def %>
+<% def(admin) %>
+<input type="hidden" name="admin" value="<% echo(admin) %>">
+<% /def %>
+<% def(pictmp) %>
+<input type="hidden" name="pictmp" value="<% echo(pictmp) %>">
+<% /def %>
+<% def(ptime) %>
+<input type="hidden" name="ptime" value="<% echo(ptime) %>">
+<% /def %>
+<% ========== レスお絵かき対応 ========== %>
+<% def(resno) %>
+<input type="hidden" name="resto" value="<% echo(resno) %>">
+<% /def %>
+<input type="hidden" name="MAX_FILE_SIZE" value="<% echo(maxbyte) %>">
+<table id="post_table">
+<% def(ipcheck) %> <tr><td colspan="2" style="text-align: center;" class="post_table_submit td_noborder">- IPアドレスチェック中 -</td></tr><% /def %>
+ <tr>
+  <td class="post_table_title">名前<% def(usename) %>(必須)<% /def %></td>
+<% ========== 編集時、valueに名前をセット ========== %>
+  <td><input type="text" name="name" <% def(name) %> value="<% echo(name) %>"<% /def %> class="post_input_text" autocomplete="username"></td>
+ </tr>
+ <tr>
+  <td class="post_table_title">E-mail</td>
+<% ========== 編集時、valueにメールアドレスをセット ========== %>
+  <td><input type="text" name="email" <% def(email) %> value="<% echo(email) %>"<% /def %> class="post_input_text" autocomplete="email"></td>
+ </tr>
+ <tr>
+  <td class="post_table_title">URL</td>
+<% ========== 編集時、valueにURLをセット ========== %>
+  <td><input type="url" name="url" <% def(url) %> value="<% echo(url) %>"<% /def %> class="post_input_text" autocomplete="url"></td>
+ </tr>
+ <tr>
+  <td class="post_table_title">題名<% def(usesub) %>(必須)<% /def %></td>
+<% ========== 編集時、valueに題名をセット ========== %>
+  <td><input type="text" name="sub" <% def(sub) %> value="<% echo(sub) %>"<% /def %> class="post_input_text" autocomplete="off"
+></td>
+ </tr>
+ <tr>
+  <td class="post_table_title">本文<% def(usecom) %>(必須)<% /def %></td>
+<% ========== 編集時、textarea内に本文をセット ========== %>
+  <td><textarea name="com" wrap="soft" class="post_input_com"><% def(com) %><% echo(com) %><% /def %></textarea></td>
+ </tr>
+<% ========== ファイルアップロード欄 ========== %>
+<% def(upfile) %>
+<tr>
+<td class="post_table_title">添付画像</td>
+  <td><input type="file" name="upfile" accept="image/*">
+	<% def(hide_the_checkbox_for_nofile) %>
+	<% elsedef %>
+	<label class="checkbox textonly"> <input type="checkbox" name="textonly" value="on">画像なし</label>
+	<% /def %>
+ </td>
+ </tr>
+<% /def %>
+<% ========== お絵かき画像選択欄 ========== %>
+<% def(tmp) %>
+ <tr>
+  <td class="post_table_title">画像</td>
+  <td><select name="picfile" class="post_select_image">
+<% each(tmp) %><option value="<% echo(tmp/srcname) %>"><% echo(tmp/srcname) %></option><% /each %>
+  </select></td>
+ </tr>
+<% /def %>
+<% ========== 新規投稿時は削除キー入力 ========== %>
+<% def(regist) %>
+ <tr>
+  <td class="post_table_title">削除キー</td>
+  <td><input type="password" name="pwd" value="" class="post_input_pass" autocomplete="current-password">
+<span class="howtoedit">(記事の編集削除用。英数字で)</span></td>
+ </tr><% /def %>
+ <tr><td colspan="2" style="text-align: center;" class="post_table_submit td_noborder"><input type="submit" value="送信する" class="post_submit"></td></tr>
+ <tr>
+  <td colspan="2" class="td_noborder">
+<% ========== 新規投稿説明 ========== %>
+<ul class="howtowrite">
+<% def(regist) %>
+<% def(upfile) %>
+<% def(hide_the_checkbox_for_nofile) %>
+<% elsedef %>
+<li>画像を添付する場合は画像なしのチェックを外してください。</li>
+<% /def %>
+<li>最大投稿データ量は <% echo(maxkb) %> KB までです。sage機能付き。</li>
+<% /def %>
+<% /def %>
+<% ========== 編集説明 ========== %>
+<% def(rewrite) %>
+<li>E-mail以外の項目は 未入力(空白)にすると内容はそのままです。</li>
+<li>編集では クッキーは保存されません。さらにsageを入れても位置は変わりません。</li>
+<% /def %>
+<% ========== 以下共通 ========== %>
+</ul></td>
+ </tr>
+</table>
+</form>
+<script src="<% echo(skindir) %>jquery-3.5.1.min.js"></script>
+<script>
+	$(function(){//2度押し対策
+		$('[type="submit"]').click(function(){
+			$(this).prop('disabled',true);
+			$(this).closest('form').submit();
+		});
+	});
+</script>
+
+<% ========== 新規投稿のみクッキーを読込み ========== %>
+<% def(regist) %>
+<script>
+l(); //LoadCookie
+</script>
+<% /def %>
+<% /def %>
+<% ========== 投稿モード ここまで ========== %>
+<% ========== 管理モード(認証) ========== %>
+<% def(n) %>
+<!-- 
+//
+// admin_in…管理モード(認証)のとき true が入る
+// home…ホームページURL
+// self…POTI-boardのスクリプト名
+// self2…入口(TOP)ページのURL
+-->
+<% /def %>
+<% def(admin_in) %>
+<div id="self2">
+    [<a href="<% echo(self2) %>"><% echo(title) %></a>]</div>
+</header>
+<form action="<% echo(self) %>" method="post">
+  <div class="centering">
+<div class="margin_radio">
+<label class="radio"><input type="radio" name="admin" value="update" checked>ログ更新 </label>
+<label class="radio"><input type="radio" name="admin" value="del">記事削除 </label>
+<label class="radio"><input type="radio" name="admin" value="post">管理人投稿</label>
+</div>
+<input type="hidden" name="mode" value="admin">
+<input type="password" name="pass" size="8" autocomplete="current-password" class="adminpass">
+<input type="submit" value=" 認証 " class="admin_submit">
+
+</div>
+</form>
+<% /def %>
+<% ========== 管理モード(認証) ここまで ========== %>
+<% ========== 管理モード(削除) ========== %>
+<% def(n) %>
+<!-- 
+//
+// admin_del…管理モード(削除)のとき true が入る
+// home…ホームページURL
+// self…POTI-boardのスクリプト名
+// self2…入口(TOP)ページのURL
+// pass…認証パスワード
+// del…削除テーブルグループ
+// del/bg…削除テーブルの背景色
+// del/no…記事No
+// del/now…書込み日付
+// del/sub…題名(半角10文字まで)
+// del/name…名前(半角10文字まで)
+// del/com…本文(半角20文字まで)
+// del/host…ホストアドレス
+// del/clip…画像へのリンクデータ
+// del/size…画像サイズ(Byte)
+// del/chk…画像MD5
+// all…画像データ合計サイズ(KB)
+-->
+<% /def %>
+<% def(admin_del) %>
+<div id="self2">
+    [<a href="<% echo(self2) %>"><% echo(title) %></a>] </div>
+</header>
+  <div class="centering">
+<p>
+削除したい記事のチェックボックスにチェックを入れ、削除ボタンを押して下さい。<br>
+<span class="hensyu">（記事Noをクリックすると編集できます）</span></p>
+<p>
+<form action="<% echo(self) %>" method="post">
+<input type="hidden" name="admin" value="update">
+<input type="hidden" name="mode" value="admin">
+<input type="hidden" name="pass" value="<% echo(pass) %>">
+<input type="submit" value="ログ更新" class="admin_submit">
+	</form>
+	</p>
+	<p>
+<form id="delete" action="<% echo(self) %>" method="POST">
+<input type="hidden" name="mode" value="admin">
+<input type="hidden" name="admin" value="del">
+<input type="hidden" name="pass" value="<% echo(pass) %>">
+
+<input type="submit" value="削除する"><input type="reset" value="リセット">
+<label class="checkbox"><input type="checkbox" name="onlyimgdel" value="on">画像だけ消す</label>
+	</form>
+</p>
+<table class="admindel_table">
+ <tr bgcolor="#FFB5E6">
+  <th class="nobreak">削除</th>
+  <th class="nobreak">記事No</th>
+  <th class="nobreak">投稿日</th>
+  <th class="nobreak">題名</th>
+  <th class="nobreak">投稿者</th>
+  <th class="nobreak">コメント</th>
+  <th class="column_non">ホスト名</th>
+  <th class="column_non">添付(Bytes)</th>
+  <th class="column_non">md5</th>
+ </tr>
+<% def(del) %><% each(del) %>
+ <tr bgcolor="<% echo(del/bg) %>">
+  <th class="delcheck"><label class="checkbox_nt"><input form="delete" type="checkbox" name="del[]" value="<% echo(del/no) %>"></label></th>
+
+  <th class="nobreak">
+ <form action="<% echo(self) %>" method="post" id="form<% echo(del/no) %>">
+<input type="hidden" name="del[]" value="<% echo(del/no) %>"><input type="hidden" name="pwd" value="<% echo(pass) %>"><input type="hidden" name="mode" value="edit">
+<a href="javascript:form<% echo(del/no) %>.submit()"><% echo(del/no) %></a></form>
+  
+  </th>
+  <td><small><% echo(del/now) %></small></td>
+  <td><% echo(del/sub) %></td>
+  <td class="nobreak"><b><% echo(del/name) %></b></td>
+  <td><small><% echo(del/com) %></small></td>
+  <td class="column_non"><% echo(del/host) %></td>
+  <td class="column_non"><% echo(del/clip) %>(<% echo(del/size) %>)</td>
+  <td class="column_non"><% echo(del/chk) %></td>
+ </tr>
+<% /each %><% /def %>
+</table>
+<p>
+<input form="delete" type="submit" value="削除する"><input form="delete" type="reset" value="リセット">
+<label class="checkbox"><input form="delete" type="checkbox" name="onlyimgdel" value="on">画像だけ消す</label>
+</p>
+
+<p>【 画像データ合計 : <b><% echo(all) %></b> KB 】</p>
+  </div>
+<% /def %>
+<% ========== 管理モード(削除) ここまで ========== %>
+<% ========== エラー画面 ========== %>
+<% def(n) %>
+<!-- 
+//
+// err_mode…エラー画面のとき true が入る
+// home…ホームページURL
+// self…POTI-boardのスクリプト名
+// self2…入口(TOP)ページのURL
+// mes…エラーメッセージ
+-->
+<% /def %>
+<% def(err_mode) %>
+
+<div id="self2">
+    [<a href="<% echo(self2) %>"><% echo(title) %></a>] </div>
+</header>
+<div class="error_mesage">
+<% echo(mes) %>
+<br><a href="#" onclick="javascript:window.history.back(-1);return false;">もどる</a>
+<!-- <a href="<% echo(self2) %>">リロード</a> -->
+</div>
+
+<% /def %>
+<% ========== エラー画面 ここまで ========== %>
+<!--著作権表示 削除しないでください-->
+<footer>
+<div class="copyright">
+<!-- GazouBBS v3.0 --><!-- ふたば改0.8 --><!-- POTI-board -->
+<a href="https://pbbs.sakura.ne.jp/poti/" target="_blank" rel="noopener noreferrer" title="POTI-board改二 <% echo (verlot) %>"><b>POTI-board改二 <% echo (ver) %></b></a>
+<span class="webstyle_wrap">Web Style by <a href="https://draclaw.com/" target="_blank" rel="noopener noreferrer" title="Cool Solid (by ドラ☆クロウ！)"><b>Cool Solid</b></a> &amp; <a href="https://github.com/satopian/pink_for_poti-kaini" target="_blank" rel="noopener noreferrer" title="PINK <% echo(tver) %> (by さとぴあ)"><b>PINK</b></a></span><br>
+OriginalScript - <a href="http://www.punyu.net/" target="_blank" rel="noopener noreferrer" title="POTI-board v1.32 (by ぷにゅねっと)">POTI-board</a>
+<span title="futaba.php v0.8 lot.031015 (by ふたば)">futaba.php</span> <a href="http://php.loglog.jp/" target="_blank" rel="noopener noreferrer" title="gazou.php v3.0 (by レッツPHP!)">gazou.php</a><br>
+<% def(paint) %>
+OekakiApplet - <a href="http://hp.vector.co.jp/authors/VA016309/" target="_blank" rel="noopener noreferrer" title="by しぃちゃん">Shi-Painter</a>
+<br>
+<% /def %>
+UseFunction - <span title="by WonderCatStudio">動的パレットスクリプト</span>
+<!--http://wondercatstudio.com/-->
+，<a href="http://skinny.sx68.net/" target="_blank" rel="noopener noreferrer" title="Skinny">Skinny</a>
+，<a href="http://github.com/funige/neo/" target="_blank" rel="noopener noreferrer" title="by funige">PaintBBS NEO</a>
+</div>
+</footer>
+</div>
+</body>
+</html>

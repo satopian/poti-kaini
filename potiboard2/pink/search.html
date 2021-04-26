@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<link rel="stylesheet" href="<% echo(skindir) %>search.css">
+	<% def(imgsearch) %>
+	<% else %>
+	<style>
+		.article{
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			padding: 3px 0;
+			border-bottom: 1px dashed #8a8a8a;
+			line-height: 3em;
+		}
+		img {
+			max-width: 300px;
+			margin: 12px 0 0;
+		}
+		</style>
+	<% /def %>
+<title><% echo(title) %><% echo(pageno) %></title>
+</head>
+<body>
+<div id="main">
+<header>
+	<div class="title">
+	<h1><% echo(h1) %><span class="title_wrap"><% echo(img_or_com) %><% echo(pageno) %></span></h1>
+	</div>
+</header>
+<nav>
+	<div class="menu">
+	[<a href="./">掲示板にもどる</a>]
+	<% def(imgsearch) %>
+	 [<a href="?page=1&imgsearch=off<% echo(query_l) %>">コメント</a>]
+	 <% else %>
+	 [<a href="?page=1&imgsearch=on<% echo(query_l) %>">イラスト</a>]
+	 <% /def %>
+	 
+
+	</div>
+</nav>
+<!-- 反復 -->
+	<% def(comments) %>
+	<% def(imgsearch) %>
+	<div class="newimg">
+		<ul><% each(comments) %><li class="catalog"><a href="<% echo(comments/link) %>" target="_blank"><img src="<% echo(comments/img) %>" alt="「<% echo(comments/sub) %>」イラスト/<% echo(comments/name) %><% echo(comments/postedtime) %>" title="「<% echo(comments/sub) %>」by <% echo(comments/name) %> <% echo(comments/postedtime) %>"/></a></li><% /each %></ul>
+	</div>
+	<% else %>
+	<% each(comments) %>
+	<article>
+		<div class="article">
+		<div class="comments_title_wrap">
+			<h2><a href="<% echo(comments/link) %>" target="_blank"><% echo(comments/sub) %></a></h2>
+			 <% echo(comments/postedtime) %><br><span class="name"><a href="?page=1&query=<% echo(comments/encoded_name) %>&radio=2" target="_blank"><% echo(comments/name) %></a></span></div>
+			 <% def(comments/img) %>
+			 <a href="<% echo(comments/link) %>" target="_blank"><img src="<% echo(comments/img) %>" alt="<% echo(comments/sub) %> by <% echo(comments/name) %>"></a><br>
+			 <% /def %>
+			 <% echo(comments/com) %>
+			 <div class="res_button_wrap">
+				 <form action="<% echo(comments/link) %>" method="post" target="_blank"><input type="submit" value="返信" class="res_button"></form><span class="page_top"><a href="#top">△</a></span>
+		</div>
+		</div>
+	</article>
+		<% /def %>
+	<% /each %>
+	<% /def %>
+	<p></p>
+
+<p>掲示板から新規投稿順に<% echo(img_or_com) %>を呼び出しています。</p>
+<!-- 最終更新日時 -->
+<% def(lastmodified) %>
+<p>last modified: <% echo(lastmodified) %></p>
+<% /def %>
+
+<p></p>
+<form method="get" action="./search.php">
+<span class="radio">
+<input type="radio" name="radio" id="author" value="1" <% echo(radio_chk1) %>><label for="author" class="label">名前</label>
+<input type="radio" name="radio" id="exact" value="2" <% echo(radio_chk2) %>><label for="exact" class="label">完全一致</label>
+<input type="radio" name="radio" id="fulltext" value="3" <% echo(radio_chk3) %>><label for="fulltext" class="label">本文題名</label>
+</span>
+<br>
+<% def(imgsearch) %>
+<input type="hidden" name="imgsearch" value="on">
+<% else %>
+<input type="hidden" name="imgsearch" value="off">
+<% /def %>
+<input type="text" name="query" placeholder="検索" value="<% echo(query) %>">
+<input type="submit" value="検索" />
+</form>
+<p></p>
+
+<footer>
+	<nav>
+	<div class="leftbox">
+	<!-- ページング -->
+	<% echo(prev) %><% def(nxet) %> | <% echo(nxet) %><% /def %>	
+	</div>
+	<!-- 著作表示 消さないでください -->
+	<div class="rightbox">- <a href="https://github.com/satopian/potiboard_plugin" target="_blank">search</a> -</div>
+	<div class="clear"></div>
+	</nav>
+	</footer>
+
+</div>
+</body>
+</html>

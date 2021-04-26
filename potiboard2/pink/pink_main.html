@@ -1,0 +1,495 @@
+<% def(n) %>
+<!--********** メインテンプレート **********
+// このテンプレートは、以下のモード用テンプレートです
+// ・メインモード
+-->
+<% /def %>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<!--SNS-->
+<% def(sharebutton) %>
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="" />
+<meta property="og:site_name" content="">
+<meta property="og:title" content="<% echo (title) %>">
+<meta property="og:type" content="article">
+<meta property="og:description" content="">
+<meta property="og:image" content="">
+<% /def %>
+<!--/SNS-->
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<link rel="stylesheet" href="<% echo(skindir) %>pink.css">
+<link rel="stylesheet" href="<% echo(skindir) %>icomoon/style.css">
+<title><% echo (title) %></title>
+<% def(n) %>
+<!--
+// title…掲示板タイトル
+// charset…文字コード
+-->
+<% /def %>
+<% ========== クッキー読込み用JavaScript(必須) ========== %>
+<script src="loadcookie.js"></script>
+</head>
+<body>
+<div id="top"></div>
+<div id="body">
+<header>
+<h1 id="bbs_title"><% echo (title) %></h1>
+<% ========== resnoがある＝レスモード ========== %>
+
+<nav>
+<div class="bbsmenu">
+[<a href="<% echo (home) %>" target="_top">ホーム</a>]
+[<a href="<% echo (self) %>?mode=catalog">カタログ</a>]
+<% def(upfile) %>
+[<a href="<% echo (self) %>?mode=newpost"><span class="txtnon">新規</span>投稿</a>]
+<% /def %>
+<span class="txtnon">[<a href="<% echo (self) %>?mode=piccom">未投稿画像</a>]</span>
+[<a href="<% echo (self) %>?mode=admin">管理<span class="txtnon">用</span></a>]
+<a href="#bottom">▽</a>
+<% def(n) %>
+<!--
+// home…ホームページURL
+// self…POTI-boardのスクリプト名
+// self2…入口(TOP)ページのURL
+// resno…レス時の親記事No
+-->
+<% /def %>
+</div>
+</nav>
+<!-- 1行広告用 -->
+<div class="menu_pr"></div>
+<div class="clear"></div>
+<% ========== お絵かきフォーム欄 ========== %>
+<% ========== 実際のお絵かきフォーム ========== %>
+<% def(paint) %>
+<form action="<% echo (self) %>" method="post">
+<input type="submit" value="PAINT" class="paint_button">
+<!-- しぃペインター通常版 -->
+<input type="hidden" name="shi" value="1">
+<% ===キャンバスサイズ 設定はconfig.phpで === %>
+<% def(n) %>
+<!--
+config.phpで設定した
+//お絵描きデフォルトサイズ(最初に選択される数値)
+PDEF_W //幅
+PDEF_H// 高さ
+//お絵描き最大サイズ
+PMAX_W //幅
+PMAX_H //高さ
+が入ります。
+-->
+<% /def %>
+<span class="canvas_size">Size</span>
+<select name="picw" title="幅" class="canvas_select">
+	<?php
+	//幅 300から、PMAX_W で設定した最大値まで。
+		for($i = 300; $i <=PMAX_W ; $i+=50){//50ずつ増える
+		if(PDEF_W==$i){//デフォルトサイズ
+		echo'<option value="'.$i.'" selected>'.$i.'</option>';
+		}
+		else{
+		echo'<option value="'.$i.'">'.$i.'</option>';
+		}
+		}
+	?>
+	</select>
+	x
+	<select name="pich" title="高さ" class="canvas_select">
+	<?php
+	//高さ 300から、PMAX_H で設定した最大値まで。
+		for($i = 300; $i <=PMAX_H ; $i+=50){//50ずつ増える
+		if(PDEF_H==$i){//デフォルトサイズ
+		echo'<option value="'.$i.'" selected>'.$i.'</option>';
+		}
+		else{
+		echo'<option value="'.$i.'">'.$i.'</option>';
+		}
+		}
+	?>
+	</select> 
+<% ===キャンバスサイズ ここまで === %>
+<% def(use_select_palettes) %>
+	<span class="palette_type bold_gray">PALETTE</span> <select name="selected_palette_no" title="パレット" class="canvas_select palette_type"><% echo(palette_select_tags) %></select>
+	<% /def %>
+<!-- NEOを使う -->
+<label class="checkbox use_neo"><input type="checkbox" name="useneo" checked="checked" />NEOを使う</label>
+
+<% def(anime) %><label class="checkbox use_animation"><input type="checkbox" value="true" name="anime" <% echo (animechk) %>>動画記録</span></label>
+	<% /def %>
+	<% def(n) %>
+	<!--
+	// anime…動画記録機能を使用するとき true が入る
+	// animechk…動画記録をデフォルトでチェックするとき ' checked' が入る
+	-->
+<% /def %>
+<input type="hidden" name="mode" value="paint"></form>
+<% /def %>
+<% ========== お絵かきフォーム欄のみ時に表示 ========== %>
+<% def(paint2) %>
+<div class="howtopaint">
+<ul id="up_desc">
+<li>お絵かきできる画像のサイズは横 300～<% echo (pmaxw) %>、縦 300～<% echo (pmaxh) %>の範囲内です。</li>
+<li>画像は横 <% echo (maxw) %>ピクセル、縦 <% echo (maxh) %>ピクセルを超えると縮小表示されます。sage機能付き。</li>
+<% echo (addinfo) %>
+</ul>
+</div>
+  <% /def %>
+  <% def(n) %>
+  <!--
+  // pmaxw…お絵かき最大サイズ(横)
+  // pmaxh…お絵かき最大サイズ(縦)
+  // maxw…投稿サイズ(横)。レス時にはレス用の値が入る
+  // maxh…投稿サイズ(縦)。レス時にはレス用の値が入る
+  // addinfo…追加お知らせ
+  -->
+  <% /def %>
+</header>
+<% ========== 投稿フォーム欄 ========== %>
+<% def(form) %>
+<form action="<% echo (self) %>" method="POST" enctype="multipart/form-data" id="top_post_form">
+	<input type="hidden" name="mode" value="regist">
+	<input type="hidden" name="MAX_FILE_SIZE" value="<% echo (maxbyte) %>">
+	<% def(n) %>
+	<!--
+		// maxbyte…最大投稿サイズ(Byte)
+	-->
+	<% /def %>
+	<% def(paint) %>
+	<div class="post_t_margin">
+	</div>
+	<% /def %>
+	
+		<table id="post_table">
+	 <tr>
+	  <td class="post_table_title">名前<% def(usename) %>(必須)<% /def %></td>
+	  <td><input type="text" name="name" class="post_input_text" autocomplete="username"></td>
+	 </tr>
+	 <tr>
+	  <td class="post_table_title">E-mail</td>
+	  <td><input type="text" name="email" class="post_input_text" autocomplete="email"></td>
+	 </tr>
+	 <tr>
+	  <td class="post_table_title">URL</td>
+	  <td><input type="text" name="url" class="post_input_text" autocomplete="url"></td>
+	 </tr>
+	 <tr>
+	  <td class="post_table_title">題名<% def(usesub) %>(必須)<% /def %></td>
+	  <td><input type="text" name="sub" class="post_input_text" autocomplete="off"></td>
+	 </tr>
+	 <tr>
+	  <td class="post_table_title">本文<% def(usecom) %>(必須)<% /def %></td>
+	  <td><textarea name="com" wrap="soft" class="post_input_com"></textarea></td>
+	 </tr>
+	 <% def(n) %>
+	 <!--
+	 // usename…名前が必須だと ' *' が入る
+	// usesub…題名が必須だと ' *' が入る
+	// usecom…本文が必須だと ' *' が入る
+	// resub…レス時の返信用題名(Re: ～)
+	-->
+	<% /def %>
+	<% ========== 文字色指定(■に色付けてチェックボタンで選択する方法) ========== %>
+	<% ========== ファイルアップロード欄 ========== %>
+	<% def(upfile) %>
+	 <tr>
+	  <td class="post_table_title">添付画像</td>
+	  <td><input type="file" name="upfile" accept="image/*">
+		<% def(hide_the_checkbox_for_nofile) %>
+		<% elsedef %>
+		<label class="howtoedit"><input type="checkbox" name="textonly" value="on">画像なし</label>
+		<% /def %>
+		
+	</td>
+	 </tr>
+	<% /def %>
+	 <tr>
+	  <td class="post_table_title">削除キー</td>
+	  <td><input type="password" name="pwd" value="" class="post_input_pass" autocomplete="current-password"><span class="howtoedit">(記事の編集削除用。英数字で)</span></td>
+	 </tr>
+	 <tr><td colspan="2" style="text-align: center;" class="post_table_submit td_noborder"><input type="submit" value="送信する" class="post_submit">
+	</td></tr>
+	 <tr>
+	  <td colspan="2" class="td_noborder">
+	<% ========== ファイルアップロード時の説明 ========== %>
+	<% def(upfile) %>
+	<div class="howtowrite">
+		<ul id="up_desc">
+			<li>画像は横 <% echo (maxw) %>ピクセル、縦 <% echo (maxh) %>ピクセルを超えると縮小表示されます。</li>
+		<li>最大投稿データ量は <% echo (maxkb) %> KB までです。
+			<% echo (addinfo) %>
+		</ul>
+	</div>
+	<% /def %>
+	</td></tr>
+	</table>
+	</form>
+	<% /def %>
+<nav>
+<div class="pagelink">
+<div class="pagelink_prev"><% def(prev) %><a href="<% echo (prev) %>">≪前へ</a><% /def %>
+</div>
+<div class="pagelink_top"><a href="<% echo (self2) %>">掲示板トップ</a></div>
+<div class="pagelink_next"><% def(next) %><a href="<% echo (next) %>">次へ≫</a><% /def %></div>
+</div>
+	</nav>
+
+<% ========== 親記事グループ ========== %>
+<% each(oya) %>
+
+<article>
+<% ========== 親記事ヘッダここから ========== %>
+<h2 class="article_title"><a href="<% echo (self) %>?res=<% echo (oya/no) %>">[<% echo (oya/no) %>] <% echo (oya/sub) %></a></h2>
+<div class="article_info">
+<span class="article_info_name"><a href="search.php?page=1&imgsearch=on&query=<% echo (oya/encoded_name) %>&radio=2" target="_blank" rel="noopener"><% echo (oya/name) %></a></span><% def(oya/url) %><span class="article_info_desc">[<a href="<% echo (oya/url) %>" target="_blank" rel="nofollow noopener noreferrer">URL</a>]</span> <% /def %>
+<% def(oya/id) %><span class="article_info_desc">ID:<% echo (oya/id) %></span> <% /def %>
+<span class="article_info_desc"><% echo (oya/now) %></span>
+<% def(oya/src) %><% def(oya/painttime) %><span class="article_info_painttime">描画時間:<% echo (oya/painttime) %></span><% /def %><% /def %>
+<% def(oya/updatemark) %><span class="article_info_desc"><% echo (oya/updatemark) %></span> <% /def %>
+</div>
+<% def(oya/src) %>
+<div class="article_img_info">
+<% def(oya/continue) %><span class="article_info_continue">☆<a href="<% echo (self) %>?mode=continue&no=<% echo (oya/continue) %>">続きを描く</a></span> <% /def %> <% def(oya/pch) %><% def(oya/continue) %>| <% /def %><span class="article_info_animation">☆<a href="<% echo (self) %>?mode=openpch&pch=<% echo (oya/pch) %>" target="_blank">動画</a></span><% /def %>
+</div>
+<% /def %>
+<% ========== 親記事ヘッダここまで ========== %>
+<% def(n) %>
+<!--
+// oya…親記事配列
+// oya/no…No
+// oya/sub…題名
+// oya/email…メールアドレス
+// oya/name…名前
+// oya/trip…トリップ
+// oya/url…URL
+// oya/now…投稿日
+// oya/updatemark…編集マーク
+// oya/id…ID
+// oya/painttime…描画時間
+// oya/src…画像URL
+// oya/pch…動画ファイル用引数(フラグ兼用)
+// oya/continue…コンティニュー用引数(フラグ兼用)
+// oya/thumb…サムネイルがあるとき true が入る
+-->
+<% /def %>
+<% def(oya/src) %><div class="posted_image" <% if(oya/w,>=,750) %>style="margin-right:0"<% /if %>><% def(oya/thumb) %><a href="<% echo (oya/src) %>" target="_blank" rel="noopener"><% /def %><img src="<% echo (oya/imgsrc) %>" width="<% echo (oya/w) %>" height="<% echo (oya/h) %>" alt="<% echo (oya/sub) %> by <% echo (oya/name) %> (<% echo (oya/size) %> B)" title="<% echo (oya/sub) %> by <% echo (oya/name) %> (<% echo (oya/size) %> B) <% def(oya/thumb) %>サムネイル縮小表示<% /def %>"><% def(oya/thumb) %></a><% /def %>
+</div>
+  <% /def %><div class="comment"> <% echo (oya/com) %></div>
+  <% def(n) %>
+<!--
+// oya/tab…TAB順用連番
+// oya/imgsrc…サムネイルがあるとき、サムネイルURL。サムネイルがないとき、画像URL
+// oya/w…画像サイズ(横)
+// oya/h…画像サイズ(縦)
+// oya/srcname…画像ファイル名
+// oya/size…画像ファイルサイズ
+// oya/fontcolor…文字色
+// oya/com…本文
+-->
+<% /def %>
+
+<% def(oya/limit) %><hr><div class="article_limit">このスレッドは古いのでもうすぐ消えます。</div><% /def %>
+<% def(n) %>
+<!--
+// oya/limit…消える(ログ落ち)間近のとき true が入る
+-->
+<% /def %>
+
+<% def(resform) %><% def(oya/skipres) %><hr><div class="article_skipres">返信が<% echo (oya/skipres) %>件省略されています。<a href="<% echo (self) %>?res=<% echo (oya/no) %>">&#187;全て表示</a></div><% /def %><% /def %>
+<% def(resform) %><% elsedef %><% def(oya/skipres) %>
+<hr><div class="article_skipres">返信が<% echo (oya/skipres) %>件省略されています。全て読むには返信ボタンを押してください。</div>
+<% /def %><% /def %>
+<% def(n) %>
+<!--
+// ※上段、ミニレスフォームを使わない場合(なぜかndefの挙動がオカシイのでifneで代用)
+// ※下段、ミニレスフォームを使う場合
+// resform…ミニレスフォームを表示させるとき true が入る
+// oya/skipres…未表示レス数
+-->
+<% /def %>
+<% ========== レスがあれば・・・ ========== %>
+<% def(oya/res) %>
+<% ========== レス記事グループ ========== %>
+<% each(oya/res) %>
+<hr>
+<div class="res_article_wrap">
+<% レス記事ヘッダここから %>
+<div class="res_article_title">[<% echo (oya/res/no) %>] <% echo (oya/res/sub) %></div>
+<div class="article_info">
+<span class="article_info_name"><a href="search.php?page=1&imgsearch=on&query=<% echo (oya/res/encoded_name) %>&radio=2" target="_blank" rel="noopener"><% echo (oya/res/name) %></a></span><% def(oya/res/url) %><span class="article_info_desc">[<a href="<% echo (oya/res/url) %>" target="_blank" rel="nofollow noopener noreferrer">URL</a>]</span> <% /def %>
+<% def(oya/res/id) %><span class="article_info_desc">ID:<% echo (oya/res/id) %></span> <% /def %>
+<span class="article_info_desc"><% echo (oya/res/now) %></span>
+<% def(oya/res/src) %><% def(oya/res/painttime) %><span class="article_info_painttime">描画時間:<% echo (oya/res/painttime) %></span><% /def %><% /def %>
+<% def(oya/res/updatemark) %><span class="article_info_desc"><% echo (oya/res/updatemark) %></span> <% /def %>
+</div>
+<% def(oya/res/src) %>
+<div class="article_img_info">
+<% def(oya/res/continue) %><span class="article_info_continue">☆<a href="<% echo (self) %>?mode=continue&no=<% echo (oya/res/continue) %>">続きを描く</a></span><% /def %> <% def(oya/res/pch) %><% def(oya/res/continue) %>| <% /def %><span class="article_info_animation">☆<a href="<% echo (self) %>?mode=openpch&pch=<% echo (oya/res/pch) %>" target="_blank">動画</a></span><% /def %>
+</div>
+<% /def %>
+<% レス記事ヘッダここまで %>
+
+<% def(n) %>
+<!--
+// oya/res…レス記事配列
+// oya/res/no…No
+// oya/res/sub…題名
+// oya/res/email…メールアドレス
+// oya/res/name…名前
+// oya/res/trip…トリップ
+// oya/res/url…URL
+// oya/res/now…投稿日
+// oya/res/updatemark…編集マーク
+// oya/res/id…ID
+// oya/res/painttime…描画時間
+// oya/res/src…画像URL
+// oya/res/pch…動画ファイル用引数(フラグ兼用)
+// oya/res/continue…コンティニュー用引数(フラグ兼用)
+// oya/res/thumb…サムネイルがあるとき true が入る
+-->
+<% /def %>
+
+<% def(oya/res/src) %><div class="posted_image"><% def(oya/res/thumb) %><a href="<% echo (oya/res/src) %>" target="_blank" rel="noopener"><% /def %><img src="<% echo (oya/res/imgsrc) %>" width="<% echo (oya/res/w) %>" height="<% echo (oya/res/h) %>" alt="<% echo (oya/res/sub) %>  by <% echo (oya/res/name) %> (<% echo (oya/res/size) %> B)" title="<% echo (oya/res/sub) %>  by <% echo (oya/res/name) %> (<% echo (oya/res/size) %> B) <% def(oya/res/thumb) %>サムネイル縮小表示<% /def %>"><% def(oya/res/thumb) %></a><% /def %>
+</div><% /def %>
+<div class="comment"> <% echo (oya/res/com) %></div>
+<% def(n) %>
+<!--
+// oya/res/imgsrc…サムネイルがあるとき、サムネイルURL。サムネイルがないとき、画像URL
+// oya/res/w…画像サイズ(横)
+// oya/res/h…画像サイズ(縦)
+// oya/res/srcname…画像ファイル名
+// oya/res/size…画像ファイルサイズ
+// oya/res/fontcolor…文字色
+// oya/res/com…本文
+-->
+<% /def %>
+</div>
+<% /each %>
+<% ========== レス記事グループここまで ========== %>
+<% /def %>
+<% ========== ミニレスフォーム欄 ========== %>
+<% def(resform) %>
+<div class="clear"></div>
+<% def(oya/disp_resform) %>
+<form action="<% echo (self) %>" method="POST">
+<div class="minires_wrap">
+<table class="minres_form_table">
+<input type="hidden" name="mode" value="regist">
+<input type="hidden" name="resto" value="<% echo (oya/no) %>">
+<input type="hidden" name="textonly" value="on">
+<% ========== ←v1.3b3以降必須 ========== %>
+<tr><td class="minres_title">名前<% def(usename) %>(必須)<% /def %></td><td><input type="text" name="name" class="minres_input_text" autocomplete="username"></td>
+<td class="minres_title">題名<% def(usesub) %>(必須)<% /def %></td><td><input type="text" name="sub" value="<% echo (oya/resub) %>" class="minres_input_text" autocomplete="off"></td>
+</tr>
+<tr>
+<td class="minres_title">E-mail</td><td><input type="text" name="email" class="minres_input_text" autocomplete="email"></td>
+<td class="minres_title">URL</td><td><input type="url" name="url" class="minres_input_text" autocomplete="url"></td>
+</tr>
+<tr><td class="minres_title">本文</td><td colspan="3"><textarea name="com" wrap="soft" class="minres_input_com"></textarea></td></tr>
+<tr><td colspan="2">
+</td>
+<td colspan="2">削除キー<input type="password" name="pwd" value="" class="minres_input_other" autocomplete="current-password"></td>
+</tr>
+<tr><td colspan="4"><input type="submit" value="返信" class="res_button"></td></tr>
+</table>
+</div>
+</form>
+<% /def %>
+<% elsedef %>
+<% ========== ミニレスフォームを表示させない場合は返信ボタンを表示 ========== %>
+
+<div class="res_button_wrap">
+	<% def(sharebutton) %>
+	<span class="share_button">
+		<a target="_blank" href="https://twitter.com/intent/tweet?text=[<% echo(oya/no|urlencode) %>] <% echo(oya/sub|urlencode) %> by <% echo(oya/name|urlencode) %> - <% echo(title|urlencode) %>&url=<% echo(rooturl|urlencode) %><% echo(self|urlencode) %>?res=<% echo(oya/no|urlencode) %>"><span class="icon-twitter"></span>tweet</a>
+		<a target="_blank" class="fb btn" href="http://www.facebook.com/share.php?u=<% echo(rooturl|urlencode) %><% echo(self|urlencode) %>?res=<% echo(oya/no|urlencode) %>"><span class="icon-facebook2"></span>share</a>
+	</span>
+	<% /def %>
+	<form action="<% echo (self) %>?res=<% echo (oya/no) %>" method="post"><input type="submit" value="返信" class="res_button"></form><span class="page_top"><a href="#top">△</a></span></div>
+	<% /def %>
+<% ========== 返信ボタンここまで ========== %>
+
+	<hr>
+
+</article>
+<% /each %>
+
+<% ========== 親記事グループここまで ========== %>
+<footer>
+<% ========== メイン時ページング表示 ========== %>
+<nav>
+<div id="paging_wrap"><% echo (paging) %></div>
+<div class="pagelink">
+<div class="pagelink_prev"><% def(prev) %><a href="<% echo (prev) %>">≪前へ</a><% /def %>
+</div>
+<div class="pagelink_top"><a href="<% echo (self2) %>">掲示板トップ</a></div>
+<div class="pagelink_next"><% def(next) %><a href="<% echo (next) %>">次へ≫</a><% /def %></div>
+</div></nav>
+<% def(n) %>
+<!--
+// prev…前ページURL
+// paging…ページングデータ
+// next…次ページURL
+-->
+<% /def %>
+
+<% ========== メンテナンスフォーム欄 ========== %>
+<form action="<% echo (self) %>" method="post">
+<div class="mente_wrap">
+<span class="nk">記事No.<input type="number" min="1" name="del[]" autocomplete="off" class="edit_number"></span>
+<span class="nk">削除キー<input type="password" name="pwd" size="8" value="" autocomplete="current-password" class="edit_password"></span>
+<select name="mode">
+<option value="edit">編集</option>
+<% def(userdel) %>
+<option value="usrdel">削除</option>
+<% /def %>
+<% def(n) %>
+<!--
+// userdel…ユーザー削除権限(0は削除不可)
+-->
+<% /def %>
+</select>
+<span class="nk"><label class="checkbox"><input type="checkbox" name="onlyimgdel" value="on">画像だけ消す</label></span>
+<input type="submit" value="OK">
+</div>
+</form>
+
+<% ========== JavaScriptの実行(クッキーを読込み、フォームに値をセット) ========== %>
+<script>
+l(); //LoadCookie
+</script>
+
+<!--著作権表示 削除しないでください-->
+
+<div class="copyright">
+<!-- GazouBBS v3.0 --><!-- ふたば改0.8 --><!-- POTI-board -->
+<a href="https://pbbs.sakura.ne.jp/poti/" target="_blank" rel="noopener noreferrer" title="POTI-board改二 <% echo (verlot) %>"><b>POTI-board改二 <% echo (ver) %></b></a>
+	<span class="webstyle_wrap">Web Style by <a href="https://draclaw.com/" target="_blank" rel="noopener noreferrer" title="Cool Solid (by ドラ☆クロウ！)"><b>Cool Solid</b></a> &amp; <a href="https://github.com/satopian/pink_for_poti-kaini" target="_blank" rel="noopener noreferrer" title="PINK <% echo (tver) %> (by さとぴあ)"><b>PINK</b></a></span><br>
+	OriginalScript - <a href="http://www.punyu.net/" target="_blank" rel="noopener noreferrer" title="POTI-board v1.32 (by ぷにゅねっと)">POTI-board</a>
+<span title="futaba.php v0.8 lot.031015 (by ふたば)">futaba.php</span> <a href="http://php.loglog.jp/" target="_blank" rel="noopener noreferrer" title="gazou.php v3.0 (by レッツPHP!)">gazou.php</a><br>
+<% def(paint) %>
+OekakiApplet - <a href="http://hp.vector.co.jp/authors/VA016309/" target="_blank" rel="noopener noreferrer" title="by しぃちゃん">Shi-Painter</a>
+<br>
+<% /def %>
+UseFunction - <span title="by WonderCatStudio">動的パレットスクリプト</span>
+<!--http://wondercatstudio.com/-->
+，<a href="http://skinny.sx68.net/" target="_blank" rel="noopener noreferrer" title="Skinny">Skinny</a>
+，<a href="http://github.com/funige/neo/" target="_blank" rel="noopener noreferrer" title="by funige">PaintBBS NEO</a>
+</div>
+
+</footer>
+
+</div>
+<div id="bottom"></div>
+<script src="<% echo(skindir) %>jquery-3.5.1.min.js"></script>
+<script>
+	$(function(){//2度押し対策
+		$('[type="submit"]').click(function(){
+			$(this).prop('disabled',true);
+			$(this).closest('form').submit();
+		});
+	});
+</script>
+</body></html>

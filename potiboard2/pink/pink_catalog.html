@@ -1,0 +1,146 @@
+<% def(n) %>
+<!--(********** カタログテンプレート **********
+// このテンプレートは、カタログモード用テンプレートです
+-->
+<% /def %>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+<link rel="stylesheet" href="<% echo(skindir) %>pink.css">
+<title>カタログモード - <% echo (title) %></title>
+<% def(n) %>
+<!--
+// title…掲示板タイトル
+// charset…文字コード
+-->
+<% /def %>
+
+<% ========== クッキー読込み用JavaScript(必須) ========== %>
+<script src="loadcookie.js"></script>
+</head><body>
+<div id="body">
+<header>
+<h1 id="bbs_title">カタログモード - <span class="title_name_wrap"><% echo(title) %></span></h1>
+<nav>
+<div id="self2">
+[<a href="<% echo (self2) %>"><% echo (title) %></a>]
+<span class="menu_home_wrap">
+[<a href="<% echo (home) %>" target="_top">ホーム</a>]</span>
+<a href="#bottom">▽</a>
+	</div>
+	</nav>
+</header>
+<% def(n) %>
+<!-- 
+// home…ホームページURL
+// self…POTI-boardのスクリプト名
+// self2…入口(TOP)ページのURL
+-->
+<% /def %>
+<div class="catalog_desc_wrap">
+<% ========== カタログ縦(y)配列 ========== %>
+<% each(y) %>
+<% ========== カタログ1行に対する横(x)配列 ========== %>
+<% each(y/x) %>
+<% ========== 記事があれば表示 ========== %><% def(y/x/no) %><div class="catalog_wrap">
+<div class="catalog_info_wrap">
+<div class="catalog_title"><a href="<% echo (self) %>?res=<% echo (y/x/no) %>">[<% echo (y/x/no) %>]&nbsp;<% echo (y/x/sub) %></a></div>
+<div class="catalog_name"><% echo (y/x/name) %></div>
+<div class="catalog_time"><% echo (y/x/now) %></div>
+</div>
+<% ========== 画像があれば・・・ ========== %>
+<% def(y/x/imgsrc) %>
+<div class="catalog_img"><a href="<% echo (self) %>?res=<% echo (y/x/no) %>"><img src="<% echo (y/x/imgsrc) %>" alt="<% echo (y/x/sub) %> by <% echo (y/x/name) %>" title="<% echo (y/x/sub) %> by <% echo (y/x/name) %>" width="<% echo (y/x/w) %>" <% def(y/x/h) %>height="<% echo (y/x/h) %>"<% /def %>></a></div>
+<% /def %>
+<% ========== 文字のみならば・・・ ========== %><% def(y/x/txt) %>
+<div class="catalog_noimg"><a href="<% echo (self) %>?res=<% echo (y/x/no) %>">画像なし</a></div>
+<% /def %></div><% /def %>
+<% ========== 記事が無い場合 ========== %><% def(y/x/noimg) %><div class="catalog_wrap no_article"></div><% /def %>
+<% /each %>
+<% /each %>
+</div>
+<% def(n) %>
+<!-- 
+// y…カタログ縦(y)配列
+// y/x…カタログ1行に対する横(x)配列
+// y/x/no…No
+// y/x/imgsrc…サムネイル画像URL
+// y/x/sub…題名
+// y/x/name…名前
+// y/x/trip…トリップ
+// y/x/w…画像幅(横)
+// y/x/txt…文字のみの場合 true が入る
+// y/x/now…投稿日
+// y/x/updatemark…編集マーク
+// y/x/id…ID
+// y/x/pch…動画ファイル用引数(フラグ兼用)
+// y/x/noimg…記事が無い場合 true が入る
+ -->
+ <% /def %>
+ <hr>
+<% ========== メイン時ページング表示 ========== %>
+<nav>
+<div id="paging_wrap"><% echo (paging) %></div>
+<div class="pagelink">
+<div class="pagelink_prev"><% def(prev) %><a href="<% echo (prev) %>">&#x226A;前へ</a><% /def %>
+</div>
+<div class="pagelink_top"><a href="<% echo (self2) %>">掲示板トップ</a></div>
+<div class="pagelink_next"><% def(next) %><a href="<% echo (next) %>">次へ&#x226B;</a><% /def %></div>
+</div></nav>
+<% def(n) %>
+<!-- 
+// prev…前ページURL
+// paging…ページングデータ
+// next…次ページURL
+ -->
+ <% /def %>
+
+<% ========== メンテナンスフォーム欄 ========== %>
+<form action="<% echo (self) %>" method="post">
+<div class="mente_wrap">
+<span class="nk">記事No.<input type="number" min="1" name="del[]" size="5" autocomplete="off" class="edit_number"></span>
+<span class="nk">削除キー<input type="password" name="pwd" size="8" value="" autocomplete="current-password" class="edit_password"></span>
+<select name="mode">
+<option value="edit">編集</option>
+<% def(userdel) %>
+<option value="usrdel">削除</option>
+<% /def %>
+<% def(n) %>
+<!-- 
+// userdel…ユーザー削除権限(0は削除不可)
+ -->
+<% /def %>
+</select>
+<span class="nk"><label class="checkbox"><input type="checkbox" name="onlyimgdel" value="on">画像だけ消す</label></span>
+<input type="submit" value="OK">
+</div>
+</form>
+
+<% ========== JavaScriptの実行(クッキーを読込み、フォームに値をセット) ========== %>
+<script>
+l(); //LoadCookie
+</script>
+	
+<!--著作権表示 削除しないでください-->
+
+<div class="copyright">
+<!-- GazouBBS v3.0 --><!-- ふたば改0.8 --><!-- POTI-board -->
+<a href="https://pbbs.sakura.ne.jp/poti/" target="_blank" rel="noopener noreferrer" title="POTI-board改二 <% echo (verlot) %>"><b>POTI-board改二 <% echo (ver) %></b></a>
+	<span class="webstyle_wrap">Web Style by <a href="https://draclaw.com/" target="_blank" rel="noopener noreferrer" title="Cool Solid (by ドラ☆クロウ！)"><b>Cool Solid</b></a> &amp; <a href="https://github.com/satopian/pink_for_poti-kaini" target="_blank" rel="noopener noreferrer" title="PINK <% echo (tver) %> (by さとぴあ)"><b>PINK</b></a></span><br>
+	OriginalScript - <a href="http://www.punyu.net/" target="_blank" rel="noopener noreferrer" title="POTI-board v1.32 (by ぷにゅねっと)">POTI-board</a>
+<span title="futaba.php v0.8 lot.031015 (by ふたば)">futaba.php</span> <a href="http://php.loglog.jp/" target="_blank" rel="noopener noreferrer" title="gazou.php v3.0 (by レッツPHP!)">gazou.php</a><br>
+<% def(paint) %>
+OekakiApplet - <a href="http://hp.vector.co.jp/authors/VA016309/" target="_blank" rel="noopener noreferrer" title="by しぃちゃん">Shi-Painter</a>
+<br>
+<% /def %>
+UseFunction - <span title="by WonderCatStudio">動的パレットスクリプト</span>
+<!--http://wondercatstudio.com/-->
+，<a href="http://skinny.sx68.net/" target="_blank" rel="noopener noreferrer" title="Skinny">Skinny</a>
+，<a href="http://github.com/funige/neo/" target="_blank" rel="noopener noreferrer" title="by funige">PaintBBS NEO</a>
+</div>
+</div>
+<div id="bottom"></div>
+</body>
+</html>
