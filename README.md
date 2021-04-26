@@ -61,7 +61,7 @@ potiboard.phpをindex.phpにリネームしてお使いの方は、上書きし�
 各テーマの[POTI改公式サイト](https://pbbs.sakura.ne.jp/poti/)のURLを変更しました。  
 著作表記を(c)POTI改 POTI-board redevelopment team.に変更しました。  
 テーマの細かな修正を行いました。
-別リポジトリで配布していたテーマファイル、[PINk](https://github.com/satopian/pink_for_poti-kaini)を同梱しました。  
+別リポジトリで配布していたテーマファイル、[PINK](https://github.com/satopian/pink_for_poti-kaini)を同梱しました。  
 
 ### [2021/04/13] v2.26.7 lot.210410
 
