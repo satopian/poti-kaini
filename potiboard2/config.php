@@ -1,6 +1,6 @@
 <?php
 /*
-  * POTI-board改二 v2.26.6 lot.210320
+  * POTI-board改二 v2.26.8 lot.210426
   * by POTI改 >> https://pbbs.sakura.ne.jp/poti/
   *
   * POTI-board改二の設定ファイルです。
@@ -18,7 +18,9 @@ define('LOG_MAX', '2000');
 //テーマ(テンプレート)のディレクトリ。'/'まで
 //themeディレクトリに使いたいtemplateをいれて使ってください。(推奨)
 //別のディレクトリにしたい場合は設定してください。
-//例えばおまけのnee2を使いたい場合は theme_nee2/ とすることができます。初期値は theme/ です。
+//例えばおまけのnee2を使いたい場合は theme_nee2/ 、PINKを使いたい時は pink/ とします。
+//初期値は theme/ です。
+
 define('SKIN_DIR', 'theme/');
 
 //メール通知のほか、シェアボタンなどで使用
