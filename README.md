@@ -23,7 +23,7 @@ POTI-board改のテンプレートエンジン「htmltemplate.inc」が古くな
   
 [Skinny](http://skinny.sx68.net/)
   
-に移植したのがこのPOTI-board改二です
+に移植したのがこのPOTI-board改二です。
 
 ## サンプル/サポート
 
