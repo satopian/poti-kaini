@@ -23,7 +23,7 @@ POTI-board改のテンプレートエンジン「htmltemplate.inc」が古くな
   
 [Skinny](http://skinny.sx68.net/)
   
-に移植したのがこのPOTI-board改二です
+に移植したのがこのPOTI-board改二です。
 
 ## サンプル/サポート
 
@@ -40,7 +40,7 @@ config.phpの設定をし、アップロードしてpotiboard.phpのあるディ
 
 2020/07/23以降のバージョンにはindex.phpというファイルが同梱されています。  
 これは、potiboardの設置をより簡単にするためのものです。  
-念のため、potiboard.phpをindex.phpにリネームしてお使いの方は、上書きしないようお願いいたします。  
+potiboard.phpをindex.phpにリネームしてお使いの方は、上書きしないようお願いいたします。  
 
 ## 古いpotiboardから改二へのバージョンアップ
 
@@ -52,8 +52,8 @@ config.phpの設定をし、アップロードしてpotiboard.phpのあるディ
 デフォルトthemeのほか、[COOL SOLID](https://draclaw.com/)、[PINK](https://github.com/satopian/pink_for_poti-kaini)などがあります。
 
 ## 外部プログラム
-[potiboard_plugin: お絵かき掲示板 POTI-boardのための外部phpプログラム](https://github.com/satopian/potiboard_plugin)
-パレットデータ(やこうさんパレット)、BBSNoteのログファイルをPOTI-board形式に変換するログコンバータもあります。
+[potiboard_plugin: お絵かき掲示板 POTI-boardのための外部phpプログラム](https://github.com/satopian/potiboard_plugin)  
+パレットデータ(やこうさんパレット)、BBSNoteのログファイルをPOTI-board形式に変換するログコンバータなどがあります。
 
 
 ## 履歴
