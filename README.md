@@ -10,8 +10,8 @@ English translated version is here. [POTI-board Kai Ni-EN](https://github.com/sa
 
 ## ！デジタルインク(windows Ink)の機能について
 
-デジタルインク(Window Ink)がオンの状態でPaintBBS NEO / しぃペインターを操作すると、
-例えばペンを左から右に大きくスライドさせるとブラウザが前の画面に戻る、などの誤動作が発生する可能性が大きくあります。PaintBBS NEO / しぃペインターご利用の際はデジタルインク(Window Ink)をオフにお願いいたします。
+デジタルインク(Windows Ink)がオンの状態でPaintBBS NEO / しぃペインターを操作すると、
+例えばペンを左から右に大きくスライドさせるとブラウザが前の画面に戻る、などの誤動作が発生する可能性が大きくあります。PaintBBS NEO / しぃペインターご利用の際はデジタルインク(Windows Ink)をオフにお願いいたします。
 
 ![デジタルインク](https://user-images.githubusercontent.com/31465648/83109254-0c7ddf80-a0fc-11ea-9627-7b4afe5ae193.PNG)
 
