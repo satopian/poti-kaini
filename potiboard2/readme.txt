@@ -125,9 +125,9 @@ POTI-boardの再開発の企画立案者であり各種テーマの作者。
 
 ■著作権
 
-POTI-boaed改二                     (c)POTI改
+POTI-boaed改二                     (C)POTI改
 
-search.php                         (c)satopian
+search.php                         (C)satopian
 
 POTI-board v1.32                   (C)SakaQ「ぷにゅねっと」
 
@@ -144,6 +144,6 @@ PaintBBS(test by v2.22_8)
 PCH Viewer(test by v1.12)          (C)しぃちゃん「しぃ堂」
 WCS 動的パレットコントロールセット  (C)のらネコ「WonderCatStudio」
 
-PaintBBS NEO                      (c)funige
+PaintBBS NEO                      (C)funige
 
 ■変更履歴はgithub参照
