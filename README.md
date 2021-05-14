@@ -35,18 +35,17 @@ v3.0で従来の[PaintBBS NEO](https://github.com/funige/neo/)、しぃペイン
 しぃペインターとChickenPaintを使う使わないの選択機能を追加したい場合のみ、config.phpをアップデート。
 - ChickenPaint対応が特に必要ではない方は改二のテーマをそのままご利用ください。
 
-すべてデフォルト設定に戻ってしまってもいいのでれば、新規設置しなおしたほうが簡単かもしれません。  
+## 設置
+
+新規設置のほうが簡単かもしれません。  
+potiboard2ディレクトリをアップロードして、フォルダにアクセスするだけで設置が終わります。
+[お絵かき掲示板簡単設置方法](http://stp.sblo.jp/article/185357941.html)
 
 ## サンプル/サポート
 
 [お絵かき掲示板PHPスクリプトPOTI-board改公式サイト](https://pbbs.sakura.ne.jp/poti/)と、[設置サポート掲示板](https://pbbs.sakura.ne.jp/cgi/neosample/support/) をオープンしました。ご利用ください。  
 設置サポート掲示板にはさとぴあが常駐しています。
 
-## 使い方
-
-基本的に [POTI-board改](https://github.com/satopian/poti-kai/) と同じですが、テーマ(スキン/テンプレート機能)を置くフォルダができました。  
-config.phpの設定をし、アップロードしてpotiboard.phpのあるディレクトリにアクセスするだけです。  
-[お絵かき掲示板簡単設置方法](http://stp.sblo.jp/article/185357941.html)
 
 ## テーマ(テンプレート)機能について
 
