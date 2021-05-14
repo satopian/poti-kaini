@@ -52,39 +52,6 @@
 				</nav>
 				<hr>
 				<h2>カタログモード</h2>
-				<hr>
-				<% def(paint) %>
-				<section class="epost">
-					<form action="<% echo(self) %>" method="post" enctype="multipart/form-data">
-						<p>
-							<% def(applet) %>
-							<input type="hidden" name="shi" value="1">
-							<% /def %>
-							幅：<input name="picw" type="number" title="幅" class="form" value="<% echo(pdefw) %>" min="300" max="<% echo(pmaxw) %>">
-							高さ：<input name="pich" type="number" title="高さ" class="form" value="<% echo(pdefh) %>" min="300" max="<% echo(pmaxh) %>">
-							<% def(use_select_palettes) %>
-							パレット：<select name="selected_palette_no" title="パレット" class="form"><% echo(palette_select_tags) %></select>
-							<% /def %>
-							<% def(resno) %>
-							<input type="hidden" name="resto" value="<% echo(resno) %>">
-							<% /def %>
-							<% def(anime) %><label><input type="checkbox" value="true" name="anime" title="動画記録" <% def(animechk) %><% echo(animechk) %><% /def %>>アニメーション記録</label><% /def %>
-							<input type="hidden" name="mode" value="paint">
-							<input class="button" type="submit" value="お絵かき">
-							<!-- NEOを使う -->
-							<label><input type="checkbox" name="useneo" checked>USE NEO</label>
-						</p>
-					</form>
-					<% def(paint2) %>
-					<ul>
-						<li>お絵かきできる画像のサイズは幅 300～<% echo (pmaxw) %>、高さ 300～<% echo (pmaxh) %>の範囲内です。</li>
-						<li>画像は幅 <% echo (maxw) %>px、高さ <% echo (maxh) %>pxを超えると縮小表示されます。</li>
-						<li>USE NEOのチェックが入っていればPaintBBS NEOが、外せばしぃペインターが起動します。</li>
-						<% def(addinfo) %><% echo (addinfo) %><% /def %>
-					</ul>
-					<% /def %>
-				</section>
-				<% /def %>
 			</article>
 		</header>
 		<main>
@@ -147,7 +114,7 @@
 				<!-- 著作権表示 削除しないでください -->
 				<!-- GazouBBS v3.0 --><!-- ふたば改0.8 --><!-- POTI-board -->
 				<p>
-					<a href="https://pbbs.sakura.ne.jp/poti/" target="_top" title="POTI-board改二 <% echo(verlot) %>">POTI-board改二 <% echo(ver) %></a>
+					<a href="https://pbbs.sakura.ne.jp/poti/" target="_top" title="POTI-board EVO <% echo(verlot) %>">POTI-board EVO <% echo(ver) %></a>
 					Web Style by <a href="https://pbbs.sakura.ne.jp/poti/" target="_top" title="MONO <% echo(tver) %>">MONO</a>
 				</p>
 				<p>

@@ -63,18 +63,15 @@
 			<article class="epost">
 				<form action="<% echo(self) %>" method="post" enctype="multipart/form-data">
 					<p>
-						<% def(applet) %>
-						<input type="hidden" name="shi" value="1">
-						<% /def %>
+						<input type="hidden" name="useneo" value="true">
 						幅：<input name="picw" type="number" title="幅" class="form" value="<% echo(pdefw) %>" min="300" max="<% echo(pmaxw) %>">
 						高さ：<input name="pich" type="number" title="高さ" class="form" value="<% echo(pdefh) %>" min="300" max="<% echo(pmaxh) %>">
 						<% def(use_select_palettes) %>
 						パレット：<select name="selected_palette_no" title="パレット" class="form"><% echo(palette_select_tags) %></select>
 						<% /def %>
-						<% def(anime) %><label><input type="checkbox" value="true" name="anime" title="動画記録" <% def(animechk) %><% echo(animechk) %><% /def %>>アニメーション記録</label><% /def %>
+						<% def(anime) %><label><input type="checkbox" value="true" name="anime" title="動画記録" <% def(animechk) %><% echo(animechk) %><% /def %>>動画記録</label><% /def %>
 						<!-- NEOを使う -->
-						<label><input type="checkbox" name="useneo" checked>USE NEO</label>
-						<input name="pch_upload" type="file" accept="image/*,.pch,.spch" title="pch upload">
+						<input name="pch_upload" type="file" accept="image/*,.pch,.spch,.chi" title="pch upload">
 						<input type="hidden" name="mode" value="paint">
 						<input type="hidden" name="admin" value="<% echo(admin) %>">
 						<input class="button" type="submit" value="お絵かき">
@@ -313,7 +310,7 @@
 				<!-- 著作権表示 削除しないでください -->
 				<!-- GazouBBS v3.0 --><!-- ふたば改0.8 --><!-- POTI-board -->
 				<p>
-					<a href="https://pbbs.sakura.ne.jp/poti/" target="_top" title="POTI-board改二 <% echo(verlot) 	%>">POTI-board改二 <% echo(ver) %></a>
+					<a href="https://pbbs.sakura.ne.jp/poti/" target="_top" title="POTI-board EVO <% echo(verlot) 	%>">POTI-board EVO <% echo(ver) %></a>
 					Web Style by <a href="https://pbbs.sakura.ne.jp/poti/" target="_top" title="MONO <% echo(tver) %>">MONO</a>
 				</p>
 				<p>

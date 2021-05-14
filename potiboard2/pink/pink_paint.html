@@ -21,6 +21,7 @@
 <% def(pch_mode) %><meta name="viewport" content="width=device-width,initial-scale=1.0"><% /def %>
 <% def(continue_mode) %><meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0"><% /def %>
 <link rel="stylesheet" type="text/css" href="<% echo(skindir) %>pink.css">
+<style>div#chickenpaint-parent {letter-spacing: initial;word-break:initial;}</style>
 <title><% def(paint_mode) %>お絵かきモード<% /def %><% def(continue_mode) %>続きを描く<% /def %><% def(pch_mode) %>動画表示モード<% /def %> - <% echo(title) %></title>
 <% def(n) %>
 <!-- 
@@ -28,6 +29,20 @@
 // charset…文字コード
 -->
 <% /def %>
+<% def(chickenpaint)%>
+<script type="text/javascript">
+	/* Check for native pointer event support before PEP adds its polyfill */
+	if (window.PointerEvent) {
+		window.hasNativePointerEvents = true;
+	}
+
+</script>
+
+<script src="chickenpaint/js/chickenpaint.min.js?210512"></script>
+
+<link rel="stylesheet" type="text/css" href="chickenpaint/css/chickenpaint.css?210512">
+
+<% elsedef %>
 
 <!-- NEOを使う -->
 <script>
@@ -41,13 +56,13 @@
 		}
 	</script>
 <% def(useneo) %>
-<link rel="stylesheet" href="neo.css?<% echo(stime) %>" type="text/css" />
-<script src="neo.js?<% echo(stime) %>" charset="UTF-8"></script>
+<link rel="stylesheet" href="neo.css" type="text/css" />
+<script src="neo.js" charset="UTF-8"></script>
 <% /def %>
 <% def(pch_mode) %>
 <% def(type_neo) %>
-<link rel="stylesheet" href="neo.css?<% echo(stime) %>" type="text/css" />
-<script src="neo.js?<% echo(stime) %>" charset="UTF-8"></script>
+<link rel="stylesheet" href="neo.css" type="text/css" />
+<script src="neo.js" charset="UTF-8"></script>
 <% /def %>
 <% /def %>
 <!-- Javaが使えるかどうか判定 -->
@@ -65,10 +80,18 @@
         window.addEventListener("load", function() { cheerpJLoad(); }, false);
 </script>
 
+<% /def %>
+
 </head>
 <body>
 <header>
-<% def(paint_mode) %><h1 style= "min-width:calc(<% echo(w) %>px + 176px)" id="bbs_title">お絵かきモード - <span class="title_name_wrap"><% echo(title) %></span></h1>
+
+<% def(paint_mode) %>
+<% def(chickenpaint)%>
+<% elsedef %>
+<h1 style= "min-width:calc(<% echo(w) %>px + 176px)" id="bbs_title">お絵かきモード - <span class="title_name_wrap"><% echo(title) %></span></h1>
+<% /def %>
+
 <% elsedef %>
 <h1 id="bbs_title"><% def(continue_mode) %>続きを描く<% /def %><% def(pch_mode) %>動画表示モード<% /def %> - <span class="title_name_wrap"><% echo(title) %></span></h1><% /def %>
 <% def(paint_mode) %>
@@ -127,6 +150,34 @@
 <% /def %>
 
 <% def(paint_mode) %>
+<% def(chickenpaint)%>
+
+<div id="chickenpaint-parent"></div>
+<p></p>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    new ChickenPaint({
+        uiElem: document.getElementById("chickenpaint-parent"),
+		canvasWidth: <% echo(picw) %>,
+	canvasHeight: <% echo(pich) %>,
+
+	<% def(imgfile) %>loadImageUrl: "<% echo(imgfile) %>",<% /def %>
+	<% def(img_chi) %>loadChibiFileUrl: "<% echo(img_chi) %>",<% /def %>
+	saveUrl: "save.php?usercode=<% echo(usercode) %>",
+	postUrl: "?mode=<% echo(mode) %>&stime=<% echo(stime) %>",
+	exitUrl: "?mode=<% echo(mode) %>&stime=<% echo(stime) %>",
+
+        allowDownload: true,
+        resourcesRoot: "chickenpaint/",
+        disableBootstrapAPI: true
+	});
+})
+</script>
+
+
+<% elsedef %>
+
 <nav>
 <div style= "min-width:calc(<% echo(w) %>px + 176px)" id="self2"> [<a href="<% echo(self2) %>"><% echo(title) %></a>] 
 <% def(useneo) %>
@@ -257,6 +308,10 @@ pe[n]}}function GradView(a,f){d=document}function showHideLayer(){d=document;var
 <% def(dynp) %>
 <% echo (dynp) %>
 <% /def %><% /def %>
+<% /def %>
+<% def(chickenpaint)%>
+<% elsedef %>
+
 </select><br>
 <INPUT type="button" VALUE="作成" OnClick="PaletteNew()">
 <INPUT type="button" VALUE="変更" OnClick="PaletteRenew()">
@@ -337,6 +392,7 @@ if(DynamicColor) PaletteListSetColor();
 <!--PaintBBS HELP START-->
 <div class="paintbbs_memo"><div>基本の動作(恐らくこれだけは覚えておいた方が良い機能)</div><div> &lt;基本&gt;<br>PaintBBSでは右クリック,ctrl+クリック,alt+クリックは同じ動作をします。<br>基本的に操作は一回のクリックか右クリックで動作が完了します。(ベジエやコピー使用時を除く)<br><br>&lt;ツールバー&gt;<br>ツールバーの殆どのボタンは複数回クリックして機能を切り替える事が出来ます。<br>右クリックで逆周り。パレットの色,マスクの色,一字保存ツールに現在の状態を登録は全て右クリックです。<br>逆にクリックでパレットの色と一時保存ツールに保存しておいた状態を取り出せます。<br><br>&lt;キャンバス部分&gt;<br>右クリックで色をスポイトします<br>ベジエやコピー等の処理の途中で右クリックを押すとリセットします。 </div><br><div>特殊動作(使う必要は無いが慣れれば便利な機能)</div><div> &lt;ツールバー&gt;<br>値を変更するバーはドラッグ時バーの外に出した場合変化が緩やかになりますので<br>それを利用して細かく変更する事が出来ます。<br>パレットはShift+クリックで色をデフォルトの状態に戻します。<br><br>&lt;キーボードのショートカット&gt;<br>+で拡大-で縮小。 <br>Ctrl+ZかCtrl+Uで元に戻す、Ctrl+Alt+ZかCtrl+Yでやり直し。<br>Escでコピーやベジエのリセット。（右クリックでも同じ） <br>スペースキーを押しながらキャンバスをドラッグするとスクロールの自由移動。<br>Ctrl+Alt+ドラッグで線の幅を変更。<br><br>&lt;コピーツールの特殊な利用方法&gt;<br>レイヤー間の移動は現時点ではコピーとレイヤー結合のみです。コピーでの移動方法は、<br>まず移動したいレイヤ上の長方形を選択後、移動させたいレイヤを選択後に通常のコピーの作業を<br>続けます。そうする事によりレイヤ間の移動が可能になります。<br></div><br><div>ツールバーのボタンと特殊な機能の簡単な説明</div><div> <ul type="circle"> <li>ペン先(通常ペン,水彩ペン,テキスト)<br>メインのフリーライン系のペンとテキスト<br><br></li><li>ペン先2(トーン,ぼかし,他)<br>特殊な効果を出すフリーライン系のペン<br><br></li><li>図形(円や長方形)<br>長方形や円等の図形<br><br></li><li>特殊(コピーやレイヤー結合,反転等)<br>コピーは一度選択後、ドラッグして移動、コピーさせるツールです。<br><br></li><li>マスクモード指定(通常,マスク,逆マスク）<br>マスクで登録されている色を描写不可にします。逆マスクはその逆。<br>通常でマスク無し。また右クリックでマスクカラーの変更が可能。<br><br></li><li>消しゴム(消しペン,消し四角,全消し)<br>透過レイヤー上を白で塗り潰した場合、下のレイヤーが見えなくなりますので<br>上位レイヤーの線を消す時にはこのツールで消す様にして下さい。全消しはすべてを透過ピクセル化させるツールです。<br>全けしを利用する場合はこのツールを選択後キャンバスをクリックでOK。<br>消しゴムは独立した線の幅を持っています。<br><br></li><li>描写方法の指定。(手書き,直線,ベジエ曲線)<br>ペン先,描写機能指定ではありません。<br>また適用されるのはフリーライン系のツールのみです。<br><br></li><li>カラーパレット郡<br>クリックで色取得。右クリックで色の登録。Shift+クリックでデフォルト値。<br><br></li><li>RGBバーとalphaバー<br>細かい色の変更と透過度の変更。Rは赤,Gは緑,Bは青,Aは透過度を指します。<br>トーンはAlphaバーで値を変更する事で密度の変更が可能です。<br><br></li><li>線幅変更ツール<br>水彩ペンを選択時に線幅を変更した時、デフォルトの値がalpha値に代入されます。<br><br></li><li>線一時保存ツール<br>クリックでデータ取得。右クリックでデータの登録。(マスク値は登録しません)<br><br></li><li>レイヤーツール<br>PaintBBSは透明なキャンバスを二枚重ねたような構造になっています。<br>つまり主線を上に書き、色を下に描くと言う事も可能になるツールです。<br>通常レイヤーと言う種類の物ですので鉛筆で描いたような線もキッチリ透過します。<br>クリックでレイヤー入れ替え。右クリックで選択されているレイヤの表示、非表示切り替え。<br><br></li></ul> </div>投稿に関して： <div> 絵が完成したら投稿ボタンで投稿します。<br>絵の投稿が成功した場合は指定されたURLへジャンプします。<br>失敗した場合は失敗したと報告するのみでどこにも飛びません。<br>単に重かっただけである場合、少し間を置いた後、再度投稿を試みて下さい。<br>この際二重で投稿される場合があるかもしれませんがそれは<br>WebサーバーかCGI側の処理ですのであしからず。 </div></div>
 <!--PaintBBS HELP END-->
+<% /def %>
 <% /def %>
 <% ========== お絵かきモード ここまで ========== %>
 <% ========== 動画表示モード ========== %>
@@ -448,36 +504,52 @@ name="pch" code="pch.PCHViewer.class" archive="PCHViewer.jar,PaintBBS.jar" width
       <br>
 <% def(n) %>
 <!--
-//コメントアウト
-{def applet) 
-アプレット<select name="shi" class="paint_select">
-{def usepbbs) 
-<option value="0">PaintBBS</option>
-{/def) 
-<option value=1>しぃペインター</option>
-<option value=2>しぃペインターPro</option> 
-</select>
-{/def) 
+//select_app ツールの選択メニューを出す時にtrueが入る
+//use_shi_painter しぃペインターを使う設定の時にtrueが入る
+//use_chickenpaint を使う設定の時にtrueが入る
+//app_to_use 動画やレイヤー情報などの固有形式があるときに対応するアプリが入る
 -->
-<% /def %>
-<% def(use_select_palettes) %>
-	<span class="palette_type">PALETTE</span> <select name="selected_palette_no" title="パレット" class="paint_select palette_type"><% echo(palette_select_tags) %></select>
-		<% /def %>
-<span class="nk">削除キー<input type="password" name="pwd" size="8" value="" class="paint_password" autocomplete="current-password"></span>
-<!-- NEOを使う -->
-<% def(ctype_pch) %>
-<% elsedef %>
-<label class="use_neo checkbox"><input type="checkbox" name="useneo" checked="checked" />NEOを使う</label>
-<% /def %>
-<input type="submit" value="続きを描く">
 
-<% def(applet) %>
-<input type="hidden" name="shi" value="1">
-<% elsedef %>
-<input type="hidden" name="useneo" value="1">
+app_to_use
 <% /def %>
+
+<% def(select_app)%>
+<select name="shi" class="paint_select palette_type for_pc">
+	<option value="neo">PaintBBS NEO</option>
+	<% def(use_shi_painter) %><option value="1">しぃペインター</option><% /def %>
+	<% def(use_chickenpaint) %><option value="chicken">ChickenPaint</option><% /def %>
+</select>
+<% elsedef %>
+<!-- 選択メニューを出さない時に起動するアプリ -->
+<input type="hidden" name="shi" value="neo">
+<% /def %>
+<% def(app_to_use) %>
+<input type="hidden" name="shi" value="<% echo(app_to_use) %>">
+<% /def %>
+
+<% def(use_select_palettes) %>
+<span class="palette_type">PALETTE</span> <select name="selected_palette_no" title="パレット" class="paint_select palette_type"><% echo(palette_select_tags) %></select>
+<% /def %>
+<span class="nk">削除キー<input type="password" name="pwd" size="8" value="" class="paint_password" autocomplete="current-password"></span>
+<input type="submit" value="続きを描く">
+<input type="hidden" name="is_mobile" id="is_mobile" value>
 
 </form>
+
+<style id="for_mobile"></style>
+<script>
+function is_mobile() {
+// if (navigator.userAgent.match(/Android|iPhone|iPad|iPod/i)) return true;
+if (navigator.maxTouchPoints && ( window.matchMedia && window.matchMedia('(max-device-width: 533px)').matches))  return true;
+return false;
+}
+if(is_mobile()){
+	document.getElementById("is_mobile").value = "true";
+	document.getElementById("for_mobile").textContent=".for_pc{display: none;}";
+}
+</script>
+
+
 <% ========== コンティニュー説明 ========== %>
 <div class="howtocontinue">
 		<ul id="up_desc">
@@ -496,21 +568,20 @@ l(); //LoadCookie
 <% /def %>
 <% ========== コンティニューモード ここまで ========== %><!--著作権表示 削除しないでください-->
 <footer>
-<div class="copyright">
-<!-- GazouBBS v3.0 --><!-- ふたば改0.8 --><!-- POTI-board -->
-<a href="https://pbbs.sakura.ne.jp/poti/" target="_blank" rel="noopener noreferrer" title="POTI-board改二 <% echo(verlot) %>"><b>POTI-board改二 <% echo(ver) %></b></a>
-<span class="webstyle_wrap">Web Style by <a href="https://draclaw.com/" target="_blank" rel="noopener noreferrer" title="Cool Solid (by ドラ☆クロウ！)"><b>Cool Solid</b></a> &amp; <a href="https://github.com/satopian/pink_for_poti-kaini" target="_blank" rel="noopener noreferrer" title="PINK <% echo(tver) %> (by さとぴあ)"><b>PINK</b></a></span><br>
-OriginalScript - <a href="http://www.punyu.net/" target="_blank" rel="noopener noreferrer" title="POTI-board v1.32 (by ぷにゅねっと)">POTI-board</a>
-<a href="https://www.2chan.net/script/" target="_blank" rel="noopener noreferrer  nofollow" title="futaba.php v0.8 lot.031015 (by ふたば)">futaba.php</a> <a href="http://php.loglog.jp/" target="_blank" rel="noopener noreferrer" title="gazou.php v3.0 (by レッツPHP!)">gazou.php</a><br>
-<% def(paint) %>
-OekakiApplet - <a href="http://hp.vector.co.jp/authors/VA016309/" target="_blank" rel="noopener noreferrer" title="by しぃちゃん">Shi-Painter</a>
-<br>
-<% /def %>
-UseFunction - <span title="by WonderCatStudio">動的パレットスクリプト</span>
-<!--http://wondercatstudio.com/-->
-，<a href="http://skinny.sx68.net/" target="_blank" rel="noopener noreferrer" title="Skinny">Skinny</a>
-，<a href="http://github.com/funige/neo/" target="_blank" rel="noopener noreferrer" title="by funige">PaintBBS NEO</a>
-</div>
-</footer>
+	<div class="copyright">
+		<!-- GazouBBS v3.0 --><!-- ふたば改0.8 --><!-- POTI-board -->
+		<a href="https://pbbs.sakura.ne.jp/poti/" target="_blank" rel="noopener noreferrer" title="POTI-board EVO <% echo (verlot) %>"><b>POTI-board EVO <% echo (ver) %></b></a>
+			<span class="webstyle_wrap">Web Style by <a href="https://draclaw.com/" target="_blank" rel="noopener noreferrer" title="Cool Solid (by ドラ☆クロウ！)"><b>Cool Solid</b></a> &amp; <a href="https://github.com/satopian/pink_for_poti-kaini" target="_blank" rel="noopener noreferrer" title="PINK <% echo (tver) %> (by さとぴあ)"><b>PINK</b></a></span><br>
+			OriginalScript - <a href="http://www.punyu.net/" target="_blank" rel="noopener noreferrer" title="POTI-board v1.32 (by ぷにゅねっと)">POTI-board</a>
+		<span title="futaba.php v0.8 lot.031015 (by ふたば)">futaba.php</span> <a href="http://php.loglog.jp/" target="_blank" rel="noopener noreferrer" title="gazou.php v3.0 (by レッツPHP!)">gazou.php</a><br>
+		<% def(paint) %>
+		OekakiApp - <a href="http://hp.vector.co.jp/authors/VA016309/" target="_blank" rel="noopener noreferrer" title="by しぃちゃん">Shi-Painter</a> , <a href="http://github.com/funige/neo/" target="_blank" rel="noopener noreferrer" title="by funige">PaintBBS NEO</a> , <a href="https://github.com/thenickdude/chickenpaint" target="_blank" rel="nofollow noopener noreferrer" title="by Nicholas Sherlock">ChickenPaint</a>
+		<br>
+		<% /def %>
+		UseFunction - <span title="by WonderCatStudio">動的パレットスクリプト</span>
+		<!--http://wondercatstudio.com/-->
+		，<a href="http://skinny.sx68.net/" target="_blank" rel="noopener noreferrer" title="Skinny">Skinny</a>
+		</div>
+				</footer>
 </body>
 </html>

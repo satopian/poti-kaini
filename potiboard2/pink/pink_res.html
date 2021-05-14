@@ -97,7 +97,7 @@
 // oya/thumb…サムネイルがあるとき true が入る
 -->
 <% /def %>
-<% def(oya/src) %><div class="posted_image" <% if(oya/w,>=,750) %>style="margin-right:0"<% /if %>><% def(oya/thumb) %><a href="<% echo (oya/src) %>" target="_blank" rel="noopener"><% /def %><img src="<% echo (oya/imgsrc) %>" width="<% echo (oya/w) %>" height="<% echo (oya/h) %>" alt="<% echo (oya/sub) %> by <% echo (oya/name) %> (<% echo (oya/size) %> B)" title="<% echo (oya/sub) %> by <% echo (oya/name) %> (<% echo (oya/size) %> B) <% def(oya/thumb) %>サムネイル縮小表示<% /def %>"><% def(oya/thumb) %></a><% /def %>
+<% def(oya/src) %><div class="posted_image" <% if(oya/w,>=,750) %>style="margin-right:0;float:none;"<% /if %>><% def(oya/thumb) %><a href="<% echo (oya/src) %>" target="_blank" rel="noopener"><% /def %><img src="<% echo (oya/imgsrc) %>" width="<% echo (oya/w) %>" height="<% echo (oya/h) %>" alt="<% echo (oya/sub) %> by <% echo (oya/name) %> (<% echo (oya/size) %> B)" title="<% echo (oya/sub) %> by <% echo (oya/name) %> (<% echo (oya/size) %> B) <% def(oya/thumb) %>サムネイル縮小表示<% /def %>"><% def(oya/thumb) %></a><% /def %>
 </div>
   <% /def %><div class="comment"> <% echo (oya/com) %></div>
   <% def(n) %>
@@ -215,9 +215,27 @@
 <div id="res_paint_form">
 <form action="<% echo (self) %>" method="post">
 <% ========== お絵かきアプレット ========== %>
+<% def(n) %>
+<!--
+//select_app ツールの選択メニューを出す時にtrueが入る
+//use_shi_painter しぃペインターを使う設定の時にtrueが入る
+//use_chickenpaint を使う設定の時にtrueが入る
+-->
+<% /def %>
 <input type="submit" value="PAINT" class="paint_button">
-<!-- しぃペインター通常版 -->
-<input type="hidden" name="shi" value="1">
+<% def(select_app) %>
+<span class="canvas_size for_pc">TOOL</span>
+<select name="shi" class="select_applet for_pc">
+	<option value="neo">PaintBBS NEO</option>
+	<% def(use_shi_painter) %><option value="1">しぃペインター</option><% /def %>
+	<% def(use_chickenpaint) %><option value="chicken">ChickenPaint</option><% /def %>
+</select>
+<% elsedef %>
+<!-- 選択メニューを出さない時に起動するアプリ -->
+<input type="hidden" name="shi" value="neo">
+<% /def %>
+
+<!-- <input type="hidden" name="shi" value="1"> -->
 <% ===キャンバスサイズ 設定はconfig.phpで === %>
 <% def(n) %>
 <!--
@@ -264,7 +282,6 @@ PMAX_H //高さ
 	<% /def %>
 	
 <!-- NEOを使う -->
-<label class="checkbox use_neo"><input type="checkbox" name="useneo" checked="checked" />NEOを使う</label>
 <% def(anime) %><label class="checkbox use_animation"><input type="checkbox" value="true" name="anime"<% echo (animechk) %>>動画記録</label><% /def %>
 <% def(n) %>
 <!--
@@ -273,8 +290,26 @@ PMAX_H //高さ
 -->
 <% /def %>
 <input type="hidden" name="resto" value="<% echo (resno) %>">
-<input type="hidden" name="mode" value="paint"></form>
+<input type="hidden" name="mode" value="paint">
+
+<input type="hidden" name="is_mobile" id="is_mobile" value>
+
+</form>
 </div>
+<style id="for_mobile"></style>
+<script>
+function is_mobile() {
+// if (navigator.userAgent.match(/Android|iPhone|iPad|iPod/i)) return true;
+if (navigator.maxTouchPoints && ( window.matchMedia && window.matchMedia('(max-device-width: 533px)').matches))  return true;
+return false;
+}
+// console.log(( window.matchMedia && window.matchMedia('(max-device-width: 533px)').matches));
+if(is_mobile()){
+	document.getElementById("is_mobile").value = "true";
+	document.getElementById("for_mobile").textContent=".for_pc{display: none;}";
+}
+</script>
+
 <% /def %>
 <% ========== お絵かきフォーム欄のみ時に表示 ========== %>
 <% def(n) %>
@@ -402,18 +437,17 @@ l(); //LoadCookie
 
 <div class="copyright">
 <!-- GazouBBS v3.0 --><!-- ふたば改0.8 --><!-- POTI-board -->
-<a href="https://pbbs.sakura.ne.jp/poti/" target="_blank" rel="noopener noreferrer" title="POTI-board改二 <% echo (verlot) %>"><b>POTI-board改二 <% echo (ver) %></b></a>
+<a href="https://pbbs.sakura.ne.jp/poti/" target="_blank" rel="noopener noreferrer" title="POTI-board EVO <% echo (verlot) %>"><b>POTI-board EVO <% echo (ver) %></b></a>
 	<span class="webstyle_wrap">Web Style by <a href="https://draclaw.com/" target="_blank" rel="noopener noreferrer" title="Cool Solid (by ドラ☆クロウ！)"><b>Cool Solid</b></a> &amp; <a href="https://github.com/satopian/pink_for_poti-kaini" target="_blank" rel="noopener noreferrer" title="PINK <% echo (tver) %> (by さとぴあ)"><b>PINK</b></a></span><br>
 	OriginalScript - <a href="http://www.punyu.net/" target="_blank" rel="noopener noreferrer" title="POTI-board v1.32 (by ぷにゅねっと)">POTI-board</a>
 <span title="futaba.php v0.8 lot.031015 (by ふたば)">futaba.php</span> <a href="http://php.loglog.jp/" target="_blank" rel="noopener noreferrer" title="gazou.php v3.0 (by レッツPHP!)">gazou.php</a><br>
 <% def(paint) %>
-OekakiApplet - <a href="http://hp.vector.co.jp/authors/VA016309/" target="_blank" rel="noopener noreferrer" title="by しぃちゃん">Shi-Painter</a>
+OekakiApp - <a href="http://hp.vector.co.jp/authors/VA016309/" target="_blank" rel="noopener noreferrer" title="by しぃちゃん">Shi-Painter</a> , <a href="http://github.com/funige/neo/" target="_blank" rel="noopener noreferrer" title="by funige">PaintBBS NEO</a> , <a href="https://github.com/thenickdude/chickenpaint" target="_blank" rel="nofollow noopener noreferrer" title="by Nicholas Sherlock">ChickenPaint</a>
 <br>
 <% /def %>
 UseFunction - <span title="by WonderCatStudio">動的パレットスクリプト</span>
 <!--http://wondercatstudio.com/-->
 ，<a href="http://skinny.sx68.net/" target="_blank" rel="noopener noreferrer" title="Skinny">Skinny</a>
-，<a href="http://github.com/funige/neo/" target="_blank" rel="noopener noreferrer" title="by funige">PaintBBS NEO</a>
 </div>
 
 </footer>

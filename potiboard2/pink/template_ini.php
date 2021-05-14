@@ -121,6 +121,7 @@ define('OTHERFILE', 'pink_other.html');
 
 //お絵かきのテンプレートファイル
 define('PAINTFILE', 'pink_paint.html');
+// define('PAINTFILE', 'chickenpaintpaint.html');
 
 //カタログのテンプレートファイル
 define('CATALOGFILE', 'pink_catalog.html');

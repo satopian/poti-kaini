@@ -7,7 +7,7 @@
 ぷにゅねっと http://www.punyu.net/php/
 のPOTI-boardをphp7で使えるように改造した
 
-POTI-board改二 v2.6
+POTI-board EVO v2.6
 https://pbbs.sakura.ne.jp/poti/
 
 以降に対応したテンプレートです。
