@@ -16,7 +16,7 @@ POTI-board改のテンプレートエンジンを
 それにともないバージョン表記をv3.xに、スクリプトの名称をPOTI-board EVO(Evolution)に変更しました。  
 よろしくお願いいたします。
 
-## 改二とEVO
+## POTI-board EVO (Evolution)
 - POTI-board EVO は、PaintBBS NEO、しぃペインターに加え、高機能なHTML5のペイントアプリChickenPaintが使えるお絵かき掲示板です。  
 - POTI-board EVOと改二のテーマファイルと互換性があります。  
 - ログファイルの形式はまったく同じです。引き続きご利用いただけます。 
