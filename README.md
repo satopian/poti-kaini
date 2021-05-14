@@ -64,8 +64,7 @@ potiboard.phpをindex.phpにリネームしてお使いの方は、上書きし�
 - v2.xからv3.xにメジャーアップデートしました。
 - それにともない、改二からEVOに名称変更。
 - ChickenPaintに対応しました。
-- ChickenPaintを使わない方は従来の改二のテーマを引き続きご利用ください。
-- v従来の改二のテーマを引き続利用できます。
+- 従来の改二のテーマも引き続利用できます。
 ### [2021/04/26] v2.26.8 lot.210426
 各テーマの[POTI改公式サイト](https://pbbs.sakura.ne.jp/poti/)のURLを変更しました。  
 著作表記を(C)POTI改 POTI-board redevelopment team.に変更しました。  
