@@ -12,7 +12,7 @@ English translated version is here. [POTI-board Kai Ni-EN](https://github.com/sa
 
 従来の[PaintBBS NEO](https://github.com/funige/neo/)、しぃペインターに加え高機能なHTML5のペイントアプリ[ChickenPaint](https://github.com/thenickdude/chickenpaint)が使えるお絵かき掲示板です。
 
-## POTI-board EVO (Evolution)
+## POTI-board EVO (ChickenPaint対応版)
 ### 互換性
 - POTI-board EVO は、PaintBBS NEO、しぃペインターそして高機能なHTML5のペイントアプリChickenPaintが使えるお絵かき掲示板です。  
 - ログファイルの形式は同じです。引き続きご利用いただけます。 
