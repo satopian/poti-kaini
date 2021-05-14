@@ -13,8 +13,8 @@ English translated version is here. [POTI-board Kai Ni-EN](https://github.com/sa
 POTI-board改のテンプレートエンジン「htmltemplate.inc」が古くなってしまったため、
   
 [Skinny](http://skinny.sx68.net/)
-  
-に移植した改二をさらに改良したのがこのPOTI-board EVO(Evolution)です。  
+に移植したPOTI-board改二を、改良して、ChickenPaintが使えるようにしました。 
+それにともないバージョン表記をv3.xに、スクリプトの名称をPOTI-board EVO(Evolution)に変更しました。  
 ## 改二とEVO
 - POTI-board EVO は、PaintBBS NEO、しぃペインターに加え、高機能なHTML5のペイントアプリChickenPaintが使えるお絵かき掲示板です。  
 - POTI-board EVOと改二のテーマファイルと互換性があります。  
@@ -23,7 +23,8 @@ POTI-board改のテンプレートエンジン「htmltemplate.inc」が古くな
 - 改二用のテーマも利用可能ですが、ChickenPaintが使えません。 
 違いはそれだけです。
 PINKと、theme2種類のthemeをChickenPaint対応にするべく準備中です。  
-## ChickenPaint対応版へのアップデート
+
+## 改二からChickenPaint対応版へのアップデート
 
 - バージョン表記がv3.xの`potiboard.php`の上書きアップデートが必要です。
 - `save.php`というファイルが追加されています。アップロードしてください。
