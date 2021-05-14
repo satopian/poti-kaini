@@ -24,7 +24,7 @@ English translated version is here. [POTI-board Kai Ni-EN](https://github.com/sa
 
 - バージョン表記がv3.xの`potiboard.php`の上書きアップデートが必要です。
 - `save.php`というファイルが追加されています。
-- ChickenPaintディレクトリが追加されています。
+- `ChickenPaint`ディレクトリが追加されています。
 - `theme`、または、`pink`ディレクトリのHTMLファイルを上書きアップデート。
 - cssを変更している方はcssファイルを上書きしないように注意してください。
 - カスタマイズした色がデフォルトに戻ってしまいます。
