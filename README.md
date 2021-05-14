@@ -33,6 +33,7 @@ v3.0で従来の[PaintBBS NEO](https://github.com/funige/neo/)、しぃペイン
 - カスタマイズした色がデフォルトに戻ってしまいます。
 - config.phpの更新は必須ではありません。
 - しぃペインターとChickenPaintを使う使わないの選択機能を追加したい場合のみ、config.phpをアップデート。
+- ChickenPaint対応が特に必要ではない方は改二のテーマをそのままご利用ください。
 
 ## サンプル/サポート
 
