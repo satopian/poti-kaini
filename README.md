@@ -2,22 +2,22 @@
 
 ![POTI-board EVO](https://user-images.githubusercontent.com/31465648/83109430-5ebf0080-a0fc-11ea-8acc-87f2fbbd2070.PNG)
 
-phpお絵かき掲示板スクリプトPOTI-boardをさらに改良していくプロジェクトです。  
+phpお絵かき掲示板PHPスクリプトPOTI-boardを改良していくプロジェクトです。  
 php5.5～ 対応。  
 English translated version is here. [POTI-board Kai Ni-EN](https://github.com/satopian/poti-kaini-EN)
   
 
-
 ## 概要
 
-従来の[PaintBBS NEO](https://github.com/funige/neo/)、しぃペインターに加え高機能なHTML5のペイントアプリ[ChickenPaint](https://github.com/thenickdude/chickenpaint)が使えるお絵かき掲示板です。
+v3.0で従来の[PaintBBS NEO](https://github.com/funige/neo/)、しぃペインターに加え高機能なHTML5のペイントアプリ[ChickenPaint](https://github.com/thenickdude/chickenpaint)が使えるようになりました。  
+それにともない、スクリプトの名称をPOTI-board改二からPOTI-board EVO(Evolution)に変更しました。 
 
 ## POTI-board EVO (ChickenPaint対応版)
 ### 互換性
 - POTI-board EVO は、PaintBBS NEO、しぃペインターそして高機能なHTML5のペイントアプリChickenPaintが使えるお絵かき掲示板です。  
 - ログファイルの形式は同じです。引き続きご利用いただけます。 
-- POTI-board EVOと改二のテーマファイルには互換性があります。  
-- 改二用のテーマではChickenPaintが使えません。 
+- POTI-board EVOと改二のテーマファイルは互換性があります。  
+- 互換性はありますが、改二用のテーマではChickenPaintが使えません。 
 - POTI-board EVOのChickenPaint対応テーマは  
 - `pink`と、`theme`です。nee2の対応予定はありません。  
 
