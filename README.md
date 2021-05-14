@@ -6,13 +6,12 @@ phpお絵かき掲示板スクリプトPOTI-boardをさらに改良していく�
 php5.5～ 対応。  
 English translated version is here. [POTI-board Kai Ni-EN](https://github.com/satopian/poti-kaini-EN)
   
-[PaintBBS NEO](https://github.com/funige/neo/)
+
 
 ## 概要
 
-高機能なHTML5のお絵かきツールChickenPaintが使えるようになりました。 
-それにともないバージョン表記をv3.xに、スクリプトの名称をPOTI-board EVO(Evolution)に変更しました。  
-よろしくお願いいたします。
+[PaintBBS NEO](https://github.com/funige/neo/)、しぃペインターに加え、高機能なHTML5のお絵かきツール[ChickenPaint](https://github.com/thenickdude/chickenpaint)を使えるようにしたPOTI-boardです。 
+ChickenPaint対応にともないスクリプトの名称をPOTI-board EVO(Evolution)に変更しました。  
 
 ## POTI-board EVO (Evolution)
 - POTI-board EVO は、PaintBBS NEO、しぃペインターに加え、高機能なHTML5のペイントアプリChickenPaintが使えるお絵かき掲示板です。  
@@ -21,7 +20,7 @@ English translated version is here. [POTI-board Kai Ni-EN](https://github.com/sa
 - ChickenPaint対応テーマを使えば、ChickenPaintが使えるようになります。  
 - 改二用のテーマも利用可能ですが、ChickenPaintが使えません。 
 違いはそれだけです。
-PINKと、theme2種類のthemeをChickenPaint対応にするべく準備中です。  
+`pink`と、`theme`はChickenPaintに対応しています。  
 
 ## 改二からChickenPaint対応版へのアップデート
 
@@ -29,7 +28,10 @@ PINKと、theme2種類のthemeをChickenPaint対応にするべく準備中で�
 - `save.php`というファイルが追加されています。アップロードしてください。
 - ChickenPaintディレクトリが追加されています。アップロードしてください。
 - しぃペインターとChickenPaintを使う使わないの選択機能を追加したい場合のみ、config.phpをアップデート。
-- config.phpの更新は必須ではありません。設定項目がない時は、デフォルトでしぃペインターとChickenPaintが使える状態になります。
+- `theme`、または、`pink`ディレクトリのHTMLファイルの上書きアップデート。
+- cssを変更している方は、cssファイルを上書きしないように注意してください。
+- カスタマイズした色がデフォルトに戻ってしまいます。
+- config.phpの更新は必須ではありません。
 
 ## サンプル/サポート
 
