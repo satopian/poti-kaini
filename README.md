@@ -19,7 +19,7 @@ v3.0で従来の[PaintBBS NEO](https://github.com/funige/neo/)、しぃペイン
 - POTI-board EVO は、PaintBBS NEO、しぃペインターそして高機能なHTML5のペイントアプリChickenPaintが使えるお絵かき掲示板です。  
 - ログファイルの形式は同じです。 
 - POTI-board EVOと改二のテーマファイルは互換性があります。  
-- 改二用のテーマではChickenPaintが使えません。 
+- ただし、改二用のテーマではChickenPaintが使えません。 
 - POTI-board EVOのChickenPaint対応テーマは  
 - 同梱の`pink`と、`theme`の2つです。  
 
@@ -34,6 +34,8 @@ v3.0で従来の[PaintBBS NEO](https://github.com/funige/neo/)、しぃペイン
 - config.phpの更新は必須ではありません。  
 しぃペインターとChickenPaintを使う使わないの選択機能を追加したい場合のみ、config.phpをアップデート。
 - ChickenPaint対応が特に必要ではない方は改二のテーマをそのままご利用ください。
+
+すべてデフォルト設定に戻ってしまってもいいのでれば、新規設置しなおしたほうが簡単かもしれません。  
 
 ## サンプル/サポート
 
