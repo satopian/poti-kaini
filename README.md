@@ -1,4 +1,4 @@
-# POTI-board EVO
+# お絵かき掲示板PHPスクリプト POTI-board EVO
 
 ![POTI-board EVO](https://user-images.githubusercontent.com/31465648/83109430-5ebf0080-a0fc-11ea-8acc-87f2fbbd2070.PNG)
 
