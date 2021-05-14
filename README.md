@@ -10,8 +10,7 @@ English translated version is here. [POTI-board Kai Ni-EN](https://github.com/sa
 
 ## 概要
 
-[PaintBBS NEO](https://github.com/funige/neo/)、しぃペインターに加え、高機能なHTML5のお絵かきツール[ChickenPaint](https://github.com/thenickdude/chickenpaint)を使えるようにしたPOTI-boardです。 
-ChickenPaint対応にともないスクリプトの名称をPOTI-board EVO(Evolution)に変更しました。  
+[PaintBBS NEO](https://github.com/funige/neo/)、しぃペインターに加え、高機能なHTML5のお絵かきツール[ChickenPaint](https://github.com/thenickdude/chickenpaint)が使えるPOTI-boardです。  
 
 ## POTI-board EVO (Evolution)
 - POTI-board EVO は、PaintBBS NEO、しぃペインターに加え、高機能なHTML5のペイントアプリChickenPaintが使えるお絵かき掲示板です。  
@@ -63,6 +62,7 @@ potiboard.phpをindex.phpにリネームしてお使いの方は、上書きし�
 ## 履歴
 ### [2021/05/15] v3.00.1 lot.210514
 - v2.xからv3.xにメジャーアップデートしました。
+- それにともない、改二からEVOに名称変更。
 - ChickenPaintに対応しました。
 - ChickenPaintを使わない方は従来の改二のテーマを引き続きご利用ください。
 - v従来の改二のテーマを引き続利用できます。
