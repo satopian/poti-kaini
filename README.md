@@ -6,34 +6,31 @@ phpお絵かき掲示板スクリプトPOTI-boardをさらに改良していく�
 php5.5～ 対応。  
 English translated version is here. [POTI-board Kai Ni-EN](https://github.com/satopian/poti-kaini-EN)
   
-[PaintBBS NEO](https://github.com/funige/neo/)
+
 
 ## 概要
 
-POTI-board改のテンプレートエンジンを  
-[Skinny](http://skinny.sx68.net/)  
-に移植したPOTI-board改二を、改良して、ChickenPaintが使えるようにしました。 
-それにともないバージョン表記をv3.xに、スクリプトの名称をPOTI-board EVO(Evolution)に変更しました。  
-よろしくお願いいたします。
+従来の[PaintBBS NEO](https://github.com/funige/neo/)、しぃペインターに加え高機能なHTML5のペイントアプリ[ChickenPaint](https://github.com/thenickdude/chickenpaint)が使えるお絵かき掲示板です。
 
-## POTI-board EVO (Evolution)
-- POTI-board EVO は、PaintBBS NEO、しぃペインターに加え、高機能なHTML5のペイントアプリChickenPaintが使えるお絵かき掲示板です。  
-- POTI-board EVOと改二のテーマファイルと互換性があります。  
-- ログファイルの形式はまったく同じです。引き続きご利用いただけます。 
-- ChickenPaint対応テーマを使えば、ChickenPaintが使えるようになります。  
-- 改二用のテーマも利用可能ですが、ChickenPaintが使えません。 
-違いはそれだけです。
-PINKと、theme2種類のthemeをChickenPaint対応にするべく準備中です。  
+## POTI-board EVO (ChickenPaint対応版)
+### 互換性
+- POTI-board EVO は、PaintBBS NEO、しぃペインターそして高機能なHTML5のペイントアプリChickenPaintが使えるお絵かき掲示板です。  
+- ログファイルの形式は同じです。引き続きご利用いただけます。 
+- POTI-board EVOと改二のテーマファイルには互換性があります。  
+- 改二用のテーマではChickenPaintが使えません。 
+- POTI-board EVOのChickenPaint対応テーマは  
+- `pink`と、`theme`です。nee2の対応予定はありません。  
 
 ## 改二からChickenPaint対応版へのアップデート
 
 - バージョン表記がv3.xの`potiboard.php`の上書きアップデートが必要です。
-- `save.php`というファイルが追加されています。アップロードしてください。
-- ChickenPaintディレクトリが追加されています。アップロードしてください。
+- `save.php`というファイルが追加されています。
+- `ChickenPaint`ディレクトリが追加されています。
+- `theme`、または、`pink`ディレクトリのHTMLファイルを上書きアップデート。
+- cssを変更している方はcssファイルを上書きしないように注意してください。
+- カスタマイズした色がデフォルトに戻ってしまいます。
+- config.phpの更新は必須ではありません。
 - しぃペインターとChickenPaintを使う使わないの選択機能を追加したい場合のみ、config.phpをアップデート。
-- config.phpの更新は必須ではありません。設定項目がない時は、デフォルトでしぃペインターとChickenPaintが使える状態になります。
-##上記の説明文は、やや先行して書いてしまったものです。
-実際の更新はこれから行いますのでちょっとだけまってください…。
 
 ## サンプル/サポート
 
@@ -63,6 +60,11 @@ potiboard.phpをindex.phpにリネームしてお使いの方は、上書きし�
 
 
 ## 履歴
+### [2021/05/15] v3.00.1 lot.210514
+- v2.xからv3.xにメジャーアップデートしました。
+- それにともない、改二からEVOに名称変更。
+- ChickenPaintに対応しました。
+- 従来の改二のテーマも引き続利用できます。
 ### [2021/04/26] v2.26.8 lot.210426
 各テーマの[POTI改公式サイト](https://pbbs.sakura.ne.jp/poti/)のURLを変更しました。  
 著作表記を(C)POTI改 POTI-board redevelopment team.に変更しました。  
