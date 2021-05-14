@@ -15,7 +15,7 @@ ChickenPaint対応にともないスクリプトの名称をPOTI-board EVO(Evolu
 
 ## POTI-board EVO (Evolution)
 - POTI-board EVO は、PaintBBS NEO、しぃペインターに加え、高機能なHTML5のペイントアプリChickenPaintが使えるお絵かき掲示板です。  
-- POTI-board EVOと改二のテーマファイルと互換性があります。  
+- POTI-board EVOと改二のテーマファイルには互換性があります。  
 - ログファイルの形式はまったく同じです。引き続きご利用いただけます。 
 - ChickenPaint対応テーマを使えば、ChickenPaintが使えるようになります。  
 - 改二用のテーマも利用可能ですが、ChickenPaintが使えません。 
@@ -25,13 +25,13 @@ ChickenPaint対応にともないスクリプトの名称をPOTI-board EVO(Evolu
 ## 改二からChickenPaint対応版へのアップデート
 
 - バージョン表記がv3.xの`potiboard.php`の上書きアップデートが必要です。
-- `save.php`というファイルが追加されています。アップロードしてください。
-- ChickenPaintディレクトリが追加されています。アップロードしてください。
-- しぃペインターとChickenPaintを使う使わないの選択機能を追加したい場合のみ、config.phpをアップデート。
-- `theme`、または、`pink`ディレクトリのHTMLファイルの上書きアップデート。
-- cssを変更している方は、cssファイルを上書きしないように注意してください。
+- `save.php`というファイルが追加されています。
+- ChickenPaintディレクトリが追加されています。
+- `theme`、または、`pink`ディレクトリのHTMLファイルを上書きアップデート。
+- cssを変更している方はcssファイルを上書きしないように注意してください。
 - カスタマイズした色がデフォルトに戻ってしまいます。
 - config.phpの更新は必須ではありません。
+- しぃペインターとChickenPaintを使う使わないの選択機能を追加したい場合のみ、config.phpをアップデート。
 
 ## サンプル/サポート
 
