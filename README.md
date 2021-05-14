@@ -17,18 +17,18 @@ v3.0で従来の[PaintBBS NEO](https://github.com/funige/neo/)、しぃペイン
 
 ### 互換性
 - POTI-board EVO は、PaintBBS NEO、しぃペインターそして高機能なHTML5のペイントアプリChickenPaintが使えるお絵かき掲示板です。  
-- ログファイルの形式は同じです。引き続きご利用いただけます。 
+- ログファイルの形式は同じです。 
 - POTI-board EVOと改二のテーマファイルは互換性があります。  
 - 改二用のテーマではChickenPaintが使えません。 
 - POTI-board EVOのChickenPaint対応テーマは  
-- `pink`と、`theme`です。  
+- 同梱の`pink`と、`theme`の2つです。  
 
 ## 改二からChickenPaint対応版へのアップデート
 
 - バージョン表記がv3.xの`potiboard.php`の上書きアップデートが必要です。
 - `save.php`というファイルが追加されています。
 - `ChickenPaint`ディレクトリが追加されています。
-- `theme`、または、`pink`ディレクトリのHTMLファイルを上書きアップデート。
+- `theme`、または、`pink`ディレクトリのHTMLファイルの上書きアップデートが必要です。
 - cssを変更している方はcssファイルを上書きしないように注意してください。
 - カスタマイズした色がデフォルトに戻ってしまいます。
 - config.phpの更新は必須ではありません。
@@ -45,16 +45,11 @@ v3.0で従来の[PaintBBS NEO](https://github.com/funige/neo/)、しぃペイン
 config.phpの設定をし、アップロードしてpotiboard.phpのあるディレクトリにアクセスするだけです。  
 [お絵かき掲示板簡単設置方法](http://stp.sblo.jp/article/185357941.html)
 
-## ちょっとした注意
-
-2020/07/23以降のバージョンにはindex.phpというファイルが同梱されています。  
-これは、potiboardの設置をより簡単にするためのものです。  
-potiboard.phpをindex.phpにリネームしてお使いの方は、上書きしないようお願いいたします。  
-
 ## テーマ(テンプレート)機能について
 
 この掲示板はテーマを入れ替える事ができます。
-デフォルトthemeのほか、[COOL SOLID](https://draclaw.com/)、[PINK](https://github.com/satopian/pink_for_poti-kaini)などがあります。
+2021年5月15日現在、ChickenPaintに対応しているテーマは同梱した`theme`、と`pink`だけですが、改二のテーマも使えます。
+[COOL SOLID](https://draclaw.com/)も人気が高いテーマです。
 
 ## 外部プログラム
 [potiboard_plugin: お絵かき掲示板 POTI-boardのための外部phpプログラム](https://github.com/satopian/potiboard_plugin)  
@@ -66,7 +61,8 @@ potiboard.phpをindex.phpにリネームしてお使いの方は、上書きし�
 - v2.xからv3.xにメジャーアップデートしました。
 - それにともない、改二からEVOに名称変更。
 - ChickenPaintに対応しました。
-- 従来の改二のテーマも引き続利用できます。
+- 改二のテーマも引き続利用できます。
+
 ### [2021/04/26] v2.26.8 lot.210426
 各テーマの[POTI改公式サイト](https://pbbs.sakura.ne.jp/poti/)のURLを変更しました。  
 著作表記を(C)POTI改 POTI-board redevelopment team.に変更しました。  
