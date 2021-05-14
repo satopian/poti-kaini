@@ -10,9 +10,7 @@ English translated version is here. [POTI-board Kai Ni-EN](https://github.com/sa
 
 ## 概要
 
-POTI-board改のテンプレートエンジンを  
-[Skinny](http://skinny.sx68.net/)  
-に移植したPOTI-board改二を、改良して、ChickenPaintが使えるようにしました。 
+高機能なHTML5のお絵かきツールChickenPaintが使えるようになりました。 
 それにともないバージョン表記をv3.xに、スクリプトの名称をPOTI-board EVO(Evolution)に変更しました。  
 よろしくお願いいたします。
 
@@ -32,8 +30,6 @@ PINKと、theme2種類のthemeをChickenPaint対応にするべく準備中で�
 - ChickenPaintディレクトリが追加されています。アップロードしてください。
 - しぃペインターとChickenPaintを使う使わないの選択機能を追加したい場合のみ、config.phpをアップデート。
 - config.phpの更新は必須ではありません。設定項目がない時は、デフォルトでしぃペインターとChickenPaintが使える状態になります。
-##上記の説明文は、やや先行して書いてしまったものです。
-実際の更新はこれから行いますのでちょっとだけまってください…。
 
 ## サンプル/サポート
 
@@ -63,6 +59,11 @@ potiboard.phpをindex.phpにリネームしてお使いの方は、上書きし�
 
 
 ## 履歴
+### [2021/05/15] v3.00.1 lot.210514
+- v2.xからv3.xにメジャーアップデートしました。
+- ChickenPaintに対応しました。
+- ChickenPaintを使わない方は従来の改二のテーマを引き続きご利用ください。
+- v従来の改二のテーマを引き続利用できます。
 ### [2021/04/26] v2.26.8 lot.210426
 各テーマの[POTI改公式サイト](https://pbbs.sakura.ne.jp/poti/)のURLを変更しました。  
 著作表記を(C)POTI改 POTI-board redevelopment team.に変更しました。  
