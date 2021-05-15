@@ -1136,5 +1136,8 @@ input.copy_txt::selection {
 	.howtoedit {
 		margin: 8px 0 3px;
 		}
+	.menu_none{
+		display: none;
+	}
 }
 
