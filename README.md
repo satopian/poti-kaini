@@ -15,8 +15,7 @@ v3.0で従来の[PaintBBS NEO](https://github.com/funige/neo/)、しぃペイン
 ## POTI-board EVO (ChickenPaint対応版)
 ![ChickenPaint](https://user-images.githubusercontent.com/44894014/118308857-6ce17900-b527-11eb-83fb-9443f38347be.png)
 
-### 互換性
-- POTI-board EVO は、PaintBBS NEO、しぃペインターそして高機能なHTML5のペイントアプリChickenPaintが使えるお絵かき掲示板です。  
+### POTI-board改二との互換性
 - ログファイルの形式は同じです。 
 - POTI-board EVOと改二のテーマファイルは互換性があります。  
 - ただし、改二用のテーマではChickenPaintが使えません。 
