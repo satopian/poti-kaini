@@ -300,10 +300,10 @@ PMAX_H //高さ
 <script>
 function is_mobile() {
 // if (navigator.userAgent.match(/Android|iPhone|iPad|iPod/i)) return true;
-if (navigator.maxTouchPoints && ( window.matchMedia && window.matchMedia('(max-device-width: 533px)').matches))  return true;
+if (navigator.maxTouchPoints && ( window.matchMedia && window.matchMedia('(max-width: 533px)').matches))  return true;
 return false;
 }
-// console.log(( window.matchMedia && window.matchMedia('(max-device-width: 533px)').matches));
+// console.log(( window.matchMedia && window.matchMedia('(max-width: 533px)').matches));
 if(is_mobile()){
 	document.getElementById("is_mobile").value = "true";
 	document.getElementById("for_mobile").textContent=".for_pc{display: none;}";
