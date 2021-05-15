@@ -26,7 +26,7 @@ v3.0で従来の[PaintBBS NEO](https://github.com/funige/neo/)、しぃペイン
 
 - バージョン表記がv3.xの`potiboard.php`の上書きアップデートが必要です。
 - `save.php`というファイルが追加されています。
-- `ChickenPaint`ディレクトリが追加されています。
+- `chickenpaint`ディレクトリが追加されています。
 - `theme`、または、`pink`ディレクトリのHTMLファイルの上書きアップデートが必要です。
 - cssを変更している方はcssファイルを上書きしないように注意してください。  
 カスタマイズした色がデフォルトに戻ってしまいます。
