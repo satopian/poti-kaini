@@ -16,13 +16,11 @@ $ADMIN_PASS = 'kanripass';
 define('LOG_MAX', '2000');
 
 //テーマ(テンプレート)のディレクトリ。'/'まで
-//themeディレクトリに使いたいtemplateをいれて使ってください。(推奨)
-//別のディレクトリにしたい場合は設定してください。
-//例えばおまけのnee2を使いたい場合は theme_nee2/ 、PINKを使いたい時は pink/ とします。
+//テーマのテンプレートが入っているディレクトリを指定してください。
+//例えばMONOを使いたい場合は theme/ 、PINKを使いたい時は pink/ とします。
 //初期値は pink/ です。
 
 define('SKIN_DIR', 'pink/');
-
 //define('SKIN_DIR', 'theme/');
 
 //メール通知のほか、シェアボタンなどで使用
@@ -48,7 +46,7 @@ define('DENY_COMMENTS_ONLY', '0');
 //する:1 でも管理画面からはコメントのみの投稿ができます。
 
 //しぃペインターを使う 使う:1 使わない:0 
-define('USE_SHI_PAINTER', '0');
+define('USE_SHI_PAINTER', '1');
 //ChickenPaintを使う 使う:1 使わない:0 
 define('USE_CHICKENPAINT', '1');
 //PaintBBS NEOはどの設定でも起動します。
