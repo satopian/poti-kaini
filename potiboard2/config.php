@@ -3,7 +3,7 @@
   * POTI-board EVO v3.0.0 lot.210512 
   * by POTI改 >> https://pbbs.sakura.ne.jp/poti/
   *
-  * POTI-board改二の設定ファイルです。
+  * POTI-board EVO の設定ファイルです。
   *
 */
 /* ---------- 最初に設定する項目 ---------- */
@@ -17,10 +17,11 @@ define('LOG_MAX', '2000');
 
 //テーマ(テンプレート)のディレクトリ。'/'まで
 //テーマのテンプレートが入っているディレクトリを指定してください。
-//例えばMONOを使いたい場合は theme/ 、PINKを使いたい時は pink/ とします。
+//例えば｢MONO｣を使いたい場合は theme/ 、｢PINK｣を使いたい時は pink/ とします。
 //初期値は pink/ です。
 
 define('SKIN_DIR', 'pink/');
+
 //define('SKIN_DIR', 'theme/');
 
 //メール通知のほか、シェアボタンなどで使用
