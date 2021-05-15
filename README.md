@@ -2,7 +2,7 @@
 
 ![POTI-board EVO](https://user-images.githubusercontent.com/31465648/83109430-5ebf0080-a0fc-11ea-8acc-87f2fbbd2070.PNG)
 
-phpお絵かき掲示板PHPスクリプトPOTI-boardを改良していくプロジェクトです。  
+お絵かき掲示板PHPスクリプトPOTI-boardを改良していくプロジェクトです。  
 php5.5～ 対応。  
 English translated version is here. [POTI-board Kai Ni-EN](https://github.com/satopian/poti-kaini-EN)
   
