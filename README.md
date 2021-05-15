@@ -15,19 +15,18 @@ v3.0で従来の[PaintBBS NEO](https://github.com/funige/neo/)、しぃペイン
 ## POTI-board EVO (ChickenPaint対応版)
 ![ChickenPaint](https://user-images.githubusercontent.com/44894014/118308857-6ce17900-b527-11eb-83fb-9443f38347be.png)
 
-### 互換性
-- POTI-board EVO は、PaintBBS NEO、しぃペインターそして高機能なHTML5のペイントアプリChickenPaintが使えるお絵かき掲示板です。  
+## POTI-board改二との互換性
 - ログファイルの形式は同じです。 
 - POTI-board EVOと改二のテーマファイルは互換性があります。  
 - ただし、改二用のテーマではChickenPaintが使えません。 
 - POTI-board EVOのChickenPaint対応テーマは  
-- 同梱の`pink`と、`theme`の2つです。  
+ 同梱の`pink`と、`theme`の2つです。  
 
 ## 改二からChickenPaint対応版へのアップデート
 
 - バージョン表記がv3.xの`potiboard.php`の上書きアップデートが必要です。
 - `save.php`というファイルが追加されています。
-- `ChickenPaint`ディレクトリが追加されています。
+- `chickenpaint`ディレクトリが追加されています。
 - `theme`、または、`pink`ディレクトリのHTMLファイルの上書きアップデートが必要です。
 - cssを変更している方はcssファイルを上書きしないように注意してください。  
 カスタマイズした色がデフォルトに戻ってしまいます。
@@ -37,7 +36,7 @@ v3.0で従来の[PaintBBS NEO](https://github.com/funige/neo/)、しぃペイン
 
 ## 設置
 
-設置のはとても簡単です。  
+設置はとても簡単です。  
 potiboard2ディレクトリをアップロードして、アップロードしたディレクトリにアクセスするだけで設置できます。  
 管理者パスワードの設定は必須です。  
 config.phpの最初の数行に必須設定項目がありますので、変更してください。  
