@@ -10,7 +10,7 @@ English translated version is here. [POTI-board Kai Ni-EN](https://github.com/sa
 ## 概要
 
 v3.0で従来の[PaintBBS NEO](https://github.com/funige/neo/)、しぃペインターに加え高機能なHTML5のペイントアプリ[ChickenPaint](https://github.com/thenickdude/chickenpaint)が使えるようになりました。  
-それにともない、スクリプトの名称がPOTI-board改二からPOTI-board EVO(Evolution)に変わりました。 
+それにともない、スクリプトの名称をPOTI-board改二からPOTI-board EVO(Evolution)に変更しました。 
 
 ## POTI-board EVO (ChickenPaint対応版)
 ![ChickenPaint](https://user-images.githubusercontent.com/44894014/118308857-6ce17900-b527-11eb-83fb-9443f38347be.png)
@@ -37,8 +37,10 @@ v3.0で従来の[PaintBBS NEO](https://github.com/funige/neo/)、しぃペイン
 
 ## 設置
 
-新規設置のほうが簡単かもしれません。  
-potiboard2ディレクトリをアップロードして、フォルダにアクセスするだけで設置が終わります。
+設置のはとても簡単です。  
+potiboard2ディレクトリをアップロードして、アップロードしたディレクトリにアクセスするだけで設置できます。  
+管理者パスワードの設定は必須です。  
+config.phpの最初の数行に必須設定項目がありますので、変更してください。  
 [お絵かき掲示板簡単設置方法](http://stp.sblo.jp/article/185357941.html)
 
 ## サンプル/サポート
@@ -49,8 +51,8 @@ potiboard2ディレクトリをアップロードして、フォルダにアク�
 
 ## テーマ(テンプレート)機能について
 
-この掲示板はテーマを入れ替える事ができます。
-2021年5月15日現在、ChickenPaintに対応しているテーマは同梱した`theme`、と`pink`だけですが、改二のテーマも使えます。
+この掲示板はテーマを入れ替える事ができます。  
+2021年5月15日現在、ChickenPaintに対応しているテーマは同梱した`MONO`、と`PINK`だけですが、改二のテーマも使えます。  
 [COOL SOLID](https://draclaw.com/)も人気が高いテーマです。
 
 ## 外部プログラム
@@ -60,9 +62,9 @@ potiboard2ディレクトリをアップロードして、フォルダにアク�
 
 ## 履歴
 ### [2021/05/15] v3.00.1 lot.210514
-- v2.xからv3.xにメジャーアップデートしました。
-- それにともない、改二からEVOに名称変更。
 - ChickenPaintに対応しました。
+- v2.xからv3.xになりました。
+- それにともない、改二からEVOに名称変更しました。
 - 改二のテーマも引き続き利用できます。
 
 ### [2021/04/26] v2.26.8 lot.210426
