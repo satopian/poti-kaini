@@ -70,7 +70,6 @@
 						パレット：<select name="selected_palette_no" title="パレット" class="form"><% echo(palette_select_tags) %></select>
 						<% /def %>
 						<% def(anime) %><label><input type="checkbox" value="true" name="anime" title="動画記録" <% def(animechk) %><% echo(animechk) %><% /def %>>動画記録</label><% /def %>
-						<!-- NEOを使う -->
 						<input name="pch_upload" type="file" accept="image/*,.pch,.spch,.chi" title="pch upload">
 						<input type="hidden" name="mode" value="paint">
 						<input type="hidden" name="admin" value="<% echo(admin) %>">
