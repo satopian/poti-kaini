@@ -20,7 +20,7 @@ v3.0で従来の[PaintBBS NEO](https://github.com/funige/neo/)、しぃペイン
 - POTI-board EVOと改二のテーマファイルは互換性があります。  
 - ただし、改二用のテーマではChickenPaintが使えません。 
 - POTI-board EVOのChickenPaint対応テーマは  
-- 同梱の`pink`と、`theme`の2つです。  
+ 同梱の`pink`と、`theme`の2つです。  
 
 ## 改二からChickenPaint対応版へのアップデート
 
