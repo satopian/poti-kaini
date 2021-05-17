@@ -11765,7 +11765,7 @@ CPBlend.LM_FIRST = 0;
 CPBlend.LM_LAST = 16;
 CPBlend.LM_LAST_CHIBIPAINT = CPBlend.LM_PINLIGHT;
 CPBlend.BLEND_MODE_CODENAMES = ["normal", "multiply", "add", "screen", "lighten", "darken", "subtract", "dodge", "burn", "overlay", "hardLight", "softLight", "vividLight", "linearLight", "pinLight", "passthrough", "multiply2"];
-CPBlend.BLEND_MODE_DISPLAY_NAMES = ["Normal", "Multiply", "Add", "Screen", "Lighten", "Darken", "Subtract", "Dodge", "Burn", "Overlay", "Hard Light", "Soft Light", "Vivid Light", "Linear Light", "Pin Light", "Passthrough", "Multiply"];
+CPBlend.BLEND_MODE_DISPLAY_NAMES = ["通常", "乗算", "加算", "スクリーン", "比較(明)", "比較(暗)", "減算", "覆い焼き", "焼き込み", "オーバーレイ", "ハードライト", "ソフトライト", "ビビッドライト", "リニアライト", "ピンライト", "透過", "乗算"];
 makeLookupTables();
 module.exports = exports.default;
 
@@ -20180,7 +20180,7 @@ function CPBrushPanel(controller) {
   };
 
   alphaSlider.title = function (value) {
-    return "Opacity: " + value;
+    return "不透明度: " + value;
   };
 
   alphaSlider.on('valueChange', function (value) {
@@ -20188,7 +20188,7 @@ function CPBrushPanel(controller) {
   });
 
   sizeSlider.title = function (value) {
-    return "Brush size: " + value;
+    return "ブラシサイズ: " + value;
   };
 
   sizeSlider.on('valueChange', function (value) {
@@ -20196,7 +20196,7 @@ function CPBrushPanel(controller) {
   });
 
   resatSlider.title = function (value) {
-    return "Color: " + value + "%";
+    return "色補充: " + value + "%";
   };
 
   resatSlider.on('valueChange', function (value) {
@@ -20205,7 +20205,7 @@ function CPBrushPanel(controller) {
   });
 
   bleedSlider.title = function (value) {
-    return "Blend: " + value + "%";
+    return "混色: " + value + "%";
   };
 
   bleedSlider.on('valueChange', function (value) {
@@ -20214,7 +20214,7 @@ function CPBrushPanel(controller) {
   });
 
   spacingSlider.title = function (value) {
-    return "Spacing: " + value + "%";
+    return "間隔: " + value + "%";
   };
 
   spacingSlider.on('valueChange', function (value) {
@@ -20223,7 +20223,7 @@ function CPBrushPanel(controller) {
   });
 
   scatteringSlider.title = function (value) {
-    return "Scattering: " + value + "%";
+    return "散乱: " + value + "%";
   };
 
   scatteringSlider.on('valueChange', function (value) {
@@ -20232,7 +20232,7 @@ function CPBrushPanel(controller) {
   });
 
   smoothingSlider.title = function (value) {
-    return "Smoothing: " + value + "%";
+    return "手ぶれ補正: " + value + "%";
   };
 
   smoothingSlider.on('valueChange', function (value) {
@@ -25346,7 +25346,7 @@ function CPLayersPalette(controller) {
   body.appendChild(blendCombo);
 
   alphaSlider.title = function (value) {
-    return "Opacity: " + value + "%";
+    return "不透明度: " + value + "%";
   };
 
   alphaSlider.on("valueChange", function (value) {
@@ -25361,7 +25361,7 @@ function CPLayersPalette(controller) {
   cbSampleAllLayers.addEventListener("click", function (e) {
     artwork.setSampleAllLayers(cbSampleAllLayers.checked);
   });
-  body.appendChild(wrapBootstrapCheckbox(cbSampleAllLayers, "Sample all layers"));
+  body.appendChild(wrapBootstrapCheckbox(cbSampleAllLayers, "全レイヤーの色を拾う"));
   cbLockAlpha.id = "chickenpaint-chk-lock-alpha";
   cbLockAlpha.type = "checkbox";
   cbLockAlpha.addEventListener("click", function (e) {
@@ -25370,7 +25370,7 @@ function CPLayersPalette(controller) {
       lock: cbLockAlpha.checked
     });
   });
-  body.appendChild(wrapBootstrapCheckbox(cbLockAlpha, "Lock transparency"));
+  body.appendChild(wrapBootstrapCheckbox(cbLockAlpha, "透明部分を保護"));
   body.appendChild(layerWidget.getElement());
   layerActionButtons = createLayerActionButtons();
   body.appendChild(layerActionButtons);
