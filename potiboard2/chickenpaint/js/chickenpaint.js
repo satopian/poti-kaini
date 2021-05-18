@@ -1182,7 +1182,7 @@ function ChickenPaint(options) {
   }
 
   function sendDrawing() {
-    if (!that.isActionSupported("CPContinue") && !confirm('Are you sure you want to send your drawing to the server and finish drawing now?')) {
+    if (!that.isActionSupported("CPContinue") && !confirm('投稿します。描画を終了してもよろしいですか?')) {
       return;
     }
 
@@ -24865,50 +24865,50 @@ function CPLayersPalette(controller) {
     function createLayerDropdownMenu() {
       var menu = document.createElement("div"),
           actions = [{
-        title: "Rename...",
+        title: "リネーム...",
         action: "CPRenameLayer"
       }, {
         require: ["image-layer"],
-        title: "Delete layer",
+        title: "レイヤー削除",
         action: "CPRemoveLayer"
       }, {
         require: ["layer-group"],
-        title: "Delete group",
+        title: "グループ削除",
         action: "CPRemoveLayer"
       }, {
         require: ["image-layer", "no-clipping-mask"],
-        title: "Clip to the layer below",
+        title: "下のレイヤーでクリッピング",
         action: "CPCreateClippingMask"
       }, {
         require: ["image-layer", "clipping-mask"],
-        title: "Unclip from the layer below",
+        title: "クリッピング解除",
         action: "CPReleaseClippingMask"
       }, {
         require: ["no-mask"],
-        title: "Add mask",
+        title: "レイヤーマスク追加",
         action: "CPAddLayerMask"
       }, {
         require: ["mask"],
-        title: "Delete mask",
+        title: "レイヤーマスク削除",
         action: "CPRemoveLayerMask"
       }, {
         require: ["mask"],
-        title: "Apply mask",
+        title: "レイヤーマスクマスク適用",
         action: "CPApplyLayerMask"
       }, {
         require: ["layer-group"],
-        title: "Merge group",
+        title: "グループ結合",
         action: "CPGroupMerge"
       }, {
         require: ["mask-enabled"],
-        title: "Disable mask",
+        title: "マスク無効化",
         action: "CPSetMaskVisible",
         actionData: {
           visible: "false"
         }
       }, {
         require: ["mask-disabled"],
-        title: "Enable mask",
+        title: "マスク有効化",
         action: "CPSetMaskVisible",
         actionData: {
           visible: "true"
@@ -25051,29 +25051,29 @@ function CPLayersPalette(controller) {
 
   function createLayerActionButtons() {
     var buttons = [{
-      title: "Add layer",
+      title: "新規レイヤー",
       icon: createFontAwesomeIcon("fa-file"),
       action: "CPAddLayer"
     }, {
-      title: "Add group",
+      title: "フォルダ追加",
       icon: createFontAwesomeIcon("fa-folder"),
       action: "CPAddGroup"
     }, {
-      title: "Add layer mask",
+      title: "レイヤーマスク追加",
       icon: createChickenPaintIcon("mask"),
       action: "CPAddLayerMask"
     }, {
-      title: "Clip to the layer below",
+      title: "下のレイヤーでクリッピング",
       icon: createFontAwesomeIcon("fa-level-down-alt fa-flip-horizontal"),
       action: "CPCreateClippingMask",
       require: "no-clipping-mask-or-is-group"
     }, {
-      title: "Unclip from the layer below",
+      title: "クリッピング解除",
       icon: createFontAwesomeIcon("fa-level-down-alt fa-flip-horizontal"),
       action: "CPReleaseClippingMask",
       require: "clipping-mask"
     }, {
-      title: "Delete layer",
+      title: "削除",
       icon: createFontAwesomeIcon("fa-trash"),
       action: "CPRemoveLayer"
     }],
@@ -25550,10 +25550,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
     along with ChickenPaint. If not, see <http://www.gnu.org/licenses/>.
 */
 var MENU_ENTRIES = [{
-  name: "File",
+  name: "ファイル",
   mnemonic: "F",
   children: [{
-    name: "Save to my computer",
+    name: "PCに保存",
     action: "CPSave",
     mnemonic: "S",
     shortcut: "ctrl+s"
@@ -25564,72 +25564,72 @@ var MENU_ENTRIES = [{
     shortcut: "ctrl+s"
   }]
 }, {
-  name: "Edit",
+  name: "編集",
   mnemonic: "E",
   children: [{
-    name: "Undo",
+    name: "取り消し",
     action: "CPUndo",
     mnemonic: "U",
     shortcut: "ctrl+z",
     title: "Undoes the most recent action"
   }, {
-    name: "Redo",
+    name: "やり直し",
     action: "CPRedo",
     mnemonic: "R",
     shortcut: "shift+ctrl+z",
     title: "Redoes a previously undone action"
   }, {
-    name: "Clear history",
+    name: "履歴削除",
     action: "CPClearHistory",
     mnemonic: "H",
     title: "Removes all undo/redo information to regain memory"
   }, {
     name: "-"
   }, {
-    name: "Cut",
+    name: "切り取り",
     action: "CPCut",
     mnemonic: "T",
     shortcut: "ctrl+x"
   }, {
-    name: "Copy",
+    name: "コピー",
     action: "CPCopy",
     mnemonic: "C",
     shortcut: "ctrl+c"
   }, {
-    name: "Copy merged",
+    name: "マージコピー",
     action: "CPCopyMerged",
     mnemonic: "Y",
     shortcut: "shift+ctrl+c"
   }, {
-    name: "Paste",
+    name: "ペースト",
     action: "CPPaste",
     mnemonic: "P",
     shortcut: "ctrl+v"
   }, {
     name: "-"
   }, {
-    name: "Select all",
+    name: "全選択",
     action: "CPSelectAll",
     mnemonic: "A",
     shortcut: "ctrl+a"
   }, {
-    name: "Deselect",
+    name: "選択解除",
     action: "CPDeselectAll",
     mnemonic: "D",
     shortcut: "ctrl+d"
   }, {
     name: "-"
   }, {
-    name: "Transform",
+    name: "変形",
     action: "CPTransform",
     mnemonic: "T",
     shortcut: "ctrl+y"
   }]
 }, {
-  name: "Layers",
+  name: "レイヤー",
   mnemonic: "L",
   children: [{
-    name: "Duplicate",
+    name: "レイヤー複製",
     action: "CPLayerDuplicate",
     mnemonic: "D",
     shortcut: "shift+ctrl+d",
@@ -25637,18 +25637,18 @@ var MENU_ENTRIES = [{
   }, {
     name: "-"
   }, {
-    name: "Merge down",
+    name: "下のレイヤーと結合",
     action: "CPLayerMergeDown",
     mnemonic: "E",
     shortcut: "ctrl+e",
     title: "Merges the currently selected layer with the one directly below it"
   }, {
-    name: "Merge group",
+    name: "グループ結合",
     action: "CPGroupMerge",
     mnemonic: "G",
     title: "Merges the contents of the selected group"
   }, {
-    name: "Merge all layers",
+    name: "表示レイヤー結合",
     action: "CPLayerMergeAll",
     mnemonic: "A",
     title: "Merges all the layers"
@@ -25678,60 +25678,60 @@ var MENU_ENTRIES = [{
     action: "CPReleaseClippingMask"
   }]
 }, {
-  name: "Effects",
+  name: "効果",
   mnemonic: "E",
   children: [{
-    name: "Clear",
+    name: "クリア",
     action: "CPClear",
     mnemonic: "D",
     shortcut: "del,backspace",
     title: "Clears the selected area"
   }, {
-    name: "Fill",
+    name: "塗り潰し",
     action: "CPFill",
     mnemonic: "F",
     shortcut: "ctrl+f",
     title: "Fills the selected area with the current color"
   }, {
-    name: "Flip horizontal",
+    name: "左右反転",
     action: "CPHFlip",
     mnemonic: "H",
     title: "Flips the current selected area horizontally"
   }, {
-    name: "Flip vertical",
+    name: "上下反転",
     action: "CPVFlip",
     mnemonic: "V",
     title: "Flips the current selected area vertically"
   }, {
-    name: "Invert",
+    name: "ネガポジ反転",
     action: "CPFXInvert",
     mnemonic: "I",
     title: "Invert the image colors"
   }, {
     name: "-"
   }, {
-    name: "Box blur...",
+    name: "ブラー",
     action: "CPFXBoxBlur",
     mnemonic: "B",
     title: "Blur effect"
   }, {
     name: "-"
   }, {
-    name: "Monochromatic noise",
+    name: "単色ノイズ",
     action: "CPMNoise",
     mnemonic: "M",
     title: "Fills the selection with noise"
   }, {
-    name: "Color noise",
+    name: "カラーノイズ",
     action: "CPCNoise",
     mnemonic: "C",
     title: "Fills the selection with colored noise"
   }]
 }, {
-  name: "View",
+  name: "表示",
   mnemonic: "V",
   children: [{
-    name: "Full-screen mode",
+    name: "フルスクリーンモード",
     action: "CPFullScreen",
     mnemonic: "F",
     checkbox: true,
@@ -25739,19 +25739,19 @@ var MENU_ENTRIES = [{
   }, {
     name: "-"
   }, {
-    name: "Zoom in",
+    name: "拡大",
     action: "CPZoomIn",
     mnemonic: "I",
     shortcut: "ctrl+=",
     title: "Zooms in"
   }, {
-    name: "Zoom out",
+    name: "縮小",
     action: "CPZoomOut",
     mnemonic: "O",
     shortcut: "ctrl+-",
     title: "Zooms out"
   }, {
-    name: "Zoom 100%",
+    name: "100%",
     action: "CPZoom100",
     mnemonic: "1",
     shortcut: "ctrl+0",
@@ -25760,7 +25760,7 @@ var MENU_ENTRIES = [{
     action: "CPLinearInterpolation",
     name: "-"
   }, {
-    name: "Smooth-out zoomed canvas",
+    name: "ズームをなめらかに表示する",
     action: "CPLinearInterpolation",
     mnemonic: "L",
     title: "Linear interpolation is used to give a smoothed looked to the picture when zoomed in",
@@ -25768,7 +25768,7 @@ var MENU_ENTRIES = [{
   }, {
     name: "-"
   }, {
-    name: "Show grid",
+    name: "グリッド",
     action: "CPToggleGrid",
     mnemonic: "G",
     shortcut: "ctrl+g",
@@ -25776,20 +25776,20 @@ var MENU_ENTRIES = [{
     checkbox: true,
     checked: false
   }, {
-    name: "Grid options...",
+    name: "グリッドオプション",
     action: "CPGridOptions",
     mnemonic: "D",
     title: "Shows the grid options dialog box"
   }]
 }, {
-  name: "Palettes",
+  name: "パレット",
   mnemonic: "P",
   children: [{
-    name: "Rearrange",
+    name: "初期化",
     action: "CPArrangePalettes",
     title: "Rearrange the palette windows"
   }, {
-    name: "Toggle palettes",
+    name: "表示非表示切り替え",
     action: "CPTogglePalettes",
     mnemonic: "P",
     shortcut: "tab",
@@ -25797,64 +25797,64 @@ var MENU_ENTRIES = [{
   }, {
     name: "-"
   }, {
-    name: "Show tool options",
+    name: "ツールオプション",
     action: "CPPalBrush",
     mnemonic: "B",
     checkbox: true,
     checked: true
   }, {
-    name: "Show color",
+    name: "カラーピッカー",
     action: "CPPalColor",
     mnemonic: "C",
     checkbox: true,
     checked: true
   }, {
-    name: "Show layers",
+    name: "レイヤー",
     action: "CPPalLayers",
     mnemonic: "Y",
     checkbox: true,
     checked: true
   }, {
-    name: "Show misc",
+    name: "操作",
     action: "CPPalMisc",
     mnemonic: "M",
     checkbox: true,
     checked: true
   }, {
-    name: "Show stroke",
+    name: "ストローク",
     action: "CPPalStroke",
     mnemonic: "S",
     checkbox: true,
     checked: true
   }, {
-    name: "Show swatches",
+    name: "カラーセット",
     action: "CPPalSwatches",
     mnemonic: "W",
     checkbox: true,
     checked: true
   }, {
-    name: "Show textures",
+    name: "テクスチャ",
     action: "CPPalTextures",
     mnemonic: "X",
     checkbox: true,
     checked: true
   }, {
-    name: "Show tools",
+    name: "ツール",
     action: "CPPalTool",
     mnemonic: "T",
     checkbox: true,
     checked: true
   }]
 }, {
-  name: "Help",
+  name: "ヘルプ",
   mnemonic: "H",
   children: [{
-    name: "Tablet support",
+    name: "タブレットサポート",
     mnemonic: "T",
     action: "CPTabletSupport",
     title: "Help with getting a drawing tablet working"
   }, {
-    name: "Shortcuts",
+    name: "ショートカット･キー",
     mnemonic: "S",
     action: "CPShortcuts",
     title: "List of keyboard and mouse shortcuts"
@@ -25965,7 +25965,7 @@ function CPMainMenu(controller, mainGUI) {
 
         if (entry.action == "CPSend" && !controller.isActionSupported("CPContinue")) {
           // User won't be able to come back after saving, so make it sound more final
-          entry.name = "Post Oekaki";
+          entry.name = "掲示板に投稿";
           entry.shortcut = "ctrl+p";
         }
 
