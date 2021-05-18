@@ -20145,8 +20145,9 @@ CPBrushPalette.prototype = Object.create(_CPPalette.default.prototype);
 CPBrushPalette.prototype.constructor = CPBrushPalette;
 
 function CPBrushPanel(controller) {
-  var TIP_NAMES = ["Round Pixelated", "Round Hard Edge", "Round Soft", "Square Pixelated", "Square Hard Edge"],
-      BRUSH_SIZES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30, 35, 40, 45, 50, 60, 70, 80, 90, 100, 125, 150, 175, 200];
+  var TIP_NAMES = ["円ピクセル", "円ハードエッジ", "円ソフト", "角ピクセル", "角ハードエッジ"],
+
+  BRUSH_SIZES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30, 35, 40, 45, 50, 60, 70, 80, 90, 100, 125, 150, 175, 200];
   var panel = document.createElement("div"),
       tipCombo = document.createElement("select"),
       alphaCB = new _CPCheckbox.default(false, "Control brush opacity with pen pressure"),
@@ -24893,7 +24894,7 @@ function CPLayersPalette(controller) {
         action: "CPRemoveLayerMask"
       }, {
         require: ["mask"],
-        title: "レイヤーマスクマスク適用",
+        title: "レイヤーマスク適用",
         action: "CPApplyLayerMask"
       }, {
         require: ["layer-group"],
@@ -24901,14 +24902,14 @@ function CPLayersPalette(controller) {
         action: "CPGroupMerge"
       }, {
         require: ["mask-enabled"],
-        title: "マスク無効化",
+        title: "レイヤーマスク無効化",
         action: "CPSetMaskVisible",
         actionData: {
           visible: "false"
         }
       }, {
         require: ["mask-disabled"],
-        title: "マスク有効化",
+        title: "レイヤーマスク有効化",
         action: "CPSetMaskVisible",
         actionData: {
           visible: "true"
@@ -25656,25 +25657,25 @@ var MENU_ENTRIES = [{
     name: "-"
   }, {
     hideIfNotAvailable: true,
-    name: "Add layer mask",
+    name: "レイヤーマスク追加",
     action: "CPAddLayerMask"
   }, {
     hideIfNotAvailable: true,
-    name: "Delete layer mask",
+    name: "レイヤーマスク削除",
     action: "CPRemoveLayerMask"
   }, {
     hideIfNotAvailable: true,
-    name: "Apply layer mask",
+    name: "レイヤーマスク適用",
     action: "CPApplyLayerMask"
   }, {
     name: "-"
   }, {
     hideIfNotAvailable: true,
-    name: "Clip to the layer below",
+    name: "下のレイヤーでクリッピング",
     action: "CPCreateClippingMask"
   }, {
     hideIfNotAvailable: true,
-    name: "Unclip from the layer below",
+    name: "クリッピング解除",
     action: "CPReleaseClippingMask"
   }]
 }, {
