@@ -13,7 +13,7 @@ v3.0で従来の[PaintBBS NEO](https://github.com/funige/neo/)、しぃペイン
 それにともない、スクリプトの名称をPOTI-board改二からPOTI-board EVO(Evolution)に変更しました。 
 
 ## POTI-board EVO (ChickenPaint対応版)
-![ChickenPaint](https://user-images.githubusercontent.com/44894014/118308857-6ce17900-b527-11eb-83fb-9443f38347be.png)
+![ChickenPaint](https://user-images.githubusercontent.com/44894014/118594807-f8d3f900-b7e4-11eb-8c4d-2a5bdfc7cee3.png)
 
 ## POTI-board改二との互換性
 - ログファイルの形式は同じです。 
