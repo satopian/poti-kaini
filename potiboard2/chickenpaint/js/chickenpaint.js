@@ -24937,7 +24937,7 @@ function CPLayersPalette(controller) {
         action: "CPCreateClippingMask"
       }, {
         require: ["image-layer", "clipping-mask"],
-        title: "Unclip from the layer below",
+        title: "クリッピング解除",
         action: "CPReleaseClippingMask"
       }, {
         require: ["no-mask"],
@@ -24945,11 +24945,11 @@ function CPLayersPalette(controller) {
         action: "CPAddLayerMask"
       }, {
         require: ["mask"],
-        title: "Delete mask",
+        title: "レイヤーマスク削除",
         action: "CPRemoveLayerMask"
       }, {
         require: ["mask"],
-        title: "Apply mask",
+        title: "レイヤーマスク適用",
         action: "CPApplyLayerMask"
       }, {
         require: ["layer-group"],
@@ -24957,14 +24957,14 @@ function CPLayersPalette(controller) {
         action: "CPGroupMerge"
       }, {
         require: ["mask-enabled"],
-        title: "Disable mask",
+        title: "レイヤーマスク無効化",
         action: "CPSetMaskVisible",
         actionData: {
           visible: "false"
         }
       }, {
         require: ["mask-disabled"],
-        title: "Enable mask",
+        title: "レイヤーマスク有効化",
         action: "CPSetMaskVisible",
         actionData: {
           visible: "true"
@@ -25718,11 +25718,11 @@ var MENU_ENTRIES = [{
     action: "CPAddLayerMask"
   }, {
     hideIfNotAvailable: true,
-    name: "Delete layer mask",
+    name: "レイヤーマスク削除",
     action: "CPRemoveLayerMask"
   }, {
     hideIfNotAvailable: true,
-    name: "Apply layer mask",
+    name: "レイヤーマスク適用",
     action: "CPApplyLayerMask"
   }, {
     name: "-"
@@ -25732,7 +25732,7 @@ var MENU_ENTRIES = [{
     action: "CPCreateClippingMask"
   }, {
     hideIfNotAvailable: true,
-    name: "Unclip from the layer below",
+    name: "クリッピング解除",
     action: "CPReleaseClippingMask"
   }]
 }, {

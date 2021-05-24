@@ -37,10 +37,10 @@
 	}
 
 </script>
+ 
+<script src="chickenpaint/js/chickenpaint.min.js<% def(parameter_day) %>?<% echo(parameter_day)%><% /def %>"></script>
 
-<script src="chickenpaint/js/chickenpaint.js?210518"></script>
-
-<link rel="stylesheet" type="text/css" href="chickenpaint/css/chickenpaint.css?210512">
+<link rel="stylesheet" type="text/css" href="chickenpaint/css/chickenpaint.css<% def(parameter_day) %>?<% echo(parameter_day)%><% /def %>">
 
 <% elsedef %>
 
@@ -56,13 +56,13 @@
 		}
 	</script>
 <% def(useneo) %>
-<link rel="stylesheet" href="neo.css" type="text/css" />
-<script src="neo.js" charset="UTF-8"></script>
+<link rel="stylesheet" href="neo.css<% def(parameter_day) %>?<% echo(parameter_day)%><% /def %>" type="text/css" />
+<script src="neo.js<% def(parameter_day) %>?<% echo(parameter_day)%><% /def %>" charset="UTF-8"></script>
 <% /def %>
 <% def(pch_mode) %>
 <% def(type_neo) %>
-<link rel="stylesheet" href="neo.css" type="text/css" />
-<script src="neo.js" charset="UTF-8"></script>
+<link rel="stylesheet" href="neo.css<% def(parameter_day) %>?<% echo(parameter_day)%><% /def %>" type="text/css" />
+<script src="neo.js<% def(parameter_day) %>?<% echo(parameter_day)%><% /def %>" charset="UTF-8"></script>
 <% /def %>
 <% /def %>
 <!-- Javaが使えるかどうか判定 -->
@@ -517,9 +517,6 @@ name="pch" code="pch.PCHViewer.class" archive="PCHViewer.jar,PaintBBS.jar" width
 	<% def(use_shi_painter) %><option value="1">しぃペインター</option><% /def %>
 	<% def(use_chickenpaint) %><option value="chicken">ChickenPaint</option><% /def %>
 </select>
-<% elsedef %>
-<!-- 選択メニューを出さない時に起動するアプリ -->
-<input type="hidden" name="shi" value="neo">
 <% /def %>
 <% def(app_to_use) %>
 <input type="hidden" name="shi" value="<% echo(app_to_use) %>">
