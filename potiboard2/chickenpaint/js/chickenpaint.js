@@ -24937,7 +24937,7 @@ function CPLayersPalette(controller) {
         action: "CPCreateClippingMask"
       }, {
         require: ["image-layer", "clipping-mask"],
-        title: "クリッピング解除",
+        title: "Unclip from the layer below",
         action: "CPReleaseClippingMask"
       }, {
         require: ["no-mask"],
@@ -24945,11 +24945,11 @@ function CPLayersPalette(controller) {
         action: "CPAddLayerMask"
       }, {
         require: ["mask"],
-        title: "レイヤーマスク削除",
+        title: "Delete mask",
         action: "CPRemoveLayerMask"
       }, {
         require: ["mask"],
-        title: "レイヤーマスク適用",
+        title: "Apply mask",
         action: "CPApplyLayerMask"
       }, {
         require: ["layer-group"],
@@ -24957,14 +24957,14 @@ function CPLayersPalette(controller) {
         action: "CPGroupMerge"
       }, {
         require: ["mask-enabled"],
-        title: "レイヤーマスク無効化",
+        title: "Disable mask",
         action: "CPSetMaskVisible",
         actionData: {
           visible: "false"
         }
       }, {
         require: ["mask-disabled"],
-        title: "レイヤーマスク有効化",
+        title: "Enable mask",
         action: "CPSetMaskVisible",
         actionData: {
           visible: "true"
@@ -25718,11 +25718,11 @@ var MENU_ENTRIES = [{
     action: "CPAddLayerMask"
   }, {
     hideIfNotAvailable: true,
-    name: "レイヤーマスク削除",
+    name: "Delete mask",
     action: "CPRemoveLayerMask"
   }, {
     hideIfNotAvailable: true,
-    name: "レイヤーマスク適用",
+    name: "Apply layer mask",
     action: "CPApplyLayerMask"
   }, {
     name: "-"
@@ -25732,7 +25732,7 @@ var MENU_ENTRIES = [{
     action: "CPCreateClippingMask"
   }, {
     hideIfNotAvailable: true,
-    name: "クリッピング解除",
+    name: "Unclip from the layer below",
     action: "CPReleaseClippingMask"
   }]
 }, {
@@ -28546,186 +28546,196 @@ module.exports={
 }
 },{}],52:[function(require,module,exports){
 module.exports={
-  "File": "ファイル",
-    "Save to my computer": "PCに保存",
-    "Post Oekaki": "お絵かきを投稿",
-
-  "Edit": "編集",
-    "Undo": "取り消し",
-    "Redo": "やり直し",
-    "Cut": "切り取り",
-    "Copy": "コピー",
-    "Clear history": "履歴削除",
-    "Copy merged": "結合コピー",
-    "Paste": "貼り付け",
-    "Select all": "すべて選択",
-    "Deselect": "選択解除",
-    "Transform": "変形",
+	"File": "ファイル",
+	  "Save to my computer": "PCに保存",
+	  "Post Oekaki": "お絵かきを投稿",
   
-  "Layers": "レイヤー",
-    "Duplicate": "複製",
-    "Merge down": "下のレイヤーと結合",
-    "Merge group": "グループ結合",
-    "Merge all layers":  "全レイヤー結合",
-    "Add layer mask": "レイヤーマスク追加",
-    "Clip to the layer below": "下のレイヤーにクリッピング",
-
-  "Effects": "効果",
-    "Clear": "消去",
-    "Fill": "塗り潰し",
-    "Flip horizontal": "左右反転",
-    "Flip vertical": "上下反転",
-    "Invert": "ネガポジ反転",
-    "Box blur...": "ぼかし",
-    "Blur amount (pixels)": "ぼかし量(ピクセル単位)",
-    "Iterations (1-8, larger gives smoother blur)": "反復(1-8,大きいほどぼかしが滑らか)",
-    "Monochromatic noise": "単色ノイズ",
-    "Color noise": "カラーノイズ",
-
-  "View": "表示",
-    "Full-screen mode": "フルスクリーンモード",
-    "Zoom in": "拡大",
-    "Zoom out": "縮小",
-    "Zoom 100%": "100%",
-    "Smooth-out zoomed canvas":  "ズームをなめらかに表示する",
-    "Show grid": "グリッドを表示",
-    "Grid options...": "グリッドの設定",
+	"Edit": "編集",
+	  "Undo": "取り消し",
+	  "Redo": "やり直し",
+	  "Cut": "切り取り",
+	  "Copy": "コピー",
+	  "Clear history": "履歴削除",
+	  "Copy merged": "結合コピー",
+	  "Paste": "貼り付け",
+	  "Select all": "すべて選択",
+	  "Deselect": "選択解除",
+	  "Transform": "変形",
+	
+	"Layers": "レイヤー",
+	  "Duplicate": "複製",
+	  "Merge down": "下のレイヤーと結合",
+	  "Merge group": "グループ結合",
+	  "Merge all layers":  "全レイヤー結合",
+	  "Add layer mask": "レイヤーマスク追加",
+	  "Delete mask": "レイヤーマスク削除",
+	  "Apply mask": "レイヤーマスク適用",
+	  "Apply layer mask": "レイヤーマスク適用",
+	  "Disable mask": "レイヤーマスク無効化",
+	  "Enable mask": "レイヤーマスク有効化",
+	  "Clip to the layer below": "下のレイヤーでクリッピング",
+	  "Unclip from the layer below" : "クリッピング解除",	
   
-  "Palettes": "パレット",
-    "Rearrange":  "初期化",
-    "Toggle palettes":  "表示非表示切り替え",
+	"Effects": "効果",
+	  "Clear": "消去",
+	  "Fill": "塗り潰し",
+	  "Flip horizontal": "左右反転",
+	  "Flip vertical": "上下反転",
+	  "Invert": "ネガポジ反転",
+	  "Box blur...": "ぼかし",
+	  "Blur amount (pixels)": "ぼかし量(ピクセル単位)",
+	  "Iterations (1-8, larger gives smoother blur)": "反復(1-8,大きいほどぼかしが滑らか)",
+	  "Monochromatic noise": "単色ノイズ",
+	  "Color noise": "カラーノイズ",
   
-    "Show tool options": "ツールオプション",
-    "Show color": "カラー",
-    "Show layers":  "レイヤー",
-    "Show misc": "操作",
-    "Show stroke": "ストローク",
-    "Show swatches": "カラーセット",
-    "Show textures": "テクスチャ",
-    "Show tools": "ツール",
+	"View": "表示",
+	  "Full-screen mode": "フルスクリーンモード",
+	  "Zoom in": "拡大",
+	  "Zoom out": "縮小",
+	  "Zoom 100%": "100%",
+	  "Smooth-out zoomed canvas":  "ズームをなめらかに表示する",
+	  "Show grid": "グリッドを表示",
+	  "Grid options...": "グリッドの設定",
+	
+	"Palettes": "パレット",
+	  "Rearrange":  "初期化",
+	  "Toggle palettes":  "表示非表示切り替え",
+	
+	  "Show tool options": "ツールオプション",
+	  "Show color": "カラー",
+	  "Show layers":  "レイヤー",
+	  "Show misc": "操作",
+	  "Show stroke": "ストローク",
+	  "Show swatches": "カラーセット",
+	  "Show textures": "テクスチャ",
+	  "Show tools": "ツール",
+	
+	"Help": "ヘルプ",
+	  "Tablet support":  "タブレットサポート",
+	  "Shortcuts": "ショートカット",
+	  "About": "ChickenPaintについて",
+	
+	"Misc": "操作",
+	
+	"Round Pixelated": "円ピクセル",
+	"Round Hard Edge": "円ハードエッジ",
+	"Round Soft": "円ソフト",
+	"Square Pixelated": "角ピクセル",
+	"Square Hard Edge": "角ハードエッジ",
   
-  "Help": "ヘルプ",
-    "Tablet support":  "タブレットサポート",
-    "Shortcuts": "ショートカット",
-    "About": "ChickenPaintについて",
+	"Color (picker)": "カラー",
+	
+	"Tool options": "ツールオプション",
+	  "Brush size": "ブラシサイズ",
+	  "Opacity": "不透明度",
+	  "Color": "色補充", 
+	  "Blend": "混色",
+	  "Spacing": "間隔",
+	  "Scattering": "散乱",
+	  "Smoothing": "手ぶれ補正",
+	
+	"Color swatches": "カラーセット",
+	  "Remove": "削除",
+	  "Replace with current color": "選択中の色に置き換え",
+	  "Save swatches to your computer...": "カラーセットをPCに保存",
+	  "Load swatches from your computer...": "カラーセットをPCから読み込み",
+	  "Add the current brush color as a new swatch": "選択中の色を追加",
   
-  "Misc": "操作",
+	"Sample all layers": "全レイヤー参照",
+	"Lock transparency": "透明部分を保護",
+	
+	"Textures": "テクスチャ",
+	  "Customize": "カスタマイズ",
+	  "Inverse": "ネガポジ反転",
+	  "Mirror": "左右反転",
+	  "Brightness": "輝度",
+	  "Contrast": "コントラスト",
+	  "Reset": "リセット",
+	
+	"Blending mode": "合成モード",
+	  "Normal": "通常",
+	  "Multiply": "乗算",
+	  "Add": "加算",
+	  "Screen": "スクリーン",
+	  "Lighten": "比較(明)",
+	  "Darken": "比較(暗)",
+	  "Subtract": "減算",
+	  "Dodge": "覆い焼き",
+	  "Burn": "焼き込み",
+	  "Overlay": "オーバーレイ",
+	  "Hard Light": "ハードライト",
+	  "Soft Light": "ソフトライト",
+	  "Vivid Light": "ビビッドライト",
+	  "Linear Light": "リニアライト",
+	  "Pin Light": "ピンライト",
+	  "Passthrough": "透過",
+	  "multiply2": "乗算",
+	  
+	"Stroke": "ストローク",
+	  "Free-hand": "フリーハンド",
+	  "Straight line": "直線",
+	  "Bezier curve": "Bz（ベジェ）曲線",
+	
+	"Tools": "ツール",
+	  "Marquee": "選択範囲",
+	  "Move tool": "移動",
+	  "Flood fill": "塗り潰し",
+	  "Gradient fill": "グラデーション",
+	  "Color picker": "スポイト",
+	  "Rotate canvas":  "キャンバスの回転",
+	  "Pencil": "鉛筆",
+	  "Pen": "ペン",
+	  "Airbrush": "エアブラシ",
+	  "Waterpaint": "水彩",
+	  "Eraser": "消しゴム",
+	  "Soft eraser": "薄消し",
+	  "Smudge": "指先",
+	  "Blender" : "混色",
+	  "Dodge (tool)": "覆い焼き",
+	  "Burn (tool)": "焼き込み",
+	  "Blur": "ぼかし",
   
-  "Round Pixelated": "円ピクセル",
-  "Round Hard Edge": "円ハードエッジ",
-  "Round Soft": "円ソフト",
-  "Square Pixelated": "角ピクセル",
-  "Square Hard Edge": "角ハードエッジ",
-
-  "Color (picker)": "カラー",
+	"Grid options": "グリッドの設定",
+	  "Grid size": "グリッドサイズ",
+	
+	"Rename...": "名前を変更",
+	"Add layer": "新規レイヤー",
+	"Delete layer": "レイヤー削除",
+	"Add group": "新規グループ",
+	"Delete group": "グループ削除", 
+	"Add mask": "レイヤーマスク追加",
+	
+	"Gradient": "グラデーション作成",
   
-  "Tool options": "ツールオプション",
-    "Brush size": "ブラシサイズ",
-    "Opacity": "不透明度",
-    "Color": "色補充", 
-    "Blend": "混色",
-    "Spacing": "間隔",
-    "Scattering": "散乱",
-    "Smoothing": "手ぶれ補正",
+	"Please enter a color in hex format": "16進形式で色を入力してください（#xxxxxxの形）",
+	
+	"Cancel": "キャンセル",
+	"Ok": "OK",
+	"Okay": "OK",
+	"OK": "OK",
   
-  "Color swatches": "カラーセット",
-    "Remove": "削除",
-    "Replace with current color": "選択中の色に置き換え",
-    "Save swatches to your computer...": "カラーセットをPCに保存",
-    "Load swatches from your computer...": "カラーセットをPCから読み込み",
-    "Add the current brush color as a new swatch": "選択中の色を追加",
-
-  "Sample all layers": "全レイヤー参照",
-  "Lock transparency": "透明部分を保護",
+	"Are you sure you want to send your drawing to the server and finish drawing now?": "お絵かきをサーバーに送信します。終了してもよろしいですか？",
+	"Your drawing has unsaved changes! Are you sure to want to navigate away?": "お絵かきに未保存の変更があります。終了してもよろしいですか？",
+			
+	"Save Oekaki": "保存",
+	
+	"Saving drawing...": "お絵かきを保存中…",
+	"Preparing your drawing to be saved, please wait...": "お絵かきを保存する準備をしています。しばらくお待ちください…",
+	"Drawing saved!": "お絵かきを保存しました！",
   
-  "Textures": "テクスチャ",
-    "Customize": "カスタマイズ",
-    "Inverse": "ネガポジ反転",
-    "Mirror": "左右反転",
-    "Brightness": "輝度",
-    "Contrast": "コントラスト",
-    "Reset": "リセット",
+	"Your drawing has been saved, would you like to post it to the forum now?": "お絵かきが保存されました。フォーラムへ投稿しますか？",
+	"Yes, post it now": "はい、投稿します",
+	"No, keep drawing": "まだ描きます",
+	"No, quit and I'll finish it later": "アプリを終了し続きを後で描く",
   
-  "Blending mode": "合成モード",
-    "Normal": "通常",
-    "Multiply": "乗算",
-    "Add": "加算",
-    "Screen": "スクリーン",
-    "Lighten": "比較(明)",
-    "Darken": "比較(暗)",
-    "Subtract": "減算",
-    "Dodge": "覆い焼き",
-    "Burn": "焼き込み",
-    "Overlay": "オーバーレイ",
-    "Hard Light": "ハードライト",
-    "Soft Light": "ソフトライト",
-    "Vivid Light": "ビビッドライト",
-    "Linear Light": "リニアライト",
-    "Pin Light": "ピンライト",
-    
-  "Stroke": "ストローク",
-    "Free-hand": "フリーハンド",
-    "Straight line": "直線",
-    "Bezier curve": "Bz（ベジェ）曲線",
+	"Your drawing has been saved, would you like to view it on the forum now?": "お絵かきが保存されました。フォーラムへ投稿しますか？",
+	"Yes, view the post": "はい、投稿します。",
   
-  "Tools": "ツール",
-    "Marquee": "選択範囲",
-    "Move tool": "移動",
-    "Flood fill": "塗り潰し",
-    "Gradient fill": "グラデーション",
-    "Color picker": "スポイト",
-    "Rotate canvas":  "キャンバスの回転",
-    "Pencil": "鉛筆",
-    "Pen": "ペン",
-    "Airbrush": "エアブラシ",
-    "Waterpaint": "水彩",
-    "Eraser": "消しゴム",
-    "Soft eraser": "薄消し",
-    "Smudge": "指先",
-    "Blender" : "混色",
-    "Dodge (tool)": "覆い焼き",
-    "Burn (tool)": "焼き込み",
-    "Blur": "ぼかし",
-
-  "Grid options": "グリッドの設定",
-    "Grid size": "グリッドサイズ",
+	"Your drawing has been saved, redirecting you to view your new post now...": "お絵かきが保存されました。投稿先に移動します。",
   
-  "Rename...": "名前を変更",
-  "Add layer": "レイヤーを追加",
-  "Add group": "グループ追加",
-  "Delete layer": "レイヤーを削除",
-  "Add mask": "レイヤーマスク追加",
+	"Sorry, your drawing could not be saved, please try again later.": "お絵かきが保存できませんでした。再度投稿してみてください。"
+  }
   
-  "Gradient": "グラデーション作成",
-
-  "Please enter a color in hex format": "16進形式で色を入力してください（#xxxxxxの形）",
-  
-  "Cancel": "キャンセル",
-  "Ok": "OK",
-  "Okay": "OK",
-  "OK": "OK",
-
-  "Are you sure you want to send your drawing to the server and finish drawing now?": "お絵かきをサーバーへ送信し、終了してもよろしいですか？",
-  "Your drawing has unsaved changes! Are you sure to want to navigate away?": "お絵かきに未保存の変更があります。終了してもよろしいですか？",
-          
-  "Save Oekaki": "保存",
-  
-  "Saving drawing...": "お絵かきを保存中…",
-  "Preparing your drawing to be saved, please wait...": "お絵かきを保存する準備をしています。しばらくお待ちください…",
-  "Drawing saved!": "お絵かきを保存しました！",
-
-  "Your drawing has been saved, would you like to post it to the forum now?": "お絵かきが保存されました。フォーラムへ投稿しますか？",
-  "Yes, post it now": "はい、投稿します",
-  "No, keep drawing": "まだ描きます",
-  "No, quit and I'll finish it later": "アプリを終了し続きを後で描く",
-
-  "Your drawing has been saved, would you like to view it on the forum now?": "お絵かきが保存されました。フォーラムへ投稿しますか？",
-  "Yes, view the post": "はい、投稿します。",
-
-  "Your drawing has been saved, redirecting you to view your new post now...": "お絵かきが保存されました。投稿先にリダイレクトします。",
-
-  "Sorry, your drawing could not be saved, please try again later.": "お絵かきが保存できませんでした。再度投稿してみてください。"
-}
 
 },{}],53:[function(require,module,exports){
 "use strict";
