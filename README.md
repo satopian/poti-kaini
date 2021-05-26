@@ -60,10 +60,14 @@ config.phpの最初の数行に必須設定項目がありますので、変更�
 
 
 ## 履歴
-### [2021/05/18] 
-ChickenPaintを日本語に翻訳しましたが、言語パックに対応して日本語に翻訳されたChickenPaintの開発が検討されています。    
-更新は、ChickenPaintの開発元が日本語に対応するのをまってからにしたほうがいいかもしれません。  
-もうしばらくお待ちください。
+### [2021/05/23] v3.00.3 lot.210523
+- ChickenPaintを日本語訳対応版にアップデートしました。
+- PaintBBS NEOをv1.5.11にアップデートしました。
+- `picpost.php`更新。PaintBBS NEOv1.5.11の、エラー発生時はペイント画面にとどまるようにする機能に対応しました。  
+- NEOの画像から続きを描く時にJavaのPaintBBSが起動するバグを修正しました。
+
+安定版をリリースからダウンロードできます。    
+[POTI-board EVO v3.00.3](https://github.com/satopian/poti-kaini/releases/tag/v3.00.3)
 
 ### [2021/05/15] v3.00.1 lot.210514
 - ChickenPaintに対応しました。
