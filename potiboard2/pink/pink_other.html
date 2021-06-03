@@ -13,6 +13,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
 <link rel="stylesheet" href="<% echo(skindir) %>pink.css">
+<style>.del_page form {display: inline-block;}</style>
 <title><% def(post_mode) %><% def(rewrite) %><% elsedef %><% def(admin_del) %><% elsedef %><% def(admin) %><% elsedef %>投稿フォーム<% /def %><% /def %><% /def %><% /def %><% def(rewrite) %>編集モード<% /def %><% def(admin_in) %>管理用<% /def %><% def(admin) %><% def(rewrite) %> - <% /def %><% /def %><% def(admin) %> 管理人による投稿<% /def %><% def(admin_del) %>記事削除<% /def %><% def(err_mode) %>エラー！<% /def %> - <% echo(title) %></title>
 <% def(n) %>
 <!-- 
@@ -388,6 +389,25 @@ l(); //LoadCookie
 <input form="delete" type="submit" value="削除する"><input form="delete" type="reset" value="リセット">
 <label class="checkbox"><input form="delete" type="checkbox" name="onlyimgdel" value="on">画像だけ消す</label>
 </p>
+<% def(del_page)%>
+<% each(del_page)%>
+<span class="del_page">[
+<form action="<% echo(self) %>" method="post" id="form_page<% echo(del_page/no) %>">
+	<input type="hidden" name="mode" value="admin">
+	<input type="hidden" name="admin" value="del">
+	<input type="hidden" name="pass" value="<% echo(pass) %>">
+	<input type="hidden" name="del_pageno" value="<% echo(del_page/no) %>">
+	<% def(del_page/notlink)%>
+	<% echo(del_page/pageno) %>
+	</form>
+]</span>
+	<% elsedef %>
+	<a href="javascript:form_page<% echo(del_page/no) %>.submit()"><% echo(del_page/pageno) %></a></form>
+]</span>
+<% /def %>
+	 
+<% /each %>
+<% /def % %>
 
 <p>【 画像データ合計 : <b><% echo(all) %></b> KB 】</p>
   </div>
