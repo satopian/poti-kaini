@@ -15,6 +15,7 @@ v3.0で従来の[PaintBBS NEO](https://github.com/funige/neo/)、しぃペイン
 ## POTI-board EVO (ChickenPaint対応版)
 ![ChickenPaint](https://user-images.githubusercontent.com/44894014/118594807-f8d3f900-b7e4-11eb-8c4d-2a5bdfc7cee3.png)
 
+
 ## POTI-board改二との互換性
 - ログファイルの形式は同じです。 
 - POTI-board EVOと改二のテーマファイルは互換性があります。  
@@ -77,6 +78,9 @@ CheerpJの起動に必要なJavaScriptのurlをpotiboard.phpで管理する形�
 - MONOのcssファイルを上書きアップデート
 - potiboard.phpを上書きアップデート
 - search.phpを上書きアップデート
+
+安定版をリリースからダウンロードできます。    
+[POTI-board EVO v3.01.9](https://github.com/satopian/poti-kaini/releases/tag/v3.01.9)
 
 ### [2021/05/23] v3.00.3 lot.210523
 - ChickenPaintを日本語訳対応版にアップデートしました。
