@@ -5,7 +5,7 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board EVO
 // バージョン :
-define('POTI_VER','v3.01.8');
+define('POTI_VER','v3.01.9');
 define('POTI_LOT','lot.210605'); 
 
 /*
@@ -94,6 +94,9 @@ if ($err = check_file(__DIR__.'/thumbnail_gd.php')) {
 	error($err);
 }
 require(__DIR__.'/thumbnail_gd.php');
+
+//CheerpJ
+define('CHEERPJ_URL', 'https://cjrtnc.leaningtech.com/2.2/loader.js');
 
 //POTI_VERLOT定義
 define('POTI_VERLOT', POTI_VER.' '.POTI_LOT);
@@ -341,6 +344,7 @@ function basicpart(){
 		$dat['hide_the_checkbox_for_nofile']=false;
 	}
 	$dat['_san']=HONORIFIC_SUFFIX;
+	$dat['cheerpj_url']=CHEERPJ_URL;
 
 	return $dat;
 }
