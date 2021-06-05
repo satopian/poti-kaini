@@ -68,8 +68,8 @@ config.phpの最初の数行に必須設定項目がありますので、変更�
 2000件単位で改ページ。  
 - メインページとカタログページのページングを改良。  
 35頁単位でページングする方式に移行。  
-- CheerpJ Applet Runnerが起動しない問題に対応。    
-CheerpJの起動に必要なJavaScriptのurlをpotiboard.phpで管理。  
+- しぃペインターが起動しないCheerpJのバージョンに対処。    
+CheerpJの起動に必要なJavaScriptのurlをpotiboard.phpで管理する形にした。  
 #### v3.00.3からアップデートする場合は
 
 - Chickenpaint ディレクトリを上書きアップデート
