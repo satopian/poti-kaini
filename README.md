@@ -68,7 +68,7 @@ config.phpの最初の数行に必須設定項目がありますので、変更�
 - ChickenPaintの日本語対応が一通り完了しました。
 - CheerpJ Applet Runnerが起動しない問題に対応しました。
 
-更新が必要なファイル。
+v3.00.3からアップデートする場合は
 - Chickenpaint ディレクトリを上書きアップデート
 - Paintとotherのテンプレートを上書きアップデート
 - MONOのcssファイルを上書きアップデート
