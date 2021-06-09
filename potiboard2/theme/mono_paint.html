@@ -19,7 +19,6 @@
 		<link rel="stylesheet" href="neo.css<% def(parameter_day) %>?<% echo(parameter_day)%><% /def %>" type="text/css">
 		<script src="neo.js<% def(parameter_day) %>?<% echo(parameter_day)%><% /def %>" charset="UTF-8"></script>
 		<% /def %>
-		<!-- Javaが使えるかどうか判定 使えなければcheerpJをロード -->
 		<% def(chickenpaint)%>
 <script type="text/javascript">
 	/* Check for native pointer event support before PEP adds its polyfill */
@@ -32,8 +31,10 @@
 <script src="chickenpaint/js/chickenpaint.min.js<% def(parameter_day) %>?<% echo(parameter_day)%><% /def %>"></script>
 <link rel="stylesheet" type="text/css" href="chickenpaint/css/chickenpaint.css<% def(parameter_day) %>?<% echo(parameter_day)%><% /def %>">
 
-
 		<% elsedef %>
+		<style>body{overscroll-behavior-x: none !important; }</style>
+		<!-- Javaが使えるかどうか判定 使えなければcheerpJをロード -->
+
 		<script>
 
 		function cheerpJLoad() {
