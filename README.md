@@ -15,6 +15,7 @@ v3.0で従来の[PaintBBS NEO](https://github.com/funige/neo/)、しぃペイン
 ## POTI-board EVO (ChickenPaint対応版)
 ![ChickenPaint](https://user-images.githubusercontent.com/44894014/118594807-f8d3f900-b7e4-11eb-8c4d-2a5bdfc7cee3.png)
 
+
 ## POTI-board改二との互換性
 - ログファイルの形式は同じです。 
 - POTI-board EVOと改二のテーマファイルは互換性があります。  
@@ -60,20 +61,26 @@ config.phpの最初の数行に必須設定項目がありますので、変更�
 
 
 ## 履歴
-### [2021/06/05] v3.01.8 lot.210605
-- 管理画面のページング  
-記事が6000件あると、管理者削除画面に6000件分全部表示する仕様を変更し、2000件単位でページ送りできるようにしました。
-- ページングの改良  
-35頁単位で区切る仕様にしました。
-- ChickenPaintの日本語対応が一通り完了しました。
-- CheerpJ Applet Runnerが起動しない問題に対応しました。
+### [2021/06/05] v3.01.9 lot.210605
+- 日本語に翻訳されたChickenPaintの最新版に更新。  
+ブラウザの言語が日本語以外の場合は英語で表示。ブラウザの言語が日本語なら日本語で表示。  
 
-v3.00.3からアップデートする場合は
+- 管理画面のページング
+2000件単位で改ページ。  
+- メインページとカタログページのページングを改良。  
+35頁単位でページングする方式に移行。  
+- しぃペインターが起動しないCheerpJのバージョンに対処。    
+CheerpJの起動に必要なJavaScriptのurlをpotiboard.phpで管理する形にした。  
+#### v3.00.3からアップデートする場合は
+
 - Chickenpaint ディレクトリを上書きアップデート
 - Paintとotherのテンプレートを上書きアップデート
 - MONOのcssファイルを上書きアップデート
 - potiboard.phpを上書きアップデート
 - search.phpを上書きアップデート
+
+安定版をリリースからダウンロードできます。    
+[POTI-board EVO v3.01.9](https://github.com/satopian/poti-kaini/releases/tag/v3.01.9)
 
 ### [2021/05/23] v3.00.3 lot.210523
 - ChickenPaintを日本語訳対応版にアップデートしました。
