@@ -11,7 +11,7 @@ English translated version is here. [POTI-board EVO-EN](https://github.com/satop
 ## 概要
 
 v3.0で従来の[PaintBBS NEO](https://github.com/funige/neo/)、しぃペインターに加え高機能なHTML5のペイントアプリ[ChickenPaint](https://github.com/thenickdude/chickenpaint)が使えるようになりました。  
-それにともない、スクリプトの名称をPOTI-board改二からPOTI-board EVO(Evolution)に変更しました。 
+スクリプトの名称を変更。POTI-board改二からPOTI-board EVO(Evolution)になりました。 
 
 ## POTI-board EVO (ChickenPaint対応版)
 ![ChickenPaint](https://user-images.githubusercontent.com/44894014/118594807-f8d3f900-b7e4-11eb-8c4d-2a5bdfc7cee3.png)
