@@ -1403,16 +1403,13 @@ function paintform(){
 	setcookie("pichc", $pich , time()+(86400*SAVE_COOKIE));//高さ
 
 	$dat['parameter_day']=date("Ymd");//JavaScriptのキャッシュ制御
-	
-
-	$useneo=($shi==='neo');//プルダウンメニューによるNEO判定
-	if(!$useneo){//NEOを使うのチェックボックスがonなら、NEO
-		$useneo = filter_input(INPUT_POST, 'useneo',FILTER_VALIDATE_BOOLEAN);
+	$useneo=filter_input(INPUT_POST, 'useneo',FILTER_VALIDATE_BOOLEAN);
+	if($shi==='neo'){
+		$useneo=true;//trueのみfalseは入らない
 	}
-	if(!$is_mobile){
-		$dat['chickenpaint']=($shi==='chicken');
+	if(!$is_mobile && $shi==='chicken'){
+		$dat['chickenpaint']=true;
 	} 
-	
 	//pchファイルアップロードペイント
 	if($admin&&($admin===$ADMIN_PASS)){
 		
@@ -1467,6 +1464,9 @@ function paintform(){
 	
 	$dat = array_merge($dat,form($resto));
 		$dat['mode2'] = $mode;
+		$dat['anime'] = $anime ? true : false;
+		$dat['animeform'] = true;
+
 	if($mode==="contpaint"){
 		$dat['no'] = $no;
 		$dat['pch'] = $pch;
@@ -1474,22 +1474,37 @@ function paintform(){
 		$dat['type'] = $type;
 		$dat['pwd'] = $pwd;
 		$dat['ext'] = $ext;
-		if(is_file(IMG_DIR.$pch.$ext)){
-			list($picw,$pich)=getimagesize(IMG_DIR.$pch.$ext);//キャンバスサイズ
-			if(mime_content_type(IMG_DIR.$pch.$ext)==='image/webp'){
-				$useneo=true;
+		$dat['applet'] = true;
+		$_pch_ext = check_pch_ext(__DIR__.'/'.PCH_DIR.$pch);
+		if($is_mobile && ($_pch_ext==='.spch')){
+			$ctype='img';
+		}
+		if($ctype=='pch'&& $_pch_ext){
+			$anime=true;
+			if($_pch_ext==='.pch'){
+				$useneo = is_neo(PCH_DIR.$pch.'.pch');
+				$dat['applet'] = false;
+			}elseif($_pch_ext==='.spch'){
+				$dat['usepbbs'] = false;
+				$useneo=false;
+			}
+			$dat['pchfile'] = './'.PCH_DIR.$pch.$_pch_ext;
+		}
+
+		if($ctype=='img' && is_file(IMG_DIR.$pch.$ext)){//画像または
+				list($picw,$pich)=getimagesize(IMG_DIR.$pch.$ext);//キャンバスサイズ
+				if(mime_content_type(IMG_DIR.$pch.$ext)==='image/webp'){
+					$useneo=true;
+				}
+	
+			$dat['animeform'] = false;
+			$dat['anime'] = false;
+			$dat['imgfile'] = './'.IMG_DIR.$pch.$ext;
+			if(!$is_mobile && is_file('./'.PCH_DIR.$pch.'.chi')){
+				$dat['img_chi'] = './'.PCH_DIR.$pch.'.chi';
 			}
 		}
-		$dat['applet'] = true;
-		if(($ctype=='pch') && is_file(PCH_DIR.$pch.'.pch')){//動画から続き
-			$useneo = is_neo(PCH_DIR.$pch.'.pch');
-			$anime=true;
-			$dat['applet'] = false;
-		}elseif(($ctype=='pch') && is_file(PCH_DIR.$pch.'.spch')){
-			$dat['usepbbs'] = false;
-			$useneo=false;
-			$anime=true;
-		}
+	
 		if((C_SECURITY_CLICK || C_SECURITY_TIMER) && SECURITY_URL){
 			$dat['security'] = true;
 			$dat['security_click'] = C_SECURITY_CLICK;
@@ -1571,6 +1586,11 @@ function paintform(){
 		$arr_pal[$i] = $palettes;
 	}
 	$dat['palettes']=$initial_palette.implode('',$arr_pal);
+	$dat['palsize'] = count($DynP) + 1;
+	foreach ($DynP as $p){
+		$arr_dynp[] = '<option>'.$p.'</option>';
+	}
+	$dat['dynp']=implode('',$arr_dynp);
 
 	$dat['w'] = $w;
 	$dat['h'] = $h;
@@ -1578,36 +1598,12 @@ function paintform(){
 	$dat['pich'] = $pich;
 	$dat['stime'] = time();
 	if($pwd){
-	$pwd=openssl_encrypt ($pwd,CRYPT_METHOD, CRYPT_PASS, true, CRYPT_IV);//暗号化
-	$pwd=bin2hex($pwd);//16進数に
+		$pwd=openssl_encrypt ($pwd,CRYPT_METHOD, CRYPT_PASS, true, CRYPT_IV);//暗号化
+		$pwd=bin2hex($pwd);//16進数に
 	}
 	$resto = ($resto) ? '&resto='.$resto : '';
 	$dat['mode'] = 'piccom'.$resto;
-	$dat['animeform'] = true;
-	$dat['anime'] = $anime ? true : false;
-	$_pch_ext = check_pch_ext(__DIR__.'/'.PCH_DIR.$pch);
-	if($is_mobile && ($_pch_ext==='.spch')){
-		$ctype='img';
-	}
-	if($ctype=='pch'){
-		if ($_pch_ext) {
-			$dat['pchfile'] = './'.PCH_DIR.$pch.$_pch_ext;
-		}
-	}
-	if($ctype=='img'){//画像または
-		$dat['animeform'] = false;
-		$dat['anime'] = false;
-		$dat['imgfile'] = './'.PCH_DIR.$pch.$ext;
-		if(!$is_mobile && is_file('./'.PCH_DIR.$pch.'.chi')){
-			$dat['img_chi'] = './'.PCH_DIR.$pch.'.chi';
-		}
-	}
 
-	$dat['palsize'] = count($DynP) + 1;
-	foreach ($DynP as $p){
-		$arr_dynp[] = '<option>'.$p.'</option>';
-	}
-	$dat['dynp']=implode('',$arr_dynp);
 	$dat['useneo'] = $useneo; //NEOを使う
 	$usercode.='&stime='.time().$resto;
 	//差し換え時の認識コード追加
@@ -1972,8 +1968,6 @@ function replace(){
 	global $path,$temppath;
 	$no = filter_input(INPUT_GET, 'no',FILTER_VALIDATE_INT);
 	$pwd = newstring(filter_input(INPUT_GET, 'pwd'));
-	// var_dump($pwd);
-	// exit;
 	$repcode = newstring(filter_input(INPUT_GET, 'repcode'));
 	$message="";
 	$userip = get_uip();
