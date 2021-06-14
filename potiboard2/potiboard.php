@@ -5,8 +5,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board EVO
 // バージョン :
-define('POTI_VER','v3.01.9');
-define('POTI_LOT','lot.210605'); 
+define('POTI_VER','v3.01.10');
+define('POTI_LOT','lot.210615'); 
 
 /*
   (C) 2018-2021 POTI改 POTI-board redevelopment team
@@ -58,7 +58,6 @@ $pwd = newstring(filter_input(INPUT_POST, 'pwd'));
 $type = newstring(filter_input(INPUT_POST, 'type'));
 $admin = (string)filter_input(INPUT_POST, 'admin');
 $pass = newstring(filter_input(INPUT_POST, 'pass'));
-$onlyimgdel = filter_input(INPUT_POST, 'onlyimgdel',FILTER_VALIDATE_BOOLEAN);
 
 //INPUT_GETから変数を取得
 
@@ -314,7 +313,6 @@ function basicpart(){
 	
 	$dat['select_app'] =(USE_SHI_PAINTER||USE_CHICKENPAINT) ? true : false;//しぃペインターとChickenPaintを使うかどうか?
 	$dat['app_to_use'] = $dat['select_app'] ? false : "neo";
-	// $dat['useneo_on'] =  (!USE_SHI_PAINTER && !USE_CHICKENPAINT) ? true : false;//アプリ切替を表示しないときはhiddenでNEOを選択
 	$dat['use_shi_painter'] = USE_SHI_PAINTER ? true : false;
 	$dat['use_chickenpaint'] = USE_CHICKENPAINT ? true : false;
 	$dat['ver'] = POTI_VER;
@@ -688,13 +686,10 @@ function similar_str($str1,$str2){
 
 // 記事書き込み
 function regist(){
-	global $path;
-	global $temppath;
-	global $usercode;
-	global $admin,$ADMIN_PASS;
+	global $path,$temppath,$usercode,$ADMIN_PASS;
 	
 	if(($_SERVER["REQUEST_METHOD"]) !== "POST") error(MSG006);
-
+	$admin = (string)filter_input(INPUT_POST, 'admin');
 	$resto = filter_input(INPUT_POST, 'resto',FILTER_VALIDATE_INT);
 	$com = filter_input(INPUT_POST, 'com');
 	$name = filter_input(INPUT_POST, 'name');
@@ -1183,8 +1178,9 @@ function newstring($str){
 
 // ユーザー削除
 function userdel(){
-	global $path,$onlyimgdel;
+	global $path;
 
+	$onlyimgdel = filter_input(INPUT_POST, 'onlyimgdel',FILTER_VALIDATE_BOOLEAN);
 	$del = filter_input(INPUT_POST,'del',FILTER_VALIDATE_INT,FILTER_REQUIRE_ARRAY);//$del は配列
 	$pwd = newstring(filter_input(INPUT_POST, 'pwd'));
 	$pwdc = filter_input(INPUT_COOKIE, 'pwdc');
@@ -1235,8 +1231,9 @@ function userdel(){
 
 // 管理者削除
 function admindel($pass){
-	global $path,$onlyimgdel;
+	global $path;
 
+	$onlyimgdel = filter_input(INPUT_POST, 'onlyimgdel',FILTER_VALIDATE_BOOLEAN);
 	$del = filter_input(INPUT_POST,'del',FILTER_VALIDATE_INT,FILTER_REQUIRE_ARRAY);//$del は配列
 	$del_pageno=(int)filter_input(INPUT_POST,'del_pageno',FILTER_VALIDATE_INT);
 
@@ -1382,11 +1379,12 @@ function check_dir ($path) {
 
 // お絵描き画面
 function paintform(){
-	global $admin,$type,$pwd;
-	global $resto,$qualitys,$usercode;
-	global $ADMIN_PASS,$pallets_dat;
+	global $qualitys,$usercode,$ADMIN_PASS,$pallets_dat;
 
-	// $dat['chickenpaint']=true;
+	$admin = (string)filter_input(INPUT_POST, 'admin');
+	$type = newstring(filter_input(INPUT_POST, 'type'));
+	$pwd = newstring(filter_input(INPUT_POST, 'pwd'));
+	$resto = filter_input(INPUT_POST, 'resto',FILTER_VALIDATE_INT);
 	$mode = filter_input(INPUT_POST, 'mode');
 	$picw = filter_input(INPUT_POST, 'picw',FILTER_VALIDATE_INT);
 	$pich = filter_input(INPUT_POST, 'pich',FILTER_VALIDATE_INT);
