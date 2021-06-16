@@ -6,7 +6,10 @@
 		<script>
 			var css = GetCookie("CSS");
 			if(css == ""){css = "<% echo(skindir) %>css/mono_main.css";}
-			document.write('<link rel="stylesheet" href="' + css + '" type="text/css">');
+			var link = document.createElement("link");
+			link.rel = "stylesheet";
+			link.href =  css ;
+			document.getElementsByTagName("head")[0].appendChild(link);
 			function SetCss(file){
 				SetCookie("CSS", file);
 				window.location.reload();
