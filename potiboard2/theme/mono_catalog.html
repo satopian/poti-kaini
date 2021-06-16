@@ -10,8 +10,11 @@
 			link.rel = "stylesheet";
 			link.href =  css ;
 			document.getElementsByTagName("head")[0].appendChild(link);
-			function SetCss(file){
+			function SetCss(obj){
+				var idx = obj.selectedIndex;
+				file = obj.options[idx].value;
 				SetCookie("CSS", file);
+				SetCookie("colorIdx",idx);
 				window.location.reload();
 			}
 			function GetCookie(key){
@@ -98,15 +101,15 @@
 						</select>
 						<label>[<input type="checkbox" name="onlyimgdel" value="on">ImageOnly]</label>
 						<input class="button" type="submit" value=" OK ">
+						<span class="stylechanger">Color: 
+							<select class="form" id="mystyle" onchange="SetCss(this);">
+								<option value="<% echo(skindir) %>css/mono_main.css">MONO</option>
+								<option value="<% echo(skindir) %>css/mono_dark.css">Dark</option>
+								<option value="<% echo(skindir) %>css/mono_deep.css">Deep</option>
+								<option value="<% echo(skindir) %>css/mono_mayo.css">MAYO</option>
+							</select>
+						</span>
 					</p>
-					<p>
-						collar
-						<a href="javascript:SetCss('<% echo(skindir) %>css/mono_main.css');">[MONO]</a>
-						<a href="javascript:SetCss('<% echo(skindir) %>css/mono_dark.css');">[dark]</a>
-						<a href="javascript:SetCss('<% echo(skindir) %>css/mono_deep.css');">[deep]</a>
-						<a href="javascript:SetCss('<% echo(skindir) %>css/mono_mayo.css');">[MAYO]</a>
-					</p>
-				</form>
 				<script src="loadcookie.js"></script>
 				<script>
 					l(); //LoadCookie
@@ -140,5 +143,9 @@
 					</p>
 				</article>
 			</footer>
+			<script>
+				let colorIdx=GetCookie('colorIdx');
+				document.getElementById("mystyle").selectedIndex=colorIdx;
+			</script>
 	</body>
 </html>

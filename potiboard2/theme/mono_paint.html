@@ -41,7 +41,7 @@
 		var jEnabled = navigator.javaEnabled();
 		if(!jEnabled){
 			var sN = document.createElement("script");
-            sN.src = "<% def(cheerpj_url)%><% echo(cheerpj_url)%><% elsedef %>https://cjrtnc.leaningtech.com/2.2/loader.js<% /def %>";
+			sN.src = "<% def(cheerpj_url)%><% echo(cheerpj_url)%><% elsedef %>https://cjrtnc.leaningtech.com/2.2/loader.js<% /def %>";
 			var s0 = document.getElementsByTagName("script")[0];
 			s0.parentNode.insertBefore(sN, s0);
 			sN.addEventListener("load", function(){ cheerpjInit(); }, false);
@@ -52,15 +52,18 @@
 		</script>
 		<% /def %>
 
-		<script type="text/javascript">
+		<script>
 			var css = GetCookie("CSS");
 			if(css == ""){css = "<% echo(skindir) %>css/mono_main.css";}
 			var link = document.createElement("link");
 			link.rel = "stylesheet";
 			link.href =  css ;
 			document.getElementsByTagName("head")[0].appendChild(link);
-			function SetCss(file){
+			function SetCss(obj){
+				var idx = obj.selectedIndex;
+				file = obj.options[idx].value;
 				SetCookie("CSS", file);
+				SetCookie("colorIdx",idx);
 				window.location.reload();
 			}
 			function GetCookie(key){

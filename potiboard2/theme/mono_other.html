@@ -10,8 +10,11 @@
 			link.rel = "stylesheet";
 			link.href =  css ;
 			document.getElementsByTagName("head")[0].appendChild(link);
-			function SetCss(file){
+			function SetCss(obj){
+				var idx = obj.selectedIndex;
+				file = obj.options[idx].value;
 				SetCookie("CSS", file);
+				SetCookie("colorIdx",idx);
 				window.location.reload();
 			}
 			function GetCookie(key){
