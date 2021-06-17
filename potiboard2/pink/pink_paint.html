@@ -21,7 +21,18 @@
 <% def(pch_mode) %><meta name="viewport" content="width=device-width,initial-scale=1.0"><% /def %>
 <% def(continue_mode) %><meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0"><% /def %>
 <link rel="stylesheet" type="text/css" href="<% echo(skindir) %>pink.css">
-<style>div#chickenpaint-parent {letter-spacing: initial;word-break:initial;}li{margin:0 0 0 1em;}</style>
+<style>
+	div#chickenpaint-parent {
+		letter-spacing: initial;word-break:initial;
+	}
+	div#chickenpaint-parent :not(input){
+		-moz-user-select: none;
+		-webkit-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+	}
+	li{margin:0 0 0 1em;}
+</style> 
 <title><% def(paint_mode) %>お絵かきモード<% /def %><% def(continue_mode) %>続きを描く<% /def %><% def(pch_mode) %>動画表示モード<% /def %> - <% echo(title) %></title>
 <% def(n) %>
 <!-- 
