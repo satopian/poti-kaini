@@ -4,13 +4,14 @@
 
 お絵かき掲示板PHPスクリプトPOTI-boardを改良していくプロジェクトです。  
 php5.5～ 対応。  
-English translated version is here. [POTI-board EVO-EN](https://github.com/satopian/poti-kaini-EN)
+English translated version is here. [POTI-board EVO-EN](https://github.com/satopian/poti-kaini-EN)  
+繁體中文版本 [POTI-board EVO-zh-TW](https://github.com/satopian/poti-kaini-zh-TW)
   
 
 ## 概要
 
 v3.0で従来の[PaintBBS NEO](https://github.com/funige/neo/)、しぃペインターに加え高機能なHTML5のペイントアプリ[ChickenPaint](https://github.com/thenickdude/chickenpaint)が使えるようになりました。  
-それにともない、スクリプトの名称がPOTI-board改二からPOTI-board EVO(Evolution)に変わりました。 
+スクリプトの名称を変更。POTI-board改二からPOTI-board EVO(Evolution)になりました。 
 
 ## POTI-board EVO (ChickenPaint対応版)
 ![ChickenPaint](https://user-images.githubusercontent.com/44894014/118594807-f8d3f900-b7e4-11eb-8c4d-2a5bdfc7cee3.png)
@@ -21,7 +22,7 @@ v3.0で従来の[PaintBBS NEO](https://github.com/funige/neo/)、しぃペイン
 - POTI-board EVOと改二のテーマファイルは互換性があります。  
 - ただし、改二用のテーマではChickenPaintが使えません。 
 - POTI-board EVOのChickenPaint対応テーマは  
- 同梱の`pink`と、`theme`の2つです。  
+ 同梱の`pink`と、`MONO`、そして[MONO_DEV](https://github.com/satopian/poti-EVO-themes)です。  
 
 ## 改二からChickenPaint対応版へのアップデート
 
@@ -52,8 +53,8 @@ config.phpの最初の数行に必須設定項目がありますので、変更�
 ## テーマ(テンプレート)機能について
 
 この掲示板はテーマを入れ替える事ができます。  
-2021年5月15日現在、ChickenPaintに対応しているテーマは同梱した`MONO`、と`PINK`だけですが、改二のテーマも使えます。  
-[COOL SOLID](https://draclaw.com/)も人気が高いテーマです。
+2021年5月15日現在、ChickenPaintに対応しているテーマは同梱した`MONO`、と`PINK`そして[MONO_DEV](https://github.com/satopian/poti-EVO-themes)です。
+従来の改二のテーマ[COOL SOLID](https://draclaw.com/)も人気が高いテーマです。
 
 ## 外部プログラム
 [potiboard_plugin: お絵かき掲示板 POTI-boardのための外部phpプログラム](https://github.com/satopian/potiboard_plugin)  
@@ -617,10 +618,6 @@ potiboard.php、picpost.php、search.php のアップデートをお願いしま
 
 - 動画再生の時にNEOのpchかJavaのpchかを判定(by さとぴあ)
 
-### [2020/06/26] v2.6.9 lot.200626
-
-- v2.6.8で追加した箇所の修正(by さとぴあ)
-
 ### [2020/06/26] v2.6.8 lot.200625
 
 - php5.6,php7.2の時に致命的エラーが発生していたv2.6.3以降のバージョンの文法ミスを修正。
@@ -646,9 +643,6 @@ potiboard.php、picpost.php、search.php のアップデートをお願いしま
 
 - suEXECを導入してあるサーバーで動かない可能性があるのを修正(Skinny.php)
 
-### [2020/05/22] v2.6.0 lot.200522a
-
-- `<SIIHELP>` 廃止
 
 ### [2020/05/20] v2.5.0 lot.200520
 
@@ -731,10 +725,6 @@ potiboard.php、picpost.php、search.php のアップデートをお願いしま
 
 - htmlの生成に成功(byさとぴあ) 大感謝。
 - スキンのエラー修整。
-
-### [2018/09/16] v2.0.0a2
-
-- 記録
 
 ### [2018/09/15] v2.0.0a1
 
