@@ -5,8 +5,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board EVO
 // バージョン :
-define('POTI_VER','v3.01.10');
-define('POTI_LOT','lot.210615'); 
+define('POTI_VER','v3.02.0');
+define('POTI_LOT','lot.210617'); 
 
 /*
   (C) 2018-2021 POTI改 POTI-board redevelopment team
@@ -1473,6 +1473,7 @@ function paintform(){
 		$dat['pwd'] = $pwd;
 		$dat['ext'] = $ext;
 		$dat['applet'] = true;
+		list($picw,$pich)=getimagesize(IMG_DIR.$pch.$ext);//キャンバスサイズ
 		$_pch_ext = check_pch_ext(__DIR__.'/'.PCH_DIR.$pch);
 		if($is_mobile && ($_pch_ext==='.spch')){
 			$ctype='img';
@@ -1490,7 +1491,6 @@ function paintform(){
 		}
 
 		if($ctype=='img' && is_file(IMG_DIR.$pch.$ext)){//画像または
-				list($picw,$pich)=getimagesize(IMG_DIR.$pch.$ext);//キャンバスサイズ
 				if(mime_content_type(IMG_DIR.$pch.$ext)==='image/webp'){
 					$useneo=true;
 				}
