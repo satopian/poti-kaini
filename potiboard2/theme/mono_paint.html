@@ -20,13 +20,20 @@
 		<script src="neo.js<% def(parameter_day) %>?<% echo(parameter_day)%><% /def %>" charset="UTF-8"></script>
 		<% /def %>
 		<% def(chickenpaint)%>
-<script type="text/javascript">
-	/* Check for native pointer event support before PEP adds its polyfill */
-	if (window.PointerEvent) {
-		window.hasNativePointerEvents = true;
-	}
-
-</script>
+		<style>
+		div#chickenpaint-parent :not(input){
+			-moz-user-select: none;
+			-webkit-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+		}
+		</style>
+		<script>
+		/* Check for native pointer event support before PEP adds its polyfill */
+		if (window.PointerEvent) {
+			window.hasNativePointerEvents = true;
+		}
+		</script>
 
 <script src="chickenpaint/js/chickenpaint.min.js<% def(parameter_day) %>?<% echo(parameter_day)%><% /def %>"></script>
 <link rel="stylesheet" type="text/css" href="chickenpaint/css/chickenpaint.css<% def(parameter_day) %>?<% echo(parameter_day)%><% /def %>">
