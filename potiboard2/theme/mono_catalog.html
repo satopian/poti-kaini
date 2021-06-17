@@ -24,7 +24,7 @@
 					tmp = tmp.substring(tmp1, tmp.length);
 					var start = tmp.indexOf("=", 0) + 1;
 					var end = tmp.indexOf(";", start);
-					return(unescape(tmp.substring(start,end)));
+					return(decodeURIComponent(tmp.substring(start,end)));
 					}
 				return("");
 			}
