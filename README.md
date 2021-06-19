@@ -62,6 +62,15 @@ config.phpの最初の数行に必須設定項目がありますので、変更�
 
 
 ## 履歴
+### [2021/06/17] v3.02.0 lot.210617
+- ChickenPaintの画面が選択される問題に対応。
+- PaintBBS NEOとしぃペインターの時は、Windows inkや二本指によるジェスチャーでブラウザバックしないようにした。
+- potiboard.phpのコードを整理。globaL変数削減、コンティニュー時の処理をまとめた。
+- MONOのCSS切り替えをプルダウンメニューに。
+
+安定版をリリースからダウンロードできます。    
+[POTI-board EVO v3.02.0](https://github.com/satopian/poti-kaini/releases/tag/v3.02.0)
+
 ### [2021/06/05] v3.01.9 lot.210605
 - 日本語に翻訳されたChickenPaintの最新版に更新。  
 ブラウザの言語が日本語以外の場合は英語で表示。ブラウザの言語が日本語なら日本語で表示。  
