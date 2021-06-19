@@ -1,12 +1,13 @@
 <?php
 /*
-** メール通知クラス(UTF-8) lot.200712
+** メール通知クラス(UTF-8) lot.210620
 **
 ** http://www.punyu.net/php/
 ** by SakaQ
 ** https://pbbs.sakura.ne.jp/poti/
 ** by POTI改
 **
+** 2020/06/20 多国語対応。メール送信をJISからutf-8へ。
 ** 2020/07/12 軽微なエラーを修正。
 ** 2020/05/11 説明追加、POTI改のURL変更。
 ** 2020/01/25 "REMOTE_ADDR"が使えないサーバに対応。
@@ -89,12 +90,15 @@ class noticemail{
 	public static function send($data=''){
 	$name = $data['name'];
 	$from = $data['email'];
+	// 明らかにメールアドレスじゃない物は除外
+	$from =filter_var($from, FILTER_VALIDATE_EMAIL);
 	$line = "---------------------------------------------------------------------\n";
 
 	// ヘッダを指定
+	
 	$MailHeaders = 'Mime-Version: 1.0'."\n";
-	$MailHeaders .= 'Content-Type: text/plain; charset=ISO-2022-JP'."\n";
-	$MailHeaders .= 'Content-Transfer-Encoding: 7bit'."\n";
+	$MailHeaders .= 'Content-Type: text/plain; charset=utf-8'."\n";
+	$MailHeaders .= 'Content-Transfer-Encoding: 8bit'."\n";
 
 	// メール本文作成
 	$Message = '■'.$data['subject']."\n";
@@ -111,16 +115,14 @@ class noticemail{
 	$Message .= 'UserAgent: '.getenv("HTTP_USER_AGENT")."\n";
 	$Message .= $line;
 	$Message .= 'Name: '.$name."\n";
-	$Message .= 'e-Mail: '.$data['email']."\n";
+	$Message .= 'e-Mail:'.$from."\n";
 	$option = $data['option'];
 	if(is_array($option)){
 	foreach($option as $value){ list($optitle,$opvalue)=explode(",", rtrim($value)); $Message .=$optitle.': '.$opvalue." \n"; }
 	}
-	unset($value);
 		$Message .= $line;
 		if($data['comment']){
-			$com = str_replace("\r\n", "\n", $data['comment']);	// 改行文字の統一
-			$com = str_replace("\r", "\n", $com);
+			$com = str_replace(["\r\n","\r"], "\n", $data['comment']);// 改行文字の統一
 			$com = preg_replace("/^(\n)+|(\n)+$/i", "", $com);	// 連続改行を消す
 			$Message .= $com;
 		}
@@ -129,23 +131,18 @@ class noticemail{
 		$Message = mb_convert_kana($Message);
 		$name = mb_convert_kana($name);
 		$from = mb_convert_kana($from);
-		// 明らかにメールアドレスじゃない物は除外
-		if(preg_match("/[\x80-\xA0]/",$from)||stristr($from,'sage')||stristr($from,'http://')) $from = '';
+	
 		// メールアドレスがなければ代替え
 		if(!$from) $from = 'nomail@'.getenv("HTTP_HOST");
-		// 日本語ならMIMEヘッド
-		if(preg_match("/[\x80-\xA0]/",$name)){
-		$name = "=?iso-2022-jp?B?".base64_encode(mb_convert_encoding($name,"JIS","utf-8"))."?=";
-		}
+		mb_language( 'Japanese' );
+		$name = mb_encode_mimeheader(($name));
 		// ヘッダにFrom追加
 		$MailHeaders .= 'From: '.$name.' <'.$from.'>'."\n";
-			// Subjectに日本語があればMIMEヘッド
-			if(preg_match("/[\x80-\xA0]/",$data['subject'])){
-			$data['subject'] = "=?iso-2022-jp?B?".base64_encode(mb_convert_encoding($data['subject'],"JIS","utf-8"))."?=";
-			} // メール送信
-			mail($data['to'],
-			$data['subject'],
-			mb_convert_encoding($Message,"JIS","utf-8"), $MailHeaders);
+			// メール送信
+		mb_internal_encoding( 'UTF-8' );
+		mb_send_mail($data['to'],
+		$data['subject'],
+			$Message,$MailHeaders);
 
 			return true;
 	}
