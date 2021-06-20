@@ -58,7 +58,7 @@
 
 		</script>
 		<% /def %>
-
+		<link rel="stylesheet" href="<% echo(skindir) %>css/mono_main.css" type="text/css">
 		<script>
 			var css = GetCookie("CSS");
 			if(css == ""){css = "<% echo(skindir) %>css/mono_main.css";}
@@ -88,9 +88,7 @@
 				document.cookie = key + "=" + escape(val) + ";max-age=31536000;";
 			}
 		</script>
-		<noscript>
-			<link rel="stylesheet" href="<% echo(skindir) %>css/mono_main.css" type="text/css">
-		</noscript>
+ 
 
 		<title><% echo(title) %></title>
 	</head>
