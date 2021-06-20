@@ -196,7 +196,7 @@
 	
 <% def(sharebutton) %>
 	<span class="share_button">
-		<a target="_blank" href="https://twitter.com/intent/tweet?text=[<% echo(oya/no|urlencode) %>] <% echo(oya/sub|urlencode) %> by <% echo(oya/name|urlencode) %> - <% echo(title|urlencode) %>&url=<% echo(rooturl|urlencode) %><% echo(self|urlencode) %>?res=<% echo(oya/no|urlencode) %>"><span class="icon-twitter"></span>tweet</a>
+		<a target="_blank" href="https://twitter.com/intent/tweet?text=%5B<% echo(oya/no|urlencode) %>%5D <% echo(oya/sub|urlencode) %> by <% echo(oya/name|urlencode) %> - <% echo(title|urlencode) %>&url=<% echo(rooturl|urlencode) %><% echo(self|urlencode) %>?res=<% echo(oya/no|urlencode) %>"><span class="icon-twitter"></span>tweet</a>
 		<a target="_blank" class="fb btn" href="http://www.facebook.com/share.php?u=<% echo(rooturl|urlencode) %><% echo(self|urlencode) %>?res=<% echo(oya/no|urlencode) %>"><span class="icon-facebook2"></span>share</a>
 	</span>
 	<% /def %>
