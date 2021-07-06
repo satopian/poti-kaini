@@ -3,10 +3,11 @@ define('USE_DUMP_FOR_DEBUG','0');
 //HTML出力の前に$datをdump しない:0 する:1 dumpしてexit：2 
 // ini_set('error_reporting', E_ALL);
 
+
 // POTI-board EVO
 // バージョン :
-define('POTI_VER','v3.02.0');
-define('POTI_LOT','lot.210617'); 
+define('POTI_VER','v3.03.1');
+define('POTI_LOT','lot.210706'); 
 
 /*
   (C) 2018-2021 POTI改 POTI-board redevelopment team
@@ -138,6 +139,8 @@ defined('DO_NOT_CHANGE_POSTS_TIME') or define('DO_NOT_CHANGE_POSTS_TIME', '0');
 
 //画像なしのチェックボックスを使用する する:1 しない:0 
 defined('USE_CHECK_NO_FILE') or define('USE_CHECK_NO_FILE', '1');
+//コメント内のHTMLタグをHTMLとして表示する  する:1 しない:0
+defined('DISPLAY_HTML_TAGS_IN_THE_COMMENT_AS_HTML') or define('DISPLAY_HTML_TAGS_IN_THE_COMMENT_AS_HTML', '0');
 
 //描画時間を合計表示に する:1 しない:0 
 defined('TOTAL_PAINTTIME') or define('TOTAL_PAINTTIME', '1');
@@ -382,7 +385,7 @@ function form($resno="",$adminin="",$tmp=""){
 		$dat['notres'] = true;
 	}
 
-	if($admin_valid) $dat['admin'] = newstring($ADMIN_PASS);
+	if($admin_valid) $dat['admin'] = h($ADMIN_PASS);
 
 	$dat['maxbyte'] = 2048 * 1024;//フォームのHTMLによるファイルサイズの制限 2Mまで
 	$dat['usename'] = USE_NAME ? ' *' : '';
@@ -647,9 +650,12 @@ function res($resno = 0){
 
 // 自動リンク
 function auto_link($str){
-	if(!(stripos($str,"script")!==false||stripos($str,"<a")!==false)){//scriptがなければ続行
-		return preg_replace("{(https?)(://[[:alnum:]\+\$\;\?\.%,!#~*/:@&=_-]+)}","<a href=\"\\1\\2\" target=\"_blank\" rel=\"nofollow noopener noreferrer\">\\1\\2</a>",$str);
+	//マークダウン[]()
+	$str= preg_replace("{\[(.+?)\]\((https?)(://[[:alnum:]\+\$\;\?\.%,!#~*/:@&=_-]+)\)}","<a href=\"\\2\\3\" target=\"_blank\" rel=\"nofollow noopener noreferrer\">\\1</a>",$str);
+	if(strpos($str,'<a')===false){//マークダウン記法がなかった時
+		$str= preg_replace("{(https?)(://[[:alnum:]\+\$\;\?\.%,!#~*/:@&=_-]+)}","<a href=\"\\1\\2\" target=\"_blank\" rel=\"nofollow noopener noreferrer\">\\1\\2</a>",$str);
 	}
+
 	return $str;
 }
 
@@ -1267,7 +1273,7 @@ function admindel($pass){
 				$name='<a href="mailto:'.$email.'">'.$name.'</a>';
 			}
 			$com = preg_replace("#<br */?>#i"," ",$com);
-			$com = newstring($com);
+			$com = h($com);
 			if(strlen($com) > 20) $com = mb_strcut($com,0,18) . ".";
 			$clip = "";
 			$size = 0;
@@ -1575,7 +1581,7 @@ function paintform(){
 	foreach ( $lines as $i => $line ) {
 		$line=charconvert(str_replace(["\r","\n","\t"],"",$line));
 		list($pid,$pname,$pal[0],$pal[2],$pal[4],$pal[6],$pal[8],$pal[10],$pal[1],$pal[3],$pal[5],$pal[7],$pal[9],$pal[11],$pal[12],$pal[13]) = explode(",", $line);
-		$DynP[]=newstring($pname);
+		$DynP[]=h($pname);
 		$p_cnt=$i+1;
 		$palettes = 'Palettes['.$p_cnt.'] = "#';
 		ksort($pal);
@@ -1858,16 +1864,16 @@ function editform(){
 
 	$dat['post_mode'] = true;
 	$dat['rewrite'] = $no;
-	if($pwd && ($pwd===$ADMIN_PASS)) $dat['admin'] = newstring($ADMIN_PASS);
+	if($pwd && ($pwd===$ADMIN_PASS)) $dat['admin'] = h($ADMIN_PASS);
 	$dat['maxbyte'] = MAX_KB * 1024;
 	$dat['maxkb']   = MAX_KB;
 	$dat['addinfo'] = $addinfo;
-	$dat['name'] = strip_tags($name);
+	$dat['name'] = h(strip_tags($name));
 	$dat['email'] = $email;
-	$dat['sub'] = $sub;
+	$dat['sub'] = h(strip_tags($sub));
 	$com = preg_replace("#<br */?>#i","\n",$com); // <br>または<br />を改行へ戻す
 	$dat['com'] = $com;
-	$dat['url'] = $url;
+	$dat['url'] = filter_var($url,FILTER_VALIDATE_URL);
 	$dat['pwd'] = $pwd;
 
 	//文字色
@@ -2254,11 +2260,6 @@ function Reject_if_NGword_exists_in_the_post($com,$name,$email,$url,$sub){
 	if($bstr_A_find && $bstr_B_find){
 		error(MSG032);
 	}
-	if(!$admin || $admin!==$ADMIN_PASS){//管理者以外タグ無効
-		$chk_com = htmlspecialchars($chk_com,ENT_QUOTES,'utf-8');
-	}
-	//管理モードで使用できるタグを制限
-	if(preg_match('/<script|<\?php|<img|<a onmouseover|<iframe|<frame|<div|<table|<meta|<base|<object|<embed|<input|<body|<style/i', $chk_com)) error(MSG038);
 
 }
 
@@ -2281,17 +2282,11 @@ function create_formatted_text_from_post($com,$name,$email,$url,$sub,$fcolor,$de
 	if(USE_COM&&!$com) error(MSG008,$dest);
 	if(USE_SUB&&!$sub) error(MSG010,$dest);
 	
-	//コメントのエスケープ
-	global $ADMIN_PASS;
-	$admin=(string)filter_input(INPUT_POST,'admin');
-	if(!$admin || $admin!==$ADMIN_PASS){//管理者以外タグ無効
-		$com = htmlspecialchars($com,ENT_QUOTES,'utf-8');
-	}
-	$com = str_replace(",", "&#44;", $com);
 
 	// 改行コード
 	$com = str_replace(["\r\n","\r"], "\n", $com);
 	$com = preg_replace("/(\s*\n){4,}/u","\n",$com); //不要改行カット
+	$com = newstring($com);	//改行文字の前に HTMLの改行タグ
 	$com = nl2br($com);	//改行文字の前に HTMLの改行タグ
 	
 	$formatted_post = [//コメント以外のエスケープと配列への格納
@@ -2483,6 +2478,9 @@ function check_badfile ($chk, $dest = '') {
 		}
 	}
 }
+function h($str){//出力のエスケープ
+	return htmlspecialchars($str,ENT_QUOTES,'utf-8',false);
+	}
 
 function create_res ($line, $options = []) {
 	global $path;
@@ -2490,15 +2488,15 @@ function create_res ($line, $options = []) {
 	list($no,$date,$name,$email,$sub,$com,$url,$host,$pwd,$ext,$w,$h,$time,$chk,$ptime,$fcolor)
 		= explode(",", rtrim($line));
 	$res = [
-		'w' => $w,
-		'h' => $h,
-		'no' => $no,
-		'sub' => $sub,
+		'w' => h($w),
+		'h' => h($h),
+		'no' => (int)$no,
+		'sub' => h($sub),
 		'url' => filter_var($url,FILTER_VALIDATE_URL),
 		'email' => filter_var($email, FILTER_VALIDATE_EMAIL),
-		'ext' => $ext,
-		'time' => $time,
-		'fontcolor' => ($fcolor ? $fcolor : DEF_FONTCOLOR), //文字色
+		'ext' => h($ext),
+		'time' => h($time),
+		'fontcolor' => h($fcolor ? $fcolor : DEF_FONTCOLOR), //文字色
 	];
 
 	// 画像系変数セット
@@ -2524,15 +2522,19 @@ function create_res ($line, $options = []) {
 	list($res['now'], $res['updatemark']) = separateDatetimeAndUpdatemark($res['now']);
 	//名前とトリップを分離
 	list($res['name'], $res['trip']) = separateNameAndTrip($name);
-
+	$res['name']=h($res['name']);
 	$res['encoded_name'] = urlencode($res['name']);
 
+	$com = preg_replace("#<br( *)/>#i","\n",$com); //<br />を改行に戻す
+	if(!DISPLAY_HTML_TAGS_IN_THE_COMMENT_AS_HTML){
+		$com=h($com);//コメントのエスケープ
+	}
 	// オートリンク
 	if(AUTOLINK) {
 		$com = auto_link($com);
 	}
-	$com = preg_replace("/(^|>)((&gt;|＞)[^<]*)/i", "\\1".RE_START."\\2".RE_END, $com); // '>'色設定
-	$res['com'] = preg_replace("#<br( *)/>#i","<br>",$com); //<br />を<br>へ
+	$com=nl2br($com,false);//改行を<br>へ
+	$res['com'] =  preg_replace("/(^|>)((&gt;|＞)[^<]*)/i", "\\1".RE_START."\\2".RE_END, $com); // '>'色設定
 
 	return $res;
 }
