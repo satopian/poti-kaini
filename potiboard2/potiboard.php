@@ -6,8 +6,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board EVO
 // バージョン :
-define('POTI_VER','v3.03.1');
-define('POTI_LOT','lot.210706'); 
+define('POTI_VER','v3.03.3');
+define('POTI_LOT','lot.210709'); 
 
 /*
   (C) 2018-2021 POTI改 POTI-board redevelopment team
@@ -549,8 +549,8 @@ function updatelog(){
 				: str_replace("<PURL>", ($i ? $pn.PHP_EXT : PHP_SELF2),
 				str_replace("<PAGE>", $rep_page_no , OTHER_PAGE));
 
+			}
 		}
-}
 
 		//改ページ分岐ここまで
 
@@ -651,9 +651,9 @@ function res($resno = 0){
 // 自動リンク
 function auto_link($str){
 	//マークダウン[]()
-	$str= preg_replace("{\[(.+?)\]\((https?)(://[[:alnum:]\+\$\;\?\.%,!#~*/:@&=_-]+)\)}","<a href=\"\\2\\3\" target=\"_blank\" rel=\"nofollow noopener noreferrer\">\\1</a>",$str);
+	$str= preg_replace("{\[([^\[\]\(\)]+?)\]\((https?://[[:alnum:]\+\$\;\?\.%,!#~*/:@&=_-]+)\)}","<a href=\"\\2\" target=\"_blank\" rel=\"nofollow noopener noreferrer\">\\1</a>",$str);
 	if(strpos($str,'<a')===false){//マークダウン記法がなかった時
-		$str= preg_replace("{(https?)(://[[:alnum:]\+\$\;\?\.%,!#~*/:@&=_-]+)}","<a href=\"\\1\\2\" target=\"_blank\" rel=\"nofollow noopener noreferrer\">\\1\\2</a>",$str);
+		$str= preg_replace("{(https?://[[:alnum:]\+\$\;\?\.%,!#~*/:@&=_-]+)}","<a href=\"\\1\" target=\"_blank\" rel=\"nofollow noopener noreferrer\">\\1</a>",$str);
 	}
 
 	return $str;
@@ -921,6 +921,8 @@ function regist(){
 	if(!$sub) $sub=DEF_SUB;
 
 	$ext=$w=$h=$chk="";
+	$thumbnail='';
+	$pchext='';
 	// アップロード処理
 	if($dest&&$is_file_dest){//画像が無い時は処理しない
 	//画像フォーマット
@@ -1122,7 +1124,7 @@ function regist(){
 			$data['option'][] = "\n".NOTICE_MAIL_URL.','.ROOT_URL.PHP_SELF.'?res='.$no;
 		}
 
-		$data['comment'] = SEND_COM ? preg_replace("#<br(( *)|( *)/)>#i","\n", $com) : '';
+		$data['comment'] = SEND_COM ? preg_replace("#<br( *)/?>#i","\n", $com) : '';
 
 		noticemail::send($data);
 	}
@@ -1265,15 +1267,16 @@ function admindel($pass){
 			list($no,$date,$name,$email,$sub,$com,$url,
 				$host,$pw,$ext,$w,$h,$time,$chk,) = explode(",",$value);
 			$now  = preg_replace("/( ID:.*)/","",$date);//ID以降除去
-			$name = strip_tags($name);//タグ除去
+			$name = h(strip_tags($name));//タグ除去
+			$sub = h(strip_tags($sub));
 			if(strlen($name) > 10) $name = mb_strcut($name,0,9).".";
 			if(strlen($sub) > 10) $sub = mb_strcut($sub,0,9).".";
 			$email=filter_var($email, FILTER_VALIDATE_EMAIL);
 			if($email){
 				$name='<a href="mailto:'.$email.'">'.$name.'</a>';
 			}
-			$com = preg_replace("#<br */?>#i"," ",$com);
-			$com = h($com);
+			$com = preg_replace("#<br( *)/?>#i"," ",$com);
+			$com = h(strip_tags($com));
 			if(strlen($com) > 20) $com = mb_strcut($com,0,18) . ".";
 			$clip = "";
 			$size = 0;
@@ -1869,10 +1872,10 @@ function editform(){
 	$dat['maxkb']   = MAX_KB;
 	$dat['addinfo'] = $addinfo;
 	$dat['name'] = h(strip_tags($name));
-	$dat['email'] = $email;
+	$dat['email'] = h($email);
 	$dat['sub'] = h(strip_tags($sub));
-	$com = preg_replace("#<br */?>#i","\n",$com); // <br>または<br />を改行へ戻す
-	$dat['com'] = $com;
+	$com = preg_replace("#<br( *)/?>#i","\n",$com); // <br>または<br />を改行へ戻す
+	$dat['com'] = h($com);
 	$dat['url'] = filter_var($url,FILTER_VALIDATE_URL);
 	$dat['pwd'] = $pwd;
 
@@ -2056,8 +2059,8 @@ function replace(){
 			list($w, $h) = getimagesize($dest);
 			$imgext = getImgType($img_type, $dest);
 	
+			chmod($dest,PERMISSION_FOR_DEST);
 			rename($dest,$path.$time.$imgext);
-			chmod($path.$time.$imgext,PERMISSION_FOR_DEST);
 
 			$message = UPLOADED_OBJECT_NAME.UPLOAD_SUCCESSFUL."<br><br>";
 
@@ -2270,7 +2273,7 @@ function create_formatted_text_from_post($com,$name,$email,$url,$sub,$fcolor,$de
 	if(!$com||preg_match("/\A\s*\z/u",$com)) $com="";
 	if(!$name||preg_match("/\A\s*\z/u",$name)) $name="";
 	if(!$sub||preg_match("/\A\s*\z/u",$sub))   $sub="";
-	if(!$url||!preg_match("#\Ahttps?://#i",$url)||preg_match("/</i",$url)) $url="";
+	if(!$url||!filter_var($url,FILTER_VALIDATE_URL)) $url="";
 	$name = str_replace("◆", "◇", $name);
 	$sage=(stripos($email,'sage')!==false);//メールをバリデートする前にsage判定
 	$email = filter_var($email, FILTER_VALIDATE_EMAIL);
@@ -2286,8 +2289,9 @@ function create_formatted_text_from_post($com,$name,$email,$url,$sub,$fcolor,$de
 	// 改行コード
 	$com = str_replace(["\r\n","\r"], "\n", $com);
 	$com = preg_replace("/(\s*\n){4,}/u","\n",$com); //不要改行カット
-	$com = newstring($com);	//改行文字の前に HTMLの改行タグ
+	$com = newstring($com);	//コメントのエスケープ
 	$com = nl2br($com);	//改行文字の前に HTMLの改行タグ
+	$url = str_replace(",", "", $url);
 	
 	$formatted_post = [//コメント以外のエスケープと配列への格納
 		'com' => $com,
@@ -2491,7 +2495,7 @@ function create_res ($line, $options = []) {
 		'w' => h($w),
 		'h' => h($h),
 		'no' => (int)$no,
-		'sub' => h($sub),
+		'sub' => h(strip_tags($sub)),
 		'url' => filter_var($url,FILTER_VALIDATE_URL),
 		'email' => filter_var($email, FILTER_VALIDATE_EMAIL),
 		'ext' => h($ext),
@@ -2522,12 +2526,12 @@ function create_res ($line, $options = []) {
 	list($res['now'], $res['updatemark']) = separateDatetimeAndUpdatemark($res['now']);
 	//名前とトリップを分離
 	list($res['name'], $res['trip']) = separateNameAndTrip($name);
-	$res['name']=h($res['name']);
+	$res['name']=h(strip_tags($res['name']));
 	$res['encoded_name'] = urlencode($res['name']);
 
-	$com = preg_replace("#<br( *)/>#i","\n",$com); //<br />を改行に戻す
+	$com = preg_replace("#<br( *)/?>#i","\n",$com); //<br />を改行に戻す
 	if(!DISPLAY_HTML_TAGS_IN_THE_COMMENT_AS_HTML){
-		$com=h($com);//コメントのエスケープ
+		$com=h(strip_tags($com));//タグの除去とエスケープ
 	}
 	// オートリンク
 	if(AUTOLINK) {
