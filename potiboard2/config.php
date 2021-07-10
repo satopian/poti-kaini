@@ -1,6 +1,6 @@
 <?php
 /*
-  * POTI-board EVO v3.0.0 lot.210512 
+  * POTI-board EVO v3.03.5 lot.210709
   * by POTI改 >> https://pbbs.sakura.ne.jp/poti/
   *
   * POTI-board EVO の設定ファイルです。
@@ -189,6 +189,9 @@ define('DISP_ID', '0');
 
 //URLを自動リンクする する:1 しない:0
 define('AUTOLINK', '1');
+//マークダウン記法でリンクする する:1 しない:0
+defined('MD_LINK') or define('MD_LINK', '0');
+
 
 //名前を必須にする する:1 しない:0
 define('USE_NAME', '0');
