@@ -6,7 +6,7 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board EVO
 // バージョン :
-define('POTI_VER','v3.03.3');
+define('POTI_VER','v3.03.5');
 define('POTI_LOT','lot.210709'); 
 
 /*
@@ -141,6 +141,9 @@ defined('DO_NOT_CHANGE_POSTS_TIME') or define('DO_NOT_CHANGE_POSTS_TIME', '0');
 defined('USE_CHECK_NO_FILE') or define('USE_CHECK_NO_FILE', '1');
 //コメント内のHTMLタグをHTMLとして表示する  する:1 しない:0
 defined('DISPLAY_HTML_TAGS_IN_THE_COMMENT_AS_HTML') or define('DISPLAY_HTML_TAGS_IN_THE_COMMENT_AS_HTML', '0');
+
+//マークダウン記法のリンクをHTMLに する:1 しない:0
+defined('MD_LINK') or define('MD_LINK', '0');
 
 //描画時間を合計表示に する:1 しない:0 
 defined('TOTAL_PAINTTIME') or define('TOTAL_PAINTTIME', '1');
@@ -647,15 +650,17 @@ function res($resno = 0){
 
 	htmloutput(SKIN_DIR.RESFILE,$dat);
 }
+//マークダウン記法のリンクをHTMLに変換
+function md_link($str){
+	$str= preg_replace("{\[([^\[\]\(\)]+?)\]\((https?://[[:alnum:]\+\$\;\?\.%,!#~*/:@&=_-]+)\)}","<a href=\"\\2\" target=\"_blank\" rel=\"nofollow noopener noreferrer\">\\1</a>",$str);
+	return $str;
+}
 
 // 自動リンク
 function auto_link($str){
-	//マークダウン[]()
-	$str= preg_replace("{\[([^\[\]\(\)]+?)\]\((https?://[[:alnum:]\+\$\;\?\.%,!#~*/:@&=_-]+)\)}","<a href=\"\\2\" target=\"_blank\" rel=\"nofollow noopener noreferrer\">\\1</a>",$str);
 	if(strpos($str,'<a')===false){//マークダウン記法がなかった時
 		$str= preg_replace("{(https?://[[:alnum:]\+\$\;\?\.%,!#~*/:@&=_-]+)}","<a href=\"\\1\" target=\"_blank\" rel=\"nofollow noopener noreferrer\">\\1</a>",$str);
 	}
-
 	return $str;
 }
 
@@ -2532,6 +2537,10 @@ function create_res ($line, $options = []) {
 	$com = preg_replace("#<br( *)/?>#i","\n",$com); //<br />を改行に戻す
 	if(!DISPLAY_HTML_TAGS_IN_THE_COMMENT_AS_HTML){
 		$com=h(strip_tags($com));//タグの除去とエスケープ
+	}
+	//マークダウン記法のリンクをHTMLに変換
+	if(MD_LINK){
+		$com = md_link($com);
 	}
 	// オートリンク
 	if(AUTOLINK) {

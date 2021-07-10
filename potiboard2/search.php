@@ -1,6 +1,6 @@
 <?php
 //POTI-board plugin search(C)2020-2021 さとぴあ
-//v1.7.0 lot.210706
+//v1.7.0 lot.210710
 //
 //https://pbbs.sakura.ne.jp/
 //フリーウェアですが著作権は放棄しません。
@@ -62,6 +62,10 @@ $dat['skindir']=SKIN_DIR;
 
 //タイムゾーン
 date_default_timezone_set('Asia/Tokyo');
+
+//マークダウン記法のリンクをHTMLに する:1 しない:0
+defined('MD_LINK') or define('MD_LINK', '0');
+
 //filter_input
 
 $imgsearch=filter_input(INPUT_GET,'imgsearch',FILTER_VALIDATE_BOOLEAN);
@@ -159,12 +163,14 @@ if($arr){
 
 			$time=(int)substr($time,-13,10);
 			$postedtime =$time ? (date("Y/m/d G:i", $time)) : '';
-			$sub=h($sub);
+			$sub=h(strip_tags($sub));
 			$com=str_replace('<br />',' ',$com);
-			$com= preg_replace("{\[([^\[\]\(\)]+?)\]\((https?://[[:alnum:]\+\$\;\?\.%,!#~*/:@&=_-]+)\)}","\\1",$com);
+			if(MD_LINK){
+				$com= preg_replace("{\[([^\[\]\(\)]+?)\]\((https?://[[:alnum:]\+\$\;\?\.%,!#~*/:@&=_-]+)\)}","\\1",$com);
+			}
 			$com=h(strip_tags($com));
 			$com=mb_strcut($com,0,180);
-			$name=h($name);
+			$name=h(strip_tags($name));
 			$encoded_name=urlencode($name);
 			//変数格納
 			$dat['comments'][]= compact('no','name','encoded_name','sub','img','com','link','postedtime');
@@ -269,9 +275,11 @@ if($arr){
 }
 
 unset($arr);
-//HTML出力
-$Skinny->SkinnyDisplay(SKIN_DIR.'search.html', $dat );
+
 function h($str){
 	return htmlspecialchars($str,ENT_QUOTES,'utf-8',false);
 }
+
+//HTML出力
+$Skinny->SkinnyDisplay(SKIN_DIR.'search.html', $dat );
 
