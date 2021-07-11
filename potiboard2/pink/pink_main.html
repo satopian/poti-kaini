@@ -43,7 +43,7 @@
 <div class="bbsmenu">
 [<a href="<% echo (home) %>" target="_top">ホーム</a>]
 [<a href="<% echo (self) %>?mode=catalog">カタログ</a>]
-<% def(upfile) %>
+<% def(for_new_post) %>
 [<a href="<% echo (self) %>?mode=newpost"><span class="txtnon">新規</span>投稿</a>]
 <% /def %>
 <span class="menu_none">[<a href="<% echo (self) %>?mode=piccom">未投稿画像</a>]</span>
@@ -175,7 +175,21 @@ PMAX_H //高さ
 <% echo (addinfo) %>
 </ul>
 </div>
-  <% /def %>
+<% elsedef %>
+
+
+<% ========== ファイルアップロード時の説明 ========== %>
+<% def(upfile) %>
+<div class="howtowrite">
+	<ul id="up_desc">
+		<li>画像は横 <% echo (maxw) %>ピクセル、縦 <% echo (maxh) %>ピクセルを超えると縮小表示されます。</li>
+	<li>最大投稿データ量は <% echo (maxkb) %> KB までです。
+		<% echo (addinfo) %>
+	</ul>
+</div>
+<% /def %>
+<% /def %>
+
   <% def(n) %>
   <!--
   // pmaxw…お絵かき最大サイズ(横)
@@ -186,86 +200,6 @@ PMAX_H //高さ
   -->
   <% /def %>
 </header>
-<% ========== 投稿フォーム欄 ========== %>
-<% def(form) %>
-<form action="<% echo (self) %>" method="POST" enctype="multipart/form-data" id="top_post_form">
-	<input type="hidden" name="mode" value="regist">
-	<input type="hidden" name="MAX_FILE_SIZE" value="<% echo (maxbyte) %>">
-	<% def(n) %>
-	<!--
-		// maxbyte…最大投稿サイズ(Byte)
-	-->
-	<% /def %>
-	<% def(paint) %>
-	<div class="post_t_margin">
-	</div>
-	<% /def %>
-	
-		<table id="post_table">
-	 <tr>
-	  <td class="post_table_title">名前<% def(usename) %>(必須)<% /def %></td>
-	  <td><input type="text" name="name" class="post_input_text" autocomplete="username"></td>
-	 </tr>
-	 <tr>
-	  <td class="post_table_title">E-mail</td>
-	  <td><input type="text" name="email" class="post_input_text" autocomplete="email"></td>
-	 </tr>
-	 <tr>
-	  <td class="post_table_title">URL</td>
-	  <td><input type="text" name="url" class="post_input_text" autocomplete="url"></td>
-	 </tr>
-	 <tr>
-	  <td class="post_table_title">題名<% def(usesub) %>(必須)<% /def %></td>
-	  <td><input type="text" name="sub" class="post_input_text" autocomplete="off"></td>
-	 </tr>
-	 <tr>
-	  <td class="post_table_title">本文<% def(usecom) %>(必須)<% /def %></td>
-	  <td><textarea name="com" wrap="soft" class="post_input_com"></textarea></td>
-	 </tr>
-	 <% def(n) %>
-	 <!--
-	 // usename…名前が必須だと ' *' が入る
-	// usesub…題名が必須だと ' *' が入る
-	// usecom…本文が必須だと ' *' が入る
-	// resub…レス時の返信用題名(Re: ～)
-	-->
-	<% /def %>
-	<% ========== 文字色指定(■に色付けてチェックボタンで選択する方法) ========== %>
-	<% ========== ファイルアップロード欄 ========== %>
-	<% def(upfile) %>
-	 <tr>
-	  <td class="post_table_title">添付画像</td>
-	  <td><input type="file" name="upfile" accept="image/*">
-		<% def(hide_the_checkbox_for_nofile) %>
-		<% elsedef %>
-		<label class="howtoedit"><input type="checkbox" name="textonly" value="on">画像なし</label>
-		<% /def %>
-		
-	</td>
-	 </tr>
-	<% /def %>
-	 <tr>
-	  <td class="post_table_title">削除キー</td>
-	  <td><input type="password" name="pwd" value="" class="post_input_pass" autocomplete="current-password"><span class="howtoedit">(記事の編集削除用。英数字で)</span></td>
-	 </tr>
-	 <tr><td colspan="2" style="text-align: center;" class="post_table_submit td_noborder"><input type="submit" value="送信する" class="post_submit">
-	</td></tr>
-	 <tr>
-	  <td colspan="2" class="td_noborder">
-	<% ========== ファイルアップロード時の説明 ========== %>
-	<% def(upfile) %>
-	<div class="howtowrite">
-		<ul id="up_desc">
-			<li>画像は横 <% echo (maxw) %>ピクセル、縦 <% echo (maxh) %>ピクセルを超えると縮小表示されます。</li>
-		<li>最大投稿データ量は <% echo (maxkb) %> KB までです。
-			<% echo (addinfo) %>
-		</ul>
-	</div>
-	<% /def %>
-	</td></tr>
-	</table>
-	</form>
-	<% /def %>
 <nav>
 <div class="pagelink">
 <div class="pagelink_prev"><% def(prev) %><a href="<% echo (prev) %>">≪前へ</a><% /def %>
