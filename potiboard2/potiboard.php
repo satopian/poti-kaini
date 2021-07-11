@@ -6,8 +6,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board EVO
 // バージョン :
-define('POTI_VER','v3.03.5');
-define('POTI_LOT','lot.210709'); 
+define('POTI_VER','v3.03.6');
+define('POTI_LOT','lot.210711'); 
 
 /*
   (C) 2018-2021 POTI改 POTI-board redevelopment team
@@ -139,8 +139,10 @@ defined('DO_NOT_CHANGE_POSTS_TIME') or define('DO_NOT_CHANGE_POSTS_TIME', '0');
 
 //画像なしのチェックボックスを使用する する:1 しない:0 
 defined('USE_CHECK_NO_FILE') or define('USE_CHECK_NO_FILE', '1');
-//コメント内のHTMLタグをHTMLとして表示する  する:1 しない:0
+//コメント内のHTMLタグをHTMLとして表示する する:1 しない:0
 defined('DISPLAY_HTML_TAGS_IN_THE_COMMENT_AS_HTML') or define('DISPLAY_HTML_TAGS_IN_THE_COMMENT_AS_HTML', '0');
+//crsfトークンを使って不正な投稿を拒絶する する:1 しない:0
+defined('CHECK_CRSF_TOKEN') or define('CHECK_CRSF_TOKEN', '0');
 
 //マークダウン記法のリンクをHTMLに する:1 しない:0
 defined('MD_LINK') or define('MD_LINK', '0');
@@ -304,6 +306,14 @@ function get_uip(){
 	return getenv("REMOTE_ADDR");
 }
 
+function get_crsf_token(){
+session_start();
+header('Expires:');
+header('Cache-Control:');
+header('Pragma:');
+return hash('sha256', session_id(), false);
+}
+
 // ベース
 function basicpart(){
 	global $pallets_dat;
@@ -358,15 +368,17 @@ function form($resno="",$adminin="",$tmp=""){
 	global $ADMIN_PASS;
 
 	$admin_valid = ($adminin === 'valid');
+	$token=get_crsf_token();
+	$_SESSION['token']=$token;
+	$dat['token']=$token;
+
 	$quality = filter_input(INPUT_POST, 'quality',FILTER_VALIDATE_INT);
 
-	$dat['form'] = true;
-	if(!USE_IMG_UPLOAD && DENY_COMMENTS_ONLY && !$resno && !$admin_valid){//コメントのみも画像アップロードも禁止
-		$dat['form'] = false;//トップページのフォームを閉じる
-		if(USE_PAINT==1 && !$resno && !$admin_valid){
-			$dat['paint2'] = true;
-		}
+	$dat['form'] = true; 
+	if(!$resno && !$admin_valid){
+		$dat['form'] = false;
 	}
+
 	if(USE_PAINT){
 		$dat['pdefw'] = PDEF_W;
 		$dat['pdefh'] = PDEF_H;
@@ -374,7 +386,7 @@ function form($resno="",$adminin="",$tmp=""){
 		$dat['animechk'] = DEF_ANIME ? ' checked' : '';
 		$dat['pmaxw'] = PMAX_W;
 		$dat['pmaxh'] = PMAX_H;
-		if(USE_PAINT==2 && !$resno && !$admin_valid){
+		if(!$resno && !$admin_valid){
 			$dat['paint2'] = true;
 			$dat['form'] = false;
 		}
@@ -455,7 +467,7 @@ function updatelog(){
 			$res['disp_resform'] = check_elapsed_days($res); // ミニレスフォームの表示有無
 
 			// ミニフォーム用
-			$resub = USE_RESUB ? 'Re: ' . $res['sub'] : '';
+			// $resub = USE_RESUB ? 'Re: ' . $res['sub'] : '';
 			// レス省略
 			$skipres = '';
 
@@ -562,7 +574,7 @@ function updatelog(){
 			$dat['next'] = $next/PAGE_DEF.PHP_EXT;
 		}
 
-		$dat['resform'] = RES_FORM ? true : false;
+		// $dat['resform'] = RES_FORM ? true : false;
 
 		$buf = htmloutput(SKIN_DIR.MAINFILE,$dat,true);
 
@@ -606,7 +618,7 @@ function res($resno = 0){
 	$res = create_res($_line, ['pch' => 1]);
 
 	if(!check_elapsed_days($res)){//レスフォームの表示有無
-		$dat['form'] = false;//フォームを閉じる
+		// $dat['form'] = false;//フォームを閉じる
 		$dat['paintform'] = false;
 	}
 
@@ -698,6 +710,14 @@ function regist(){
 	global $path,$temppath,$usercode,$ADMIN_PASS;
 	
 	if(($_SERVER["REQUEST_METHOD"]) !== "POST") error(MSG006);
+
+	//CRSFトークン
+	session_start();
+	$token=filter_input(INPUT_POST,'token');
+	if(CHECK_CRSF_TOKEN && ($token!==$_SESSION['token'])){
+		error(MSG006);
+	}
+
 	$admin = (string)filter_input(INPUT_POST, 'admin');
 	$resto = filter_input(INPUT_POST, 'resto',FILTER_VALIDATE_INT);
 	$com = filter_input(INPUT_POST, 'com');
@@ -708,6 +728,8 @@ function regist(){
 	$fcolor = filter_input(INPUT_POST, 'fcolor');
 	$pwd = newstring(filter_input(INPUT_POST, 'pwd'));
 	$pwdc = filter_input(INPUT_COOKIE, 'pwdc');
+
+
 
 	$userip = get_uip();
 	//ホスト取得
@@ -1834,9 +1856,10 @@ function check_cont_pass(){
 
 // 編集画面
 function editform(){
-	global $addinfo;
-	global $fontcolors;
-	global $ADMIN_PASS;
+	global $addinfo,$fontcolors,$ADMIN_PASS;
+
+	$token=get_crsf_token();
+	$_SESSION['token']=$token;
 
 	$del = filter_input(INPUT_POST,'del',FILTER_VALIDATE_INT,FILTER_REQUIRE_ARRAY);//$del は配列
 	$pwd = newstring(filter_input(INPUT_POST, 'pwd'));
@@ -1901,6 +1924,11 @@ function editform(){
 function rewrite(){
 
 	if(($_SERVER["REQUEST_METHOD"]) !== "POST") error(MSG006);
+	session_start();
+	$token=filter_input(INPUT_POST,'token');
+	if(CHECK_CRSF_TOKEN && ($token!==$_SESSION['token'])){
+		error(MSG006);
+	}
 	
 	$com = filter_input(INPUT_POST, 'com');
 	$name = filter_input(INPUT_POST, 'name');

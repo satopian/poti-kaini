@@ -1,6 +1,6 @@
 <?php
 /*
-  * POTI-board EVO v3.03.5 lot.210709
+  * POTI-board EVO v3.03.6 lot.210712
   * by POTI改 >> https://pbbs.sakura.ne.jp/poti/
   *
   * POTI-board EVO の設定ファイルです。
@@ -190,7 +190,7 @@ define('DISP_ID', '0');
 //URLを自動リンクする する:1 しない:0
 define('AUTOLINK', '1');
 //マークダウン記法でリンクする する:1 しない:0
-defined('MD_LINK') or define('MD_LINK', '0');
+define('MD_LINK', '0');
 
 
 //名前を必須にする する:1 しない:0
@@ -208,9 +208,6 @@ define('DEF_SUB', '無題');	//未入力時の題名
 //レス時にスレ題名を引用する する:1 しない:0
 define('USE_RESUB', '1');
 
-//各スレにレスフォームを表示する する:1 しない:0
-define('RES_FORM', '0');
-
 //編集しても投稿日時を変更しないようにする する:1 しない:0 
 define('DO_NOT_CHANGE_POSTS_TIME', '0');
 //する:1 にすると投稿を編集しても投稿日時は変更されず最初の投稿日時のままになります。
@@ -218,8 +215,8 @@ define('DO_NOT_CHANGE_POSTS_TIME', '0');
 
 /* ---------- お絵かき設定 ---------- */
 
-//お絵かき機能を使用する お絵かきのみ:2 する:1 しない:0
-define('USE_PAINT', '2');
+//お絵かき機能を使用する する:1 しない:0
+define('USE_PAINT', '1');
 
 //お絵描き最大サイズ（これ以上は強制でこの値
 //最小値は幅、高さともに 300 固定です
@@ -443,3 +440,10 @@ define('PERMISSION_FOR_DIR', 0707);//初期値 0707
 //GD2のImageCopyResampledでサムネイルの画質向上 させる:1 させない:0
 //不具合がある場合のみ 0
 define('RE_SAMPLED', '1');
+
+//crsfトークンを使って不正な投稿を拒絶する する:1 しない:0
+defined('CHECK_CRSF_TOKEN') or define('CHECK_CRSF_TOKEN', '1');
+//する:1 にすると外部サイトからの不正な投稿を拒絶することができます。
+//しかし古いテーマで する:1 に設定すると、投稿ができなくなります。 
+//2021年7月以前に配布された古いテーマファイルを使っている時は、しない:0
+
