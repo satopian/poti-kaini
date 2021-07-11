@@ -327,6 +327,7 @@ if(is_mobile()){
 <% ========== 投稿フォーム欄 ========== %>
 <% def(form) %>
 <form action="<% echo (self) %>" method="POST" enctype="multipart/form-data" id="post_form">
+<input type="hidden" name="token" value="<% echo(token) %>">
 <input type="hidden" name="mode" value="regist">
 <input type="hidden" name="resto" value="<% echo (resno) %>">
 <input type="hidden" name="MAX_FILE_SIZE" value="<% echo (maxbyte) %>">
