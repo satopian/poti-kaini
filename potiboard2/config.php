@@ -442,7 +442,7 @@ define('PERMISSION_FOR_DIR', 0707);//初期値 0707
 define('RE_SAMPLED', '1');
 
 //crsfトークンを使って不正な投稿を拒絶する する:1 しない:0
-defined('CHECK_CRSF_TOKEN') or define('CHECK_CRSF_TOKEN', '1');
+define('CHECK_CSRF_TOKEN', '1');
 //する:1 にすると外部サイトからの不正な投稿を拒絶することができます。
 //しかし古いテーマで する:1 に設定すると、投稿ができなくなります。 
 //2021年7月以前に配布された古いテーマファイルを使っている時は、しない:0

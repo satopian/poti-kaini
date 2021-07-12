@@ -151,7 +151,7 @@ PMAX_H //高さ
 </div>
 <% /def %>
 <form action="<% echo(self) %>" method="POST" enctype="multipart/form-data">
-<input type="hidden" name="token" value="<% echo(token) %>">
+<input type="hidden" name="token" value="<% def(token) %><% echo(token) %><% /def %>">
 <% ========== モード指定:新規投稿 ========== %>
 <% def(regist) %>
 <input type="hidden" name="mode" value="regist">

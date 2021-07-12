@@ -6,8 +6,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board EVO
 // バージョン :
-define('POTI_VER','v3.03.6');
-define('POTI_LOT','lot.210711'); 
+define('POTI_VER','v3.03.7');
+define('POTI_LOT','lot.210712'); 
 
 /*
   (C) 2018-2021 POTI改 POTI-board redevelopment team
@@ -141,8 +141,8 @@ defined('DO_NOT_CHANGE_POSTS_TIME') or define('DO_NOT_CHANGE_POSTS_TIME', '0');
 defined('USE_CHECK_NO_FILE') or define('USE_CHECK_NO_FILE', '1');
 //コメント内のHTMLタグをHTMLとして表示する する:1 しない:0
 defined('DISPLAY_HTML_TAGS_IN_THE_COMMENT_AS_HTML') or define('DISPLAY_HTML_TAGS_IN_THE_COMMENT_AS_HTML', '0');
-//crsfトークンを使って不正な投稿を拒絶する する:1 しない:0
-defined('CHECK_CRSF_TOKEN') or define('CHECK_CRSF_TOKEN', '0');
+//CSRFトークンを使って不正な投稿を拒絶する する:1 しない:0
+defined('CHECK_CSRF_TOKEN') or define('CHECK_CSRF_TOKEN', '0');
 
 //マークダウン記法のリンクをHTMLに する:1 しない:0
 defined('MD_LINK') or define('MD_LINK', '0');
@@ -305,15 +305,23 @@ function get_uip(){
 	}
 	return getenv("REMOTE_ADDR");
 }
-
-function get_crsf_token(){
-session_start();
-header('Expires:');
-header('Cache-Control:');
-header('Pragma:');
-return hash('sha256', session_id(), false);
+//csrfトークンを作成
+function get_csrf_token(){
+	session_start();
+	header('Expires:');
+	header('Cache-Control:');
+	header('Pragma:');
+	return hash('sha256', session_id(), false);
 }
-
+//csrfトークンをチェック	
+function check_csrf_token(){
+	session_start();
+	$token=filter_input(INPUT_POST,'token');
+	if($token!==$_SESSION['token']){
+		error(MSG006);
+	}
+}
+	
 // ベース
 function basicpart(){
 	global $pallets_dat;
@@ -368,9 +376,13 @@ function form($resno="",$adminin="",$tmp=""){
 	global $ADMIN_PASS;
 
 	$admin_valid = ($adminin === 'valid');
-	$token=get_crsf_token();
-	$_SESSION['token']=$token;
-	$dat['token']=$token;
+	//csrfトークンをセット
+	$dat['token']='';
+	if(CHECK_CSRF_TOKEN){
+		$token=get_csrf_token();
+		$_SESSION['token']=$token;
+		$dat['token']=$token;
+	}
 
 	$quality = filter_input(INPUT_POST, 'quality',FILTER_VALIDATE_INT);
 
@@ -510,7 +522,7 @@ function updatelog(){
 			$logmax=(LOG_MAX>=1000) ? LOG_MAX : 1000;
 			$res['limit'] = ($lineindex[$res['no']] >= $logmax * LOG_LIMIT / 100) ? true : false; // そろそろ消える。
 			$res['skipres'] = $skipres ? $skipres : false;
-			$res['resub'] = $resub;
+			// $res['resub'] = $resub;
 			$dat['oya'][$oya] = $res;
 
 			//レス作成
@@ -711,11 +723,9 @@ function regist(){
 	
 	if(($_SERVER["REQUEST_METHOD"]) !== "POST") error(MSG006);
 
-	//CRSFトークン
-	session_start();
-	$token=filter_input(INPUT_POST,'token');
-	if(CHECK_CRSF_TOKEN && ($token!==$_SESSION['token'])){
-		error(MSG006);
+	//CSRFトークンをチェック
+	if(CHECK_CSRF_TOKEN){
+		check_csrf_token();
 	}
 
 	$admin = (string)filter_input(INPUT_POST, 'admin');
@@ -1858,8 +1868,13 @@ function check_cont_pass(){
 function editform(){
 	global $addinfo,$fontcolors,$ADMIN_PASS;
 
-	$token=get_crsf_token();
-	$_SESSION['token']=$token;
+	//csrfトークンをセット
+	$dat['token']='';
+	if(CHECK_CSRF_TOKEN){
+		$token=get_csrf_token();
+		$_SESSION['token']=$token;
+		$dat['token']=$token;
+	}
 
 	$del = filter_input(INPUT_POST,'del',FILTER_VALIDATE_INT,FILTER_REQUIRE_ARRAY);//$del は配列
 	$pwd = newstring(filter_input(INPUT_POST, 'pwd'));
@@ -1924,10 +1939,10 @@ function editform(){
 function rewrite(){
 
 	if(($_SERVER["REQUEST_METHOD"]) !== "POST") error(MSG006);
-	session_start();
-	$token=filter_input(INPUT_POST,'token');
-	if(CHECK_CRSF_TOKEN && ($token!==$_SESSION['token'])){
-		error(MSG006);
+
+	//CSRFトークンをチェック
+	if(CHECK_CSRF_TOKEN){
+		check_csrf_token();
 	}
 	
 	$com = filter_input(INPUT_POST, 'com');
