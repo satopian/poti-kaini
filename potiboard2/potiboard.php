@@ -320,7 +320,7 @@ function check_csrf_token(){
 	session_start();
 	$token=filter_input(INPUT_POST,'token');
 	$session_token=isset($_SESSION['token']) ? $_SESSION['token'] : '';
-	if(!$token||$token!==$session_token){
+	if(!$session_token||$token!==$session_token){
 		error(MSG006);
 	}
 }
