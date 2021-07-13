@@ -307,7 +307,9 @@ function get_uip(){
 }
 //csrfトークンを作成
 function get_csrf_token(){
-	session_start();
+	if(!isset($_SESSION)){
+		session_start();
+	}
 	header('Expires:');
 	header('Cache-Control:');
 	header('Pragma:');
@@ -317,7 +319,8 @@ function get_csrf_token(){
 function check_csrf_token(){
 	session_start();
 	$token=filter_input(INPUT_POST,'token');
-	if($token!==$_SESSION['token']){
+	$session_token=isset($_SESSION['token']) ? $_SESSION['token'] : '';
+	if(!$token||$token!==$session_token){
 		error(MSG006);
 	}
 }
