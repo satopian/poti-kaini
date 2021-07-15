@@ -98,6 +98,7 @@
 		</script>
 		
 		<title><% echo(title) %></title>
+		<style id="for_mobile"></style>
 	</head>
 	<body id="paintmode">
 		
@@ -550,7 +551,6 @@
 			<% /def %>
 			<% def(continue_mode) %>
 			<!-- (========== CONTINUE MODE(コンティニューモード) start ==========) -->
-			<style id="for_mobile"></style>
 			<script>
 				function is_mobile() {
 				if (navigator.maxTouchPoints && ( window.matchMedia && window.matchMedia('(max-width: 769px)').matches))  return true;
