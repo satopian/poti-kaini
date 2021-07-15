@@ -26,6 +26,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
 <link rel="stylesheet" href="<% echo(skindir) %>pink.css">
 <link rel="stylesheet" href="<% echo(skindir) %>icomoon/style.css">
+<style>span.canvas_size_wrap {display: inline-block;padding: 8px 0 0;}</style>
 <title>[<% echo (oya/no) %>] <% echo (oya/sub) %> by <% echo (oya/name) %> - <% echo (title) %></title>
 <% def(n) %>
 <!--
@@ -215,6 +216,17 @@
 <div id="res_paint_form">
 <form action="<% echo (self) %>" method="post">
 <% ========== お絵かきアプレット ========== %>
+<style id="for_mobile"></style>
+<script>
+function is_mobile() {
+if (navigator.maxTouchPoints && ( window.matchMedia && window.matchMedia('(max-width: 769px)').matches))  return true;
+return false;
+}
+if(is_mobile()){
+	document.getElementById("for_mobile").textContent=".for_pc{display: none;}";
+}
+</script>
+
 <% def(n) %>
 <!--
 //select_app ツールの選択メニューを出す時にtrueが入る
@@ -224,8 +236,8 @@
 <% /def %>
 <input type="submit" value="PAINT" class="paint_button">
 <% def(select_app) %>
-<span class="canvas_size for_pc">TOOL</span>
-<select name="shi" class="select_applet for_pc">
+<span class="canvas_size">TOOL</span>
+<select name="shi" class="select_applet">
 	<option value="neo">PaintBBS NEO</option>
 	<% def(use_shi_painter) %><option value="1">しぃペインター</option><% /def %>
 	<% def(use_chickenpaint) %><option value="chicken">ChickenPaint</option><% /def %>
@@ -249,6 +261,7 @@ PMAX_H //高さ
 が入ります。
 -->
 <% /def %>
+<span class="canvas_size_wrap">
 <span class="canvas_size">Size</span> <select name="picw" title="幅" class="canvas_select">
 	<?php
 	//幅 300から、PMAX_W で設定した最大値まで。
@@ -280,10 +293,11 @@ PMAX_H //高さ
 	<% def(use_select_palettes) %>
 	<span class="palette_type bold_gray">PALETTE</span> <select name="selected_palette_no" title="パレット" class="canvas_select palette_type"><% echo(palette_select_tags) %></select>
 	<% /def %>
-	
-<!-- NEOを使う -->
-<% def(anime) %><label class="checkbox use_animation"><input type="checkbox" value="true" name="anime"<% echo (animechk) %>>動画記録</label><% /def %>
-<% def(n) %>
+</span>
+	<!-- NEOを使う -->
+	</span>
+	<% def(anime) %><label class="checkbox use_animation"><input type="checkbox" value="true" name="anime"<% echo (animechk) %>>動画記録</label><% /def %>
+	<% def(n) %>
 <!--
 // anime…動画記録機能を使用するとき true が入る
 // animechk…動画記録をデフォルトでチェックするとき ' checked' が入る
@@ -291,24 +305,8 @@ PMAX_H //高さ
 <% /def %>
 <input type="hidden" name="resto" value="<% echo (resno) %>">
 <input type="hidden" name="mode" value="paint">
-
-<input type="hidden" name="is_mobile" id="is_mobile" value>
-
 </form>
 </div>
-<style id="for_mobile"></style>
-<script>
-function is_mobile() {
-// if (navigator.userAgent.match(/Android|iPhone|iPad|iPod/i)) return true;
-if (navigator.maxTouchPoints && ( window.matchMedia && window.matchMedia('(max-width: 533px)').matches))  return true;
-return false;
-}
-// console.log(( window.matchMedia && window.matchMedia('(max-width: 533px)').matches));
-if(is_mobile()){
-	document.getElementById("is_mobile").value = "true";
-	document.getElementById("for_mobile").textContent=".for_pc{display: none;}";
-}
-</script>
 
 <% /def %>
 <% ========== お絵かきフォーム欄のみ時に表示 ========== %>

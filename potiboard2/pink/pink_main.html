@@ -22,6 +22,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
 <link rel="stylesheet" href="<% echo(skindir) %>pink.css">
 <link rel="stylesheet" href="<% echo(skindir) %>icomoon/style.css">
+<style>span.canvas_size_wrap {display: inline-block;padding: 8px 0 0;}</style>
 <title><% echo (title) %></title>
 <% def(n) %>
 <!--
@@ -71,35 +72,31 @@
 //use_chickenpaint を使う設定の時にtrueが入る
 -->
 <% /def %>
+<style id="for_mobile"></style>
+<script>
+function is_mobile() {
+if (navigator.maxTouchPoints && ( window.matchMedia && window.matchMedia('(max-width: 769px)').matches))  return true;
+return false;
+}
+if(is_mobile()){
+	document.getElementById("for_mobile").textContent=".for_pc{display: none;}";
+}
+</script>
 
 <% def(paint) %>
 <form action="<% echo (self) %>" method="post">
 	<input type="submit" value="PAINT" class="paint_button">
 	<% def(select_app) %>
-	<span class="select_applet bold_gray for_pc">TOOL</span>
-	<select name="shi" class="select_applet for_pc">
+	<span class="select_applet bold_gray">TOOL</span>
+	<select name="shi" class="select_applet">
 	<option value="neo">PaintBBS NEO</option>
-	<% def(use_shi_painter) %><option value="1">しぃペインター</option><% /def %>
+	<% def(use_shi_painter) %><option value="1" class="for_pc">しぃペインター</option><% /def %>
 	<% def(use_chickenpaint) %><option value="chicken">ChickenPaint</option><% /def %>
 </select>
 <% elsedef %>
 <!-- 選択メニューを出さない時に起動するアプリ -->
 <input type="hidden" name="shi" value="neo">
 <% /def %>
-<input type="hidden" name="is_mobile" id="is_mobile" value>
-<style id="for_mobile"></style>
-<script>
-function is_mobile() {
-// if (navigator.userAgent.match(/Android|iPhone|iPad|iPod/i)) return true;
-if (navigator.maxTouchPoints && ( window.matchMedia && window.matchMedia('(max-width: 533px)').matches))  return true;
-return false;
-}
-if(is_mobile()){
-	document.getElementById("is_mobile").value = "true";
-	document.getElementById("for_mobile").textContent=".for_pc{display: none;}";
-}
-</script>
-<!-- <input type="hidden" name="shi" value="1"> -->
 
 
 <% ===キャンバスサイズ 設定はconfig.phpで === %>
@@ -115,7 +112,7 @@ PMAX_H //高さ
 が入ります。
 -->
 <% /def %>
-<span class="nk">
+<span class="canvas_size_wrap">
 <span class="canvas_size">Size</span>
 <select name="picw" title="幅" class="canvas_select">
 	<?php
@@ -145,12 +142,13 @@ PMAX_H //高さ
 	?>
 	</select> 
 <% ===キャンバスサイズ ここまで === %>
-</span>
 
 <% def(use_select_palettes) %>
 	<span class="palette_type bold_gray">PALETTE</span> <select name="selected_palette_no" title="パレット" class="canvas_select palette_type"><% echo(palette_select_tags) %></select>
 	<% /def %>
-<!-- NEOを使う -->
+</span>
+
+	<!-- NEOを使う -->
 <!-- <label class="checkbox use_neo"><input type="checkbox" name="useneo" checked="checked" />NEOを使う</label> -->
 
 <% def(anime) %><label class="checkbox use_animation"><input type="checkbox" value="true" name="anime" <% echo (animechk) %>>動画記録</span></label>

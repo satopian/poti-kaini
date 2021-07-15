@@ -183,7 +183,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
         allowDownload: true,
         resourcesRoot: "chickenpaint/",
-        disableBootstrapAPI: true
+        disableBootstrapAPI: true,
+		fullScreenMode: "auto"
+
 	});
 })
 </script>
@@ -481,6 +483,17 @@ name="pch" code="pch.PCHViewer.class" archive="PCHViewer.jar,PaintBBS.jar" width
 <% /def %>
 
 <% def(continue_mode) %>
+<style id="for_mobile"></style>
+<script>
+function is_mobile() {
+if (navigator.maxTouchPoints && ( window.matchMedia && window.matchMedia('(max-width: 769px)').matches))  return true;
+return false;
+}
+if(is_mobile()){
+	document.getElementById("for_mobile").textContent=".for_pc{display: none;}";
+}
+</script>
+
 <nav>
 <div id="self2"> 
 [<a href="<% echo(self2) %>"><% echo(title) %></a>]
@@ -525,9 +538,9 @@ name="pch" code="pch.PCHViewer.class" archive="PCHViewer.jar,PaintBBS.jar" width
 <% /def %>
 
 <% def(select_app)%>
-<select name="shi" class="paint_select palette_type for_pc">
+<select name="shi" class="paint_select palette_type">
 	<option value="neo">PaintBBS NEO</option>
-	<% def(use_shi_painter) %><option value="1">しぃペインター</option><% /def %>
+	<% def(use_shi_painter) %><option value="1" class="for_pc">しぃペインター</option><% /def %>
 	<% def(use_chickenpaint) %><option value="chicken">ChickenPaint</option><% /def %>
 </select>
 <% /def %>
@@ -540,22 +553,9 @@ name="pch" code="pch.PCHViewer.class" archive="PCHViewer.jar,PaintBBS.jar" width
 <% /def %>
 <span class="nk">削除キー<input type="password" name="pwd" size="8" value="" class="paint_password" autocomplete="current-password"></span>
 <input type="submit" value="続きを描く">
-<input type="hidden" name="is_mobile" id="is_mobile" value>
 
 </form>
 
-<style id="for_mobile"></style>
-<script>
-function is_mobile() {
-// if (navigator.userAgent.match(/Android|iPhone|iPad|iPod/i)) return true;
-if (navigator.maxTouchPoints && ( window.matchMedia && window.matchMedia('(max-width: 533px)').matches))  return true;
-return false;
-}
-if(is_mobile()){
-	document.getElementById("is_mobile").value = "true";
-	document.getElementById("for_mobile").textContent=".for_pc{display: none;}";
-}
-</script>
 
 
 <% ========== コンティニュー説明 ========== %>
