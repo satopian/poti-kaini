@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
 	<head>
-		<meta charset="<% echo(charset) %>">
-		<meta name="viewport" content="width=device-width">
-		<head>
 			<meta charset="utf-8">
 			<meta name="viewport" content="width=device-width,initial-scale=1">
 			<link rel="stylesheet" href="<% echo(skindir) %>css/mono_main.css">
@@ -130,7 +127,7 @@
 							幅：<input name="picw" type="number" title="幅" class="form" value="<% echo(pdefw) %>" min="300" max="<% echo(pmaxw) %>">
 							高さ：<input name="pich" type="number" title="高さ" class="form" value="<% echo(pdefh) %>" min="300" max="<% echo(pmaxh) %>">
 							<% def(select_app) %>
-							<span class="for_pc">ツール:</span>
+							ツール:
 							<select name="shi">
 							<option value="neo">PaintBBS NEO</option>
 							<% def(use_shi_painter) %><option value="1" class="for_pc">しぃペインター</option><% /def %>
