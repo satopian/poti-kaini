@@ -185,7 +185,6 @@ document.addEventListener("DOMContentLoaded", function() {
         resourcesRoot: "chickenpaint/",
         disableBootstrapAPI: true,
 		fullScreenMode: "auto"
-
 	});
 })
 </script>
@@ -538,7 +537,7 @@ if(is_mobile()){
 <% /def %>
 
 <% def(select_app)%>
-<select name="shi" class="paint_select palette_type">
+<select name="shi" class="paint_select">
 	<option value="neo">PaintBBS NEO</option>
 	<% def(use_shi_painter) %><option value="1" class="for_pc">しぃペインター</option><% /def %>
 	<% def(use_chickenpaint) %><option value="chicken">ChickenPaint</option><% /def %>

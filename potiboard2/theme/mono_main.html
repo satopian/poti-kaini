@@ -131,9 +131,9 @@
 							高さ：<input name="pich" type="number" title="高さ" class="form" value="<% echo(pdefh) %>" min="300" max="<% echo(pmaxh) %>">
 							<% def(select_app) %>
 							<span class="for_pc">ツール:</span>
-							<select name="shi" class="for_pc">
+							<select name="shi">
 							<option value="neo">PaintBBS NEO</option>
-							<% def(use_shi_painter) %><option value="1">しぃペインター</option><% /def %>
+							<% def(use_shi_painter) %><option value="1" class="for_pc">しぃペインター</option><% /def %>
 							<% def(use_chickenpaint) %><option value="chicken">ChickenPaint</option><% /def %>
 						</select>
 						<% elsedef %>
