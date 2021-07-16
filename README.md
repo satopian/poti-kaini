@@ -19,7 +19,7 @@ v3.0で従来の[PaintBBS NEO](https://github.com/funige/neo/)、しぃペイン
 
 ## POTI-board改二との互換性
 - ログファイルの形式は同じです。 
-- POTI-board EVOと改二のテーマはほとんど同じですが、古いテーマでは新しい機能に対応できません。
+- POTI-board 改二のテーマはEVOの新しい機能に対応していません。
 - POTI-board EVOのChickenPaint対応テーマは  
  同梱の`pink`と、`MONO`、そして[MONO_DEV](https://github.com/satopian/poti-EVO-themes)です。  
 
