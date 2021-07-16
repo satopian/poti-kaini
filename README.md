@@ -19,8 +19,7 @@ v3.0で従来の[PaintBBS NEO](https://github.com/funige/neo/)、しぃペイン
 
 ## POTI-board改二との互換性
 - ログファイルの形式は同じです。 
-- POTI-board EVOと改二のテーマファイルは互換性があります。  
-- ただし、改二用のテーマではChickenPaintが使えません。 
+- POTI-board EVOと改二のテーマはほとんど同じですが、古いテーマでは新しい機能に対応できません。
 - POTI-board EVOのChickenPaint対応テーマは  
  同梱の`pink`と、`MONO`、そして[MONO_DEV](https://github.com/satopian/poti-EVO-themes)です。  
 
@@ -54,7 +53,6 @@ config.phpの最初の数行に必須設定項目がありますので、変更�
 
 この掲示板はテーマを入れ替える事ができます。  
 2021年5月15日現在、ChickenPaintに対応しているテーマは同梱した`MONO`、と`PINK`そして[MONO_DEV](https://github.com/satopian/poti-EVO-themes)です。
-従来の改二のテーマ[COOL SOLID](https://draclaw.com/)も人気が高いテーマです。
 
 ## 外部プログラム
 [potiboard_plugin: お絵かき掲示板 POTI-boardのための外部phpプログラム](https://github.com/satopian/potiboard_plugin)  
@@ -62,6 +60,20 @@ config.phpの最初の数行に必須設定項目がありますので、変更�
 
 
 ## 履歴
+### [2021/07/16] v3.03.10
+- 固定トークンを使った、CSRF対策を導入しました。
+サイト外部からの不正な投稿を拒絶する事ができます。  
+しかし、テーマのHTMLのトークン対応が必要になります。  
+テーマが対応していない時は、  
+`define('CHECK_CSRF_TOKEN', '1');`  
+を    
+`define('CHECK_CSRF_TOKEN', '0');`　
+に変更します。テーマが対応していない時にこの設定を有効にすると通常の投稿もできなくなります。
+- 出力時にHTMLをチェックする方式に移行しました。管理者もHTMLタグの使用ができなくなりました。  
+すでに入力済みのHTMLタグは除去されます。  
+除去してさらにエスケープ処理を行ったものを出力します。 
+- トップページのフォームと、各スレッドに表示するミニレスフォームを廃止しました。    
+静的HTMLファイルにはCSRFトークンをセットする事ができないからです。  
 ### [2021/06/22] テーマMONO
 - MONOのCSS切り替えのJavaScriptを大幅に更新。  
 非推奨の古いJavaScriptの関数の使用をやめました。  
