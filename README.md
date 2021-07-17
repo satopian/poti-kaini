@@ -14,13 +14,12 @@ v3.0で従来の[PaintBBS NEO](https://github.com/funige/neo/)、しぃペイン
 スクリプトの名称を変更。POTI-board改二からPOTI-board EVO(Evolution)になりました。 
 
 ## POTI-board EVO (ChickenPaint対応版)
-![ChickenPaint](https://user-images.githubusercontent.com/44894014/118594807-f8d3f900-b7e4-11eb-8c4d-2a5bdfc7cee3.png)
+![ChickenPaint](https://user-images.githubusercontent.com/44894014/125903306-5162a621-e403-4ca5-bebf-6408ded99a9d.png)
 
 
 ## POTI-board改二との互換性
 - ログファイルの形式は同じです。 
-- POTI-board EVOと改二のテーマファイルは互換性があります。  
-- ただし、改二用のテーマではChickenPaintが使えません。 
+- POTI-board 改二のテーマはEVOの新しい機能に対応していません。
 - POTI-board EVOのChickenPaint対応テーマは  
  同梱の`pink`と、`MONO`、そして[MONO_DEV](https://github.com/satopian/poti-EVO-themes)です。  
 
@@ -33,8 +32,6 @@ v3.0で従来の[PaintBBS NEO](https://github.com/funige/neo/)、しぃペイン
 - cssを変更している方はcssファイルを上書きしないように注意してください。  
 カスタマイズした色がデフォルトに戻ってしまいます。
 - config.phpの更新は必須ではありません。  
-しぃペインターとChickenPaintを使う使わないの選択機能を追加したい場合のみ、config.phpをアップデート。
-- ChickenPaint対応が特に必要ではない方は改二のテーマをそのままご利用ください。
 
 ## 設置
 
@@ -54,7 +51,6 @@ config.phpの最初の数行に必須設定項目がありますので、変更�
 
 この掲示板はテーマを入れ替える事ができます。  
 2021年5月15日現在、ChickenPaintに対応しているテーマは同梱した`MONO`、と`PINK`そして[MONO_DEV](https://github.com/satopian/poti-EVO-themes)です。
-従来の改二のテーマ[COOL SOLID](https://draclaw.com/)も人気が高いテーマです。
 
 ## 外部プログラム
 [potiboard_plugin: お絵かき掲示板 POTI-boardのための外部phpプログラム](https://github.com/satopian/potiboard_plugin)  
@@ -62,6 +58,24 @@ config.phpの最初の数行に必須設定項目がありますので、変更�
 
 
 ## 履歴
+### [2021/07/16] v3.03.10 lot.210714
+- 固定トークンを使った、CSRF対策を導入しました。
+サイト外部からの不正な投稿を拒絶する事ができます。  
+テーマのHTMLがトークンに対応していない時は、  
+`define('CHECK_CSRF_TOKEN', '1');`  
+を    
+`define('CHECK_CSRF_TOKEN', '0');`　
+に変更します。テーマが対応していない時にこの設定を有効にすると通常の投稿もできなくなります。  
+この設定項目がconfig.phpに存在しない時は、  
+`define('CHECK_CSRF_TOKEN', '0');`  
+と同じ扱いになります。  
+- 出力時にHTMLをチェックする方式に移行しました。管理者もHTMLタグの使用ができなくなりました。  
+すでに入力済みのHTMLタグは除去されます。  
+除去してさらにエスケープ処理を行ったものを出力します。 
+- トップページのフォームと、各スレッドに表示するミニレスフォームを廃止しました。    
+静的HTMLファイルにはCSRFトークンをセットする事ができないからです。  
+- ChickenPaintがスマホ対応になりました。
+
 ### [2021/06/22] テーマMONO
 - MONOのCSS切り替えのJavaScriptを大幅に更新。  
 非推奨の古いJavaScriptの関数の使用をやめました。  
@@ -548,16 +562,6 @@ potiboard.php、picpost.php、search.php のアップデートをお願いしま
 - オートリンク関連(by さとぴあ)
 
 
-### [2020/07/31] v2.8.11 lot.200731
-
-- ソースコード整理(by さとぴあ)
-  - `CleanStr()` に引数を追加して、コメントのみの時の処理もそれ以外の時の処理もひとつの関数で行えるように
-
-### [2020/07/31] v2.8.9 lot.200731
-
-- ソースコード整理(by きつねこ)
-  - 不要なコードを除去
-
 ### [2020/07/31] v2.8.7 lot.200731
 
 - ソースコード整理(by きつねこ)
@@ -690,18 +694,6 @@ potiboard.php、picpost.php、search.php のアップデートをお願いしま
   - デフォルト設定ではお絵かき掲示板のindex.htmlに飛ばされてしまうため、なぜ投稿失敗したのかがわからないから。
   - セキュリティにヒットした場合の飛び先を define('SECURITY_URL', './security_c.html'); に設定変更してください。
 
-### [2020/05/17] v2.2.4 lot.200517
-
-- デフォルトでしぃペインターに対応
-
-### [2020/05/16] v2.2.3 lot.200516e
-
-- readme_pch.html を追加。Javaのpchビューワー配布条件に必要でした。(by さとぴあ)
-- thumbnail_re.php を削除。現在のバージョンのPOTIでは使っていない。(by さとぴあ)
-
-### [2020/05/16] v2.2.2 lot.200516d
-
-- 対応スキン用にしぃちゃんアプレットを本体に同梱。[Readme_Shichan.html](./potiboard2/Readme_Shichan.html)
 
 ### [2020/05/16] v2.2.0 lot.200516b
 
