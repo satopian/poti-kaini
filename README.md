@@ -77,7 +77,6 @@ config.phpの最初の数行に必須設定項目がありますので、変更�
 - ChickenPaintがスマホ対応になりました。
 
 安定版をリリースからダウンロードできます。    
-
 [POTI-board EVO v3.05.0](https://github.com/satopian/poti-kaini/releases/tag/v3.05.0)
 
 ### [2021/06/22] テーマMONO
