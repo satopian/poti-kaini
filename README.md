@@ -58,7 +58,7 @@ config.phpの最初の数行に必須設定項目がありますので、変更�
 
 
 ## 履歴
-### [2021/07/17] v3.05.0 lot.210716
+### [2021/07/18] v3.05.1 lot.210716
 - 固定トークンを使った、CSRF対策を導入しました。
 サイト外部からの不正な投稿を拒絶する事ができます。  
 テーマのHTMLがトークンに対応していない時は、  
@@ -77,7 +77,7 @@ config.phpの最初の数行に必須設定項目がありますので、変更�
 - ChickenPaintがスマホ対応になりました。
 
 安定版をリリースからダウンロードできます。    
-[POTI-board EVO v3.05.0](https://github.com/satopian/poti-kaini/releases/tag/v3.05.0)
+[POTI-board EVO v3.05.1](https://github.com/satopian/poti-kaini/releases/tag/v3.05.1)
 
 ### [2021/06/22] テーマMONO
 - MONOのCSS切り替えのJavaScriptを大幅に更新。  
