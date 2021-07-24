@@ -30,6 +30,7 @@
 		-webkit-user-select: none;
 		-ms-user-select: none;
 		user-select: none;
+		touch-action: none;
 	}
 	li{margin:0 0 0 1em;}
 </style> 
@@ -41,13 +42,6 @@
 -->
 <% /def %>
 <% def(chickenpaint)%>
-<script type="text/javascript">
-	/* Check for native pointer event support before PEP adds its polyfill */
-	if (window.PointerEvent) {
-		window.hasNativePointerEvents = true;
-	}
-
-</script>
  
 <script src="chickenpaint/js/chickenpaint.min.js<% def(parameter_day) %>?<% echo(parameter_day)%><% /def %>"></script>
 
@@ -97,11 +91,11 @@
 <style id="for_mobile"></style>
 </head>
 <body>
+	
+	<% def(paint_mode) %>
+	<% def(chickenpaint)%>
+	<% elsedef %>
 <header>
-
-<% def(paint_mode) %>
-<% def(chickenpaint)%>
-<% elsedef %>
 <h1 style= "min-width:calc(<% echo(w) %>px + 176px)" id="bbs_title">お絵かきモード - <span class="title_name_wrap"><% echo(title) %></span></h1>
 <% /def %>
 
@@ -231,7 +225,7 @@ function GradSelC(){if(d.grad.view.checked){d=document.grad;l=ps.length;pe="";fo
 pe[n]}}function GradView(a,f){d=document}function showHideLayer(){d=document;var a=d.layers?d.layers.psft:d.all("psft").style;d.grad.view.checked||(a.visibility="hidden");d.grad.view.checked&&(a.visibility="visible",GetPalette())};
 </SCRIPT>
 <% ========== 動的パレットスクリプト ここまで ========== %>
-<NOSCRIPT><H3>JavaScriptが有効でないため正常に動作致しません</H3></NOSCRIPT>
+<NOSCRIPT><H3>JavaScriptが有効でないため正常に動作致しません。</H3></NOSCRIPT>
 <div class="appstage"><div class="app">
 <%  <applet～</applet>の～部分の詳しい事は、PaintBBS及びしぃペインターのReadmeを参照  %>
 <% ========== PaintBBS個別設定 ========== %>
