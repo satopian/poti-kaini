@@ -39,20 +39,9 @@
 		-webkit-user-select: none;
 		-ms-user-select: none;
 		user-select: none;
-		/* touch-action: none; */
 	}
 	li{margin:0 0 0 1em;}
 </style>
-<script>
-	var lastTouchEnd = 0;
-	document.addEventListener('touchend', function (event) {
-	var now = (new Date()).getTime();
-	if (now - lastTouchEnd <= 300) {
-	event.preventDefault();
-	}
-	lastTouchEnd = now;
-	}, false);
-</script>
  
 <script src="chickenpaint/js/chickenpaint.min.js<% def(parameter_day) %>?<% echo(parameter_day)%><% /def %>"></script>
 
