@@ -52,7 +52,7 @@
 </div>
 <% ========== 画像があれば・・・ ========== %>
 <% def(y/x/imgsrc) %>
-<div class="catalog_img"><a href="<% echo (self) %>?res=<% echo (y/x/no) %>"><img src="<% echo (y/x/imgsrc) %>" alt="<% echo (y/x/sub) %> by <% echo (y/x/name) %>" title="<% echo (y/x/sub) %> by <% echo (y/x/name) %>" width="<% echo (y/x/w) %>" <% def(y/x/h) %>height="<% echo (y/x/h) %>"<% /def %>></a></div>
+<div class="catalog_img"><a href="<% echo (self) %>?res=<% echo (y/x/no) %>"><img src="<% echo (y/x/imgsrc) %>" alt="<% echo (y/x/sub) %> by <% echo (y/x/name) %>" title="<% echo (y/x/sub) %> by <% echo (y/x/name) %>" width="<% echo (y/x/w) %>" <% def(y/x/h) %>height="<% echo (y/x/h) %>"<% /def %> loading="lazy"></a></div>
 <% /def %>
 <% ========== 文字のみならば・・・ ========== %><% def(y/x/txt) %>
 <div class="catalog_noimg"><a href="<% echo (self) %>?res=<% echo (y/x/no) %>">画像なし</a></div>
