@@ -48,7 +48,7 @@
 <% def(for_new_post) %>
 [<a href="<% echo (self) %>?mode=newpost"><span class="menu_none">新規</span>投稿</a>]
 <% /def %>
-[<a href="<% echo (self) %>?mode=piccom">未<span class="menu_none">投稿画像</span></a>]</span>
+[<a href="<% echo (self) %>?mode=piccom">未<span class="menu_none">投稿画像</span></a>]
 [<a href="<% echo (self) %>?mode=admin">管<span class="menu_none">理用</span></a>]
 <a href="#bottom">▽</a>
 <% def(n) %>
@@ -311,7 +311,7 @@ PMAX_H //高さ
 // oya/thumb…サムネイルがあるとき true が入る
 -->
 <% /def %>
-<% def(oya/src) %><div class="posted_image" <% if(oya/w,>=,750) %>style="margin-right:0;float:none;"<% /if %>><% def(oya/thumb) %><a href="<% echo (oya/src) %>" target="_blank" rel="noopener"><% /def %><img src="<% echo (oya/imgsrc) %>" width="<% echo (oya/w) %>" height="<% echo (oya/h) %>" alt="<% echo (oya/sub) %> by <% echo (oya/name) %> (<% echo (oya/size) %> B)" title="<% echo (oya/sub) %> by <% echo (oya/name) %> (<% echo (oya/size) %> B) <% def(oya/thumb) %>サムネイル縮小表示<% /def %>"><% def(oya/thumb) %></a><% /def %>
+<% def(oya/src) %><div class="posted_image" <% if(oya/w,>=,750) %>style="margin-right:0;float:none;"<% /if %>><% def(oya/thumb) %><a href="<% echo (oya/src) %>" target="_blank" rel="noopener"><% /def %><img src="<% echo (oya/imgsrc) %>" width="<% echo (oya/w) %>" height="<% echo (oya/h) %>" alt="<% echo (oya/sub) %> by <% echo (oya/name) %> (<% echo (oya/size) %> B)" title="<% echo (oya/sub) %> by <% echo (oya/name) %> (<% echo (oya/size) %> B) <% def(oya/thumb) %>サムネイル縮小表示<% /def %>" loading="lazy"><% def(oya/thumb) %></a><% /def %>
 </div>
   <% /def %><div class="comment"> <% echo (oya/com) %></div>
   <% def(n) %>
