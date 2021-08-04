@@ -50,7 +50,7 @@ config.phpの最初の数行に必須設定項目がありますので、変更�
 ## テーマ(テンプレート)機能について
 
 この掲示板はテーマを入れ替える事ができます。  
-2021年5月15日現在、ChickenPaintに対応しているテーマは同梱した`MONO`、と`PINK`そして[MONO_DEV](https://github.com/satopian/poti-EVO-themes)です。
+2021年5月15日現在、ChickenPaintに対応しているテーマは同梱した`MONO`、と`PINK`そして[MONO_DEV](https://github.com/sakots/poti-EVO-themes)です。
 
 ## 外部プログラム
 [potiboard_plugin: お絵かき掲示板 POTI-boardのための外部phpプログラム](https://github.com/satopian/potiboard_plugin)  
