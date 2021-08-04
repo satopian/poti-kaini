@@ -63,6 +63,7 @@ config.phpの最初の数行に必須設定項目がありますので、変更�
 各テーマのPaint画面のHTMLの更新をお願いします。
 - `<img loading="lazy">`。各テーマの`img`タグに`loading="lazy"`を追加しました。  
 ディスプレイに表示されていない範囲の画像を読み込まなくなるので転送量が少しだけ減ります。  
+
 安定版をリリースからダウンロードできます。    
 [POTI-board EVO v3.05.2](https://github.com/satopian/poti-kaini/releases/tag/v3.05.2)
 
