@@ -50,7 +50,7 @@ config.phpの最初の数行に必須設定項目がありますので、変更�
 ## テーマ(テンプレート)機能について
 
 この掲示板はテーマを入れ替える事ができます。  
-2021年5月15日現在、ChickenPaintに対応しているテーマは同梱した`MONO`、と`PINK`そして[MONO_DEV](https://github.com/satopian/poti-EVO-themes)です。
+2021年5月15日現在、ChickenPaintに対応しているテーマは同梱した`MONO`、と`PINK`そして[MONO_DEV](https://github.com/sakots/poti-EVO-themes)です。
 
 ## 外部プログラム
 [potiboard_plugin: お絵かき掲示板 POTI-boardのための外部phpプログラム](https://github.com/satopian/potiboard_plugin)  
@@ -58,6 +58,16 @@ config.phpの最初の数行に必須設定項目がありますので、変更�
 
 
 ## 履歴
+### [2021/08/03] v3.05.2 lot.210803
+- iPadでChickenPaintを使う時に、意図しないダブルタップズームが発生し、描画が困難になる問題に暫定対応しました。  
+各テーマのPaint画面のHTMLの更新をお願いします。
+- `<img loading="lazy">`。各テーマの`img`タグに`loading="lazy"`を追加しました。  
+ディスプレイに表示されていない範囲の画像を読み込まなくなるので転送量が少しだけ減ります。  
+
+安定版をリリースからダウンロードできます。    
+[POTI-board EVO v3.05.2](https://github.com/satopian/poti-kaini/releases/tag/v3.05.2)
+
+
 ### [2021/07/18] v3.05.1 lot.210716
 - 固定トークンを使った、CSRF対策を導入しました。
 サイト外部からの不正な投稿を拒絶する事ができます。  
