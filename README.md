@@ -58,13 +58,13 @@ config.phpの最初の数行に必須設定項目がありますので、変更�
 
 
 ## 履歴
-### [2021/08/06] v3.05.2.1
+### [2021/08/06] v3.05.2.2
 - ChickenPaintがアップデートし、iOS関連の多くの不具合が解消されました。
 パームリジェクション関連の不具合が解消されました。  
 手のひらとApple Pencilの認識できるようになりました。これまでは、意図しない直線が発生していまた。  
 
 安定版をリリースからダウンロードできます。    
-[POTI-board EVO v3.05.2.1](https://github.com/satopian/poti-kaini/releases/tag/v3.05.2.1)
+[POTI-board EVO v3.05.2.2](https://github.com/satopian/poti-kaini/releases/tag/v3.05.2.2)
 
 ### [2021/08/03] v3.05.2 lot.210803
 - iPadでChickenPaintを使う時に、意図しないダブルタップズームが発生し、描画が困難になる問題に暫定対応しました。  
