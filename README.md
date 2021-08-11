@@ -51,7 +51,7 @@ config.phpの最初の数行に必須設定項目がありますので、変更�
 
 この掲示板はテーマを入れ替える事ができます。  
 `PINK`と`MONO`2種類のテーマを同梱しました。  
-また、[MONO_DEV](https://github.com/sakots/poti-EVO-themes)や[themeparty](https://github.com/boxfries/themeparty)を各作者のページからダウンロードして使う事ができます。
+また、[MONO_DEV](https://github.com/sakots/poti-EVO-themes)や[themeparty](https://github.com/boxfries/themeparty)を各作者のページからダウンロードして使う事もできます。
 
 ## 外部プログラム
 [potiboard_plugin: お絵かき掲示板 POTI-boardのための外部phpプログラム](https://github.com/satopian/potiboard_plugin)  
