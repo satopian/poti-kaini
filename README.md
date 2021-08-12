@@ -59,6 +59,15 @@ config.phpの最初の数行に必須設定項目がありますので、変更�
 
 
 ## 履歴
+### [2021/08/11] v3.05.3 lot.210811
+- Tweetや通知メールがHTMLエスケープされた文字化けした文字になるためデコード処理を追加。
+- Tweetに使用する、題名と名前に相当する出力の変数を追加。
+#### テーマ作者向けの情報
+`<% def(oya/share_sub)><% echo(oya/share_sub) %><% else %><% echo(oya/sub|urlencode) %><% /def %>`    
+`<% def(oya/share_name)><% echo(oya/share_name) %><% else %><% echo(oya/name|urlencode) %><% /def %>`  
+POTI-board本体のバージョンが低い時は新しく追加した変数が未定義になります。  
+それを回避するため、テーマのHTMLで、変数が存在していたら新しく設定したTweet用の変数を使い、でなければ古い形式のまま出力としました。
+
 ### [2021/08/06] v3.05.2.2
 - ChickenPaintがアップデートし、iOS関連の多くの不具合が解消されました。  
 パームリジェクション関連の不具合が解消されました。    
