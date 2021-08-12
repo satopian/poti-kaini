@@ -21,7 +21,7 @@ v3.0で従来の[PaintBBS NEO](https://github.com/funige/neo/)、しぃペイン
 - ログファイルの形式は同じです。 
 - POTI-board 改二のテーマはEVOの新しい機能に対応していません。
 - POTI-board EVOのChickenPaint対応テーマは  
- 同梱の`pink`と、`MONO`、そして[MONO_DEV](https://github.com/satopian/poti-EVO-themes)です。  
+同梱の`pink`と、`MONO`、そして、さこつさんの[MONO_DEV](https://github.com/sakots/poti-EVO-themes)とboxfriesさんの[themeparty](https://github.com/boxfries/themeparty)です。  
 
 ## 改二からChickenPaint対応版へのアップデート
 
@@ -50,7 +50,8 @@ config.phpの最初の数行に必須設定項目がありますので、変更�
 ## テーマ(テンプレート)機能について
 
 この掲示板はテーマを入れ替える事ができます。  
-2021年5月15日現在、ChickenPaintに対応しているテーマは同梱した`MONO`、と`PINK`そして[MONO_DEV](https://github.com/sakots/poti-EVO-themes)です。
+`PINK`と`MONO`2種類のテーマを同梱しました。  
+また、[MONO_DEV](https://github.com/sakots/poti-EVO-themes)や[themeparty](https://github.com/boxfries/themeparty)を各作者のページからダウンロードして使う事もできます。
 
 ## 外部プログラム
 [potiboard_plugin: お絵かき掲示板 POTI-boardのための外部phpプログラム](https://github.com/satopian/potiboard_plugin)  
@@ -58,13 +59,13 @@ config.phpの最初の数行に必須設定項目がありますので、変更�
 
 
 ## 履歴
-### [2021/08/06] v3.05.2.1
-- ChickenPaintがアップデートし、iOS関連の多くの不具合が解消されました。
-パームリジェクション関連の不具合が解消されました。  
+### [2021/08/06] v3.05.2.2
+- ChickenPaintがアップデートし、iOS関連の多くの不具合が解消されました。  
+パームリジェクション関連の不具合が解消されました。    
 手のひらとApple Pencilの認識できるようになりました。これまでは、意図しない直線が発生していまた。  
 
 安定版をリリースからダウンロードできます。    
-[POTI-board EVO v3.05.2.1](https://github.com/satopian/poti-kaini/releases/tag/v3.05.2.1)
+[POTI-board EVO v3.05.2.2](https://github.com/satopian/poti-kaini/releases/tag/v3.05.2.2)
 
 ### [2021/08/03] v3.05.2 lot.210803
 - iPadでChickenPaintを使う時に、意図しないダブルタップズームが発生し、描画が困難になる問題に暫定対応しました。  
@@ -170,7 +171,7 @@ CheerpJの起動に必要なJavaScriptのurlをpotiboard.phpで管理する形�
 
 ### [2021/03/09] v2.26.5 lot.210308.0
 
-- v2.26.3の「e-mailとして不正な形式のものはリンクに出さないようにした」のミス修正 (by さとぴあ)
+- v2.26.3の「e-mailとして不正な形式のものはリンクに出さないようにした」に関するバグの修正。
 
 ### [2021/03/07] v2.26.3 lot.210306.0
 
@@ -195,8 +196,6 @@ CheerpJの起動に必要なJavaScriptのurlをpotiboard.phpで管理する形�
 
 ### [2021/02/13] v2.26.0 lot.210213.0
 
-- v2.23.1 lot.210203で発生したXSS脆弱性を修正 (by さとぴあ)
-  - かなり危険ですので、必ずアップデートをお願いします。
 - Cookieにセットできない文字列があったのを修正 (by さとぴあ)
 
 ### [2021/02/13] v2.23.9 lot.210212.1
@@ -221,17 +220,16 @@ CheerpJの起動に必要なJavaScriptのurlをpotiboard.phpで管理する形�
 ### [2021/02/09] v2.23.6 lot.210209.1
 
 - v2.23.5で発生したバグ修正 (by さとぴあ)
-  - これはアップデートお願いします。ほんと。
 
 ### [2021/02/09] v2.23.5 lot.210209.0
 
 - パスワードまたはadminがNULL時かつ、管理パスの変数が設定されていない時に管理モードが開いてしまう事があるのを修正 (by さとぴあ)
-  - config.phpが正しく設定されていればこれまでのバージョンでも問題ありません。
+config.phpが正しく設定されていればこれまでのバージョンでも問題ありません。
 
 ### [2021/02/07] v2.23.3 lot.210207.0
 
 - お絵かきのCookieが無い時に、通常のコメントのCookieがエラーで取得できなくなっていたのを修正 (by さとぴあ)
-  - `loadcookie.js`の上書きアップデートをお願いします。
+ `loadcookie.js`の上書きアップデートをお願いします。
 
 
 ### [2021/02/04] v2.23.2 lot.210204.0
@@ -726,7 +724,6 @@ potiboard.php、picpost.php、search.php のアップデートをお願いしま
 ### [2020/05/15] v2.0.4　lot.200515
 
 - 改行の抑制とProxyチェックを廃止(by さとぴあ)
-- potiboard.phpの上のほうの説明を修正
 
 ### [2020/05/15] v2.0.2　lot.200515
 
