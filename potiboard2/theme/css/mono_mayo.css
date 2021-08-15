@@ -19,7 +19,7 @@ body {
 }
 
 a:link {
-  color: #00F;
+  color: #666;
 }
 
 a:visited {
@@ -65,7 +65,7 @@ footer > article.copy {
 
 input, textarea, select, .se {
   border-style: solid;
-  border-color: #300 #F66 #F66 #300;
+  border-color: #300 #ff8c8c #ff8c8c #300;
   border-width: 1px;
   color: #000;
   background-color: #EEEEEE;
@@ -79,7 +79,7 @@ textarea {
 
 button, button.copy_button, .button {
   border-style: solid;
-  border-color: #F66 #300 #300 #F66;
+  border-color: #ff8c8c #300 #300 #ff8c8c;
   border-width: 1px;
   color: #000;
   background-color: #EEEEEE;
@@ -107,7 +107,7 @@ input[name="pwd"], textarea[name="pwd"], select[name="pwd"], .se[name="pwd"] {
 }
 
 input[value="お絵かき"], textarea[value="お絵かき"], select[value="お絵かき"], button.copy_button, .se[value="お絵かき"], .button {
-  background-color: #F96;
+  background-color: #f7a67e;
   color: #FFF;
 }
 
@@ -142,7 +142,7 @@ em.thispage {
 
 .name {
   line-height: 1em;
-  border: solid 1px #F96;
+  border: solid 1px #f7a67e;
   border-radius: 5px;
   display: inline-block;
 }
@@ -168,7 +168,7 @@ h1 a {
 
 h2 {
   border-left: solid 1ex #000;
-  background-color: #F66;
+  background-color: #ff8c8c;
   padding-left: 5px;
 }
 
@@ -262,23 +262,23 @@ ul.menu {
 }
 
 .NEO .color_bk {
-  color: #F96;
+  color: #de9b84;
 }
 
 .NEO .color_bk2 {
-  color: #963;
+  color: #a38a71;
 }
 
 .NEO .color_tool_icon {
-  color: #693;
+  color: #966;
 }
 
 .NEO .color_icon {
-  color: #360;
+  color: #966;
 }
 
 .NEO .color_iconselect {
-  color: #360;
+  color: #966;
 }
 
 .NEO .color_text {
@@ -286,7 +286,7 @@ ul.menu {
 }
 
 .NEO .color_bar {
-  color: #963;
+  color: #a38a71;
 }
 
 .NEO .tool_color_button {
@@ -302,11 +302,11 @@ ul.menu {
 }
 
 .NEO .tool_color_bar {
-  color: #F96;
+  color: #C9AB8B;
 }
 
 .NEO .tool_color_frame {
-  color: #963;
+  color: #a38a71;
 }
 
 .palette {
@@ -371,7 +371,7 @@ ul.menu {
 }
 
 .delfo tr:nth-child(odd) {
-  background-color: #F66;
+  background-color: #ff8c8c;
 }
 
 p.page {
@@ -511,7 +511,7 @@ p.page {
   width: 180px;
   border: 1px solid;
   color: auto;
-  border-color: #003 #F66 #F66 #300;
+  border-color: #003 #ff8c8c #ff8c8c #300;
   background-color: #FFF;
   vertical-align: middle;
 }
@@ -523,7 +523,7 @@ p.page {
 #search input[type=submit], #search textarea[type=submit], #search select[type=submit], #search .se[type=submit] {
   color: #000;
   border: 1px solid;
-  border-color: #F66 #300 #300 #F66;
+  border-color: #ff8c8c #300 #300 #ff8c8c;
   background-color: #FDD;
   vertical-align: middle;
 }

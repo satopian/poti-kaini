@@ -19,7 +19,7 @@ body {
 }
 
 a:link {
-  color: #66F;
+  color: #999;
 }
 
 a:visited {
@@ -107,7 +107,7 @@ input[name="pwd"], textarea[name="pwd"], select[name="pwd"], .se[name="pwd"] {
 }
 
 input[value="お絵かき"], textarea[value="お絵かき"], select[value="お絵かき"], button.copy_button, .se[value="お絵かき"], .button {
-  background-color: #69F;
+  background-color: #7aa3f5;
   color: #FFF;
 }
 
@@ -142,7 +142,7 @@ em.thispage {
 
 .name {
   line-height: 1em;
-  border: solid 1px #69F;
+  border: solid 1px #7aa3f5;
   border-radius: 5px;
   display: inline-block;
 }
@@ -262,23 +262,23 @@ ul.menu {
 }
 
 .NEO .color_bk {
-  color: #69F;
+  color: #333;
 }
 
 .NEO .color_bk2 {
-  color: #369;
+  color: #222;
 }
 
 .NEO .color_tool_icon {
-  color: #396;
+  color: #669;
 }
 
 .NEO .color_icon {
-  color: #063;
+  color: #669;
 }
 
 .NEO .color_iconselect {
-  color: #063;
+  color: #669;
 }
 
 .NEO .color_text {
@@ -302,11 +302,11 @@ ul.menu {
 }
 
 .NEO .tool_color_bar {
-  color: #69F;
+  color: #7aa3f5;
 }
 
 .NEO .tool_color_frame {
-  color: #369;
+  color: #222;
 }
 
 .palette {
