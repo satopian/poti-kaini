@@ -11,7 +11,7 @@ label {
 
 body {
   background-color: #d1ce9e;
-  color: #000;
+  color: #222;
   font-family: sans-serif;
   word-wrap: break-word;
   overflow-wrap: break-word;
@@ -35,7 +35,7 @@ a:hover {
 }
 
 hr {
-  border: dashed 1px #000;
+  border: dashed 1px #333;
   margin: 1ex auto;
 }
 
@@ -52,7 +52,7 @@ header, main > section > .thread, main > article#catalog, footer > article, foot
   margin: 0px auto;
   display: block;
   max-width: 1350px;
-  border: solid 1px #000;
+  border: solid 1px #333;
 }
 
 footer > article form {
@@ -65,9 +65,9 @@ footer > article.copy {
 
 input, textarea, select, .se {
   border-style: solid;
-  border-color: #300 #ff8c8c #ff8c8c #300;
+  border-color: #3d3431 #ff8c8c #ff8c8c #3d3431;
   border-width: 1px;
-  color: #000;
+  color: #222;
   background-color: #EEEEEE;
   padding: 3px;
 }
@@ -79,9 +79,9 @@ textarea {
 
 button, button.copy_button, .button {
   border-style: solid;
-  border-color: #ff8c8c #300 #300 #ff8c8c;
+  border-color: #ff8c8c #3d3431 #3d3431 #ff8c8c;
   border-width: 1px;
-  color: #000;
+  color: #222;
   background-color: #EEEEEE;
 }
 
@@ -136,7 +136,7 @@ em.thispage {
 
 .se {
   background-color: #d1ce9e;
-  color: #000;
+  color: #222;
   font-style: normal;
 }
 
@@ -167,7 +167,7 @@ h1 a {
 }
 
 h2 {
-  border-left: solid 1ex #000;
+  border-left: solid 1ex #333;
   background-color: #ff8c8c;
   padding-left: 5px;
 }
@@ -294,7 +294,7 @@ ul.menu {
 }
 
 .NEO .tool_color_button2 {
-  color: #633;
+  color: #635142;
 }
 
 .NEO .tool_color_text {
@@ -404,7 +404,7 @@ p.page {
   font-family: "Hiragino Sans", meiryo, ヒラギノ角ゴシック, メイリオ, sans-serif;
   font-size: 16px;
   line-height: 150%;
-  color: #000;
+  color: #222;
   background-color: #d1ce9e;
   letter-spacing: .08em;
 }
@@ -430,15 +430,15 @@ p.page {
 }
 
 #search .title {
-  color: #000;
+  color: #222;
   background-color: #FC9;
-  border-left: 8px solid #F33;
+  border-left: 8px solid #C66;
   padding: 6px 5px 2px;
   margin: 0 0 10px;
 }
 
 #search a {
-  color: #300;
+  color: #555;
   text-decoration: underline;
 }
 
@@ -511,20 +511,20 @@ p.page {
   width: 180px;
   border: 1px solid;
   color: auto;
-  border-color: #003 #ff8c8c #ff8c8c #300;
+  border-color: #003 #ff8c8c #ff8c8c #3d3431;
   background-color: #FFF;
   vertical-align: middle;
 }
 
 #search input[type=text]:hover, #search textarea[type=text]:hover, #search select[type=text]:hover, #search .se[type=text]:hover {
-  background-color: #FEE;
+  background-color: #ffbbbb;
 }
 
 #search input[type=submit], #search textarea[type=submit], #search select[type=submit], #search .se[type=submit] {
-  color: #000;
+  color: #222;
   border: 1px solid;
-  border-color: #ff8c8c #300 #300 #ff8c8c;
-  background-color: #FDD;
+  border-color: #ff8c8c #3d3431 #3d3431 #ff8c8c;
+  background-color: #f7c29c;
   vertical-align: middle;
 }
 
@@ -534,19 +534,19 @@ p.page {
 
 #search .name {
   font-weight: 700;
-  color: #000;
+  color: #222;
   display: inline-block;
-  border: 1px solid #633;
+  border: 1px solid #635142;
   border-radius: 6px;
   line-height: 1em;
 }
 
 #search .name:hover {
-  background-color: #FDD;
+  background-color: #ffbbbb;
 }
 
 #search .name a {
-  color: #300;
+  color: #3d3431;
   display: block;
   padding: 5px;
 }
@@ -577,7 +577,7 @@ p.page {
 }
 
 #search .res_button:hover {
-  background-color: #FEE;
+  background-color: #f7b48d;
 }
 
 #search .res_button form {
@@ -596,7 +596,7 @@ p.page {
 
 #search input[type=radio]:checked + label, #search textarea[type=radio]:checked + label, #search select[type=radio]:checked + label, #search .se[type=radio]:checked + label {
   color: #000;
-  background: #FDD;
+  background: #ffbbbb;
 }
 
 #search .label {
@@ -610,7 +610,7 @@ p.page {
 }
 
 #search .label:hover {
-  background-color: #FEE;
+  background-color: #ffbbbb;
 }
 
 #search .radio {
