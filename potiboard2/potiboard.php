@@ -1302,11 +1302,11 @@ function admindel($pass){
 			list($no,$date,$name,$email,$sub,$com,$url,
 			$host,$pw,$ext,$w,$h,$time,$chk,) = explode(",",$value);
 		$res= [
+			'size' => 0,
 			'no' => $no,
 			'host' => $host,
+			'chk' => $chk,
 			'clip' => "",
-			'size' => 0,
-			'chk' => "",
 		] ;
 		$res['now']  = preg_replace("/( ID:.*)/","",$date);//ID以降除去
 		$res['name'] = strip_tags($name);//タグ除去
@@ -1317,20 +1317,21 @@ function admindel($pass){
 		$res['com'] = preg_replace("#<br( *)/?>#i"," ",$com);
 		$res['com'] = strip_tags($res['com']);
 		if(strlen($res['com']) > 20) $res['com'] = mb_strcut($res['com'],0,18) . ".";
-		if($ext && is_file($path.$time.$ext)){
-			$res['size'] = filesize($path.$time.$ext);
-			$all += $res['size'];	//ファイルサイズ加算
-			$res['chk']= substr($chk,0,10);//md5
-		}
+
 		$res['bg'] = ($j % 2) ? ADMIN_DELGUSU : ADMIN_DELKISU;//背景色
 		
 		foreach($res as $key => $val){
 			$res[$key]=h($val);
 		}
+		if($ext && is_file($path.$time.$ext)){
+			$res['size'] = filesize($path.$time.$ext);
+			$all += $res['size'];	//ファイルサイズ加算
+			$res['chk']= substr($res['chk'],0,10);//md5
+			$res['clip'] = '<a href="'.IMG_DIR.$time.$ext.'" target="_blank" rel="noopener">'.$time.$ext.'</a><br>';
+		}
 		if($res['email']){
 			$res['name']='<a href="mailto:'.$res['email'].'">'.$res['name'].'</a>';
 		}
-		$res['clip'] = '<a href="'.IMG_DIR.$time.$ext.'" target="_blank" rel="noopener">'.$time.$ext.'</a><br>';
 		$dat['del'][] = $res;
 		}
 	}
