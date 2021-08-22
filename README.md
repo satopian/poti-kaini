@@ -1,6 +1,7 @@
 # お絵かき掲示板 PHPスクリプト POTI-board EVO
 
-![POTI-board EVO](https://user-images.githubusercontent.com/44894014/130361027-27d75169-bfad-4d29-bbbc-c9ff9c6a9134.png)
+![POTI-board EVO](https://user-images.githubusercontent.com/44894014/130365226-565801a0-da27-4a13-a684-ef849769c0b4.png)
+
 
 お絵かき掲示板PHPスクリプトPOTI-boardを改良していくプロジェクトです。  
 php5.5～ 対応。  
@@ -14,8 +15,8 @@ v3.0で従来の[PaintBBS NEO](https://github.com/funige/neo/)、しぃペイン
 スクリプトの名称を変更。POTI-board改二からPOTI-board EVO(Evolution)になりました。 
 
 ## POTI-board EVO (ChickenPaint対応版)
-![ChickenPaint](https://user-images.githubusercontent.com/44894014/125903306-5162a621-e403-4ca5-bebf-6408ded99a9d.png)
 
+![ChickenPaint](https://user-images.githubusercontent.com/44894014/130365082-a94773a6-8d4f-4bd9-aad0-b35406951a38.png)
 
 ## POTI-board改二との互換性
 - ログファイルの形式は同じです。 
