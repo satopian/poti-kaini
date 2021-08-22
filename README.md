@@ -1,6 +1,6 @@
 # お絵かき掲示板 PHPスクリプト POTI-board EVO
 
-![POTI-board EVO](https://user-images.githubusercontent.com/31465648/83109430-5ebf0080-a0fc-11ea-8acc-87f2fbbd2070.PNG)
+![POTI-board EVO](https://user-images.githubusercontent.com/44894014/130361027-27d75169-bfad-4d29-bbbc-c9ff9c6a9134.png)
 
 お絵かき掲示板PHPスクリプトPOTI-boardを改良していくプロジェクトです。  
 php5.5～ 対応。  
@@ -59,6 +59,25 @@ config.phpの最初の数行に必須設定項目がありますので、変更�
 
 
 ## 履歴
+
+### [2021/08/22] v3.06.8 lot.210822
+
+- ChickenPaintのアイコンが一新されました。
+
+- テーマ MONOの配色を変更しました。  
+原色系の配色を見直しました。
+
+-  管理者削除画面  
+セキュリティ向上。XSS対策を強化しました。  
+1ページに表示する件数を2000件から1000件に変更しました。  
+
+-  アップロードペイントのエラーメッセージを修正  
+ファイルをアップロードしてキャンバスに読み込む機能にChickenPaintの｢chi｣ファイルも対応しているため、対応フォーマットの説明に｢chi｣を追加しました。
+
+安定版をリリースからダウンロードできます。    
+[POTI-board EVO v3.06.8](https://github.com/satopian/poti-kaini/releases/tag/v3.06.8)
+
+
 ### [2021/08/11] v3.05.3 lot.210811
 - Tweetや通知メールがHTMLエスケープされた文字化けした文字になるためデコード処理を追加。
 - Tweetに使用する、題名と名前に相当する出力の変数を追加。
