@@ -74,7 +74,7 @@ define('MSG041', "がありません");
 define('MSG042', "を読めません");
 define('MSG043', "を書けません");
 define('MSG044', "最大ログ数が設定されていないか、数字以外の文字列が入っています。[Either the MAX LOG is not set, or it contains a non-numeric string.]");
-define('MSG045', "ペイントアプリのファイルをアップロードしてください。[Please upload the file of the paint app.]<br>対応フォーマットはpch、spch、chiです。[Supported formats are pch, spch and chi.]");
+define('MSG045', "アップロードペイントに対応していないファイルです。[This file does not supported by the ability to load uploaded files onto the canvas.]<br>対応フォーマットはpch、spch、chiです。[Supported formats are pch, spch and chi.]");
 
 //文字色テーブル '値[,名称]'
 $fontcolors = array('white,White'
