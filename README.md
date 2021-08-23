@@ -75,8 +75,11 @@ config.phpの最初の数行に必須設定項目がありますので、変更�
 -  アップロードペイントのエラーメッセージを修正  
 ファイルをアップロードしてキャンバスに読み込む機能にChickenPaintの｢chi｣ファイルも対応しているため、対応フォーマットの説明に｢chi｣を追加しました。
 
+- 2021/08/23 ChickenPaintの新しいアイコンが入っていないというミスがありましたので、修正してリリースしなおしました。(v3.06.8.1) 
+8/22～8/23の間にダウンロードして、ChickenPaintのアイコンが表示されない方は、ChickenPaintディレクトリの上書きアップデートをお願いします。
+
 安定版をリリースからダウンロードできます。    
-[POTI-board EVO v3.06.8](https://github.com/satopian/poti-kaini/releases/tag/v3.06.8)
+[POTI-board EVO v3.06.8.1](https://github.com/satopian/poti-kaini/releases/tag/v3.06.8.1)
 
 
 ### [2021/08/11] v3.05.3 lot.210811
