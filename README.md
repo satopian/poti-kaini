@@ -80,7 +80,7 @@ config.phpの最初の数行に必須設定項目がありますので、変更�
 (v3.06.8.1) で修正済み。
 
 安定版をリリースからダウンロードできます。    
-[POTI-board EVO v3.06.8.1](https://github.com/satopian/poti-kaini/releases/tag/v3.06.8.1)
+[POTI-board EVO v3.06.8.2](https://github.com/satopian/poti-kaini/releases/tag/v3.06.8.2)
 
 
 ### [2021/08/11] v3.05.3 lot.210811
