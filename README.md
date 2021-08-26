@@ -60,6 +60,14 @@ config.phpの最初の数行に必須設定項目がありますので、変更�
 
 
 ## 履歴
+### [2021/08/25] search.php
+- config.phpで設定したタイムゾーンがsearchに反映されず、searchの設定を変更しない限り｢Asia/Tokyo｣のままになっていたのを修正しました。  
+結果的に日本時間になるため、日本時間に設定していた人の表示はなにも変わりません。
+また、コードを修正して処理を高速化しました。
+
+昨日再リリースした、v3.06.8.2に変更ずみのsearch.phpも入っています。     
+[POTI-board EVO v3.06.8.2](https://github.com/satopian/poti-kaini/releases/tag/v3.06.8.2)
+
 
 ### [2021/08/22] v3.06.8 lot.210822
 
