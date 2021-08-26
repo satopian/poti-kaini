@@ -160,16 +160,9 @@ themeディレクトリのHTML全5ファイルの上書きアップデートを�
 - 管理画面のページング
 2000件単位で改ページ。  
 - メインページとカタログページのページングを改良。  
-35頁単位でページングする方式に移行。  
+35頁単位でページングする方式に移行しました。  
 - しぃペインターが起動しないCheerpJのバージョンに対処。    
-CheerpJの起動に必要なJavaScriptのurlをpotiboard.phpで管理する形にした。  
-#### v3.00.3からアップデートする場合は
-
-- Chickenpaint ディレクトリを上書きアップデート
-- Paintとotherのテンプレートを上書きアップデート
-- MONOのcssファイルを上書きアップデート
-- potiboard.phpを上書きアップデート
-- search.phpを上書きアップデート
+CheerpJの起動に必要なJavaScriptのurlをpotiboard.phpで管理するようになりました。  
 
 安定版をリリースからダウンロードできます。    
 [POTI-board EVO v3.01.9](https://github.com/satopian/poti-kaini/releases/tag/v3.01.9)
