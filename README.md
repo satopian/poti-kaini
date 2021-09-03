@@ -60,6 +60,13 @@ config.phpの最初の数行に必須設定項目がありますので、変更�
 
 
 ## 履歴
+### [2021/08/25] search.php
+- config.phpで設定したタイムゾーンがsearchに反映されず、searchの設定を変更しない限り｢Asia/Tokyo｣のままになっていたのを修正しました。  
+日本時間に設定していた人の表示はなにも変わりません。
+
+昨日再リリースした、v3.06.8.2に変更ずみのsearch.phpも入っています。     
+[POTI-board EVO v3.06.8.2](https://github.com/satopian/poti-kaini/releases/tag/v3.06.8.2)
+
 
 ### [2021/08/22] v3.06.8 lot.210822
 
@@ -80,7 +87,7 @@ config.phpの最初の数行に必須設定項目がありますので、変更�
 (v3.06.8.1) で修正済み。
 
 安定版をリリースからダウンロードできます。    
-[POTI-board EVO v3.06.8.1](https://github.com/satopian/poti-kaini/releases/tag/v3.06.8.1)
+[POTI-board EVO v3.06.8.2](https://github.com/satopian/poti-kaini/releases/tag/v3.06.8.2)
 
 
 ### [2021/08/11] v3.05.3 lot.210811
@@ -153,16 +160,9 @@ themeディレクトリのHTML全5ファイルの上書きアップデートを�
 - 管理画面のページング
 2000件単位で改ページ。  
 - メインページとカタログページのページングを改良。  
-35頁単位でページングする方式に移行。  
+35頁単位でページングする方式に移行しました。  
 - しぃペインターが起動しないCheerpJのバージョンに対処。    
-CheerpJの起動に必要なJavaScriptのurlをpotiboard.phpで管理する形にした。  
-#### v3.00.3からアップデートする場合は
-
-- Chickenpaint ディレクトリを上書きアップデート
-- Paintとotherのテンプレートを上書きアップデート
-- MONOのcssファイルを上書きアップデート
-- potiboard.phpを上書きアップデート
-- search.phpを上書きアップデート
+CheerpJの起動に必要なJavaScriptのurlをpotiboard.phpで管理するようになりました。  
 
 安定版をリリースからダウンロードできます。    
 [POTI-board EVO v3.01.9](https://github.com/satopian/poti-kaini/releases/tag/v3.01.9)
