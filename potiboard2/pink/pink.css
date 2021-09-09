@@ -801,6 +801,7 @@ input.pch_upload {
 .appstage {
 	margin: 0 auto;
 	display: table;
+	word-break: initial;
 }
 
 .app {
