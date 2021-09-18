@@ -121,7 +121,10 @@ class noticemail{
 	$Message .= 'e-Mail:'.$from."\n";
 	$option = $data['option'];
 	if(is_array($option)){
-	foreach($option as $value){ list($optitle,$opvalue)=explode(",", rtrim($value)); $Message .=$optitle.': '.$opvalue." \n"; }
+		foreach($option as $value){
+			list($optitle,$opvalue)=explode(",", rtrim($value));
+			$Message .=$optitle.': '.$opvalue." \n"; 
+		}
 	}
 		$Message .= $line;
 		if($data['comment']){
