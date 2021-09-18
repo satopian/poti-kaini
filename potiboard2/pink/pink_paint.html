@@ -21,6 +21,7 @@
 <% def(pch_mode) %><meta name="viewport" content="width=device-width,initial-scale=1.0"><% /def %>
 <% def(continue_mode) %><meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0"><% /def %>
 <link rel="stylesheet" type="text/css" href="<% echo(skindir) %>pink.css?<% echo(parameter_day)%>">
+<style>.input_disp_none{display: none;}</style>	
 <title><% def(paint_mode) %>お絵かきモード<% /def %><% def(continue_mode) %>続きを描く<% /def %><% def(pch_mode) %>動画表示モード<% /def %> - <% echo(title) %></title>
 <% def(n) %>
 <!-- 
@@ -549,6 +550,7 @@ if(is_mobile()){
 <% def(use_select_palettes) %>
 <span class="palette_type">PALETTE</span> <select name="selected_palette_no" title="パレット" class="paint_select palette_type"><% echo(palette_select_tags) %></select>
 <% /def %>
+<span class="input_disp_none"><input type="txt" value="" autocomplete="username"></span>
 <span class="nk">削除キー<input type="password" name="pwd" size="8" value="" class="paint_password" autocomplete="current-password"></span>
 <input type="submit" value="続きを描く">
 

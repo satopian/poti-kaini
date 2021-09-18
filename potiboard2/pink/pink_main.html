@@ -22,7 +22,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
 <link rel="stylesheet" href="<% echo(skindir) %>pink.css">
 <link rel="stylesheet" href="<% echo(skindir) %>icomoon/style.css">
-<style>span.canvas_size_wrap {display: inline-block;padding: 8px 0 0;}</style>
+<style>.input_disp_none{display: none;}span.canvas_size_wrap {display: inline-block;padding: 8px 0 0;}</style>
 <style id="for_mobile"></style>
 <title><% echo (title) %></title>
 <% def(n) %>
@@ -476,6 +476,7 @@ PMAX_H //高さ
 <form action="<% echo (self) %>" method="post">
 <div class="mente_wrap">
 <span class="nk">記事No.<input type="number" min="1" name="del[]" autocomplete="off" class="edit_number"></span>
+<span class="input_disp_none"><input type="txt" value="" autocomplete="username"></span>
 <span class="nk">削除キー<input type="password" name="pwd" size="8" value="" autocomplete="current-password" class="edit_password"></span>
 <select name="mode">
 <option value="edit">編集</option>
