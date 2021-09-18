@@ -6,8 +6,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board EVO
 // バージョン :
-define('POTI_VER','v3.06.9');
-define('POTI_LOT','lot.210902'); 
+define('POTI_VER','v3.06.10');
+define('POTI_LOT','lot.210915'); 
 
 /*
   (C) 2018-2021 POTI改 POTI-board redevelopment team
@@ -785,8 +785,8 @@ function regist(){
 		list($uip,$uhost,,,$ucode,,$starttime,$postedtime,$uresto) = explode("\t", rtrim($userdata)."\t");
 		if(($ucode != $usercode) && ($uip != $userip)){error(MSG007);}
 		//描画時間を$userdataをもとに計算
-		if($starttime && DSP_PAINTTIME){
-			$psec=$postedtime-$starttime;
+		if(DSP_PAINTTIME && $starttime && is_numeric($starttime)){
+			$psec=(int)$postedtime-(int)$starttime;
 			$ptime = TOTAL_PAINTTIME ? $psec : calcPtime($psec);
 		}
 		$uresto=filter_var($uresto,FILTER_VALIDATE_INT);
@@ -2059,7 +2059,8 @@ function replace(){
 	//描画時間を$userdataをもとに計算
 	$psec='';
 	$_ptime = '';
-	if($psec=$postedtime-$starttime){
+	if($starttime && is_numeric($starttime)){
+		$psec=(int)$postedtime-(int)$starttime;
 		$_ptime = calcPtime($psec);
 	}
 
