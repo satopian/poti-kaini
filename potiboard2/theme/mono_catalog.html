@@ -53,7 +53,7 @@
 				<a href="<% echo(self) %>?mode=admin">[管理モード]</a>
 			</div>
 			<hr>
-			<article>
+			<div>
 				<nav class="menu">
 					<a href="<% echo(self2) %>">[トップ]</a>
 					<% def(for_new_post) %>
@@ -66,10 +66,10 @@
 				</nav>
 				<hr>
 				<h2><span class="oyano"></span>カタログモード</h2>
-			</article>
+			</div>
 		</header>
 		<main>
-			<article id="catalog">
+			<div id="catalog">
 				<hr>
 				<div>
 					<% each(y) %><% each(y/x) %><% def(y/x/no) %>
@@ -85,12 +85,12 @@
 				<% /def %><% /each %><% /each %>
 				</div>
 				<hr>
-			</article>
+			</div>
 		</main>
 		<footer id="footer">
 			<script src="https://code.jquery.com/jquery-1.12.4.min.js" type="text/javascript"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/js/lightbox.min.js" type="text/javascript"></script>
-			<article>
+			<div>
 				<% def(notres) %>
 				<p class="page">
 					<% def(prev) %><a href="<% echo(prev) %>">≪BACK</a> |<% /def %> <% def(next) %><a href="<% echo(next) %>">NEXT≫</a> <% /def %>
@@ -124,8 +124,8 @@
 				<script>
 					l(); //LoadCookie
 				</script>
-			</article>
-			<article class="copy">
+			</div>
+			<div class="copy">
 				<!-- 著作権表示 削除しないでください -->
 				<!-- GazouBBS v3.0 --><!-- ふたば改0.8 --><!-- POTI-board -->
 					<p>
@@ -151,7 +151,7 @@
 						DynamicPalette <!-- http://wondercatstudio.com/ -->
 						
 					</p>
-				</article>
+				</div>
 			</footer>
 			<script>
 				colorIdx=GetCookie('colorIdx');
