@@ -98,17 +98,16 @@
 <style id="for_mobile"></style>
 </head>
 <body>
+<header>
 	
 	<% def(paint_mode) %>
 	<% def(chickenpaint)%>
 	<% elsedef %>
-<header>
 <h1 style= "min-width:calc(<% echo(w) %>px + 176px)" id="bbs_title">お絵かきモード - <span class="title_name_wrap"><% echo(title) %></span></h1>
 <% /def %>
 
 <% elsedef %>
 <h1 id="bbs_title"><% def(continue_mode) %>続きを描く<% /def %><% def(pch_mode) %>動画表示モード<% /def %> - <span class="title_name_wrap"><% echo(title) %></span></h1><% /def %>
-<% def(paint_mode) %>
 <% ========== お絵かきモード ========== %>
 <% def(n) %>
 <!-- 
@@ -322,7 +321,7 @@ pe[n]}}function GradView(a,f){d=document}function showHideLayer(){d=document;var
 <option>一時保存パレット</option>
 <% def(dynp) %>
 <% echo (dynp) %>
-<% /def %><% /def %>
+<% /def %>
 <% /def %>
 <% def(chickenpaint)%>
 <% elsedef %>
@@ -551,7 +550,7 @@ if(is_mobile()){
 <span class="palette_type">PALETTE</span> <select name="selected_palette_no" title="パレット" class="paint_select palette_type"><% echo(palette_select_tags) %></select>
 <% /def %>
 <span class="input_disp_none"><input type="text" value="" autocomplete="username"></span>
-<span class="nk">削除キー <input type="password" name="pwd" size="8" value="" class="paint_password" autocomplete="current-password"></span>
+<span class="nk">削除キー<input type="password" name="pwd" size="8" value="" class="paint_password" autocomplete="current-password"></span>
 <input type="submit" value="続きを描く">
 
 </form>
