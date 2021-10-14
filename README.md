@@ -60,6 +60,12 @@ config.phpの最初の数行に必須設定項目がありますので、変更�
 
 
 ## 履歴
+### [2021/10/09] v3.08.1 
+
+- ブラウザのヒストリーバックやエラー画面の戻るで元の画面に戻った時に送信ボタンが無効化されたままになり操作できなくなる不具合を修正しました。  
+安定版をリリースからダウンロードできます。
+[POTI-board EVO v3.07.5 リリース](https://github.com/satopian/poti-kaini/releases/tag/v3.07.5)
+
 ### [2021/09/28] v3.07.5
 #### 細かなバグの修正
 - ブラウザの言語が日本語以外の時にPaintBBSのメニューの表示がおかしくなっていたのを修正しました。 
@@ -92,7 +98,7 @@ define('ID_SEED', 'IDの種');
 これにより名前をユーザー名としたパスワードの保存が容易になります。
 
 安定版をリリースからダウンロードできます。    
-[Release POTI-board EVO v3.07.5 リリース · satopian/poti-kaini](https://github.com/satopian/poti-kaini/releases/tag/v3.07.5)
+[POTI-board EVO v3.07.5 リリース](https://github.com/satopian/poti-kaini/releases/tag/v3.07.5)
 
 ### [2021/08/25] search.php
 - config.phpで設定したタイムゾーンがsearchに反映されず、searchの設定を変更しない限り｢Asia/Tokyo｣のままになっていたのを修正しました。  
