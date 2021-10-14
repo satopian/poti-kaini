@@ -68,7 +68,7 @@ config.phpの最初の数行に必須設定項目がありますので、変更�
 このバグの影響を受けるのは、テーマMONOです。PINKには配色切り替え機能がないためこの影響を受けません。    
 より詳細な情報はリリースのページにあります。  
 ダウンロードもリリースからお願いします。  
-[POTI-board EVO v3.08.1.1 リリース](https://github.com/satopian/poti-kaini/releases/tag/v3.08.1.1)
+[POTI-board EVO v3.08.1.1 リリース](https://github.com/satopian/poti-kaini/releases/tag/v3.08.1)
 
 
 ### [2021/10/09] v3.08.1 
