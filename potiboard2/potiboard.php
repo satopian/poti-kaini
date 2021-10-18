@@ -6,8 +6,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board EVO
 // バージョン :
-define('POTI_VER','v3.09.0');
-define('POTI_LOT','lot.211015'); 
+define('POTI_VER','v3.09.1');
+define('POTI_LOT','lot.211017'); 
 
 /*
   (C) 2018-2021 POTI改 POTI-board redevelopment team
@@ -170,6 +170,7 @@ defined('UPLOAD_SUCCESSFUL') or define('UPLOAD_SUCCESSFUL', 'のアップロー�
 defined('THE_SCREEN_CHANGES') or define('THE_SCREEN_CHANGES', '画面を切り替えます');
 defined('MSG044') or define('MSG044', '最大ログ数が設定されていないか、数字以外の文字列が入っています。');
 defined('MSG045') or define('MSG045', 'アップロードペイントに対応していないファイルです。<br>対応フォーマットはpch、spch、chiです。');
+defined('MSG046') or define('MSG046', 'パスワードが短ずぎます。最低6文字。');
 
 $ADMIN_PASS=isset($ADMIN_PASS) ? $ADMIN_PASS : false; 
 if(!$ADMIN_PASS){
@@ -752,6 +753,21 @@ function regist(){
 	$pictmp = filter_input(INPUT_POST, 'pictmp',FILTER_VALIDATE_INT);
 	$picfile = newstring(filter_input(INPUT_POST, 'picfile'));
 
+	// パスワード未入力の時はパスワードを生成してクッキーにセット
+	$c_pass=str_replace("\t",'',filter_input(INPUT_POST, 'pwd'));//エスケープ前の値をCookieにセット
+	if($pwd===''){
+		if($pwdc){//Cookieはnullの可能性があるので厳密な型でチェックしない
+			$pwd=newstring($pwdc);
+			$c_pass=$pwdc;//エスケープ前の値
+		}else{
+			srand((double)microtime()*1000000);
+			$pwd = substr(rand(), 0, 8);
+			$c_pass=$pwd;
+		}
+	}
+
+	if(strlen($pwd) < 6) error(MSG046);
+
 	//画像アップロード
 	$upfile_name = isset($_FILES["upfile"]["name"]) ? basename($_FILES["upfile"]["name"]) : "";
 	$upfile = isset($_FILES["upfile"]["tmp_name"]) ? $_FILES["upfile"]["tmp_name"] : "";
@@ -824,21 +840,9 @@ function regist(){
 		}
 		chmod($dest,PERMISSION_FOR_DEST);
 	}
-
-
-	// パスワード未入力の時はパスワードを生成してクッキーにセット
-	$c_pass=str_replace("\t",'',filter_input(INPUT_POST, 'pwd'));//エスケープ前の値をCookieにセット
-	if($pwd===''){
-		if($pwdc){//Cookieはnullの可能性があるので厳密な型でチェックしない
-			$pwd=newstring($pwdc);
-			$c_pass=$pwdc;//エスケープ前の値
-		}else{
-			srand((double)microtime()*1000000);
-			$pwd = substr(rand(), 0, 8);
-			$c_pass=$pwd;
-		}
-	}
+	//パスワードハッシュ
 	$pass = $pwd ? password_hash($pwd,PASSWORD_BCRYPT,['cost' => 5]) : "*";
+
 	$date = now_date(time());//日付取得
 	if(DISP_ID){
 		$date .= " ID:" . getId($userip);
