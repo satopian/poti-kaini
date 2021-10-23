@@ -44,7 +44,7 @@ config.phpの最初の数行に必須設定項目がありますので、変更�
 
 ## サンプル/サポート
 
-[お絵かき掲示板PHPスクリプトPOTI-board改公式サイト](https://pbbs.sakura.ne.jp/poti/)と、[設置サポート掲示板](https://pbbs.sakura.ne.jp/cgi/neosample/support/) をオープンしました。ご利用ください。  
+[お絵かき掲示板PHPスクリプトPOTI-board改公式サイト](https://paintbbs.sakura.ne.jp/poti/)と、[設置サポート掲示板](https://paintbbs.sakura.ne.jp/cgi/neosample/support/) をオープンしました。ご利用ください。  
 設置サポート掲示板にはさとぴあが常駐しています。
 
 
