@@ -232,7 +232,7 @@ CheerpJの起動に必要なJavaScriptのurlをpotiboard.phpで管理するよ�
 - 改二のテーマも引き続き利用できます。
 
 ### [2021/04/26] v2.26.8 lot.210426
-各テーマの[POTI改公式サイト](https://pbbs.sakura.ne.jp/poti/)のURLを変更しました。  
+各テーマの[POTI改公式サイト](https://paintbbs.sakura.ne.jp/poti/)のURLを変更しました。  
 著作表記を(C)POTI改 POTI-board redevelopment team.に変更しました。  
 テーマの細かな修正を行いました。
 別リポジトリで配布していたテーマファイル、[PINK](https://github.com/satopian/pink_for_poti-kaini)を同梱しました。  
