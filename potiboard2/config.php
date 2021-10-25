@@ -1,7 +1,7 @@
 <?php
 /*
   * POTI-board EVO v3.03.6 lot.210712
-  * by POTI改 >> https://pbbs.sakura.ne.jp/poti/
+  * by POTI改 >> https://paintbbs.sakura.ne.jp/poti/
   *
   * POTI-board EVO の設定ファイルです。
   *

@@ -1,6 +1,6 @@
 <?php
 /*
-  * Template - PINK - lot.lot.210309  by さとぴあ  >> https://pbbs.sakura.ne.jp/
+  * Template - PINK - lot.lot.210309  by さとぴあ  >> https://paintbbs.sakura.ne.jp/
   *
 */
 
