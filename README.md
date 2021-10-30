@@ -60,6 +60,18 @@ config.phpの最初の数行に必須設定項目がありますので、変更�
 
 
 ## 履歴
+
+## [2021/10/31] v3.10.1 入力値チェックを強化
+- パスワードの長さチェックを追加しました。
+- 各入力項目の長さチェックを処理の前半に移動しました。
+- 管理画面を表示した時に発生していた軽微なエラーを修正しました。
+
+この問題を修正するために必要なファイルは、`potiboard.php`です。  
+`potiboard.php`の上書きアップデートをお願いします。  
+
+リリースから安定版をダウンロードできます。  
+[POTI-board EVO v3.10.1 リリース](https://github.com/satopian/poti-kaini/releases/tag/v3.10.1)
+
 ## [2021/10/27] v3.10.0 重大バグ修正
 
 - 従来のすべてのバージョンのPOTI-boardに存在する重大な欠陥が見つかりました。  
@@ -70,7 +82,7 @@ urlの長さのチェックが入っていませんでした。早急に最新�
 
 より詳細な情報はリリースにあります。  
 リリースから安定版をダウンロードできます。  
-[POTI-board EVO v3.08.1.1 リリース](https://github.com/satopian/poti-kaini/releases/tag/v3.08.1.1)
+[POTI-board EVO v3.10.0 リリース](https://github.com/satopian/poti-kaini/releases/tag/v3.10.0)
 
 
 ### [2021/10/27] v3.09.5
