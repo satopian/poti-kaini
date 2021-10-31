@@ -6,7 +6,7 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board EVO
 // バージョン :
-define('POTI_VER','v3.10.1');
+define('POTI_VER','v3.10.3');
 define('POTI_LOT','lot.211031'); 
 
 /*
@@ -769,6 +769,9 @@ function regist(){
 
 	//画像アップロード
 	$upfile_name = isset($_FILES["upfile"]["name"]) ? basename($_FILES["upfile"]["name"]) : "";
+	if(strlen($upfile_name)>256){
+		error(MSG015);
+	}
 	$upfile = isset($_FILES["upfile"]["tmp_name"]) ? $_FILES["upfile"]["tmp_name"] : "";
 
 	if($upfile_name && isset($_FILES["upfile"]["error"])){//エラーチェック
@@ -1445,6 +1448,9 @@ function paintform(){
 	$type = newstring(filter_input(INPUT_POST, 'type'));
 	$pwd = newstring(filter_input(INPUT_POST, 'pwd'));
 	$resto = filter_input(INPUT_POST, 'resto',FILTER_VALIDATE_INT);
+	if(strlen($resto)>1000){
+		error(MSG015);
+	}
 	$mode = filter_input(INPUT_POST, 'mode');
 	$picw = filter_input(INPUT_POST, 'picw',FILTER_VALIDATE_INT);
 	$pich = filter_input(INPUT_POST, 'pich',FILTER_VALIDATE_INT);
