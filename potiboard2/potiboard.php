@@ -6,7 +6,7 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board EVO
 // バージョン :
-define('POTI_VER','v3.10.3');
+define('POTI_VER','v3.10.5');
 define('POTI_LOT','lot.211031'); 
 
 /*
@@ -1462,7 +1462,14 @@ function paintform(){
 	$quality = filter_input(INPUT_POST, 'quality',FILTER_VALIDATE_INT);
 	$no = filter_input(INPUT_POST, 'no',FILTER_VALIDATE_INT);
 	$is_mobile = filter_input(INPUT_POST, 'is_mobile',FILTER_VALIDATE_BOOLEAN);
-	
+
+	if(strlen($pwd) > 72) error(MSG015);
+
+	if($picw < 300) $picw = 300;
+	if($pich < 300) $pich = 300;
+	if($picw > PMAX_W) $picw = PMAX_W;
+	if($pich > PMAX_H) $pich = PMAX_H;
+
 	//Cookie保存
 	setcookie("appletc", $shi , time()+(86400*SAVE_COOKIE));//アプレット選択
 	setcookie("picwc", $picw , time()+(86400*SAVE_COOKIE));//幅
@@ -1589,10 +1596,6 @@ function paintform(){
 		$useneo=$is_mobile;//mobileの時はNEOしか起動しない。
 	}
 
-	if($picw < 300) $picw = 300;
-	if($pich < 300) $pich = 300;
-	if($picw > PMAX_W) $picw = PMAX_W;
-	if($pich > PMAX_H) $pich = PMAX_H;
 	if(!$useneo && $shi){
 	$w = $picw + 510;//しぃぺの時の幅
 	$h = $pich + 120;//しぃぺの時の高さ

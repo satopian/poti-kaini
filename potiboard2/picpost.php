@@ -64,10 +64,6 @@ if($lang==="ja"){//ブラウザの言語が日本語の時
 defined('PERMISSION_FOR_LOG') or define('PERMISSION_FOR_LOG', 0600); //config.phpで未定義なら0600
 defined('PERMISSION_FOR_DEST') or define('PERMISSION_FOR_DEST', 0606); //config.phpで未定義なら0606
 
-//タイムゾーン config.phpで未定義ならAsia/Tokyo
-defined('DEFAULT_TIMEZONE') or define('DEFAULT_TIMEZONE','Asia/Tokyo');
-date_default_timezone_set(DEFAULT_TIMEZONE);
-
 //容量違反チェックをする する:1 しない:0
 define('SIZE_CHECK', '1');
 //投稿容量制限 KB
