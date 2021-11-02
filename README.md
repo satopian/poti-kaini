@@ -306,7 +306,6 @@ CheerpJの起動に必要なJavaScriptのurlをpotiboard.phpで管理するよ�
 ### [2021/02/17] v2.26.2 lot.210217.0
 
 - E_WARNINGレベルのエラーが発生していたのを修正 (by さとぴあ)
-  - いまのところは些細な問題ですが今後のために。詳しくは[こちら](https://github.com/sakots/poti-kaini/pull/192)
   - `potiboard.php`のほかに`picpsot.php`に変更があります。
 
 ### [2021/02/15] v2.26.1 lot.210215.0
@@ -479,7 +478,7 @@ potiboard.php、picpost.php、search.php のアップデートをお願いしま
 ### [2020/11/25] v2.20.0 lot.201123
 
 - 続きを描いた時の描画時間を合計表示に
-  - 従来は1時間10分2秒+2分6秒のように+で描画時間をつないでいましたが、1時間12分8秒のような描画時間の合計になります。従来の表記も選択可能です。くわしくは[こちら](https://github.com/sakots/poti-kaini/pull/151)
+  - 従来は1時間10分2秒+2分6秒のように+で描画時間をつないでいましたが、1時間12分8秒のような描画時間の合計になります。従来の表記も選択可能です。
 - 今回更新が必要なファイルは、`potiboard.php`、`thumbnail_gd.php`（できれば）、`config.php`（設定を変更したい場合のみ）です。
 
 ### [2020/11/22] v2.19.5 lot.201121
@@ -504,7 +503,6 @@ potiboard.php、picpost.php、search.php のアップデートをお願いしま
 ### [2020/11/11] v2.19.0 lot.201110
 
 - 未投稿画像からの投稿でもレス先への投稿になるように(by さとぴあ)
-  - 詳しくは[こちら](https://github.com/sakots/poti-kaini/pull/145)
   - potiboard.phpとpicpost.phpの更新が必要です。
 
 ### [2020/11/08] v2.18.11 lot.201108
@@ -540,7 +538,6 @@ potiboard.php、picpost.php、search.php のアップデートをお願いしま
 ### [2020/10/09] v2.18.3 lot.201008
 
 - 画像なしのチェックボックスによるチェックは面倒なので、その機能を使用しないオプションを追加(by さとぴあ)
-  - 詳しくは[こちら](https://github.com/sakots/poti-kaini/pull/136)
 
 ### [2020/10/02] v2.18.2 lot.201002
 
@@ -569,12 +566,10 @@ potiboard.php、picpost.php、search.php のアップデートをお願いしま
 
 - パレット切り替え機能でパレット名を任意に設定できるように(by さとぴあ)
   - potiboard.phpとconfig.phpに変更があります
-  - 詳しくは[こちら](https://github.com/sakots/poti-kaini/pull/131)
 
 ### [2020/09/08] v2.17.0 lot.200908
 
 - 記事編集しても投稿日時を変更しないようにする設定をconfig.phpに追加他(by さとぴあ)
-  - 詳しくは[こちら](https://github.com/sakots/poti-kaini/pull/130)
   - potiboard.php、config.php、thumbnail_gd.php に変更があります。
 
 ### [2020/09/06] v2.16.3 lot.200906
@@ -635,7 +630,6 @@ potiboard.php、picpost.php、search.php のアップデートをお願いしま
 ### [2020/08/23] v.2.12.8 lot.200823
 
 - $pictmp,$picfileを関数内に移動。カタログモードの時の画像のHTMLHTMLの幅と高さを出力できるようにした。(by さとぴあ)
-  - くわしくは[こちら](https://github.com/sakots/poti-kaini/pull/112)
 
 
 ### [2020/08/18] v.2.12.6 lot.200822
@@ -653,7 +647,6 @@ potiboard.php、picpost.php、search.php のアップデートをお願いしま
 ### [2020/08/17] v.2.12.3 lot.200817
 
 - ソースコード整理(by きつねこ)
-  - くわしくは[こちら](https://github.com/sakots/poti-kaini/pull/107)
 
 ### [2020/08/13] v2.12.0 lot.200813
 
@@ -754,16 +747,14 @@ potiboard.php、picpost.php、search.php のアップデートをお願いしま
 ### [2020/07/12] v2.7.4 lot.200711
 
 - 規定容量を超えるとJPEGに変換、JPEGとPNGを比較してファイルサイズが小さなほうを出力(by さとぴあ)
-  - くわしくは[こちら](https://github.com/sakots/poti-kaini/pull/51)
 
 ### [2020/07/10]
 
-- テーマ開発用のファイルを削除しリポジトリを分離[poti-kaini-themes](https://github.com/sakots/poti-kaini-themes)
+- テーマ開発用のファイルを削除しリポジトリを分離[poti-kaini-themes](https://github.com/satopian/poti-kaini-themes)
 
 ### [2020/07/10] v2.7.3 lot.200708
 
 - 投稿されたPNG画像が指定kbを超えた時にJPEG化する処理の調整(by さとぴあ)
-  - くわしくは[こちら](https://github.com/sakots/poti-kaini/pull/50)
 
 ### [2020/07/05] v2.7.2 lot.200704
 
