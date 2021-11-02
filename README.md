@@ -50,6 +50,7 @@ potiboard2ディレクトリをアップロードして、アップロードし�
 config.phpの最初の数行に必須設定項目がありますので、変更してください。  
 [お絵かき掲示板簡単設置方法](http://stp.sblo.jp/article/185357941.html)
 
+
 ## サンプル/サポート
 
 [お絵かき掲示板PHPスクリプトPOTI-board改公式サイト](https://paintbbs.sakura.ne.jp/poti/)と、[設置サポート掲示板](https://paintbbs.sakura.ne.jp/cgi/neosample/support/) をオープンしました。ご利用ください。  
@@ -66,6 +67,13 @@ config.phpの最初の数行に必須設定項目がありますので、変更�
 [potiboard_plugin: お絵かき掲示板 POTI-boardのための外部phpプログラム](https://github.com/satopian/potiboard_plugin)  
 パレットデータ(やこうさんパレット)、BBSNoteのログファイルをPOTI-board形式に変換するログコンバータなどがあります。
 
+## 独自タグ
+
+HTMLタグの旧独自タグも廃止してしまいましたが、urlの自動リンクは使えます。  
+また、マークダウン形式のテキストリンクも使えます。
+
+`[テキストリンク](https://example.com/)`と書くと  
+[テキストリンク](https://example.com/)のようなテキストリンクを作成できます。
 
 ## 履歴
 
