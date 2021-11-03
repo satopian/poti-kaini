@@ -15,7 +15,7 @@ English translated version is here. [POTI-board EVO-EN](https://github.com/satop
 
 v3.10.1以上の`potiboard.php`の上書きアップデートをお願いします。  
 古いバージョンv2.x系統を利用されている方へ。  
-`potiboard.php`の上書きアップデートお願いいたします。`potiboard.php`の上書きアップデートのみでも上記2つの大きな問題への対処になります。  
+`potiboard.php`の上書きアップデートお願いいたします。`potiboard.php`の上書きアップデートのみでも上記2つの大きな問題に対応できます。
 
 ## 概要
 
