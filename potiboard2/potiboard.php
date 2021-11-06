@@ -169,7 +169,7 @@ defined('THE_SCREEN_CHANGES') or define('THE_SCREEN_CHANGES', '画面を切り�
 defined('MSG044') or define('MSG044', '最大ログ数が設定されていないか、数字以外の文字列が入っています。');
 defined('MSG045') or define('MSG045', 'アップロードペイントに対応していないファイルです。<br>対応フォーマットはpch、spch、chiです。');
 defined('MSG046') or define('MSG046', 'パスワードが短すぎます。最低6文字。');
-defined('MSG047') or define('MSG047', 'キャンバスサイズが大きすぎるため続行できません。');
+defined('MSG047') or define('MSG047', '画像の幅と高さが大きすぎるため続行できません。');
 
 $ADMIN_PASS=isset($ADMIN_PASS) ? $ADMIN_PASS : false; 
 if(!$ADMIN_PASS){
