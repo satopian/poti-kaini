@@ -6,8 +6,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board EVO
 // バージョン :
-define('POTI_VER','v3.11.0');
-define('POTI_LOT','lot.211104'); 
+define('POTI_VER','v3.11.1');
+define('POTI_LOT','lot.211105'); 
 
 /*
   (C) 2018-2021 POTI改 POTI-board redevelopment team
@@ -1686,12 +1686,13 @@ function paintform(){
 		$usercode.='&repcode='.$repcode;
 	}
 
+	$dat['usercode'] = $usercode;
+
 	//Cookie保存
 	setcookie("appletc", $shi , time()+(86400*SAVE_COOKIE));//アプレット選択
 	setcookie("picwc", $picw , time()+(86400*SAVE_COOKIE));//幅
 	setcookie("pichc", $pich , time()+(86400*SAVE_COOKIE));//高さ
 
-	$dat['usercode'] = $usercode;
 	htmloutput(SKIN_DIR.PAINTFILE,$dat);
 }
 
@@ -2152,15 +2153,16 @@ function replace(){
 			$message = UPLOADED_OBJECT_NAME.UPLOAD_SUCCESSFUL."<br><br>";
 
 			$trees=file(TREEFILE);
-			$tree_nos=[];
-			$oya=[];
-			foreach ($trees as $tree) {
-				$tree_nos = explode(',', trim($tree));
-				$oya[$tree_nos[0]] = true ; //キーにres no、値にoya no
-			}
 
-			$max_w = !(isset($oya[$no])) ? MAX_RESW : MAX_W;
-			$max_h = !(isset($oya[$no])) ? MAX_RESH : MAX_H;
+			$oya=false;
+			foreach ($trees as $tree) {
+				if (strpos(trim($tree) . ',', $no . ',') === 0) {
+					$oya=true;
+					break;
+				}
+			}
+			$max_w = $oya ? MAX_W : MAX_RESW ;
+			$max_h = $oya ? MAX_H : MAX_RESH ;
 			list($w,$h)=image_reduction_display($w,$h,$max_w,$max_h);
 	
 			//サムネイル作成
