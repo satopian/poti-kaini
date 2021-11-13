@@ -11,7 +11,7 @@ English translated version is here. [POTI-board EVO-EN](https://github.com/satop
 
 ## 古いバージョンに存在する重大なバグ
 - v2.26.0以前のPOTI-boardにはXSSの脆弱性があります。
-- v3.09.5以前のPOTI-boardのすべてのバージョンには重大な欠陥があります。  
+- v3.09.5以前のPOTI-boardのすべてのバージョンにはログファイルを失う可能性がある重大な欠陥があります。  
 
 v3.10.1以上の`potiboard.php`の上書きアップデートをお願いします。  
 古いバージョンv2.x系統を利用されている方へ。  
