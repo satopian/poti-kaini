@@ -76,11 +76,6 @@ HTMLタグの旧独自タグも廃止してしまいましたが、urlの自動�
 [テキストリンク](https://example.com/)のようなテキストリンクを作成できます。
 
 ## 履歴
-Commits on Nov 6, 2021
-defined('MSG047') or define('MSG047', '画像の幅と高さが大きすぎるため続行できません。');
-
-@satopian
-satopian committed 5 days ago
 
 ## [2021/10/31] v3.12.2
 
