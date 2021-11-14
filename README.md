@@ -10,7 +10,7 @@ English translated version is here. [POTI-board EVO-EN](https://github.com/satop
   
 
 ## 古いバージョンに存在する重大なバグ
-- v2.26.0以前のPOTI-boardにはXSSの脆弱性があります。  
+- [v2.26.0以前のPOTI-boardにはXSSの脆弱性があります。](https://github.com/satopian/poti-kaini/issues/11)  
 悪意のあるJavaScriptが実行される可能性があります。
 
 - v3.09.5以前のPOTI-boardのすべてのバージョンには重大な欠陥があります。  
