@@ -10,8 +10,11 @@ English translated version is here. [POTI-board EVO-EN](https://github.com/satop
   
 
 ## 古いバージョンに存在する重大なバグ
-- v2.26.0以前のPOTI-boardにはXSSの脆弱性があります。
+- [v2.26.0以前のPOTI-boardにはXSSの脆弱性があります。](https://github.com/satopian/poti-kaini/issues/11)  
+悪意のあるJavaScriptが実行される可能性があります。
+
 - v3.09.5以前のPOTI-boardのすべてのバージョンには重大な欠陥があります。  
+すべてのログファイルを失う可能性があります。  
 
 v3.10.1以上の`potiboard.php`の上書きアップデートをお願いします。  
 古いバージョンv2.x系統を利用されている方へ。  
@@ -63,13 +66,26 @@ config.phpの最初の数行に必須設定項目がありますので、変更�
 `PINK`と`MONO`2種類のテーマを同梱しました。  
 また、[MONO_DEV](https://github.com/sakots/poti-EVO-themes)や[themeparty](https://github.com/boxfries/themeparty)を各作者のページからダウンロードして使う事もできます。
 
+#### デフォルトtheme MONOの配色の変更について
+MONOのHTMLとCSSをv3.07.5で大幅に更新しました。   
+そのためv3.07.5より古いCSSファイルを使用すると一部のデザインが正しく表示されなくなります。  
+たとえば、フッターやカタログの見た目が意図通りになりません。  
+その場合は、カスタマイズしたCSSファイルと同じ配色のCSSと同じになるように作り直す必要があります。
+もし配色のみを変更したいのであれば、開発のためのSCSSのリポジトリもありますのでご利用ください。
+
+[satopian/poti-kaini-themes: MONO for POTI-board EVO](https://github.com/satopian/poti-kaini-themes)
+
+配色とその他のデザインに設定が分かれているため、配色を容易に変更できます。  
+ただし、SCSSが扱える環境が必要です。
+たとえば無料の[Visual Studio Code – コード エディター](https://azure.microsoft.com/ja-jp/products/visual-studio-code/)とその拡張機能である[Live Sass Compiler](https://marketplace.visualstudio.com/items?itemName=ritwickdey.live-sass)をそろえる必要があります。
+
 ## 外部プログラム
 [potiboard_plugin: お絵かき掲示板 POTI-boardのための外部phpプログラム](https://github.com/satopian/potiboard_plugin)  
 パレットデータ(やこうさんパレット)、BBSNoteのログファイルをPOTI-board形式に変換するログコンバータなどがあります。
 
 ## 独自タグ
 
-HTMLタグの旧独自タグも廃止してしまいましたが、urlの自動リンクは使えます。  
+HTMLタグも旧独自タグも廃止してしまいましたが、urlの自動リンクは使えます。  
 また、マークダウン形式のテキストリンクも使えます。
 
 `[テキストリンク](https://example.com/)`と書くと  
@@ -77,7 +93,7 @@ HTMLタグの旧独自タグも廃止してしまいましたが、urlの自動�
 
 ## 履歴
 
-## [2021/10/31] v3.12.2
+## [2021/11/08] v3.12.2
 
 ### potiboard.phpの更新内容
 
@@ -110,7 +126,7 @@ picpost.phpとsave.phpのアップデートをお願いします。
 ## [2021/10/27] v3.10.0 重大バグ修正
 
 - 従来のすべてのバージョンのPOTI-boardに存在する重大な欠陥が見つかりました。  
-urlの長さのチェックが入っていませんでした。早急に最新版にバージョンアップしてくださいますようお願いいたします。  
+すべてのログファイルを失う可能性があります。早急に最新版にバージョンアップしてくださいますようお願いいたします。  
 - POTI-board v2(改二)を利用されている方へ。   
 `potiboard.php`の差し換えのみではv3系統の全機能を使う事はできませんが、この問題に対処する事はできます。  
 `potiboard.php`の上書きアップデートをお願いします。  
