@@ -168,7 +168,7 @@
 						<input type="hidden" name="mode" value="regist">
 						<% def(resno) %><input type="hidden" name="resto" value="<% echo(resno) %>"><% /def %>
 						<input type="hidden" name="MAX_FILE_SIZE" value="<% echo(maxbyte) %>">
-						<table summary="投稿フォーム">
+						<table>
 							<tr>
 								<td>Name<% def(usename) %><% echo(usename) %><% /def %></td>
 								<td><input class="form" type="text" name="name" size="28" value="" autocomplete="username"></td>
@@ -207,7 +207,7 @@
 							<% /def %>
 							<tr>
 								<td>Pass</td>
-								<td><input class="form" type="password" name="pwd" size="8" value="" autocomplete="current-password"><small>記事の削除に必要</small></td>
+								<td><input class="form" type="password" name="pwd" size="8" value="" autocomplete="current-password"><small>(記事の編集削除用)</small></td>
 							</tr>
 						</table>
 						<ul>
@@ -251,10 +251,12 @@
 						</div>
 						<figure>
 							<% def(oya/thumb) %>
-							<a href="<% echo(oya/src) %>" target="_blank" title="<% echo(oya/sub) %>" rel="noopener"><img src="<% echo(oya/imgsrc) %>" alt="<% echo(oya/srcname) %>" width="<% echo (oya/w) %>" height="<% echo (oya/h) %>" loading="lazy"></a>
-							<% elsedef %>
-							<img src="<% echo(oya/imgsrc) %>" alt="<% echo(oya/srcname) %>" title="<% echo(oya/sub) %>" width="<% echo (oya/w) %>" height="<% echo (oya/h) %>" loading="lazy">
-							<% /def %>
+							<a href="<% echo(oya/src) %>" target="_blank" rel="noopener">
+							<% /def %>	
+								<img src="<% echo(oya/imgsrc) %>" alt="<% echo (oya/sub) %> by <% echo (oya/name) %>" title="<% echo (oya/sub) %> by <% echo (oya/name) %>" width="<% echo (oya/w) %>" height="<% echo (oya/h) %>" loading="lazy">
+								<% def(oya/thumb) %>
+								</a>
+								<% /def %>
 						</figure>
 						<% /def %>
 						<div class="res">
@@ -283,11 +285,14 @@
 										<a href="<% echo(self) %>?mode=continue&amp;no=<% echo(oya/res/continue) %>">●続きを描く</a><% /def %><% def(oya/res/pch) %> <a href="<% echo(self) %>?mode=openpch&amp;pch=<% echo(oya/res/pch) %>" target="_blank">●動画</a><% /def %>
 									</figcaption>
 									<% def(oya/res/thumb) %>
-									<a href="<% echo(oya/res/src) %>" title="<% echo(oya/res/sub) %>" target="_blank"><img src="<% echo(oya/res/imgsrc) %>" width="<% echo (oya/res/w) %>" height="<% echo (oya/res/h) %>" alt="<% echo(oya/res/srcname) %>" loading="lazy"></a>
-									<% elsedef %>
-									<img src="<% echo(oya/res/imgsrc) %>" alt="<% echo(oya/res/srcname) %>" title="<% echo(oya/res/sub) %>" width="<% echo (oya/res/w) %>" height="<% echo (oya/res/h) %>" loading="lazy">
+									<a href="<% echo(oya/res/src) %>"  target="_blank">
 									<% /def %>
-								</figure>
+									<img src="<% echo(oya/res/imgsrc) %>" alt="<% echo(oya/res/sub) %> by <% echo(oya/res/name) %>" title="<% echo(oya/res/sub) %> by <% echo(oya/res/name) %>" width="<% echo (oya/res/w) %>" height="<% echo (oya/res/h) %>" loading="lazy">
+									<% def(oya/res/thumb) %>
+										</a>
+										<% /def %>
+
+									</figure>
 								<% /def %>
 								<div class="comment_wrap">
 									<p><% echo(oya/res/com) %></p>

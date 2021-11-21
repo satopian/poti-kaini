@@ -354,7 +354,7 @@
 								PaintTime :
 								<input type="text" size="24" name="count">
 							</p>
-							<script type="text/javascript">
+							<script>
 								timerID = 10;
 								stime = new Date();
 								function SetTimeCount() {
@@ -553,7 +553,8 @@
 			<script type="text/javascript" src="loadcookie.js"></script>
 				<div class="thread">
 					<figure>
-						<img src="<% echo(picfile) %>">
+						<img src="<% echo(picfile) %>" width="<% echo(picw) %>" height="<% echo(pich) %>" alt="<% def(sub)%><% echo(sub)%> <% /def %><% def(name)%>by <% echo(name)%> <% /def %><% echo(picw) %>x<% echo(pich) %>" title="<% def(sub)%><% echo(sub)%> <% /def %><% def(name)%>by <% echo(name)%> <% /def %><% echo(picw) %>x<% echo(pich) %>">
+						
 						<figcaption><% echo(picfile) %><% def(painttime) %> PaintTime : <% echo(painttime) %><% /def %></figcaption>
 					</figure>
 					<hr class="hr">

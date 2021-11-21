@@ -504,7 +504,7 @@ if(is_mobile()){
     <Script src="loadcookie.js"></script>
     <% ========== 画像と描画時間 ========== %>
  	<div class="continue_img">
-<img src="<% echo(picfile) %>" width="<% echo(picw) %>" height="<% echo(pich) %>" alt="<% echo(picw) %>x<% echo(pich) %> <% echo(title) %>" title="<% echo(picw) %>x<% echo(pich) %> <% echo(title) %>">
+<img src="<% echo(picfile) %>" width="<% echo(picw) %>" height="<% echo(pich) %>" alt="<% def(sub)%><% echo(sub)%> <% /def %><% def(name)%>by <% echo(name)%> <% /def %><% echo(picw) %>x<% echo(pich) %>" title="<% def(sub)%><% echo(sub)%> <% /def %><% def(name)%>by <% echo(name)%> <% /def %><% echo(picw) %>x<% echo(pich) %>">
    </div>
     <div class="continue_painttime"><% def(painttime) %>描画時間：<% echo(painttime) %><% /def %></div>
     <% ========== コンティニューフォーム欄 ========== %>
