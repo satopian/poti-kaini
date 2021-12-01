@@ -44,10 +44,14 @@
 	}
 </style>
 <script>
-	function load() {
-	document.addEventListener("dblclick", function(e){ e.preventDefault();}, { passive: false });
-	}
-	window.onload = load;
+	function fixchicken() {
+		document.addEventListener("dblclick", function(dble){ dble.preventDefault()}, { passive: false });
+		document.querySelector('#chickenpaint-parent').addEventListener('contextmenu', function (conte){
+			conte.preventDefault();
+			conte.stopPropagation();
+		}, { passive: false });
+		}
+	window.addEventListener('DOMContentLoaded',fixchicken,false);
 </script>
  
 <script src="chickenpaint/js/chickenpaint.min.js<% def(parameter_day) %>?<% echo(parameter_day)%><% /def %>"></script>
@@ -378,7 +382,8 @@ pe[n]}}function GradView(a,f){d=document}function showHideLayer(){d=document;var
 <option selected>12</option>
 <option>13</option>
 <option>14</option>
-</SELECT><input type="text" name="ped" size="8" onKeyPress="Chenge_()" onChange="Chenge_()"><div id=psft style="position:absolute;width:100px;height:30px;z-index:1;left:5px;top:10px;"></div>
+</SELECT><input type="text" name="ped" size="8" onKeyPress="Chenge_()" onChange="Chenge_()">
+<div id="psft"></div>
 </FORM></div>
 <Script>
 if(DynamicColor) PaletteListSetColor();

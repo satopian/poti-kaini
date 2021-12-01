@@ -844,6 +844,7 @@ input.pch_upload {
 
 .palette_select {
 	margin: 2px 0;
+	max-width: 100%;
 	min-width: 130px;
 }
 
