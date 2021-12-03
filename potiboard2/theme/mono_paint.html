@@ -54,10 +54,25 @@
 		<% def(useneo) %>
 		<link rel="stylesheet" href="neo.css<% def(parameter_day) %>?<% echo(parameter_day)%><% /def %>" type="text/css">
 		<script src="neo.js<% def(parameter_day) %>?<% echo(parameter_day)%><% /def %>" charset="UTF-8"></script>
+		<script>
+			function fixneo() {
+		
+				if(screen.width>767){//iPad以上の横幅の時は、NEOの網目のところでtouchmoveしない。
+					console.log(screen.width);
+					document.querySelector('#NEO').addEventListener('touchmove', function (e){
+						e.preventDefault();
+						e.stopPropagation();
+					}, { passive: false });
+				}
+			}
+			window.addEventListener('DOMContentLoaded',fixneo,false);
+		</script>
 		<% /def %>
 		<% def(pch_mode) %>
+		<% def(type_neo) %>
 		<link rel="stylesheet" href="neo.css<% def(parameter_day) %>?<% echo(parameter_day)%><% /def %>" type="text/css">
 		<script src="neo.js<% def(parameter_day) %>?<% echo(parameter_day)%><% /def %>" charset="UTF-8"></script>
+		<% /def %>
 		<% /def %>
 		<% def(chickenpaint)%>
 		<style>
@@ -103,8 +118,8 @@
 		window.addEventListener("load", function() { cheerpJLoad(); }, false);
 
 		</script>
-		<% /def %>
 
+	<% /def %>
 		
 		<title><% echo(title) %></title>
 		<style id="for_mobile"></style>
