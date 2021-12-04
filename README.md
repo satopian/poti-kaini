@@ -94,6 +94,65 @@ HTMLタグも旧独自タグも廃止してしまいましたが、urlの自動�
 
 ## 履歴
 
+## [2021/12/04] v3.15.3
+- 新規設置の時に必要なindex.phpを更新しました。  
+PHPのバージョンがPHP5.3以下の時にもPHPのバージョンが古い事が原因で動作しない事をエラーメッセージで表示するようにしました。  
+これまでは、致命的エラーになっていました。  
+そのため設置が成功しない原因がわからなくなっていました。    
+- ChickenPaintのパレットを長押しした時にコンテキストメニュー(名前を付けて保存ほか)が開く問題に対応
+ChickenPaintのパレットをペンで長押しした時に、不要なマウスの右クリックメニューが開いてしまう問題に対応しました。  
+この問題はwindows inkをonにしている時や、Apple Pencil、またはスマホなどで発生していました。
+各テーマのPaint画面のテンプレートにJavaScriptを追加する形で対応しましたので、Paint画面のテーマの更新をお願いします。  
+また、同梱したテーマは対応ずみですが、他の作者の方が作成したテーマはまだ未対応かもしれませんし、今後も対応しないかもしれません。  
+その場合は各作者の方に対応してもらうか、自分でコードを追加するなどの対応をお願いします。
+```
+<script>
+	function fixchicken() {
+		document.addEventListener('dblclick', function(e){ e.preventDefault()}, { passive: false });
+		document.querySelector('#chickenpaint-parent').addEventListener('contextmenu', function (e){
+			e.preventDefault();
+			e.stopPropagation();
+		}, { passive: false });
+		}
+	window.addEventListener('DOMContentLoaded',fixchicken,false);
+</script>
+
+```
+(同梱テーマは対応ずみ)
+
+- PaintBBS NEOで、コピーやレイヤー結合を行う時に画面が上下に動く問題に対応しました。  
+長方形の選択を行う事でコピーやレイヤー結合の操作を行うため、キャンバスからペンが少しはみ出る操作になる事があります。  
+この時にNEOのキャンバスが上下に動く事があります。  
+windows inkや、Apple Pencilを使っている時に発生します。  
+iPad以上の画面の横幅を検出した時にはNEOのキャンバスの周囲の網目の上でスワイプしても画面が動かなくなるようにしました。  
+スマホの時は従来と同じ動作としました。ピンチアウトでキャンバスを拡大したときにスワイプできなくなると操作不能に陥るからです。  
+こちらも、同梱テーマのみの対応になる可能性があります。  
+その場合は各作者の方に対応してもらうか、自分でコードを追加するなどの対応をお願いします。  
+```
+<script>
+	function fixneo() {
+
+		if(screen.width>767){//iPad以上の横幅の時は、NEOの網目のところでtouchmoveしない。
+			console.log(screen.width);
+			document.querySelector('#NEO').addEventListener('touchmove', function (e){
+				e.preventDefault();
+				e.stopPropagation();
+			}, { passive: false });
+		}
+	}
+	window.addEventListener('DOMContentLoaded',fixneo,false);
+</script>
+
+```
+(同梱テーマは対応ずみ)
+
+- picpost.php  
+エラーメッセージの日本語･英語自動切り替えがiPadの`ja-jp`に対応していなかったを修正しました。  
+これまでは、iPadまたは`ja-jp`を返す端末でエラーが発生した時に英語のエラーメッセージが表示されていました。
+
+リリースから安定版をダウンロードできます。  
+[POTI-board EVO v3.15.3 リリース](https://github.com/satopian/poti-kaini/releases/tag/v3.15.3)
+
 ## [2021/11/23] v3.15.2
 ### `potiboard.php`の更新内容
 
