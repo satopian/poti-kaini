@@ -64,7 +64,8 @@ config.phpの最初の数行に必須設定項目がありますので、変更�
 
 この掲示板はテーマを入れ替える事ができます。  
 `PINK`と`MONO`2種類のテーマを同梱しました。  
-また、[MONO_DEV](https://github.com/sakots/poti-EVO-themes)や[themeparty](https://github.com/boxfries/themeparty)を各作者のページからダウンロードして使う事もできます。
+また、[MONO_DEV](https://github.com/sakots/poti-EVO-themes)や[themeparty](https://github.com/boxfries/themeparty)を各作者のページからダウンロードして使う事もできます。  
+しかし、こちらで動作確認をしているのは同梱のテーマのみとなります。各テーマの使用時に発生する問題は各テーマの作者の方に連絡して対応してもらってください。  
 
 #### デフォルトtheme MONOの配色の変更について
 MONOのHTMLとCSSをv3.07.5で大幅に更新しました。   
