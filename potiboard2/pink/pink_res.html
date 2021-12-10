@@ -404,8 +404,27 @@ PMAX_H //高さ
 <% elsedef %>
 	<hr>
 <% /def %>
-
+<hr>
 <footer>
+	<nav>
+		<div class="pagelink pcdisp">
+		<% def(res_prev) %><a href="<% echo (self) %>?res=<% echo (@res_prev/no) %>">≪<% echo (@res_prev/substr_sub) %></a><% /def %> 
+		<div class="pagelink_top"><a href="<% echo (self2) %>">掲示板トップ</a></div>
+		<% def(res_next) %><a href="<% echo (self) %>?res=<% echo (@res_next/no) %>"><% echo (@res_next/substr_sub) %>≫</a><% /def %>
+		</div>
+		<div class="mobiledisp">
+			<% def(res_prev) %>
+			前のスレッド: <a href="<% echo (self) %>?res=<% echo (@res_prev/no) %>"><% echo (@res_prev/sub) %></a>
+			<br>
+			<% /def %>
+			<% def(res_next) %>
+			次のスレッド: <a href="<% echo (self) %>?res=<% echo (@res_next/no) %>"><% echo (@res_next/sub) %></a>
+			<br>
+			<% /def %>
+			<a href="<% echo (self2) %>">掲示板トップ</a>
+		</div>
+	</nav>
+		
 <% ========== メンテナンスフォーム欄 ========== %>
 <form action="<% echo (self) %>" method="post">
 <div class="mente_wrap">

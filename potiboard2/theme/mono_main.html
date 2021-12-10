@@ -346,13 +346,22 @@
 		</main>
 		<footer id="footer">
 			<div>
-				<% def(notres) %>
+		
+
 				<p class="page">
+					<% def(resno) %>
+
+					<% def(res_prev) %><span><a href="<% echo (self) %>?res=<% echo (@res_prev/no) %>">≪<% echo (@res_prev/substr_sub) %></a> |</span><% /def %> 
+					<% def(res_next) %><span><a href="<% echo (self) %>?res=<% echo (@res_next/no) %>"><% echo (@res_next/substr_sub) %>≫</a></span><% /def %>
+
+					<% /def %>
+		
+					<% def(notres) %>
 					<% def(prev) %><a href="<% echo(prev) %>">≪BACK</a> |<% /def %> <% def(next) %><a href="<% echo(next) %>">NEXT≫</a> <% /def %>
 					<% echo(paging) %>
+					<% /def %>
 					
 				</p>
-				<% /def %>
 				<form class="delf" action="<% echo(self) %>" method="post">
 					<p>
 						No <input class="form" type="number" min="1" name="del[]" value="" autocomplete="off">
