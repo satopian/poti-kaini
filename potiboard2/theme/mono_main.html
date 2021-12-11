@@ -306,39 +306,14 @@
 						</div>
 						<div class="thfoot">
 							<hr>
-							<% if(resform,==,false) %>
-							<% def(oya/skipres) %>
-							レス<% echo(oya/skipres) %>件省略。すべて見るには返信ボタンをクリックしてください。
-							<% /def %>
 							<% def(sharebutton) %>
 							<span class="share_button">
 								<a target="_blank" href="https://twitter.com/intent/tweet?&text=%5B<% echo(oya/no|urlencode) %>%5D%20<% def(oya/share_sub)%><% echo(oya/share_sub) %><% else %><% echo(oya/sub|urlencode) %><% /def %>%20by%20<% def(oya/share_name)%><% echo(oya/share_name) %><% else %><% echo(oya/name|urlencode) %><% /def %>%20-%20<% echo(title|urlencode) %>&url=<% echo(rooturl|urlencode) %><% echo(self|urlencode) %>?res=<% echo(oya/no|urlencode) %>"><span class="icon-twitter button"><img src="<% echo(skindir) %>img/twitter.svg" alt=""> tweet</span></a>
 								<a target="_blank" class="fb btn" href="http://www.facebook.com/share.php?u=<% echo(rooturl|urlencode) %><% echo(self|urlencode) %>?res=<% echo(oya/no|urlencode) %>"><span class="icon-facebook2 button"><img src="<% echo(skindir) %>img/facebook.svg" alt=""> share</span></a>
 							</span>
-								<% /def %>
-							<% def(notres) %><span class="button"><a href="<% echo(self) %>?res=<% echo(oya/no) %>"><img src="<% echo(skindir) %>img/rep.svg" alt=""> 返信</a></span> <a href="#header" title="一番上へ">[↑]</a><% /def %>
-							<% /if %>
-							<% def(resform) %>
-							<% def(oya/disp_resform) %>
-							<form class="resform" action="<% echo(self) %>" method="post" enctype="multipart/form-data">
-								<input type="hidden" name="mode" value="regist">
-								<input type="hidden" name="resto" value="<% echo(oya/no) %>">
-								<input type="hidden" name="textonly" value="on">
-								<label>name<% def(usename) %><% echo(usename) %><% /def %> <input class="form" type="text" name="name" size="20" value="" autocomplete="username"></label>
-								<label>sub<% def(usesub) %><% echo(usesub) %><% /def %> <input class="form" type="text" name="sub" size="18" value="<% def(oya/resub) %><% echo(oya/resub) %><% /def %>" autocomplete="section-sub"></label><br>
-								<label>URL <input class="form" type="text" name="url" size="20" autocomplete="url"></label>
-								<label>mail <input class="form" type="text" name="email" size="8" autocomplete="email"></label><br>
-								<textarea class="form" name="com" cols="56" rows="3" wrap="soft"></textarea><br>
-								<label>Pass <input class="form" type="password" name="pwd" size="8" value="" autocomplete="current-password"></label>
-								<input class="button" type="submit" value="返信">
-								<a href="#header" title="一番上へ">[↑]</a>
-							</form>
-							<% elsedef %>
-							<p class="resform">
-								<a href="#header" title="一番上へ">[↑]</a>
-							</p>
 							<% /def %>
-							<% /def %>
+							<% def(notres) %><span class="button"><a href="<% echo(self) %>?res=<% echo(oya/no) %>"><img src="<% echo(skindir) %>img/rep.svg" alt=""> 返信</a></span><% /def %></a>
+							<a href="#header" title="上へ">[&uarr;]
 						</div>
 				</div>
 				<% /each %>
@@ -348,20 +323,27 @@
 			<div>
 		
 
-				<p class="page">
 					<% def(resno) %>
-
-					<% def(res_prev) %><span><a href="<% echo (self) %>?res=<% echo (@res_prev/no) %>">≪<% echo (@res_prev/substr_sub) %></a> |</span><% /def %> 
-					<% def(res_next) %><span><a href="<% echo (self) %>?res=<% echo (@res_next/no) %>"><% echo (@res_next/substr_sub) %>≫</a></span><% /def %>
-
-					<% /def %>
-		
-					<% def(notres) %>
-					<% def(prev) %><a href="<% echo(prev) %>">≪BACK</a> |<% /def %> <% def(next) %><a href="<% echo(next) %>">NEXT≫</a> <% /def %>
-					<% echo(paging) %>
-					<% /def %>
-					
-				</p>
+					<div class="pcdisp page">
+						<% def(res_prev) %><a href="<% echo (self) %>?res=<% echo (@res_prev/no) %>">≪<% echo (@res_prev/substr_sub) %></a><% /def %>
+						  | <a href="<% echo(self2) %>">Top</a> | 
+						<% def(res_next) %><a href="<% echo (self) %>?res=<% echo (@res_next/no) %>"><% echo (@res_next/substr_sub) %>≫</a><% /def %>
+					</div>
+	
+					<div class="mobiledisp">
+						<% def(res_prev) %>Prev: <a href="<% echo (self) %>?res=<% echo (@res_prev/no) %>"><% echo (@res_prev/sub) %></a><br><% /def %> 
+						<% def(res_next) %>Next: <a href="<% echo (self) %>?res=<% echo (@res_next/no) %>"><% echo (@res_next/sub) %></a><br><% /def %>
+					</div>
+						<% /def %>
+	
+						<% def(notres) %>
+					<div class="page">
+						<% def(prev) %><a href="<% echo(prev) %>">≪Prev</a><% /def %> | <a href="<% echo(self2) %>">Top</a> |
+						<% def(next) %><a href="<% echo(next) %>">Next≫</a> <% /def %><br>
+						<% echo(paging) %>
+					</div>
+						<% /def %>
+						
 				<form class="delf" action="<% echo(self) %>" method="post">
 					<p>
 						No <input class="form" type="number" min="1" name="del[]" value="" autocomplete="off">
@@ -375,7 +357,7 @@
 						</select>
 						<label>[<input type="checkbox" name="onlyimgdel" value="on">ImageOnly]</label>
 						<input class="button" type="submit" value=" OK ">
-						<span class="stylechanger">Color: 
+						<span class="stylechanger">Style: 
 							<select class="form" id="mystyle" onchange="SetCss(this);">
 								<option>MONO</option>
 								<option>Dark</option>
