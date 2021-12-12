@@ -414,14 +414,13 @@ PMAX_H //高さ
 		</div>
 		<div class="mobiledisp">
 			<% def(res_prev) %>
-			前のスレッド: <a href="<% echo (self) %>?res=<% echo (@res_prev/no) %>"><% echo (@res_prev/sub) %></a>
+			前: <a href="<% echo (self) %>?res=<% echo (@res_prev/no) %>"><% echo (@res_prev/sub) %></a>
 			<br>
 			<% /def %>
 			<% def(res_next) %>
-			次のスレッド: <a href="<% echo (self) %>?res=<% echo (@res_next/no) %>"><% echo (@res_next/sub) %></a>
+			次: <a href="<% echo (self) %>?res=<% echo (@res_next/no) %>"><% echo (@res_next/sub) %></a>
 			<br>
 			<% /def %>
-			<a href="<% echo (self2) %>">掲示板トップ</a>
 		</div>
 	</nav>
 		

@@ -889,7 +889,7 @@ input.pch_upload {
 /* レス書き込みの説明 */
 .howtowrite {
 	list-style-type: square;
-	margin-top: 6px;
+	margin: 15px 0;
 }
 
 
@@ -1061,6 +1061,12 @@ input.copy_txt::selection {
 		margin: 1px 1.52% 11px 0;
 	}
 }
+.mobiledisp{
+	display: none;
+}
+.pcdisp{
+	display: block;
+}
 
 @media screen and (max-width: 767px) {
 
@@ -1092,6 +1098,19 @@ input.copy_txt::selection {
 	.catalog_desc_wrap div:nth-of-type(2n) {
 		margin-right: 0;
 	}
+	.mobiledisp {
+		display: block;
+		line-height: 2;
+		display: block;
+		margin: 15px 0;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+	.pcdisp{
+		display: none;
+	}
+
 }
 @media screen and (max-width: 639px) {
 	.palette_type {
