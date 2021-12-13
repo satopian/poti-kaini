@@ -1772,7 +1772,7 @@ function paintcom(){
 	$dat['post_mode'] = true;
 	$dat['regist'] = true;
 	$dat['ipcheck'] = true;//常にtrue
-	if(count($tmp)==0){
+	if(empty($tmp)){
 		$dat['notmp'] = true;
 		$dat['pictmp'] = 1;
 	}else{
