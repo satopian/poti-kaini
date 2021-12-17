@@ -6,8 +6,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board EVO
 // バージョン :
-define('POTI_VER','v3.16.8');
-define('POTI_LOT','lot.211215'); 
+define('POTI_VER','v3.18.1');
+define('POTI_LOT','lot.211217'); 
 
 /*
   (C) 2018-2021 POTI改 POTI-board redevelopment team
@@ -154,6 +154,7 @@ defined('USE_SHI_PAINTER') or define('USE_SHI_PAINTER', '1');
 defined('USE_CHICKENPAINT') or define('USE_CHICKENPAINT', '1');
 //レス画像から新規投稿で続きを描いた画像はレスにする する:1 しない:0
 defined('RES_CONTINUE_IN_CURRENT_THREAD') or define('RES_CONTINUE_IN_CURRENT_THREAD', '1');
+defined('VIEW_OTHER_WORKS') or define('VIEW_OTHER_WORKS', '1');
 
 //パーミッション
 
@@ -684,7 +685,20 @@ function res($resno = 0){
 	$dat['res_next']=$next ? create_res($line[$lineindex[$next]]):[];
 	$prev=(isset($trees[$p])&&$trees[$p]) ? explode(",",trim($trees[$p]))[0]:'';
 	$dat['res_prev']=$prev ? create_res($line[$lineindex[$prev]]):[];
-
+	$dat['view_other_works']=false;
+	if(VIEW_OTHER_WORKS){
+		$a=[];
+		for($j=($i-4);$j<($i+8);++$j){
+			$p=(isset($trees[$j])&&$trees[$j]) ? explode(",",trim($trees[$j]))[0]:'';
+			$b=$p?create_res($line[$lineindex[$p]]):[];
+			if($b&&$b['imgsrc']&&$b['no']!==$resno){
+				$a[]=$b;
+			}
+		}
+		$a=array_slice($a,0,6,false);
+		$dat['view_other_works']=$a;
+	}
+	
 	htmloutput(SKIN_DIR.RESFILE,$dat);
 }
 //マークダウン記法のリンクをHTMLに変換
