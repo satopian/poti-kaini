@@ -151,6 +151,8 @@
 									<% /def %>
 									<% def(rewrite) %>
 									<input type="hidden" name="mode" value="rewrite">
+									<input type="hidden" name="thread_no" value="<% def(thread_no)%><% echo(thread_no)%><% /def %>">
+									<input type="hidden" name="logfilename" value="<% def(logfilename)%><% echo(logfilename)%><% /def %>">
 									<input type="hidden" name="no" value="<% echo(rewrite) %>">
 									<input type="hidden" name="pwd" value="<% echo(pwd) %>">
 									<% /def %>

@@ -22,7 +22,7 @@ define('LOG_MAX', '2000');
 
 define('SKIN_DIR', 'pink/');
 
-//define('SKIN_DIR', 'theme/');
+// define('SKIN_DIR', 'theme/');
 
 //メール通知のほか、シェアボタンなどで使用
 //設置場所のURL。phpのあるディレクトリの'/'まで
