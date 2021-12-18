@@ -6,7 +6,7 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board EVO
 // バージョン :
-define('POTI_VER','v3.18.7');
+define('POTI_VER','v3.18.9');
 define('POTI_LOT','lot.211218'); 
 
 /*
@@ -685,14 +685,14 @@ function res($resno = 0){
 	$dat['view_other_works']=false;
 	if(VIEW_OTHER_WORKS){
 		$a=[];
-		for($j=($i-6);$j<($i+10);++$j){
+		for($j=($i-7);$j<($i+10);++$j){
 			$p=(isset($trees[$j])&&$trees[$j]) ? explode(",",trim($trees[$j]))[0]:'';
 			$b=$p?create_res($line[$lineindex[$p]]):[];
 			if($b&&$b['imgsrc']&&$b['no']!==$resno){
 				$a[]=$b;
 			}
 		}
-		$c=($i<4) ? 0 : (count($a)>8 ? 3 :0);
+		$c=($i<4) ? 0 : (count($a)>9 ? 4 :0);
 		$a=array_slice($a,$c,6,false);
 		$dat['view_other_works']=$a;
 	}
