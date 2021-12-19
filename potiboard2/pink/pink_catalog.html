@@ -100,6 +100,8 @@
 
 <% ========== メンテナンスフォーム欄 ========== %>
 <form action="<% echo (self) %>" method="post">
+<input type="hidden" name="catalog_pageno" value="<% def(catalog_pageno)%><%% (catalog_pageno)%%><% /def %>">	
+<input type="hidden" name="mode_catalog" value="on">	
 <div class="mente_wrap">
 <span class="nk">記事No.<input type="number" min="1" name="del[]" autocomplete="off" class="edit_number"></span>
 <span class="input_disp_none"><input type="text" value="" autocomplete="username"></span>

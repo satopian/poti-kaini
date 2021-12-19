@@ -88,8 +88,6 @@
 			</div>
 		</main>
 		<footer id="footer">
-			<script src="https://code.jquery.com/jquery-1.12.4.min.js" type="text/javascript"></script>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/js/lightbox.min.js" type="text/javascript"></script>
 			<div>
 				<div class="page">
 					<% def(prev) %><a href="<% echo(prev) %>">≪Prev</a><% /def %> | <a href="<% echo(self2) %>">Top</a> |
@@ -97,6 +95,8 @@
 					<% echo(paging) %>
 				</div>
 			<form class="delf" action="<% echo(self) %>" method="post">
+				<input type="hidden" name="catalog_pageno" value="<% def(catalog_pageno)%><%% (catalog_pageno)%%><% /def %>">	
+				<input type="hidden" name="mode_catalog" value="on">
 					<p>
 						No <input class="form" type="number" min="1" name="del[]" value="" autocomplete="off">
 						<span class="input_disp_none"><input type="text" value="" autocomplete="username"></span>

@@ -460,6 +460,9 @@ form.adminin {
   height: auto;
   margin-right: 0.6%;
   display: inline-block;
+  max-height: 200px;
+  overflow: hidden;
+  vertical-align: top;
 }
 
 .view_other_works img {

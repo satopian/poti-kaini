@@ -336,7 +336,7 @@
 					</div>
 					<% def(view_other_works)%>
 					<div class="view_other_works">
-						<% each(view_other_works)%><div><a href="<% echo (self) %>?res=<%%(view_other_works/no)%%>"><img src="<%% (view_other_works/imgsrc)%%>" alt="<%% (view_other_works/sub)%%> by <%% (view_other_works/name)%%>" title="<%% (view_other_works/sub)%%> by <%% (view_other_works/name)%%>"></a></div><% /each %>
+						<% each(view_other_works)%><div><a href="<% echo (self) %>?res=<%%(view_other_works/no)%%>"><img src="<%% (view_other_works/imgsrc)%%>" alt="<%% (view_other_works/sub)%%> by <%% (view_other_works/name)%%>" title="<%% (view_other_works/sub)%%> by <%% (view_other_works/name)%%>" width="<%% (view_other_works/w)%%>" height="<%% (view_other_works/h)%%>" loading="lazy"></a></div><% /each %>
 					</div>
 					<% /def %>	
 

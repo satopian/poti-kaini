@@ -6,7 +6,7 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board EVO
 // バージョン :
-define('POTI_VER','v3.18.9');
+define('POTI_VER','v3.18.15');
 define('POTI_LOT','lot.211218'); 
 
 /*
@@ -692,7 +692,7 @@ function res($resno = 0){
 				$a[]=$b;
 			}
 		}
-		$c=($i<4) ? 0 : (count($a)>9 ? 4 :0);
+		$c=($i<5) ? 0 : (count($a)>9 ? 4 :0);
 		$a=array_slice($a,$c,6,false);
 		$dat['view_other_works']=$a;
 	}
@@ -1263,8 +1263,11 @@ function newstring($str){
 function userdel(){
 	global $path;
 
-	$thread_no=(string)filter_input(INPUT_POST,'thread_no');
+	$thread_no=(string)filter_input(INPUT_POST,'thread_no',FILTER_VALIDATE_INT);
 	$logfilename=(string)filter_input(INPUT_POST,'logfilename');
+	$mode_catalog=filter_input(INPUT_POST,'mode_catalog');
+	$catalog_pageno=filter_input(INPUT_POST,'catalog_pageno');
+
 	$onlyimgdel = filter_input(INPUT_POST, 'onlyimgdel',FILTER_VALIDATE_BOOLEAN);
 	$del = filter_input(INPUT_POST,'del',FILTER_VALIDATE_INT,FILTER_REQUIRE_ARRAY);//$del は配列
 	$pwd = (string)newstring(filter_input(INPUT_POST, 'pwd'));
@@ -1313,7 +1316,7 @@ function userdel(){
 		writeFile($fp, implode("\n", $line));
 	}
 	closeFile($fp);
-	$destination = ($thread_no&&$thread_exists) ? PHP_SELF.'?res='.h($thread_no) :($logfilename ? './'.h($logfilename) :PHP_SELF2);
+	$destination = ($thread_no&&$thread_exists) ? PHP_SELF.'?res='.h($thread_no) :($logfilename ? './'.h($logfilename) : ($mode_catalog ? PHP_SELF.'?mode=catalog&page='.h($catalog_pageno) : PHP_SELF2));
 
 	updatelog();
 	return redirect($destination, 0);
@@ -1962,8 +1965,10 @@ function editform(){
 	if(CHECK_CSRF_TOKEN){
 		$dat['token']=get_csrf_token();
 	}
-	$thread_no=(string)filter_input(INPUT_POST,'thread_no');
+	$thread_no=(string)filter_input(INPUT_POST,'thread_no',FILTER_VALIDATE_INT);
 	$logfilename=(string)filter_input(INPUT_POST,'logfilename');
+	$mode_catalog=filter_input(INPUT_POST,'mode_catalog');
+	$catalog_pageno=filter_input(INPUT_POST,'catalog_pageno');
 
 	$del = filter_input(INPUT_POST,'del',FILTER_VALIDATE_INT,FILTER_REQUIRE_ARRAY);//$del は配列
 	$pwd = (string)newstring(filter_input(INPUT_POST, 'pwd'));
@@ -2015,6 +2020,8 @@ function editform(){
 	$dat['pwd'] = h($pwd);
 	$dat['thread_no'] = h($thread_no);
 	$dat['logfilename'] = h($logfilename);
+	$dat['mode_catalog'] = h($mode_catalog);
+	$dat['catalog_pageno'] = h($catalog_pageno);
 
 
 	//文字色
@@ -2041,8 +2048,10 @@ global $ADMIN_PASS;
 		check_csrf_token();
 	}
 
-	$thread_no=(string)filter_input(INPUT_POST,'thread_no');
+	$thread_no=(string)filter_input(INPUT_POST,'thread_no',FILTER_VALIDATE_INT);
 	$logfilename=(string)filter_input(INPUT_POST,'logfilename');
+	$mode_catalog=filter_input(INPUT_POST,'mode_catalog');
+	$catalog_pageno=filter_input(INPUT_POST,'catalog_pageno');
 	
 	$com = (string)filter_input(INPUT_POST, 'com');
 	$name = (string)filter_input(INPUT_POST, 'name');
@@ -2115,7 +2124,9 @@ global $ADMIN_PASS;
 	closeFile($fp);
 
 	updatelog();
-	$destination = $thread_no ? PHP_SELF.'?res='.h($thread_no) :($logfilename ? './'.h($logfilename) :PHP_SELF2);
+
+	$destination = $thread_no ? PHP_SELF.'?res='.h($thread_no) : ($logfilename ? './'.h($logfilename) : ($mode_catalog ? PHP_SELF.'?mode=catalog&page='.h($catalog_pageno) : PHP_SELF2));
+
 	redirect(
 		$destination . (URL_PARAMETER ? "?".time() : ''),
 		1,
@@ -2377,6 +2388,7 @@ function catalog(){
 	if($counttree > $next){
 		$dat['next'] = PHP_SELF.'?mode=catalog&amp;page='.$next;
 	}
+	$dat['catalog_pageno']=h($page);
 
 	htmloutput(SKIN_DIR.CATALOGFILE,$dat);
 }

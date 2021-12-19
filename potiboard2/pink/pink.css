@@ -520,9 +520,10 @@ input.pch_upload {
 /* レス画面に前後のスレッドの画像を配置 */
 .view_other_works div{
 	width: 16.1%;
-	height:auto;
-	margin-right: 0.6%;
+	height:auto;margin-right: 0.6%;
 	display: inline-block;
+	max-height: 200px;overflow: hidden;
+	vertical-align: top;
 }
 .view_other_works img{
 	width: 100%;
