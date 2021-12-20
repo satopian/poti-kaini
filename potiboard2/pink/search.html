@@ -32,7 +32,7 @@
 </header>
 <nav>
 	<div class="menu">
-	[<a href="./">掲示板にもどる</a>]
+	[<a href="./<% def(php_self2)%><% echo(php_self2)%><% /def %>">掲示板にもどる</a>]
 	<% def(imgsearch) %>
 	 [<a href="?page=1&imgsearch=off<% echo(query_l) %>">コメント</a>]
 	 <% else %>
