@@ -6,7 +6,7 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board EVO
 // バージョン :
-define('POTI_VER','v3.19.1');
+define('POTI_VER','v3.19.3');
 define('POTI_LOT','lot.211221'); 
 
 /*
@@ -1577,17 +1577,17 @@ function paintform(){
 
 		if(RES_CONTINUE_IN_CURRENT_THREAD && $type!=='rep'){
 
+
+			$oyano='';
 			$trees=file(TREEFILE);
-			$oya = [];
-			foreach ($trees as $tree) {
-				$tree_nos = explode(',', trim($tree));
-				foreach ($tree_nos as $tree_no) {
-					$oya[$tree_no] = $tree_nos[0]; //キーにres no、値にoya no
+			foreach ($trees as $i =>$tree) {
+				if (strpos(',' . trim($tree) . ',',',' . $no . ',') !== false) {
+					$tree_nos = explode(',', trim($tree));
+					$oyano=$tree_nos[0];
+					break;
 				}
 			}
 			
-			$oyano = !empty($oya) ? $oya[$no] :'';
-		
 			$resto= ($oyano&&((int)$oyano!==$no)) ? $oyano :'';
 			//お絵かきレスの新規投稿はスレッドへの返信の新規投稿に。
 			//親の番号ではない事を確認してレス先の番号をセット。
@@ -2304,16 +2304,17 @@ function replace(){
 
 	updatelog();
 
+
+	$oyano='';
 	$trees=file(TREEFILE);
-	$oya = [];
-	foreach ($trees as $tree) {
-		$tree_nos = explode(',', trim($tree));
-		foreach ($tree_nos as $tree_no) {
-			$oya[$tree_no] = $tree_nos[0]; //キーにres no、値にoya no
+	foreach ($trees as $i =>$tree) {
+		if (strpos(',' . trim($tree) . ',',',' . $no . ',') !== false) {
+			$tree_nos = explode(',', trim($tree));
+			$oyano=$tree_nos[0];
+			break;
 		}
 	}
-	
-	$thread_no = !empty($oya) ? $oya[$no] :'';
+	$thread_no = $oyano ? $oyano :'';
 
 	$destination = $thread_no ? PHP_SELF.'?res='.h($thread_no) :  h(PHP_SELF2);
 	redirect(
