@@ -1,6 +1,6 @@
 <?php
 /*
-  * POTI-board EVO v3.03.6 lot.210712
+  * POTI-board EVO v3.19.5 lot.211222
   * by POTI改 >> https://paintbbs.sakura.ne.jp/poti/
   *
   * POTI-board EVO の設定ファイルです。
@@ -212,6 +212,9 @@ define('USE_RESUB', '1');
 define('DO_NOT_CHANGE_POSTS_TIME', '0');
 //する:1 にすると投稿を編集しても投稿日時は変更されず最初の投稿日時のままになります。
 //編集マークも付きません。
+
+//レス画面に前後のスレッドの画像を表示する する:1 しない:0
+define('VIEW_OTHER_WORKS', '1');
 
 /* ---------- お絵かき設定 ---------- */
 
