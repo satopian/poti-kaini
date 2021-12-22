@@ -93,6 +93,76 @@ HTMLタグも旧独自タグも廃止してしまいましたが、urlの自動�
 [テキストリンク](https://example.com/)のようなテキストリンクを作成できます。
 
 ## 履歴
+## [2021/12/22] v3.19.5
+
+- 返信画面の下に前後のスレッドと前後のスレッドの画像が表示されるようになりました。   
+- レスの画像からの｢新規投稿｣で続きを描くは｢新規投稿｣でもレスになります。  
+これまでは、レスの画像から｢新規投稿｣で続きを描くと新規スレッドが作成されていました。  
+- 返信したあとに表示される画面がスレッドの返信画面になりました。
+これまでは、どの位置のスレッドに返信しても、投稿処理が完了するとトップページが表示されていました。
+- レスモード、カタログモードからの編集･削除の処理の完了時にもとの画面が表示されるようになりました。
+- 続きを描いて投稿が完了した時にスレッドの返信画面が表示されるようになりました。  
+これまでは、トップページから何ページも離れた場所で続きを描いた時にもトップページが表示されていました。  
+たとえば、  
+そのため、続きを描いた画像がどこにあるのか探す必要がありました。
+
+- ChickenPaintの画面の特定の箇所でスワイプすると画面が上下に動く問題がありました。該当箇所をJavaScriptで制御しました。
+```
+<script>
+function fixchicken() {
+	document.addEventListener('dblclick', function(e){ e.preventDefault()}, { passive: false });
+	const chicken=document.querySelector('#chickenpaint-parent');
+	chicken.addEventListener('contextmenu', function (e){
+		e.preventDefault();
+		e.stopPropagation();
+	}, { passive: false });
+	chicken.addEventListener('touchmove', function (e){
+		e.preventDefault();
+		e.stopPropagation();
+	}, { passive: false });
+}
+window.addEventListener('DOMContentLoaded',fixchicken,false);
+</script>
+
+```
+このコードはペイント画面のテンプレートにあります。
+テーマのHTML画面を更新しなければ、このJavaScriptは有効になりません。  
+
+- 初期設定では、index.html、設定を変更すればfoo.htmlに変更可能なトップページへのリンクが`<a href="./"></a>`となっている箇所が数箇所見つかりました。ほとんどのケースでは問題はでませんが、実害がでてしまっているサイトも存在しているため修正しました。  
+
+### テーマについて
+すべての作者のテーマを細かくチェックするところまで手がまわりませんので、同梱テーマ以外で発生する問題についてはテーマの作者の方にご相談いただく形になります。よろしくお願いします。
+
+### 更新があったファイル
+
+- config.php 
+- potiboard.php 
+- search.php 
+#### テーマPINKディレクトリ全部
+- pink/pink.css 
+- pink/pink_catalog.html 
+- pink/pink_main.html 
+- pink/pink_other.html 
+- pink/pink_paint.html 
+- pink/pink_res.html 
+- pink/search.html 
+#### テーマMONOディレクトリ全部
+- theme/css/mono_dark.css 
+- theme/css/mono_deep.css 
+- theme/css/mono_main.css 
+- theme/css/mono_mayo.css 
+- theme/mono_catalog.html 
+- theme/mono_main.html 
+- theme/mono_other.html 
+- theme/mono_paint.html 
+- theme/search.html   
+
+CSSの更新も必要です。
+主にレス画面で前後のスレッドの画像を表示している箇所に関連した内容になります。
+色を変更している方は、差分エディタで比較すれば、なんとかなるかもしれません。  
+
+また、今回の表示上の変更が必要ない時は、以前から使っていたテーマを使う事もできます。    
+その場合は返信画面にスレッドの前後の情報はでてきませんが、面倒な作業も発生しません。  
 
 ## [2021/12/04] v3.15.3
 - 新規設置の時に必要なindex.phpを更新しました。  
