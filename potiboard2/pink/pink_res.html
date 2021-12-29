@@ -402,7 +402,6 @@ PMAX_H //高さ
 <% /def %>
 <hr>
 
-<footer>
 	<nav>
 		<div class="pagelink pcdisp">
 		<% def(res_prev) %><a href="<% echo (self) %>?res=<% echo (@res_prev/no) %>">≪<% echo (@res_prev/substr_sub) %></a><% /def %> 
@@ -426,7 +425,7 @@ PMAX_H //高さ
 		<% /def %>	
 
 	</nav>
-
+	<footer>
 	<% ========== メンテナンスフォーム欄 ========== %>
 	<form action="<% echo (self) %>" method="post">
 	<input type="hidden" name="thread_no" value="<% def(@oya/0/no) %><% echo(@oya/0/no) %><% /def %>">
