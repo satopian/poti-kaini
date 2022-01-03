@@ -6,11 +6,11 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board EVO
 // バージョン :
-define('POTI_VER','v3.19.8');
-define('POTI_LOT','lot.211224'); 
+define('POTI_VER','v3.19.9');
+define('POTI_LOT','lot.220105'); 
 
 /*
-  (C) 2018-2021 POTI改 POTI-board redevelopment team
+  (C) 2018-2022 POTI改 POTI-board redevelopment team
   >> https://paintbbs.sakura.ne.jp/poti/
   *----------------------------------------------------------------------------------
   * ORIGINAL SCRIPT
@@ -2690,8 +2690,8 @@ function create_res ($line, $options = []) {
 		= explode(",", rtrim($line));
 	$three_point_sub=(mb_strlen($sub)>12) ? '…' :'';
 	$res = [
-		'w' => $w,
-		'h' => $h,
+		'w' => is_numeric($w) ? $w :'',
+		'h' => is_numeric($h) ? $h :'',
 		'no' => (int)$no,
 		'sub' => strip_tags($sub),
 		'substr_sub' => mb_substr(strip_tags(($sub)),0,12).$three_point_sub,

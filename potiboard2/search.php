@@ -1,5 +1,5 @@
 <?php
-//POTI-board plugin search(C)2020-2021 さとぴあ(@satopian)
+//POTI-board plugin search(C)2020-2022 さとぴあ(@satopian)
 //v1.7.1 lot.210825
 //
 //https://paintbbs.sakura.ne.jp/
