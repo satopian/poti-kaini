@@ -250,8 +250,8 @@
 						<div class="img_info_wrap">
 							<a href="<% echo(oya/src) %>" title="<% echo(oya/sub) %>" target="_blank"><% echo(oya/srcname) %></a> (<% echo(oya/size) %> B)<% def(oya/thumb) %> - サムネイル表示中 -<% /def %><% def(oya/painttime) %> PaintTime : <% echo(oya/painttime) %><% /def %>
 							<br>
-							<% def(oya/continue) %> <a href="<% echo(self) %>?mode=continue&amp;no=<% echo(oya/continue) %>">●続きを描く</a><% /def %><% def(oya/spch)><span class="for_pc"><% /def %><% def(oya/pch) %> <a href="<% echo(self) %>?mode=openpch&amp;pch=<% echo(oya/pch) %>" target="_blank">●動画</a><% /def %>
-								<% def(oya/spch)></span><% /def %>
+							<% def(oya/continue) %> <a href="<% echo(self) %>?mode=continue&amp;no=<% echo(oya/continue) %>">●続きを描く</a><% /def %><% def(oya/spch)%><span class="for_pc"><% /def %><% def(oya/pch) %> <a href="<% echo(self) %>?mode=openpch&amp;pch=<% echo(oya/pch) %>" target="_blank">●動画</a><% /def %>
+								<% def(oya/spch)%></span><% /def %>
 						</div>
 						<figure>
 							<% def(oya/thumb) %>
@@ -286,8 +286,8 @@
 										<% /def %>
 										<br>
 										<% def(oya/res/continue) %>
-										<a href="<% echo(self) %>?mode=continue&amp;no=<% echo(oya/res/continue) %>">●続きを描く</a><% /def %><% def(oya/res/spch)><span class="for_pc"><% /def %><% def(oya/res/pch) %> <a href="<% echo(self) %>?mode=openpch&amp;pch=<% echo(oya/res/pch) %>" target="_blank">●動画</a><% /def %>
-										<% def(oya/res/spch)></span><% /def %>
+										<a href="<% echo(self) %>?mode=continue&amp;no=<% echo(oya/res/continue) %>">●続きを描く</a><% /def %><% def(oya/res/spch)%><span class="for_pc"><% /def %><% def(oya/res/pch) %> <a href="<% echo(self) %>?mode=openpch&amp;pch=<% echo(oya/res/pch) %>" target="_blank">●動画</a><% /def %>
+										<% def(oya/res/spch)%></span><% /def %>
 									</figcaption>
 									<% def(oya/res/thumb) %>
 									<a href="<% echo(oya/res/src) %>"  target="_blank">
