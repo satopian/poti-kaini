@@ -6,8 +6,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board EVO
 // バージョン :
-define('POTI_VER','v3.19.9');
-define('POTI_LOT','lot.220105'); 
+define('POTI_VER','v3.19.11');
+define('POTI_LOT','lot.220106'); 
 
 /*
   (C) 2018-2022 POTI改 POTI-board redevelopment team
@@ -694,8 +694,7 @@ function res($resno = 0){
 			}
 		}
 		$c=($i<5) ? 0 : (count($a)>9 ? 4 :0);
-		$a=array_slice($a,$c,6,false);
-		$dat['view_other_works']=$a;
+		$dat['view_other_works']=array_slice($a,$c,6,false);
 	}
 
 	htmloutput(SKIN_DIR.RESFILE,$dat);
@@ -2640,6 +2639,7 @@ function is_ngword ($ngwords, $strs) {
 	}
 	foreach ($strs as $str) {
 		foreach($ngwords as $ngword){//拒絶する文字列
+			$ngword  = str_replace([" ", "　"], "", $ngword);
 			if ($ngword !== '' && preg_match("/{$ngword}/ui", $str)){
 				return true;
 			}
