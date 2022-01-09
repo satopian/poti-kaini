@@ -148,9 +148,6 @@ PMAX_H //高さ
 	<span class="palette_type bold_gray">PALETTE</span> <select name="selected_palette_no" title="パレット" class="canvas_select palette_type"><% echo(palette_select_tags) %></select>
 	<% /def %>
 
-	<!-- NEOを使う -->
-<!-- <label class="checkbox use_neo"><input type="checkbox" name="useneo" checked="checked" />NEOを使う</label> -->
-
 <% def(anime) %><label class="checkbox use_animation"><input type="checkbox" value="true" name="anime" <% echo (animechk) %>>動画記録</label>
 	<% /def %>
 	<% def(n) %>
@@ -168,8 +165,8 @@ PMAX_H //高さ
 <% def(paint2) %>
 <div class="howtopaint">
 <ul id="up_desc">
-<li>お絵かきできる画像のサイズは横 300～<% echo (pmaxw) %>、縦 300～<% echo (pmaxh) %>の範囲内です。</li>
-<li>画像は横 <% echo (maxw) %>ピクセル、縦 <% echo (maxh) %>ピクセルを超えると縮小表示されます。sage機能付き。</li>
+<li>お絵かきできる画像のサイズは横 300～<% echo (pmaxw) %>、縦 300px～<% echo (pmaxh) %>pxの範囲内です。</li>
+<li>画像は横 <% echo (maxw) %>px、縦 <% echo (maxh) %>pxを超えると縮小表示されます。sage機能付き。</li>
 <% echo (addinfo) %>
 </ul>
 </div>
