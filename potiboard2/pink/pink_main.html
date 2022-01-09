@@ -334,17 +334,8 @@ PMAX_H //高さ
 -->
 <% /def %>
 
-<% def(resform) %><% def(oya/skipres) %><hr><div class="article_skipres">返信が<% echo (oya/skipres) %>件省略されています。<a href="<% echo (self) %>?res=<% echo (oya/no) %>">&#187;全て表示</a></div><% /def %><% /def %>
-<% def(resform) %><% elsedef %><% def(oya/skipres) %>
-<hr><div class="article_skipres">返信が<% echo (oya/skipres) %>件省略されています。全て読むには返信ボタンを押してください。</div>
-<% /def %><% /def %>
-<% def(n) %>
-<!--
-// ※上段、ミニレスフォームを使わない場合(なぜかndefの挙動がオカシイのでifneで代用)
-// ※下段、ミニレスフォームを使う場合
-// resform…ミニレスフォームを表示させるとき true が入る
-// oya/skipres…未表示レス数
--->
+<% def(oya/skipres) %>
+<hr><div class="article_skipres">レス<% echo (oya/skipres) %>件省略中。</div>
 <% /def %>
 <% ========== レスがあれば・・・ ========== %>
 <% def(oya/res) %>
@@ -444,7 +435,7 @@ PMAX_H //高さ
 		<a target="_blank" class="fb btn" href="http://www.facebook.com/share.php?u=<% echo(rooturl|urlencode) %><% echo(self|urlencode) %>?res=<% echo(oya/no|urlencode) %>"><span class="icon-facebook2"></span>share</a>
 	</span>
 	<% /def %>
-	<form action="<% echo (self) %>?res=<% echo (oya/no) %>" method="post"><input type="submit" value="返信" class="res_button"></form><span class="page_top"><a href="#top">△</a></span></div>
+	<form action="<% echo (self) %>?res=<% echo (oya/no) %>" method="post"><input type="submit" value="<% def(oya/disp_resform)%>返信<% elsedef %>表示<% /def %>" class="res_button"></form><span class="page_top"><a href="#top">△</a></span></div>
 	<% /def %>
 <% ========== 返信ボタンここまで ========== %>
 
