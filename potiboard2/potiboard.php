@@ -6,8 +6,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board EVO
 // バージョン :
-define('POTI_VER','v3.20.9');
-define('POTI_LOT','lot.220108'); 
+define('POTI_VER','v3.21.0');
+define('POTI_LOT','lot.220111'); 
 
 /*
   (C) 2018-2022 POTI改 POTI-board redevelopment team
@@ -362,6 +362,8 @@ function basicpart(){
 	//OGPイメージ シェアボタン
 	$dat['rooturl'] = ROOT_URL;//設置場所url
 	$dat['sharebutton'] = SHARE_BUTTON ? true : false;
+	$dat['use_select_palettes']=false;
+	$dat['palette_select_tags']='';
 	if(USE_SELECT_PALETTES){
 		$dat['use_select_palettes']=true;
 		foreach($pallets_dat as $i=>$value){
@@ -374,12 +376,28 @@ function basicpart(){
 		}
 		$dat['palette_select_tags']=implode("",$arr_palette_select_tags);
 	}
-	$dat['hide_the_checkbox_for_nofile']=true;//poti本体が古い時はfalse→画像なしのチェックが出る
-	if(USE_CHECK_NO_FILE){
-		$dat['hide_the_checkbox_for_nofile']=false;
-	}
+	$dat['hide_the_checkbox_for_nofile'] = USE_CHECK_NO_FILE ? false : true;//poti本体が古い時はfalse→画像なしのチェックが出る
 	$dat['_san']=HONORIFIC_SUFFIX;
 	$dat['cheerpj_url']=CHEERPJ_URL;
+	//PHP8.1 その他テンプレート
+	$dat['admin_del']=false;
+	$dat['regist']=false;
+	$dat['admin']=false;
+	$dat['admin_in']=false;
+	$dat['post_mode']=false;
+	$dat['err_mode']=false;
+	$dat['paint']=false;
+	$dat['resno']=false;
+	$dat['rewrite']=false;
+	$dat['pictmp']=false;
+	$dat['ptime']=false;
+	$dat['name']=false;
+	$dat['email']=false;
+	$dat['url']=false;
+	$dat['sub']=false;
+	$dat['com']=false;
+	$dat['ipcheck']=false;
+	$dat['tmp']=false;
 
 	return $dat;
 }
@@ -390,47 +408,36 @@ function form($resno="",$adminin="",$tmp=""){
 	global $fontcolors,$qualitys;
 	global $ADMIN_PASS;
 
+
 	$admin_valid = ($adminin === 'valid');
 	//csrfトークンをセット
-	$dat['token']='';
-	if(CHECK_CSRF_TOKEN){
-		$dat['token']=get_csrf_token();
-	}
+	$dat['token']= CHECK_CSRF_TOKEN ? get_csrf_token() : '';
 
 	$quality = filter_input(INPUT_POST, 'quality',FILTER_VALIDATE_INT);
 
-	$dat['form'] = true; 
-	if(!$resno){
-		$dat['form'] = false;
-	}
+	$dat['form'] = $resno ? true : false;
 
-	if(USE_PAINT){
-		$dat['pdefw'] = PDEF_W;
-		$dat['pdefh'] = PDEF_H;
-		$dat['anime'] = USE_ANIME ? true : false;
-		$dat['animechk'] = DEF_ANIME ? ' checked' : '';
-		$dat['pmaxw'] = PMAX_W;
-		$dat['pmaxh'] = PMAX_H;
-		if(!$resno){
-			$dat['paint2'] = true;
-		}
-	}
+	$dat['pdefw'] = USE_PAINT ? PDEF_W : '';
+	$dat['pdefh'] = USE_PAINT ? PDEF_H : '';
+	$dat['anime'] = USE_PAINT ? (USE_ANIME ? true : false) : false;
+	$dat['animechk'] = USE_PAINT ? (DEF_ANIME ? ' checked' : '') :'';
+	$dat['pmaxw'] = USE_PAINT ? PMAX_W : '';
+	$dat['pmaxh'] = USE_PAINT ? PMAX_H : '';
+	$dat['paint2'] = USE_PAINT ? ($resno ? false : true):false;
 
-	if($resno){
-		$dat['resno'] = $resno;
-		if(RES_UPLOAD) $dat['paintform'] = true;
-	}else{
-		$dat['paintform'] = true;
-		$dat['notres'] = true;
-	}
+	$dat['resno'] = $resno ? $resno :'';
+	$dat['notres'] = $resno ? false : true;
+	
+	$dat['paintform'] = USE_PAINT ? ($resno ? (RES_UPLOAD ? true :false) :true):false;
 
-	if($admin_valid) $dat['admin'] = h($ADMIN_PASS);
+	$dat['admin'] = $admin_valid ? h($ADMIN_PASS) :'';
 
 	$dat['maxbyte'] = 2048 * 1024;//フォームのHTMLによるファイルサイズの制限 2Mまで
 	$dat['usename'] = USE_NAME ? ' *' : '';
 	$dat['usesub']  = USE_SUB ? ' *' : '';
-	if(USE_COM||($resno&&!RES_UPLOAD)) $dat['usecom'] = ' *';
+	$dat['usecom'] = (USE_COM||($resno&&!RES_UPLOAD)) ? ' *' :'';
 	//本文必須の設定では無い時はレスでも画像かコメントがあれば通る
+	$dat['upfile'] = false;
 	if(!USE_IMG_UPLOAD && !$admin_valid){//画像アップロード機能を使わない時
 		$dat['upfile'] = false;
 	} else{
@@ -442,6 +449,7 @@ function form($resno="",$adminin="",$tmp=""){
 	$dat['addinfo'] = $addinfo;
 
 	//文字色
+	$dat['fctable']=[];
 	if(USE_FONTCOLOR){
 		foreach ( $fontcolors as $fontcolor ){
 			list($color,$name) = explode(",", $fontcolor);
@@ -450,11 +458,12 @@ function form($resno="",$adminin="",$tmp=""){
 	}
 
 	//アプレット設定
-	$undo = filter_input(INPUT_POST, 'undo',FILTER_VALIDATE_INT);
+	$undo = (string)filter_input(INPUT_POST, 'undo',FILTER_VALIDATE_INT);
 	$dat['undo'] = $undo ? $undo : UNDO;
-	$undo_in_mg = filter_input(INPUT_POST, 'undo_in_mg',FILTER_VALIDATE_INT);
+	$undo_in_mg = (string)filter_input(INPUT_POST, 'undo_in_mg',FILTER_VALIDATE_INT);
 	$dat['undo_in_mg'] = $undo_in_mg ? $undo_in_mg : UNDO_IN_MG;
 	$qline='';
+	$dat['qualitys'] =[];
 	foreach ( $qualitys as $q ){
 		$selq = ($q == $quality) ? ' selected' : '';
 		$qline .= '<option value='.$q.$selq.'>'.$q."</option>\n";
@@ -532,7 +541,8 @@ function updatelog(){
 			$dat['oya'][$oya] = $res;
 
 			//レス作成
-			$rres=array();
+			$rres[$oya]=[];
+			$dat['oya'][$oya]['res']=[];
 			foreach($treeline as $k => $disptree){
 				if($k<$s){//レス表示件数
 					continue;
@@ -544,9 +554,7 @@ function updatelog(){
 			}
 
 			// レス記事一括格納
-			if($rres){//レスがある時
-				$dat['oya'][$oya]['res'] = $rres[$oya];
-			}
+			$dat['oya'][$oya]['res'] = !empty($rres) ? $rres[$oya] :[];
 
 			clearstatcache(); //キャッシュをクリア
 			$oya++;
@@ -554,6 +562,7 @@ function updatelog(){
 		$prev = $page - PAGE_DEF;
 		$next = $page + PAGE_DEF;
 		// 改ページ処理
+		$dat['prev'] =false;
 		if($prev >= 0){
 			$dat['prev'] = $prev == 0 ? h(PHP_SELF2) : ($prev / PAGE_DEF) . PHP_EXT;
 		}
@@ -587,6 +596,7 @@ function updatelog(){
 		//改ページ分岐ここまで
 
 		$dat['paging'] = $paging;
+		$dat['next'] = false;
 		if($oya >= PAGE_DEF && $counttree > $next){
 			$dat['next'] = $next/PAGE_DEF.PHP_EXT;
 		}
@@ -642,7 +652,7 @@ function res($resno = 0){
 	$res['limit'] = ($lineindex[$res['no']] >= $logmax * LOG_LIMIT / 100) ? true : false; // そろそろ消える。
 	$res['resub'] = $resub;
 	$res['descriptioncom'] = h(strip_tags(mb_strcut($res['com'],0,300))); //メタタグに使うコメントからタグを除去
-
+	$res['skipres']=false;
 	$dat['oya'][0] = $res;
 
 	$oyaname = $res['name']; //投稿者名をコピー
@@ -700,7 +710,6 @@ function res($resno = 0){
 		$c=($i<5) ? 0 : (count($a)>9 ? 4 :0);
 		$dat['view_other_works']=array_slice($a,$c,6,false);
 	}
-
 	htmloutput(SKIN_DIR.RESFILE,$dat);
 }
 //マークダウン記法のリンクをHTMLに変換
@@ -1210,7 +1219,7 @@ function regist(){
 
 function h_decode($str){
 	$str = str_replace("&#44;", ",", $str);
-	return htmlspecialchars_decode($str, ENT_QUOTES);
+	return htmlspecialchars_decode((string)$str, ENT_QUOTES);
 }
 
 //ツリー削除
@@ -1258,8 +1267,8 @@ function treedel($delno){
 
 // HTMLの特殊文字をエスケープ
 function newstring($str){
-	$str = trim($str);
-	$str = htmlspecialchars($str,ENT_QUOTES,'utf-8');
+	$str = trim((string)$str);
+	$str = htmlspecialchars((string)$str,ENT_QUOTES,'utf-8');
 	return str_replace(",", "&#44;", $str);//カンマをエスケープ
 }
 
@@ -2521,6 +2530,7 @@ function htmloutput($template,$dat,$buf_flag=''){
 	global $Skinny;
 	$dat += basicpart();//basicpart()で上書きしない
 	//array_merge()ならbasicpart(),$datの順
+	$dat['n']=false;
 	if($buf_flag){
 		$buf=$Skinny->SkinnyFetchHTML($template, $dat );
 		return $buf;
@@ -2689,8 +2699,8 @@ function check_badfile ($chk, $dest = '') {
 	}
 }
 function h($str){//出力のエスケープ
-	return htmlspecialchars($str,ENT_QUOTES,'utf-8',false);
-	}
+	return htmlspecialchars((string)$str,ENT_QUOTES,'utf-8',false);
+}
 
 function create_res ($line, $options = []) {
 	global $path;
@@ -2757,13 +2767,12 @@ function create_res ($line, $options = []) {
 	}
 	$res['com']=nl2br($res['com'],false);//改行を<br>へ
 	$res['com'] = preg_replace("/(^|>)((&gt;|＞)[^<]*)/i", "\\1".RE_START."\\2".RE_END, $res['com']); // '>'色設定
-	
 	return $res;
 }
 //Tweet
 function encode_for_share($str){
 	$str = str_replace("&#44;",",", $str);
-	$str = htmlspecialchars_decode($str, ENT_QUOTES);
+	$str = htmlspecialchars_decode((string)$str, ENT_QUOTES);
 	return h(urlencode($str));
 }
 

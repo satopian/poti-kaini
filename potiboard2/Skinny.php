@@ -285,19 +285,19 @@ class Skinny {
 	public function _sfParseSkin( $str, $type = null ){
 		
 		$str = trim( $str[1] );
-		
+		$prm = '';//PHP8.1
 		if ( substr( $str, 0, 1) == '/' ) {
 			/* '/'で始まるタグは無条件で終了タグ（PHPの閉じ括弧）とみなす (v0.4.0以降) */
 			return $this->_skTags_close();
-			list( $com ) = explode( '(', $str );
+			list( $com ) = explode( '(', (string)$str );
 			$prm = '';
 		} else {
 			/* タグとパラメータの分離 */
-			@list( $com, $prm ) = explode( '(', $str );
+			@list( $com, $prm ) = explode( '(', (string)$str );
 		}
 		
 		$com = trim( strtolower( $com ) );      // チェック用に小文字で統一
-		list( $prm, ) = explode( ')', $prm );   // パラメータ部取り出し
+		list( $prm, ) = explode( ')', (string)$prm );   // パラメータ部取り出し
 		$prm = $this->_sfTagValueTrims( $prm ); // パラメータ内の不要な空白除去
 		
 		// 分岐
@@ -424,8 +424,8 @@ class Skinny {
 	 *  ifタグ
 	 */
 	private function _skTags_if( $tag ){
-		list( $variable , $comp , $str ) = explode( ',' , $tag );
-		$vals = explode('/',$variable);
+		list( $variable , $comp , $str ) = explode( ',' , (string)$tag );
+		$vals = explode('/',(string)$variable);
 		$variable_name = $this->_skTags_LoopCounter( $vals );
 		$add_src = "<?php if($variable_name $comp $str) { ?>";
 		return $add_src;
@@ -436,8 +436,8 @@ class Skinny {
 	 *  elseifタグ
 	 */
 	private function _skTags_elseif( $tag ){
-		list( $variable , $comp , $str ) = explode( ',' , $tag );
-		$vals = explode('/',$variable);
+		list( $variable , $comp , $str ) = explode( ',' , (string)$tag );
+		$vals = explode('/',(string)$variable);
 		$variable_name = $this->_skTags_LoopCounter( $vals );
 		$add_src = "<?php }elseif($variable_name $comp $str) { ?>";
 		return $add_src;
@@ -448,9 +448,9 @@ class Skinny {
 	 *  ifsタグ
 	 */
 	function _skTags_ifs( $tag ) {
-		list( $variable , $comp , $variable2 ) = explode( ',' , $tag );
-		$variable_name  = $this->_skTags_LoopCounter( explode('/',$variable) );
-		$variable_name2 = $this->_skTags_LoopCounter( explode('/',$variable2) );
+		list( $variable , $comp , $variable2 ) = explode( ',' , (string)$tag );
+		$variable_name  = $this->_skTags_LoopCounter( explode('/',(string)$variable) );
+		$variable_name2 = $this->_skTags_LoopCounter( explode('/',(string)$variable2) );
 		$add_src = "<?php if($variable_name $comp $variable_name2){ ?>";
 		return $add_src;
 	}
@@ -460,9 +460,9 @@ class Skinny {
 	 *  elseifsタグ
 	 */
 	function _skTags_elseifs( $tag ) {
-		list( $variable , $comp , $variable2 ) = explode( ',' , $tag );
-		$variable_name = $this->_skTags_LoopCounter( explode('/',$variable) );
-		$variable_name2 = $this->_skTags_LoopCounter( explode('/',$variable2) );
+		list( $variable , $comp , $variable2 ) = explode( ',' , (string)$tag );
+		$variable_name = $this->_skTags_LoopCounter( explode('/',(string)$variable) );
+		$variable_name2 = $this->_skTags_LoopCounter( explode('/',(string)$variable2) );
 		$add_src = "<?php }elseif($variable_name $comp $variable_name2){ ?>";
 		return $add_src;
 	}
@@ -479,7 +479,7 @@ class Skinny {
 		$val_split = explode( '|', $tag );
 		foreach ( $val_split as $t ) {
 			list( $variable, $comp, $str ) = explode( ',' , trim($t) );
-			$variable_name = $this->_skTags_LoopCounter( explode('/',$variable) );
+			$variable_name = $this->_skTags_LoopCounter( explode('/',(string)$variable) );
 			$src_c  .= "if(isset($variable_name)===false){ $variable_name=null; }\n";
 			$src_a[] = "($variable_name $comp $str)";
 		}
@@ -501,7 +501,7 @@ class Skinny {
 		$val_split = explode( '|', $tag );
 		foreach ( $val_split as $t ) {
 			list( $variable, $comp, $str ) = explode( ',' , trim($t) );
-			$variable_name = $this->_skTags_LoopCounter( explode('/',$variable) );
+			$variable_name = $this->_skTags_LoopCounter( explode('/',(string)$variable) );
 			$src_c  .= "if(isset($variable_name)===false){ $variable_name=null; }\n";
 			$src_a[] = "($variable_name $comp $str)";
 		}
@@ -522,8 +522,8 @@ class Skinny {
 		$val_split = explode( '|', $tag );
 		foreach ( $val_split as $t ) {
 			list( $variable, $comp, $variable2 ) = explode( ',' , trim($t) );
-			$variable_name = $this->_skTags_LoopCounter( explode('/',$variable)  );
-			$variable_name2= $this->_skTags_LoopCounter( explode('/',$variable2) );
+			$variable_name = $this->_skTags_LoopCounter( explode('/',(string)$variable)  );
+			$variable_name2= $this->_skTags_LoopCounter( explode('/',(string)$variable2) );
 			$src_c  .= "if(isset($variable_name) ===false){ $variable_name =null; }\n";
 			$src_c  .= "if(isset($variable_name2)===false){ $variable_name2=null; }\n";
 			$src_a[] = "($variable_name $comp $variable_name2)";
@@ -546,8 +546,8 @@ class Skinny {
 		$val_split = explode( '|', $tag );
 		foreach ( $val_split as $t ) {
 			list( $variable, $comp, $variable2 ) = explode( ',' , trim($t) );
-			$variable_name = $this->_skTags_LoopCounter( explode('/',$variable)  );
-			$variable_name2= $this->_skTags_LoopCounter( explode('/',$variable2) );
+			$variable_name = $this->_skTags_LoopCounter( explode('/',(string)$variable)  );
+			$variable_name2= $this->_skTags_LoopCounter( explode('/',(string)$variable2) );
 			$src_c  .= "if(isset($variable_name) ===false){ $variable_name =null; }\n";
 			$src_c  .= "if(isset($variable_name2)===false){ $variable_name2=null; }\n";
 			$src_a[] = "($variable_name $comp $variable_name2)";
@@ -562,7 +562,7 @@ class Skinny {
 	 *  varの中の文字列を置換する
 	 */
 	function _skTags_replace( $tag ) {
-		list($newvar, $pattern, $replaced, $variable ) = explode( ',' , $tag );
+		list($newvar, $pattern, $replaced, $variable ) = explode( ',' , (string)$tag );
 		
 		$newvar   = trim($newvar);
 		$variable = trim($variable);
@@ -570,22 +570,22 @@ class Skinny {
 		$replaced = trim($replaced);
 		
 		// ここに置換後を戻す
-		$newvar_name = $this->_skTags_LoopCounter( explode('/',$newvar) );
+		$newvar_name = $this->_skTags_LoopCounter( explode('/',(string)$newvar) );
 		// パターン
 		if ( $pattern == trim($pattern,"'\"") ) {
-			$pattern_name = $this->_skTags_LoopCounter( explode('/',$pattern) );
+			$pattern_name = $this->_skTags_LoopCounter( explode('/',(string)$pattern) );
 		}else{
 			$pattern_name = $pattern;
 		}
 		// 置換後
 		if ( $replaced == trim($replaced,"'\"") ) {
-			$replaced_name = $this->_skTags_LoopCounter( explode('/',$replaced) );
+			$replaced_name = $this->_skTags_LoopCounter( explode('/',(string)$replaced) );
 		}else{
 			$replaced_name = $replaced;
 		}
 		// 置換元
 		if ( $variable == trim($variable,"'\"") ) {
-			$variable_name = $this->_skTags_LoopCounter( explode('/',$variable) );
+			$variable_name = $this->_skTags_LoopCounter( explode('/',(string)$variable) );
 		}else{
 			$variable_name = $variable;
 		}
@@ -624,8 +624,8 @@ class Skinny {
 	 *  ex) ifeven(var,4) ⇒ varが4で割り切れる場合に /ifeven までを実行
 	 */
 	private function _skTags_ifeven( $tag ) {
-		list( $tags, $num ) = explode( ',' , $tag );
-		$vals = explode( '/' , $tags );
+		list( $tags, $num ) = explode( ',' , (string)$tag );
+		$vals = explode( '/' , (string)$tags );
 		$variable_name = $this->_skTags_LoopCounter( $vals );
 		return "<?php if ($variable_name % $num === 0 ) { ?>";
 	}
@@ -636,11 +636,11 @@ class Skinny {
 	 *  ex) def(argument) ⇒ argumentが true / 1文字以上 / array_count1以上の場合に /def までを実行
 	 */
 	private function _skTags_def( $tag ){
-		$vals = explode('/',$tag);
+		$vals = explode('/',(string)$tag);
 		$variable_name = $this->_skTags_LoopCounter( $vals );
 		$src ="<?php\n";
 		$src.="  if( !isset($variable_name) ){ $variable_name=null;}\n";
-		$src.="  if( (!is_array($variable_name) and strlen($variable_name)!==0) or (is_array($variable_name) and count($variable_name)!==0) ) {\n";
+		$src.="  if( (!is_array($variable_name) and strlen((string)$variable_name)!==0) or (is_array($variable_name) and count($variable_name)!==0) ) {\n";
 		$src.="?>";
 		return $src;
 	}
@@ -652,7 +652,7 @@ class Skinny {
 	 */
 	private function _skTags_each( $tag ) {
 		
-		$vals = explode('/',$tag);
+		$vals = explode('/',(string)$tag);
 		$vals_loop = '';
 		$variable_name = '$skOutput';
 		
@@ -689,7 +689,7 @@ class Skinny {
 	 *      <% /keach %>
 	 */
 	private function _skTags_keach( $tag ) {
-		$vals = explode( '/', $tag );
+		$vals = explode( '/', (string)$tag );
 		
 		$val_list = '';
 		$variable_name = '$skOutput';
@@ -718,9 +718,9 @@ class Skinny {
 		$valiable_v_name = '$skOutput[\'VAL\']';
 		
 		if ( strpos( $tag, '|' ) ) {
-			$par = explode( '|', $tag );
+			$par = explode( '|', (string)$tag );
 			$command = strtolower( $par[0] );
-			$vals = explode( '/', trim(array_shift($par)) );
+			$vals = explode( '/', (string)trim(array_shift($par)) );
 			if ( $command == 'key' ) {
 				$variable_name = $valiable_k_name;
 			} else {
@@ -745,7 +745,7 @@ class Skinny {
 	 *  forタグ
 	 */
 	function _skTags_for( $tag ) {
-		$vals = explode('/',$tag);
+		$vals = explode('/',(string)$tag);
 		$variable_name = $this->_skTags_LoopCounter( $vals );
 		$var = '$_'.md5($variable_name);
 		$src = "<?php if(isset($variable_name)===false) $variable_name=0; ?>";
@@ -764,14 +764,14 @@ class Skinny {
 	private function _skTags_echo( $tag ) {
 		$ret = '';
 		if ( strpos( $tag, '|' ) ) {
-			$par = explode( '|', $tag );
+			$par = explode( '|', (string)$tag );
 			$vals = explode( '/', trim(array_shift($par)) );
 			$variable_name = $this->_skTags_LoopCounter( $vals );
 			foreach ( $par as $mod ) {
 				$variable_name = $this->modifier_escape_over_smarty( $variable_name, trim($mod) );
 			}
 		} else {
-			$vals = explode( '/', $tag );
+			$vals = explode( '/', (string)$tag );
 			$variable_name = $this->_skTags_LoopCounter( $vals );
 		}
 		return "<?php echo $variable_name; ?>";
@@ -927,7 +927,7 @@ class Skinny {
 				 * width[s,n]   s文字目からn長で切り出す
 				 */
 				if ( preg_match("/^width\[([0-9]+),([0-9]+)\]$/",$esc_type,$mc) ) {
-					return "strlen($string)<={$mc[1]} ? $string : mb_strimwidth($string,{$mc[1]},{$mc[2]})";
+					return "strlen((string)$string)<={$mc[1]} ? $string : mb_strimwidth($string,{$mc[1]},{$mc[2]})";
 				}
 				
 				
@@ -936,7 +936,7 @@ class Skinny {
 				 * substr[s,n]   s:0以上の数値
 				 */
 				if ( preg_match("/^substr\[([-,0-9]+)\]$/",$esc_type,$mc) ) {
-					return "mb_substr($string,{$mc[1]})";
+					return "mb_substr((string)$string,{$mc[1]})";
 				}
 				
 				
@@ -1004,7 +1004,7 @@ class Skinny {
 	 *  ex) var(var,10) ⇒ var変数を値「10」として宣言
 	 */
 	private function _skTags_var( $tag ) {
-		list($tags,$value) = explode( ',' , $tag );
+		list($tags,$value) = explode( ',' , (string)$tag );
 		$vals = explode('/',$tags);
 		$variable_name = $this->_skTags_LoopCounter( $vals );
 		return "<?php $variable_name = $value; ?>";
@@ -1016,7 +1016,7 @@ class Skinny {
 	 *  ex) calc(var,+=,3) ⇒ varに3を足す
 	 */
 	private function _skTags_calc( $tag ) {
-		list( $tags, $operator, $value ) = explode( ',' , $tag );
+		list( $tags, $operator, $value ) = explode( ',' , (string)$tag );
 		$vals = explode( '/' , $tags );
 		$variable_name = $this->_skTags_LoopCounter( $vals );
 		return "<?php $variable_name $operator $value; ?>";
@@ -1032,7 +1032,7 @@ class Skinny {
 			$tags = $tag;
 			$_var = "false";
 		} else {
-			list( $tags, $_var) = explode( ',' , $tag );
+			list( $tags, $_var) = explode( ',' , (string)$tag );
 		}
 		$tags = trim($tags," \t\"'" );
 		$_var = trim($_var," \t\"'" );
@@ -1352,7 +1352,7 @@ function _get_microtime(){
 if ( $skConf['SKINNY']['AUTOEXEC'] ) {
 	if ( !isset($_SERVER['PATH_TRANSLATED']) ) { $_SERVER['PATH_TRANSLATED'] = null; }
 	if ( !isset($_SERVER['SCRIPT_FILENAME']) ) { $_SERVER['SCRIPT_FILENAME'] = null; }
-	if ( strlen( $_SERVER['PATH_TRANSLATED'] ) !== 0 ) {
+	if ( strlen( (string)$_SERVER['PATH_TRANSLATED'] ) !== 0 ) {
 		$SKIN_FILE = $_SERVER['PATH_TRANSLATED'];
 	} else {
 		$SKIN_FILE = $_SERVER['SCRIPT_FILENAME'];
@@ -1379,7 +1379,7 @@ function _autoPrependFuncion(){
 /* マルチバイト対応strrev */
 function _skGlobal_mb_strrev( $data ) {
 	global $skConf;
-	$n = mb_strlen( $data, $skConf['ENCODE']['INTERNAL'] );
+	$n = mb_strlen((string)$data, $skConf['ENCODE']['INTERNAL'] );
 	if ( $n == 0 ) return $data;
 	for ( $i = 0; $i < $n; $i++ ) {
 		$r_array[$i] = mb_substr( $data, $i, 1, $skConf['ENCODE']['INTERNAL'] );
