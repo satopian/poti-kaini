@@ -65,22 +65,23 @@
 <% each(oya) %>
 
 <article>
-<% ========== 親記事ヘッダここから ========== %>
-<h2 class="article_title">[<% echo (oya/no) %>] <% echo (oya/sub) %></h2>
-<div class="article_info">
-<span class="article_info_name"><a href="search.php?page=1&imgsearch=on&query=<% echo (oya/encoded_name) %>&radio=2" target="_blank" rel="noopener"><% echo (oya/name) %></a></span><% def(oya/url) %><span class="article_info_desc">[<a href="<% echo (oya/url) %>" target="_blank" rel="nofollow noopener noreferrer">URL</a>]</span> <% /def %>
-<% def(oya/id) %><span class="article_info_desc">ID:<% echo (oya/id) %></span> <% /def %>
-<span class="article_info_desc"><% echo (oya/now) %></span>
-<% def(oya/src) %><% def(oya/painttime) %><span class="article_info_painttime">描画時間:<% echo (oya/painttime) %></span><% /def %><% /def %>
-<% def(oya/updatemark) %><span class="article_info_desc"><% echo (oya/updatemark) %></span> <% /def %>
-</div>
-<% def(oya/src) %>
-<div class="article_img_info">
-<% def(oya/continue) %><span class="article_info_continue">☆<a href="<% echo (self) %>?mode=continue&no=<% echo (oya/continue) %>">続きを描く</a></span> <% /def %> <% def(oya/spch)%><span class="for_pc"><% /def %><% def(oya/pch) %><% def(oya/continue) %>| <% /def %><span class="article_info_animation">☆<a href="<% echo (self) %>?mode=openpch&pch=<% echo (oya/pch) %>" target="_blank">動画</a></span><% /def %><% def(oya/spch)%></span><% /def %>
-</div>
-<% /def %>
-<% ========== 親記事ヘッダここまで ========== %>
-<% def(n) %>
+	<% ========== 親記事ヘッダここから ========== %>
+	<h2 class="article_title"><a href="<% echo (self) %>?res=<% echo (oya/no) %>">[<% echo (oya/no) %>] <% echo (oya/sub) %></a></h2>
+	<div class="article_info">
+	<span class="article_info_name"><a href="search.php?page=1&imgsearch=on&query=<% echo (oya/encoded_name) %>&radio=2" target="_blank" rel="noopener"><% echo (oya/name) %></a></span><% def(oya/url) %><span class="article_info_desc">[<a href="<% echo (oya/url) %>" target="_blank" rel="nofollow noopener noreferrer">URL</a>]</span> <% /def %>
+	<% def(oya/id) %><span class="article_info_desc">ID:<% echo (oya/id) %></span> <% /def %>
+	<span class="article_info_desc"><% echo (oya/now) %></span>
+	<% def(oya/src) %><% def(oya/painttime) %><span class="article_info_painttime">描画時間:<% echo (oya/painttime) %></span><% /def %><% /def %>
+	<% def(oya/updatemark) %><span class="article_info_desc"><% echo (oya/updatemark) %></span><% /def %>
+	<% def(oya/thumb) %><span class="article_info_desc">- サムネイル表示中 -</span><% /def %>
+	</div>
+	<% def(oya/src) %>
+	<div class="article_img_info">
+	<% def(oya/continue) %><span class="article_info_continue">☆<a href="<% echo (self) %>?mode=continue&no=<% echo (oya/continue) %>">続きを描く</a></span> <% /def %> <% def(oya/spch)%><span class="for_pc"><% /def %><% def(oya/pch) %><% def(oya/continue) %>| <% /def %><span class="article_info_animation">☆<a href="<% echo (self) %>?mode=openpch&pch=<% echo (oya/pch) %>" target="_blank">動画</a></span><% /def %><% def(oya/spch)%></span><% /def %>
+	</div>
+	<% /def %>
+	<% ========== 親記事ヘッダここまで ========== %>
+		<% def(n) %>
 <!--
 // oya…親記事配列
 // oya/no…No
@@ -128,22 +129,23 @@
 <% each(oya/res) %>
 <hr>
 <div class="res_article_wrap">
-<% レス記事ヘッダここから %>
-<div class="res_article_title">[<% echo (oya/res/no) %>] <% echo (oya/res/sub) %></div>
-<div class="article_info">
-<span class="article_info_name"><a href="search.php?page=1&imgsearch=on&query=<% echo (oya/res/encoded_name) %>&radio=2" target="_blank" rel="noopener"><% echo (oya/res/name) %></a></span><% def(oya/res/url) %><span class="article_info_desc">[<a href="<% echo (oya/res/url) %>" target="_blank" rel="nofollow noopener noreferrer">URL</a>]</span> <% /def %>
-<% def(oya/res/id) %><span class="article_info_desc">ID:<% echo (oya/res/id) %></span> <% /def %>
-<span class="article_info_desc"><% echo (oya/res/now) %></span>
-<% def(oya/res/src) %><% def(oya/res/painttime) %><span class="article_info_painttime">描画時間:<% echo (oya/res/painttime) %></span><% /def %><% /def %>
-<% def(oya/res/updatemark) %><span class="article_info_desc"><% echo (oya/res/updatemark) %></span> <% /def %>
-</div>
-<% def(oya/res/src) %>
-<div class="article_img_info">
-<% def(oya/res/continue) %><span class="article_info_continue">☆<a href="<% echo (self) %>?mode=continue&no=<% echo (oya/res/continue) %>">続きを描く</a></span><% /def %> <% def(oya/res/spch)%><span class="for_pc"><% /def %><% def(oya/res/pch) %><% def(oya/res/continue) %>| <% /def %><span class="article_info_animation">☆<a href="<% echo (self) %>?mode=openpch&pch=<% echo (oya/res/pch) %>" target="_blank">動画</a></span><% /def %><% def(oya/res/spch)%></span><% /def %>
-</div>
-<% /def %>
-<% レス記事ヘッダここまで %>
-
+	<% レス記事ヘッダここから %>
+	<div class="res_article_title">[<% echo (oya/res/no) %>] <% echo (oya/res/sub) %></div>
+	<div class="article_info">
+	<span class="article_info_name"><a href="search.php?page=1&imgsearch=on&query=<% echo (oya/res/encoded_name) %>&radio=2" target="_blank" rel="noopener"><% echo (oya/res/name) %></a></span><% def(oya/res/url) %><span class="article_info_desc">[<a href="<% echo (oya/res/url) %>" target="_blank" rel="nofollow noopener noreferrer">URL</a>]</span> <% /def %>
+	<% def(oya/res/id) %><span class="article_info_desc">ID:<% echo (oya/res/id) %></span><% /def %>
+	<span class="article_info_desc"><% echo (oya/res/now) %></span>
+	<% def(oya/res/src) %><% def(oya/res/painttime) %><span class="article_info_painttime">描画時間:<% echo (oya/res/painttime) %></span><% /def %><% /def %>
+	<% def(oya/res/updatemark) %><span class="article_info_desc"><% echo (oya/res/updatemark) %></span><% /def %>
+	<% def(oya/res/thumb) %><span class="article_info_desc">- サムネイル表示中 -</span><% /def %>
+	</div>
+	<% def(oya/res/src) %>
+	<div class="article_img_info">
+	<% def(oya/res/continue) %><span class="article_info_continue">☆<a href="<% echo (self) %>?mode=continue&no=<% echo (oya/res/continue) %>">続きを描く</a></span><% /def %> <% def(oya/res/spch)%><span class="for_pc"><% /def %><% def(oya/res/pch) %><% def(oya/res/continue) %>| <% /def %><span class="article_info_animation">☆<a href="<% echo (self) %>?mode=openpch&pch=<% echo (oya/res/pch) %>" target="_blank">動画</a></span><% /def %><% def(oya/res/spch)%></span><% /def %>
+	</div>
+	<% /def %>
+	<% レス記事ヘッダここまで %>
+		
 <% def(n) %>
 <!--
 // oya/res…レス記事配列

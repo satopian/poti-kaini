@@ -281,7 +281,8 @@ PMAX_H //高さ
 <% def(oya/id) %><span class="article_info_desc">ID:<% echo (oya/id) %></span> <% /def %>
 <span class="article_info_desc"><% echo (oya/now) %></span>
 <% def(oya/src) %><% def(oya/painttime) %><span class="article_info_painttime">描画時間:<% echo (oya/painttime) %></span><% /def %><% /def %>
-<% def(oya/updatemark) %><span class="article_info_desc"><% echo (oya/updatemark) %></span> <% /def %>
+<% def(oya/updatemark) %><span class="article_info_desc"><% echo (oya/updatemark) %></span><% /def %>
+<% def(oya/thumb) %><span class="article_info_desc">- サムネイル表示中 -</span><% /def %>
 </div>
 <% def(oya/src) %>
 <div class="article_img_info">
@@ -344,10 +345,11 @@ PMAX_H //高さ
 <div class="res_article_title">[<% echo (oya/res/no) %>] <% echo (oya/res/sub) %></div>
 <div class="article_info">
 <span class="article_info_name"><a href="search.php?page=1&imgsearch=on&query=<% echo (oya/res/encoded_name) %>&radio=2" target="_blank" rel="noopener"><% echo (oya/res/name) %></a></span><% def(oya/res/url) %><span class="article_info_desc">[<a href="<% echo (oya/res/url) %>" target="_blank" rel="nofollow noopener noreferrer">URL</a>]</span> <% /def %>
-<% def(oya/res/id) %><span class="article_info_desc">ID:<% echo (oya/res/id) %></span> <% /def %>
+<% def(oya/res/id) %><span class="article_info_desc">ID:<% echo (oya/res/id) %></span><% /def %>
 <span class="article_info_desc"><% echo (oya/res/now) %></span>
 <% def(oya/res/src) %><% def(oya/res/painttime) %><span class="article_info_painttime">描画時間:<% echo (oya/res/painttime) %></span><% /def %><% /def %>
-<% def(oya/res/updatemark) %><span class="article_info_desc"><% echo (oya/res/updatemark) %></span> <% /def %>
+<% def(oya/res/updatemark) %><span class="article_info_desc"><% echo (oya/res/updatemark) %></span><% /def %>
+<% def(oya/res/thumb) %><span class="article_info_desc">- サムネイル表示中 -</span><% /def %>
 </div>
 <% def(oya/res/src) %>
 <div class="article_img_info">
@@ -395,36 +397,7 @@ PMAX_H //高さ
 <% ========== レス記事グループここまで ========== %>
 <% /def %>
 <% ========== ミニレスフォーム欄 ========== %>
-<% def(resform) %>
 <div class="clear"></div>
-<% def(oya/disp_resform) %>
-<form action="<% echo (self) %>" method="POST">
-<div class="minires_wrap">
-<table class="minres_form_table">
-<input type="hidden" name="mode" value="regist">
-<input type="hidden" name="resto" value="<% echo (oya/no) %>">
-<input type="hidden" name="textonly" value="on">
-<% ========== ←v1.3b3以降必須 ========== %>
-<tr><td class="minres_title">名前<% def(usename) %>(必須)<% /def %></td><td><input type="text" name="name" class="minres_input_text" autocomplete="username"></td>
-<td class="minres_title">題名<% def(usesub) %>(必須)<% /def %></td><td><input type="text" name="sub" value="<% echo (oya/resub) %>" class="minres_input_text" autocomplete="off"></td>
-</tr>
-<tr>
-<td class="minres_title">E-mail</td><td><input type="text" name="email" class="minres_input_text" autocomplete="email"></td>
-<td class="minres_title">URL</td><td><input type="url" name="url" class="minres_input_text" autocomplete="url"></td>
-</tr>
-<tr><td class="minres_title">本文</td><td colspan="3"><textarea name="com" wrap="soft" class="minres_input_com"></textarea></td></tr>
-<tr><td colspan="2">
-</td>
-<td colspan="2">削除キー<input type="password" name="pwd" value="" class="minres_input_other" autocomplete="current-password"></td>
-</tr>
-<tr><td colspan="4"><input type="submit" value="返信" class="res_button"></td></tr>
-</table>
-</div>
-</form>
-<% /def %>
-<% elsedef %>
-<% ========== ミニレスフォームを表示させない場合は返信ボタンを表示 ========== %>
-
 <div class="res_button_wrap">
 	<% def(sharebutton) %>
 	<span class="share_button">
@@ -433,7 +406,6 @@ PMAX_H //高さ
 	</span>
 	<% /def %>
 	<form action="<% echo (self) %>?res=<% echo (oya/no) %>" method="post"><input type="submit" value="<% def(oya/disp_resform)%>返信<% elsedef %>表示<% /def %>" class="res_button"></form><span class="page_top"><a href="#top">△</a></span></div>
-	<% /def %>
 <% ========== 返信ボタンここまで ========== %>
 
 	<hr>
