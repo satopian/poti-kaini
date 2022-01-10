@@ -414,7 +414,7 @@ input.pch_upload {
 .comment {
 	margin: 0 0 12px;
 	display: table;
-	min-width: 200px;
+	min-width: 350px;
 	line-height: 185%;
 	/*	letter-spacing: 0.08em;*/
 }
@@ -1092,10 +1092,13 @@ input.copy_txt::selection {
 	.menu_pr,.res_menu_pr,.column_non,label.use_animation {
 		display: none;
 	}
-
+	
 	.posted_image {
 		float: none;
 		margin-right: 0;
+	}
+	.comment {
+		min-width: initial;
 	}
 	.catalog_desc_wrap {
 		max-width: 560px;
