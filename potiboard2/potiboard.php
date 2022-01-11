@@ -381,10 +381,12 @@ function basicpart(){
 	$dat['cheerpj_url']=CHEERPJ_URL;
 	//PHP8.1 その他テンプレート
 	$dat['admin_del']=false;
+	$dat['pass']=false;
 	$dat['regist']=false;
 	$dat['admin']=false;
 	$dat['admin_in']=false;
 	$dat['post_mode']=false;
+	$dat['mes']=false;
 	$dat['err_mode']=false;
 	$dat['resno']=false;
 	$dat['rewrite']=false;
@@ -561,7 +563,7 @@ function updatelog(){
 		// 改ページ処理
 		$dat['prev'] =false;
 		if($prev >= 0){
-			$dat['prev'] = $prev == 0 ? h(PHP_SELF2) : ($prev / PAGE_DEF) . PHP_EXT;
+			$dat['prev'] = ($prev == 0) ? h(PHP_SELF2) : ($prev / PAGE_DEF) . PHP_EXT;
 		}
 		$paging = "";
 		for($l = 0; $l < $counttree; $l += (PAGE_DEF*35)){
@@ -1523,9 +1525,7 @@ function paintform(){
 	if($shi==='neo'){
 		$useneo=true;//trueのみfalseは入らない
 	}
-	if(!$is_mobile && $shi==='chicken'){
-		$dat['chickenpaint']=true;
-	} 
+	$dat['chickenpaint']= (!$is_mobile && $shi==='chicken') ? true :false;
 	//pchファイルアップロードペイント
 	if($admin&&($admin===$ADMIN_PASS)){
 		
@@ -2387,6 +2387,7 @@ function catalog(){
 	$prev = $page - $pagedef;
 	$next = $page + $pagedef;
 	// 改ページ処理
+	$dat['prev'] = false;
 	if($prev >= 0) $dat['prev'] = PHP_SELF.'?mode=catalog&amp;page='.$prev;
 	$paging = "";
 
@@ -2415,6 +2416,7 @@ function catalog(){
 	}
 	//改ページ分岐ここまで
 	$dat['paging'] = $paging;
+	$dat['next'] = false;
 	if($counttree > $next){
 		$dat['next'] = PHP_SELF.'?mode=catalog&amp;page='.$next;
 	}
