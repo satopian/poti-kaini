@@ -286,7 +286,7 @@ class Skinny {
 		
 		$str = trim( $str[1] );
 		$prm = '';//PHP8.1
-		if ( substr( $str, 0, 1) == '/' ) {
+		if ( substr( (string)$str, 0, 1) == '/' ) {
 			/* '/'で始まるタグは無条件で終了タグ（PHPの閉じ括弧）とみなす (v0.4.0以降) */
 			return $this->_skTags_close();
 			list( $com ) = explode( '(', (string)$str );
@@ -390,7 +390,7 @@ class Skinny {
 	 *  ループカウンタ
 	 */
 	private function _skTags_LoopCounter( $vals ){
-		if ( substr($vals[0],0,1) != "@" ) {
+		if ( substr((string)$vals[0],0,1) != "@" ) {
 			$vals_loop = '';
 			$variable_name = '$skOutput';
 			$cnt = 0;
@@ -411,7 +411,7 @@ class Skinny {
 			return $variable_name;
 		} else {
 			$variable_name = '$skOutput';
-			$vals[0] = substr( $vals[0],1);
+			$vals[0] = substr( (string)$vals[0],1);
 			foreach ( $vals as $val ) {
 				$variable_name .= '[\'' . $val . '\']';
 			}
@@ -1382,7 +1382,7 @@ function _skGlobal_mb_strrev( $data ) {
 	$n = mb_strlen((string)$data, $skConf['ENCODE']['INTERNAL'] );
 	if ( $n == 0 ) return $data;
 	for ( $i = 0; $i < $n; $i++ ) {
-		$r_array[$i] = mb_substr( $data, $i, 1, $skConf['ENCODE']['INTERNAL'] );
+		$r_array[$i] = mb_substr( (string)$data, $i, 1, $skConf['ENCODE']['INTERNAL'] );
 	}
 	$r_array = array_reverse( $r_array );
 	$data = NULL;
