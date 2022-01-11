@@ -386,7 +386,6 @@ function basicpart(){
 	$dat['admin_in']=false;
 	$dat['post_mode']=false;
 	$dat['err_mode']=false;
-	$dat['paint']=false;
 	$dat['resno']=false;
 	$dat['rewrite']=false;
 	$dat['pictmp']=false;
@@ -398,6 +397,7 @@ function basicpart(){
 	$dat['com']=false;
 	$dat['ipcheck']=false;
 	$dat['tmp']=false;
+	$dat['n']=false;
 
 	return $dat;
 }
@@ -407,7 +407,6 @@ function form($resno="",$adminin="",$tmp=""){
 	global $addinfo;
 	global $fontcolors,$qualitys;
 	global $ADMIN_PASS;
-
 
 	$admin_valid = ($adminin === 'valid');
 	//csrfトークンをセット
@@ -429,7 +428,7 @@ function form($resno="",$adminin="",$tmp=""){
 	$dat['notres'] = $resno ? false : true;
 	
 	$dat['paintform'] = USE_PAINT ? ($resno ? (RES_UPLOAD ? true :false) :true):false;
-
+	$dat['paintform']=true;
 	$dat['admin'] = $admin_valid ? h($ADMIN_PASS) :'';
 
 	$dat['maxbyte'] = 2048 * 1024;//フォームのHTMLによるファイルサイズの制限 2Mまで
@@ -542,7 +541,6 @@ function updatelog(){
 
 			//レス作成
 			$rres[$oya]=[];
-			$dat['oya'][$oya]['res']=[];
 			foreach($treeline as $k => $disptree){
 				if($k<$s){//レス表示件数
 					continue;
@@ -554,7 +552,7 @@ function updatelog(){
 			}
 
 			// レス記事一括格納
-			$dat['oya'][$oya]['res'] = !empty($rres) ? $rres[$oya] :[];
+			$dat['oya'][$oya]['res'] = !empty($rres[$oya]) ? $rres[$oya] :[];
 
 			clearstatcache(); //キャッシュをクリア
 			$oya++;
@@ -2530,7 +2528,6 @@ function htmloutput($template,$dat,$buf_flag=''){
 	global $Skinny;
 	$dat += basicpart();//basicpart()で上書きしない
 	//array_merge()ならbasicpart(),$datの順
-	$dat['n']=false;
 	if($buf_flag){
 		$buf=$Skinny->SkinnyFetchHTML($template, $dat );
 		return $buf;
