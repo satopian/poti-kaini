@@ -6,7 +6,7 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board EVO
 // バージョン :
-define('POTI_VER','v3.21.0');
+define('POTI_VER','v3.21.1');
 define('POTI_LOT','lot.220111'); 
 
 /*
@@ -428,7 +428,6 @@ function form($resno="",$adminin="",$tmp=""){
 	$dat['notres'] = $resno ? false : true;
 	
 	$dat['paintform'] = USE_PAINT ? ($resno ? (RES_UPLOAD ? true :false) :true):false;
-	$dat['paintform']=true;
 	$dat['admin'] = $admin_valid ? h($ADMIN_PASS) :'';
 
 	$dat['maxbyte'] = 2048 * 1024;//フォームのHTMLによるファイルサイズの制限 2Mまで
