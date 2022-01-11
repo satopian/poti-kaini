@@ -1,6 +1,7 @@
 <?php
-//パーミッションの値を設定できるようにした。初期値を 0777→0707 0666→0606 に。
-//変更者 https://paintbbs.sakura.ne.jp/poti/
+//2020/12/20 パーミッションの値を設定できるようにした。初期値を 0777→0707 0666→0606 に。
+//2022/01/11 PHP8.1エラー対策。sub_str(),explode()のstrを、(string)で文字列に変換。
+//変更者 さとぴあ(@satopian) https://paintbbs.sakura.ne.jp/poti/
 /**
  *  Skinny  - One File Simple Template Engine over PHP -
  *  
@@ -263,7 +264,7 @@ class Skinny {
 	 *  ※ この方法だとif/ifsにしか効果ないな…
 	 */
 	private function _sfTagValueTrims( $tags ) {
-		$arr = explode( "," , $tags );
+		$arr = explode( "," , (string)$tags );
 		foreach ( $arr as $val ) {
 			$val = trim( $val );
 		}
@@ -476,9 +477,9 @@ class Skinny {
 		$src_a = array();
 		$ope   = " OR ";
 		
-		$val_split = explode( '|', $tag );
+		$val_split = explode( '|', (string)$tag );
 		foreach ( $val_split as $t ) {
-			list( $variable, $comp, $str ) = explode( ',' , trim($t) );
+			list( $variable, $comp, $str ) = explode( ',' , (string)trim($t) );
 			$variable_name = $this->_skTags_LoopCounter( explode('/',(string)$variable) );
 			$src_c  .= "if(isset($variable_name)===false){ $variable_name=null; }\n";
 			$src_a[] = "($variable_name $comp $str)";
@@ -498,9 +499,9 @@ class Skinny {
 		$src_a = array();
 		$ope   = " AND ";
 		
-		$val_split = explode( '|', $tag );
+		$val_split = explode( '|', (string)$tag );
 		foreach ( $val_split as $t ) {
-			list( $variable, $comp, $str ) = explode( ',' , trim($t) );
+			list( $variable, $comp, $str ) = explode( ',' , trim((string)$t) );
 			$variable_name = $this->_skTags_LoopCounter( explode('/',(string)$variable) );
 			$src_c  .= "if(isset($variable_name)===false){ $variable_name=null; }\n";
 			$src_a[] = "($variable_name $comp $str)";
@@ -521,7 +522,7 @@ class Skinny {
 		
 		$val_split = explode( '|', $tag );
 		foreach ( $val_split as $t ) {
-			list( $variable, $comp, $variable2 ) = explode( ',' , trim($t) );
+			list( $variable, $comp, $variable2 ) = explode( ',' , trim((string)$t) );
 			$variable_name = $this->_skTags_LoopCounter( explode('/',(string)$variable)  );
 			$variable_name2= $this->_skTags_LoopCounter( explode('/',(string)$variable2) );
 			$src_c  .= "if(isset($variable_name) ===false){ $variable_name =null; }\n";
@@ -543,9 +544,9 @@ class Skinny {
 		$src_a = array();
 		$ope   = " AND ";
 		
-		$val_split = explode( '|', $tag );
+		$val_split = explode( '|', (string)$tag );
 		foreach ( $val_split as $t ) {
-			list( $variable, $comp, $variable2 ) = explode( ',' , trim($t) );
+			list( $variable, $comp, $variable2 ) = explode( ',' , trim((string)$t) );
 			$variable_name = $this->_skTags_LoopCounter( explode('/',(string)$variable)  );
 			$variable_name2= $this->_skTags_LoopCounter( explode('/',(string)$variable2) );
 			$src_c  .= "if(isset($variable_name) ===false){ $variable_name =null; }\n";
@@ -765,7 +766,7 @@ class Skinny {
 		$ret = '';
 		if ( strpos( $tag, '|' ) ) {
 			$par = explode( '|', (string)$tag );
-			$vals = explode( '/', trim(array_shift($par)) );
+			$vals = explode( '/', trim((string)array_shift($par)) );
 			$variable_name = $this->_skTags_LoopCounter( $vals );
 			foreach ( $par as $mod ) {
 				$variable_name = $this->modifier_escape_over_smarty( $variable_name, trim($mod) );
@@ -990,9 +991,9 @@ class Skinny {
 	 *  ex) dval(val,'Y-m-d H:i') ⇒ valの内容を'Y-m-d H:i'形式で出力
 	 */
 	private function _skTags_dval( $tag ){
-		list($tags,$outputFormat)=explode(',',$tag);
+		list($tags,$outputFormat)=explode(',',(string)$tag);
 		$outputFormat = trim( $outputFormat, '\'"' );
-		$vals = explode('/',$tags);
+		$vals = explode('/',(string)$tags);
 		$variable_name = $this->_skTags_LoopCounter( $vals );
 		$src = "<?php \$_DTTM_ = (is_numeric($variable_name)==true) ? $variable_name : strtotime($variable_name);";
 		return $src . " echo (\$_DTTM_ <= 0) ? '' : date('$outputFormat',\$_DTTM_); ?>";
@@ -1005,7 +1006,7 @@ class Skinny {
 	 */
 	private function _skTags_var( $tag ) {
 		list($tags,$value) = explode( ',' , (string)$tag );
-		$vals = explode('/',$tags);
+		$vals = explode('/',(string)$tags);
 		$variable_name = $this->_skTags_LoopCounter( $vals );
 		return "<?php $variable_name = $value; ?>";
 	}
@@ -1017,7 +1018,7 @@ class Skinny {
 	 */
 	private function _skTags_calc( $tag ) {
 		list( $tags, $operator, $value ) = explode( ',' , (string)$tag );
-		$vals = explode( '/' , $tags );
+		$vals = explode( '/' , (string)$tags );
 		$variable_name = $this->_skTags_LoopCounter( $vals );
 		return "<?php $variable_name $operator $value; ?>";
 	}
@@ -1066,7 +1067,7 @@ class Skinny {
 			$variables = explode( ',', $vars );
 			$arguments = '';
 			foreach ( $variables as $v ) {
-				$arguments .= $this->_skTags_LoopCounter( explode('/',$v) ) . ",";
+				$arguments .= $this->_skTags_LoopCounter( explode('/',(string)$v) ) . ",";
 			}
 			$arguments = trim( $arguments, "," );
 			$plugin_file = sprintf("%s/%s.php", rtrim($this->skConf['PLUGIN']['DIR'],'/'), ltrim($plugin_name,'/') );
