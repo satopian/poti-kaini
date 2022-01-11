@@ -6,7 +6,7 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board EVO
 // バージョン :
-define('POTI_VER','v3.21.1');
+define('POTI_VER','v3.21.3');
 define('POTI_LOT','lot.220111'); 
 
 /*
@@ -192,7 +192,7 @@ deltemp();
 //user-codeの発行
 if(!$usercode){//falseなら発行
 	$userip = get_uip();
-	$usercode = substr(crypt(md5($userip.ID_SEED.date("Ymd", time())),'id'),-12);
+	$usercode = (string)substr(crypt(md5($userip.ID_SEED.date("Ymd", time())),'id'),-12);
 	//念の為にエスケープ文字があればアルファベットに変換
 	$usercode = strtr($usercode,"!\"#$%&'()+,/:;<=>?@[\\]^`/{|}~","ABCDEFGHIJKLMNOabcdefghijklmn");
 }
@@ -391,6 +391,7 @@ function basicpart(){
 	$dat['resno']=false;
 	$dat['rewrite']=false;
 	$dat['pictmp']=false;
+	$dat['notmp']=false;
 	$dat['ptime']=false;
 	$dat['name']=false;
 	$dat['email']=false;
@@ -399,7 +400,8 @@ function basicpart(){
 	$dat['com']=false;
 	$dat['ipcheck']=false;
 	$dat['tmp']=false;
-	$dat['n']=false;
+	$dat['resform'] = false;//ミニフォーム廃止	
+	$dat['n']=false;//コメント行
 
 	return $dat;
 }
@@ -499,8 +501,6 @@ function updatelog(){
 
 			$res['disp_resform'] = check_elapsed_days($res['time']); // ミニレスフォームの表示有無
 
-			// ミニフォーム用
-			// $resub = USE_RESUB ? 'Re: ' . $res['sub'] : '';
 			// レス省略
 			$skipres = '';
 
@@ -617,6 +617,10 @@ function updatelog(){
 
 //レス画面を表示
 function res($resno = 0){
+
+	if(!$resno){
+		return redirect(h(PHP_SELF2), 0);
+	}
 
 	$trees = file(TREEFILE);
 	foreach($trees as $i => $value){
@@ -2720,6 +2724,18 @@ function create_res ($line, $options = []) {
 	];
 	$res['imgsrc']='';
 	// 画像系変数セット
+
+	//初期化
+	$res['src'] = '';
+	$res['srcname'] = '';
+	$res['size'] = '';
+	$res['thumb'] = '';
+	$res['imgsrc'] = '';
+	$res['painttime'] = '';
+	$res['spch']='';
+	$res['pch'] = '';
+	$res['continue'] ='';
+
 	$res['img'] = $path.$time.$ext; // 画像ファイル名
 	if ($res['img_file_exists'] = ($ext && is_file($res['img']))) { // 画像ファイルがある場合
 		$res['src'] = IMG_DIR.$time.$ext;
