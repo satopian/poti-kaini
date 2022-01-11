@@ -130,7 +130,7 @@
 
 <% elsedef %>
 <h1 id="bbs_title"><% def(continue_mode) %>続きを描く<% /def %><% def(pch_mode) %>動画表示モード<% /def %> - <span class="title_name_wrap"><% echo(title) %></span></h1><% /def %>
-<% ========== お絵かきモード ========== %>
+<!--お絵かきモード-->
 <% def(n) %>
 <!-- 
 // 【お絵かき(通常/続き)】
@@ -225,11 +225,11 @@ document.addEventListener("DOMContentLoaded", function() {
 </div>
 </nav>
 </header>
-<% ========== 動的パレットスクリプト ここから ========== %>
+<!--動的パレットスクリプト ここから-->
 <script>
 var DynamicColor = 1;	// パレットリストに色表示
 var Palettes = new Array();
-<% ========== パレット配列作成 ========== %>
+<!--パレット配列作成-->
 <% def(palettes) %>
 <% echo(palettes) %>
 <% /def %>
@@ -252,11 +252,11 @@ function GetPalette(){d=document;p=String(d.paintbbs.getColors());"null"!=p&&""!
 function GradSelC(){if(d.grad.view.checked){d=document.grad;l=ps.length;pe="";for(n=0;l>n;n++)R=255+-1*parseInt("0x"+ps[n].substr(1,2)),G=255+-1*parseInt("0x"+ps[n].substr(3,2)),B=255+-1*parseInt("0x"+ps[n].substr(5,2)),255<R?R=255:0>R&&(R=0),255<G?G=255:0>G&&(G=0),255<B?B=255:0>B&&(B=0),pe+="#"+Hex(R)+Hex(G)+Hex(B)+"\n";pe=pe.split("\n");for(n=0;l>n;n++)d.p_st.options[n].style.background=ps[n],d.p_st.options[n].style.color=pe[n],d.p_ed.options[n].style.background=ps[n],d.p_ed.options[n].style.color=
 pe[n]}}function GradView(a,f){d=document}function showHideLayer(){d=document;var a=d.layers?d.layers.psft:d.all("psft").style;d.grad.view.checked||(a.visibility="hidden");d.grad.view.checked&&(a.visibility="visible",GetPalette())};
 </SCRIPT>
-<% ========== 動的パレットスクリプト ここまで ========== %>
+<!--動的パレットスクリプト ここまで-->
 <NOSCRIPT><H3>JavaScriptが有効でないため正常に動作致しません。</H3></NOSCRIPT>
 <div class="appstage"><div class="app">
-<%  <applet～</applet>の～部分の詳しい事は、PaintBBS及びしぃペインターのReadmeを参照  %>
-<% ========== PaintBBS個別設定 ========== %>
+<!--<applet～</applet>の～部分の詳しい事は、PaintBBS及びしぃペインターのReadmeを参照-->
+<!--PaintBBS個別設定-->
 <% def(paintbbs) %>
 <!-- NEOを使う時はアプレットを読み込まないように -->
 <% def(useneo) %><applet-dummy <% elsedef %><applet <% /def %>
@@ -265,7 +265,7 @@ pe[n]}}function GradView(a,f){d=document}function showHideLayer(){d=document;var
  <param name="neo_confirm_unload" value="true">
  <param name="neo_show_right_button" value="true">
 <% /def %>
-<% ========== しぃペインター個別設定 ========== %>
+<!--しぃペインター個別設定-->
 <% def(normal) %>
 <applet code="c.ShiPainter.class" archive="spainter_all.jar" name="paintbbs" WIDTH="<% echo(w) %>" HEIGHT="<% echo(h) %>" MAYSCRIPT>
 <param name=dir_resource value="./">
@@ -278,7 +278,7 @@ pe[n]}}function GradView(a,f){d=document}function showHideLayer(){d=document;var
 <param name=quality value="<% echo(quality) %>">
 <% /def %>
 <% /def %>
-<% ========== しぃペインターPro個別設定 ========== %>
+<!--しぃペインターPro個別設定-->
 <% def(pro) %>
 <applet code="c.ShiPainter.class" archive="spainter_all.jar" name="paintbbs" WIDTH="<% echo(w) %>" HEIGHT="<% echo(h) %>" MAYSCRIPT>
 <param name=dir_resource value="./">
@@ -290,7 +290,7 @@ pe[n]}}function GradView(a,f){d=document}function showHideLayer(){d=document;var
 <param name=quality value="<% echo(quality) %>">
 <% /def %>
 <% /def %>
-<% ========== 共通設定(変更不可) ========== %>
+<!--共通設定(変更不可)-->
 <param name="image_width" value="<% echo(picw) %>">
 <param name="image_height" value="<% echo(pich) %>">
 <param name="image_jpeg" value="<% echo(image_jpeg) %>">
@@ -325,16 +325,16 @@ pe[n]}}function GradView(a,f){d=document}function showHideLayer(){d=document;var
 <param name="security_url" value="<% echo(security_url) %>">
 <param name="security_post" value="false">
 <% /def %>
-<% ========== 共通設定(変更不可) ここまで ========== %>
-<% ========== アプレットのカラー設定(変更可) ========== %>
-<% ========== アプレットのカラー設定(変更可) ここまで ========== %>
+<!--共通設定(変更不可) ここまで-->
+<!--アプレットのカラー設定(変更可)-->
+<!--アプレットのカラー設定(変更可) ここまで-->
 <% def(useneo) %>
 </applet-dummy>
 <% elsedef %>
 </applet>
 <% /def %>
 </div>
-<% ========== 動的パレット制御関連 ========== %>
+<!--動的パレット制御関連-->
 <div class="palette_wrap">
 <div class="palette"><FORM name="Palette">
 <span class="palette_desc">PALETTE</span> <INPUT type="button" VALUE="一時保存" OnClick="PaletteSave()"><br>
@@ -406,11 +406,11 @@ if(DynamicColor) PaletteListSetColor();
 </Script>
 </div>
 </div>
-<% ========== 動的パレット制御関連 ここまで ========== %>
+<!--動的パレット制御関連 ここまで-->
 
 
 <div class="centering">
-<% ========== 描画時間動的表示 ========== %>
+<!--描画時間動的表示-->
 <div class="applet_painttime">
 <FORM NAME="watch">描画時間
 <INPUT SIZE="20" NAME="count">
@@ -419,10 +419,10 @@ if(DynamicColor) PaletteListSetColor();
 	timerID=10;stime=new Date;function SetTimeCount(){now=new Date;s=Math.floor((now.getTime()-stime.getTime())/1E3);disp="";86400<=s&&(d=Math.floor(s/86400),disp+=d+"\u65e5",s-=86400*d);3600<=s&&(h=Math.floor(s/3600),disp+=h+"\u6642\u9593",s-=3600*h);60<=s&&(m=Math.floor(s/60),disp+=m+"\u5206",s-=60*m);document.watch.count.value=disp+s+"\u79d2";clearTimeout(timerID);timerID=setTimeout("SetTimeCount()",250)}SetTimeCount();
 	</Script>
 	</div>
-<% ========== 描画時間動的表示 ここまで ========== %>
+<!--描画時間動的表示 ここまで-->
 <p><% def(anime) %>★描画アニメ記録中★<% /def %></p>
-<% ========== お絵かき設定値の再設定関連 ========== %>
-<% ========== お絵かき設定値の再設定関連 ここまで ========== %>
+<!--お絵かき設定値の再設定関連-->
+<!--お絵かき設定値の再設定関連 ここまで-->
 <a href="<% echo(self) %>?mode=piccom<% def(resno) %>&resto=<% echo(resno) %><% /def %>" target="_blank" rel="noopener">アップロード途中の画像</a>
 </div>
 <!--PaintBBS HELP START-->
@@ -430,8 +430,8 @@ if(DynamicColor) PaletteListSetColor();
 <!--PaintBBS HELP END-->
 <% /def %>
 <% /def %>
-<% ========== お絵かきモード ここまで ========== %>
-<% ========== 動画表示モード ========== %>
+<!--お絵かきモード ここまで-->
+<!--動画表示モード-->
 <% def(n) %>
 <!--
 //
@@ -479,8 +479,8 @@ name="pch" code="pch.PCHViewer.class" archive="PCHViewer.jar,PaintBBS.jar" width
 	<a href="<% echo(self2) %>"><% echo(title) %></a> / <a href="javascript:close()">閉じる</a>
 </div>
 <% /def %>
-<% ========== 動画表示モード ここまで ========== %>
-<% ========== コンティニューモード ==========  %>
+<!--動画表示モード ここまで-->
+<!--コンティニューモード ==========-->
 <% def(n) %>
 <!--
 // continue_mode…コンティニューモードのとき true が入る
@@ -521,14 +521,14 @@ if(is_mobile()){
 </nav>
 </header>
  	<div class="centering">
-    <% ========== クッキー読込み用JavaScript(必須) ========== %>
+    <!--クッキー読込み用JavaScript(必須)-->
     <Script src="loadcookie.js"></script>
-    <% ========== 画像と描画時間 ========== %>
+    <!--画像と描画時間-->
  	<div class="continue_img">
 <img src="<% echo(picfile) %>" width="<% echo(picw) %>" height="<% echo(pich) %>" alt="<% def(sub)%><% echo(sub)%> <% /def %><% def(name)%>by <% echo(name)%> <% /def %><% echo(picw) %>x<% echo(pich) %>" title="<% def(sub)%><% echo(sub)%> <% /def %><% def(name)%>by <% echo(name)%> <% /def %><% echo(picw) %>x<% echo(pich) %>">
    </div>
     <div class="continue_painttime"><% def(painttime) %>描画時間：<% echo(painttime) %><% /def %></div>
-    <% ========== コンティニューフォーム欄 ========== %>
+    <!--コンティニューフォーム欄-->
     <form action="<% echo(self) %>" method="post">
       <input type="hidden" name="mode" value="contpaint">
       <input type="hidden" name="anime" value="true">
@@ -579,7 +579,7 @@ if(is_mobile()){
 
 
 
-<% ========== コンティニュー説明 ========== %>
+<!--コンティニュー説明-->
 <div class="howtocontinue">
 		<ul id="up_desc">
 <% def(newpost_nopassword) %>
@@ -589,13 +589,13 @@ if(is_mobile()){
 <% /def %>
 	</ul>
 </div>
-<% ========== JavaScriptの実行(クッキーを読込み、フォームに値をセット) ========== %>
+<!--JavaScriptの実行(クッキーを読込み、フォームに値をセット)-->
 <script>
 l(); //LoadCookie
 </script>
 </div>
 <% /def %>
-<% ========== コンティニューモード ここまで ========== %><!--著作権表示 削除しないでください-->
+<!--コンティニューモード ここまで--><!--著作権表示 削除しないでください-->
 <footer>
 	<div class="copyright">
 		<!-- GazouBBS v3.0 --><!-- ふたば改0.8 --><!-- POTI-board -->

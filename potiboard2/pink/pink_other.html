@@ -65,7 +65,7 @@
 -->
 <% /def %>
 <% def(post_mode) %>
-<% ========== クッキー読込みは新規投稿のみ ========== %>
+<!--クッキー読込みは新規投稿のみ-->
 <% def(regist) %>
 <script src="loadcookie.js"></script>
 <% /def %>
@@ -81,7 +81,7 @@
 <input type="submit" value="PAINT" class="paint_button">
 <input type="hidden" name="useneo" value="true">
 
-<% ===キャンバスサイズ 設定はconfig.phpで === %>
+<!--キャンバスサイズ 設定はconfig.phpで-->
 <% def(n) %>
 <!-- 
 
@@ -122,7 +122,7 @@ PMAX_H //高さ
 		}
 	?>
 	</select>&nbsp;
-<% ===キャンバスサイズ ここまで === %>
+<!--キャンバスサイズ ここまで-->
 <% def(anime) %><label class="checkbox use_animation"><input type="checkbox" value="true" name="anime"<% echo (animechk) %>>動画記録</label>
 <% /def %>
 <input name="pch_upload" type="file" />
@@ -130,7 +130,7 @@ PMAX_H //高さ
 <input type="hidden" name="mode" value="paint"></form>
 <% /def %>
 <% /def %>
-<% ========== 投稿待ちのお絵かき画像表示 ========== %>
+<!--投稿待ちのお絵かき画像表示-->
 <% def(pictmp) %>
 <div class="centering">
 <% def(notmp) %>
@@ -152,11 +152,11 @@ PMAX_H //高さ
 <% /def %>
 <form action="<% echo(self) %>" method="POST" enctype="multipart/form-data">
 <input type="hidden" name="token" value="<% def(token) %><% echo(token) %><% /def %>">
-<% ========== モード指定:新規投稿 ========== %>
+<!--モード指定:新規投稿-->
 <% def(regist) %>
 <input type="hidden" name="mode" value="regist">
 <% /def %>
-<% ========== モード指定:編集 ========== %>
+<!--モード指定:編集-->
 <% def(rewrite) %>
 <input type="hidden" name="mode" value="rewrite">
 <input type="hidden" name="thread_no" value="<% def(thread_no)%><% echo(thread_no)%><% /def %>">
@@ -175,7 +175,7 @@ PMAX_H //高さ
 <% def(ptime) %>
 <input type="hidden" name="ptime" value="<% echo(ptime) %>">
 <% /def %>
-<% ========== レスお絵かき対応 ========== %>
+<!--レスお絵かき対応-->
 <% def(resno) %>
 <input type="hidden" name="resto" value="<% echo(resno) %>">
 <% /def %>
@@ -184,31 +184,31 @@ PMAX_H //高さ
 <% def(ipcheck) %> <tr><td colspan="2" style="text-align: center;" class="post_table_submit td_noborder">- IPアドレスチェック中 -</td></tr><% /def %>
  <tr>
   <td class="post_table_title">名前<% def(usename) %>(必須)<% /def %></td>
-<% ========== 編集時、valueに名前をセット ========== %>
+<!--編集時、valueに名前をセット-->
   <td><input type="text" name="name" <% def(name) %> value="<% echo(name) %>"<% /def %> class="post_input_text" autocomplete="username"></td>
  </tr>
  <tr>
   <td class="post_table_title">E-mail</td>
-<% ========== 編集時、valueにメールアドレスをセット ========== %>
+<!--編集時、valueにメールアドレスをセット-->
   <td><input type="text" name="email" <% def(email) %> value="<% echo(email) %>"<% /def %> class="post_input_text" autocomplete="email"></td>
  </tr>
  <tr>
   <td class="post_table_title">URL</td>
-<% ========== 編集時、valueにURLをセット ========== %>
+<!--編集時、valueにURLをセット-->
   <td><input type="url" name="url" <% def(url) %> value="<% echo(url) %>"<% /def %> class="post_input_text" autocomplete="url"></td>
  </tr>
  <tr>
   <td class="post_table_title">題名<% def(usesub) %>(必須)<% /def %></td>
-<% ========== 編集時、valueに題名をセット ========== %>
+<!--編集時、valueに題名をセット-->
   <td><input type="text" name="sub" <% def(sub) %> value="<% echo(sub) %>"<% /def %> class="post_input_text" autocomplete="off"
 ></td>
  </tr>
  <tr>
   <td class="post_table_title">本文<% def(usecom) %>(必須)<% /def %></td>
-<% ========== 編集時、textarea内に本文をセット ========== %>
+<!--編集時、textarea内に本文をセット-->
   <td><textarea name="com" wrap="soft" class="post_input_com"><% def(com) %><% echo(com) %><% /def %></textarea></td>
  </tr>
-<% ========== ファイルアップロード欄 ========== %>
+<!--ファイルアップロード欄-->
 <% def(upfile) %>
 <tr>
 <td class="post_table_title">添付画像</td>
@@ -220,7 +220,7 @@ PMAX_H //高さ
  </td>
  </tr>
 <% /def %>
-<% ========== お絵かき画像選択欄 ========== %>
+<!--お絵かき画像選択欄-->
 <% def(tmp) %>
  <tr>
   <td class="post_table_title">画像</td>
@@ -229,7 +229,7 @@ PMAX_H //高さ
   </select></td>
  </tr>
 <% /def %>
-<% ========== 新規投稿時は削除キー入力 ========== %>
+<!--新規投稿時は削除キー入力-->
 <% def(regist) %>
  <tr>
   <td class="post_table_title">削除キー</td>
@@ -239,7 +239,7 @@ PMAX_H //高さ
  <tr><td colspan="2" style="text-align: center;" class="post_table_submit td_noborder"><input type="submit" value="送信する" class="post_submit"></td></tr>
  <tr>
   <td colspan="2" class="td_noborder">
-<% ========== 新規投稿説明 ========== %>
+<!--新規投稿説明-->
 <ul class="howtowrite">
 <% def(regist) %>
 <% def(upfile) %>
@@ -250,12 +250,12 @@ PMAX_H //高さ
 <li>最大投稿データ量は <% echo(maxkb) %> KB までです。sage機能付き。</li>
 <% /def %>
 <% /def %>
-<% ========== 編集説明 ========== %>
+<!--編集説明-->
 <% def(rewrite) %>
 <li>E-mail以外の項目は 未入力(空白)にすると内容はそのままです。</li>
 <li>編集では クッキーは保存されません。さらにsageを入れても位置は変わりません。</li>
 <% /def %>
-<% ========== 以下共通 ========== %>
+<!--以下共通-->
 </ul></td>
  </tr>
 </table>
@@ -273,15 +273,15 @@ PMAX_H //高さ
 	}
 </script>
 
-<% ========== 新規投稿のみクッキーを読込み ========== %>
+<!--新規投稿のみクッキーを読込み-->
 <% def(regist) %>
 <script>
 l(); //LoadCookie
 </script>
 <% /def %>
 <% /def %>
-<% ========== 投稿モード ここまで ========== %>
-<% ========== 管理モード(認証) ========== %>
+<!--投稿モード ここまで-->
+<!--管理モード(認証)-->
 <% def(n) %>
 <!-- 
 //
@@ -309,8 +309,8 @@ l(); //LoadCookie
 </div>
 </form>
 <% /def %>
-<% ========== 管理モード(認証) ここまで ========== %>
-<% ========== 管理モード(削除) ========== %>
+<!--管理モード(認証) ここまで-->
+<!--管理モード(削除)-->
 <% def(n) %>
 <!-- 
 //
@@ -418,8 +418,8 @@ l(); //LoadCookie
 <p>【 画像データ合計 : <b><% echo(all) %></b> KB 】</p>
   </div>
 <% /def %>
-<% ========== 管理モード(削除) ここまで ========== %>
-<% ========== エラー画面 ========== %>
+<!--管理モード(削除) ここまで-->
+<!--エラー画面-->
 <% def(n) %>
 <!-- 
 //
@@ -442,7 +442,7 @@ l(); //LoadCookie
 </div>
 
 <% /def %>
-<% ========== エラー画面 ここまで ========== %>
+<!--エラー画面 ここまで-->
 <!--著作権表示 削除しないでください-->
 <footer>
 	<div class="copyright">

@@ -6,8 +6,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board EVO
 // バージョン :
-define('POTI_VER','v3.21.3');
-define('POTI_LOT','lot.220111'); 
+define('POTI_VER','v3.21.5');
+define('POTI_LOT','lot.220111');
 
 /*
   (C) 2018-2022 POTI改 POTI-board redevelopment team
@@ -402,7 +402,47 @@ function basicpart(){
 	$dat['tmp']=false;
 	$dat['resform'] = false;//ミニフォーム廃止	
 	$dat['n']=false;//コメント行
-
+	// $dat['paint_mode'] = false;
+	// $dat['pinchin'] = false;
+	// $dat['pch_mode'] = false;
+	// $dat['continue_mode'] = false;
+	// $dat['useneo'] = false;
+	// $dat['parameter_day'] = false;
+	// $dat['chickenpaint'] = false;
+	// $dat['picw'] = false;
+	// $dat['pich'] = false;
+	// $dat['imgfile'] = false;
+	// $dat['img_chi'] = false;
+	// $dat['usercode'] = false;
+	// $dat['stime'] = false;
+	// $dat['palettes'] = false;
+	// $dat['paintbbs'] = false;
+	// $dat['h'] = false;
+	// $dat['quality'] = false;
+	// $dat['pro'] = false;
+	// $dat['normal'] = false;
+	// $dat['image_jpeg'] = false;
+	// $dat['image_size'] = false;
+	// $dat['compress_level'] = false;
+	// $dat['undo'] = false;
+	// $dat['undo_in_mg'] = false;
+	// $dat['anime'] = false;
+	// $dat['pchfile'] = false;
+	// $dat['security'] = false;
+	// $dat['security_click'] = false;
+	// $dat['security_timer'] = false;
+	// $dat['security_url'] = false;
+	// $dat['dynp'] = false;
+	// $dat['type_neo'] = false;
+	// $dat['speed'] = false;
+	// $dat['picfile'] = false;
+	// $dat['painttime'] = false;
+	// $dat['no'] = false;
+	// $dat['pch'] = false;
+	// $dat['ext'] = false;
+	// $dat['ctype_pch'] = false;
+	// $dat['newpost_nopassword'] = false;
+	
 	return $dat;
 }
 
@@ -1523,9 +1563,36 @@ function paintform(){
 
 	if(strlen($pwd) > 72) error(MSG015);
 
+	$dat['pinchin'] = false;
+	$dat['pch_mode'] = false;
+	$dat['continue_mode'] = false;
+	$dat['imgfile'] = false;
+	$dat['img_chi'] = false;
+	$dat['paintbbs'] = false;
+	$dat['quality'] = false;
+	$dat['pro'] = false;
+	$dat['normal'] = false;
+	$dat['image_jpeg'] = false;
+	$dat['image_size'] = false;
+	$dat['undo'] = false;
+	$dat['undo_in_mg'] = false;
+	$dat['pchfile'] = false;
+	$dat['security'] = false;
+	$dat['security_click'] = false;
+	$dat['security_timer'] = false;
+	$dat['security_url'] = false;
+	$dat['type_neo'] = false;
+	$dat['speed'] = false;
+	$dat['picfile'] = false;
+	$dat['painttime'] = false;
+	$dat['no'] = false;
+	$dat['pch'] = false;
+	$dat['ext'] = false;
+	$dat['ctype_pch'] = false;
+	$dat['newpost_nopassword'] = false;
 
 	$dat['parameter_day']=date("Ymd");//JavaScriptのキャッシュ制御
-	$useneo=filter_input(INPUT_POST, 'useneo',FILTER_VALIDATE_BOOLEAN);
+	$useneo=filter_input(INPUT_POST, 'useneo',FILTER_VALIDATE_BOOLEAN) ? true :false;
 	if($shi==='neo'){
 		$useneo=true;//trueのみfalseは入らない
 	}
@@ -1844,6 +1911,45 @@ function paintcom(){
 // 動画表示
 function openpch(){
 
+	$dat['paint_mode'] = false;
+	$dat['pinchin'] = false;
+	$dat['pch_mode'] = false;
+	$dat['continue_mode'] = false;
+	$dat['useneo'] = false;
+	$dat['chickenpaint'] = false;
+	$dat['picw'] = false;
+	$dat['pich'] = false;
+	$dat['imgfile'] = false;
+	$dat['img_chi'] = false;
+	$dat['usercode'] = false;
+	$dat['stime'] = false;
+	$dat['palettes'] = false;
+	$dat['paintbbs'] = false;
+	$dat['quality'] = false;
+	$dat['pro'] = false;
+	$dat['normal'] = false;
+	$dat['image_jpeg'] = false;
+	$dat['image_size'] = false;
+	$dat['compress_level'] = false;
+	$dat['undo'] = false;
+	$dat['undo_in_mg'] = false;
+	$dat['anime'] = false;
+	$dat['pchfile'] = false;
+	$dat['security'] = false;
+	$dat['security_click'] = false;
+	$dat['security_timer'] = false;
+	$dat['security_url'] = false;
+	$dat['dynp'] = false;
+	$dat['type_neo'] = false;
+	$dat['speed'] = false;
+	$dat['picfile'] = false;
+	$dat['painttime'] = false;
+	$dat['no'] = false;
+	$dat['pch'] = false;
+	$dat['ext'] = false;
+	$dat['ctype_pch'] = false;
+	$dat['newpost_nopassword'] = false;
+
 	$dat['parameter_day']=date("Ymd");
 
 	$pch = (string)newstring(filter_input(INPUT_GET, 'pch'));
@@ -1899,6 +2005,47 @@ function deltemp(){
 function incontinue(){
 	global $addinfo;
 
+	$dat['paint_mode'] = false;
+	$dat['pinchin'] = false;
+	$dat['pch_mode'] = false;
+	$dat['useneo'] = false;
+	$dat['parameter_day'] = false;
+	$dat['chickenpaint'] = false;
+	$dat['picw'] = false;
+	$dat['pich'] = false;
+	$dat['imgfile'] = false;
+	$dat['img_chi'] = false;
+	$dat['usercode'] = false;
+	$dat['stime'] = false;
+	$dat['palettes'] = false;
+	$dat['paintbbs'] = false;
+	$dat['w'] = false;
+	$dat['h'] = false;
+	$dat['quality'] = false;
+	$dat['pro'] = false;
+	$dat['normal'] = false;
+	$dat['image_jpeg'] = false;
+	$dat['image_size'] = false;
+	$dat['compress_level'] = false;
+	$dat['undo'] = false;
+	$dat['undo_in_mg'] = false;
+	$dat['anime'] = false;
+	$dat['pchfile'] = false;
+	$dat['security'] = false;
+	$dat['security_click'] = false;
+	$dat['security_timer'] = false;
+	$dat['security_url'] = false;
+	$dat['dynp'] = false;
+	$dat['type_neo'] = false;
+	$dat['speed'] = false;
+	$dat['picfile'] = false;
+	$dat['painttime'] = false;
+	$dat['no'] = false;
+	$dat['pch'] = false;
+	$dat['ext'] = false;
+	$dat['ctype_pch'] = false;
+	$dat['newpost_nopassword'] = false;
+
 	$no = (string)filter_input(INPUT_GET, 'no',FILTER_VALIDATE_INT);
 	$lines = file(LOGFILE);
 	$flag = FALSE;
@@ -1920,7 +2067,7 @@ function incontinue(){
 	//コンティニュー時は削除キーを常に表示
 	$dat['passflag'] = true;
 	//新規投稿で削除キー不要の時 true
-	if(! CONTINUE_PASS) $dat['newpost_nopassword'] = true;
+	$dat['newpost_nopassword']= CONTINUE_PASS ? false : true;
 	$dat['picfile'] = IMG_DIR.h($ctim).h($cext);
 	$dat['name']=h($name);
 	$dat['sub']=h($sub);
@@ -2424,6 +2571,10 @@ function catalog(){
 	if($counttree > $next){
 		$dat['next'] = PHP_SELF.'?mode=catalog&amp;page='.$next;
 	}
+
+	$dat["resno"]=false;
+	$dat["resto"]=false;//この変数使用しているテーマのエラー対策
+
 	$dat['catalog_pageno']=h($page);
 
 	htmloutput(SKIN_DIR.CATALOGFILE,$dat);
