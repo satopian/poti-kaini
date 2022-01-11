@@ -100,18 +100,6 @@ if(is_mobile()){
 
 
 <!-- キャンバスサイズ 設定はconfig.phpで-->
-<% def(n) %>
-<!--
-config.phpで設定した
-//お絵描きデフォルトサイズ(最初に選択される数値)
-PDEF_W //幅
-PDEF_H// 高さ
-//お絵描き最大サイズ
-PMAX_W //幅
-PMAX_H //高さ
-が入ります。
--->
-<% /def %>
 <span class="canvas_size_wrap">
 <span class="canvas_size">Size</span>
 <select name="picw" title="幅" class="canvas_select">
@@ -159,6 +147,18 @@ PMAX_H //高さ
 <input type="hidden" name="mode" value="paint">
 </form>
 
+<% /def %>
+<% def(n) %>
+<!--
+config.phpで設定した
+//お絵描きデフォルトサイズ(最初に選択される数値)
+PDEF_W //幅
+PDEF_H// 高さ
+//お絵描き最大サイズ
+PMAX_W //幅
+PMAX_H //高さ
+が入ります。
+-->
 <% /def %>
 
 <!--お絵かきフォーム欄のみ時に表示-->

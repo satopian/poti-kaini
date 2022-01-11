@@ -57,9 +57,7 @@
 <% /def %>
 <!--文字のみならば・・・--><% def(y/x/txt) %>
 <div class="catalog_noimg"><a href="<% echo (self) %>?res=<% echo (y/x/no) %>">画像なし</a></div>
-<% /def %></div><% /def %>
-<!--記事が無い場合--><% def(y/x/noimg) %><div class="catalog_wrap no_article"></div><% /def %>
-<% /each %>
+<% /def %></div><% /def %><% /each %>
 <% /each %>
 </div>
 <% def(n) %>

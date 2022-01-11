@@ -6,8 +6,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board EVO
 // バージョン :
-define('POTI_VER','v3.21.5');
-define('POTI_LOT','lot.220111');
+define('POTI_VER','v3.22.6');
+define('POTI_LOT','lot.220112');
 
 /*
   (C) 2018-2022 POTI改 POTI-board redevelopment team
@@ -402,47 +402,7 @@ function basicpart(){
 	$dat['tmp']=false;
 	$dat['resform'] = false;//ミニフォーム廃止	
 	$dat['n']=false;//コメント行
-	// $dat['paint_mode'] = false;
-	// $dat['pinchin'] = false;
-	// $dat['pch_mode'] = false;
-	// $dat['continue_mode'] = false;
-	// $dat['useneo'] = false;
-	// $dat['parameter_day'] = false;
-	// $dat['chickenpaint'] = false;
-	// $dat['picw'] = false;
-	// $dat['pich'] = false;
-	// $dat['imgfile'] = false;
-	// $dat['img_chi'] = false;
-	// $dat['usercode'] = false;
-	// $dat['stime'] = false;
-	// $dat['palettes'] = false;
-	// $dat['paintbbs'] = false;
-	// $dat['h'] = false;
-	// $dat['quality'] = false;
-	// $dat['pro'] = false;
-	// $dat['normal'] = false;
-	// $dat['image_jpeg'] = false;
-	// $dat['image_size'] = false;
-	// $dat['compress_level'] = false;
-	// $dat['undo'] = false;
-	// $dat['undo_in_mg'] = false;
-	// $dat['anime'] = false;
-	// $dat['pchfile'] = false;
-	// $dat['security'] = false;
-	// $dat['security_click'] = false;
-	// $dat['security_timer'] = false;
-	// $dat['security_url'] = false;
-	// $dat['dynp'] = false;
-	// $dat['type_neo'] = false;
-	// $dat['speed'] = false;
-	// $dat['picfile'] = false;
-	// $dat['painttime'] = false;
-	// $dat['no'] = false;
-	// $dat['pch'] = false;
-	// $dat['ext'] = false;
-	// $dat['ctype_pch'] = false;
-	// $dat['newpost_nopassword'] = false;
-	
+
 	return $dat;
 }
 
@@ -1912,43 +1872,11 @@ function paintcom(){
 function openpch(){
 
 	$dat['paint_mode'] = false;
-	$dat['pinchin'] = false;
-	$dat['pch_mode'] = false;
 	$dat['continue_mode'] = false;
 	$dat['useneo'] = false;
 	$dat['chickenpaint'] = false;
-	$dat['picw'] = false;
-	$dat['pich'] = false;
-	$dat['imgfile'] = false;
-	$dat['img_chi'] = false;
-	$dat['usercode'] = false;
-	$dat['stime'] = false;
-	$dat['palettes'] = false;
-	$dat['paintbbs'] = false;
-	$dat['quality'] = false;
 	$dat['pro'] = false;
 	$dat['normal'] = false;
-	$dat['image_jpeg'] = false;
-	$dat['image_size'] = false;
-	$dat['compress_level'] = false;
-	$dat['undo'] = false;
-	$dat['undo_in_mg'] = false;
-	$dat['anime'] = false;
-	$dat['pchfile'] = false;
-	$dat['security'] = false;
-	$dat['security_click'] = false;
-	$dat['security_timer'] = false;
-	$dat['security_url'] = false;
-	$dat['dynp'] = false;
-	$dat['type_neo'] = false;
-	$dat['speed'] = false;
-	$dat['picfile'] = false;
-	$dat['painttime'] = false;
-	$dat['no'] = false;
-	$dat['pch'] = false;
-	$dat['ext'] = false;
-	$dat['ctype_pch'] = false;
-	$dat['newpost_nopassword'] = false;
 
 	$dat['parameter_day']=date("Ymd");
 
@@ -2006,45 +1934,9 @@ function incontinue(){
 	global $addinfo;
 
 	$dat['paint_mode'] = false;
-	$dat['pinchin'] = false;
 	$dat['pch_mode'] = false;
 	$dat['useneo'] = false;
-	$dat['parameter_day'] = false;
 	$dat['chickenpaint'] = false;
-	$dat['picw'] = false;
-	$dat['pich'] = false;
-	$dat['imgfile'] = false;
-	$dat['img_chi'] = false;
-	$dat['usercode'] = false;
-	$dat['stime'] = false;
-	$dat['palettes'] = false;
-	$dat['paintbbs'] = false;
-	$dat['w'] = false;
-	$dat['h'] = false;
-	$dat['quality'] = false;
-	$dat['pro'] = false;
-	$dat['normal'] = false;
-	$dat['image_jpeg'] = false;
-	$dat['image_size'] = false;
-	$dat['compress_level'] = false;
-	$dat['undo'] = false;
-	$dat['undo_in_mg'] = false;
-	$dat['anime'] = false;
-	$dat['pchfile'] = false;
-	$dat['security'] = false;
-	$dat['security_click'] = false;
-	$dat['security_timer'] = false;
-	$dat['security_url'] = false;
-	$dat['dynp'] = false;
-	$dat['type_neo'] = false;
-	$dat['speed'] = false;
-	$dat['picfile'] = false;
-	$dat['painttime'] = false;
-	$dat['no'] = false;
-	$dat['pch'] = false;
-	$dat['ext'] = false;
-	$dat['ctype_pch'] = false;
-	$dat['newpost_nopassword'] = false;
 
 	$no = (string)filter_input(INPUT_GET, 'no',FILTER_VALIDATE_INT);
 	$lines = file(LOGFILE);
@@ -2512,7 +2404,6 @@ function catalog(){
 		$j=$lineindex[$disptree]; //該当記事を探して$jにセット
 
 		$res = create_res($line[$j]);
-
 		// カタログ専用ロジック
 		if ($res['img_file_exists']) {
 			if($res['w'] && $res['h']){
@@ -2522,14 +2413,14 @@ function catalog(){
 				}
 			}else{//ログに幅と高さが記録されていない時
 				$res['w'] = CATALOG_W;
-				$res['h'] = null;
+				$res['h'] = '';
 			}
 		}
 		
 		$res['txt'] = !$res['img_file_exists']; // 画像が無い時
 		$res['rescount'] = count($treeline) - 1;
-
 		// 記事格納
+		$dat['y'][$y]['x'][$x]['noimg'] = false;//旧タイプ互換
 		$dat['y'][$y]['x'][$x] = $res;
 		$x++;
 		if($x == CATALOG_X){$y++; $x=0;}
@@ -2571,7 +2462,6 @@ function catalog(){
 	if($counttree > $next){
 		$dat['next'] = PHP_SELF.'?mode=catalog&amp;page='.$next;
 	}
-
 	$dat["resno"]=false;
 	$dat["resto"]=false;//この変数使用しているテーマのエラー対策
 
