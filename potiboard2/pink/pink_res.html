@@ -8,7 +8,6 @@
 <html lang="ja">
 <head>
 <meta charset="utf-8">
-
 <% each(oya) %>
 <!--SNS-->
 <% def(sharebutton) %>
@@ -18,13 +17,11 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="<% echo (rooturl) %><% echo (self) %>?res=<% echo (oya/no) %>" />
 <% def(oya/src) %>
-
 <meta property="og:image" content="<% echo (rooturl) %><% echo (oya/imgsrc) %>" />
 <% /def %>
 <meta property="og:site_name"  content="" />
 <meta property="og:description" content="<% echo (oya/descriptioncom) %>" />
 <% /def %>
-
 <!--ENDSNS-->
 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
 <link rel="stylesheet" href="<% echo(skindir) %>pink.css">
@@ -33,8 +30,6 @@
 <style id="for_mobile"></style>
 
 <title>[<% echo(oya/no) %>] <% echo(oya/sub) %> by <% echo(oya/name) %> - <% echo(title) %></title>
-
-
 <% def(n) %>
 <!--
 // title…掲示板タイトル
@@ -138,7 +133,7 @@
 <% each(oya/res) %>
 <hr>
 <div class="res_article_wrap">
-	<% レス記事ヘッダここから %>
+	<!-- レス記事ヘッダここから -->
 	<div class="res_article_title">[<% echo (oya/res/no) %>] <% echo (oya/res/sub) %></div>
 	<div class="article_info">
 	<span class="article_info_name"><a href="search.php?page=1&imgsearch=on&query=<% echo (oya/res/encoded_name) %>&radio=2" target="_blank" rel="noopener"><% echo (oya/res/name) %></a></span><% def(oya/res/url) %><span class="article_info_desc">[<a href="<% echo (oya/res/url) %>" target="_blank" rel="nofollow noopener noreferrer">URL</a>]</span> <% /def %>
@@ -153,7 +148,7 @@
 	<% def(oya/res/continue) %><span class="article_info_continue">☆<a href="<% echo (self) %>?mode=continue&no=<% echo (oya/res/continue) %>">続きを描く</a></span><% /def %> <% def(oya/res/spch)%><span class="for_pc"><% /def %><% def(oya/res/pch) %><% def(oya/res/continue) %>| <% /def %><span class="article_info_animation">☆<a href="<% echo (self) %>?mode=openpch&pch=<% echo (oya/res/pch) %>" target="_blank">動画</a></span><% /def %><% def(oya/res/spch)%></span><% /def %>
 	</div>
 	<% /def %>
-	<% レス記事ヘッダここまで %>
+	<!-- レス記事ヘッダここまで -->
 		
 <% def(n) %>
 <!--
@@ -202,7 +197,7 @@
 		document.getElementById("p_input_com").value += "<% echo(resname) %><% def(_san)%><% echo(_san) %><% elsedef %>さん<% /def %>";
 	}</script>
 	
-	<% コピーボタン %><button class="copy_button" onclick="add_to_com()">投稿者名をコピー</button>
+	<!--コピーボタン--><button class="copy_button" onclick="add_to_com()">投稿者名をコピー</button>
 	<% /def %>
 	<% /def %>
 	
@@ -256,8 +251,6 @@ if(is_mobile()){
 <!-- 選択メニューを出さない時に起動するアプリ -->
 <input type="hidden" name="shi" value="neo">
 <% /def %>
-
-<!-- <input type="hidden" name="shi" value="1"> -->
 <!-- キャンバスサイズ 設定はconfig.phpで-->
 <% def(n) %>
 <!--
