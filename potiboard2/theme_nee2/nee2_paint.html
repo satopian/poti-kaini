@@ -469,7 +469,7 @@
 						<% def(use_select_palettes) %>
 							P/L：<select name="selected_palette_no" title="パレット" class="form"><% echo(palette_select_tags) %></select>
 							<% /def %>
-						<% def(passflag) %>Pass<input class="form" type="password" name="pwd" size="8" value=""> <% /def %>
+						Pass<input class="form" type="password" name="pwd" value="">
 						<input class="button" type="submit" value="続きを描く">
 						<!-- NEOを使う -->
 						<% if(ctype_pch,==,false) %>
@@ -481,7 +481,6 @@
 						<input type="hidden" name="useneo" value="1">
 						<% /def %>
 					</form>
-					<% def(passflag) %>
 					<ul>
 						<% def(newpost_nopassword) %>
 						<li>新規投稿なら削除キーがなくても続きを描く事ができます。</li>
@@ -490,7 +489,6 @@
 						<li>続きを描くには描いたときの削除キーが必要です。</li>
 						<% /def %>
 						</ul>
-					<% /def %>
 				</div>
 				<script type="text/javascript">
 				l(); //LoadCookie

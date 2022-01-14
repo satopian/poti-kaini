@@ -495,7 +495,6 @@ name="pch" code="pch.PCHViewer.class" archive="PCHViewer.jar,PaintBBS.jar" width
 // applet…しぃペインターが使用できるとき true が入る
 // usepbbs…しぃペインターとPaintBBSの両方が使用できるとき true が入る
 // palette…パレット選択用データ(selectタグ用option配列)
-// passflag…削除キー入力を促す場合 true が入る
 -->
 <% /def %>
 
@@ -568,7 +567,7 @@ if(is_mobile()){
 <span class="palette_type">PALETTE</span> <select name="selected_palette_no" title="パレット" class="paint_select palette_type"><% echo(palette_select_tags) %></select>
 <% /def %>
 <span class="input_disp_none"><input type="text" value="" autocomplete="username"></span>
-<span class="nk">削除キー<input type="password" name="pwd" size="8" value="" class="paint_password" autocomplete="current-password"></span>
+<span class="nk">削除キー<input type="password" name="pwd" value="" class="paint_password" autocomplete="current-password"></span>
 <input type="submit" value="続きを描く">
 
 </form>
