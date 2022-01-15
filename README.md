@@ -257,9 +257,6 @@ config.phpのバージョンが古い場合でも｢画像なし｣のチェッ�
 - POTI-board EVO v3.08.1 のバグを修正しました。  
 必要なJavaScriptを誤って削除していたため、テーマMONOの配色の切り替えに不具合が発生していました。  
 このバグの影響を受けるのは、テーマMONOです。PINKには配色切り替え機能がないためこの影響を受けません。    
-より詳細な情報はリリースのページにあります。  
-[POTI-board EVO v3.08.1.1 リリース](https://github.com/satopian/poti-kaini/releases/tag/v3.08.1.1)
-
 
 ### [2021/10/09] v3.08.1 
 
@@ -296,15 +293,9 @@ define('ID_SEED', 'IDの種');
 この問題を回避するためCSSで非表示にした入力欄を別途作成しました。  
 これにより名前をユーザー名としたパスワードの保存が容易になります。
 
-安定版をリリースからダウンロードできます。    
-[POTI-board EVO v3.07.5 リリース](https://github.com/satopian/poti-kaini/releases/tag/v3.07.5)
-
 ### [2021/08/25] search.php
 - config.phpで設定したタイムゾーンがsearchに反映されず、searchの設定を変更しない限り｢Asia/Tokyo｣のままになっていたのを修正しました。  
 日本時間に設定していた人の表示はなにも変わりません。
-
-昨日再リリースした、v3.06.8.2に変更ずみのsearch.phpも入っています。     
-[POTI-board EVO v3.06.8.2](https://github.com/satopian/poti-kaini/releases/tag/v3.06.8.2)
 
 
 ### [2021/08/22] v3.06.8 lot.210822
@@ -321,13 +312,6 @@ define('ID_SEED', 'IDの種');
 -  アップロードペイントのエラーメッセージを修正  
 ファイルをアップロードしてキャンバスに読み込む機能にChickenPaintの｢chi｣ファイルも対応しているため、対応フォーマットの説明に｢chi｣を追加しました。
 
-2021/08/23 ChickenPaintの新しいアイコンが入っていませんでした。  
-修正版をリリースしましたのでお手数ですが、ChickenPaintディレクトリの上書きアップデートをお願いします。  
-(v3.06.8.1) で修正済み。
-
-安定版をリリースからダウンロードできます。    
-[POTI-board EVO v3.06.8.2](https://github.com/satopian/poti-kaini/releases/tag/v3.06.8.2)
-
 
 ### [2021/08/11] v3.05.3 lot.210811
 - Tweetや通知メールがHTMLエスケープされた文字化けした文字になるためデコード処理を追加。
@@ -342,9 +326,6 @@ POTI-board本体のバージョンが低い時は新しく追加した変数が�
 - ChickenPaintがアップデートし、iOS関連の多くの不具合が解消されました。  
 パームリジェクション関連の不具合が解消されました。    
 手のひらとApple Pencilの識別ができるようになりました。これまでは、意図しない直線が発生していまた。  
-
-安定版をリリースからダウンロードできます。    
-[POTI-board EVO v3.05.2.2](https://github.com/satopian/poti-kaini/releases/tag/v3.05.2.2)
 
 ### [2021/08/03] v3.05.2 lot.210803
 - iPadでChickenPaintを使う時に、意図しないダブルタップズームが発生し、描画が困難になる問題に暫定対応しました。  
@@ -371,9 +352,6 @@ POTI-board本体のバージョンが低い時は新しく追加した変数が�
 静的HTMLファイルにはCSRFトークンをセットする事ができないからです。  
 - ChickenPaintがスマホ対応になりました。
 
-安定版をリリースからダウンロードできます。    
-[POTI-board EVO v3.05.1](https://github.com/satopian/poti-kaini/releases/tag/v3.05.1)
-
 ### [2021/06/22] テーマMONO
 - MONOのCSS切り替えのJavaScriptを大幅に更新。  
 非推奨の古いJavaScriptの関数の使用をやめました。  
@@ -389,9 +367,6 @@ themeディレクトリのHTML全5ファイルの上書きアップデートを�
 - potiboard.phpのコードを整理。global変数削減、コンティニュー時の処理をまとめた。
 - MONOのCSS切り替えをプルダウンメニューに。
 
-安定版をリリースからダウンロードできます。    
-[POTI-board EVO v3.02.0](https://github.com/satopian/poti-kaini/releases/tag/v3.02.0)
-
 ### [2021/06/05] v3.01.9 lot.210605
 - 日本語に翻訳されたChickenPaintの最新版に更新。  
 ブラウザの言語が日本語以外の場合は英語で表示。ブラウザの言語が日本語なら日本語で表示。  
@@ -403,17 +378,12 @@ themeディレクトリのHTML全5ファイルの上書きアップデートを�
 - しぃペインターが起動しないCheerpJのバージョンに対処。    
 CheerpJの起動に必要なJavaScriptのurlをpotiboard.phpで管理するようになりました。  
 
-安定版をリリースからダウンロードできます。    
-[POTI-board EVO v3.01.9](https://github.com/satopian/poti-kaini/releases/tag/v3.01.9)
-
 ### [2021/05/23] v3.00.3 lot.210523
 - ChickenPaintを日本語訳対応版にアップデートしました。
 - PaintBBS NEOをv1.5.11にアップデートしました。
 - `picpost.php`更新。PaintBBS NEOv1.5.11の、エラー発生時はペイント画面にとどまるようにする機能に対応しました。  
 - NEOの画像から続きを描く時にJavaのPaintBBSが起動するバグを修正しました。
 
-安定版をリリースからダウンロードできます。    
-[POTI-board EVO v3.00.3](https://github.com/satopian/poti-kaini/releases/tag/v3.00.3)
 
 ### [2021/05/15] v3.00.1 lot.210514
 - ChickenPaintに対応しました。
