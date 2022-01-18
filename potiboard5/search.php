@@ -55,7 +55,7 @@ $max_search=120;
 //設定の読み込み
 require(__DIR__.'/config.php');
 
-defined('SKIN_DIR') or define('SKIN_DIR','theme/');//config.php で未定義なら /theme
+defined('SKIN_DIR') or define('SKIN_DIR','basic/');//config.php で未定義なら basic/
 
 //HTMLテンプレート
 require_once __DIR__.'/vendor/autoload.php';

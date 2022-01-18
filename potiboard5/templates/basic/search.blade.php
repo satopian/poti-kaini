@@ -114,7 +114,7 @@
 					{!!$prev!!}@if($nxet) | {!!$nxet!!} @endif
 				</div>
 				<!-- 著作表示 消さないでください -->
-				<div class="rightbox">- <a href="https://github.com/satopian/potiboard_plugin"
+				<div class="rightbox">- <a href="https://paintbbs.sakura.ne.jp/poti/"
 						target="_blank">search</a> -</div>
 				<div class="clear"></div>
 			</nav>
