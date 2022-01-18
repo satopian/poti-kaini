@@ -309,7 +309,7 @@
 			{{-- <!--著作権表示 削除しないでください--> --}}
 			@include('parts.copyright')
 		</footer>
-
+		<script src="{{$skindir}}jquery-3.5.1.min.js"></script>
 		<script>
 			window.onpageshow = function () {
 				var $btn = $('[type="submit"]');
