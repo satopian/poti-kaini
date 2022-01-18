@@ -4,7 +4,7 @@
 
 
 お絵かき掲示板PHPスクリプトPOTI-boardを改良していくプロジェクトです。  
-php5.5～ 対応。  
+php5.6～ 対応。  
 English translated version is here. [POTI-board EVO-EN](https://github.com/satopian/poti-kaini-EN)  
 繁體中文版本 [POTI-board EVO-zh-TW](https://github.com/satopian/poti-kaini-zh-TW)
   
@@ -17,41 +17,40 @@ English translated version is here. [POTI-board EVO-EN](https://github.com/satop
 すべてのログファイルを失う可能性があります。  
 
 v3.10.1以上の`potiboard.php`の上書きアップデートをお願いします。  
-古いバージョンv2.x系統を利用されている方へ。  
-`potiboard.php`の上書きアップデートお願いいたします。`potiboard.php`の上書きアップデートのみでも上記2つの大きな問題に対応できます。
+
+v3.x系統の開発は終了し、v5.xになりました。ログファイル以外の互換性はなくなりました。  
+PHP8.1～PHP9に対応するためにテンプレートエンジンをBladeOneに変更し、potiboard.phpのコードの見直しを行いました。
 
 ## 概要
 
 v3.0で従来の[PaintBBS NEO](https://github.com/funige/neo/)、しぃペインターに加え高機能なHTML5のペイントアプリ[ChickenPaint](https://github.com/thenickdude/chickenpaint)が使えるようになりました。  
 スクリプトの名称を変更。POTI-board改二からPOTI-board EVO(Evolution)になりました。 
+v5.0で、テンプレートエンジンBladeOneを採用。PHP8.1～PHP9でも動作する環境を整えるためコードを大幅に見直しました。  
 
 ## POTI-board EVO (ChickenPaint対応版)
 
 ![ChickenPaint](https://user-images.githubusercontent.com/44894014/130365082-a94773a6-8d4f-4bd9-aad0-b35406951a38.png)
 
-## POTI-board改二との互換性
-- ログファイルの形式は同じです。 
-- POTI-board 改二のテーマはEVOの新しい機能に対応していません。
-- POTI-board EVOのChickenPaint対応テーマは  
-同梱の`pink`と、`MONO`、そして、さこつさんの[MONO_DEV](https://github.com/sakots/poti-EVO-themes)とboxfriesさんの[themeparty](https://github.com/boxfries/themeparty)です。  
+## 古いPOTI-boardとの互換性
+- ログファイルの形式は同じです。どのバージョンのPOTI-boardのログファイルでも動作します。 
 
-## 改二からChickenPaint対応版へのアップデート
+## v3.x以前のPOTI-boardからのバージョンアップ
 
-- バージョン表記がv3.xの`potiboard.php`の上書きアップデートが必要です。
-- `save.php`というファイルが追加されています。
-- `chickenpaint`ディレクトリが追加されています。
-- `theme`、または、`pink`ディレクトリのHTMLファイルの上書きアップデートが必要です。
-- cssを変更している方はcssファイルを上書きしないように注意してください。  
-カスタマイズした色がデフォルトに戻ってしまいます。
-- config.phpの更新は必須ではありません。  
+- `potiboard.php`の上書きアップデートが必要です。
+- `save.php`というファイルが追加されました。
+- `chickenpaint`ディレクトリが追加されました。
+- `vendor/`ディレクトリが追加されました。
+- `templates/`ディレクトリが追加されました。  
+拡張子`blade.php`のファイルがHTML部分です。CSSファイルも`templates/`ディレクトリにあります。
+- `config.php`の更新が必要です。お手数をおかけしますが再設定をお願いします。  
 
 ## 設置
 
 設置はとても簡単です。  
-potiboard2ディレクトリをアップロードして、アップロードしたディレクトリにアクセスするだけで設置できます。  
+potiboard5ディレクトリをアップロードして、アップロードしたディレクトリにアクセスするだけで設置できます。  
 管理者パスワードの設定は必須です。  
 config.phpの最初の数行に必須設定項目がありますので、変更してください。  
-[お絵かき掲示板簡単設置方法](http://stp.sblo.jp/article/185357941.html)
+[お絵かき掲示板簡単設置方法](http://satopian.sblo.jp/article/189094093.html)
 
 
 ## サンプル/サポート
@@ -63,11 +62,9 @@ config.phpの最初の数行に必須設定項目がありますので、変更�
 ## テーマ(テンプレート)機能について
 
 この掲示板はテーマを入れ替える事ができます。  
-`PINK`と`MONO`2種類のテーマを同梱しました。  
-また、[MONO_DEV](https://github.com/sakots/poti-EVO-themes)や[themeparty](https://github.com/boxfries/themeparty)を各作者のページからダウンロードして使う事もできます。  
-しかし、こちらで動作確認をしているのは同梱のテーマのみとなります。各テーマの使用時に発生する問題は各テーマの作者の方に連絡して対応してもらってください。  
+`BASIC`と`MONO`2種類のテーマを同梱しました。  
 
-#### デフォルトtheme MONOの配色の変更について
+#### 同梱テーマ MONOの配色の変更について
 MONOのHTMLとCSSをv3.07.5で大幅に更新しました。   
 そのためv3.07.5より古いCSSファイルを使用すると一部のデザインが正しく表示されなくなります。  
 たとえば、フッターやカタログの見た目が意図通りになりません。  
@@ -91,6 +88,17 @@ HTMLタグも旧独自タグも廃止してしまいましたが、urlの自動�
 
 `[テキストリンク](https://example.com/)`と書くと  
 [テキストリンク](https://example.com/)のようなテキストリンクを作成できます。
+
+## [2022/01/18] v3.22.8
+
+- 今後のPHPのバージョンアップで文字列の処理にnullを入力できなくなりますが、採用しているテンプレートエンジンSkinny.phpでその箇所のエラーが発生しました。現時点では今後は使えなくなるという警告ですがPHP9では動作が停止します。      
+エラーがでなくなるように修正したのが今回のバージョンになります。  
+しかしながら、採用しているテンプレートエンジンでエラーがでるような状況のまま使い続けるわけにもいきませんので、次のバージョンで、**BladeOneにテンプレートエンジンを入れ替え**ます。  
+**バージョン3.x系統の開発を今回のバージョンで終了**し、次のメジャーバージョンアップ、**バージョン5にとりかかります**。  
+ログファイルの互換性は確保します。  
+
+リリースから安定版をダウンロードできます。  
+[POTI-board EVO v3.22.8 リリース](https://github.com/satopian/poti-kaini/releases/tag/v3.22.8)
 
 ## 履歴
 ## [2021/12/22] v3.19.5
