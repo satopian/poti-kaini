@@ -17,11 +17,9 @@ English translated version is here. [POTI-board EVO-EN](https://github.com/satop
 すべてのログファイルを失う可能性があります。  
 
 v3.10.1以上の`potiboard.php`の上書きアップデートをお願いします。  
-古いバージョンv2.x系統を利用されている方へ。  
-`potiboard.php`の上書きアップデートお願いいたします。`potiboard.php`の上書きアップデートのみでも上記2つの大きな問題に対応できます。
 
-v3.x系統の開発は終了し、v5.xになりました。ログファイル以外の互換性がなくなってしまった事をお詫びします。  
-PHP8.1～PHP9を見据えて長期的にPOTI-boardが使える状態にするために、テンプレートエンジンをBladeOneに変更し、potiboard.phpのコードの大幅の見直しも行いました。
+v3.x系統の開発は終了し、v5.xになりました。ログファイル以外の互換性はなくなりました。  
+PHP8.1～PHP9に対応するためにテンプレートエンジンをBladeOneに変更し、potiboard.phpのコードの見直しを行いました。
 
 ## 概要
 
