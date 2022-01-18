@@ -1,7 +1,7 @@
 <?php
 //POTI-board plugin search(C)2020-2022 さとぴあ(@satopian)
-//v1.7.1 lot.210825
-//
+//v5.0 lot.22015
+//POTI-board EVO v5.0 対応版
 //https://paintbbs.sakura.ne.jp/
 //フリーウェアですが著作権は放棄しません。
 
@@ -29,6 +29,7 @@ $max_search=120;
 
 //更新履歴
 
+//v5.0.0 2022.01.16 テンプレートエンジンをbladeに変更。
 //v1.7.1 2021.08.25 ツリーの照合方式を変更。config.phpで設定したタイムゾーンが反映されるようにした。
 //v1.7.0 2021.07.07 v3.03.1 対応。マークダウン記法による自動リンクの文字部分だけを表示。出力時のエスケープ処理追加。
 //v1.6.9 2021.03.10 ２重エンコードにならないようにした。
@@ -51,15 +52,23 @@ $max_search=120;
 //v0.2 2020.07.14 負荷削減。ページングで表示している記事の分だけレス先を探して見つけるようにした。
 //v0.1 2020.07.13 GitHubに公開
 
-
 //設定の読み込み
 require(__DIR__.'/config.php');
-//HTMLテンプレート Skinny
-require_once(__DIR__.'/Skinny.php');
 
 defined('SKIN_DIR') or define('SKIN_DIR','theme/');//config.php で未定義なら /theme
 
-$dat['skindir']=SKIN_DIR;
+//HTMLテンプレート
+require_once __DIR__.'/vendor/autoload.php';
+
+Use eftec\bladeone\BladeOne;
+
+
+$views = __DIR__ . '/templates/'.SKIN_DIR;
+$cache = $views.'cache';
+$blade = new BladeOne($views,$cache,BladeOne::MODE_AUTO);
+
+
+$dat['skindir'] = 'templates/'.SKIN_DIR;
 $dat['php_self2']=h(PHP_SELF2);
 
 //タイムゾーン
@@ -71,7 +80,7 @@ defined('MD_LINK') or define('MD_LINK', '0');
 
 //filter_input
 
-$imgsearch=filter_input(INPUT_GET,'imgsearch',FILTER_VALIDATE_BOOLEAN);
+$imgsearch=filter_input(INPUT_GET,'imgsearch',FILTER_VALIDATE_BOOLEAN) ? true : false;
 $page=filter_input(INPUT_GET,'page',FILTER_VALIDATE_INT);
 $page= $page ? $page : 1;
 $query=filter_input(INPUT_GET,'query');
@@ -152,6 +161,7 @@ while ($line = fgets($fp)) {
 
 //検索結果の出力
 $j=0;
+$dat['comments']=[];
 if($arr){
 	foreach($arr as $i => $val){
 		if($i > $page-2){//$iが表示するページになるまで待つ
@@ -191,7 +201,6 @@ unset($i,$val);
 $search_type='';
 if($imgsearch){
 	$search_type='&imgsearch=on';
-	$dat['imgsearch']=true;
 	$img_or_com='イラスト';
 	$mai_or_ken='枚';
 }
@@ -199,6 +208,7 @@ else{
 	$img_or_com='コメント';
 	$mai_or_ken='件';
 }
+$dat['imgsearch']= $imgsearch ? true : false;
 
 //クエリを検索窓に入ったままにする
 $dat['query']=h($query);
@@ -273,18 +283,16 @@ elseif($page>=$disp_count_of_page+1){
 	}
 }
 //最終更新日時を取得
-if($arr){
-	$postedtime=$arr[0]['time'];
-	$postedtime=(int)substr($postedtime,-13,10);
-	$dat['lastmodified']=$postedtime ? (date("Y/m/d G:i", $postedtime)) : '';
-}
+$postedtime= $arr ? $arr[0]['time']:'';
+$postedtime=(int)substr($postedtime,-13,10);
+$dat['lastmodified']=$arr ? ($postedtime ? (date("Y/m/d G:i", $postedtime)) : '') :'';
 
 unset($arr);
 
 function h($str){
 	return htmlspecialchars($str,ENT_QUOTES,'utf-8',false);
 }
-
 //HTML出力
-$Skinny->SkinnyDisplay(SKIN_DIR.'search.html', $dat );
+echo $blade->run('search',$dat);
+
 
