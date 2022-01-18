@@ -535,9 +535,6 @@ input.pch_upload {
 }
 
 /* カタログ表示 */
-.catalog_title {
-	background-color: #ffe6e6;
-}
 
 .catalog_desc_wrap {
 	max-width: 100%;
@@ -571,8 +568,6 @@ input.pch_upload {
 	overflow: hidden;
 	white-space: nowrap;
 }
-
-
 
 .catalog_title a {
 	color: #8a8a8a;
@@ -673,8 +668,6 @@ tr.deltable_tr{
 	line-height: 200%;
 	text-align: center;
 	font-size: 30px;
-	color: #f8c;
-	;
 	margin: 1em 0;
 	border-top: 1px dashed #666666;
 	border-bottom: 1px dashed #666666;
