@@ -6,8 +6,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board EVO
 // バージョン :
-define('POTI_VER','v5.00.05');
-define('POTI_LOT','lot.220118');
+define('POTI_VER','v5.00.06');
+define('POTI_LOT','lot.220119');
 
 /*
   (C) 2018-2022 POTI改 POTI-board redevelopment team
@@ -29,7 +29,7 @@ define('POTI_LOT','lot.220118');
   *     (C)funige >> https://github.com/funige/neo/
   *
   * USE FUNCTION :
-  *   Skinny.php            (C) Jorge Patricio Castro Castillo   >> https://github.com/EFTEC/BladeOne
+  *   BladeOne              (C) Jorge Patricio Castro Castillo   >> https://github.com/EFTEC/BladeOne
   *   DynamicPalette        (C)NoraNeko  >> wondercatstudio
   *----------------------------------------------------------------------------------
 
@@ -1686,6 +1686,9 @@ function paintform(){
 				setcookie("palettec", $i, time()+(86400*SAVE_COOKIE));//Cookie保存
 				if(is_array($value)){
 					list($p_name,$p_dat)=$value;
+					if(!is_file($p_dat)){
+						error($p_dat.MSG041);
+					}
 					$lines=file($p_dat);
 				}else{
 					$lines=file($value);
