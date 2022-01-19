@@ -49,7 +49,7 @@ v5.0で、テンプレートエンジンBladeOneを採用。PHP8.1～PHP9でも�
 拡張子`blade.php`のファイルがHTML部分です。CSSファイルも`templates/`ディレクトリの中にあります。  
 `parts/`ディレクトリにもいくつかの`blade.php`形式のファイルが入っています。
 BladeのHTMLファイルの編集には、[laravel-blade - Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=cjhowe7.laravel-blade)が便利です。
-編集画面がBladeの文法にそった配色に切り替わります。 
+編集画面がBladeの文法にそった配色になります。
 
 ## 設置
 
@@ -76,7 +76,7 @@ MONOのHTMLとCSSをv3.07.5で大幅に更新しました。
 そのためv3.07.5より古いCSSファイルを使用すると一部のデザインが正しく表示されなくなります。  
 たとえば、フッターやカタログの見た目が意図通りになりません。  
 その場合は、カスタマイズしたCSSファイルと同じ配色のCSSと同じになるように作り直す必要があります。
-もし配色のみを変更したいのであれば、Sassで記述されたScssファイルもありますのでどうぞご利用ください。
+もし配色のみを変更したいのであれば、SCSSファイルもありますのでどうぞご利用ください。
 
 MONOの`css/dev/sass/`ディレクトリに入っています。
 配色とその他のデザインに設定が分かれているため、配色を容易に変更できます。  
