@@ -112,7 +112,7 @@
 				<script>
 					function add_to_com() {
 						document.getElementById("p_input_com").value +=
-							"{!! htmlspecialchars($resname,ENT_QUOTES,'utf-8') !!} @if($_san){{$_san}}) @else -san @endif";
+						"{!! htmlspecialchars($resname,ENT_QUOTES,'utf-8') !!}{{$_san}}";
 					}
 				</script>
 				{{-- コピーボタン  --}}
