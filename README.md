@@ -38,7 +38,7 @@ v5.0で、テンプレートエンジンBladeOneを採用。PHP8.1～PHP9でも�
 
 ### 上書きアップデートが必要なファイル
 - `potiboard.php`
-- `potiboard.php`
+- `search.php`
 - `config.php`の再設定が必要です。新しい`config.php`を使用して再設定する必要があります。  
 - `save.php` 
 
@@ -46,7 +46,10 @@ v5.0で、テンプレートエンジンBladeOneを採用。PHP8.1～PHP9でも�
 - `chickenpaint`
 - `vendor/`
 - `templates/`  
-拡張子`blade.php`のファイルがHTML部分です。CSSファイルも`templates/`ディレクトリの中にあります。
+拡張子`blade.php`のファイルがHTML部分です。CSSファイルも`templates/`ディレクトリの中にあります。  
+`parts/`ディレクトリにもいくつかの`blade.php`形式のファイルが入っています。
+BladeのHTMLファイルの編集には、[laravel-blade - Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=cjhowe7.laravel-blade)が便利です。
+編集画面がBladeの文法にそった配色に切り替わります。 
 
 ## 設置
 
