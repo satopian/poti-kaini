@@ -124,7 +124,7 @@ input[name="del[]"], textarea[name="del[]"], select[name="del[]"], .se[name="del
   width: 4em;
 }
 
-input[name=pwd], textarea[name=pwd], select[name=pwd], .se[name=pwd] {
+input[name=pwd], textarea[name=pwd], select[name=pwd], .se[name=pwd], input[name=pass] {
   width: 6em;
 }
 

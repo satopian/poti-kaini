@@ -149,4 +149,3 @@ define('ADMIN_DELKISU', 'none');
 //管理画面(削除モード)の偶数行カラー
 define('ADMIN_DELGUSU', '#fff0f3');
 
-?>

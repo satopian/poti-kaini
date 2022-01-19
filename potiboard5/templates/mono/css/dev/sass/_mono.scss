@@ -104,7 +104,7 @@ select[name="shi"] {
 input[name="del[]"], textarea[name="del[]"], select[name="del[]"], .se[name="del[]"] {
 	width: 4em;
   }
-  input[name="pwd"], textarea[name="pwd"], select[name="pwd"], .se[name="pwd"] {
+  input[name="pwd"], textarea[name="pwd"], select[name="pwd"], .se[name="pwd"],input[name="pass"] {
 	width: 6em;
   }
   input[value="お絵かき"], textarea[value="お絵かき"], select[value="お絵かき"], button.copy_button, .se[value="お絵かき"], .button {
