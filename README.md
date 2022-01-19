@@ -73,13 +73,13 @@ MONOのHTMLとCSSをv3.07.5で大幅に更新しました。
 そのためv3.07.5より古いCSSファイルを使用すると一部のデザインが正しく表示されなくなります。  
 たとえば、フッターやカタログの見た目が意図通りになりません。  
 その場合は、カスタマイズしたCSSファイルと同じ配色のCSSと同じになるように作り直す必要があります。
-もし配色のみを変更したいのであれば、開発のためのSCSSのリポジトリもありますのでご利用ください。
+もし配色のみを変更したいのであれば、Sassで記述されたScssファイルもありますのでどうぞご利用ください。
 
-[satopian/poti-kaini-themes: MONO for POTI-board EVO](https://github.com/satopian/poti-kaini-themes)
-
+MONOの`css/dev/sass/`ディレクトリに入っています。
 配色とその他のデザインに設定が分かれているため、配色を容易に変更できます。  
-ただし、SCSSが扱える環境が必要です。
-たとえば無料の[Visual Studio Code – コード エディター](https://azure.microsoft.com/ja-jp/products/visual-studio-code/)とその拡張機能である[Live Sass Compiler](https://marketplace.visualstudio.com/items?itemName=ritwickdey.live-sass)をそろえる必要があります。
+ただし、SASSが扱える環境が必要です。
+たとえば無料の[Visual Studio Code – コード エディター](https://azure.microsoft.com/ja-jp/products/visual-studio-code/)とその拡張機能である[DartJS Sass Compiler and Sass Watcher](https://marketplace.visualstudio.com/items?itemName=codelios.dartsass)
+をそろえる必要があります。
 
 ## 外部プログラム
 [potiboard_plugin: お絵かき掲示板 POTI-boardのための外部phpプログラム](https://github.com/satopian/potiboard_plugin)  
