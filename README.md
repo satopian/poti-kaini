@@ -36,13 +36,17 @@ v5.0で、テンプレートエンジンBladeOneを採用。PHP8.1～PHP9でも�
 
 ## v3.x以前のPOTI-boardからのバージョンアップ
 
-- `potiboard.php`の上書きアップデートが必要です。
-- `save.php`というファイルが追加されました。
-- `chickenpaint`ディレクトリが追加されました。
-- `vendor/`ディレクトリが追加されました。
-- `templates/`ディレクトリが追加されました。  
-拡張子`blade.php`のファイルがHTML部分です。CSSファイルも`templates/`ディレクトリにあります。
-- `config.php`の更新が必要です。お手数をおかけしますが再設定をお願いします。  
+### 上書きアップデートが必要なファイル
+- `potiboard.php`
+- `potiboard.php`
+- `config.php`の再設定が必要です。新しい`config.php`を使用して再設定する必要があります。  
+- `save.php` 
+
+## 追加されたディレクトリ
+- `chickenpaint`
+- `vendor/`
+- `templates/`  
+拡張子`blade.php`のファイルがHTML部分です。CSSファイルも`templates/`ディレクトリの中にあります。
 
 ## 設置
 
