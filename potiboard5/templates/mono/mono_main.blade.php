@@ -356,8 +356,8 @@
 				</span>
 				@endif
 				@if($notres)<span class="button"><a href="{{$self}}?res={{$ress[0]['no']}}"><img
-							src="{{$skindir}}img/rep.svg" alt=""> @if($ress[0]['disp_resbutton'])返信@else
-						表示@endif</a></span>@endif
+							src="{{$skindir}}img/rep.svg" alt="">@if($ress[0]['disp_resbutton']) 返信 @else
+						 表示 @endif</a></span>@endif
 				<a href="#header" title="上へ">[&uarr;]</a>
 			</div>
 			</div>

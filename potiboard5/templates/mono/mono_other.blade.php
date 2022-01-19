@@ -232,7 +232,6 @@
 						@endif
 						@if($rewrite)
 						<li>編集では クッキーは保存されません。さらにsageを入れても位置は変わりません。</li>
-						{{-- <!-- <li>トリップは 再生成されるので、名前を変更しない場合は 未入力(空白)にしてください。</li> --> --}}
 						<li>最大投稿データ量は {{$maxkb}} KB までです。sage機能付き。</li>
 						@endif
 					</ul>
@@ -295,7 +294,7 @@
 							<th>コメント</th>
 							<th>Host</th>
 							<th>Image (size)</th>
-							<th>md5</th>
+							<th>MD5</th>
 						</tr>
 						@foreach ($dels as $del)
 						<tr>

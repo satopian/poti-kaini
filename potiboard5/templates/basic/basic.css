@@ -63,7 +63,7 @@ select {
 	background-color: #FFFFFE;
 	border-radius: 0;
 	margin: 1px;
-	color: #666555;
+	color: #555;
 }
 
 select {
@@ -535,6 +535,9 @@ input.pch_upload {
 }
 
 /* カタログ表示 */
+.catalog_title {
+	background-color: #ffe6e6;
+}
 
 .catalog_desc_wrap {
 	max-width: 100%;
@@ -569,8 +572,10 @@ input.pch_upload {
 	white-space: nowrap;
 }
 
+
+
 .catalog_title a {
-	color: #8a8a8a;
+	color: #666;
 	text-decoration: none;
 }
 
@@ -645,6 +650,7 @@ input.pch_upload {
 
 .hensyu {
 	font-weight: 700;
+	color: #888;
 }
 
 .admindel_table tr {
@@ -668,6 +674,8 @@ tr.deltable_tr{
 	line-height: 200%;
 	text-align: center;
 	font-size: 30px;
+	color: #f8c;
+	;
 	margin: 1em 0;
 	border-top: 1px dashed #666666;
 	border-bottom: 1px dashed #666666;
