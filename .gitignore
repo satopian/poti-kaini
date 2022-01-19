@@ -4,5 +4,12 @@
 !.vscode/launch.json
 !.vscode/extensions.json
 *.code-workspace
-
-
+.tgitconfig
+*.log
+*.cgi
+*.htm
+*.html
+src/
+thumb/
+tmp/
+cache/
