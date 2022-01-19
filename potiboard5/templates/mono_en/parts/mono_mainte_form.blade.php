@@ -12,9 +12,9 @@
 		<span class="input_disp_none"><input type="text" value="" autocomplete="username"></span>
 		Pass <input class="form" type="password" name="pwd" value="" autocomplete="current-password">
 		<select class="form" name="mode" tabindex="1">
-			<option value="edit" selected>編集</option>
+			<option value="edit" selected>Edit</option>
 			@if($userdel)
-			<option value="usrdel">削除</option>
+			<option value="usrdel">Delete</option>
 			@endif
 		</select>
 		<label>[<input type="checkbox" name="onlyimgdel" value="on">ImageOnly]</label>
