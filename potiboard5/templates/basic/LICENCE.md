@@ -1,7 +1,7 @@
 License
 
-* Template - BASIC by (C) 2018-2022 POTI-kai POTI-board redevelopment team.  >> https://paintbbs.sakura.ne.jp/poti/
-* original script by 黒鋼彗牙 ( https://draclaw.com/ )
+* Template - BASIC by (C) 2022 satopian >> https://paintbbs.sakura.ne.jp/poti/
+* original script by 黒鋼彗牙 >> https://draclaw.com/
 
 MIT License
 
