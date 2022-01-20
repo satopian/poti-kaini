@@ -22,16 +22,6 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
 	<link rel="stylesheet" href="{{$skindir}}basic.css">
 	<link rel="stylesheet" href="{{$skindir}}icomoon/style.css">
-	<style>
-		.input_disp_none {
-			display: none;
-		}
-
-		span.canvas_size_wrap {
-			display: inline-block;
-			padding: 8px 0 0;
-		}
-	</style>
 	<style id="for_mobile"></style>
 
 	<title>[{{$oya[0][0]['no']}}] {{$oya[0][0]['sub']}} by {{$oya[0][0]['name']}} - {{$title}}</title>
@@ -73,14 +63,14 @@
 		{{-- <!--親記事グループ--> --}}
 		<article>
 			@if(isset($ress) and !@empty($ress))
-
+		
 			@foreach ($ress as $res)
 			{{-- <!--親記事ヘッダ--> --}}
 			@if ($loop->first)
 			{{-- 最初のループ --}}
 			<h2 class="article_title">@if($notres)<a href="{{$self}}?res={{$ress[0]['no']}}">@endif[{{$ress[0]['no']}}]
 					{{$ress[0]['sub']}}@if($notres)</a>@endif</h2>
-
+		
 			@else
 			<hr>
 			{{-- <!-- レス記事ヘッダ --> --}}
@@ -89,30 +79,30 @@
 				@endif
 				{{-- <!-- 記事共通ヘッダ --> --}}
 				<div class="article_info">
-					<span class="article_info_name"><a
-							href="search.php?page=1&imgsearch=on&query={{$res['encoded_name']}}&radio=2" target="_blank"
-							rel="noopener">{{$res['name']}}</a></span>@if($res['url'])<span
+					<span class="article_info_name"><a href="search.php?page=1&imgsearch=on&query={{$res['encoded_name']}}&radio=2"
+							target="_blank" rel="noopener">{{$res['name']}}</a></span>@if($res['url'])<span
 						class="article_info_desc">[<a href="{{$res['url']}}" target="_blank"
 							rel="nofollow noopener noreferrer">URL</a>]</span> @endif
 					@if($res['id'])<span class="article_info_desc">ID:{{$res['id']}}</span>@endif
 					<span class="article_info_desc">{{$res['now']}}</span>@if($res['painttime'])<span
 						class="article_info">描画時間:{{$res['painttime']}}</span>@endif
-					@if($res['src']) @endif
 					@if(['updatemark'])<span class="article_info_desc">{{$res['updatemark']}}</span>@endif
 					@if($res['thumb'])<span class="article_info_desc">- サムネイル表示中 -</span>@endif
 					<div class="article_img_info">
+						@if($res['src'])
 						@if($res['continue'])<span class="article_info_continue">☆<a
 								href="{{$self}}?mode=continue&no={{$res['continue']}}">続きを描く</a></span>@endif
 						@if($res['spch'])<span class="for_pc">@endif @if($res['pch'])@if($res['continue'])| @endif<span
 								class="article_info_animation">☆<a href="{{$self}}?mode=openpch&pch={{$res['pch']}}"
 									target="_blank">動画</a></span>@endif @if($res['spch'])</span>@endif
+						@endif			
 					</div>
-
-
+		
+		
 					{{-- <!-- 記事共通ヘッダここまで --> --}}
-
-					@if($res['src'])<div class="posted_image" @if($res['w']>=750) style="margin-right:0;float:none;"
-						@endif > @if($res['thumb'])<a href="{{$res['src']}}" target="_blank" rel="noopener">@endif<img
+		
+					@if($res['src'])<div class="posted_image" @if($res['w']>=750) style="margin-right:0;float:none;" @endif >
+						@if($res['thumb'])<a href="{{$res['src']}}" target="_blank" rel="noopener">@endif<img
 								src="{{$res['imgsrc']}}" width="{{$res['w']}}" height="{{$res['h']}}"
 								alt="{{$res['sub']}} by {{$res['name']}} ({{$res['size']}} B)"
 								title="{{$res['sub']}} by {{$res['name']}} ({{$res['size']}} B) @if($res['thumb'])サムネイル縮小表示 @endif"
@@ -137,10 +127,10 @@
 				</div>
 				@endif
 			</div>
-
+		
 			@endforeach
 			@endif
-			{{-- ここまで --}}
+					{{-- ここまで --}}
 			<div class="clear"></div>
 			<div class="margin_resbutton_res">
 				<div class="res_button_wrap">
@@ -296,7 +286,7 @@
 @if($view_other_works)
 <div class="view_other_works">
 @foreach($view_other_works as $view_other_work)<div><a
- href="{{$self}}?res={{$view_other_work['no']}}"><img src="{{$view_other_work['imgsrc']}}" alt="{{$view_other_work['sub']}} by {{$view_other_work['name']}}" title="{{$view_other_work['sub']}} by {{$view_other_work['name']}} width="{{$view_other_work['w']}}" height="{{$view_other_work['h']}} "loading="lazy"></a></div>@endforeach
+ href="{{$self}}?res={{$view_other_work['no']}}"><img src="{{$view_other_work['imgsrc']}}" alt="{{$view_other_work['sub']}} by {{$view_other_work['name']}}" title="{{$view_other_work['sub']}} by {{$view_other_work['name']}}" width="{{$view_other_work['w']}}" height="{{$view_other_work['h']}}" loading="lazy"></a></div>@endforeach
 </div>
 @endif
 
@@ -304,7 +294,10 @@
 
 		{{-- <!-- メンテナンスフォーム欄 --> --}}
 		@include('parts.mainte_form')
-
+		<script>
+			l(); //LoadCookie
+		</script>
+	
 		<footer>
 			{{-- <!--著作権表示 削除しないでください--> --}}
 			@include('parts.copyright')
@@ -321,6 +314,6 @@
 				});
 			}
 		</script>
+</div>
 </body>
-
 </html>

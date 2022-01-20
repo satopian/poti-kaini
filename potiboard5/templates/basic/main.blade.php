@@ -21,21 +21,10 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
 	<link rel="stylesheet" href="{{$skindir}}basic.css">
 	<link rel="stylesheet" href="{{$skindir}}icomoon/style.css">
-	<style>
-		.input_disp_none {
-			display: none;
-		}
-
-		span.canvas_size_wrap {
-			display: inline-block;
-			padding: 8px 0 0;
-		}
-	</style>
 	<style id="for_mobile"></style>
 	<title>{{$title}}</title>
 	{{-- <!--
 	// title…掲示板タイトル
-	// charset…文字コード
 	--> --}}
 	{{-- <!--クッキー読込み用JavaScript(必須)--> --}}
 	<script src="loadcookie.js"></script>
@@ -141,15 +130,16 @@
 			@if($res['id'])<span class="article_info_desc">ID:{{$res['id']}}</span>@endif
 			<span class="article_info_desc">{{$res['now']}}</span>@if($res['painttime'])<span
 				class="article_info">描画時間:{{$res['painttime']}}</span>@endif
-			@if($res['src']) @endif
 			@if(['updatemark'])<span class="article_info_desc">{{$res['updatemark']}}</span>@endif
 			@if($res['thumb'])<span class="article_info_desc">- サムネイル表示中 -</span>@endif
 			<div class="article_img_info">
+				@if($res['src'])
 				@if($res['continue'])<span class="article_info_continue">☆<a
 						href="{{$self}}?mode=continue&no={{$res['continue']}}">続きを描く</a></span>@endif
 				@if($res['spch'])<span class="for_pc">@endif @if($res['pch'])@if($res['continue'])| @endif<span
 						class="article_info_animation">☆<a href="{{$self}}?mode=openpch&pch={{$res['pch']}}"
 							target="_blank">動画</a></span>@endif @if($res['spch'])</span>@endif
+				@endif			
 			</div>
 
 
@@ -219,6 +209,10 @@
 		@include('parts.prev_next')
 		{{-- <!-- メンテナンスフォーム欄 --> --}}
 		@include('parts.mainte_form')
+
+		<script>
+			l(); //LoadCookie
+		</script>
 
 		<footer>
 			{{-- <!--著作権表示 削除しないでください--> --}}

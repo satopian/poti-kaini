@@ -14,17 +14,11 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
 	<link rel="stylesheet" href="{{$skindir}}basic.css">
-	<style>
-		.del_page form {
-			display: inline-block;
-		}
-	</style>
 	<title>@if($post_mode) @if(!$rewrite) @if(!$admin_del) @if(!$admin) 投稿フォーム @endif @endif @endif @endif @if($rewrite)
 		編集モード @endif @if($admin_in) 管理用 @endif @if($admin) @if($rewrite) - @endif @endif @if($admin) 管理人による投稿 @endif
 		@if($admin_del) 記事削除 @endif @if($err_mode) エラー！ @endif - {{$title}} </title>
 	{{-- <!-- 
 // title…掲示板タイトル
-// charset…文字コード
 --> --}}
 </head>
 

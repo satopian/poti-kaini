@@ -10,11 +10,6 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
 	<link rel="stylesheet" href="{{$skindir}}basic.css">
-	<style>
-		.input_disp_none {
-			display: none;
-		}
-	</style>
 	<title>カタログモード - {{$title}}</title>
 	<!--
 	// title…掲示板タイトル
