@@ -21,7 +21,7 @@
 	@if($res['id'])<span class="article_info_desc">ID:{{$res['id']}}</span>@endif
 	<span class="article_info_desc">{{$res['now']}}</span>@if($res['painttime'])<span class="article_info">描画時間:{{$res['painttime']}}</span>@endif
 	@if($res['src']) @endif
-	@if(['updatemark'])<span class="article_info_desc">{{$res['updatemark']}}</span>@endif
+	@if($res['updatemark'])<span class="article_info_desc">{{$res['updatemark']}}</span>@endif
 	@if($res['thumb'])<span class="article_info_desc">- サムネイル表示中 -</span>@endif
 	<div class="article_img_info">
 		@if($res['continue'])<span class="article_info_continue">☆<a href="{{$self}}?mode=continue&no={{$res['continue']}}">続きを描く</a></span>@endif @if($res['spch'])<span class="for_pc">@endif @if($res['pch'])@if($res['continue'])| @endif<span class="article_info_animation">☆<a href="{{$self}}?mode=openpch&pch={{$res['pch']}}" target="_blank">動画</a></span>@endif @if($res['spch'])</span>@endif
