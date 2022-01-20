@@ -6,8 +6,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board EVO
 // バージョン :
-define('POTI_VER','v5.00.06');
-define('POTI_LOT','lot.220119');
+define('POTI_VER','v5.00.08');
+define('POTI_LOT','lot.220120');
 
 /*
   (C) 2018-2022 POTI改 POTI-board redevelopment team
@@ -1498,7 +1498,6 @@ function paintform(){
 	$dat['security_click'] = false;
 	$dat['security_timer'] = false;
 	$dat['security_url'] = false;
-	$dat['type_neo'] = false;
 	$dat['speed'] = false;
 	$dat['picfile'] = false;
 	$dat['painttime'] = false;
@@ -1834,6 +1833,8 @@ function openpch(){
 	$dat['chickenpaint'] = false;
 	$dat['pro'] = false;
 	$dat['normal'] = false;
+	$dat['paintbbs'] = false;
+	$dat['type_neo'] = false;
 
 	$dat['parameter_day']=date("Ymd");
 
