@@ -75,15 +75,11 @@ if ($err = check_file(__DIR__.'/config.php')) {
 require(__DIR__.'/config.php');
 
 //autoload.php
-if ($err = check_file(__DIR__.'/vendor/autoload.php')) {
-	error($err);
-}
-//autoload.php
-if ($err = check_file(__DIR__.'/vendor/autoload.php')) {
+if ($err = check_file(__DIR__.'/BladeOne/lib/BladeOne.php')) {
 	error($err);
 }
 
-require_once __DIR__.'/vendor/autoload.php';
+require_once __DIR__.'/BladeOne/lib/BladeOne.php';
 
 Use eftec\bladeone\BladeOne;
 
