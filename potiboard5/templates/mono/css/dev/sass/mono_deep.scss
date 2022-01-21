@@ -199,6 +199,11 @@
 	font-size: medium;
 	line-height: 2em;
   }
+  .comment_wrap {
+	min-width: 500px;
+	display: table;
+  }
+
   .res {
 	section {
 	  display: table;
@@ -206,10 +211,6 @@
 	h3, h4 {
 	  font-size: 100%;
 	  margin-bottom: 1ex;
-	}
-	.comment_wrap {
-	  min-width: 500px;
-	  display: table;
 	}
 	figure {
 	  float:none;
@@ -392,11 +393,12 @@
   }
   
   @media screen and (max-width: 767px) {
-	  .res {
+	.comment_wrap {
+		min-width: 300px;
+		}
+
+	.res {
 			  clear: left;
-			  .comment_wrap {
-			  min-width: initial;
-			  }
 		  }
 	  body{
 		  margin: 6px;

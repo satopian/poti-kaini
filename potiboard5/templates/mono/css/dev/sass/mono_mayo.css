@@ -225,16 +225,17 @@ ul.menu {
   line-height: 2em;
 }
 
+.comment_wrap {
+  min-width: 500px;
+  display: table;
+}
+
 .res section {
   display: table;
 }
 .res h3, .res h4 {
   font-size: 100%;
   margin-bottom: 1ex;
-}
-.res .comment_wrap {
-  min-width: 500px;
-  display: table;
 }
 .res figure {
   float: none;
@@ -457,11 +458,12 @@ form.adminin {
 }
 
 @media screen and (max-width: 767px) {
+  .comment_wrap {
+    min-width: 300px;
+  }
+
   .res {
     clear: left;
-  }
-  .res .comment_wrap {
-    min-width: initial;
   }
 
   body {
