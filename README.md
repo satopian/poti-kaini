@@ -40,9 +40,9 @@ v5.0で、テンプレートエンジンをBladeOneに変更しました。
 ### 上書きアップデートが必要なファイル
 - `potiboard.php`
 - `search.php`
-- `config.php`の再設定が必要です。新しい`config.php`を使用して再設定する必要があります。  
 - `save.php` 
 - `picpost.php` 
+- `config.php`の再設定が必要です。新しい`config.php`を使用して再設定する必要があります。  
 
 ## 追加されたディレクトリ
 - `chickenpaint/`
