@@ -44,12 +44,13 @@ v5.0で、テンプレートエンジンをBladeOneに変更しました。
 - `save.php` 
 
 ## 追加されたディレクトリ
-- `chickenpaint`
+- `chickenpaint/`
 - `BladeOne/`
 - `templates/`  
 拡張子`blade.php`のファイルがHTML部分です。CSSファイルも`templates/`ディレクトリの中にあります。  
 `parts/`ディレクトリにもいくつかの`blade.php`形式のファイルが入っています。
-[laravel-blade - Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=cjhowe7.laravel-blade)を使うとBladeのHTMLファイルがBladeの文法にそって色分けされます。これによりBladeのHTMLファイルの編集が容易になります。  
+[laravel-blade - Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=cjhowe7.laravel-blade)を使うとBladeの文法にそって色分けされて表示されます。  
+これによりBladeのHTMLファイルの編集が容易になります。  
 
 ## 設置
 
