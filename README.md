@@ -42,6 +42,7 @@ v5.0で、テンプレートエンジンをBladeOneに変更しました。
 - `search.php`
 - `config.php`の再設定が必要です。新しい`config.php`を使用して再設定する必要があります。  
 - `save.php` 
+- `picpost.php` 
 
 ## 追加されたディレクトリ
 - `chickenpaint/`
