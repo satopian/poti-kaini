@@ -86,7 +86,7 @@
 				<ul id="up_desc">
 					<li>お絵かきできる画像のサイズは横 300～{{$pmaxw}}、縦 300px～{{$pmaxh}}pxの範囲内です。</li>
 					<li>画像は横 {{$maxw}}px、縦 {{$maxh}}pxを超えると縮小表示されます。sage機能付き。</li>
-					{{$addinfo}}
+					{!!$addinfo!!}
 				</ul>
 			</div>
 			@endif

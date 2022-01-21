@@ -177,7 +177,7 @@
 				<ul>
 					<li>お絵かきできる画像のサイズは幅 300～{{$pmaxw}}、高さ 300～{{$pmaxh}}の範囲内です。</li>
 					<li>画像は幅 {{$maxw}}px、高さ {{$maxh}}pxを超えると縮小表示されます。</li>
-					@if($addinfo){{$addinfo}}@endif
+					@if($addinfo){!!$addinfo!!}@endif
 				</ul>
 				@endif
 			</div>
@@ -241,7 +241,7 @@
 						<li>画像は幅 {{$maxw}}px、高さ {{$maxh}}pxを超えると縮小表示されます。</li>
 						@endif
 						<li>最大投稿データ量は {{$maxkb}} KB までです。sage機能付き。</li>
-						@if($addinfo){{$addinfo}}@endif
+						@if($addinfo){!!$addinfo!!}@endif
 					</ul>
 				</form>
 			</div>

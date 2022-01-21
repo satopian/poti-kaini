@@ -256,7 +256,7 @@
 						@if($upfile)
 						<ul class="howtowrite">
 							<li>最大投稿データ量は {{$maxkb}} KB までです。</li>
-							{{$addinfo}}
+							{!!$addinfo!!}
 						</ul>
 						@endif
 					</td>
