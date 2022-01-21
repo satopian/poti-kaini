@@ -40,17 +40,18 @@ v5.0で、テンプレートエンジンをBladeOneに変更しました。
 ### 上書きアップデートが必要なファイル
 - `potiboard.php`
 - `search.php`
-- `config.php`の再設定が必要です。新しい`config.php`を使用して再設定する必要があります。  
 - `save.php` 
+- `picpost.php` 
+- `config.php`の再設定が必要です。新しい`config.php`を使用して再設定する必要があります。  
 
 ## 追加されたディレクトリ
-- `chickenpaint`
-- `vendor/`
+- `chickenpaint/`
+- `BladeOne/`
 - `templates/`  
 拡張子`blade.php`のファイルがHTML部分です。CSSファイルも`templates/`ディレクトリの中にあります。  
 `parts/`ディレクトリにもいくつかの`blade.php`形式のファイルが入っています。
-BladeのHTMLファイルの編集には、[laravel-blade - Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=cjhowe7.laravel-blade)が便利です。
-編集画面がBladeの文法にそった配色になります。
+[laravel-blade - Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=cjhowe7.laravel-blade)を使うとBladeの文法にそって色分けされて表示されます。  
+これによりBladeのHTMLファイルの編集が容易になります。  
 
 ## 設置
 
@@ -81,9 +82,8 @@ MONOのHTMLとCSSをv3.07.5で大幅に更新しました。
 
 SCSSファイルは`mono/css/dev/sass/`ディレクトリに入っています。
 配色とその他のデザインに設定が分かれているため、配色を容易に変更できます。  
-ただし、SASSが扱える環境が必要です。
-たとえば無料の[Visual Studio Code – コード エディター](https://azure.microsoft.com/ja-jp/products/visual-studio-code/)とその拡張機能である[DartJS Sass Compiler and Sass Watcher](https://marketplace.visualstudio.com/items?itemName=codelios.dartsass)
-をそろえる必要があります。
+無料の[Visual Studio Code – コード エディター](https://azure.microsoft.com/ja-jp/products/visual-studio-code/)とその拡張機能である[DartJS Sass Compiler and Sass Watcher](https://marketplace.visualstudio.com/items?itemName=codelios.dartsass)
+があればコンパイルできます。
 
 ## 外部プログラム
 [potiboard_plugin: お絵かき掲示板 POTI-boardのための外部phpプログラム](https://github.com/satopian/potiboard_plugin)  
@@ -97,6 +97,8 @@ HTMLタグも旧独自タグも廃止してしまいましたが、urlの自動�
 `[テキストリンク](https://example.com/)`と書くと  
 [テキストリンク](https://example.com/)のようなテキストリンクを作成できます。
 
+## 履歴
+
 ## [2022/01/18] v3.22.8
 
 - 今後のPHPのバージョンアップで文字列の処理にnullを入力できなくなりますが、採用しているテンプレートエンジンSkinny.phpでその箇所のエラーが発生しました。現時点では今後は使えなくなるという警告にどどまっていますがPHP9では動作が停止します。      
@@ -108,7 +110,6 @@ HTMLタグも旧独自タグも廃止してしまいましたが、urlの自動�
 リリースから安定版をダウンロードできます。  
 [POTI-board EVO v3.22.8 リリース](https://github.com/satopian/poti-kaini/releases/tag/v3.22.8)
 
-## 履歴
 ## [2021/12/22] v3.19.5
 
 - 返信画面の下に前後のスレッドと前後のスレッドの画像が表示されるようになりました。   
