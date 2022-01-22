@@ -7,8 +7,6 @@
 .tgitconfig
 *.log
 *.cgi
-*.htm
-*.html
 src/
 thumb/
 tmp/
