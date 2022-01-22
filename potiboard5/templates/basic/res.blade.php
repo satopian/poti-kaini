@@ -23,6 +23,16 @@
 	<link rel="stylesheet" href="{{$skindir}}basic.css">
 	<link rel="stylesheet" href="{{$skindir}}icomoon/style.css">
 	<style id="for_mobile"></style>
+	<script>
+		function is_mobile() {
+			if (navigator.maxTouchPoints && (window.matchMedia && window.matchMedia('(max-width: 768px)').matches))
+			return true;
+			return false;
+		}
+		if (is_mobile()) {
+			document.getElementById("for_mobile").textContent = ".for_pc{display: none;}";
+		}
+	</script>
 
 	<title>[{{$oya[0][0]['no']}}] {{$oya[0][0]['sub']}} by {{$oya[0][0]['name']}} - {{$title}}</title>
 	{{-- <!--
@@ -117,17 +127,11 @@
 					// $res/srcname…画像ファイル名
 					// $res/size…画像ファイルサイズ
 					// $res/com…本文 --}}
-					@if ($loop->first)
-					@if ($res['skipres'])
-					<hr>
-					<div class="article_skipres">レス{{$res['skipres']}}件省略中。</div>
-					@endif
-					@endif
-					@if (!$loop->first)
-				</div>
-				@endif
 			</div>
-		
+			@if (!$loop->first)
+			</div>
+			@endif
+					
 			@endforeach
 			@endif
 					{{-- ここまで --}}
@@ -174,16 +178,6 @@
 		{{-- <!--実際のお絵かきフォーム--> --}}
 		@if($paint)
 		<div id="res_paint_form">
-			<script>
-				function is_mobile() {
-					if (navigator.maxTouchPoints && (window.matchMedia && window.matchMedia('(max-width: 768px)').matches))
-					return true;
-					return false;
-				}
-				if (is_mobile()) {
-					document.getElementById("for_mobile").textContent = ".for_pc{display: none;}";
-				}
-			</script>
 
 			@include('parts.paint_form', ['ress' => $ress])
 

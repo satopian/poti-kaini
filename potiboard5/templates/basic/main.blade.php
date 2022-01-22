@@ -22,7 +22,17 @@
 	<link rel="stylesheet" href="{{$skindir}}basic.css">
 	<link rel="stylesheet" href="{{$skindir}}icomoon/style.css">
 	<style id="for_mobile"></style>
-	<title>{{$title}}</title>
+	<script>
+		function is_mobile() {
+			if (navigator.maxTouchPoints && (window.matchMedia && window.matchMedia('(max-width: 768px)').matches))
+			return true;
+			return false;
+		}
+		if (is_mobile()) {
+			document.getElementById("for_mobile").textContent = ".for_pc{display: none;}";
+		}
+	</script>
+<title>{{$title}}</title>
 	{{-- <!--
 	// title…掲示板タイトル
 	--> --}}
@@ -64,16 +74,6 @@
 			//use_shi_painter しぃペインターを使う設定の時にtrueが入る
 			//use_chickenpaint を使う設定の時にtrueが入る
 			--> --}}
-			<script>
-				function is_mobile() {
-					if (navigator.maxTouchPoints && (window.matchMedia && window.matchMedia('(max-width: 768px)').matches))
-					return true;
-					return false;
-				}
-				if (is_mobile()) {
-					document.getElementById("for_mobile").textContent = ".for_pc{display: none;}";
-				}
-			</script>
 
 			@if ($paint)
 			{{-- ペイントフォームの外部化 --}}
@@ -84,7 +84,7 @@
 			@if ($paint2)
 			<div class="howtopaint">
 				<ul id="up_desc">
-					<li>お絵かきできる画像のサイズは横 300～{{$pmaxw}}、縦 300px～{{$pmaxh}}pxの範囲内です。</li>
+					<li>お絵かきできる画像のサイズは横 300px～{{$pmaxw}}px、縦 300px～{{$pmaxh}}pxの範囲内です。</li>
 					<li>画像は横 {{$maxw}}px、縦 {{$maxh}}pxを超えると縮小表示されます。sage機能付き。</li>
 					{!!$addinfo!!}
 				</ul>
@@ -112,8 +112,8 @@
 	{{-- <!--親記事ヘッダ--> --}}
 	@if ($loop->first)
 	{{-- 最初のループ --}}
-	<h2 class="article_title">@if($notres)<a href="{{$self}}?res={{$ress[0]['no']}}">@endif[{{$ress[0]['no']}}]
-			{{$ress[0]['sub']}}@if($notres)</a>@endif</h2>
+	<h2 class="article_title"><a href="{{$self}}?res={{$ress[0]['no']}}">[{{$ress[0]['no']}}]
+			{{$ress[0]['sub']}}</a></h2>
 
 	@else
 	<hr>
@@ -167,10 +167,10 @@
 			<div class="article_skipres">レス{{$res['skipres']}}件省略中。</div>
 			@endif
 			@endif
-			@if (!$loop->first)
 		</div>
-		@endif
+	@if (!$loop->first)
 	</div>
+	@endif
 
 	@endforeach
 	@endif

@@ -125,6 +125,16 @@
 		
 		<title>{{$title}}</title>
 		<style id="for_mobile"></style>
+		<script>
+			function is_mobile() {
+			if (navigator.maxTouchPoints && ( window.matchMedia && window.matchMedia('(max-width: 768px)').matches))  return true;
+			return false;
+			}
+			if(is_mobile()){
+				document.getElementById("for_mobile").textContent=".for_pc{display: none;}";
+			}
+			</script>
+
 	</head>
 	<body id="paintmode">
 		
@@ -563,7 +573,7 @@
 						@endif
 					</div>
 					<p>
-						<a href="{{$pchfile}}" target="_blank">Download</a> - Datasize : {{$datasize}} kb
+						<a href="{{$pchfile}}" target="_blank">Download</a> - Datasize : {{$datasize}} KB
 					</p>
 					<p>
 						<a href="javascript:close()">閉じる</a>
@@ -575,15 +585,6 @@
 			@if($continue_mode)
 			<!-- (========== CONTINUE MODE(コンティニューモード) start ==========) -->
 			<section>
-				<script>
-				function is_mobile() {
-				if (navigator.maxTouchPoints && ( window.matchMedia && window.matchMedia('(max-width: 768px)').matches))  return true;
-				return false;
-				}
-				if(is_mobile()){
-					document.getElementById("for_mobile").textContent=".for_pc{display: none;}";
-				}
-				</script>
 
 			<script type="text/javascript" src="loadcookie.js"></script>
 				<div class="thread">

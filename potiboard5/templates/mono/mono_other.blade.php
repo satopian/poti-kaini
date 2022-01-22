@@ -57,6 +57,18 @@
 		}
 	</style>
 	<title>{{$title}}</title>
+	<style id="for_mobile"></style>
+	<script>
+		function is_mobile() {
+			if (navigator.maxTouchPoints && (window.matchMedia && window.matchMedia('(max-width: 768px)').matches))
+			return true;
+			return false;
+		}
+		if (is_mobile()) {
+			document.getElementById("for_mobile").textContent = ".for_pc{display: none;}";
+		}
+	</script>
+
 </head>
 
 <body>
@@ -88,16 +100,6 @@
 		@if($admin)@if($rewrite)@else
 		<div class="epost">
 
-			<script>
-				function is_mobile() {
-					if (navigator.maxTouchPoints && (window.matchMedia && window.matchMedia('(max-width: 768px)').matches))
-					return true;
-					return false;
-				}
-				if (is_mobile()) {
-					document.getElementById("for_mobile").textContent = ".for_pc{display: none;}";
-				}
-			</script>
 			{{-- ペイントフォーム --}}
 			@include('parts.mono_paint_form',['admin'=>$admin])
 

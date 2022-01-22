@@ -1,4 +1,0 @@
-<Files ~ "\.hml?$">
-	deny from all
-</Files>
-

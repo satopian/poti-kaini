@@ -58,7 +58,7 @@ require(__DIR__.'/config.php');
 defined('SKIN_DIR') or define('SKIN_DIR','basic/');//config.php で未定義なら basic/
 
 //HTMLテンプレート
-require_once __DIR__.'/vendor/autoload.php';
+require_once __DIR__.'/BladeOne/lib/BladeOne.php';
 
 Use eftec\bladeone\BladeOne;
 

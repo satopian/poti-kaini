@@ -6,8 +6,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board EVO
 // バージョン :
-define('POTI_VER','v5.00.08');
-define('POTI_LOT','lot.220120');
+define('POTI_VER','v5.00.15');
+define('POTI_LOT','lot.220122');
 
 /*
   (C) 2018-2022 POTI改 POTI-board redevelopment team
@@ -500,7 +500,6 @@ function updatelog(){
 			}
 			$treeline = explode(",", rtrim($tree[$i]));
 			// レス省略
-			$skipres = '';
 
 			$skipres=count($treeline) - DSP_RES-1;
 
@@ -513,6 +512,7 @@ function updatelog(){
 				if(DSP_RES && $k!==0 && $k<=$skipres){//レス表示件数
 					continue;
 				}
+				$res['skipres']=false;
 				if($k===0){//スレッドの親の時
 					$res['disp_resbutton'] = check_elapsed_days($res['time']); //返信ボタン表示有無
 					// 親レス用の値
@@ -615,11 +615,12 @@ function res($resno = 0){
 	//レス作成
 	$dat['oya'][0] = [];
 	$rresname = [];
-	foreach($treeline as $j => $disptree){ // 子レスだけ回す
+	foreach($treeline as $j => $disptree){
 		if(!isset($lineindex[$disptree])) continue;
 		$k=$lineindex[$disptree];
 
 		$res = create_res($line[$k], ['pch' => 1]);
+		$res['skipres']=false;
 	
 	if($j===0){
 		$resub = USE_RESUB ? 'Re: ' . $res['sub'] : '';
@@ -628,7 +629,6 @@ function res($resno = 0){
 		// 親レス用の値
 		$res['resub'] = $resub;
 		$res['descriptioncom'] = h(strip_tags(mb_strcut($res['com'],0,300))); //メタタグに使うコメントからタグを除去
-		$res['skipres']=false;
 		$oyaname = $res['name']; //投稿者名をコピー
 	
 	}

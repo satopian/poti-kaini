@@ -112,6 +112,16 @@
 
 @endif
 <style id="for_mobile"></style>
+<script>
+	function is_mobile() {
+	if (navigator.maxTouchPoints && ( window.matchMedia && window.matchMedia('(max-width: 768px)').matches))  return true;
+	return false;
+	}
+	if(is_mobile()){
+		document.getElementById("for_mobile").textContent=".for_pc{display: none;}";
+	}
+</script>
+	
 </head>
 <body>
 <header>
@@ -465,7 +475,7 @@ name="pch" code="pch.PCHViewer.class" archive="PCHViewer.jar,PaintBBS.jar" width
 	</div>
 <div class="pch_download">
 <A href="{{$pchfile}}" target="_blank" rel="noopener noreferrer">Download</A><br>
-<small>Datasize : {{$datasize}} kb</small><br>
+<small>Datasize : {{$datasize}} KB</small><br>
 	<a href="{{$self2}}">{{$title}}</a> / <a href="javascript:close()">閉じる</a>
 </div>
 @endif
@@ -491,15 +501,6 @@ name="pch" code="pch.PCHViewer.class" archive="PCHViewer.jar,PaintBBS.jar" width
 --}}
 
 @if($continue_mode) 
-<script>
-function is_mobile() {
-if (navigator.maxTouchPoints && ( window.matchMedia && window.matchMedia('(max-width: 768px)').matches))  return true;
-return false;
-}
-if(is_mobile()){
-	document.getElementById("for_mobile").textContent=".for_pc{display: none;}";
-}
-</script>
 
 <nav>
 <div id="self2">
