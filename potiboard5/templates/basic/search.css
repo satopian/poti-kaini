@@ -163,10 +163,6 @@ input[type=submit] {
 	width: 5em
 }
 
-.res_button:hover {
-	/* background-color: #ffe4f5 */
-}
-
 .comments_title_wrap {
 	display: block;
 	line-height: 2em;
@@ -196,7 +192,7 @@ input[type=submit] {
 }
 
 input[type=text]:hover {
-	background-color: #ffe4f5
+	background-color: #fff7f7;
 }
 
 input[type=radio] {

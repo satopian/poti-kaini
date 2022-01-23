@@ -133,7 +133,7 @@
 			@endif
 			@endif
 			@if($paintform)
-			@if($paint)
+			@if($paint and ($resno or !$diary))
 
 			@if($resno)
 			<p class="resm">お絵かきレス</p>
