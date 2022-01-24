@@ -50,6 +50,10 @@ img {
 	height: auto;
 }
 
+/* チェックボックスの色 */
+input {
+    accent-color: #5686d5;
+}
 
 input[type="text"],
 input[type="submit"],
