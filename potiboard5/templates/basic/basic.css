@@ -198,11 +198,10 @@ a:hover {
 }
 
 #post_table td {
-	padding: 2px;
+	padding: 2px 5px 2px 0;
 }
-
 .post_table_title {
-	width: 5.5em;
+	min-width: 5.5em;
 }
 
 .td_noborder {
