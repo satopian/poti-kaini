@@ -89,38 +89,28 @@
 	window.addEventListener('DOMContentLoaded',fixneo,false);
 </script>
 @endif
-@if($pch_mode) 
-@if($type_neo) 
+@if($pch_mode and $type_neo) 
 <link rel="stylesheet" href="neo.css?{{$parameter_day}}" type="text/css" />
 <script src="neo.js?{{$parameter_day}}" charset="UTF-8"></script>
 @endif
-@endif
-<!-- Javaが使えるかどうか判定 -->
-<script>
-        function cheerpJLoad() {
-        var jEnabled = navigator.javaEnabled();
-        if(!jEnabled){
-            var sN = document.createElement("script");
-            sN.src = "{{$cheerpj_url}}";
-            var s0 = document.getElementsByTagName("script")[0];
-            s0.parentNode.insertBefore(sN, s0);
-            sN.addEventListener("load", function(){ cheerpjInit(); }, false);
-            }
-        }
-        window.addEventListener("load", function() { cheerpJLoad(); }, false);
-</script>
-
+	@if(($paint_mode and !$useneo) or ($pch_mode and !$type_neo))
+	<!-- Javaが使えるかどうか判定 -->
+	<script>
+			function cheerpJLoad() {
+			var jEnabled = navigator.javaEnabled();
+			if(!jEnabled){
+				var sN = document.createElement("script");
+				sN.src = "{{$cheerpj_url}}";
+				var s0 = document.getElementsByTagName("script")[0];
+				s0.parentNode.insertBefore(sN, s0);
+				sN.addEventListener("load", function(){ cheerpjInit(); }, false);
+				}
+			}
+			window.addEventListener("load", function() { cheerpJLoad(); }, false);
+	</script>
+	@endif
 @endif
 <style id="for_mobile"></style>
-<script>
-	function is_mobile() {
-	if (navigator.maxTouchPoints && ( window.matchMedia && window.matchMedia('(max-width: 768px)').matches))  return true;
-	return false;
-	}
-	if(is_mobile()){
-		document.getElementById("for_mobile").textContent=".for_pc{display: none;}";
-	}
-</script>
 	
 </head>
 <body>

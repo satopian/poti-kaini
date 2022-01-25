@@ -48,6 +48,10 @@ img {
 	max-width: 100%;
 	height: auto;
 }
+/* チェックボックスの色 */
+input {
+    accent-color: #5686d5;
+}
 
 input[type="text"],
 input[type="submit"],
@@ -87,6 +91,15 @@ input:-webkit-autofill {
 	margin: 0 auto;
 	text-align: center;
 }
+.input_disp_none {
+	display: none;
+}
+
+span.canvas_size_wrap {
+	display: inline-block;
+	padding: 8px 0 0;
+}
+
 /* ラジオ・ラベル */
 
 label{
@@ -757,6 +770,9 @@ input.pch_upload {
 .admindel_table tr {
 	height: 2.5em;
 }
+tr.deltable_tr{
+	background-color: #ffb5e6;
+}
 
 .admindel_table td,
 .admindel_table th {
@@ -768,6 +784,10 @@ input.pch_upload {
 	vertical-align: middle;
 }
 
+.del_page form {
+	display: inline-block;
+}
+/* その他 */
 .error_mesage {
 	line-height: 200%;
 	text-align: center;

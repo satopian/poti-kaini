@@ -5,12 +5,11 @@ body {
 	background-color: #fffffe;
 	margin: 1px 10.5px 1em;
 	padding: 2px 0;
-	color: #555;
 }
 
 body,
 td {
-	color: #555;
+	color: #363a3a;
 	font-family: "Hiragino Sans", meiryo, ヒラギノ角ゴシック, メイリオ, sans-serif;
 	font-size: 16px;
 	letter-spacing: 0.09em;
@@ -122,13 +121,12 @@ label.palette_desc{
 
 /* リンクの色 */
 a {
-	color: #666;
+	color: #5b5c6c;
 	text-decoration: underline;
 	text-decoration-skip-ink: none;
 }
 
 a:hover {
-	color: #666;
 	text-decoration: none;
 }
 
@@ -330,14 +328,6 @@ input.pch_upload {
 	/*	letter-spacing: 0.08em;*/
 }
 
-/* img max-width */
-
-.article_limit {
-	font-weight: 700;
-	text-align: right;
-	color: #fd95d0;
-}
-
 .article_skipres {
 	text-align: right;
 	padding: 5px 0 0;
@@ -482,9 +472,17 @@ input.pch_upload {
 	padding: 2px 3px;
 }
 
+.pagelink_next {
+	text-align: left;
+	margin: 1px 0;
+}
+
+.pagelink_next a {
+	padding-right: 14px;
+}
+
 .pagelink_prev {
 	text-align: right;
-	width: 72px;
 	margin: 1px 0;
 }
 
@@ -500,15 +498,6 @@ input.pch_upload {
 	margin: 1px 0;
 }
 
-.pagelink_next {
-	text-align: left;
-	width: 72px;
-	margin: 1px 0;
-}
-
-.pagelink_next a {
-	padding-right: 14px;
-}
 
 /* 記事メンテナンス */
 .mente_wrap {
