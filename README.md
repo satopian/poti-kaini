@@ -98,7 +98,6 @@ HTMLタグも旧独自タグも廃止してしまいましたが、urlの自動�
 [テキストリンク](https://example.com/)のようなテキストリンクを作成できます。
 
 ## 履歴
-## [2022/01/27] v5.01.02
 
 ## [2022/01/26] v5.01.02
 ### 概要
@@ -106,7 +105,7 @@ HTMLタグも旧独自タグも廃止してしまいましたが、urlの自動�
 noteにまとめました。
 [PHP8\.1対応作業。テンプレートエンジンに苦しめられる。｜さとぴあ｜note](https://note.com/satopian/n/nf69c79b75a4a)
 
-### テンプレートエンジンにbladeOneに変更
+### テンプレートエンジンをbladeOneに変更
 
 PHP8.1環境でSkinny.phpから非推奨のエラーが発生するため、テンプレートエンジンをbladeOneに変更しました。  
 しかし、それはテンプレートの互換性がなくなる事を意味しています。  
@@ -118,7 +117,7 @@ PHP8.1環境でSkinny.phpから非推奨のエラーが発生するため、テ�
 PINKの背景色のピンク色の評判があまりよくなかったため背景色を白に変更して名称もBASICに変更しました。  
 
 BASICは 黒鋼彗牙さんのCOOL SOLIDをベースにして作成したものです。  
-著作表記はテンプレートの[LICENCE](https://github.com/satopian/poti-kaini/blob/master/potiboard5/templates/basic/LICENCE.md)ファイルにあります。
+著作表記はテンプレートの[LICENCE](https://github.com/satopian/poti-kaini/blob/master/potiboard5/templates/basic/LICENCE.md)にあります。
 
 ### テンプレートエンジンの変更で変わった事
 #### PHP7.1
