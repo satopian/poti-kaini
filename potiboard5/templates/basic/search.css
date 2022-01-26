@@ -5,7 +5,7 @@ body {
 	font-family: "Hiragino Sans", meiryo, ヒラギノ角ゴシック, メイリオ, sans-serif;
 	font-size: 16px;
 	line-height: 150%;
-	color: #555;
+	color: #363a3a;
 	background-color: #fffffe;
 	letter-spacing: .08em;
 }
@@ -26,7 +26,7 @@ h1 {
 }
 
 a {
-	color: #555;
+	color: #5b5c6c;
 	text-decoration: underline
 }
 
