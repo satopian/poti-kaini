@@ -23,10 +23,10 @@ PHP8.1～PHP9に対応するためにテンプレートエンジンをBladeOne�
 
 ## 概要
 
-v3.0で従来の[PaintBBS NEO](https://github.com/funige/neo/)、しぃペインターに加え高機能なHTML5のペイントアプリ[ChickenPaint](https://github.com/thenickdude/chickenpaint)が使えるようになりました。  
-スクリプトの名称を変更。POTI-board改二からPOTI-board EVO(Evolution)になりました。 
-v5.0で、テンプレートエンジンをBladeOneに変更しました。  
-またPHP8.1～PHP9でも動作する環境を整えるためコードを大幅に見直しました。  
+v3.0で従来の[PaintBBS NEO](https://github.com/funige/neo/)、しぃペインターに加え高機能なHTML5のペイントアプリ[ChickenPaint](https://github.com/thenickdude/chickenpaint)の使えるようになりました。  
+スクリプトの名称はPOTI-board EVO(Evolution)になりました。 
+そしてPHP8.1以降に対応するためv5.0で、テンプレートエンジンをBladeOneに変更しました。  
+またコードの大幅な見直しも行いました。  
 
 [POI\-board EVO v5\.x で変わる事 · Discussion \#15](https://github.com/satopian/poti-kaini/discussions/15)
 
