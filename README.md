@@ -28,6 +28,8 @@ v3.0で従来の[PaintBBS NEO](https://github.com/funige/neo/)、しぃペイン
 v5.0で、テンプレートエンジンをBladeOneに変更しました。  
 またPHP8.1～PHP9でも動作する環境を整えるためコードを大幅に見直しました。  
 
+[POI\-board EVO v5\.x で変わる事 · Discussion \#15](https://github.com/satopian/poti-kaini/discussions/15)
+
 ## POTI-board EVO (ChickenPaint対応版)
 
 ![ChickenPaint](https://user-images.githubusercontent.com/44894014/130365082-a94773a6-8d4f-4bd9-aad0-b35406951a38.png)
