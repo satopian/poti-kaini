@@ -18,15 +18,17 @@ English translated version is here. [POTI-board EVO-EN](https://github.com/satop
 
 v3.10.1以上の`potiboard.php`の上書きアップデートをお願いします。  
 
-v3.x系統の開発は終了し、v5.xになりました。ログファイル以外の互換性はなくなりました。  
-PHP8.1～PHP9に対応するためにテンプレートエンジンをBladeOneに変更し、potiboard.phpのコードの見直しを行いました。
+v3.x系統の開発は終了し、v5.xになりました。  
+PHP8.1～PHP9に対応するためにテンプレートエンジンをBladeOneに変更し、potiboard.phpのコードの見直しを行いました。  
+v3.xのテンプレートは使えなくなりました。v5.xのテンプレートが必要です。
 
 ## 概要
 
-v3.0で従来の[PaintBBS NEO](https://github.com/funige/neo/)、しぃペインターに加え高機能なHTML5のペイントアプリ[ChickenPaint](https://github.com/thenickdude/chickenpaint)が使えるようになりました。  
-スクリプトの名称を変更。POTI-board改二からPOTI-board EVO(Evolution)になりました。 
-v5.0で、テンプレートエンジンをBladeOneに変更しました。  
-またPHP8.1～PHP9でも動作する環境を整えるためコードを大幅に見直しました。  
+v3.0で従来の[PaintBBS NEO](https://github.com/funige/neo/)、しぃペインターに加え高機能なHTML5のペイントアプリ[ChickenPaint](https://github.com/thenickdude/chickenpaint)の使えるようになりました。  
+スクリプトの名称はPOTI-board EVO(Evolution)になりました。 
+PHP8.1以降に対応するためテンプレートエンジンをBladeOneに変更。v5.xになりました。  
+
+[POI\-board EVO v5\.x で変わる事 · Discussion \#15](https://github.com/satopian/poti-kaini/discussions/15)
 
 ## POTI-board EVO (ChickenPaint対応版)
 
@@ -68,12 +70,12 @@ config.phpの最初の数行に必須設定項目がありますので、変更�
 設置サポート掲示板にはさとぴあが常駐しています。
 
 
-## テーマ(テンプレート)機能について
+## テンプレート機能について
 
-この掲示板はテーマを入れ替える事ができます。  
-`BASIC`と`MONO`2種類のテーマを同梱しました。  
+この掲示板はテンプレートを入れ替える事ができます。  
+`BASIC`と`MONO`2種類のテンプレートを同梱しました。  
 
-#### 同梱テーマ MONOの配色の変更について
+#### 同梱テンプレート MONOの配色の変更について
 MONOのHTMLとCSSをv3.07.5で大幅に更新しました。   
 そのためv3.07.5より古いCSSファイルを使用すると一部のデザインが正しく表示されなくなります。  
 たとえば、フッターやカタログの見た目が意図通りになりません。  
@@ -98,6 +100,40 @@ HTMLタグも旧独自タグも廃止してしまいましたが、urlの自動�
 [テキストリンク](https://example.com/)のようなテキストリンクを作成できます。
 
 ## 履歴
+
+## [2022/01/26] v5.01.02
+### 概要
+
+noteにまとめました。
+[PHP8\.1対応作業。テンプレートエンジンに苦しめられる。｜さとぴあ｜note](https://note.com/satopian/n/nf69c79b75a4a)
+
+### テンプレートエンジンをbladeOneに変更
+
+PHP8.1環境でSkinny.phpから非推奨のエラーが発生するため、テンプレートエンジンをbladeOneに変更しました。  
+しかし、それはテンプレートの互換性がなくなる事を意味します。  
+拡張子`HTML`のテンプレートは、拡張子`blade.php`のテンプレートに置き換えられました。  
+拡張子が`HTML`ではないのでカスタマイズが難しそうに感じられるかもしれません。
+しかし、中身は従来のテンプレートとほとんど同じです。
+ 
+同梱したテンプレートは、これまで同梱していたPINKとMONOをBladeOneで使えるように修正したものです。
+PINKの背景色を白に変更。名称もBASICに変更しました。  
+
+BASICは 黒鋼彗牙さんのCOOL SOLIDをベースにして作成したものです。  
+著作表記はテンプレートの[LICENCE](https://github.com/satopian/poti-kaini/blob/master/potiboard5/templates/basic/LICENCE.md)にあります。
+
+### テンプレートエンジンの変更で変わった事
+#### PHP7.1
+- PHP5.6環境でも動作するように開発していましたが、BladeOneのv4.2はPHP7.1以上の環境でなければ動作しない事がわかりました。  
+POTI-board EVO v5.xにはPHP7.1以上の環境が必要になりました。  
+
+### 改善
+- 日記モードを調整しました。新規投稿は管理者のみに設定してもペイントボタンは表示されたままで、絵を描き終わって投稿を完了させようと思ったら管理パス以外での投稿はできないというエラーになっていました。  
+新規投稿には管理パスが必要と設定した時点で新規投稿のためのペイントボタンが非表示になるようにしました。  
+管理者投稿画面にお絵かき機能を実装して、管理者はそこからお絵かき投稿が可能になるように作り直しました。
+
+リリースから安定版をダウンロードできます。  
+[POTI-board EVO v5.01.02 リリース](https://github.com/satopian/poti-kaini/releases/tag/v5.01.02)
+
 
 ## [2022/01/18] v3.22.8
 
