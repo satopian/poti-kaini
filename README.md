@@ -101,7 +101,7 @@ HTMLタグも旧独自タグも廃止してしまいましたが、urlの自動�
 
 ## 履歴
 
-## [2022/01/26] v5.01.02
+## [2022/01/27] v5.01.03
 ### 概要
 
 noteにまとめました。
@@ -132,7 +132,7 @@ POTI-board EVO v5.xにはPHP7.1以上の環境が必要になりました。
 管理者投稿画面にお絵かき機能を実装して、管理者はそこからお絵かき投稿が可能になるように作り直しました。
 
 リリースから安定版をダウンロードできます。  
-[POTI-board EVO v5.01.02 リリース](https://github.com/satopian/poti-kaini/releases/tag/v5.01.02)
+[POTI-board EVO v5.01.03 リリース](https://github.com/satopian/poti-kaini/releases/tag/v5.01.03)
 
 
 ## [2022/01/18] v3.22.8
