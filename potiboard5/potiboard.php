@@ -6,7 +6,7 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board EVO
 // バージョン :
-define('POTI_VER','v5.02.00');
+define('POTI_VER','v5.03.1');
 define('POTI_LOT','lot.220130');
 
 /*
@@ -1107,6 +1107,8 @@ function regist(){
 	closeFile($tp);
 	closeFile($fp);
 
+	updatelog();
+
 	//ワークファイル削除
 	safe_unlink($src);
 	safe_unlink($upfile);
@@ -1124,8 +1126,7 @@ function regist(){
 		setcookie ($c_name, $c_cookie,time()+(SAVE_COOKIE*24*3600));
 	}
 
-	updatelog();
-
+	
 	//メール通知
 
 	//template_ini.phpで未定義の時の初期値
@@ -2211,13 +2212,23 @@ function replace(){
 	$flag = false;
 	$pwd=hex2bin($pwd);//バイナリに
 	$pwd=openssl_decrypt($pwd,CRYPT_METHOD, CRYPT_PASS, true, CRYPT_IV);//復号化
-
+	$oyano='';
 	foreach($line as $i => $value){
 		list($eno,$edate,$name,$email,$sub,$com,$url,$ehost,$epwd,$ext,$_w,$_h,$etim,,$ptime,$fcolor) = explode(",", rtrim($value));
 	//画像差し替えに管理パスは使っていない
 		if($eno == $no && check_password($pwd, $epwd)){
 
-			if(!check_elapsed_days($etim)){//指定日数より古い画像差し換えは新規投稿にする
+			$trees=file(TREEFILE);
+
+			foreach ($trees as $tree) {
+				if (strpos(',' . trim($tree) . ',',',' . $no . ',') !== false) {
+					$tree_nos = explode(',', trim($tree));
+					$oyano=$tree_nos[0];
+					break;
+				}
+			}
+
+			if(!check_elapsed_days($etim)||!$oyano){//指定日数より古い画像差し換えは新規投稿にする
 				closeFile($fp);
 				return paintcom();
 			}
@@ -2257,15 +2268,8 @@ function replace(){
 
 			$message = UPLOADED_OBJECT_NAME.UPLOAD_SUCCESSFUL."<br><br>";
 
-			$trees=file(TREEFILE);
-
-			$oya=false;
-			foreach ($trees as $tree) {
-				if (strpos(trim($tree) . ',', $no . ',') === 0) {
-					$oya=true;
-					break;
-				}
-			}
+		
+			$oya=($oyano===$no);
 			$max_w = $oya ? MAX_W : MAX_RESW ;
 			$max_h = $oya ? MAX_H : MAX_RESH ;
 			list($w,$h)=image_reduction_display($w,$h,$max_w,$max_h);
@@ -2320,6 +2324,8 @@ function replace(){
 
 	closeFile($fp);
 
+	updatelog();
+
 	//旧ファイル削除
 	delete_files($path, $etim, $ext);
 
@@ -2329,16 +2335,7 @@ function replace(){
 	safe_unlink($temppath.$file_name.".dat");
 
 
-	updatelog();
 
-	$oyano='';
-	foreach ($trees as $i =>$tree) {
-		if (strpos(',' . trim($tree) . ',',',' . $no . ',') !== false) {
-			$tree_nos = explode(',', trim($tree));
-			$oyano=$tree_nos[0];
-			break;
-		}
-	}
 	$thread_no = $oyano ? $oyano :'';
 
 	$destination = $thread_no ? PHP_SELF.'?res='.h($thread_no) :  h(PHP_SELF2);
