@@ -6,7 +6,7 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board EVO
 // バージョン :
-define('POTI_VER','v5.03.3');
+define('POTI_VER','v5.03.5');
 define('POTI_LOT','lot.220130');
 
 /*
@@ -1969,8 +1969,13 @@ function check_cont_pass(){
 	$lines = file(LOGFILE);
 	foreach($lines as $line){
 		if (strpos(trim($line) . ',', $no . ',') === 0) {
-		list($cno,,,,,,,,$cpwd,) = explode(",", $line);
-		if($cno == $no && check_password($pwd, $cpwd)){
+
+			list($cno,,,,,,,,$cpwd,,,,$ctime,)
+			= explode(",", rtrim($line));
+
+		if($cno == $no && check_password($pwd, $cpwd) 
+		&& check_elapsed_days($ctime)
+		){
 			return true;
 		}
 	}
