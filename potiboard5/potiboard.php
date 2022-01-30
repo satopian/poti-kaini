@@ -671,7 +671,7 @@ function res($resno = 0){
 	$next=(isset($trees[$n])&&$trees[$n]) ? explode(",",trim($trees[$n]))[0]:'';
 	$dat['res_next']=($next && isset($lineindex[$next])) ? create_res($line[$lineindex[$next]]):[];
 	$prev=(isset($trees[$p])&&$trees[$p]) ? explode(",",trim($trees[$p]))[0]:'';
-	$dat['res_prev']=($prev && ($lineindex[$prev])) ? create_res($line[$lineindex[$prev]]):[];
+	$dat['res_prev']=($prev && isset($lineindex[$prev])) ? create_res($line[$lineindex[$prev]]):[];
 	$dat['view_other_works']=false;
 	if(VIEW_OTHER_WORKS){
 		$a=[];
