@@ -6,8 +6,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board EVO
 // バージョン :
-define('POTI_VER','v5.01.03');
-define('POTI_LOT','lot.220127');
+define('POTI_VER','v5.02.00');
+define('POTI_LOT','lot.220130');
 
 /*
   (C) 2018-2022 POTI改 POTI-board redevelopment team
@@ -2216,6 +2216,12 @@ function replace(){
 		list($eno,$edate,$name,$email,$sub,$com,$url,$ehost,$epwd,$ext,$_w,$_h,$etim,,$ptime,$fcolor) = explode(",", rtrim($value));
 	//画像差し替えに管理パスは使っていない
 		if($eno == $no && check_password($pwd, $epwd)){
+
+			if(!check_elapsed_days($etim)){//指定日数より古い画像差し換えは新規投稿にする
+				closeFile($fp);
+				return paintcom();
+			}
+
 			$upfile = $temppath.$file_name.$imgext;
 			$dest = $path.$time.'.tmp';
 			copy($upfile, $dest);
@@ -2748,7 +2754,7 @@ function create_res ($line, $options = []) {
 		$res['spch']=($pch_ext==='.spch') ? true : false;
 		$res['pch'] = (isset($options['pch']) && USE_ANIME && $pch_ext) ? $time.$ext : '';
 		//コンティニュー
-		$res['continue'] = USE_CONTINUE ? $res['no'] : '';
+		$res['continue'] = USE_CONTINUE ? (check_elapsed_days($time) ? $res['no'] : '') :'';
 	}
 
 	//日付とIDを分離
