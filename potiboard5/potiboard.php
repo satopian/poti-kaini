@@ -6,7 +6,7 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board EVO
 // バージョン :
-define('POTI_VER','v5.03.1');
+define('POTI_VER','v5.03.2');
 define('POTI_LOT','lot.220130');
 
 /*
@@ -677,7 +677,7 @@ function res($resno = 0){
 		$a=[];
 		for($j=($i-7);$j<($i+10);++$j){
 			$p=(isset($trees[$j])&&$trees[$j]) ? explode(",",trim($trees[$j]))[0]:'';
-			$b=$p?create_res($line[$lineindex[$p]]):[];
+			$b=($p && isset($lineindex[$p])) ? create_res($line[$lineindex[$p]]):[];
 			if(!empty($b)&&$b['imgsrc']&&$b['no']!==$resno){
 				$a[]=$b;
 			}
