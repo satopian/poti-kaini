@@ -51,7 +51,7 @@ img {
 
 /* チェックボックスの色 */
 input {
-    accent-color: #5686d5;
+    accent-color: #7590d4;
 }
 
 input[type="text"],
@@ -165,10 +165,6 @@ a:hover {
 .clear {
 	clear: both;
 }
-.bbsmenu,
-.menu_pr {
-	margin-bottom: 15px;
-}
 .res_bbsmenu,
 .res_menu_pr {
 	margin-bottom: 0;
@@ -198,7 +194,6 @@ a:hover {
 .margin_radio {
 	margin-bottom: 15px;
 }
-
 #post_table td {
 	padding: 2px 5px 2px 0;
 }
@@ -868,6 +863,10 @@ tr.deltable_tr{
 
 
 /* ペイントボタン */
+form.paint_form{
+	margin: 15px 0;
+}
+
 .paint_button {
 	width: 78px;
 	height: 25px;

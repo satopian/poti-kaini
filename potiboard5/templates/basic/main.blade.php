@@ -78,7 +78,7 @@
 			@if ($paint and !$diary)
 			{{-- ペイントボタン --}}
 
-			<form action="{{$self}}" method="post" enctype="multipart/form-data">
+			<form action="{{$self}}" method="post" enctype="multipart/form-data" class="paint_form">
 				<input type="submit" value="PAINT" class="paint_button">
 				@if ($select_app)
 				<span class="select_applet bold_gray">TOOL</span>
