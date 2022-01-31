@@ -267,10 +267,6 @@ a:hover {
 .clear {
 	clear: both;
 }
-.bbsmenu,
-.menu_pr {
-	margin-bottom: 15px;
-}
 .res_bbsmenu,
 .res_menu_pr {
 	margin-bottom: 0;
@@ -984,6 +980,10 @@ tr.deltable_tr{
 
 
 /* ペイントボタン */
+form.paint_form{
+	margin: 15px 0;
+}
+
 .paint_button {
 	width: 78px;
 	height: 25px;
