@@ -77,6 +77,9 @@ define('SHARE_BUTTON', '1');
 //拒絶する文字列
 $badstring = array("irc.s16.xrea.com","未承諾広告");
 
+//拒絶するurl
+$badurl = array("example.com","www.example.com");
+
 //使用できない名前
 $badname = array("ブランド","通販","販売","口コミ");
 
