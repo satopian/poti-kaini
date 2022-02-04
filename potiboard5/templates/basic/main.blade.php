@@ -150,15 +150,17 @@
 			@endif
 
 			{{-- <!--お絵かきフォーム欄のみ時に表示--> --}}
-			@if ($paint2 and !$diary)
+			@if (!$diary or $addinfo)
 			<div class="howtopaint">
 				<ul id="up_desc">
+					@if ($paint2 and !$diary)
 					<li>お絵かきできる画像のサイズは横 300px～{{$pmaxw}}px、縦 300px～{{$pmaxh}}pxの範囲内です。</li>
 					<li>画像は横 {{$maxw}}px、縦 {{$maxh}}pxを超えると縮小表示されます。sage機能付き。</li>
+					@endif
 					{!!$addinfo!!}
 				</ul>
-			</div>
-			@endif
+				</div>
+			@endif	
 		{{-- <!--
 		// pmaxw…お絵かき最大サイズ(横)
 		// pmaxh…お絵かき最大サイズ(縦)
