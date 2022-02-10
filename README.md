@@ -58,6 +58,7 @@ v5.xになりました。
 `parts/`ディレクトリにもいくつかの`blade.php`形式のファイルが入っています。
 [laravel-blade - Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=cjhowe7.laravel-blade)を使うとBladeの文法にそって色分けされて表示されます。  
 これによりBladeのHTMLファイルの編集が容易になります。  
+エディタも拡張機能も無償で利用できます。  
 
 ## 設置
 
@@ -88,8 +89,8 @@ MONOのHTMLとCSSをv3.07.5で大幅に更新しました。
 
 SCSSファイルは`mono/css/dev/sass/`ディレクトリに入っています。
 配色とその他のデザインに設定が分かれているため、配色を容易に変更できます。  
-無料の[Visual Studio Code – コード エディター](https://azure.microsoft.com/ja-jp/products/visual-studio-code/)とその拡張機能である[DartJS Sass Compiler and Sass Watcher](https://marketplace.visualstudio.com/items?itemName=codelios.dartsass)
-があればコンパイルできます。
+[Visual Studio Code – コード エディター](https://azure.microsoft.com/ja-jp/products/visual-studio-code/)と拡張機能[DartJS Sass Compiler and Sass Watcher](https://marketplace.visualstudio.com/items?itemName=codelios.dartsass)
+があればコンパイルできます。エディタと拡張機能どちらも無償で利用できます。
 
 ## 外部プログラム
 [potiboard_plugin: お絵かき掲示板 POTI-boardのための外部phpプログラム](https://github.com/satopian/potiboard_plugin)  
