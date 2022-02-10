@@ -110,10 +110,10 @@ HTMLタグも旧独自タグも廃止してしまいましたが、urlの自動�
 ### 拒絶するURL  
 拒絶する文字列で指定された文字列がURLに存在する時は拒絶するようになりました。  
 また、拒絶する文字列とは別に使用できないURLの設定項目も追加しました。
-
-`//拒絶するurl`
-`$badurl = array("example.com","www.example.com");`
-
+```
+//拒絶するurl
+$badurl = array("example.com","www.example.com");
+```
 これまでは、URLのスパムワードチェックは何も行われていませんでした。  
 
 ### 日記モード
