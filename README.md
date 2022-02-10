@@ -7,7 +7,7 @@
 PHP7.1～PHP8.1 対応。  
 English translated version is here. [POTI-board EVO-EN](https://github.com/satopian/poti-kaini-EN)  
 繁體中文版本 [POTI-board EVO-zh-TW](https://github.com/satopian/poti-kaini-zh-TW)
-  
+
 
 ## 古いバージョンに存在する重大なバグ
 - [v2.26.0以前のPOTI-boardにはXSSの脆弱性があります。](https://github.com/satopian/poti-kaini/issues/11)  
@@ -38,6 +38,20 @@ v5.xになりました。
 
 ![ChickenPaint](https://user-images.githubusercontent.com/44894014/130365082-a94773a6-8d4f-4bd9-aad0-b35406951a38.png)
 
+
+## 設置
+
+設置はとても簡単です。  
+potiboard5ディレクトリをアップロードして、アップロードしたディレクトリにアクセスするだけで設置できます。  
+管理者パスワードの設定は必須です。  
+config.phpの最初の数行に必須設定項目がありますので、変更してください。  
+[お絵かき掲示板簡単設置方法](http://satopian.sblo.jp/article/189094093.html)
+
+## サンプル/サポート
+
+[お絵かき掲示板PHPスクリプトPOTI-board改公式サイト](https://paintbbs.sakura.ne.jp/poti/)と、[設置サポート掲示板](https://paintbbs.sakura.ne.jp/cgi/neosample/support/) をオープンしました。ご利用ください。  
+設置サポート掲示板にはさとぴあが常駐しています。
+
 ## 古いPOTI-boardとの互換性
 - ログファイルの形式は同じです。どのバージョンのPOTI-boardのログファイルでも動作します。 
 
@@ -59,20 +73,6 @@ v5.xになりました。
 [laravel-blade - Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=cjhowe7.laravel-blade)を使うとBladeの文法にそって色分けされて表示されます。  
 これによりBladeのHTMLファイルの編集が容易になります。  
 エディタも拡張機能も無償で利用できます。  
-
-## 設置
-
-設置はとても簡単です。  
-potiboard5ディレクトリをアップロードして、アップロードしたディレクトリにアクセスするだけで設置できます。  
-管理者パスワードの設定は必須です。  
-config.phpの最初の数行に必須設定項目がありますので、変更してください。  
-[お絵かき掲示板簡単設置方法](http://satopian.sblo.jp/article/189094093.html)
-
-
-## サンプル/サポート
-
-[お絵かき掲示板PHPスクリプトPOTI-board改公式サイト](https://paintbbs.sakura.ne.jp/poti/)と、[設置サポート掲示板](https://paintbbs.sakura.ne.jp/cgi/neosample/support/) をオープンしました。ご利用ください。  
-設置サポート掲示板にはさとぴあが常駐しています。
 
 
 ## テンプレート機能について
