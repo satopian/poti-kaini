@@ -16,17 +16,21 @@ English translated version is here. [POTI-board EVO-EN](https://github.com/satop
 - v3.09.5以前のPOTI-boardのすべてのバージョンには重大な欠陥があります。  
 すべてのログファイルを失う可能性があります。  
 
-v3.10.1以上の`potiboard.php`の上書きアップデートをお願いします。  
+また、v3.x系統のPOTI-boardはPHP8.1環境下で非推奨のエラーが発生しています。  
+PHP9になると動作しなくなります。
+そのためのv5.xの開発です。  
+v5.xの利用をよろしくお願いします。
 
 v3.x系統の開発は終了し、v5.xになりました。  
 PHP8.1～PHP9に対応するためにテンプレートエンジンをBladeOneに変更し、potiboard.phpのコードの見直しを行いました。  
-v3.xのテンプレートは使えなくなりました。v5.xのテンプレートが必要です。
+v3.xのテンプレートは使えなくなりました。v5.xに対応したテンプレートをご利用ください。  
 
 ## 概要
 
 v3.0で従来の[PaintBBS NEO](https://github.com/funige/neo/)、しぃペインターに加え高機能なHTML5のペイントアプリ[ChickenPaint](https://github.com/thenickdude/chickenpaint)の使えるようになりました。  
 スクリプトの名称はPOTI-board EVO(Evolution)になりました。 
-PHP8.1以降に対応するためテンプレートエンジンをBladeOneに変更。v5.xになりました。  
+PHP8.1以降に対応するためテンプレートエンジンをBladeOneに変更しました。  
+v5.xになりました。  
 
 [POI\-board EVO v5\.x で変わる事 · Discussion \#15](https://github.com/satopian/poti-kaini/discussions/15)
 
