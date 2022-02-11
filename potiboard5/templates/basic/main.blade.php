@@ -212,6 +212,7 @@
 							target="_blank">動画</a></span>@endif @if($res['spch'])</span>@endif
 				@endif			
 			</div>
+		</div>
 
 
 			{{-- <!-- 記事共通ヘッダここまで --> --}}
@@ -238,7 +239,6 @@
 			<div class="article_skipres">レス{{$res['skipres']}}件省略中。</div>
 			@endif
 			@endif
-		</div>
 	@if (!$loop->first)
 	</div>
 	@endif
