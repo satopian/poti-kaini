@@ -7,7 +7,7 @@
 PHP7.1～PHP8.1 対応。  
 English translated version is here. [POTI-board EVO-EN](https://github.com/satopian/poti-kaini-EN)  
 繁體中文版本 [POTI-board EVO-zh-TW](https://github.com/satopian/poti-kaini-zh-TW)
-  
+
 
 ## 古いバージョンに存在する重大なバグ
 - [v2.26.0以前のPOTI-boardにはXSSの脆弱性があります。](https://github.com/satopian/poti-kaini/issues/11)  
@@ -16,23 +16,39 @@ English translated version is here. [POTI-board EVO-EN](https://github.com/satop
 - v3.09.5以前のPOTI-boardのすべてのバージョンには重大な欠陥があります。  
 すべてのログファイルを失う可能性があります。  
 
-v3.10.1以上の`potiboard.php`の上書きアップデートをお願いします。  
-
-v3.x系統の開発は終了し、v5.xになりました。  
-PHP8.1～PHP9に対応するためにテンプレートエンジンをBladeOneに変更し、potiboard.phpのコードの見直しを行いました。  
-v3.xのテンプレートは使えなくなりました。v5.xのテンプレートが必要です。
+また、v3.x系統のPOTI-boardはPHP8.1で非推奨のエラーが発生します。  
+現時点では警告ですがPHP9で動作が停止します。
+そのためのv5.xの開発です。  
+v5.xの利用をよろしくお願いします。
 
 ## 概要
 
 v3.0で従来の[PaintBBS NEO](https://github.com/funige/neo/)、しぃペインターに加え高機能なHTML5のペイントアプリ[ChickenPaint](https://github.com/thenickdude/chickenpaint)の使えるようになりました。  
 スクリプトの名称はPOTI-board EVO(Evolution)になりました。 
-PHP8.1以降に対応するためテンプレートエンジンをBladeOneに変更。v5.xになりました。  
+PHP8.1以降に対応するためテンプレートエンジンをBladeOneに変更しました。  
+v3.x系統の開発は終了し、v5.xになりました。  
+PHP8.1～PHP9に対応するためにテンプレートエンジンをBladeOneに変更し、potiboard.phpのコードの見直しを行いました。  
+v3.xのテンプレートは使えなくなりました。v5.xに対応したテンプレートをご利用ください。  
 
 [POI\-board EVO v5\.x で変わる事 · Discussion \#15](https://github.com/satopian/poti-kaini/discussions/15)
 
 ## POTI-board EVO (ChickenPaint対応版)
 
 ![ChickenPaint](https://user-images.githubusercontent.com/44894014/130365082-a94773a6-8d4f-4bd9-aad0-b35406951a38.png)
+
+
+## 設置
+
+設置はとても簡単です。  
+potiboard5ディレクトリをアップロードして、アップロードしたディレクトリにアクセスするだけで設置できます。  
+管理者パスワードの設定は必須です。  
+config.phpの最初の数行に必須設定項目がありますので、変更してください。  
+[お絵かき掲示板簡単設置方法](http://satopian.sblo.jp/article/189094093.html)
+
+## サンプル/サポート
+
+[お絵かき掲示板PHPスクリプトPOTI-board改公式サイト](https://paintbbs.sakura.ne.jp/poti/)と、[設置サポート掲示板](https://paintbbs.sakura.ne.jp/cgi/neosample/support/) をオープンしました。ご利用ください。  
+設置サポート掲示板にはさとぴあが常駐しています。
 
 ## 古いPOTI-boardとの互換性
 - ログファイルの形式は同じです。どのバージョンのPOTI-boardのログファイルでも動作します。 
@@ -54,20 +70,7 @@ PHP8.1以降に対応するためテンプレートエンジンをBladeOneに変
 `parts/`ディレクトリにもいくつかの`blade.php`形式のファイルが入っています。
 [laravel-blade - Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=cjhowe7.laravel-blade)を使うとBladeの文法にそって色分けされて表示されます。  
 これによりBladeのHTMLファイルの編集が容易になります。  
-
-## 設置
-
-設置はとても簡単です。  
-potiboard5ディレクトリをアップロードして、アップロードしたディレクトリにアクセスするだけで設置できます。  
-管理者パスワードの設定は必須です。  
-config.phpの最初の数行に必須設定項目がありますので、変更してください。  
-[お絵かき掲示板簡単設置方法](http://satopian.sblo.jp/article/189094093.html)
-
-
-## サンプル/サポート
-
-[お絵かき掲示板PHPスクリプトPOTI-board改公式サイト](https://paintbbs.sakura.ne.jp/poti/)と、[設置サポート掲示板](https://paintbbs.sakura.ne.jp/cgi/neosample/support/) をオープンしました。ご利用ください。  
-設置サポート掲示板にはさとぴあが常駐しています。
+エディタも拡張機能も無償で利用できます。  
 
 
 ## テンプレート機能について
@@ -84,8 +87,8 @@ MONOのHTMLとCSSをv3.07.5で大幅に更新しました。
 
 SCSSファイルは`mono/css/dev/sass/`ディレクトリに入っています。
 配色とその他のデザインに設定が分かれているため、配色を容易に変更できます。  
-無料の[Visual Studio Code – コード エディター](https://azure.microsoft.com/ja-jp/products/visual-studio-code/)とその拡張機能である[DartJS Sass Compiler and Sass Watcher](https://marketplace.visualstudio.com/items?itemName=codelios.dartsass)
-があればコンパイルできます。
+[Visual Studio Code – コード エディター](https://azure.microsoft.com/ja-jp/products/visual-studio-code/)と拡張機能[DartJS Sass Compiler and Sass Watcher](https://marketplace.visualstudio.com/items?itemName=codelios.dartsass)
+があればコンパイルできます。エディタと拡張機能どちらも無償で利用できます。
 
 ## 外部プログラム
 [potiboard_plugin: お絵かき掲示板 POTI-boardのための外部phpプログラム](https://github.com/satopian/potiboard_plugin)  
@@ -100,6 +103,60 @@ HTMLタグも旧独自タグも廃止してしまいましたが、urlの自動�
 [テキストリンク](https://example.com/)のようなテキストリンクを作成できます。
 
 ## 履歴
+
+## [2022/02/10] v5.05.0
+
+### テンプレートBASIC
+
+## POI-board EVO v5.05.0 リリース
+## [2022/02/10] v5.05.0
+
+### バグ修正
+#### テンプレートBASIC
+
+- テンプレートBASICで管理者モードの時に｢投稿フォーム｣という文字列が｢投稿フォーム｣以外の時にも表示されていたバグを修正しました。
+- img.logとtree.logの内容が一致しない時にレス画面に前後の画像を表示する機能で未定義エラーが発生する問題を修正しました。  
+しかし、img.logとtree.logの内容が一致しないという時点でそのログファイルは壊れています。  
+ログファイルが壊れるようなテストを行っていた過程でみつけた問題です。通常の使用ではログファイルは壊れないと思います。 
+
+### 機能追加
+#### 拒絶するURL  
+拒絶する文字列で指定された文字列がURLに存在する時は拒絶するようになりました。  
+また、拒絶する文字列とは別に使用できないURLの設定項目も追加しました。
+```
+//拒絶するurl
+$badurl = array("example.com","www.example.com");
+```
+これまでは、URLのスパムワードチェックは何も行われていませんでした。  
+### 改善
+#### 日記モード
+
+日記モードに設定しても、ペイントボタン下に表示される説明文が表示されたままになっていたのを改善しました。  
+しかし、追加の説明文 `$addinfo`は表示する必要があるため、`$addinfo`が存在するときは表示するように工夫しました。
+
+####   古いスレッドでは続きを描くのリンクを表示しない。続きを描くを許可しない。
+
+指定日数を超えた記事の編集をロックするだけでなく、続きを描く(画像の編集)もロックするようにしました。
+これらの設定項目を作ったのはパスワードが第三者によって侵害されて記事が改変されるのを防ぐためです。
+記事の編集はロックされますがユーザーによる削除はできます。  
+また管理者は指定日数を過ぎていてもテキストの編集ができます。    
+
+しかし、一定の指定日数でロックがかかると困る方もいらっしゃると思います。
+
+`define('ELAPSED_DAYS','365');`
+
+`365`で1年以上経過したスレッドはロックされますが、
+
+`define('ELAPSED_DAYS','0');`
+  
+`0`に設定するとロックされません。
+
+- 描いている最中に指定日数を過ぎてしまった時は新規投稿になります。  
+また描いている最中にスレッドが削除されていた時も新規投稿になるようにしました。    
+
+リリースから安定版をダウンロードできます。  
+[POTI-board EVO v5.05.0 リリース](https://github.com/satopian/poti-kaini/releases/tag/v5.05.0)
+
 
 ## [2022/01/27] v5.01.03
 ### 概要
