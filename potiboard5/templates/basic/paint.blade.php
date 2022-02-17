@@ -447,7 +447,8 @@ name="pch" code="pch.PCHViewer.class" archive="PCHViewer.jar,PaintBBS.jar" width
 @endif
 @if($normal) 
 <applet name="pch" code="pch2.PCHViewer.class" archive="PCHViewer.jar,spainter_all.jar" codebase="./" width="{{$w}}" height="{{$h}}">
-<param name="res.zip" value="res.zip"><% しぃペインターv1.05_9以前を使うなら res_normal.zip に変更 %>
+<param name="res.zip" value="res.zip">
+{{-- しぃペインターv1.05_9以前を使うなら res_normal.zip に変更 --}}
 <param name="tt.zip" value="tt_def.zip">
 <param name="tt_size" value="31">
 @endif
