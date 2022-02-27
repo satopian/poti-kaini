@@ -6,8 +6,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board EVO
 // バージョン :
-define('POTI_VER','v5.05.0');
-define('POTI_LOT','lot.220131');
+define('POTI_VER','v5.05.2');
+define('POTI_LOT','lot.220225');
 
 /*
   (C) 2018-2022 POTI改 POTI-board redevelopment team
@@ -1519,10 +1519,7 @@ function paintform(){
 	$dat['newpost_nopassword'] = false;
 
 	$dat['parameter_day']=date("Ymd");//JavaScriptのキャッシュ制御
-	$useneo=filter_input(INPUT_POST, 'useneo',FILTER_VALIDATE_BOOLEAN) ? true :false;
-	if($shi==='neo'){
-		$useneo=true;//trueのみfalseは入らない
-	}
+	$useneo= ($shi==='neo');//trueのみfalseは入らない
 	$dat['chickenpaint']= (!$is_mobile && $shi==='chicken') ? true :false;
 	//pchファイルアップロードペイント
 	if($admin&&($admin===$ADMIN_PASS)){
@@ -1605,7 +1602,6 @@ function paintform(){
 		$dat['type'] = $type;
 		$dat['pwd'] = $pwd;
 		$dat['ext'] = $ext;
-		$dat['applet'] = true;
 		list($picw,$pich)=getimagesize(IMG_DIR.$pch.$ext);//キャンバスサイズ
 		if($shi==='chicken' && ($picw > PMAX_W)) error(MSG047);
 		if($shi==='chicken' && ($pich > PMAX_H)) error(MSG047);	
@@ -1618,7 +1614,6 @@ function paintform(){
 			$anime=true;
 			if($_pch_ext==='.pch'){
 				$useneo = is_neo(PCH_DIR.$pch.'.pch');
-				$dat['applet'] = false;
 			}elseif($_pch_ext==='.spch'){
 				$dat['usepbbs'] = false;
 				$useneo=false;
@@ -1942,11 +1937,9 @@ function incontinue(){
 	//描画時間
 	$cptime=is_numeric($cptime) ? h(calcPtime($cptime)) : h($cptime); 
 	if(DSP_PAINTTIME) $dat['painttime'] = $cptime;
-	$dat['applet'] = true;//従来の条件のアプリの選択メニューを出すかどうか(旧タイプ互換)
 	$dat['ctype_pch'] = false;
 	if(is_file(PCH_DIR.$ctim.'.pch')){
 		$dat['ctype_pch'] = true;
-		$dat['applet'] = false;
 		$dat['select_app'] = false;
 		$dat['usepbbs'] = true;
 		if(is_neo(PCH_DIR.$ctim.'.pch')){
@@ -1964,7 +1957,6 @@ function incontinue(){
 		$dat['app_to_use'] = 'chicken';
 	}
 	if(mime_content_type(IMG_DIR.$ctim.$cext)==='image/webp'){
-		$dat['applet'] = false;
 		$dat['use_shi_painter'] = false; 
 	}
 	$dat['addinfo'] = $addinfo;
