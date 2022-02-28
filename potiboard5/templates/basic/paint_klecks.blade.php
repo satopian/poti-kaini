@@ -151,11 +151,19 @@
                 canvas.width = {{$picw}};
                 canvas.height = {{$pich}};
 				const ctx = canvas.getContext('2d');
-                    ctx.save();
-                    ctx.fillStyle = '#fff';
-                    ctx.fillRect(0, 0, canvas.width, canvas.height);
-                    ctx.restore();
-                return canvas;
+				//PSDがなくて画像がある時はcanvasに読み込む
+				@if($imgfile)
+					var img = new Image();
+					img.src = "{{$imgfile}}";
+					img.onload = function(){
+						ctx.drawImage(img, 0, 0);
+					}
+				@endif
+				ctx.save();
+				ctx.fillStyle = '#fff';
+				ctx.fillRect(0, 0, canvas.width, canvas.height);
+				ctx.restore();
+			return canvas;
             })(),
         }]
     });

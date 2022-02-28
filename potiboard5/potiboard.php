@@ -6,7 +6,7 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board EVO
 // バージョン :
-define('POTI_VER','v5.06.2');
+define('POTI_VER','v5.06.3');
 define('POTI_LOT','lot.220301');
 
 /*
