@@ -1154,9 +1154,6 @@ function regist(){
 		$data['option'][] = NOTICE_MAIL_TITLE.','.$sub;
 		if($ext) $data['option'][] = NOTICE_MAIL_IMG.','.ROOT_URL.IMG_DIR.$time.$ext;//拡張子があったら
 		if(is_file(THUMB_DIR.$time.'s.jpg')) $data['option'][] = NOTICE_MAIL_THUMBNAIL.','.ROOT_URL.THUMB_DIR.$time.'s.jpg';
-		if ($_pch_ext = check_pch_ext(__DIR__.'/'.PCH_DIR.$time)) {
-			$data['option'][] = NOTICE_MAIL_ANIME.','.ROOT_URL.PCH_DIR.$time.$_pch_ext;
-		}
 		if($resto){
 			$data['subject'] = '['.TITLE.'] No.'.$resto.NOTICE_MAIL_REPLY;
 			$data['option'][] = "\n".NOTICE_MAIL_URL.','.ROOT_URL.PHP_SELF.'?res='.$resto;
@@ -1605,21 +1602,21 @@ function paintform(){
 		if($shi==='chicken' && ($pich > PMAX_H)) error(MSG047);	
 	
 		$_pch_ext = check_pch_ext(__DIR__.'/'.PCH_DIR.$pch);
+		$continue_from_pch = in_array($_pch_ext,['.pch','.spch']);
 		if($is_mobile && ($_pch_ext==='.spch')){
 			$ctype='img';
 		}
-		if($ctype=='pch'&& $_pch_ext){
+		if($ctype=='pch'&& $continue_from_pch){
 			$anime=true;
 			if($_pch_ext==='.pch'){
 				$shi = is_neo(PCH_DIR.$pch.'.pch') ? 'neo':0;
 			}
 			$dat['pchfile'] = './'.PCH_DIR.$pch.$_pch_ext;
 		}
-		if($ctype=='img' && is_file(IMG_DIR.$pch.$ext)){//画像または
+		if($ctype=='img' && is_file(IMG_DIR.$pch.$ext)){//画像
 				if(mime_content_type(IMG_DIR.$pch.$ext)==='image/webp'){
 					$shi='neo';
 				}
-	
 			$dat['animeform'] = false;
 			$dat['anime'] = false;
 			$dat['imgfile'] = './'.IMG_DIR.$pch.$ext;
@@ -1843,7 +1840,7 @@ function openpch(){
 	$_pch = pathinfo($pch, PATHINFO_FILENAME); //拡張子除去
 
 	$ext = check_pch_ext(PCH_DIR . $_pch);
-	if(!$ext){
+	if(!in_array($ext,['.pch','.spch'])){
 		error(MSG001);
 	}
 	$dat['pchfile'] = './' . PCH_DIR . $_pch . $ext;
@@ -2655,6 +2652,7 @@ function delete_files ($path, $filename, $ext) {
 	safe_unlink(PCH_DIR.$filename.'.pch');
 	safe_unlink(PCH_DIR.$filename.'.spch');
 	safe_unlink(PCH_DIR.$filename.'.chi');
+	safe_unlink(PCH_DIR.$filename.'.psd');
 }
 
 /**
