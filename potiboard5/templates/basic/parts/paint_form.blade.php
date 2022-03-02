@@ -61,7 +61,7 @@
 @if($resno)<input type="hidden" name="resto" value="{{$resno}}">@endif
 @if($admin)
 <input type="hidden" name="admin" value="{{$admin}}">
-<input name="pch_upload" type="file" />
+<input name="pch_upload" type="file" accept="image/*,.pch,.spch,.chi,.psd" />
 @endif
 <input type="hidden" name="mode" value="paint">
 </form>
