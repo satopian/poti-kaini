@@ -38,13 +38,6 @@ if(mime_content_type($_FILES['picture']['tmp_name'])!=='image/png'){
 	die("Your picture upload failed! Please try again!");
 }
 
-list($w,$h)=getimagesize($_FILES['picture']['tmp_name']);
-
-if($w > PMAX_W || $h > PMAX_H){//幅と高さ
-	//規定サイズ違反を検出しました。画像は保存されません。
-	die("Your picture upload failed! Please try again!");
-}
-
 $success = TRUE;
 $success = $success && move_uploaded_file($_FILES['picture']['tmp_name'], TEMP_DIR.$imgfile.'.png');
 
