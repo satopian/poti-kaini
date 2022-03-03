@@ -52,7 +52,7 @@ if (!$success) {
     die("Couldn't move uploaded files");
 }
 if (isset ($_FILES["psd"]) && ($_FILES['psd']['error'] == UPLOAD_ERR_OK)){
-	if(!SIZE_CHECK || ($_FILES['picture']['size'] < (PSD_MAX_KB * 1024))){
+	if(!SIZE_CHECK || ($_FILES['psd']['size'] < (PSD_MAX_KB * 1024))){
 	//PSDファイルのアップロードができなかった場合はエラーメッセージはださず、画像のみ投稿する。 
 	move_uploaded_file($_FILES['psd']['tmp_name'], TEMP_DIR.$imgfile.'.psd');
 	}
