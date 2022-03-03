@@ -10,9 +10,6 @@ define('PICTURE_MAX_KB', '5120');//5MBまで
 define('PSD_MAX_KB', '10240');//10MBまで。ただしサーバのPHPの設定によって2MB以下に制限される可能性があります。
 defined('PERMISSION_FOR_LOG') or define('PERMISSION_FOR_LOG', 0600); //config.phpで未定義なら0600
 defined('PERMISSION_FOR_DEST') or define('PERMISSION_FOR_DEST', 0606); //config.phpで未定義なら0606
-defined('CRYPT_METHOD') or define('CRYPT_METHOD','aes-128-cbc');
-defined('CRYPT_IV') or define('CRYPT_IV','T3pkYxNyjN7Wz3pu');//半角英数16文字
-
 
 $time = time();
 $imgfile = $time.substr(microtime(),2,3);	//画像ファイル名
@@ -43,14 +40,9 @@ if(mime_content_type($_FILES['picture']['tmp_name'])!=='image/png'){
 
 list($w,$h)=getimagesize($_FILES['picture']['tmp_name']);
 
-$pwd = (string)filter_input(INPUT_POST, 'pwd');
-$pwd=hex2bin($pwd);//バイナリに
-$pwd=openssl_decrypt($pwd,CRYPT_METHOD, CRYPT_PASS, true, CRYPT_IV);//復号化
-if($pwd!==$ADMIN_PASS){
-	if($w > PMAX_W || $h > PMAX_H){//幅と高さ
-		//規定サイズ違反を検出しました。画像は保存されません。
-		die("Your picture upload failed! Please try again!");
-	}
+if($w > PMAX_W || $h > PMAX_H){//幅と高さ
+	//規定サイズ違反を検出しました。画像は保存されません。
+	die("Your picture upload failed! Please try again!");
 }
 
 $success = TRUE;
