@@ -190,6 +190,10 @@
 				@endif
 				<!--お絵かき画像選択欄-->
 				@if($tmp)
+				@php 
+				rsort($tmp);
+				@endphp
+
 				<tr>
 					<td class="post_table_title">画像</td>
 					<td><select name="picfile" class="post_select_image">
