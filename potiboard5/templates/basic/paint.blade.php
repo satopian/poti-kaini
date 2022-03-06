@@ -25,6 +25,9 @@
 // title…掲示板タイトル
 // charset…文字コード
 --> --}}
+@if($paint_mode)
+<style>body{overscroll-behavior-x: none !important; }</style>
+@endif
 @if($chickenpaint)
 <style>
 	div#chickenpaint-parent {
@@ -60,7 +63,6 @@
 <link rel="stylesheet" type="text/css" href="chickenpaint/css/chickenpaint.css?{{$parameter_day}}">
 
 @else
-<style>body{overscroll-behavior-x: none !important; }</style>
 <!-- NEOを使う -->
 <script>
 	document.paintBBSCallback = function (str) {
