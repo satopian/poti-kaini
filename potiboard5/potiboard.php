@@ -602,7 +602,7 @@ function res($resno = 0){
 	if(!$resno){
 		return redirect(h(PHP_SELF2), 0);
 	}
-
+	$treeline=[];
 	$trees = file(TREEFILE);
 	foreach($trees as $i => $value){
 		//レス先検索
@@ -1895,10 +1895,15 @@ function incontinue(){
 	$dat['useneo'] = false;
 	$dat['chickenpaint'] = false;
 
+	$name='';
+	$sub='';
+	$cext='';
+	$ctim='';
+	$cptime='';
+
 	$no = (string)filter_input(INPUT_GET, 'no',FILTER_VALIDATE_INT);
 	$lines = file(LOGFILE);
 	$flag = FALSE;
-	$cptime='';
 	foreach($lines as $line){
 		//記事ナンバーのログを取得		
 		if (strpos(trim($line) . ',', $no . ',') === 0) {
@@ -2216,6 +2221,9 @@ function replace(){
 	$pwd=hex2bin($pwd);//バイナリに
 	$pwd=openssl_decrypt($pwd,CRYPT_METHOD, CRYPT_PASS, true, CRYPT_IV);//復号化
 	$oyano='';
+	$src='';
+	$upfile='';
+
 	foreach($line as $i => $value){
 		list($eno,$edate,$name,$email,$sub,$com,$url,$ehost,$epwd,$ext,$_w,$_h,$etim,,$ptime,$fcolor) = explode(",", rtrim($value));
 	//画像差し替えに管理パスは使っていない
@@ -2280,8 +2288,6 @@ function replace(){
 			//サムネイル作成
 			if(USE_THUMB){thumb($path,$time,$imgext,$max_w,$max_h);}
 
-			$src='';
-			
 			//PCHファイルアップロード
 			// .pch, .spch,.chi,.psd ブランク どれかが返ってくる
 			if ($pchext = check_pch_ext($temppath . $file_name,['upfile'=>true])) {
