@@ -63,8 +63,13 @@ config.phpの最初の数行に必須設定項目がありますので、変更�
 - `picpost.php` 
 - `config.php`の再設定が必要です。新しい`config.php`を使用して再設定する必要があります。  
 
+### 新しく追加されたファイル
+
+- `saveklecks.php`
+
 ## 追加されたディレクトリ
 - `chickenpaint/`
+- `klecks`
 - `BladeOne/`
 - `templates/`  
 拡張子`blade.php`のファイルがHTML部分です。CSSファイルも`templates/`ディレクトリの中にあります。  
@@ -130,6 +135,9 @@ PSDファイルを選択してペイントボタンを押すとKlecksのキャ�
 ### レガシーなコードを整理
 - 古いコードを整理ました。投稿するまえにJPEG/PNGを切り替える機能やペイント画面から新しい設定でお絵かきする機能は削除されました。 
 - 同梱テンプレートには存在しないものの、機能としては残っているのは文字色の選択機能だけになりました。  
+
+リリースから安定版をダウンロードできます。  
+[POTI-board EVO v5.10.0 リリース](https://github.com/satopian/poti-kaini/releases/tag/v5.10.0)
 
 ## [2022/02/10] v5.05.0
 
