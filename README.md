@@ -137,7 +137,7 @@ PSDファイルを選択してペイントボタンを押すとKlecksのキャ�
 - 同梱テンプレートは対応していないものの、機能としては残っているのは文字色選択機能だけになりました。  
 
 リリースから安定版をダウンロードできます。  
-[POTI-board EVO v5.10.0 リリース](https://github.com/satopian/poti-kaini/releases/tag/v5.10.0)
+[POTI-board EVO v5.10.0 リリース](https://github.com/satopian/poti-kaini/releases/tag/v5.10.0.1)
 
 ## [2022/02/10] v5.05.0
 
