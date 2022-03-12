@@ -163,7 +163,7 @@ defined('VIEW_OTHER_WORKS') or define('VIEW_OTHER_WORKS', '1');
 //日記モードで使用する する:1 しない:0
 defined('DIARY') or define('DIARY', '0');
 //RSSを出力する する:1 しない:0
-defined('USE_RSS') or define('USE_RSS', '1');
+defined('USE_RSS') or define('USE_RSS', '0');
 
 $badurl= $badurl ?? [];//拒絶するurl
 if(USE_RSS){
@@ -514,7 +514,6 @@ function updatelog(){
 	$lineindex = get_lineindex($line); // 逆変換テーブル作成
 	$fdat=form();
 	$counttree = count($tree);//190619
-	$r=0;
 	$rsslines=[];
 	for($page=0;$page<$counttree;$page+=PAGE_DEF){//PAGE_DEF単位で全件ループ
 		$oya = 0;	//親記事のメイン添字
@@ -543,20 +542,12 @@ function updatelog(){
 					$res['disp_resbutton'] = check_elapsed_days($res['time']); //返信ボタン表示有無
 					// 親レス用の値
 					$res['skipres'] = DSP_RES ? (($skipres>0) ? $skipres : false) :false;
-					// 親レス用の値
-					// if($r<20){
-					// 	$rsslines[]=$line[$j];//rss表示用
-					// }
-					++$r;
 				}
-					// if($r<20){
 				if($page===0){
 					$rsslines[$oya][]=$line[$j];//rss表示用
 				}		
-					// }
 					$dat['oya'][$oya][]=$res;
 			}
-			// = $rres;
 			clearstatcache(); //キャッシュをクリア
 			$oya++;
 
