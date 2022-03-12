@@ -13,35 +13,42 @@ $blade = new BladeOne($views,$cache,BladeOne::MODE_AUTO);
 
 class rss{
 	
-	public static function create_rss($rsslines){
-
-		$dat['ress']=[];
-		foreach($rsslines as $i =>$rssline){
+	public static function create_rss($threads){
 		global $blade;
+
+		$dat['title'] = TITLE;
+		$dat['encoded_title'] = urlencode(TITLE);
+		$dat['home']  = HOME;
+		$dat['self']  = PHP_SELF;
+		$dat['encoded_self'] = urlencode(PHP_SELF);
+		$dat['self2'] = h(PHP_SELF2);
+		$dat['rooturl'] = ROOT_URL;//設置場所url
+		$dat['skindir'] = 'templates/'.SKIN_DIR;
+		$dat['encoded_rooturl'] = urlencode(ROOT_URL);//設置場所url
+		$dat['ver'] = 'v0.1.0';
+		$dat['updated']=gmdate("Y-m-d\TH:i:s",filemtime(TREEFILE));
+
+		$oya = 0;	//親記事のメイン添字
+		$dat['oya'][$oya]=[];
+		foreach($threads as $i =>$rsslines){
+			foreach($rsslines as $i =>$rssline){
+
 			//レス作成
 				$res = self::create_rss_from_line($rssline);
-				$dat['ress'][]=$res;
-			// = $rres;
+				// $dat['oya'][$oya]=$res;
+
+			$dat['oya'][$oya][]=$res;
+
 			clearstatcache(); //キャッシュをクリア
-			if($i>=20){
-				break;
-			}	
 
-			$dat['title'] = TITLE;
-			$dat['encoded_title'] = urlencode(TITLE);
-			$dat['home']  = HOME;
-			$dat['self']  = PHP_SELF;
-			$dat['encoded_self'] = urlencode(PHP_SELF);
-			$dat['self2'] = h(PHP_SELF2);
-			$dat['rooturl'] = ROOT_URL;//設置場所url
-			$dat['skindir'] = 'templates/'.SKIN_DIR;
-			$dat['encoded_rooturl'] = urlencode(ROOT_URL);//設置場所url
-			$dat['ver'] = 'v0.1.0';
-			$dat['updated']=gmdate("Y-m-d\TH:i:s",filemtime(TREEFILE));
-			file_put_contents('rss.xml',$blade->run('rss',$dat),LOCK_EX);
-			chmod('rss.xml',PERMISSION_FOR_DEST);
-
+			}
+			$oya++;
 		}
+
+		file_put_contents('rss.xml',$blade->run('rss',$dat),LOCK_EX);
+		chmod('rss.xml',PERMISSION_FOR_DEST);
+
+
 	}	
 	private static function create_rss_from_line ($line, $options = []) {
 		global $path;
@@ -56,7 +63,6 @@ class rss{
 			'sub' => strip_tags($sub),
 			'substr_sub' => mb_substr(strip_tags(($sub)),0,12).$three_point_sub,
 			'url' => filter_var($url,FILTER_VALIDATE_URL),
-			'email' => filter_var($email, FILTER_VALIDATE_EMAIL),
 			'ext' => $ext,
 			'time' => $time,
 			'updated'=> gmdate("Y-m-d\TH:i:s",substr($time,-13,-3)),
@@ -76,7 +82,7 @@ class rss{
 			// 画像ファイルがある場合
 			$res['size'] = filesize($imgsrc);
 			$res['imgsrc'] = '<img src="'.ROOT_URL.$imgsrc.'"><br>';
-		$res['enclosure']=ROOT_URL.$imgsrc;
+		$res['enclosure']=ROOT_URL.IMG_DIR.$imgsrc;
 		$res['imgtype']=mime_content_type(IMG_DIR.$time.$ext);		
 			
 		}
@@ -102,5 +108,4 @@ class rss{
 		}
 		return $res;
 	}
-	
 }

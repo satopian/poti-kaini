@@ -6,7 +6,7 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board EVO
 // バージョン :
-define('POTI_VER','v5.11.0');
+define('POTI_VER','v5.11.2');
 define('POTI_LOT','lot.220312');
 
 /*
@@ -166,6 +166,16 @@ defined('DIARY') or define('DIARY', '0');
 defined('USE_RSS') or define('USE_RSS', '1');
 
 $badurl= $badurl ?? [];//拒絶するurl
+if(USE_RSS){
+//RSSの出力に必要なファイルの確認と読み込み
+	if ($err = check_file(__DIR__.'/rss.php')) {
+		error($err);
+	}
+	require(__DIR__.'/rss.php');
+	if ($err = check_file(__DIR__ . '/templates/'.SKIN_DIR.'rss.blade.php')) {
+		error($err);
+	}
+}
 
 //パーミッション
 
@@ -534,12 +544,17 @@ function updatelog(){
 					// 親レス用の値
 					$res['skipres'] = DSP_RES ? (($skipres>0) ? $skipres : false) :false;
 					// 親レス用の値
-					if($r<20){
-						$rsslines[]=$line[$j];//rss表示用
-					}
+					// if($r<20){
+					// 	$rsslines[]=$line[$j];//rss表示用
+					// }
 					++$r;
 				}
-				$dat['oya'][$oya][]=$res;
+					// if($r<20){
+				if($page===0){
+					$rsslines[$oya][]=$line[$j];//rss表示用
+				}		
+					// }
+					$dat['oya'][$oya][]=$res;
 			}
 			// = $rres;
 			clearstatcache(); //キャッシュをクリア
@@ -600,11 +615,6 @@ function updatelog(){
 		if(PHP_EXT!='.php'){chmod($logfilename,PERMISSION_FOR_DEST);}
 	}
 	if(USE_RSS){
-		if ($err = check_file(__DIR__.'/rss.php')) {
-			error($err);
-		}
-		require(__DIR__.'/rss.php');
-		
 		rss::create_rss($rsslines);
 	}
 	safe_unlink(($page/PAGE_DEF+1).PHP_EXT);
