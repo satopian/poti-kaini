@@ -6,8 +6,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board EVO
 // バージョン :
-define('POTI_VER','v5.10.0');
-define('POTI_LOT','lot.220308');
+define('POTI_VER','v5.11.0');
+define('POTI_LOT','lot.220312');
 
 /*
   (C) 2018-2022 POTI改 POTI-board redevelopment team
@@ -102,7 +102,6 @@ require(__DIR__.'/templates/'.SKIN_DIR.'template_ini.php');
 $path = realpath("./").'/'.IMG_DIR;
 $temppath = realpath("./").'/'.TEMP_DIR;
 
-
 //CheerpJ
 define('CHEERPJ_URL', 'https://cjrtnc.leaningtech.com/2.2/loader.js');
 
@@ -163,6 +162,8 @@ defined('RES_CONTINUE_IN_CURRENT_THREAD') or define('RES_CONTINUE_IN_CURRENT_THR
 defined('VIEW_OTHER_WORKS') or define('VIEW_OTHER_WORKS', '1');
 //日記モードで使用する する:1 しない:0
 defined('DIARY') or define('DIARY', '0');
+//RSSを出力する する:1 しない:0
+defined('USE_RSS') or define('USE_RSS', '1');
 
 $badurl= $badurl ?? [];//拒絶するurl
 
@@ -503,6 +504,8 @@ function updatelog(){
 	$lineindex = get_lineindex($line); // 逆変換テーブル作成
 	$fdat=form();
 	$counttree = count($tree);//190619
+	$r=0;
+	$rsslines=[];
 	for($page=0;$page<$counttree;$page+=PAGE_DEF){//PAGE_DEF単位で全件ループ
 		$oya = 0;	//親記事のメイン添字
 		$dat=$fdat;//form()を何度もコールしない
@@ -531,6 +534,10 @@ function updatelog(){
 					// 親レス用の値
 					$res['skipres'] = DSP_RES ? (($skipres>0) ? $skipres : false) :false;
 					// 親レス用の値
+					if($r<20){
+						$rsslines[]=$line[$j];//rss表示用
+					}
+					++$r;
 				}
 				$dat['oya'][$oya][]=$res;
 			}
@@ -572,7 +579,6 @@ function updatelog(){
 
 			}
 		}
-
 		//改ページ分岐ここまで
 
 		$dat['paging'] = $paging;
@@ -593,7 +599,14 @@ function updatelog(){
 		closeFile($fp);
 		if(PHP_EXT!='.php'){chmod($logfilename,PERMISSION_FOR_DEST);}
 	}
-
+	if(USE_RSS){
+		if ($err = check_file(__DIR__.'/rss.php')) {
+			error($err);
+		}
+		require(__DIR__.'/rss.php');
+		
+		rss::create_rss($rsslines);
+	}
 	safe_unlink(($page/PAGE_DEF+1).PHP_EXT);
 }
 

@@ -67,6 +67,11 @@ define('DEFAULT_TIMEZONE','Asia/Tokyo');
 //設置場所のURL ROOT_URL で設定したurlをもとにリンクを作成
 define('SHARE_BUTTON', '1');
 
+/* ---------- RSS ---------- */
+//RSSを出力する する:1 しない:0
+//rss.xmlをRSSリーダーに登録して使います。
+define('USE_RSS', '0');
+
 /* ---------- スパム対策 ---------- */
 
 //正規表現を使うことができます
