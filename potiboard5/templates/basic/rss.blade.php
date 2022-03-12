@@ -8,29 +8,39 @@
 	</author>
 	<generator uri="{{$rooturl}}rss.php" version="{{$ver}}">POTI-board</generator>
 	<id>PaintBBS:{{$rooturl}}</id>
-	@if(isset($ress) and !@empty($ress))
-	@foreach ($ress as $i=>$res)
+	@foreach ($oya as $ress)
+	
 	<entry>
-		<title>[{{$res['no']}}]{!!$res['sub']!!} by {!!$res['name']!!}</title>
-			<link href="{{$rooturl}}{{$self}}?res={{$res['no']}}"/>
-			<id>paintbbs:{{$self}}?res={{$res['no']}}</id>
-			<published>{{$res['updated']}}</published>
-			<updated>{{$res['updated']}}</updated>
+		<title>[{{$ress[0]['no']}}]{!!$ress[0]['sub']!!} by {!!$ress[0]['name']!!}</title>
+			<link href="{{$rooturl}}{{$self}}?res={{$ress[0]['no']}}"/>
+			<id>paintbbs:{{$self}}?res={{$ress[0]['no']}}</id>
+			<published>{{$ress[0]['updated']}}</published>
+			<updated>{{$ress[0]['updated']}}</updated>
 					<summary type="html">
-						{{$res['imgsrc']}}
-						{!!$res['descriptioncom']!!}
+						{{$ress[0]['imgsrc']}}{{'<br>'}}
+						{!!$ress[0]['descriptioncom']!!}{{'<br>'}}
 					</summary>
-		  <content type="html">
-			{{$res['imgsrc']}}
-			{!!$res['com']!!}
-	</content>        
+		<content type="html">
+			{!!$ress[0]['sub']!!} by {!!$ress[0]['name']!!}{{'<br>'}}
+			{{$ress[0]['imgsrc']}}
+			{!!$ress[0]['com']!!}{{'<br>'}}
+			@if(isset($ress) and !@empty($ress))
+			@foreach ($ress as $i=>$res)
+			@if (!$loop->first)
+				{{'<hr>'}}
+				{!!$res['sub']!!} by {!!$res['name']!!}{{'<br>'}}
+				{{$res['imgsrc']}}
+				{!!$res['com']!!}{{'<br>'}}
+			@endif
+			@endforeach
+			@endif
+		</content>        
 		  <category term="PaintBBS" label="PaintBBS" />
 		  <link rel="enclosure" href="{{$res['enclosure']}}" type="{{$res['imgtype']}}" length="{{$res['size']}}" />
 		  <author>
-			  <name></name>
+			  <name>{!!$ress[0]['name']!!}</name>
 		  </author>
-	  </entry>
+	</entry>
 	  @endforeach
-	  @endif
 	</feed>
   
