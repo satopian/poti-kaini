@@ -11,7 +11,7 @@
 	@foreach ($oya as $ress)
 	
 	<entry>
-		<title>[{{$ress[0]['no']}}]{!!$ress[0]['sub']!!} by {!!$ress[0]['name']!!}</title>
+		<title>[{{$ress[0]['no']}}]{!!$ress[0]['sub']!!}</title>
 			<link href="{{$rooturl}}{{$self}}?res={{$ress[0]['no']}}"/>
 			<id>paintbbs:{{$self}}?res={{$ress[0]['no']}}</id>
 			<published>{{$ress[0]['updated']}}</published>
@@ -21,14 +21,15 @@
 						{!!$ress[0]['descriptioncom']!!}
 					</summary>
 		<content type="html">
+			{{'<h3>'}}{!!$ress[0]['name']!!}{{'</h3>'}}
 			{{$ress[0]['imgsrc']}}
-			{!!$ress[0]['com']!!}{{'<br>'}}
+			{!!$ress[0]['com']!!}
 			@if(isset($ress) and !@empty($ress))
 			@foreach ($ress as $i=>$res)
 			@if (!$loop->first)
-			{{'<h3>'}}{!!$res['sub']!!} by {!!$res['name']!!}{{'</h3>'}}
+			{{'<h3>'}}{!!$res['name']!!}{{'</h3>'}}
 				{{$res['imgsrc']}}
-				{!!$res['com']!!}{{'<br>'}}
+				{!!$res['com']!!}
 			@endif
 			@endforeach
 			@endif
