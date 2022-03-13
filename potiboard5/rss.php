@@ -82,7 +82,7 @@ class rss{
 			// 画像ファイルがある場合
 			$res['size'] = filesize($imgsrc);
 			$res['imgsrc'] = '<img src="'.ROOT_URL.$imgsrc.'"><br>';
-		$res['enclosure']=ROOT_URL.IMG_DIR.$imgsrc;
+		$res['enclosure']=ROOT_URL.$imgsrc;
 		$res['imgtype']=mime_content_type(IMG_DIR.$time.$ext);		
 			
 		}
