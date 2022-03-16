@@ -1,9 +1,9 @@
-{{-- <!--********** お絵かきテンプレート **********
+{{-- ********** お絵かきテンプレート **********
 // このテンプレートは、以下のモード用テンプレートです
 // ・お絵かきモード
 // ・動画表示モード
 // ・コンティニューモード
---> --}}
+ --}}
 <!DOCTYPE html>
 
 <html lang="ja">
@@ -21,10 +21,10 @@
 @if($continue_mode)<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">@endif
 <link rel="stylesheet" type="text/css" href="{{$skindir}}basic.css">
 <title>@if($paint_mode)お絵かきモード@endif @if($continue_mode)続きを描く@endif @if($pch_mode)動画表示モード@endif - {{$title}}</title>
-{{-- <!-- 
+{{--  
 // title…掲示板タイトル
 // charset…文字コード
---> --}}
+ --}}
 @if($paint_mode)
 <style>body{overscroll-behavior-x: none !important; }</style>
 @endif
@@ -507,7 +507,20 @@ name="pch" code="pch.PCHViewer.class" archive="PCHViewer.jar,PaintBBS.jar" width
    </div>
     <div class="continue_painttime">@if($painttime) 描画時間：{{$painttime}}@endif</div>
     <!--コンティニューフォーム欄-->
-    <form action="{{$self}}" method="post">
+	<div class="continue_post_form">	
+		@if($download_app_dat)
+		<form action="{{$self}}" method="post">
+				<input type="hidden" name="mode" value="download">
+				<input type="hidden" name="pch" value="{{$pch}}">
+				<input type="hidden" name="no" value="{{$no}}">
+				<input type="hidden" name="pch_ext" value="{{$pch_ext}}">
+				<span class="nk">削除キー<input type="password" name="pwd" value="" class="paint_password" autocomplete="current-password"></span>
+				
+				<input type="submit" value="{{$pch_ext}}ファイルをダウンロード">
+				</form>
+		@endif	  
+		
+	<form action="{{$self}}" method="post">
       <input type="hidden" name="mode" value="contpaint">
       <input type="hidden" name="anime" value="true">
       <input type="hidden" name="picw" value="{{$picw}}">
@@ -526,14 +539,12 @@ name="pch" code="pch.PCHViewer.class" archive="PCHViewer.jar,PaintBBS.jar" width
        </select>
        </span>
       <br>
-@if($n) 
-<!--
+{{-- 
 //select_app ツールの選択メニューを出す時にtrueが入る
 //use_shi_painter しぃペインターを使う設定の時にtrueが入る
 //use_chickenpaint を使う設定の時にtrueが入る
-//app_to_use 動画やレイヤー情報などの固有形式があるときに対応するアプリが入る
--->
-@endif
+//app_to_use 動画やレイヤー情報などの固有形式があるときに対応するアプリが入る 
+--}}
 
 @if($select_app)
 <select name="shi" class="paint_select">
@@ -555,9 +566,7 @@ name="pch" code="pch.PCHViewer.class" archive="PCHViewer.jar,PaintBBS.jar" width
 <input type="submit" value="続きを描く">
 
 </form>
-
-
-
+</div>
 <!--コンティニュー説明-->
 <div class="howtocontinue">
 		<ul id="up_desc">
@@ -568,6 +577,8 @@ name="pch" code="pch.PCHViewer.class" archive="PCHViewer.jar,PaintBBS.jar" width
 @endif
 	</ul>
 </div>
+
+
 <!--JavaScriptの実行(クッキーを読込み、フォームに値をセット)-->
 <script>
 l(); //LoadCookie

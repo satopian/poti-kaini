@@ -800,7 +800,10 @@ tr.deltable_tr{
 	display: table;
 	text-align: left;
 }
-
+/*  続から描くフォーム */
+.continue_post_form {
+	line-height: 1.8;
+}
 /* レス書き込みの説明 */
 .howtowrite {
 	list-style-type: square;

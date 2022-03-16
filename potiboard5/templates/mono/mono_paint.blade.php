@@ -638,6 +638,22 @@
 						<li>続きを描くには描いたときの削除キーが必要です。</li>
 						@endif
 						</ul>
+						{{-- ダウンロード --}}
+						@if($download_app_dat)
+						<form action="{{$self}}" method="post">
+								<input type="hidden" name="mode" value="download">
+								<input type="hidden" name="pch" value="{{$pch}}">
+								<input type="hidden" name="no" value="{{$no}}">
+								Pass <input class="form" type="password" name="pwd" value="">
+								<input class="button" type="submit" value="ダウンロード">
+						</form>
+						<ul>
+							<li>
+							アプリ固有の{{$pch_type}}形式のファイルをダウンロードできます。		
+							</li>
+						</ul>
+								@endif	  
+
 				</div>
 				<script type="text/javascript">
 				l(); //LoadCookie
