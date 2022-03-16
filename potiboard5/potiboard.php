@@ -6,8 +6,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board EVO
 // バージョン :
-define('POTI_VER','v5.15.3');
-define('POTI_LOT','lot.220315');
+define('POTI_VER','v5.15.5');
+define('POTI_LOT','lot.220316');
 
 /*
   (C) 2018-2022 POTI改 POTI-board redevelopment team
@@ -1968,12 +1968,14 @@ function incontinue(){
 			$dat['select_app'] = false;
 			$dat['app_to_use'] = 'klecks';
 			$dat['download_app_dat'] = true;
+			$dat['pch_ext']='.psd';
 			break;
 
 		default :
 			$dat['select_app'] = true;
 			$dat['app_to_use'] = false;
 			$dat['download_app_dat'] = false;
+			$dat['pch_ext']='';
 			break;
 	}
 	
@@ -2007,14 +2009,14 @@ function check_cont_pass(){
 }
 function download_app_dat(){
 
-	$pch=filter_input(INPUT_POST,'pch');
-	$pwd=filter_input(INPUT_POST,'pwd');
-	$no=filter_input(INPUT_POST,'no');
-	$pchext=filter_input(INPUT_POST,'pch_ext');
+	$pwd=(string)filter_input(INPUT_POST,'pwd');
+	$no=(string)filter_input(INPUT_POST,'no');
+	$pchext=(string)basename(filter_input(INPUT_POST,'pch_ext'));
 	$cpwd='';
 	$cno='';
+	$ctime='';
 	$lines = file(LOGFILE);
-	$flag = FALSE;
+	$flag = false;
 	foreach($lines as $line){
 		//記事ナンバーのログを取得		
 		if (strpos(trim($line) . ',', $no . ',') === 0) {
@@ -2028,10 +2030,9 @@ function download_app_dat(){
 		return error(MSG028);
 	}
 
-	// $ext=check_pch_ext(PCH_DIR.$pch,['upfile'=>true]);
-	$filepath= $pchext ? PCH_DIR.$pch.$pchext : '';
+	$filepath= ($ctime && $pchext) ? PCH_DIR.$ctime.$pchext : '';
 	if(!$filepath)error(MSG001);
-	header('Content-Type: application/force-download');
+	header('Content-Type: '.mime_content_type($filepath));
 	header('Content-Length: '.filesize($filepath));
 	header('Content-Disposition: attachment; filename="'.h(basename($filepath)).'"');
 

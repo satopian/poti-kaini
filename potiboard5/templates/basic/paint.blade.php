@@ -511,7 +511,6 @@ name="pch" code="pch.PCHViewer.class" archive="PCHViewer.jar,PaintBBS.jar" width
 		@if($download_app_dat)
 		<form action="{{$self}}" method="post">
 				<input type="hidden" name="mode" value="download">
-				<input type="hidden" name="pch" value="{{$pch}}">
 				<input type="hidden" name="no" value="{{$no}}">
 				<input type="hidden" name="pch_ext" value="{{$pch_ext}}">
 				<span class="nk">削除キー<input type="password" name="pwd" value="" class="paint_password" autocomplete="current-password"></span>
