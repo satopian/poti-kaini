@@ -1968,14 +1968,12 @@ function incontinue(){
 			$dat['select_app'] = false;
 			$dat['app_to_use'] = 'klecks';
 			$dat['download_app_dat'] = true;
-			$dat['pch_ext']='.psd';
 			break;
 
 		default :
 			$dat['select_app'] = true;
 			$dat['app_to_use'] = false;
 			$dat['download_app_dat'] = false;
-			$dat['pch_ext']='';
 			break;
 	}
 	
@@ -2027,7 +2025,7 @@ function download_app_dat(){
 	}
 	if(!$flag) error(MSG001);
 	if(!(($no==$cno)&&check_password($pwd,$cpwd,$pwd))){
-		return error(MSG028);
+		return error(MSG029);
 	}
 
 	$filepath= ($ctime && $pchext) ? PCH_DIR.$ctime.$pchext : '';
