@@ -35,7 +35,7 @@ define('MSG002', "絵が選択されていません。[You haven't selected a pi
 define('MSG003', "アップロードに失敗しました。[Failed to upload picture.]<br>サーバーがサポートしていない可能性があります[There is a possibility that the server doesn't support it.]");
 define('MSG004', "アップロードに失敗しました。[Failed to upload picture.]<br>画像ファイル以外は受け付けません[The image is not valid and it was excluded.]");
 define('MSG005', "アップロードに失敗しました。[Failed to upload picture.]<br>同じ画像がありました[Image already exists.]");
-define('MSG006', "不正な投稿をしないで下さい。[Please do not do an illegal contribution.]<br>POST以外での投稿は受け付けません[The contribution excluding 'POST' is not accepted.]");
+define('MSG006', "CSRFトークンが一致しません。[CSRF token mismatch.]");
 define('MSG007', "画像がありません。[Image does not exist.]");
 define('MSG008', "何か書いて下さい。[Please write something.]");
 define('MSG009', "名前がありません。[Please enter your name.]");
