@@ -45,7 +45,7 @@ define('MSG012', "名前が長すぎます。[name is too long.]");
 define('MSG013', "メールアドレスが長すぎます。[email is too long.]");
 define('MSG014', "題名が長すぎます。[subject is too long.]");
 define('MSG015', "異常です。[Unknown error]");
-define('MSG016', "拒絶されました。[Post was rejected.]<br>そのHOSTからの投稿は受け付けません[This HOST has been banned from posting.]");
+define('MSG016', "拒絶されました。[Post was rejected.]<br>そのHOSTからの投稿は受け付けません。[This HOST has been banned from posting.]");
 define('MSG017', "ＥＲＲＯＲ！[Error]　公開ＰＲＯＸＹ規制中！！[Open-PROXY is limited.](80)");
 define('MSG018', "ＥＲＲＯＲ！[Error]　公開ＰＲＯＸＹ規制中！！[Open-PROXY is limited.](8080)");
 define('MSG019', "ログの読み込みに失敗しました。[It failed in reading the log.]");
@@ -56,7 +56,7 @@ define('MSG023', "ツリーの更新に失敗しました。[It failed in the re
 define('MSG024', "ツリーの削除に失敗しました。[It failed in the deletion of the tree.]");
 define('MSG025', "スレッドがありません。[Thread does not exist.]");
 define('MSG026', "スレッドが最後の1つなので削除できません。[This is the last thread, it can not be deleted.]");
-define('MSG027', "削除に失敗しました(ユーザー)。[failed in deletion.(User)]");
+define('MSG027', "削除に失敗しました。(ユーザー)[failed in deletion.(User)]");
 define('MSG028', "該当記事が見つからないかパスワードが間違っています。[article is not found or password is wrong.]");
 define('MSG029', "パスワードが違います。[password is wrong.]");
 define('MSG030', "削除に失敗しました(管理者権限)。[failed in deletion.(Admin)]");
