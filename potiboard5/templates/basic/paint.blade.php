@@ -169,7 +169,6 @@
 // type…差し換えか、新規投稿か(コンティニュー)
 // pwd…記事Pass(コンティニュー)
 // ext…画像拡張子(コンティニュー)
-// mode2…現在のモード
 --> --}}
 @if($paint_mode) 
 @if($chickenpaint)
