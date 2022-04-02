@@ -119,6 +119,9 @@ search画面の画像の一覧のリンクが機能していなかったのを�
 - search画面のHTMLの文法エラーを修正しました。 
 `checked="checked"`のクオートがエスケープされて文法チェッカーでエラーになっていました。
 
+リリースから安定版をダウンロードできます。  
+[POTI-board EVO v5.16.5.1 リリース](https://github.com/satopian/poti-kaini/releases/latest)
+
 ## [2022/03/25] v5.16.5
 
 ### 改善
@@ -164,8 +167,6 @@ v3.19.5でペイント関連のテンプレートに追加したJavascriptが原
 - Klecksを最新版にアップデート。  
 新しいブラシが追加されました。ミラーペインティングができるようになりました。
 
-リリースから安定版をダウンロードできます。  
-[POTI-board EVO v5.12.0 リリース](https://github.com/satopian/poti-kaini/releases/tag/v5.12.0)
 
 ## [2022/03/8] v5.10.0
 
