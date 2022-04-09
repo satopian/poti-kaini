@@ -6,8 +6,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board EVO
 // バージョン :
-define('POTI_VER','v5.16.5');
-define('POTI_LOT','lot.220325');
+define('POTI_VER','v5.16.6');
+define('POTI_LOT','lot.220405');
 
 /*
   (C) 2018-2022 POTI改 POTI-board redevelopment team
@@ -1704,6 +1704,7 @@ function paintform(){
 	$usercode.='&stime='.time().$resto;
 	//差し換え時の認識コード追加
 	$dat['rep']=false;//klecks
+	$dat['repcode']='';
 	if($type==='rep'){
 		$dat['rep']=true;//klecks
 		$time=time();
