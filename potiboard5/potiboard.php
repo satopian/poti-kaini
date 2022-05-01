@@ -6,8 +6,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board EVO
 // バージョン :
-define('POTI_VER','v5.16.10');
-define('POTI_LOT','lot.220430');
+define('POTI_VER','v5.16.11');
+define('POTI_LOT','lot.220501');
 
 /*
   (C) 2018-2022 POTI改 POTI-board redevelopment team
@@ -1775,14 +1775,14 @@ function paintcom(){
 			list($uip,$uhost,$uagent,$imgext,$ucode,) = explode("\t", rtrim($userdata));
 			$file_name = pathinfo($file, PATHINFO_FILENAME);
 			if(is_file(TEMP_DIR.$file_name.$imgext)) //画像があればリストに追加
-			$tmplist[] = $ucode."\t".$uip."\t".$file_name.$imgext;
+			$tmplist[] = [$ucode,$uip,$file_name.$imgext];
 		}
 	}
 	closedir($handle);
 	$tmp = array();
 	if(!empty($tmplist)){
 		foreach($tmplist as $tmpimg){
-			list($ucode,$uip,$ufilename) = explode("\t", $tmpimg);
+			list($ucode,$uip,$ufilename) = $tmpimg;
 			if($ucode == $usercode||$uip == $userip){
 				$tmp[] = $ufilename;
 			}
