@@ -908,56 +908,56 @@ function regist(){
 	// 連続・二重投稿チェック
 	$chkline=20;//チェックする最大行数
 	foreach($line as $i => $value){
-		if(!trim($value)){
-			continue;
-		}
-		list($lastno,,$lname,$lemail,$lsub,$lcom,$lurl,$lhost,$lpwd,,,,$ltime,) = explode(",", $value);
-		$pchk=0;
-		switch(POST_CHECKLEVEL){
-			case 1:	//low
-				if($host===$lhost
-				){$pchk=1;}
-				break;
-			case 2:	//middle
-				if($host===$lhost
-				|| ($name===$lname)
-				|| ($email===$lemail)
-				|| ($url===$lurl)
-				|| ($sub===$lsub)
-				){$pchk=1;}
-				break;
-			case 3:	//high
-				if($host===$lhost
-				|| (similar_str($name,$lname) > VALUE_LIMIT)
-				|| (similar_str($email,$lemail) > VALUE_LIMIT)
-				|| (similar_str($url,$lurl) > VALUE_LIMIT)
-				|| (similar_str($sub,$lsub) > VALUE_LIMIT)
-				){$pchk=1;}
-				break;
-			case 4:	//full
-				$pchk=1;
-		}
-			if($pchk){
-			//KASIRAが入らない10桁のUNIX timeを取り出す
-			if(strlen($ltime)>10){$ltime=substr($ltime,-13,-3);}
-			if(RENZOKU && (time() - (int)$ltime) < RENZOKU){error(MSG020,$dest);}
-			if(RENZOKU2 && (time() - (int)$ltime) < RENZOKU2 && $upfile_name){error(MSG021,$dest);}
-			if($com){
-					switch(D_POST_CHECKLEVEL){//190622
-						case 1:	//low
-							if($com === $lcom){error(MSG022,$dest);}
-							break;
-						case 2:	//middle
-							if(similar_str($com,$lcom) > COMMENT_LIMIT_MIDDLE){error(MSG022,$dest);}
-							break;
-						case 3:	//high
-							if(similar_str($com,$lcom) > COMMENT_LIMIT_HIGH){error(MSG022,$dest);}
-							break;
-						default:
-							if($com === $lcom && !$upfile_name){error(MSG022,$dest);}
-					}
+	if(!trim($value)){
+		continue;
+	}
+	list($lastno,,$lname,$lemail,$lsub,$lcom,$lurl,$lhost,$lpwd,,,,$ltime,) = explode(",", $value);
+	$pchk=0;
+	switch(POST_CHECKLEVEL){
+		case 1:	//low
+			if($host===$lhost
+			){$pchk=1;}
+			break;
+		case 2:	//middle
+			if($host===$lhost
+			|| ($name===$lname)
+			|| ($email===$lemail)
+			|| ($url===$lurl)
+			|| ($sub===$lsub)
+			){$pchk=1;}
+			break;
+		case 3:	//high
+			if($host===$lhost
+			|| (similar_str($name,$lname) > VALUE_LIMIT)
+			|| (similar_str($email,$lemail) > VALUE_LIMIT)
+			|| (similar_str($url,$lurl) > VALUE_LIMIT)
+			|| (similar_str($sub,$lsub) > VALUE_LIMIT)
+			){$pchk=1;}
+			break;
+		case 4:	//full
+			$pchk=1;
+	}
+		if($pchk){
+		//KASIRAが入らない10桁のUNIX timeを取り出す
+		if(strlen($ltime)>10){$ltime=substr($ltime,-13,-3);}
+		if(RENZOKU && (time() - (int)$ltime) < RENZOKU){error(MSG020,$dest);}
+		if(RENZOKU2 && (time() - (int)$ltime) < RENZOKU2 && $upfile_name){error(MSG021,$dest);}
+		if($com){
+				switch(D_POST_CHECKLEVEL){//190622
+					case 1:	//low
+						if($com === $lcom){error(MSG022,$dest);}
+						break;
+					case 2:	//middle
+						if(similar_str($com,$lcom) > COMMENT_LIMIT_MIDDLE){error(MSG022,$dest);}
+						break;
+					case 3:	//high
+						if(similar_str($com,$lcom) > COMMENT_LIMIT_HIGH){error(MSG022,$dest);}
+						break;
+					default:
+						if($com === $lcom && !$upfile_name){error(MSG022,$dest);}
 				}
 			}
+		}
 		if($i>=$chkline){break;}//チェックする最大行数
 	}//ここまで
 
@@ -1007,14 +1007,14 @@ function regist(){
 			if(!trim($value)){
 				continue;
 			}
-				list(,,,,,,,,,$extp,,,$timep,$chkp,) = explode(",", $value);
-				if($extp){//拡張子があったら
-				if($chkp===$chk&&is_file($path.$timep.$extp)){
-				error(MSG005,$dest);
-				}
-				if($j>=20){break;}//画像を20枚チェックしたら
-				++$j;
-				}
+			list(,,,,,,,,,$extp,,,$timep,$chkp,) = explode(",", $value);
+			if($extp){//拡張子があったら
+			if($chkp===$chk&&is_file($path.$timep.$extp)){
+			error(MSG005,$dest);
+			}
+			if($j>=20){break;}//画像を20枚チェックしたら
+			++$j;
+			}
 			if($i>=$chkline){break;}//チェックする最大行数
 		}
 		//PCHファイルアップロード
@@ -1071,10 +1071,10 @@ function regist(){
 		if(!trim($value)){
 			continue;
 		}
-			list($oyano,) = explode(",", rtrim($value));
-			if(!isset($lineindex[$oyano])){//親のログが存在しないときは
-				unset($line[$i]);//ツリーを削除
-			}
+		list($oyano,) = explode(",", rtrim($value));
+		if(!isset($lineindex[$oyano])){//親のログが存在しないときは
+			unset($line[$i]);//ツリーを削除
+		}
 	}
 
 	if($resto){
