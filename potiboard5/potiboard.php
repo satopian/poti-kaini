@@ -490,8 +490,23 @@ function form($resno="",$adminin="",$tmp=""){
 // 記事表示 
 function updatelog(){
 
-	$tree = file(TREEFILE);
-	$line = file(LOGFILE);
+	$fp=fopen(LOGFILE,"r");
+	while($_line = fgets($fp)){
+		if(!trim($_line)){
+			continue;
+		}
+		$line[]=$_line;
+	}
+	$tp=fopen(TREEFILE,"r");
+	while($_tree = fgets($tp)){
+		if(!trim($_tree)){
+			continue;
+		}
+		$tree[]=$_tree;
+	}
+	closeFile($tp);
+	closeFile($fp);
+
 	$lineindex = get_lineindex($line); // 逆変換テーブル作成
 	$fdat=form();
 	$counttree = count($tree);//190619
@@ -593,7 +608,23 @@ function res($resno = 0){
 		return redirect(h(PHP_SELF2), 0);
 	}
 	$treeline=[];
-	$trees = file(TREEFILE);
+	$fp=fopen(LOGFILE,"r");
+	while($_line = fgets($fp)){
+		if(!trim($_line)){
+			continue;
+		}
+		$line[]=$_line;
+	}
+	$tp=fopen(TREEFILE,"r");
+	while($_tree = fgets($tp)){
+		if(!trim($_tree)){
+			continue;
+		}
+		$trees[]=$_tree;
+	}
+	closeFile($tp);
+	closeFile($fp);
+
 	foreach($trees as $i => $value){
 		//レス先検索
 		if (strpos(trim($value) . ',', $resno . ',') === 0) {
@@ -605,7 +636,6 @@ function res($resno = 0){
 	if (empty($treeline)) {
 		error(MSG001);
 	}
-	$line = file(LOGFILE);
 	$lineindex = get_lineindex($line); // 逆変換テーブル作成
 	if(!isset($lineindex[$resno])){
 		error(MSG001);
@@ -623,28 +653,28 @@ function res($resno = 0){
 		$res = create_res($line[$k], ['pch' => 1]);
 		$res['skipres']=false;
 	
-	if($j===0){
-		$resub = USE_RESUB ? 'Re: ' . $res['sub'] : '';
-		$dat['resub'] = $resub; //レス画面用
-	
-		// 親レス用の値
-		$res['resub'] = $resub;
-		$res['descriptioncom'] = h(strip_tags(mb_strcut($res['com'],0,300))); //メタタグに使うコメントからタグを除去
-		$oyaname = $res['name']; //投稿者名をコピー
+		if($j===0){
+			$resub = USE_RESUB ? 'Re: ' . $res['sub'] : '';
+			$dat['resub'] = $resub; //レス画面用
+		
+			// 親レス用の値
+			$res['resub'] = $resub;
+			$res['descriptioncom'] = h(strip_tags(mb_strcut($res['com'],0,300))); //メタタグに使うコメントからタグを除去
+			$oyaname = $res['name']; //投稿者名をコピー
 
-		if(!check_elapsed_days($res['time'])){//親の値
-		$dat['form'] = false;//フォームを閉じる
-		$dat['paintform'] = false;
-		$dat['resname'] = false;//投稿者名をコピーを閉じる
+			if(!check_elapsed_days($res['time'])){//親の値
+			$dat['form'] = false;//フォームを閉じる
+			$dat['paintform'] = false;
+			$dat['resname'] = false;//投稿者名をコピーを閉じる
+			}
+
 		}
+		$dat['oya'][0][] = $res;
 
-	}
-	$dat['oya'][0][] = $res;
-
-	// 投稿者名を配列にいれる
-	if ($oyaname != $res['name'] && !in_array($res['name'], $rresname)) { // 重複チェックと親投稿者除外
-		$rresname[] = $res['name'];
-	}
+		// 投稿者名を配列にいれる
+		if ($oyaname != $res['name'] && !in_array($res['name'], $rresname)) { // 重複チェックと親投稿者除外
+			$rresname[] = $res['name'];
+		}
 		// 投稿者名を配列にいれる
 		if ($oyaname != $res['name'] && !in_array($res['name'], $rresname)) { // 重複チェックと親投稿者除外
 			$rresname[] = $res['name'];
@@ -2394,19 +2424,35 @@ function catalog(){
 
 	$page = filter_input(INPUT_GET, 'page',FILTER_VALIDATE_INT);
 	$page= $page ? $page : 0;
-	$line = file(LOGFILE);
-	$lineindex = get_lineindex($line); // 逆変換テーブル作成
 
-	$tree = file(TREEFILE);
-	$counttree = count($tree);
-	$oya = 0;
-	$pagedef = 30;//1ページに表示する件数
-	$dat = form();
-	for($i = $page; $i < $page+$pagedef; ++$i){
-		if(!isset($tree[$i])||!trim($tree[$i])){
+	$fp=fopen(LOGFILE,"r");
+	while($_line = fgets($fp)){
+		if(!trim($_line)){
 			continue;
 		}
-		$treeline = explode(",", rtrim($tree[$i]));
+		$line[]=$_line;
+	}
+	$tp=fopen(TREEFILE,"r");
+	while($_tree = fgets($tp)){
+		if(!trim($_tree)){
+			continue;
+		}
+		$trees[]=$_tree;
+	}
+	closeFile($tp);
+	closeFile($fp);
+
+
+	$lineindex = get_lineindex($line); // 逆変換テーブル作成
+	// $counttree = count($tree);
+	// $oya = 0;
+	$pagedef = 30;//1ページに表示する件数
+	$dat = form();
+	$view_trees=array_slice($trees,(int)$page,$pagedef,false);
+
+	// for($i = $page; $i < $page+$pagedef; ++$i){
+	foreach($view_trees as $oya=>$val){
+		$treeline = explode(",", rtrim($val));
 		$disptree = $treeline[0];
 		if(!isset($lineindex[$disptree])) continue; //範囲外なら次の行
 		$j=$lineindex[$disptree]; //該当記事を探して$jにセット
@@ -2429,7 +2475,7 @@ function catalog(){
 		$res['rescount'] = count($treeline) - 1;
 		// 記事格納
 		$dat['oya'][$oya][] = $res;
-		$oya++;
+		// $oya++;
 	}
 
 	$prev = $page - $pagedef;
