@@ -6,8 +6,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board EVO
 // バージョン :
-define('POTI_VER','v5.18.1');
-define('POTI_LOT','lot.220509');
+define('POTI_VER','v5.18.2');
+define('POTI_LOT','lot.220510');
 
 /*
   (C) 2018-2022 POTI改 POTI-board redevelopment team
@@ -498,7 +498,7 @@ function updatelog(){
 	$fdat=form();
 	$counttree = count($trees);//190619
 	for($page=0;$page<$counttree;$page+=PAGE_DEF){//PAGE_DEF単位で全件ループ
-		$oya = 0;	//親記事のメイン添字
+
 		$dat=$fdat;//form()を何度もコールしない
 
 		$disp_threads = array_slice($trees,(int)$page,PAGE_DEF,false);
