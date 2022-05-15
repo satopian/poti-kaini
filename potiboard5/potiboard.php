@@ -506,7 +506,6 @@ function updatelog(){
 		foreach($disp_threads as $oya=>$val){//PAGE_DEF分のスレッドを表示
 			$treeline = explode(",", rtrim($val));
 			// レス省略
-
 			$skipres=count($treeline) - DSP_RES-1;
 
 			//レス作成
@@ -559,7 +558,7 @@ function updatelog(){
 					$rep_page_no=$pn;
 				}
 
-			$paging .= ($page === $i)
+				$paging .= ($page === $i)
 				? str_replace("<PAGE>", $pn, NOW_PAGE) // 現在ページにはリンクを付けない
 				: str_replace("<PURL>", ($i ? $pn.PHP_EXT : h(PHP_SELF2)),
 				str_replace("<PAGE>", $rep_page_no , OTHER_PAGE));
