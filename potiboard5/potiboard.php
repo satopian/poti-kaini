@@ -6,8 +6,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board EVO
 // バージョン :
-define('POTI_VER','v5.18.3');
-define('POTI_LOT','lot.220510');
+define('POTI_VER','v5.18.5');
+define('POTI_LOT','lot.220516');
 
 /*
   (C) 2018-2022 POTI改 POTI-board redevelopment team
@@ -103,7 +103,7 @@ $path = realpath("./").'/'.IMG_DIR;
 $temppath = realpath("./").'/'.TEMP_DIR;
 
 //CheerpJ
-define('CHEERPJ_URL', 'https://cjrtnc.leaningtech.com/2.2/loader.js');
+define('CHEERPJ_URL', 'https://cjrtnc.leaningtech.com/2.3/loader.js');
 
 //POTI_VERLOT定義
 define('POTI_VERLOT', POTI_VER.' '.POTI_LOT);
