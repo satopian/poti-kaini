@@ -7,7 +7,7 @@
 
 <head>
 	<meta charset="utf-8">
-	{{-- <!--SNS--> --}}
+	{{-- SNS --}}
 	@if ($sharebutton)
 	<meta name="twitter:card" content="summary" />
 	<meta name="twitter:site" content="" />
@@ -17,7 +17,7 @@
 	<meta property="og:description" content="">
 	<meta property="og:image" content="">
 	@endif
-	<!-- ENDSNS-->
+	{{--  ENDSNS --}}
 	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
 	<link rel="stylesheet" href="{{$skindir}}basic.css">
 	<link rel="stylesheet" href="{{$skindir}}icomoon/style.css">
@@ -33,10 +33,10 @@
 		}
 	</script>
 <title>{{$title}}</title>
-	{{-- <!--
+	{{-- 
 	// title…掲示板タイトル
-	--> --}}
-	{{-- <!--クッキー読込み用JavaScript(必須)--> --}}
+	 --}}
+	{{-- クッキー読込み用JavaScript(必須) --}}
 	<script src="loadcookie.js"></script>
 </head>
 
@@ -45,7 +45,7 @@
 	<div id="body">
 		<header>
 			<h1 id="bbs_title">{{$title}}</h1>
-			{{-- <!--resnoがある＝レスモード--> --}}
+			{{-- resnoがある＝レスモード --}}
 			<nav>
 				<div class="bbsmenu">
 					[<a href="{{$home}}" target="_top">ホーム</a>]
@@ -56,24 +56,23 @@
 					[<a href="{{$self}}?mode=piccom">未<span class="menu_none">投稿画像</span></a>]
 					[<a href="{{$self}}?mode=admin">管<span class="menu_none">理用</span></a>]
 					<a href="#bottom">▽</a>
-			{{-- <!--
+			{{-- 
 			// home…ホームページURL
 			// self…POTI-boardのスクリプト名
 			// self2…入口(TOP)ページのURL
 			// resno…レス時の親記事No
-			--> --}}
+			 --}}
 				</div>
 			</nav>
-			{{-- <!-- 1行広告用 --> --}}
+			{{--  1行広告用  --}}
 			<div class="menu_pr"></div>
 			<div class="clear"></div>
-			{{-- <!--お絵かきフォーム欄-->
-			<!--実際のお絵かきフォーム-->
-			<!--
+			{{-- お絵かきフォーム欄
+			//実際のお絵かきフォーム
 			//select_app ツールの選択メニューを出す時にtrueが入る
 			//use_shi_painter しぃペインターを使う設定の時にtrueが入る
 			//use_chickenpaint を使う設定の時にtrueが入る
-			--> --}}
+			 --}}
 
 			@if ($paint and !$diary)
 			{{-- ペイントボタン --}}
@@ -81,7 +80,7 @@
 			<form action="{{$self}}" method="post" enctype="multipart/form-data" class="paint_form">
 				<input type="submit" value="PAINT" class="paint_button">
 				@if ($select_app)
-				<span class="select_applet bold_gray">TOOL</span>
+				<span class="bold_gray">TOOL</span>
 				<select name="shi" class="select_applet">
 				<option value="neo">PaintBBS NEO</option>
 				@if ($use_shi_painter)<option value="1" class="for_pc">しぃペインター</option>@endif
@@ -89,14 +88,14 @@
 				@if ($use_klecks)<option value="klecks">Klecks</option>@endif
 			</select>
 			@else
-			<!-- 選択メニューを出さない時に起動するアプリ -->
+			{{--  選択メニューを出さない時に起動するアプリ  --}}
 			<input type="hidden" name="shi" value="neo">
 			@endif
 
 
-			<!-- キャンバスサイズ 設定はconfig.phpで-->
+			{{--  キャンバスサイズ 設定はconfig.phpで --}}
 			<span class="canvas_size_wrap">
-			<span class="canvas_size">Size</span>
+			<span class="bold_gray">Size</span>
 			<select name="picw" title="幅" class="canvas_select">
 				@php
 				//幅 300から、PMAX_W で設定した最大値まで。
@@ -125,20 +124,20 @@
 				@endphp
 				</select> 
 			</span>
-			<!-- キャンバスサイズ ここまで-->
+			{{-- キャンバスサイズ ここまで --}}
 
 			@if ($use_select_palettes)
 				<span class="palette_type bold_gray">PALETTE</span> <select name="selected_palette_no" title="パレット" class="canvas_select palette_type">{!!$palette_select_tags!!}</select>@endif
 			@if ($anime)<label class="checkbox use_animation"><input type="checkbox" value="true" name="anime" {{$animechk}}>動画記録</label>@endif
-				{{-- <!--
-				// // anime…動画記録機能を使用するとき true が入る
-				// // animechk…動画記録をデフォルトでチェックするとき ' checked' が入る
-				// --> --}}
+				{{-- 
+				//  anime…動画記録機能を使用するとき true が入る
+				//  animechk…動画記録をデフォルトでチェックするとき ' checked' が入る
+				//  --}}
 			@if($resno)<input type="hidden" name="resto" value="{{$resno}}">@endif
 			<input type="hidden" name="mode" value="paint">
 			</form>
 
-			{{-- <!--
+			{{-- 
 			// config.phpで設定した
 			// //お絵描きデフォルトサイズ(最初に選択される数値)
 			// PDEF_W //幅
@@ -150,7 +149,7 @@
 			// --> --}}
 			@endif
 
-			{{-- <!--お絵かきフォーム欄のみ時に表示--> --}}
+			{{-- お絵かきフォーム欄のみ時に表示 --}}
 			@if (!$diary or $addinfo)
 			<div class="howtopaint">
 				<ul id="up_desc">
@@ -162,13 +161,13 @@
 				</ul>
 				</div>
 			@endif	
-		{{-- <!--
+		{{-- 
 		// pmaxw…お絵かき最大サイズ(横)
 		// pmaxh…お絵かき最大サイズ(縦)
 		// maxw…投稿サイズ(横)。レス時にはレス用の値が入る
 		// maxh…投稿サイズ(縦)。レス時にはレス用の値が入る
 		// addinfo…追加お知らせ
-		--> --}}
+		--}}
 		</header>
 		{{-- 前、次のナビゲーション --}}
 		@include('parts.prev_next')
@@ -176,12 +175,12 @@
 		@foreach ($oya as $i=>$ress)
 
 {{-- スレッドのループ --}}
-{{-- <!--親記事グループ--> --}}
+{{-- 親記事グループ --}}
 <article>
 	@if(isset($ress) and !@empty($ress))
 		
 	@foreach ($ress as $res)
-	{{-- <!--親記事ヘッダ--> --}}
+	{{-- 親記事ヘッダ --}}
 	@if ($loop->first)
 	{{-- 最初のループ --}}
 	<h2 class="article_title"><a href="{{$self}}?res={{$ress[0]['no']}}">[{{$ress[0]['no']}}]
@@ -189,11 +188,11 @@
 
 	@else
 	<hr>
-	{{-- <!-- レス記事ヘッダ --> --}}
+	{{-- レス記事ヘッダ --}}
 	<div class="res_article_wrap">
 		<div class="res_article_title">[{{$res['no']}}] {{$res['sub']}}</div>
 		@endif
-		{{-- <!-- 記事共通ヘッダ --> --}}
+		{{-- 記事共通ヘッダ --}}
 		<div class="article_info">
 			<span class="article_info_name"><a href="search.php?page=1&imgsearch=on&query={{$res['encoded_name']}}&radio=2"
 					target="_blank" rel="noopener">{{$res['name']}}</a></span>@if($res['url'])<span
@@ -216,7 +215,7 @@
 		</div>
 
 
-			{{-- <!-- 記事共通ヘッダここまで --> --}}
+			{{-- 記事共通ヘッダここまで --}}
 
 			@if($res['src'])<div class="posted_image" @if($res['w']>=750) style="margin-right:0;float:none;" @endif >
 				@if($res['thumb'])<a href="{{$res['src']}}" target="_blank" rel="noopener">@endif<img
@@ -266,20 +265,20 @@
 							value="@if($ress[0]['disp_resbutton']) 返信 @else 表示 @endif" class="res_button"></form><span
 						class="page_top"><a href="#top">△</a></span></div>
 			</div>
-			<!-- /thread -->
+			{{-- end thread --}}
 		</article>
 		<hr>
 
 		@endforeach
-		<!--親記事グループここまで-->
+		{{-- 親記事グループここまで --}}
 		<div class="clear"></div>
 
-		{{-- <!--メイン時ページング表示--> --}}
+		{{-- メイン時ページング表示 --}}
 		<div id="paging_wrap">{!!$paging!!}</div>
 
 		{{-- 前、次のナビゲーション --}}
 		@include('parts.prev_next')
-		{{-- <!-- メンテナンスフォーム欄 --> --}}
+		{{-- メンテナンスフォーム欄 --}}
 		@include('parts.mainte_form')
 
 		<script>
@@ -287,7 +286,7 @@
 		</script>
 
 		<footer>
-			{{-- <!--著作権表示 削除しないでください--> --}}
+			{{-- 著作権表示 削除しないでください --}}
 			@include('parts.copyright')
 		</footer>
 	</div>
