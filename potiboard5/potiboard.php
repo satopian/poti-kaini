@@ -6,7 +6,7 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board EVO
 // バージョン :
-define('POTI_VER','v5.18.12');
+define('POTI_VER','v5.18.15');
 define('POTI_LOT','lot.220526');
 
 /*
@@ -602,9 +602,6 @@ function res($resno = 0){
 		}
 	}
 
-	if (empty($treeline)) {
-		error(MSG001);
-	}
 	$lineindex = get_lineindex($line); // 逆変換テーブル作成
 	if(!isset($lineindex[$resno])){
 		error(MSG001);
@@ -1322,9 +1319,6 @@ function admindel($pass){
 	}
 
 	foreach($line as $j => $value){
-		if(!trim($value)){
-			continue;
-		}
 			if(($j>=($del_pageno))&&($j<(1000+$del_pageno))){
 			list($no,$date,$name,$email,$sub,$com,$url,
 			$host,$pw,$ext,$w,$h,$time,$chk,) = explode(",",$value);
@@ -1335,6 +1329,7 @@ function admindel($pass){
 			'clip' => "",
 			'chk' => "",
 		] ;
+		list($name,) = separateNameAndTrip($name);
 		$res['now']  = preg_replace("/( ID:.*)/","",$date);//ID以降除去
 		$res['name'] = strip_tags($name);//タグ除去
 		$res['sub'] = strip_tags($sub);
