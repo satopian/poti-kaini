@@ -6,7 +6,7 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board EVO
 // バージョン :
-define('POTI_VER','v5.18.10');
+define('POTI_VER','v5.18.11');
 define('POTI_LOT','lot.220526');
 
 /*
@@ -1306,7 +1306,7 @@ function admindel($pass){
 	$dat['admin_del'] = true;
 	$dat['pass'] = $pass;
 	$all = 0;
-	$line = file(LOGFILE);
+	$line=get_log();
 	$countlog=count($line);
 	$l = 0;
 
@@ -1582,7 +1582,8 @@ function paintform(){
 		if(RES_CONTINUE_IN_CURRENT_THREAD && $type!=='rep'){
 
 			$oyano='';
-			$trees=file(TREEFILE);
+			$trees=get_tree();
+		
 			foreach ($trees as $tree) {
 				if (strpos(',' . trim($tree) . ',',',' . $no . ',') !== false) {
 					$tree_nos = explode(',', trim($tree));
@@ -1754,7 +1755,8 @@ function paintcom(){
 	}
 
 	if(USE_RESUB && $resto) {
-		$lines = file(LOGFILE);
+		$lines=get_log();
+	
 		foreach($lines as $line){
 
 			if (strpos(trim($line) . ',', $resto . ',') === 0) {
@@ -2266,7 +2268,7 @@ function replace(){
 	//画像差し替えに管理パスは使っていない
 		if($eno == $no && check_password($pwd, $epwd)){
 
-			$trees=file(TREEFILE);
+			$trees=get_tree();
 
 			foreach ($trees as $tree) {
 				if (strpos(',' . trim($tree) . ',',',' . $no . ',') !== false) {
