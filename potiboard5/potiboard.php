@@ -6,7 +6,7 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board EVO
 // バージョン :
-define('POTI_VER','v5.18.11');
+define('POTI_VER','v5.18.12');
 define('POTI_LOT','lot.220526');
 
 /*
@@ -2971,7 +2971,7 @@ function is_neo($src) {//neoのPCHかどうか調べる
 }
 //表示用のログファイルを取得
 function get_log() {
-
+	$lines=[];
 	$fp=fopen(LOGFILE,"r");
 	while($_line = fgets($fp)){
 		if(!trim($_line)){
@@ -2981,14 +2981,14 @@ function get_log() {
 	}
 	closeFile($fp);
 	
-	if(empty($line)){
+	if(empty($lines)){
 		return error(MSG019);
 	}
 	return $lines;
 }
 //表示用のログファイルを取得
 function get_tree() {
-
+	$trees=[];
 	$tp=fopen(TREEFILE,"r");
 	while($_tree = fgets($tp)){
 		if(!trim($_tree)){
