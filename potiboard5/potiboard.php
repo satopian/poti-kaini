@@ -6,8 +6,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board EVO
 // バージョン :
-define('POTI_VER','v5.18.16');
-define('POTI_LOT','lot.220526');
+define('POTI_VER','v5.18.18');
+define('POTI_LOT','lot.220527');
 
 /*
   (C) 2018-2022 POTI改 POTI-board redevelopment team
@@ -1750,9 +1750,12 @@ function paintcom(){
 	}
 
 	if(USE_RESUB && $resto) {
-		$lines=get_log(LOGFILE);
-		foreach($lines as $line){
 
+		$fp=fopen(LOGFILE,"r");
+		while($line = fgets($fp)){
+			if(!trim($line)){
+				continue;
+			}
 			if (strpos(trim($line) . ',', $resto . ',') === 0) {
 
 				list($cno,,,,$sub,,,,,,,,,,) = explode(",", charconvert($line));
@@ -1760,6 +1763,7 @@ function paintcom(){
 					break;
 			}
 		}
+		closeFile($fp);
 	}
 
 	//テンポラリ画像リスト作成
@@ -1769,9 +1773,7 @@ function paintcom(){
 	while ($file = readdir($handle)) {
 		if(!is_dir($file) && pathinfo($file, PATHINFO_EXTENSION)==='dat') {
 
-			$fp = fopen(TEMP_DIR.$file, "r");
-			$userdata = fread($fp, 1024);
-			fclose($fp);
+			$userdata=file_get_contents(TEMP_DIR.$file);
 			list($uip,$uhost,$uagent,$imgext,$ucode,) = explode("\t", rtrim($userdata));
 			$file_name = pathinfo($file, PATHINFO_FILENAME);
 			if(is_file(TEMP_DIR.$file_name.$imgext)) //画像があればリストに追加
@@ -1884,16 +1886,20 @@ function incontinue(){
 	$cptime='';
 
 	$no = (string)filter_input(INPUT_GET, 'no',FILTER_VALIDATE_INT);
-	$lines=get_log(LOGFILE);
 	$flag = FALSE;
-	foreach($lines as $line){
-		//記事ナンバーのログを取得		
+	$fp=fopen(LOGFILE,"r");
+	while($line = fgets($fp)){//記事ナンバーのログを取得
+		if(!trim($line)){
+			continue;
+		}
 		if (strpos(trim($line) . ',', $no . ',') === 0) {
 		list($cno,,$name,,$sub,,,,,$cext,$picw,$pich,$ctim,,$cptime,) = explode(",", rtrim($line));
 		$flag = true;
 		break;
 		}
 	}
+	closeFile($fp);
+
 	if(!$flag) error(MSG001);
 
 	$dat['continue_mode'] = true;
@@ -1965,8 +1971,8 @@ function check_cont_pass(){
 
 	$no = (string)filter_input(INPUT_POST, 'no',FILTER_VALIDATE_INT);
 	$pwd = (string)newstring(filter_input(INPUT_POST, 'pwd'));
-	$lines=get_log(LOGFILE);
-	foreach($lines as $line){
+	$fp=fopen(LOGFILE,"r");
+	while($line = fgets($fp)){
 		if (strpos(trim($line) . ',', $no . ',') === 0) {
 
 			list($cno,,,,,,,,$cpwd,,,,$ctime,)
@@ -1975,10 +1981,12 @@ function check_cont_pass(){
 		if($cno == $no && check_password($pwd, $cpwd) 
 		&& check_elapsed_days($ctime)
 		){
+			closeFile($fp);
 			return true;
 		}
 	}
 	}
+	closeFile($fp);
 	error(MSG028);
 }
 function download_app_dat(){
@@ -1989,16 +1997,20 @@ function download_app_dat(){
 	$cpwd='';
 	$cno='';
 	$ctime='';
-	$lines=get_log(LOGFILE);
 	$flag = false;
-	foreach($lines as $line){
-		//記事ナンバーのログを取得		
+	$fp=fopen(LOGFILE,"r");
+	while($line = fgets($fp)){//記事ナンバーのログを取得		
+
+		if(!trim($line)){
+			continue;
+		}
 		if (strpos(trim($line) . ',', $no . ',') === 0) {
 		list($cno,,,,,,,,$cpwd,,,,$ctime,) = explode(",", rtrim($line));
 		$flag = true;
 		break;
 		}
 	}
+	closeFile($fp);
 	if(!$flag) error(MSG001);
 	if(!(($no==$cno)&&check_password($pwd,$cpwd,$pwd))){
 		return error(MSG029);
