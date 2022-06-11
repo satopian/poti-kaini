@@ -763,7 +763,7 @@ function regist(){
 		}else{
 			list($usec,) = explode(' ', microtime());
 			srand($usec * 1000000);
-			$pwd = substr(md5(uniqid(rand())),2,15);
+			$pwd = substr(md5(uniqid(rand(),true)),2,15);
 			$pwd = strtr($pwd,"!\"#$%&'()+,/:;<=>?@[\\]^`/{|}~","ABCDEFGHIJKLMNOabcdefghijklmn");
 			$c_pass=$pwd;
 		}
