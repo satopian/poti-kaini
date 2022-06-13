@@ -327,17 +327,17 @@
 					@endif
 					<div class="comment_wrap">
 						<p>{!!$res['com']!!}</p>
-						{{-- 親のコメント部分 --}}
-						@if ($loop->first)
+						{{-- コメント部分 --}}
 					</div>
+					{{-- 最初のループならレス省略件数を表示 --}}
+					@if ($loop->first)
 					@if ($res['skipres'])
 					<hr>
 					<div class="article_skipres">レス{{$res['skipres']}}件省略中。</div>
 					@endif
 					@endif
-					{{-- 子レスなら --}}
-					@if (!$loop->first)
-				</div>
+			{{-- 子レス閉じタグ --}}
+			@if (!$loop->first)
 			</div>
 			@endif
 			@endforeach
