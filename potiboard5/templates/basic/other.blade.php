@@ -94,9 +94,11 @@
 		@endif
 		<!--投稿待ちのお絵かき画像表示-->
 		@if($pictmp)
-		<div class="centering">
 			@if($notmp)
+			<div class="error_mesage">
 			画像が見当たりません。
+			<br><a href="#" onclick="javascript:window.history.back(-1);return false;">もどる</a>
+			</div>
 			@endif
 			@if($tmp)
 			@foreach ($tmp as $tmpimg)
@@ -105,13 +107,16 @@
 			[{{$tmpimg['date']}}]
 			@endforeach
 			@endif
-		</div>
 		@endif
 		@if($ptime)
 		<div class="centering">
 			描画時間： {{$ptime}}
 		</div>
 		@endif
+
+		{{-- 未投稿画像の画像が無い時はフォームを表示しない --}}
+		@if(!$notmp)
+
 		<form action="{{$self}}" method="POST" enctype="multipart/form-data">
 			<input type="hidden" name="token" value="{{$token}}">
 			<!--モード指定:新規投稿-->
@@ -235,6 +240,7 @@
 				</tr>
 			</table>
 		</form>
+		@endif
 		<script src="{{$skindir}}jquery-3.5.1.min.js"></script>
 		<script>
 			window.onpageshow = function () {
