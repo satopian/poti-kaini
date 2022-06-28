@@ -4,7 +4,7 @@
 
 
 お絵かき掲示板PHPスクリプトPOTI-boardを改良していくプロジェクトです。  
-PHP7.1～PHP8.1 対応。  
+PHP7.4～PHP8.1 対応。  
 English translated version is here. [POTI-board EVO-EN](https://github.com/satopian/poti-kaini-EN)  
 繁體中文版本 [POTI-board EVO-zh-TW](https://github.com/satopian/poti-kaini-zh-TW)
 
@@ -316,9 +316,9 @@ BASICは 黒鋼彗牙さんのCOOL SOLIDをベースにして作成したもの�
 著作表記はテンプレートの[LICENCE](https://github.com/satopian/poti-kaini/blob/master/potiboard5/templates/basic/LICENCE.md)にあります。
 
 ### テンプレートエンジンの変更で変わった事
-#### PHP7.1
-- PHP5.6環境でも動作するように開発していましたが、BladeOneのv4.2はPHP7.1以上の環境でなければ動作しない事がわかりました。  
-POTI-board EVO v5.xにはPHP7.1以上の環境が必要になりました。  
+#### PHP7.4
+- PHP5.6環境でも動作するように開発していましたが、BladeOneのv4.2はPHP7.4以上の環境でなければ動作しない事がわかりました。  
+POTI-board EVO v5.xにはPHP7.4以上の環境が必要になりました。  
 
 ### 改善
 - 日記モードを調整しました。新規投稿は管理者のみに設定してもペイントボタンは表示されたままで、絵を描き終わって投稿を完了させようと思ったら管理パス以外での投稿はできないというエラーになっていました。  
