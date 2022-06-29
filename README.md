@@ -6,7 +6,7 @@
 
 ## 動作環境
 PHP7.2～PHP8.1  
-#### そのほかのバージョン
+## そのほかのバージョン
 English translated version is here. [POTI-board EVO-EN](https://github.com/satopian/poti-kaini-EN)  
 繁體中文版本 [POTI-board EVO-zh-TW](https://github.com/satopian/poti-kaini-zh-TW)
 
