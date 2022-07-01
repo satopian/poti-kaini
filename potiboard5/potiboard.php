@@ -6,8 +6,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board EVO
 // バージョン :
-define('POTI_VER','v5.19.1');
-define('POTI_LOT','lot.220629');
+define('POTI_VER','v5.20.0');
+define('POTI_LOT','lot.220630');
 
 /*
   (C) 2018-2022 POTI改 POTI-board redevelopment team
@@ -914,18 +914,18 @@ function regist(){
 				break;
 			case 2:	//middle
 				if($host===$lhost
-				|| ($name===$lname)
-				|| ($email===$lemail)
-				|| ($url===$lurl)
-				|| ($sub===$lsub)
+				|| ($name && $name===$lname)
+				|| ($email && $email===$lemail)
+				|| ($url && $url===$lurl)
+				|| ($sub && $sub===$lsub)
 				){$pchk=1;}
 				break;
 			case 3:	//high
 				if($host===$lhost
-				|| (similar_str($name,$lname) > VALUE_LIMIT)
-				|| (similar_str($email,$lemail) > VALUE_LIMIT)
-				|| (similar_str($url,$lurl) > VALUE_LIMIT)
-				|| (similar_str($sub,$lsub) > VALUE_LIMIT)
+				|| ($name && similar_str($name,$lname) > VALUE_LIMIT)
+				|| ($email && similar_str($email,$lemail) > VALUE_LIMIT)
+				|| ($url && similar_str($url,$lurl) > VALUE_LIMIT)
+				|| ($sub && similar_str($sub,$lsub) > VALUE_LIMIT)
 				){$pchk=1;}
 				break;
 			case 4:	//full
