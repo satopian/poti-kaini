@@ -6,8 +6,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board EVO
 // バージョン :
-define('POTI_VER','v5.20.0');
-define('POTI_LOT','lot.220630');
+define('POTI_VER','v5.20.1');
+define('POTI_LOT','lot.220701');
 
 /*
   (C) 2018-2022 POTI改 POTI-board redevelopment team
@@ -46,8 +46,8 @@ define('POTI_LOT','lot.220630');
 ご質問は、<https://paintbbs.sakura.ne.jp/poti/>までどうぞ。
 */
 
-if (version_compare(PHP_VERSION, '7.2.0', '<')) {
-	die("Error. PHP version 7.2.0 or higher is required for this program to work. <br>\n(Current PHP version:".PHP_VERSION.")");
+if (version_compare(PHP_VERSION, '7.2.5', '<')) {
+	die("Error. PHP version 7.2.5 or higher is required for this program to work. <br>\n(Current PHP version:".PHP_VERSION.")");
 }
 
 //INPUT_POSTから変数を取得
