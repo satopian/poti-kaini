@@ -6,8 +6,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board EVO
 // バージョン :
-define('POTI_VER','v5.20.1');
-define('POTI_LOT','lot.220701');
+define('POTI_VER','v5.20.2');
+define('POTI_LOT','lot.220707');
 
 /*
   (C) 2018-2022 POTI改 POTI-board redevelopment team
@@ -790,7 +790,15 @@ function regist(){
 	$message="";
 
 	//記事管理用 ユニックスタイム10桁+3桁
-	$time = time().substr(microtime(),2,3);
+	$time = (string)(time().substr(microtime(),2,3));	//投稿時刻
+
+	$testexts=['.gif','.jpg','.png','.webp'];
+	foreach($testexts as $testext){
+		if(is_file(IMG_DIR.$time.$testext)){
+		$time=(string)(time()+1).substr(microtime(),2,3);
+		break;
+		}
+	}
 
 	$ptime='';
 	// お絵かき絵アップロード処理
@@ -1526,7 +1534,7 @@ function paintform(){
 		if ($pchtmp && $_FILES['pch_upload']['error'] === UPLOAD_ERR_OK){
 		$pchfilename = isset($_FILES['pch_upload']['name']) ? newstring(basename($_FILES['pch_upload']['name'])) : '';
 
-			$time = time().substr(microtime(),2,3);
+			$time = (string)(time().substr(microtime(),2,6));
 			$pchext=pathinfo($pchfilename, PATHINFO_EXTENSION);
 			$pchext=strtolower($pchext);//すべて小文字に
 			//拡張子チェック
@@ -2240,7 +2248,15 @@ function replace(){
 	}
 
 	// 時間
-	$time = time().substr(microtime(),2,3);
+	$time = (string)(time().substr(microtime(),2,3));
+	$testexts=['.gif','.jpg','.png','.webp'];
+	foreach($testexts as $testext){
+		if(is_file(IMG_DIR.$time.$testext)){
+		$time=(string)(time()+1).substr(microtime(),2,3);
+		break;
+		}
+	}
+
 	$date = now_date(time());//日付取得
 	$date .= UPDATE_MARK;
 	//描画時間を$userdataをもとに計算
