@@ -6,7 +6,7 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board EVO
 // バージョン :
-define('POTI_VER','v5.22.1');
+define('POTI_VER','v5.22.2');
 define('POTI_LOT','lot.220716');
 
 /*
@@ -2295,7 +2295,6 @@ function replace(){
 		list($eno,$edate,$name,$email,$sub,$com,$url,$ehost,$epwd,$ext,$_w,$_h,$etim,,$ptime,$fcolor) = explode(",", rtrim($value).',,,');
 	//画像差し替えに管理パスは使っていない
 		if($eno == $no && check_password($pwd, $epwd)){
-			$oyano='';
 			$tp=fopen(TREEFILE,"r");
 			while($tree=fgets($tp)){
 				if (strpos(',' . trim($tree) . ',',',' . $no . ',') !== false) {
