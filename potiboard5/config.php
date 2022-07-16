@@ -1,6 +1,6 @@
 <?php
 /*
-  * POTI-board EVO v5.00.0 lot.220118
+  * POTI-board EVO v5.21.0 lot.220715
   * by POTI改 >> https://paintbbs.sakura.ne.jp/poti/
   *
   * POTI-board EVO の設定ファイルです。
@@ -182,7 +182,7 @@ define('MAX_RESW', '400');	//幅
 define('MAX_RESH', '400');	//高さ
 
 //IDを表示する する:1 しない:0
-define('DISP_ID', '0');
+define('DISP_ID', '1');
 
 //URLを自動リンクする する:1 しない:0
 define('AUTOLINK', '1');
@@ -414,11 +414,10 @@ define('PERMISSION_FOR_LOG', 0600);//初期値 0600
 //画像や動画ファイルを保存するディレクトリのパーミッション
 define('PERMISSION_FOR_DIR', 0707);//初期値 0707
 
-// Skinny.phpのキャッシュやディレクトリのパーミッションは、
-// Skinny.phpで設定。
-
 //GD2のImageCopyResampledでサムネイルの画質向上 させる:1 させない:0
 //不具合がある場合のみ 0
 define('RE_SAMPLED', '1');
-
+//iframe内での表示を 拒否する:1 許可する:0
+//セキュリティ対策のため 拒否する1 を強く推奨。
+define('X_FRAME_OPTIONS_DENY', '1');
 
