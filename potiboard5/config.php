@@ -418,6 +418,7 @@ define('PERMISSION_FOR_DIR', 0707);//初期値 0707
 //不具合がある場合のみ 0
 define('RE_SAMPLED', '1');
 //iframe内での表示を 拒否する:1 許可する:0
-//セキュリティ対策のため 拒否する1 を強く推奨。
+//セキュリティリスクを回避するため "拒否する:1" を強く推奨。
+
 define('X_FRAME_OPTIONS_DENY', '1');
 
