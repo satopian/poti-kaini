@@ -296,6 +296,8 @@
 			{{-- <!--著作権表示 削除しないでください--> --}}
 			@include('parts.copyright')
 		</footer>
+		<div id="bottom"></div>
+		<div id="page_top"><a href="#" class="icon-angles-up-solid"></a></div>
 		<script src="{{$skindir}}jquery-3.5.1.min.js"></script>
 		<script>
 			window.onpageshow = function () {
@@ -307,7 +309,25 @@
 					$(this).closest('form').submit();
 				});
 			}
+				// https://cotodama.co/pagetop/
+		jQuery(function() {
+			var pagetop = $('#page_top');   
+			pagetop.hide();
+			$(window).scroll(function () {
+				if ($(this).scrollTop() > 100) {  //100pxスクロールしたら表示
+					pagetop.fadeIn();
+				} else {
+					pagetop.fadeOut();
+				}
+			});
+			pagetop.click(function () {
+				$('body,html').animate({
+					scrollTop: 0
+				}, 500); //0.5秒かけてトップへ移動
+				return false;
+			});
+		});
 		</script>
-</div>
+	</div>
 </body>
 </html>
