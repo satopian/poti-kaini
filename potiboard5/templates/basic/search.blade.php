@@ -5,7 +5,12 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<link rel="stylesheet" href="{{$skindir}}search.css">
-	@if (!$imgsearch)
+	<style>
+	img {
+		height: auto;
+	}
+	</style>
+@if (!$imgsearch)
 	<style>
 		.article {
 			white-space: nowrap;
@@ -52,7 +57,7 @@
 							src="{{$comment['img']}}"
 							alt="「{{$comment['sub']}}」イラスト/{{$comment['name']}}{{$comment['postedtime']}}"
 							title="「{{$comment['sub']}}」by {{$comment['name']}} {{$comment['postedtime']}}"
-							loading="lazy"></a></li>@endforeach</ul>
+							loading="lazy" width="{{$comment['w']}}" height="{{$comment['h']}}"></a></li>@endforeach</ul>
 		</div>
 		@else
 		@foreach ($comments as $comment)
@@ -66,7 +71,7 @@
 				</div>
 				@if ($comment['img'])
 				<a href="{{$comment['link']}}" target="_blank"><img src="{{$comment['img']}}"
-						alt="{{$comment['sub']}} by {{$comment['name']}}" loading="lazy"></a><br>
+						alt="{{$comment['sub']}} by {{$comment['name']}}" loading="lazy" width="{{$comment['w']}}" height="{{$comment['h']}}"></a><br>
 				@endif
 				{{$comment['com']}}
 				<div class="res_button_wrap">
