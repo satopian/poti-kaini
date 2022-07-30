@@ -61,7 +61,8 @@ a:hover {
 .catalog img {
 	width: 100%;
 	vertical-align: text-top;
-	border: none
+	border: none;
+	height:auto;
 }
 
 .newimg li:nth-of-type(5n) {
