@@ -221,7 +221,7 @@ PHP8.1環境でSkinny.phpから非推奨のエラーが発生するため、テ�
 PINKの背景色を白に変更。名称もBASICに変更しました。  
 
 BASICは 黒鋼彗牙さんのCOOL SOLIDをベースにして作成したものです。  
-著作表記はテンプレートの[LICENCE](https://github.com/satopian/poti-kaini/blob/master/potiboard5/templates/basic/LICENCE.md)にあります。
+著作表記はテンプレートの[LICENSE](https://github.com/satopian/poti-kaini/blob/master/potiboard5/templates/basic/LICENSE.md)にあります。
 
 ### テンプレートエンジンの変更で変わった事
 #### PHP7.4
