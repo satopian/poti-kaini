@@ -42,7 +42,7 @@
 		<div class="catalog_desc_wrap">
 			<!--カタログ配列-->
 			@if(isset($oya) and !(empty($oya)))
-			@foreach ($oya as $ress)
+			@foreach ($oya as $i => $ress)
 			@foreach ($ress as $res)@if($res['no'])<div class="catalog_wrap">
 				<div class="catalog_info_wrap">
 					<div class="catalog_title"><a
