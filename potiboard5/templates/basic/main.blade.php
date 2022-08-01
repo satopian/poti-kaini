@@ -222,7 +222,7 @@
 						src="{{$res['imgsrc']}}" width="{{$res['w']}}" height="{{$res['h']}}"
 						alt="{{$res['sub']}} by {{$res['name']}} ({{$res['size']}} B)"
 						title="{{$res['sub']}} by {{$res['name']}} ({{$res['size']}} B) @if($res['thumb'])サムネイル縮小表示 @endif"
-						loading="lazy">@if($res['thumb'])</a>@endif
+						@if($i>4)loading="lazy"@endif>@if($res['thumb'])</a>@endif
 			</div>
 			@endif
 			<div class="comment"> {!!$res['com']!!}</div>
@@ -291,7 +291,7 @@
 		</footer>
 	</div>
 	<div id="bottom"></div>
-	<div id="page_top"><a href="#" class="icon-angles-up-solid"></a></div>
+	<div id="page_top"><a class="icon-angles-up-solid"></a></div>
 	<script src="{{$skindir}}jquery-3.5.1.min.js"></script>
 	<script>
 		window.onpageshow = function () {

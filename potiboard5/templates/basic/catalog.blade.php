@@ -54,7 +54,7 @@
 				@if($res['imgsrc'])<div class="catalog_img"><a href="{{$self}}?res={{$res['no']}}"><img
 							src="{{$res['imgsrc']}}" alt="{{$res['sub']}} by {{$res['name']}}"
 							title="{{$res['sub']}} by {{$res['name']}}" width="{{$res['w']}}" @if($res['h'])
-							height="{{$res['h']}}" @endif loading="lazy"></a></div>@endif
+							height="{{$res['h']}}" @endif @if($i>14)loading="lazy"@endif></a></div>@endif
 				{{-- <!--文字のみならば・・・--> --}}
 				@if($res['txt'])<div class="catalog_noimg"><a href="{{$self}}?res={{$res['no']}}">画像なし</a></div>@endif
 			</div>@endif @endforeach @endforeach
