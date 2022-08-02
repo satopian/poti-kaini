@@ -100,8 +100,9 @@
 <script src="chickenpaint/js/chickenpaint.min.js?{{$parameter_day}}"></script>
 <link rel="stylesheet" type="text/css" href="chickenpaint/css/chickenpaint.css?{{$parameter_day}}">
 
-		@else 
-		{{-- <!-- Javaが使えるかどうか判定 使えなければcheerpJをロード --> --}}
+	@else 
+		@if(($paint_mode and !$useneo) or ($pch_mode and !$type_neo))
+		{{--  Javaが使えるかどうか判定 使えなければcheerpJをロード  --}}
 		<script>
 			function cheerpJLoad() {
 			var jEnabled = navigator.javaEnabled();
@@ -115,7 +116,7 @@
 			}
 			window.addEventListener("load", function() { cheerpJLoad(); }, false);
 		</script>
-
+		@endif
 	@endif
 	@if($paint_mode)
 	<style>body{overscroll-behavior-x: none !important; }</style>
