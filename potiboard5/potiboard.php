@@ -6,7 +6,7 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board EVO
 // バージョン :
-define('POTI_VER','v5.22.8');
+define('POTI_VER','v5.22.10');
 define('POTI_LOT','lot.220723');
 
 /*
@@ -529,9 +529,9 @@ function updatelog(){
 			if($page-(PAGE_DEF*35)<=$l){break;}//現在ページより1つ前のページ
 		}
 
-		for($i = 0; $i < $counttree; $i += PAGE_DEF){
+	for($i = $start_page; ($i < $counttree && $i <= $end_page) ; $i += PAGE_DEF){
+
 			$pn = $i ? $i / PAGE_DEF : 0; // page_number
-			if(($i>=$start_page)&&($i<=$end_page)){//ページ数を表示する範囲
 				if($i === $end_page){//特定のページに代入される記号 エンド
 					$rep_page_no="≫";
 				}elseif($i!==0&&$i == $start_page){//スタート
@@ -545,7 +545,6 @@ function updatelog(){
 				: str_replace("<PURL>", ($i ? $pn.PHP_EXT : h(PHP_SELF2)),
 				str_replace("<PAGE>", $rep_page_no , OTHER_PAGE));
 
-			}
 		}
 		//改ページ分岐ここまで
 
@@ -2456,22 +2455,21 @@ function catalog(){
 		$end_page=$l+($pagedef*36);//現在のページよりひとつ後ろのページ
 		if($page-($pagedef*35)<=$l){break;}//現在ページより1つ前のページ
 	}
-	for($i = 0; $i < $counttree; $i += $pagedef){
+		for($i = $start_page; ($i < $counttree && $i <= $end_page) ; $i += $pagedef){
+	
 		$pn = $i / $pagedef;
 		
-		if(($i>=$start_page)&&($i<=$end_page)){//ページ数を表示する範囲
-			if($i === $end_page){//特定のページに代入される記号 エンド
-				$rep_page_no="≫";
-			}elseif($i!==0 && $i == $start_page){//スタート
-				$rep_page_no="≪";
-			}else{//ページ番号
-				$rep_page_no=$pn;
-			}
-			$paging .= ($page === $i)
-			? str_replace("<PAGE>", $pn, NOW_PAGE)
-			: str_replace("<PURL>", PHP_SELF."?mode=catalog&amp;page=".$i,
-			str_replace("<PAGE>", $rep_page_no , OTHER_PAGE));
+		if($i === $end_page){//特定のページに代入される記号 エンド
+			$rep_page_no="≫";
+		}elseif($i!==0 && $i == $start_page){//スタート
+			$rep_page_no="≪";
+		}else{//ページ番号
+			$rep_page_no=$pn;
 		}
+		$paging .= ($page === $i)
+		? str_replace("<PAGE>", $pn, NOW_PAGE)
+		: str_replace("<PURL>", PHP_SELF."?mode=catalog&amp;page=".$i,
+		str_replace("<PAGE>", $rep_page_no , OTHER_PAGE));
 	}
 	//改ページ分岐ここまで
 	$dat['paging'] = $paging;
