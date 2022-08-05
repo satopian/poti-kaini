@@ -56,6 +56,7 @@
 			display: inline-block;
 		}
 	</style>
+	<link rel="preload" as="script" href="lib/{{JQUERY}}">
 	<title>{{$title}}</title>
 	<style id="for_mobile"></style>
 	<script>
@@ -366,7 +367,7 @@
 		{{-- <!-- 著作権表示 削除しないでください --> --}}
 		@include('parts.mono_copyright')
 	</footer>
-	<script src="{{$skindir}}jquery-3.5.1.min.js"></script>
+	<script src="lib/{{JQUERY}}"></script>
 	<script>
 		window.onpageshow = function () {
 			var $btn = $('[type="submit"]');

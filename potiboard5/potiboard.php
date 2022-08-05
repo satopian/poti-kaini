@@ -6,8 +6,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board EVO
 // バージョン :
-define('POTI_VER','v5.22.10');
-define('POTI_LOT','lot.220723');
+define('POTI_VER','v5.23.0');
+define('POTI_LOT','lot.220805');
 
 /*
   (C) 2018-2022 POTI改 POTI-board redevelopment team
@@ -98,6 +98,11 @@ if ($err = check_file(__DIR__.'/templates/'.SKIN_DIR.'template_ini.php')) {
 	error($err);
 }
 require(__DIR__.'/templates/'.SKIN_DIR.'template_ini.php');
+
+const JQUERY ='jquery-3.6.0.min.js';
+if ($err = check_file(__DIR__.'/lib/'.JQUERY)) {
+	error($err);
+}
 
 $path = realpath("./").'/'.IMG_DIR;
 $temppath = realpath("./").'/'.TEMP_DIR;

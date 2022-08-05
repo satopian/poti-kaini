@@ -50,7 +50,7 @@
 			document.cookie = key + "=" + encodeURIComponent(val) + ";max-age=31536000;";
 		}
 	</script>
-
+	<link rel="preload" as="script" href="lib/{{JQUERY}}">
 	<title>{{$title}}</title>
 	@if($notres)
 	{{-- このあたりは各自変更してもらえると嬉しいです
@@ -419,7 +419,7 @@
 		{{-- <!-- 著作権表示 削除しないでください --> --}}
 		@include('parts.mono_copyright')
 	</footer>
-	<script src="{{$skindir}}jquery-3.5.1.min.js"></script>
+	<script src="lib/{{JQUERY}}"></script>
 	<script>
 		colorIdx = GetCookie('colorIdx');
 		document.getElementById("mystyle").selectedIndex = colorIdx;

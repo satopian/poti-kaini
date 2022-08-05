@@ -12,6 +12,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
 	<link rel="stylesheet" href="{{$skindir}}basic.css">
+	<link rel="preload" as="script" href="lib/{{JQUERY}}">
 	<title>@if($post_mode and !$rewrite) 投稿フォーム @endif @if($rewrite)
 		編集モード @endif @if($admin_in) 管理用 @endif @if($admin) 管理人による投稿 @endif
 		@if($admin_del) 記事削除 @endif @if($err_mode) エラー！ @endif - {{$title}} </title>
@@ -241,7 +242,7 @@
 			</table>
 		</form>
 		@endif
-		<script src="{{$skindir}}jquery-3.5.1.min.js"></script>
+		<script src="lib/{{JQUERY}}"></script>
 		<script>
 			window.onpageshow = function () {
 				var $btn = $('[type="submit"]');
