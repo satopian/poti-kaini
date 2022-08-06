@@ -421,7 +421,7 @@
 									}
 									document.watch.count.value = disp+s+"sec";
 									clearTimeout(timerID);
-									timerID = setTimeout('SetTimeCount()',250);
+									timerID = setTimeout(function() { SetTimeCount(); },250);
 								}
 								SetTimeCount();
 							</script>
