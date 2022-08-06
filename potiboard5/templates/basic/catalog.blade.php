@@ -19,7 +19,8 @@
 	-->
 
 	{{-- <!--クッキー読込み用JavaScript(必須)--> --}}
-	<script src="loadcookie.js"></script>
+	<link rel="preload" as="script" href="loadcookie.js">
+
 </head>
 
 <body>
@@ -85,8 +86,9 @@
 		@include('parts.mainte_form')
 
 		<!--JavaScriptの実行(クッキーを読込み、フォームに値をセット)-->
+		<script src="loadcookie.js"></script>
 		<script>
-			l(); //LoadCookie
+			document.addEventListener('DOMContentLoaded',l,false); //LoadCookie
 		</script>
 		<footer>
 			<!--著作権表示 削除しないでください-->

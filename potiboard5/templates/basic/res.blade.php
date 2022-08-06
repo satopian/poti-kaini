@@ -41,7 +41,8 @@
 // charset…文字コード
 --> --}}
 	{{-- <!--クッキー読込み用JavaScript(必須)--> --}}
-	<script src="loadcookie.js"></script>
+	<link rel="preload" as="script" href="loadcookie.js">
+
 </head>
 
 <body>
@@ -289,8 +290,9 @@
 
 		{{-- <!-- メンテナンスフォーム欄 --> --}}
 		@include('parts.mainte_form')
+		<script src="loadcookie.js"></script>
 		<script>
-			l(); //LoadCookie
+			document.addEventListener('DOMContentLoaded',l,false);
 		</script>
 	
 		<footer>

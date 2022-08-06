@@ -258,7 +258,7 @@
 		<!--新規投稿のみクッキーを読込み-->
 		@if($regist)
 		<script>
-			l(); //LoadCookie
+			document.addEventListener('DOMContentLoaded',l,false); //LoadCookie
 		</script>
 		@endif
 		@endif

@@ -51,6 +51,7 @@
 		}
 	</script>
 	<link rel="preload" as="script" href="lib/{{JQUERY}}">
+	<link rel="preload" as="script" href="loadcookie.js">
 	<title>{{$title}}</title>
 	@if($notres)
 	{{-- このあたりは各自変更してもらえると嬉しいです
@@ -413,7 +414,7 @@
 
 			<script src="loadcookie.js"></script>
 			<script>
-				l(); //LoadCookie
+				document.addEventListener('DOMContentLoaded',l,false); //LoadCookie
 			</script>
 		</div>
 		{{-- <!-- 著作権表示 削除しないでください --> --}}

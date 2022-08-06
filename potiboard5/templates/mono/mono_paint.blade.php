@@ -654,7 +654,7 @@
 				
 				</div>
 				<script type="text/javascript">
-				l(); //LoadCookie
+				document.addEventListener('DOMContentLoaded',l,false); //LoadCookie
 				</script>
 			</section>
 			<!-- (========== CONTINUE MODE(コンティニューモード) end ==========) -->
