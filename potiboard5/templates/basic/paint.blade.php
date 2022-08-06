@@ -109,6 +109,15 @@
 	@endif
 @endif
 <style id="for_mobile"></style>
+<script>
+	function is_mobile() {
+	if (navigator.maxTouchPoints && ( window.matchMedia && window.matchMedia('(max-width: 768px)').matches))  return true;
+	return false;
+	}
+	if(is_mobile()){
+		document.getElementById("for_mobile").textContent=".for_pc{display: none;}";
+	}
+</script>
 	
 </head>
 <body>
@@ -237,9 +246,9 @@ m2-=q;if(255<m3||0>m3)h*=-1,m2-=h;w+="#"+Hex(m1)+Hex(m2)+Hex(m3)+"\n"}a.paintbbs
 function GetPalette(){d=document;p=String(d.paintbbs.getColors());"null"!=p&&""!=p&&(ps=p.split("\n"),st=d.grad.p_st.selectedIndex,ed=d.grad.p_ed.selectedIndex,d.grad.pst.value=ps[st].substr(1.6),d.grad.ped.value=ps[ed].substr(1.6),GradSelC(),GradView(ps[st],ps[ed]),PaletteListSetColor())}
 function GradSelC(){if(d.grad.view.checked){d=document.grad;l=ps.length;pe="";for(n=0;l>n;n++)R=255+-1*parseInt("0x"+ps[n].substr(1,2)),G=255+-1*parseInt("0x"+ps[n].substr(3,2)),B=255+-1*parseInt("0x"+ps[n].substr(5,2)),255<R?R=255:0>R&&(R=0),255<G?G=255:0>G&&(G=0),255<B?B=255:0>B&&(B=0),pe+="#"+Hex(R)+Hex(G)+Hex(B)+"\n";pe=pe.split("\n");for(n=0;l>n;n++)d.p_st.options[n].style.background=ps[n],d.p_st.options[n].style.color=pe[n],d.p_ed.options[n].style.background=ps[n],d.p_ed.options[n].style.color=
 pe[n]}}function GradView(a,f){d=document}function showHideLayer(){d=document;var a=d.layers?d.layers.psft:d.all("psft").style;d.grad.view.checked||(a.visibility="hidden");d.grad.view.checked&&(a.visibility="visible",GetPalette())};
-</SCRIPT>
+</script>
 <!--動的パレットスクリプト ここまで-->
-<NOSCRIPT><H3>JavaScriptが有効でないため正常に動作致しません。</H3></NOSCRIPT>
+<noscript><h3>JavaScriptが有効でないため正常に動作致しません。</h3></NOSCRIPT>
 <div class="appstage"><div class="app">
 <!--applet～の～部分の詳しい事は、PaintBBS及びしぃペインターのReadmeを参照-->
 <!--PaintBBS個別設定-->
