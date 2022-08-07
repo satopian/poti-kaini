@@ -294,6 +294,7 @@
 	<div id="page_top"><a class="icon-angles-up-solid"></a></div>
 	<script src="lib/{{JQUERY}}"></script>
 	<script>
+	jQuery(function() {
 		window.onpageshow = function () {
 			var $btn = $('[type="submit"]');
 			//disbledを解除
@@ -304,7 +305,6 @@
 			});
 		}
 			// https://cotodama.co/pagetop/
-	jQuery(function() {
 		var pagetop = $('#page_top');   
 		pagetop.hide();
 		$(window).scroll(function () {

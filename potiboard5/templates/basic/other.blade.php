@@ -243,6 +243,7 @@
 		@endif
 		<script src="lib/{{JQUERY}}"></script>
 		<script>
+		jQuery(function() {
 			window.onpageshow = function () {
 				var $btn = $('[type="submit"]');
 				//disbledを解除
@@ -252,6 +253,7 @@
 					$(this).closest('form').submit();
 				});
 			}
+		});
 		</script>
 
 		<!--新規投稿のみクッキーを読込み-->
