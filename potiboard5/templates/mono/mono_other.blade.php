@@ -250,7 +250,7 @@
 				@if($regist)
 				<script>
 					document.addEventListener('DOMContentLoaded', (e) => {
-					l();//LoadCookie
+						l();//LoadCookie
 					});
 				</script>
 				@endif

@@ -655,7 +655,7 @@
 				</div>
 				<script>
 					document.addEventListener('DOMContentLoaded', (e) => {
-					l();//LoadCookie
+						l();//LoadCookie
 					});
 				</script>
 			</section>
