@@ -92,7 +92,7 @@ MONOのHTMLとCSSをv3.07.5で大幅に更新しました。
 その場合は、カスタマイズしたCSSファイルと同じ配色のCSSと同じになるように作り直す必要があります。
 もし配色のみを変更したいのであれば、SCSSファイルもありますのでどうぞご利用ください。
 
-SCSSファイルは`mono/css/dev/sass/`ディレクトリに入っています。
+SCSSファイルは[mono/css/dev/sass/](https://github.com/satopian/poti-kaini/tree/master/potiboard5/templates/mono/css/dev/sass)ディレクトリに入っています。
 配色とその他のデザインに設定が分かれているため、配色を容易に変更できます。  
 [Visual Studio Code – コード エディター](https://azure.microsoft.com/ja-jp/products/visual-studio-code/)と拡張機能[DartJS Sass Compiler and Sass Watcher](https://marketplace.visualstudio.com/items?itemName=codelios.dartsass)
 があればコンパイルできます。エディタと拡張機能どちらも無償で利用できます。
