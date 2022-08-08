@@ -653,8 +653,10 @@
 					</ul>
 				
 				</div>
-				<script type="text/javascript">
-				document.addEventListener('DOMContentLoaded',l,false); //LoadCookie
+				<script>
+					document.addEventListener('DOMContentLoaded', (e) => {
+					l();//LoadCookie
+					});
 				</script>
 			</section>
 			<!-- (========== CONTINUE MODE(コンティニューモード) end ==========) -->

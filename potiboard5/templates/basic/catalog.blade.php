@@ -88,7 +88,9 @@
 		<!--JavaScriptの実行(クッキーを読込み、フォームに値をセット)-->
 		<script src="loadcookie.js"></script>
 		<script>
-			document.addEventListener('DOMContentLoaded',l,false); //LoadCookie
+			document.addEventListener('DOMContentLoaded', (e) => {
+				l();//LoadCookie
+			});
 		</script>
 		<footer>
 			<!--著作権表示 削除しないでください-->

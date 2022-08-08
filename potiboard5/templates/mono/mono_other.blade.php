@@ -248,8 +248,10 @@
 				</form>
 				@endif
 				@if($regist)
-				<script type="text/javascript">
-					document.addEventListener('DOMContentLoaded',l,false); //LoadCookie
+				<script>
+					document.addEventListener('DOMContentLoaded', (e) => {
+					l();//LoadCookie
+					});
 				</script>
 				@endif
 			</div>

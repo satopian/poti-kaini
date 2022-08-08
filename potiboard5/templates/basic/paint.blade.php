@@ -588,7 +588,9 @@ name="pch" code="pch.PCHViewer.class" archive="PCHViewer.jar,PaintBBS.jar" width
 
 <!--JavaScriptの実行(クッキーを読込み、フォームに値をセット)-->
 <script>
-document.addEventListener('DOMContentLoaded',l,false); //LoadCookie
+document.addEventListener('DOMContentLoaded', (e) => {
+	l();//LoadCookie
+});
 </script>
 </div>
 @endif

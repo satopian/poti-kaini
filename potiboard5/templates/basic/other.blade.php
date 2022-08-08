@@ -259,7 +259,9 @@
 		<!--新規投稿のみクッキーを読込み-->
 		@if($regist)
 		<script>
-			document.addEventListener('DOMContentLoaded',l,false); //LoadCookie
+			document.addEventListener('DOMContentLoaded', (e) => {
+				l();//LoadCookie
+			});
 		</script>
 		@endif
 		@endif
