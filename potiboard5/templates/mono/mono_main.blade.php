@@ -307,10 +307,10 @@
 						@if($res['thumb']) - サムネイル表示中 - @endif @if($res['painttime']) PaintTime :
 						{{$res['painttime']}}@endif
 						<br>
-						@if($res['continue']) <a
-							href="{{$self}}?mode=continue&amp;no={{$res['continue']}}">●続きを描く</a>@endif
-						@if($res['spch'])<span class="for_pc">@endif @if($res['pch']) <a
-								href="{{$self}}?mode=openpch&amp;pch={{$res['pch']}}" target="_blank">●動画</a>@endif
+						@if($res['continue']) ●<a
+							href="{{$self}}?mode=continue&amp;no={{$res['continue']}}">続きを描く</a>@endif
+						@if($res['spch'])<span class="for_pc">@endif @if($res['pch']) ●<a
+								href="{{$self}}?mode=openpch&amp;pch={{$res['pch']}}" target="_blank">動画</a>@endif
 							@if($res['spch'])</span>@endif
 					</div>
 					<figure @if($res['w']>=750) style="float:none;margin-right:0"@endif>

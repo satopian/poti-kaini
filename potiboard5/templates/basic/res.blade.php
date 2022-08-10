@@ -299,7 +299,7 @@
 			@include('parts.copyright')
 		</footer>
 		<div id="bottom"></div>
-		<div id="page_top"><a href="#" class="icon-angles-up-solid"></a></div>
+		<div id="page_top"><a class="icon-angles-up-solid"></a></div>
 		<script src="lib/{{JQUERY}}"></script>
 		<script>
 		jQuery(function() {

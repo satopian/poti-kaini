@@ -262,7 +262,7 @@
 					</span>
 					@endif
 					<form action="{{$self}}?res={{$ress[0]['no']}}" method="post"><input type="submit"
-							value="@if($ress[0]['disp_resbutton']) 返信 @else 表示 @endif" class="res_button"></form><span
+						value="@if($ress[0]['disp_resbutton']) 返信 @else 表示 @endif" class="res_button"></form><span
 						class="page_top"><a href="#top">△</a></span></div>
 			</div>
 			{{-- end thread --}}
