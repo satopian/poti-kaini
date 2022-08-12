@@ -6,7 +6,7 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board EVO
 // バージョン :
-define('POTI_VER','v5.23.3');
+define('POTI_VER','v5.23.5');
 define('POTI_LOT','lot.220812');
 
 /*
@@ -45,9 +45,11 @@ define('POTI_LOT','lot.220812');
 「ふたば★ちゃんねる」「ぷにゅねっと」に問い合わせないでください。
 ご質問は、<https://paintbbs.sakura.ne.jp/poti/>までどうぞ。
 */
-
+$en=lang_en();
 if (version_compare(PHP_VERSION, '7.2.5', '<')) {
-	die("Error. PHP version 7.2.5 or higher is required for this program to work. <br>\n(Current PHP version:".PHP_VERSION.")");
+	die($en? "Error. PHP version 7.2.5 or higher is required for this program to work. <br>\n(Current PHP version:".PHP_VERSION.")":
+		"エラー。本プログラムの動作には PHPバージョン 7.2.5 以上が必要です。<br>\n(現在のPHPバージョン：".PHP_VERSION.")"
+	);
 }
 
 //INPUT_POSTから変数を取得
@@ -93,22 +95,21 @@ if ($err = check_file(__DIR__.'/templates/'.SKIN_DIR.'template_ini.php')) {
 }
 require(__DIR__.'/templates/'.SKIN_DIR.'template_ini.php');
 
+const JQUERY ='jquery-3.6.0.min.js';
+if ($err = check_file(__DIR__.'/lib/'.JQUERY)) {
+	die($err);
+}
+//CheerpJ
+const CHEERPJ_URL = 'https://cjrtnc.leaningtech.com/2.3/loader.js';
+
 //サムネイルfunction
 if ($err = check_file(__DIR__.'/thumbnail_gd.php')) {
 	die($err);
 }
 require(__DIR__.'/thumbnail_gd.php');
 
-const JQUERY ='jquery-3.6.0.min.js';
-if ($err = check_file(__DIR__.'/lib/'.JQUERY)) {
-	die($err);
-}
-
 $path = realpath("./").'/'.IMG_DIR;
 $temppath = realpath("./").'/'.TEMP_DIR;
-
-//CheerpJ
-const CHEERPJ_URL = 'https://cjrtnc.leaningtech.com/2.3/loader.js';
 
 //POTI_VERLOT定義
 define('POTI_VERLOT', POTI_VER.' '.POTI_LOT);
