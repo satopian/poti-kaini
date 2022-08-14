@@ -972,8 +972,8 @@ input.copy_txt {
 	position: fixed;
 	right: 0;
 	bottom: 50px;
-	background: #ffcfcf73;
-	opacity: .6;
+	background: #ffcfcf;
+	opacity: .5;
 	border-radius: 50%
 }
 
