@@ -21,7 +21,7 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
 	<link rel="stylesheet" href="{{$skindir}}basic.css">
 	<link rel="stylesheet" href="{{$skindir}}icomoon/style.css">
-	<link rel="preload" as="script" href="lib/{{JQUERY}}">
+	<link rel="preload" as="script" href="lib/{{$jquery}}">
 	<style id="for_mobile"></style>
 	<script>
 		function is_mobile() {
@@ -294,7 +294,7 @@
 	</div>
 	<div id="bottom"></div>
 	<div id="page_top"><a class="icon-angles-up-solid"></a></div>
-	<script src="lib/{{JQUERY}}"></script>
+	<script src="lib/{{$jquery}}"></script>
 	<script>
 	jQuery(function() {
 		window.onpageshow = function () {
