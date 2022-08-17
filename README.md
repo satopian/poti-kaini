@@ -70,10 +70,12 @@ config.phpの最初の数行に必須設定項目がありますので、変更�
 - `saveklecks.php`
 
 ## 追加されたディレクトリ
+- `lib/`  
 - `chickenpaint/`
 - `klecks/`
 - `BladeOne/`
 - `templates/`  
+
 拡張子`blade.php`のファイルがHTML部分です。CSSファイルも`templates/`ディレクトリの中にあります。  
 `parts/`ディレクトリにもいくつかの`blade.php`形式のファイルが入っています。
 [laravel-blade - Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=cjhowe7.laravel-blade)を使うとBladeの文法にそって色分けされて表示されます。  
