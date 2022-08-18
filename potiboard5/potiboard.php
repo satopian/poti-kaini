@@ -1344,13 +1344,15 @@ function admindel($pass){
 			$res[$key]=h($val);
 		}
 		if($ext && is_file($path.$time.$ext)){
-			$res['size'] = filesize($path.$time.$ext);
+			$filesize = filesize($path.$time.$ext);
+			$res['size'] = h($filesize);
+			$res['size_kb'] = h(($filesize-($filesize % 1024)) / 1024);
 			$all += $res['size'];	//ファイルサイズ加算
 			$res['chk']= h(substr($chk,0,10));//md5
-			$res['clip'] = '<a href="'.IMG_DIR.$time.$ext.'" target="_blank" rel="noopener">'.$time.$ext.'</a><br>';
+			$res['clip'] = '<a href="'.h(IMG_DIR.$time.$ext).'" target="_blank" rel="noopener">'.h($time.$ext).'</a><br>';
 		}
 		if($res['email']){
-			$res['name']='<a href="mailto:'.$res['email'].'">'.$res['name'].'</a>';
+			$res['name']='<a href="mailto:'.h($res['email']).'">'.h($res['name']).'</a>';
 		}
 		$dat['dels'][] = $res;
 		}

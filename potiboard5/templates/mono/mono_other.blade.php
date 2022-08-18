@@ -317,7 +317,7 @@
 							<td>{!!$del['name']!!}</td>
 							<td>{{$del['com']}}</td>
 							<td>{{$del['host']}}</td>
-							<td>@if($del['clip']){!!$del['clip']!!}({{$del['size']}})byte @endif</td>
+							<td>@if($del['clip']){!!$del['clip']!!}({{$del['size_kb']}})KB @endif</td>
 							<td>@if($del['clip']){{$del['chk']}}@endif</td>
 						</tr>
 						@endforeach
