@@ -6,8 +6,8 @@ define('USE_DUMP_FOR_DEBUG','0');
 
 // POTI-board EVO
 // バージョン :
-const POTI_VER = 'v5.23.8';
-const POTI_LOT = 'lot.220815';
+const POTI_VER = 'v5.23.9';
+const POTI_LOT = 'lot.220818';
 
 /*
   (C) 2018-2022 POTI改 POTI-board redevelopment team
@@ -1483,37 +1483,19 @@ function paintform(){
 
 	if(strlen($pwd) > 72) error(MSG015);
 
+	
 	$dat['klecksusercode']=$usercode;//klecks
 	$dat['resto']=$resto;//klecks
-	$dat['type_neo'] = false;
-	$dat['pinchin'] = false;
-	$dat['pch_mode'] = false;
-	$dat['continue_mode'] = false;
-	$dat['imgfile'] = false;
-	$dat['img_chi'] = false;
-	$dat['img_klecks']=false;
-	$dat['paintbbs'] = false;
-	$dat['quality'] = false;
-	$dat['pro'] = false;
-	$dat['normal'] = false;
+	
+	// 初期化
 	$dat['image_jpeg'] = 'false';
 	$dat['image_size'] = 0;
-	$dat['undo'] = false;
-	$dat['undo_in_mg'] = false;
-	$dat['pchfile'] = false;
-	$dat['security'] = false;
-	$dat['security_click'] = false;
-	$dat['security_timer'] = false;
-	$dat['security_url'] = false;
-	$dat['speed'] = false;
-	$dat['picfile'] = false;
-	$dat['painttime'] = false;
-	$dat['no'] = false;
-	$dat['pch'] = false;
-	$dat['ext'] = false;
-	$dat['ctype_pch'] = false;
-	$dat['newpost_nopassword'] = false;
-
+	$keys=['type_neo','pinchin','pch_mode','continue_mode','imgfile','img_chi','img_klecks','paintbbs','quality','pro','normal','undo','undo_in_mg','pchfile','security','security_click','security_timer','security_url','speed','picfile','painttime','no','pch','ext','ctype_pch','newpost_nopassword'];
+	
+	foreach($keys as $key){
+		$dat[$key]=false;	
+	}
+	
 	$dat['parameter_day']=date("Ymd");//JavaScriptのキャッシュ制御
 	//pchファイルアップロードペイント
 	if($admin&&($admin===$ADMIN_PASS)){
