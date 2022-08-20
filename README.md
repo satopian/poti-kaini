@@ -70,10 +70,12 @@ config.phpの最初の数行に必須設定項目がありますので、変更�
 - `saveklecks.php`
 
 ## 追加されたディレクトリ
+- `lib/`  
 - `chickenpaint/`
 - `klecks/`
 - `BladeOne/`
 - `templates/`  
+
 拡張子`blade.php`のファイルがHTML部分です。CSSファイルも`templates/`ディレクトリの中にあります。  
 `parts/`ディレクトリにもいくつかの`blade.php`形式のファイルが入っています。
 [laravel-blade - Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=cjhowe7.laravel-blade)を使うとBladeの文法にそって色分けされて表示されます。  
@@ -111,7 +113,7 @@ HTMLタグも旧独自タグも廃止してしまいましたが、urlの自動�
 
 ## 最新のリリース
 
-- [POTI-board EVO v5.20.2 リリース](https://github.com/satopian/poti-kaini/releases/latest)
+- [POTI-board EVO v5.23.8.1 リリース](https://github.com/satopian/poti-kaini/releases/latest)
 
 ## 履歴
 
