@@ -3,8 +3,8 @@
 
 // POTI-board EVO
 // バージョン :
-const POTI_VER = 'v5.23.12';
-const POTI_LOT = 'lot.220820';
+const POTI_VER = 'v5.23.15';
+const POTI_LOT = 'lot.220821';
 
 /*
   (C) 2018-2022 POTI改 POTI-board redevelopment team
@@ -1394,20 +1394,20 @@ function admindel($pass){
 function init(){
 	$err='';
 
-	if(!is_writable(realpath("./")))error("カレントディレクトリに書けません<br>");
+	$err .= check_dir("./");
 
 	if (!is_file(realpath(LOGFILE))) {
 		$date = now_date(time());//日付取得
 		if(DISP_ID) $date .= " ID:???";
 		$time = time().substr(microtime(),2,3);
 		$testmes="1,".$date.",".DEF_NAME.",,".DEF_SUB.",".DEF_COM.",,,,,,,".$time.",,,\n";
-		file_put_contents(LOGFILE, $testmes);
+		file_put_contents(LOGFILE, $testmes,LOCK_EX);
 		chmod(LOGFILE, PERMISSION_FOR_LOG);
 	}
 	$err .= check_file(LOGFILE,true);
 
 	if (!is_file(realpath(TREEFILE))) {
-		file_put_contents(TREEFILE, "1\n");
+		file_put_contents(TREEFILE, "1\n",LOCK_EX);
 		chmod(TREEFILE, PERMISSION_FOR_LOG);
 	}
 	$err .= check_file(TREEFILE,true);
@@ -1430,7 +1430,7 @@ function initial_error_message(){
 	$en=lang_en();
 	$msg['041']=defined('MSG041') ? MSG041 :($en ? ' does not exist.':'がありません。'); 
 	$msg['042']=defined('MSG042') ? MSG042 :($en ? ' is not readable.':'を読めません。'); 
-	$msg['043']=defined('MSG043') ? MSG043 :($en ? ' is not writable.':'を書けません。'); 
+	$msg['043']=defined('MSG043') ? MSG043 :($en ? ' is not writable.':'に書けません。'); 
 return $msg;	
 }
 
