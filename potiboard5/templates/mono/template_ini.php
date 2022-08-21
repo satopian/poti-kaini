@@ -72,7 +72,7 @@ define('MSG039', "コメントのみの新規投稿はできません。［New p
 define('MSG040', "管理者パスワードが設定されていません。[admin password is not set.]");
 define('MSG041', "がありません。");
 define('MSG042', "を読めません。");
-define('MSG043', "を書けません。");
+define('MSG043', "に書けません。");
 define('MSG044', "最大ログ数が設定されていないか、数字以外の文字列が入っています。[Either the MAX LOG is not set, or it contains a non-numeric string.]");
 define('MSG045', "アップロードペイントに対応していないファイルです。[This file does not supported by the ability to load uploaded files onto the canvas.]<br>対応フォーマットはpch、spch、chiです。[Supported formats are pch, spch,chi and psd.]");
 define('MSG046', "パスワードが短すぎます。最低6文字。[The password is too short. At least 6 characters.]");

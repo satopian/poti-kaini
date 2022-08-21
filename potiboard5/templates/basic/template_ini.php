@@ -64,7 +64,7 @@ define('MSG039', "コメントのみの新規投稿はできません。");
 define('MSG040', "管理者パスワードが設定されていません。");
 define('MSG041', "がありません。");
 define('MSG042', "を読めません。");
-define('MSG043', "を書けません。");
+define('MSG043', "に書けません。");
 define('MSG044', "最大ログ数が設定されていないか、数字以外の文字列が入っています。");
 define('MSG045', "アップロードペイントに対応していないファイルです。<br>対応フォーマットはpch、spch、chi、psdです。");
 define('MSG046', "パスワードが短すぎます。最低6文字。");
@@ -105,7 +105,7 @@ define('RE_END', '');
 
 //現在のページの書式
 //※<PAGE> にページ数が入ります
-define('NOW_PAGE', '<span class="parentheses">[<span class="page_number"><PAGE></span>]</span>');
+define('NOW_PAGE', '<span class="parentheses">[<span class="page_number"><strong><PAGE></strong></span>]</span>');
 
 //他のページの書式
 //※<PAGE> にページ数が入ります
