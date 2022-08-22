@@ -265,8 +265,8 @@ BASICは 黒鋼彗牙さんのCOOL SOLIDをベースにして作成したもの�
 著作表記はテンプレートの[LICENSE](https://github.com/satopian/poti-kaini/blob/master/potiboard5/templates/basic/LICENSE.md)にあります。
 
 ### テンプレートエンジンの変更で変わった事
-#### PHP7.4
-- PHP5.6環境でも動作するように開発していましたが、BladeOneのv4.2はPHP7.4以上の環境でなければ動作しない事がわかりました。  
+#### PHP7.2
+- PHP5.6環境でも動作するように開発していましたが、BladeOneのv4.2はPHP7.2以上の環境でなければ動作しない事がわかりました。  
 POTI-board EVO v5.xにはPHP7.4以上の環境が必要になりました。  
 
 ### 改善
