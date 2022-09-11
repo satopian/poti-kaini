@@ -3,8 +3,8 @@
 
 // POTI-board EVO
 // バージョン :
-const POTI_VER = 'v5.25.6';
-const POTI_LOT = 'lot.220823';
+const POTI_VER = 'v5.25.8';
+const POTI_LOT = 'lot.220911';
 
 /*
   (C) 2018-2022 POTI改 POTI-board redevelopment team
@@ -75,13 +75,11 @@ $views = __DIR__ . '/templates/'.SKIN_DIR;
 $cache = $views.'cache';
 $blade = new BladeOne($views,$cache,BladeOne::MODE_AUTO);
 
-
 //Template設定ファイル
 if ($err = check_file(__DIR__.'/templates/'.SKIN_DIR.'template_ini.php')) {
 	die($err);
 }
 require(__DIR__.'/templates/'.SKIN_DIR.'template_ini.php');
-
 
 //サムネイルfunction
 if ($err = check_file(__DIR__.'/thumbnail_gd.php')) {
@@ -590,6 +588,9 @@ function res($resno = 0){
 		}
 	}
 
+	if (empty($treeline)) {
+		error(MSG001);
+	}
 	$lineindex = get_lineindex($line); // 逆変換テーブル作成
 	if(!isset($lineindex[$resno])){
 		error(MSG001);
@@ -654,9 +655,9 @@ function res($resno = 0){
 	$dat['view_other_works']=false;
 	if(VIEW_OTHER_WORKS){
 		$a=[];
-	$start_view=(($i-7)>=0) ? ($i-7) : 0;
-	$other_works=array_slice($trees,$start_view,17,false);
-	foreach($other_works as $j=>$val){
+		$start_view=(($i-7)>=0) ? ($i-7) : 0;
+		$other_works=array_slice($trees,$start_view,17,false);
+		foreach($other_works as $j=>$val){
 
 		$p=explode(",",trim($val))[0];
 		$b=($p && isset($lineindex[$p])) ? create_res($line[$lineindex[$p]]):[];
@@ -1009,11 +1010,11 @@ function regist(){
 		//PCHファイルアップロード
 		// .pch, .spch,.chi,.psd ブランク どれかが返ってくる
 		if ($pchext = check_pch_ext($temppath.$picfile,['upfile'=>true])) {
-		$src = $temppath.$picfile.$pchext;
-		$dst = PCH_DIR.$time.$pchext;
-			if(copy($src, $dst)){
-				chmod($dst,PERMISSION_FOR_DEST);
-			}
+			$src = $temppath.$picfile.$pchext;
+			$dst = PCH_DIR.$time.$pchext;
+				if(copy($src, $dst)){
+					chmod($dst,PERMISSION_FOR_DEST);
+				}
 		}
 
 		list($w, $h) = getimagesize($dest);
@@ -1490,11 +1491,11 @@ function paintform(){
 	$dat['image_jpeg'] = 'false';
 	$dat['image_size'] = 0;
 	$keys=['type_neo','pinchin','pch_mode','continue_mode','imgfile','img_chi','img_klecks','paintbbs','quality','pro','normal','undo','undo_in_mg','pchfile','security','security_click','security_timer','security_url','speed','picfile','painttime','no','pch','ext','ctype_pch','newpost_nopassword'];
-	
+
 	foreach($keys as $key){
 		$dat[$key]=false;	
 	}
-	
+
 	$dat['parameter_day']=date("Ymd");//JavaScriptのキャッシュ制御
 	//pchファイルアップロードペイント
 	if($admin&&($admin===$ADMIN_PASS)){
@@ -1504,7 +1505,7 @@ function paintform(){
 			error(MSG034);
 		} 
 		if ($pchtmp && $_FILES['pch_upload']['error'] === UPLOAD_ERR_OK){
-		$pchfilename = isset($_FILES['pch_upload']['name']) ? newstring(basename($_FILES['pch_upload']['name'])) : '';
+			$pchfilename = isset($_FILES['pch_upload']['name']) ? newstring(basename($_FILES['pch_upload']['name'])) : '';
 
 			$time = (string)(time().substr(microtime(),2,6));
 			$pchext=pathinfo($pchfilename, PATHINFO_EXTENSION);
@@ -1837,7 +1838,7 @@ function deltemp(){
 		if(!is_dir($file)) {
 			//pchアップロードペイントファイル削除
 			$lapse = time() - filemtime(TEMP_DIR.$file);
-				if(strpos($file,'pchup-')===0) {
+			if(strpos($file,'pchup-')===0) {
 				if($lapse > (300)){//5分
 					safe_unlink(TEMP_DIR.$file);
 				}
@@ -1940,7 +1941,7 @@ function incontinue(){
 			$dat['download_app_dat'] = false;
 			break;
 	}
-	
+
 	if(mime_content_type(IMG_DIR.$ctim.$cext)==='image/webp'){
 		$dat['use_shi_painter'] = false; 
 	}
@@ -1960,13 +1961,13 @@ function check_cont_pass(){
 			list($cno,,,,,,,,$cpwd,,,,$ctime,)
 			= explode(",", rtrim($line));
 
-		if($cno == $no && check_password($pwd, $cpwd) 
-		&& check_elapsed_days($ctime)
-		){
-			closeFile($fp);
-			return true;
+			if($cno == $no && check_password($pwd, $cpwd)
+			&& check_elapsed_days($ctime)
+			){
+				closeFile($fp);
+				return true;
+			}
 		}
-	}
 	}
 	closeFile($fp);
 	error(MSG028);
@@ -2677,7 +2678,7 @@ function check_pch_ext ($filepath,$options = []) {
 	} elseif (is_file($filepath . ".psd")) {
 		return ".psd";
 	} 
-		return '';
+	return '';
 }
 
 /**
