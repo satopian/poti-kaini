@@ -3,7 +3,7 @@
 
 // POTI-board EVO
 // バージョン :
-const POTI_VER = 'v5.25.10';
+const POTI_VER = 'v5.25.11';
 const POTI_LOT = 'lot.220915';
 
 /*
@@ -1243,7 +1243,7 @@ function userdel(){
 
 	sort($del);
 	reset($del);
-	if($pwd===""&&$pwdc) $pwd=newstring($pwdc);
+	$pwd = $pwd ? $pwd : newstring($pwdc);
 	$fp=fopen(LOGFILE,"r+");
 	set_file_buffer($fp, 0);
 	flock($fp, LOCK_EX);
@@ -1466,7 +1466,7 @@ function paintform(){
 	$type = (string)newstring(filter_input(INPUT_POST, 'type'));
 	$pwd = (string)newstring(filter_input(INPUT_POST, 'pwd'));
 	$pwdc = (string)filter_input(INPUT_COOKIE, 'pwdc');
-	if($pwd===""&&$pwdc) $pwd=newstring($pwdc);
+	$pwd = $pwd ? $pwd : newstring($pwdc);
 	$resto = (string)filter_input(INPUT_POST, 'resto',FILTER_VALIDATE_INT);
 	if(strlen($resto)>1000){
 		error(MSG015);
@@ -1957,7 +1957,7 @@ function check_cont_pass(){
 	$no = (string)filter_input(INPUT_POST, 'no',FILTER_VALIDATE_INT);
 	$pwd = (string)newstring(filter_input(INPUT_POST, 'pwd'));
 	$pwdc = (string)filter_input(INPUT_COOKIE, 'pwdc');
-	if($pwd===""&&$pwdc) $pwd=newstring($pwdc);
+	$pwd = $pwd ? $pwd : newstring($pwdc);
 	$fp=fopen(LOGFILE,"r");
 	while($line = fgets($fp)){
 		if (strpos(trim($line) . ',', $no . ',') === 0) {
@@ -1982,7 +1982,7 @@ function download_app_dat(){
 	$pwdc = (string)filter_input(INPUT_COOKIE, 'pwdc');
 	$no=(string)filter_input(INPUT_POST,'no');
 	$pchext=(string)basename(filter_input(INPUT_POST,'pch_ext'));
-	if($pwd===""&&$pwdc) $pwd=newstring($pwdc);
+	$pwd = $pwd ? $pwd : newstring($pwdc);
 
 	$cpwd='';
 	$cno='';
@@ -2037,7 +2037,7 @@ function editform(){
 
 	sort($del);
 	reset($del);
-	if($pwd===""&&$pwdc) $pwd=newstring($pwdc);
+	$pwd = $pwd ? $pwd : newstring($pwdc);
 	$fp=fopen(LOGFILE,"r");
 	flock($fp, LOCK_EX);
 	$buf=fread($fp,5242880);
