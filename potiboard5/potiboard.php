@@ -3,7 +3,7 @@
 
 // POTI-board EVO
 // バージョン :
-const POTI_VER = 'v5.25.9';
+const POTI_VER = 'v5.25.10';
 const POTI_LOT = 'lot.220915';
 
 /*
@@ -1465,6 +1465,8 @@ function paintform(){
 	$admin = (string)filter_input(INPUT_POST, 'admin');
 	$type = (string)newstring(filter_input(INPUT_POST, 'type'));
 	$pwd = (string)newstring(filter_input(INPUT_POST, 'pwd'));
+	$pwdc = (string)filter_input(INPUT_COOKIE, 'pwdc');
+	if($pwd===""&&$pwdc) $pwd=newstring($pwdc);
 	$resto = (string)filter_input(INPUT_POST, 'resto',FILTER_VALIDATE_INT);
 	if(strlen($resto)>1000){
 		error(MSG015);
