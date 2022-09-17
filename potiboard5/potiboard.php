@@ -3,7 +3,7 @@
 
 // POTI-board EVO
 // バージョン :
-const POTI_VER = 'v5.26.0';
+const POTI_VER = 'v5.26.2';
 const POTI_LOT = 'lot.220917';
 
 /*
@@ -2964,12 +2964,12 @@ function get_lineindex ($line){
 	return $lineindex;
 }
 
-function check_password ($pwd, $epwd, $adminPass = false) {
+function check_password ($pwd, $hash, $adminPass = false) {
 	global $ADMIN_PASS;
 	return
-		password_verify($pwd, $epwd)
-		|| $epwd === substr(md5($pwd), 2, 8)
-		|| ($adminPass ? ($adminPass === $ADMIN_PASS) : false); // 管理パスを許可する場合
+		($pwd && (password_verify($pwd, $hash)))
+		||($pwd && ($hash === substr(md5($pwd), 2, 8)))
+		|| ($adminPass && $ADMIN_PASS && ($adminPass === $ADMIN_PASS)); // 管理パスを許可する場合
 }
 function is_neo($src) {//neoのPCHかどうか調べる
 	$fp = fopen("$src", "rb");
