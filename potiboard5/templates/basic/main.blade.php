@@ -20,8 +20,11 @@
 	{{--  ENDSNS --}}
 	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
 	<link rel="stylesheet" href="{{$skindir}}basic.css">
-	<link rel="stylesheet" href="{{$skindir}}icomoon/style.css">
+	<link rel="preload" as="style" href="{{$skindir}}icomoon/style.css" onload="this.rel='stylesheet'">
 	<link rel="preload" as="script" href="lib/{{$jquery}}">
+	<link rel="preload" as="style" href="lib/luminous/luminous-basic.min.css" onload="this.rel='stylesheet'">
+	<link rel="preload" as="script" href="lib/luminous/luminous.min.js">
+
 	<style id="for_mobile"></style>
 	<script>
 		function is_mobile() {
@@ -218,11 +221,11 @@
 			{{-- 記事共通ヘッダここまで --}}
 
 			@if($res['src'])<div class="posted_image" @if($res['w']>=750) style="margin-right:0;float:none;" @endif >
-				@if($res['thumb'])<a href="{{$res['src']}}" target="_blank" rel="noopener">@endif<img
+				<a href="{{$res['src']}}" target="_blank" rel="noopener" class="luminous"><img
 						src="{{$res['imgsrc']}}" width="{{$res['w']}}" height="{{$res['h']}}"
 						alt="{{$res['sub']}} by {{$res['name']}} ({{$res['size']}} B)"
 						title="{{$res['sub']}} by {{$res['name']}} ({{$res['size']}} B) @if($res['thumb'])サムネイル縮小表示 @endif"
-						@if($i>4)loading="lazy"@endif>@if($res['thumb'])</a>@endif
+						@if($i>4)loading="lazy"@endif></a>
 			</div>
 			@endif
 			<div class="comment"> {!!$res['com']!!}</div>
@@ -282,9 +285,7 @@
 		@include('parts.mainte_form')
 		<script src="loadcookie.js"></script>
 		<script>
-			document.addEventListener('DOMContentLoaded', (e) => {
-				l();//LoadCookie
-			});
+			document.addEventListener('DOMContentLoaded',l,false);
 		</script>
 
 		<footer>
@@ -295,6 +296,7 @@
 	<div id="bottom"></div>
 	<div id="page_top"><a class="icon-angles-up-solid"></a></div>
 	<script src="lib/{{$jquery}}"></script>
+	<script src="lib/luminous/luminous.min.js"></script>
 	<script>
 	jQuery(function() {
 		window.onpageshow = function () {
@@ -306,7 +308,7 @@
 				$(this).closest('form').submit();
 			});
 		}
-			// https://cotodama.co/pagetop/
+		// https://cotodama.co/pagetop/
 		var pagetop = $('#page_top');   
 		pagetop.hide();
 		$(window).scroll(function () {
@@ -322,6 +324,14 @@
 			}, 500); //0.5秒かけてトップへ移動
 			return false;
 		});
+		// https://www.webdesignleaves.com/pr/plugins/luminous-lightbox.html
+		const luminousElems = document.querySelectorAll('.luminous');
+		//取得した要素の数が 0 より大きければ
+		if( luminousElems.length > 0 ) {
+			luminousElems.forEach( (elem) => {
+			new Luminous(elem);
+			});
+		}
 	});
 	</script>
 </body>

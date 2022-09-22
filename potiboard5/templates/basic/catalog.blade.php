@@ -10,7 +10,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
 	<link rel="stylesheet" href="{{$skindir}}basic.css">
-	<link rel="stylesheet" href="{{$skindir}}icomoon/style.css">
+	<link rel="preload" as="style" href="{{$skindir}}icomoon/style.css" onload="this.rel='stylesheet'">
 	<link rel="preload" as="script" href="lib/{{$jquery}}">
 	<title>カタログモード - {{$title}}</title>
 	<!--
@@ -88,9 +88,7 @@
 		<!--JavaScriptの実行(クッキーを読込み、フォームに値をセット)-->
 		<script src="loadcookie.js"></script>
 		<script>
-			document.addEventListener('DOMContentLoaded', (e) => {
-				l();//LoadCookie
-			});
+			document.addEventListener('DOMContentLoaded',l,false);
 		</script>
 		<footer>
 			<!--著作権表示 削除しないでください-->

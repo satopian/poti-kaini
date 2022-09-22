@@ -114,9 +114,7 @@
 
 			<script src="loadcookie.js"></script>
 			<script>
-				document.addEventListener('DOMContentLoaded', (e) => {
-					l();//LoadCookie
-				});
+			document.addEventListener('DOMContentLoaded',l,false);
 			</script>
 		</div>
 		<!--著作権表示 削除しないでください-->

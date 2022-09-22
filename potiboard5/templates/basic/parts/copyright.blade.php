@@ -12,5 +12,8 @@
 	 @endif
 	UseFunction - <span title="by WonderCatStudio">動的パレットスクリプト</span>
 	<!--http://wondercatstudio.com/-->
-	，<a href="https://github.com/EFTEC/BladeOne" target="_blank" rel="noopener noreferrer" title="BladeOne">BladeOne</a>
+	，
+	<a href="https://github.com/imgix/luminous" target="_blank" rel="noopener noreferrer" title="by Zebrafish Labs" >luminous</a>
+	，
+	<a href="https://github.com/EFTEC/BladeOne" target="_blank" rel="noopener noreferrer" title="BladeOne">BladeOne</a>
 	</div>

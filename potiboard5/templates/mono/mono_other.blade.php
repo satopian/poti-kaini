@@ -56,7 +56,7 @@
 			display: inline-block;
 		}
 	</style>
-	<link rel="preload" as="script" href="lib/{{JQUERY}}">
+	<link rel="preload" as="script" href="lib/{{$jquery}}">
 	<title>{{$title}}</title>
 	<style id="for_mobile"></style>
 	<script>
@@ -249,9 +249,7 @@
 				@endif
 				@if($regist)
 				<script>
-					document.addEventListener('DOMContentLoaded', (e) => {
-						l();//LoadCookie
-					});
+				document.addEventListener('DOMContentLoaded',l,false);
 				</script>
 				@endif
 			</div>
@@ -368,8 +366,9 @@
 		{{-- <!-- 著作権表示 削除しないでください --> --}}
 		@include('parts.mono_copyright')
 	</footer>
-	<script src="lib/{{JQUERY}}"></script>
+	<script src="lib/{{$jquery}}"></script>
 	<script>
+	jQuery(function() {
 		window.onpageshow = function () {
 			var $btn = $('[type="submit"]');
 			//disbledを解除
@@ -379,6 +378,7 @@
 				$(this).closest('form').submit();
 			});
 		}
+	});
 	</script>
 </body>
 

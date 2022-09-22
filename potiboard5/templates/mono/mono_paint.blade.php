@@ -630,9 +630,7 @@
 				
 				</div>
 				<script>
-					document.addEventListener('DOMContentLoaded', (e) => {
-						l();//LoadCookie
-					});
+				document.addEventListener('DOMContentLoaded',l,false);
 				</script>
 			</section>
 			<!-- (========== CONTINUE MODE(コンティニューモード) end ==========) -->
