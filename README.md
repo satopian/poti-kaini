@@ -18,7 +18,7 @@ English translated version is here. [POTI-board EVO-EN](https://github.com/satop
 - v3.09.5以前のPOTI-boardのすべてのバージョンには重大な欠陥があります。  
 すべてのログファイルを失う可能性があります。  
 
-また、v3.x系統のPOTI-boardはPHP8.1で非推奨のエラーが発生します。  
+また、v3.x系統のPOTI-boardはPHP8.1環境で非推奨のエラーがでます。  
 現時点では警告ですがPHP9で動作が停止します。
 そのためのv5.xの開発です。  
 v5.xの利用をよろしくお願いします。
