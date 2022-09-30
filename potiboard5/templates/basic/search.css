@@ -26,7 +26,7 @@ h1 {
 }
 
 a {
-	color: #5b5c6c;
+	color: #555;
 	text-decoration: underline
 }
 
@@ -223,6 +223,42 @@ input[type=radio]:checked+label {
 	display: inline-block;
 	margin: 0 0 16px 0
 }
+/* スクロールすると出てくる「トップへ戻る」ボタン */
+/* https://cotodama.co/pagetop/ */
+#page_top {
+	width: 50px;
+	height: 50px;
+	position: fixed;
+	right: 0;
+	bottom: 50px;
+	background: #ffcfcf;
+	opacity: .5;
+	border-radius: 50%
+}
+
+#page_top a {
+	position: relative;
+	display: block;
+	width: 50px;
+	height: 50px;
+	text-decoration: none
+}
+
+#page_top a::before {
+	font-weight: 900;
+	font-size: 25px;
+	color: #fff;
+	position: absolute;
+	width: 25px;
+	height: 25px;
+	top: -5px;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	margin: auto;
+	text-align: center
+}
+
 @media screen and (max-width:967px) {
 	#main {
 		width: 736px
