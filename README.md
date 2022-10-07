@@ -27,9 +27,8 @@ v5.xの利用をよろしくお願いします。
 
 v3.0で従来の[PaintBBS NEO](https://github.com/funige/neo/)、しぃペインターに加え高機能なHTML5のペイントアプリ[ChickenPaint](https://github.com/thenickdude/chickenpaint)の使えるようになりました。  
 スクリプトの名称はPOTI-board EVO(Evolution)になりました。 
-PHP8.1以降に対応するためテンプレートエンジンをBladeOneに変更しました。  
-v3.x系統の開発は終了し、v5.xになりました。  
 PHP8.1～PHP9に対応するためにテンプレートエンジンをBladeOneに変更し、potiboard.phpのコードの見直しを行いました。  
+v3.x系統の開発は終了し、v5.xになりました。  
 v3.xのテンプレートは使えなくなりました。v5.xに対応したテンプレートをご利用ください。  
 v5.10.0で、新しいHTML5のペイントアプリ[klecks](https://github.com/bitbof/klecks)が使えるようになりました。  
 
