@@ -3,7 +3,7 @@
 
 // POTI-board EVO
 // バージョン :
-const POTI_VER = 'v5.27.3';
+const POTI_VER = 'v5.27.5';
 const POTI_LOT = 'lot.22108';
 
 /*
@@ -680,14 +680,14 @@ function res($resno = 0){
 }
 //マークダウン記法のリンクをHTMLに変換
 function md_link($str){
-	$str= preg_replace("{\[([^\[\]\(\)]+?)\]\((https?://[[:alnum:]\+\$\;\?\.%,!#~*/:@&=_-]+)\)}","<a href=\"\\2\" target=\"_blank\" rel=\"nofollow noopener noreferrer\">\\1</a>",$str);
+	$str= preg_replace('{\[([^\[\]\(\)]+?)\]\((https?://[[:alnum:]\+\$\;\?\.%,!#~*/:@&=_-]+)\)}','<a href="$2" target="_blank" rel="nofollow noopener noreferrer">$1</a>',$str);
 	return $str;
 }
 
 // 自動リンク
 function auto_link($str){
 	if(strpos($str,'<a')===false){//マークダウン記法がなかった時
-		$str= preg_replace("{(https?://[[:alnum:]\+\$\;\?\.%,!#~*/:@&=_-]+)}","<a href=\"\\1\" target=\"_blank\" rel=\"nofollow noopener noreferrer\">\\1</a>",$str);
+		$str= preg_replace('{(https?://[[:alnum:]\+\$\;\?\.%,!#~*/:@&=_-]+)}','<a href="$1" target="_blank" rel="nofollow noopener noreferrer">$1</a>',$str);
 	}
 	return $str;
 }
@@ -1643,6 +1643,7 @@ function paintform(){
 	$dat['layer_count'] = LAYER_COUNT;
 	if($shi) $dat['quality'] = $quality ? $quality : $qualitys[0];
 	//NEOを使う時はPaintBBSの設定
+	$initial_palette = 'Palettes[0] = "#000000\n#FFFFFF\n#B47575\n#888888\n#FA9696\n#C096C0\n#FFB6FF\n#8080FF\n#25C7C9\n#E7E58D\n#E7962D\n#99CB7B\n#FCECE2\n#F9DDCF";';
 	if(USE_SELECT_PALETTES){//パレット切り替え機能を使う時
 		foreach($pallets_dat as $i=>$value){
 			if($i==filter_input(INPUT_POST, 'selected_palette_no',FILTER_VALIDATE_INT)){//キーと入力された数字が同じなら
@@ -1669,7 +1670,6 @@ function paintform(){
 	$pal=[];
 	$DynP=[];
 	$arr_pal=[];
-	$initial_palette = 'Palettes[0] = "#000000\n#FFFFFF\n#B47575\n#888888\n#FA9696\n#C096C0\n#FFB6FF\n#8080FF\n#25C7C9\n#E7E58D\n#E7962D\n#99CB7B\n#FCECE2\n#F9DDCF";';
 	foreach ( $lines as $i => $line ) {
 		$line=charconvert(str_replace(["\r","\n","\t"],"",$line));
 		list($pid,$pname,$pal[0],$pal[2],$pal[4],$pal[6],$pal[8],$pal[10],$pal[1],$pal[3],$pal[5],$pal[7],$pal[9],$pal[11],$pal[12],$pal[13]) = explode(",", $line);
