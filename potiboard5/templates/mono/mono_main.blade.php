@@ -9,7 +9,6 @@
 	<link rel="stylesheet" href="{{$skindir}}css/mono_deep.css" id="css2" disabled>
 	<link rel="stylesheet" href="{{$skindir}}css/mono_mayo.css" id="css3" disabled>
 	<link rel="preload" as="style" href="{{$skindir}}icomoon/style.css" onload="this.rel='stylesheet'">
-
 	<style>
 		.input_disp_none {
 			display: none;
@@ -349,10 +348,10 @@
 				<span class="share_button">
 					<a target="_blank"
 						href="https://twitter.com/intent/tweet?&text=%5B{{$ress[0]['encoded_no']}}%5D%20{{$ress[0]['share_sub']}}%20by%20{{$ress[0]['share_name']}}%20-%20{{$encoded_title}}&url={{$encoded_rooturl}}{{$encoded_self}}?res={{$ress[0]['encoded_no']}}"><span
-							class="icon-twitter button"><img src="{{$skindir}}img/twitter.svg" alt=""> tweet</span></a>
+							class="button"><img src="{{$skindir}}img/twitter.svg" alt=""> tweet</span></a>
 					<a target="_blank" class="fb btn"
 						href="http://www.facebook.com/share.php?u={{$encoded_rooturl}}{{$encoded_self}}?res={{$ress[0]['encoded_no']}}"><span
-							class="icon-facebook2 button"><img src="{{$skindir}}img/facebook.svg" alt="">
+							class="button"><img src="{{$skindir}}img/facebook.svg" alt="">
 							share</span></a>
 				</span>
 				@endif
@@ -454,7 +453,7 @@
 			return false;
 		});
 		// https://www.webdesignleaves.com/pr/plugins/luminous-lightbox.html
-				const luminousElems = document.querySelectorAll('.luminous');
+		const luminousElems = document.querySelectorAll('.luminous');
 		//取得した要素の数が 0 より大きければ
 		if( luminousElems.length > 0 ) {
 			luminousElems.forEach( (elem) => {
