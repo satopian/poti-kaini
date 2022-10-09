@@ -26,14 +26,17 @@
 // charset…文字コード
  --}}
 @if($paint_mode)
-<style>body{overscroll-behavior-x: none !important; }</style>
+<style>
+	body{overscroll-behavior-x: none !important; }
+	div#chickenpaint-parent , div.appstage {
+		letter-spacing: initial;
+		word-break:initial;
+		overflow-wrap: initial;
+	}
+</style>
 @endif
 @if($chickenpaint)
 <style>
-	div#chickenpaint-parent {
-		letter-spacing: initial;
-		word-break:initial;
-	}
 	li{margin:0 0 0 1em;}
 	:not(input),div#chickenpaint-parent :not(input){
 		-moz-user-select: none;

@@ -13,7 +13,8 @@ td {
 	font-family: "Hiragino Sans", meiryo, ヒラギノ角ゴシック, メイリオ, sans-serif;
 	font-size: 16px;
 	letter-spacing: 0.09em;
-	word-break: break-all;
+	overflow-wrap: anywhere;
+
 }
 
 #body {
@@ -716,7 +717,7 @@ tr.deltable_tr{
 .appstage {
 	margin: 0 auto;
 	display: table;
-	word-break: initial;
+	overflow-wrap: initial;
 }
 
 .app {
