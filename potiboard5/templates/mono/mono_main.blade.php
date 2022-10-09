@@ -8,6 +8,8 @@
 	<link rel="stylesheet" href="{{$skindir}}css/mono_dark.css" id="css1" disabled>
 	<link rel="stylesheet" href="{{$skindir}}css/mono_deep.css" id="css2" disabled>
 	<link rel="stylesheet" href="{{$skindir}}css/mono_mayo.css" id="css3" disabled>
+	<link rel="preload" as="style" href="{{$skindir}}icomoon/style.css" onload="this.rel='stylesheet'">
+
 	<style>
 		.input_disp_none {
 			display: none;
@@ -417,6 +419,8 @@
 		{{-- <!-- 著作権表示 削除しないでください --> --}}
 		@include('parts.mono_copyright')
 	</footer>
+	<div id="bottom"></div>
+	<div id="page_top"><a class="icon-angles-up-solid"></a></div>
 	<script src="lib/{{$jquery}}"></script>
 	<script src="lib/luminous/luminous.min.js"></script>
 	<script>
@@ -433,6 +437,22 @@
 				$(this).closest('form').submit();
 			});
 		}
+		// https://cotodama.co/pagetop/
+		var pagetop = $('#page_top');   
+		pagetop.hide();
+		$(window).scroll(function () {
+			if ($(this).scrollTop() > 100) {  //100pxスクロールしたら表示
+				pagetop.fadeIn();
+			} else {
+				pagetop.fadeOut();
+			}
+		});
+		pagetop.click(function () {
+			$('body,html').animate({
+				scrollTop: 0
+			}, 500); //0.5秒かけてトップへ移動
+			return false;
+		});
 		// https://www.webdesignleaves.com/pr/plugins/luminous-lightbox.html
 				const luminousElems = document.querySelectorAll('.luminous');
 		//取得した要素の数が 0 より大きければ
