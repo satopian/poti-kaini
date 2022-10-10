@@ -102,6 +102,8 @@
 			if(!jEnabled){
 				var sN = document.createElement("script");
 				sN.src = "{{$cheerpj_url}}";
+				sN.integrity="{{$cheerpj_hash}}";
+				sN.crossOrigin="anonymous";
 				var s0 = document.getElementsByTagName("script")[0];
 				s0.parentNode.insertBefore(sN, s0);
 				sN.addEventListener("load", function(){ cheerpjInit(); }, false);
