@@ -3,7 +3,7 @@
 <form action="{{$self}}" method="post" enctype="multipart/form-data" class="paint_form">
 	<input type="submit" value="PAINT" class="paint_button">
 	@if ($select_app)
-	<span class="bold_gray">TOOL</span>
+	<span class="bold_gray">Tool</span>
 	<select name="shi" class="select_applet">
 	<option value="neo">PaintBBS NEO</option>
 	@if ($use_shi_painter)<option value="1" class="for_pc">しぃペインター</option>@endif
