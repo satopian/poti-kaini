@@ -144,6 +144,7 @@ if(!is_file($full_imgfile)){
 }
 $img_type=mime_content_type($full_imgfile);
 if(!in_array($img_type,["image/png","image/jpeg"])){
+	unlink($full_imgfile);
 	die("error\n{$errormsg_3}");
 }
 chmod($full_imgfile,PERMISSION_FOR_DEST);
