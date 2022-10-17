@@ -122,7 +122,7 @@ label.palette_desc{
 
 /* リンクの色 */
 a {
-	color: #5b5c6c;
+	color: #555;
 	text-decoration: underline;
 	text-decoration-skip-ink: none;
 }
