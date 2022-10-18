@@ -118,8 +118,8 @@
 					@if($res['src'])<div class="posted_image" @if($res['w']>=750) style="margin-right:0;float:none;" @endif >
 						<a href="{{$res['src']}}" target="_blank" rel="noopener" class="luminous"><img
 								src="{{$res['imgsrc']}}" width="{{$res['w']}}" height="{{$res['h']}}"
-								alt="{{$res['sub']}} by {{$res['name']}} ({{$res['size']}} B)"
-								title="{{$res['sub']}} by {{$res['name']}} ({{$res['size']}} B) @if($res['thumb'])サムネイル縮小表示 @endif"
+								alt="{{$res['sub']}} by {{$res['name']}} ({{$res['size_kb']}} KB)"
+								title="{{$res['sub']}} by {{$res['name']}} ({{$res['size_kb']}} KB) @if($res['thumb'])サムネイル縮小表示 @endif"
 								></a>
 					</div>
 					@endif
