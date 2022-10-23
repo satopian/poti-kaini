@@ -134,8 +134,8 @@
 
 @else
 <h1 id="bbs_title">@if($continue_mode) 続きを描く@endif @if($pch_mode) 動画表示モード@endif - <span class="title_name_wrap">{{$title}}</span></h1>@endif
-{{-- <!--お絵かきモード--> --}}
-{{-- <!-- 
+{{-- お絵かきモード --}}
+{{-- 
 // 【お絵かき(通常/続き)】
 //
 // paint_mode…お絵かきモードのとき true が入る
@@ -163,10 +163,6 @@
 // pchfile…動画ファイル名(動画から続きを描く場合)
 // imgfile…画像ファイル名(画像から続きを描く場合)
 // usercode…ユーザーコード(投稿者認識用)
-// security…セキュリティが有効な場合 true が入る
-// security_click…セキュリティクリック数
-// security_timer…セキュリティタイマー(秒)
-// security_url…セキュリティにヒットした場合の飛び先
 // palsize…パレット総数
 // dynp…パレットの名前配列データ
 // applet…しぃペインターを使用するとき true が入る
@@ -183,7 +179,7 @@
 // type…差し換えか、新規投稿か(コンティニュー)
 // pwd…記事Pass(コンティニュー)
 // ext…画像拡張子(コンティニュー)
---> --}}
+ --}}
 @if($paint_mode) 
 @if($chickenpaint)
 
@@ -291,6 +287,8 @@ pe[n]}}function GradView(a,f){d=document}function showHideLayer(){d=document;var
 @endif
 @endif
 <!--共通設定(変更不可)-->
+<param name="send_header_count" value="true">
+<param name="send_header_timer" value="true">
 <param name="image_width" value="{{$picw}}">
 <param name="image_height" value="{{$pich}}">
 <param name="image_jpeg" value="{{$image_jpeg}}">

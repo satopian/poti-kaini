@@ -267,6 +267,8 @@
 						@endif
 						@endif
 						<!--(========== 共通設定(変更不可) ==========)-->
+						<param name="send_header_count" value="true">
+						<param name="send_header_timer" value="true">
 						<param name="image_width" value="{{$picw}}">
 						<param name="image_height" value="{{$pich}}">
 						<param name="image_jpeg" value="{{$image_jpeg}}">
