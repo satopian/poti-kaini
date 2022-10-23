@@ -1,7 +1,7 @@
 <?php
 /*
-  * POTI-board EVO v5.21.0 lot.220715
-  * by POTI改 >> https://paintbbs.sakura.ne.jp/poti/
+  * POTI-board EVO v5.30.0 lot.221022
+  * by POTI-board redevelopment team >> https://paintbbs.sakura.ne.jp/poti/
   *
   * POTI-board EVO の設定ファイルです。
   *
@@ -125,7 +125,6 @@ $badfile = array("dummy","dummy2");
 
 //拒絶するホスト
 $badip = array("addr.dummy.com","addr2.dummy.com");
-
 
 /* ---------- メール通知設定 ---------- */
 // メール通知機能を使う使わないを設定する項目はここにはありません。
@@ -374,22 +373,12 @@ define("COMPRESS_LEVEL", "15");
 //※最初の値がデフォルトになります(要対応テーマ)
 $qualitys = array("1","2","3","4");
 
-//　セキュリティ関連－URLとクリック数かタイマーのどちらかが設定されていれば有効
-//※アプレットのreadmeを参照し、十分テストした上で設定して下さい
-//NEOでは無効
+//セキュリティ関連－URLとクリック数かタイマーのどちらかが設定されていれば有効
+//※十分テストした上で設定して下さい
 //セキュリティクリック数。設定しないなら""で
 define("SECURITY_CLICK", "");
 //セキュリティタイマー(単位:秒)。設定しないなら""で
 define("SECURITY_TIMER", "");
-//セキュリティにヒットした場合の飛び先
-define("SECURITY_URL", "./security_c.html");
-
-//続きを描くときのセキュリティ。利用しないなら両方""で
-//続きを描くときのセキュリティクリック数。設定しないなら""で
-//NEOでは無効
-define("C_SECURITY_CLICK", "");
-//続きを描くときのセキュリティタイマー(単位:秒)。設定しないなら""で
-define("C_SECURITY_TIMER", "");
 
 //ペイント画面のパスワードの暗号鍵
 //あまり頻繁に変更しない事
