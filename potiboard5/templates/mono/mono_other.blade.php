@@ -297,7 +297,7 @@
 					<input class="button delbtton" type="submit" value="削除">
 					<input class="button delbtton" type="reset" value="リセット">
 					<label>[<input type="checkbox" name="onlyimgdel" value="on">ImageOnly]</label>
-					</form>
+				</form>
 				<table class="delfo">
 						<tr>
 							<th>Check</th>
