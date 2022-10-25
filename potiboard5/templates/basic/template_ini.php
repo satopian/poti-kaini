@@ -145,7 +145,7 @@ define('UPDATE_MARK', '(編集)');
 define('DATE_FORMAT', 'Y/m/d(D) H:i');
 
 //管理画面(削除モード)の奇数行カラー
-define('ADMIN_DELKISU', 'none');
+define('ADMIN_DELKISU', '#fff');
 
 //管理画面(削除モード)の偶数行カラー
 define('ADMIN_DELGUSU', '#fff0f3');

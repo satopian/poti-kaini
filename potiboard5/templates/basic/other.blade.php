@@ -12,7 +12,10 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
 	<link rel="stylesheet" href="{{$skindir}}basic.css">
+	<link rel="preload" as="style" href="{{$skindir}}icomoon/style.css" onload="this.rel='stylesheet'">
 	<link rel="preload" as="script" href="lib/{{$jquery}}">
+	<link rel="preload" as="style" href="lib/luminous/luminous-basic.min.css" onload="this.rel='stylesheet'">
+	<link rel="preload" as="script" href="lib/luminous/luminous.min.js">
 	<title>@if($post_mode and !$rewrite) 投稿フォーム @endif @if($rewrite)
 		編集モード @endif @if($admin_in) 管理用 @endif @if($admin) 管理人による投稿 @endif
 		@if($admin_del) 記事削除 @endif @if($err_mode) エラー！ @endif - {{$title}} </title>
@@ -321,16 +324,14 @@
 		<div class="centering">
 			<p>
 				削除したい記事のチェックボックスにチェックを入れ、削除ボタンを押して下さい。<br>
-				<span class="hensyu">（記事Noをクリックすると編集できます）</span></p>
-			<p>
+				<span class="hensyu">（記事Noをクリックすると編集できます）</span>
+			</p>
 				<form action="{{$self}}" method="post">
 					<input type="hidden" name="admin" value="update">
 					<input type="hidden" name="mode" value="admin">
 					<input type="hidden" name="pass" value="{{$pass}}">
 					<input type="submit" value="ログ更新" class="admin_submit">
 				</form>
-			</p>
-			<p>
 				<form id="delete" action="{{$self}}" method="POST">
 					<input type="hidden" name="mode" value="admin">
 					<input type="hidden" name="admin" value="del">
@@ -339,7 +340,6 @@
 					<input type="submit" value="削除する"><input type="reset" value="リセット">
 					<label class="checkbox"><input type="checkbox" name="onlyimgdel" value="on">画像だけ消す</label>
 				</form>
-			</p>
 			<table class="admindel_table">
 				<tr class="deltable_tr">
 					<th class="nobreak">削除</th>
@@ -371,33 +371,33 @@
 					<td class="nobreak"><b>{!!$del['name']!!}</b></td>
 					<td><small>{{$del['com']}}</small></td>
 					<td class="column_non">{{$del['host']}}</td>
-					<td class="column_non">{!!$del['clip']!!}({{$del['size_kb']}})</td>
-					<td class="column_non">{{$del['chk']}}</td>
+					<td class="column_non">@if($del['src'])
+								<a href="{{$del['src']}}" target="_blank" rel="noopener" class="luminous">{{$del['srcname']}}</a>
+								({{$del['size_kb']}})KB @endif</td>
+					<td class="column_non">@if($del['src'])
+						{{$del['chk']}}@endif</td>
 				</tr>
 				@endforeach
 				@endif
 			</table>
-			<p>
-				<input form="delete" type="submit" value="削除する"><input form="delete" type="reset" value="リセット">
-				<label class="checkbox"><input form="delete" type="checkbox" name="onlyimgdel" value="on">画像だけ消す</label>
-			</p>
 			@if($del_pages)
 			@foreach($del_pages as $del_page)
-			<span class="del_page">[
+			<div class="del_page">[
 				<form action="{{$self}}" method="post" id="form_page{{$del_page['no']}}">
 					<input type="hidden" name="mode" value="admin">
 					<input type="hidden" name="admin" value="del">
 					<input type="hidden" name="pass" value="{{$pass}}">
 					<input type="hidden" name="del_pageno" value="{{$del_page['no']}}">
 					@if($del_page['notlink'])
-					{{$del_page['pageno']}}
-				</form>
-				]</span>
-			@else
+			<strong>{{$del_page['pageno']}}
+			</strong>
+		</form>
+		]</div>
+	@else
 			<a href="javascript:form_page{{$del_page['no']}}.submit()">{{$del_page['pageno']}}</a></form>
-			]</span>
+			]</div>
 			@endif
-
+		
 			@endforeach
 			@endif
 			<p>【 画像データ合計 : <b>{{$all}}</b> KB 】</p>
@@ -405,16 +405,12 @@
 		@endif
 		<!--管理モード(削除) ここまで-->
 		<!--エラー画面-->
-		@if($n)
-		<!-- 
-//
-// err_mode…エラー画面のとき true が入る
-// home…ホームページURL
-// self…POTI-boardのスクリプト名
-// self2…入口(TOP)ページのURL
-// mes…エラーメッセージ
--->
-		@endif
+		{{-- //
+		// err_mode…エラー画面のとき true が入る
+		// home…ホームページURL
+		// self…POTI-boardのスクリプト名
+		// self2…入口(TOP)ページのURL
+		// mes…エラーメッセージ --}}
 		@if($err_mode)
 
 		<div id="self2">
@@ -432,6 +428,49 @@
 			@include('parts.copyright')
 		</footer>
 	</div>
+	<div id="page_top"><a class="icon-angles-up-solid"></a></div>
+	<script src="lib/{{$jquery}}"></script>
+	<script src="lib/luminous/luminous.min.js"></script>
+	<script>
+
+	jQuery(function() {
+		window.onpageshow = function () {
+			var $btn = $('[type="submit"]');
+			//disbledを解除
+			$btn.prop('disabled', false);
+			$btn.click(function () { //送信ボタン2度押し対策
+				$(this).prop('disabled', true);
+				$(this).closest('form').submit();
+			});
+		}
+		// https://cotodama.co/pagetop/
+		var pagetop = $('#page_top');   
+		pagetop.hide();
+		$(window).scroll(function () {
+			if ($(this).scrollTop() > 100) {  //100pxスクロールしたら表示
+				pagetop.fadeIn();
+			} else {
+				pagetop.fadeOut();
+			}
+		});
+		pagetop.click(function () {
+			$('body,html').animate({
+				scrollTop: 0
+			}, 500); //0.5秒かけてトップへ移動
+			return false;
+		});
+		// https://www.webdesignleaves.com/pr/plugins/luminous-lightbox.html
+		const luminousElems = document.querySelectorAll('.luminous');
+		//取得した要素の数が 0 より大きければ
+		if( luminousElems.length > 0 ) {
+			luminousElems.forEach( (elem) => {
+			new Luminous(elem);
+			});
+		}
+	});
+
+	</script>
+
 </body>
 
 </html>

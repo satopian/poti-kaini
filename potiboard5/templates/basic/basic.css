@@ -94,6 +94,15 @@ input:-webkit-autofill {
 	text-align: center;
 }
 
+form#delete {
+    margin-bottom: 8px;
+    padding: 8px;
+}
+
+.del_page {
+    display: inline-block;
+}
+
 .input_disp_none {
 	display: none;
 }
@@ -643,7 +652,7 @@ input.pch_upload {
 	border-collapse: collapse;
 	width: 100%;
 	margin-top: 10px;
-	margin-bottom: 0;
+	margin-bottom: 1em;
 }
 
 

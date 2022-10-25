@@ -8,6 +8,10 @@
 	<link rel="stylesheet" href="{{$skindir}}css/mono_dark.css" id="css1" disabled>
 	<link rel="stylesheet" href="{{$skindir}}css/mono_deep.css" id="css2" disabled>
 	<link rel="stylesheet" href="{{$skindir}}css/mono_mayo.css" id="css3" disabled>
+	<link rel="preload" as="script" href="lib/{{$jquery}}">
+	<link rel="preload" as="style" href="lib/luminous/luminous-basic.min.css" onload="this.rel='stylesheet'">
+	<link rel="preload" as="script" href="lib/luminous/luminous.min.js">
+	<link rel="preload" as="style" href="{{$skindir}}icomoon/style.css" onload="this.rel='stylesheet'">
 
 	<script>
 		var colorIdx = GetCookie("colorIdx");
@@ -56,7 +60,6 @@
 			display: inline-block;
 		}
 	</style>
-	<link rel="preload" as="script" href="lib/{{$jquery}}">
 	<title>{{$title}}</title>
 	<style id="for_mobile"></style>
 	<script>
@@ -282,19 +285,20 @@
 					<input type="hidden" name="admin" value="update">
 					<input type="hidden" name="mode" value="admin">
 					<input type="hidden" name="pass" value="{{$pass}}">
-					<input type="submit" value="ログ更新" class="button">
+					<input type="submit" value="ログ更新" class="button delbtton">
 					htmlファイルの更新を行います
 				</form>
 				<hr>
-				<form action="{{$self}}" method="post" class="delmode">
+				<form id="delete" action="{{$self}}" method="post" class="delmode">
 					<input type="hidden" name="mode" value="admin">
 					<input type="hidden" name="admin" value="del">
 					<input type="hidden" name="pass" value="{{$pass}}">
 					<p>削除したい記事のチェックボックスにチェックを入れ、削除ボタンを押して下さい。</p>
-					<input class="button" type="submit" value="削除">
-					<input class="button" type="reset" value="リセット">
+					<input class="button delbtton" type="submit" value="削除">
+					<input class="button delbtton" type="reset" value="リセット">
 					<label>[<input type="checkbox" name="onlyimgdel" value="on">ImageOnly]</label>
-					<table class="delfo">
+					</form>
+				<table class="delfo">
 						<tr>
 							<th>Check</th>
 							<th>No</th>
@@ -308,21 +312,25 @@
 						</tr>
 						@foreach ($dels as $del)
 						<tr>
-							<td><input type="checkbox" name="del[]" value="{{$del['no']}}"></td>
-							<td>{{$del['no']}}</td>
+							<td><input form="delete" type="checkbox" name="del[]" value="{{$del['no']}}"></td>
+							<td>
+								<form action="{{$self}}" method="post" id="form{{$del['no']}}">
+									<input type="hidden" name="del[]" value="{{$del['no']}}"><input type="hidden" name="pwd"
+										value="{{$pass}}"><input type="hidden" name="mode" value="edit">
+									<a href="javascript:form{{$del['no']}}.submit()">{{$del['no']}}</a></form>
+							</td>
 							<td>{{$del['now']}}</td>
 							<td>{{$del['sub']}}</td>
 							<td>{!!$del['name']!!}</td>
 							<td>{{$del['com']}}</td>
 							<td>{{$del['host']}}</td>
-							<td>@if($del['clip']){!!$del['clip']!!}({{$del['size_kb']}})KB @endif</td>
-							<td>@if($del['clip']){{$del['chk']}}@endif</td>
+							<td>@if($del['src'])
+								<a href="{{$del['src']}}" target="_blank" rel="noopener" class="luminous">{{$del['srcname']}}</a>
+								({{$del['size_kb']}})KB @endif</td>
+							<td>@if($del['src']){{$del['chk']}}@endif</td>
 						</tr>
 						@endforeach
 					</table>
-					<input class="button" type="submit" value="削除">
-					<input class="button" type="reset" value="リセット">
-				</form>
 				@if($del_pages)
 				@foreach($del_pages as $del_page)
 				<span class="del_page">[
@@ -332,7 +340,8 @@
 						<input type="hidden" name="pass" value="{{$pass}}">
 						<input type="hidden" name="del_pageno" value="{{$del_page['no']}}">
 						@if($del_page['notlink'])
-						{{$del_page['pageno']}}
+						<strong>{{$del_page['pageno']}}
+						</strong>
 					</form>
 					]</span>
 				@else
@@ -366,7 +375,9 @@
 		{{-- <!-- 著作権表示 削除しないでください --> --}}
 		@include('parts.mono_copyright')
 	</footer>
+	<div id="page_top"><a class="icon-angles-up-solid"></a></div>
 	<script src="lib/{{$jquery}}"></script>
+	<script src="lib/luminous/luminous.min.js"></script>
 	<script>
 	jQuery(function() {
 		window.onpageshow = function () {
@@ -378,7 +389,32 @@
 				$(this).closest('form').submit();
 			});
 		}
+		// https://cotodama.co/pagetop/
+		var pagetop = $('#page_top');   
+		pagetop.hide();
+		$(window).scroll(function () {
+			if ($(this).scrollTop() > 100) {  //100pxスクロールしたら表示
+				pagetop.fadeIn();
+			} else {
+				pagetop.fadeOut();
+			}
+		});
+		pagetop.click(function () {
+			$('body,html').animate({
+				scrollTop: 0
+			}, 500); //0.5秒かけてトップへ移動
+			return false;
+		});
+		// https://www.webdesignleaves.com/pr/plugins/luminous-lightbox.html
+		const luminousElems = document.querySelectorAll('.luminous');
+		//取得した要素の数が 0 より大きければ
+		if( luminousElems.length > 0 ) {
+			luminousElems.forEach( (elem) => {
+			new Luminous(elem);
+			});
+		}
 	});
+
 	</script>
 </body>
 
