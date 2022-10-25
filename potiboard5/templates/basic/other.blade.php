@@ -1,10 +1,10 @@
-{{-- <!--********** その他テンプレート **********
+{{-- ********** その他テンプレート **********
 // このテンプレートは、以下のモード用テンプレートです
 // ・投稿モード
 // ・管理モード(認証)モード
 // ・管理モード(削除)モード
 // ・エラーモード
---> --}}
+--}}
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -392,11 +392,10 @@
 			<strong>{{$del_page['pageno']}}
 			</strong>
 		</form>
-		]</div>
 	@else
 			<a href="javascript:form_page{{$del_page['no']}}.submit()">{{$del_page['pageno']}}</a></form>
-			]</div>
 			@endif
+			]</div>
 		
 			@endforeach
 			@endif
