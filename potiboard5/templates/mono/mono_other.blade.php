@@ -333,7 +333,7 @@
 					</table>
 				@if($del_pages)
 				@foreach($del_pages as $del_page)
-				<span class="del_page">[
+				<div class="del_page">[
 					<form action="{{$self}}" method="post" id="form_page{{$del_page['no']}}">
 						<input type="hidden" name="mode" value="admin">
 						<input type="hidden" name="admin" value="del">
@@ -343,12 +343,11 @@
 						<strong>{{$del_page['pageno']}}
 						</strong>
 					</form>
-					]</span>
+					
 				@else
 				<a href="javascript:form_page{{$del_page['no']}}.submit()">{{$del_page['pageno']}}</a></form>
-				]</span>
 				@endif
-
+				]</div>
 				@endforeach
 				@endif
 
