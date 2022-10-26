@@ -874,7 +874,7 @@ function regist(){
 	$fcolor = $formatted_post['fcolor'];
 	$sage = $formatted_post['sage'];
 
-	if(!$com&&!$is_file_dest) error(MSG008,$dest);
+	if($com==="" && !$is_file_dest) error(MSG008,$dest);
 
 	//ログ読み込み
 	$fp=fopen(LOGFILE,"r+");
