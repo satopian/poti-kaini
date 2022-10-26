@@ -3,7 +3,7 @@
 
 // POTI-board EVO
 // バージョン :
-const POTI_VER = 'v5.33.6';
+const POTI_VER = 'v5.33.8';
 const POTI_LOT = 'lot.221026';
 
 /*
@@ -2499,25 +2499,32 @@ function Reject_if_NGword_exists_in_the_post(){
 	$sub = (string)filter_input(INPUT_POST, 'sub');
 	$pwd = (string)filter_input(INPUT_POST, 'pwd');
 
-	if($com && (strlen($com) > MAX_COM)) error(MSG011);
-	if($name && (strlen($name) > MAX_NAME)) error(MSG012);
-	if($email && (strlen($email) > MAX_EMAIL)) error(MSG013);
-	if($sub && (strlen($sub) > MAX_SUB)) error(MSG014);
-	if($url && (strlen($url) > 200)) error(MSG015);
-	if($pwd && (strlen($pwd) > 72)) error(MSG015);
+	$com_len=strlen($com);
+	$name_len=strlen($name);
+	$email_len=strlen($email);
+	$sub_len=strlen($sub);
+	$url_len=strlen($url);
+	$pwd_len=strlen($pwd);
+
+	if($com_len && ($com_len > MAX_COM)) error(MSG011);
+	if($name_len && ($name_len > MAX_NAME)) error(MSG012);
+	if($email_len && ($email_len > MAX_EMAIL)) error(MSG013);
+	if($sub_len && ($sub_len > MAX_SUB)) error(MSG014);
+	if($url_len && ($url_len > 200)) error(MSG015);
+	if($pwd_len && ($pwd_len > 72)) error(MSG015);
 
 	//チェックする項目から改行・スペース・タブを消す
 
-	$chk_com  = $com ? preg_replace("/\s/u", "", $com ) : '';
-	$chk_name = $name ? preg_replace("/\s/u", "", $name ) : '';
-	$chk_email = $email ? preg_replace("/\s/u", "", $email ) : '';
-	$chk_url = $url ? preg_replace("/\s/u", "", $url ) : '';
-	$chk_sub = $sub ? preg_replace("/\s/u", "", $sub ) : '';
+	$chk_com  = $com_len ? preg_replace("/\s/u", "", $com ) : '';
+	$chk_name = $name_len ? preg_replace("/\s/u", "", $name ) : '';
+	$chk_email = $email_len ? preg_replace("/\s/u", "", $email ) : '';
+	$chk_url = $url_len ? preg_replace("/\s/u", "", $url ) : '';
+	$chk_sub = $sub_len ? preg_replace("/\s/u", "", $sub ) : '';
 
 	//本文に日本語がなければ拒絶
 	if (USE_JAPANESEFILTER) {
 		mb_regex_encoding("UTF-8");
-		if (strlen($com) > 0 && !preg_match("/[ぁ-んァ-ヶー一-龠]+/u",$chk_com)) error(MSG035);
+		if ($com_len && !preg_match("/[ぁ-んァ-ヶー一-龠]+/u",$chk_com)) error(MSG035);
 	}
 
 	//本文へのURLの書き込みを禁止
@@ -2571,7 +2578,7 @@ function create_formatted_text_from_post($com,$name,$email,$url,$sub,$fcolor,$de
 	$url = str_replace(",", "", $url);
 
 	//トリップ(名前の後ろの#と文字列をもとに生成)
-	if((strpos($name,'#')!==false||strpos($name,'＃')!==false) && preg_match("/(#|＃)(.*)/",$name,$regs)){
+	if(preg_match("/(#|＃)(.*)/",$name,$regs)){
 		$cap = $regs[2];
 		$cap=strtr($cap,"&amp;", "&");
 		$cap=strtr($cap,"&#44;", ",");
