@@ -4,7 +4,7 @@
 // POTI-board EVO
 // バージョン :
 const POTI_VER = 'v5.33.8';
-const POTI_LOT = 'lot.221026';
+const POTI_LOT = 'lot.221027';
 
 /*
   (C) 2018-2022 POTI改 POTI-board redevelopment team
@@ -769,7 +769,7 @@ function regist(){
 
 	//画像アップロード
 	$upfile_name = isset($_FILES["upfile"]["name"]) ? basename($_FILES["upfile"]["name"]) : "";
-	if(strlen($upfile_name)>256){
+	if(strlen((string)$upfile_name)>256){
 		error(MSG015);
 	}
 	$upfile = isset($_FILES["upfile"]["tmp_name"]) ? $_FILES["upfile"]["tmp_name"] : "";
@@ -2499,12 +2499,12 @@ function Reject_if_NGword_exists_in_the_post(){
 	$sub = (string)filter_input(INPUT_POST, 'sub');
 	$pwd = (string)filter_input(INPUT_POST, 'pwd');
 
-	$com_len=strlen($com);
-	$name_len=strlen($name);
-	$email_len=strlen($email);
-	$sub_len=strlen($sub);
-	$url_len=strlen($url);
-	$pwd_len=strlen($pwd);
+	$com_len=strlen((string)$com);
+	$name_len=strlen((string)$name);
+	$email_len=strlen((string)$email);
+	$sub_len=strlen((string)$sub);
+	$url_len=strlen((string)$url);
+	$pwd_len=strlen((string)$pwd);
 
 	if($com_len && ($com_len > MAX_COM)) error(MSG011);
 	if($name_len && ($name_len > MAX_NAME)) error(MSG012);
@@ -2559,16 +2559,16 @@ function Reject_if_NGword_exists_in_the_post(){
 function create_formatted_text_from_post($com,$name,$email,$url,$sub,$fcolor,$dest=''){
 
 	//入力チェック
-	if(!$com||preg_match("/\A\s*\z/u",$com)) $com="";
-	if(!$name||preg_match("/\A\s*\z/u",$name)) $name="";
-	if(!$sub||preg_match("/\A\s*\z/u",$sub))   $sub="";
-	if(!$url||!filter_var($url,FILTER_VALIDATE_URL)||!preg_match('{\Ahttps?://}', $url)) $url="";
+	if(!strlen((string)$com)||preg_match("/\A\s*\z/u",$com)) $com="";
+	if(!strlen((string)$name)||preg_match("/\A\s*\z/u",$name)) $name="";
+	if(!strlen((string)$sub)||preg_match("/\A\s*\z/u",$sub))   $sub="";
+	if(!strlen((string)$url)||!filter_var($url,FILTER_VALIDATE_URL)||!preg_match('{\Ahttps?://}', $url)) $url="";
 	$name = str_replace("◆", "◇", $name);
 	$sage=(stripos($email,'sage')!==false);//メールをバリデートする前にsage判定
 	$email = filter_var($email, FILTER_VALIDATE_EMAIL);
-	if(USE_NAME&&!$name) error(MSG009,$dest);
-	if(USE_COM&&!$com) error(MSG008,$dest);
-	if(USE_SUB&&!$sub) error(MSG010,$dest);
+	if(USE_NAME&&$name==="") error(MSG009,$dest);
+	if(USE_COM&&$com==="") error(MSG008,$dest);
+	if(USE_SUB&&$sub==="") error(MSG010,$dest);
 
 	// 改行コード
 	$com = str_replace(["\r\n","\r"], "\n", $com);
