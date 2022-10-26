@@ -3,7 +3,7 @@
 
 // POTI-board EVO
 // バージョン :
-const POTI_VER = 'v5.33.2';
+const POTI_VER = 'v5.33.3';
 const POTI_LOT = 'lot.221026';
 
 /*
