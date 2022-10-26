@@ -3,7 +3,7 @@
 
 // POTI-board EVO
 // バージョン :
-const POTI_VER = 'v5.33.5';
+const POTI_VER = 'v5.33.6';
 const POTI_LOT = 'lot.221026';
 
 /*
@@ -803,7 +803,7 @@ function regist(){
 	if($pictmp==2){
 		if(!$picfile) error(MSG002);
 		$upfile = $temppath.$picfile;
-		$upfile_name = $picfile;
+		$upfile_name = basename($picfile);
 		$picfile=pathinfo($picfile, PATHINFO_FILENAME );//拡張子除去
 		//選択された絵が投稿者の絵か再チェック
 		if (!$picfile || !is_file($temppath.$picfile.".dat")) {
@@ -2571,7 +2571,7 @@ function create_formatted_text_from_post($com,$name,$email,$url,$sub,$fcolor,$de
 	$url = str_replace(",", "", $url);
 
 	//トリップ(名前の後ろの#と文字列をもとに生成)
-	if(preg_match("/(#|＃)(.*)/",$name,$regs)){
+	if((strpos($name,'#')!==false||strpos($name,'＃')!==false) && preg_match("/(#|＃)(.*)/",$name,$regs)){
 		$cap = $regs[2];
 		$cap=strtr($cap,"&amp;", "&");
 		$cap=strtr($cap,"&#44;", ",");
@@ -2971,7 +2971,7 @@ function check_password ($pwd, $hash, $adminPass = false) {
 	global $ADMIN_PASS;
 	return
 		($pwd && (password_verify($pwd, $hash)))
-		||($pwd && ($hash === substr(md5($pwd), 2, 8)))
+		|| ($pwd && ($hash === substr(md5($pwd), 2, 8)))
 		|| ($adminPass && $ADMIN_PASS && ($adminPass === $ADMIN_PASS)); // 管理パスを許可する場合
 }
 function is_neo($src) {//neoのPCHかどうか調べる
