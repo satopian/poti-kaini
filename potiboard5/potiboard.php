@@ -3,7 +3,7 @@
 
 // POTI-board EVO
 // バージョン :
-const POTI_VER = 'v5.35.1';
+const POTI_VER = 'v5.35.2';
 const POTI_LOT = 'lot.221027';
 
 /*
@@ -2799,6 +2799,9 @@ function check_badfile ($chk, $dest = '') {
 	}
 }
 function h($str){//出力のエスケープ
+	if($str!==0 && $str!=='0' && !$str){
+		return '';
+	}
 	return htmlspecialchars((string)$str,ENT_QUOTES,'utf-8',false);
 }
 
