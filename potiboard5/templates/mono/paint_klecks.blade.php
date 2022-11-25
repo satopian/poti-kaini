@@ -3,7 +3,7 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-	<title>お絵かきモード - {{$title}}</title> 
+	<title>{{$title}}</title> 
 
     <!-- this is important -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -94,11 +94,11 @@
 						if(req_status===0){
 							return alert(@if($en)'Server or line is unstable.\nPlease try again!'@else'サーバまたは回線が不安定です。\n時間をおいて再度投稿してみてください。'@endif);	
 						}
-						if(req_status===404){
-							return alert(@if($en)'404 not found\nsaveklecks.php'@else'エラー404\nsaveklecks.phpがありません。'@endif);	
-						}
 						if(req_status===403){
 							return alert(@if($en)'403 Forbidden\nsaveklecks.php'@else'エラー403\nsaveklecks.phpへのアクセスが拒否されました。'@endif);
+						}
+						if(req_status===404){
+							return alert(@if($en)'404 not found\nsaveklecks.php'@else'エラー404\nsaveklecks.phpがありません。'@endif);	
 						}
 						if(req_status===503){
 							return alert(@if($en)'503 Service Unavailable\nPlease try again!'@else'エラー503\n時間をおいて再度投稿してみてください。'@endif);
