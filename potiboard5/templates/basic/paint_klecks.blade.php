@@ -84,13 +84,13 @@
 					if(request.readyState === 4 && request.status === 200) {
 
 						if(request.responseText === 'ok'){
-					//PHPからOKが返って来た時は画面を推移。OKが返って来ない時は、alertを出す。
+						//PHPからOKが返って来た時は画面を推移。OKが返って来ない時は、alertを出す。
 						return window.location.href="?mode={!!$mode!!}&stime={{$stime}}";
-					}
-					return alert(@if($en)'Your picture upload failed! Please try again!'@else'投稿に失敗。時間をおいて再度投稿してみてください。'@endif);
+						}
+						return alert(@if($en)'Your picture upload failed! Please try again!'@else'投稿に失敗。時間をおいて再度投稿してみてください。'@endif);
 					}
 					if(request.readyState === 4 && (request.status != 200)){
-					let req_status=request.status;
+						let req_status=request.status;
 						if(req_status===0){
 							return alert(@if($en)'Server or line is unstable.\nPlease try again!'@else'サーバまたは回線が不安定です。\n時間をおいて再度投稿してみてください。'@endif);	
 						}
