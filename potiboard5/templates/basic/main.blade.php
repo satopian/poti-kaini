@@ -118,10 +118,10 @@
 					//高さ 300から、PMAX_H で設定した最大値まで。
 					for($i = 300; $i <=PMAX_H ; $i+=50){//50ずつ増える
 					if(PDEF_H==$i){//デフォルトサイズ
-					echo'<option value="'.$i.'" selected>'.$i.'</option>';
+					echo'<option value="'.e($i).'" selected>'.e($i).'</option>';
 					}
 					else{
-					echo'<option value="'.$i.'">'.$i.'</option>';
+					echo'<option value="'.e($i).'">'.e($i).'</option>';
 					}
 					}
 				@endphp

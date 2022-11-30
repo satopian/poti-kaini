@@ -24,10 +24,10 @@
 	//幅 300から、PMAX_W で設定した最大値まで。
 		for($i = 300; $i <=PMAX_W ; $i+=50){//50ずつ増える
 		if(PDEF_W==$i){//デフォルトサイズ
-		echo'<option value="'.$i.'" selected>'.$i.'</option>';
+		echo'<option value="'.e($i).'" selected>'.e($i).'</option>';
 		}
 		else{
-		echo'<option value="'.$i.'">'.$i.'</option>';
+		echo'<option value="'.e($i).'">'.e($i).'</option>';
 		}
 		}
 	@endphp

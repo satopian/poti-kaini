@@ -181,7 +181,7 @@
 		@if($paint)
 		<div id="res_paint_form">
 
-			@include('parts.paint_form', ['ress' => $ress])
+			@include('parts.paint_form', ['resno' =>$resno])
 
 		</div>
 
