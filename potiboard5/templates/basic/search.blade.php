@@ -110,7 +110,7 @@
 			<input type="hidden" name="imgsearch" value="off">
 			@endif
 			<input type="text" name="query" placeholder="検索" value="{{$query}}">
-			<input type="submit" value="検索" />
+			<input type="submit" value="検索">
 		</form>
 		<p></p>
 

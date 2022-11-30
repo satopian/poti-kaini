@@ -7,16 +7,16 @@
 	@if ($sharebutton)
 	<meta name="Description" content="{{$oya[0][0]['descriptioncom']}}">
 
-	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:card" content="summary">
 	<meta property="og:title"
-		content="[{{$oya[0][0]['no']}}] {{$oya[0][0]['sub']}} by {{$oya[0][0]['name']}} - {{$title}}" />
-	<meta property="og:type" content="article" />
-	<meta property="og:url" content="{{$rooturl}}{{$self}}?res={{$oya[0][0]['no']}}" />
+		content="[{{$oya[0][0]['no']}}] {{$oya[0][0]['sub']}} by {{$oya[0][0]['name']}} - {{$title}}">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="{{$rooturl}}{{$self}}?res={{$oya[0][0]['no']}}">
 	@if ($oya[0][0]['src'])
-	<meta property="og:image" content="{{$rooturl}}{{$oya[0][0]['imgsrc']}}" />
+	<meta property="og:image" content="{{$rooturl}}{{$oya[0][0]['imgsrc']}}">
 	@endif
-	<meta property="og:site_name" content="" />
-	<meta property="og:description" content="{{$oya[0][0]['descriptioncom']}}" />
+	<meta property="og:site_name" content="">
+	<meta property="og:description" content="{{$oya[0][0]['descriptioncom']}}">
 	@endif
 	<!--ENDSNS-->
 	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">

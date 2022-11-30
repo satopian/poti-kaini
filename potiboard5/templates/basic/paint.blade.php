@@ -74,7 +74,7 @@
 		}
 	</script>
 @if($useneo) 
-<link rel="stylesheet" href="neo.css?{{$parameter_day}}" type="text/css" />
+<link rel="stylesheet" href="neo.css?{{$parameter_day}}" type="text/css">
 <script src="neo.js?{{$parameter_day}}" charset="UTF-8"></script>
 <script>
 	function fixneo() {
@@ -91,7 +91,7 @@
 </script>
 @endif
 @if($pch_mode and $type_neo) 
-<link rel="stylesheet" href="neo.css?{{$parameter_day}}" type="text/css" />
+<link rel="stylesheet" href="neo.css?{{$parameter_day}}" type="text/css">
 <script src="neo.js?{{$parameter_day}}" charset="UTF-8"></script>
 @endif
 	@if(($paint_mode and !$useneo) or ($pch_mode and !$type_neo))

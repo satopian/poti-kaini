@@ -19,32 +19,25 @@
 {{--  キャンバスサイズ 設定はconfig.phpで --}}
 <span class="canvas_size_wrap">
 <span class="bold_gray">Size</span>
-<select name="picw" title="幅" class="canvas_select">
-	@php
-	//幅 300から、PMAX_W で設定した最大値まで。
-		for($i = 300; $i <=PMAX_W ; $i+=50){//50ずつ増える
-		if(PDEF_W==$i){//デフォルトサイズ
-		echo'<option value="'.e($i).'" selected>'.e($i).'</option>';
-		}
-		else{
-		echo'<option value="'.e($i).'">'.e($i).'</option>';
-		}
-		}
-	@endphp
+	<select name="picw" title="幅" class="canvas_select">
+	{{-- 幅 300から、PMAX_W で設定した最大値まで。 --}}
+		@for($i = 300; $i <=$pmaxw ; $i+=50){{-- 50ずつ増える --}}
+		@if(PDEF_W==$i){{-- デフォルトサイズ --}}
+		<option value="{{$i}}" selected>{{$i}}</option>
+		@else
+		<option value="{{$i}}">{{$i}}</option>
+		@endif
+		@endfor
 	</select>
 	x
 	<select name="pich" title="高さ" class="canvas_select">
-	@php
-		//高さ 300から、PMAX_H で設定した最大値まで。
-		for($i = 300; $i <=PMAX_H ; $i+=50){//50ずつ増える
-		if(PDEF_H==$i){//デフォルトサイズ
-		echo'<option value="'.$i.'" selected>'.$i.'</option>';
-		}
-		else{
-		echo'<option value="'.$i.'">'.$i.'</option>';
-		}
-		}
-	@endphp
+		@for($i = 300; $i <=$pmaxh ; $i+=50){{-- 50ずつ増える --}}
+		@if(PDEF_H==$i){{-- デフォルトサイズ --}}
+		<option value="{{$i}}" selected>{{$i}}</option>
+		@else
+		<option value="{{$i}}">{{$i}}</option>
+		@endif
+		@endfor
 	</select> 
 </span>
 {{--  キャンバスサイズ ここまで --}}
@@ -61,7 +54,7 @@
 @if($resno)<input type="hidden" name="resto" value="{{$resno}}">@endif
 @if($admin)
 <input type="hidden" name="admin" value="{{$admin}}">
-<input name="pch_upload" type="file" accept="image/*,.pch,.spch,.chi,.psd" />
+<input name="pch_upload" type="file" accept="image/*,.pch,.spch,.chi,.psd">
 @endif
 <input type="hidden" name="mode" value="paint">
 </form>
