@@ -44,10 +44,11 @@
 // 2003/08/28 perl -> php 移植  by TakeponG >> https://chomstudio.com/
 // 2003/07/11 perl版初公開
 
-//設定
 if(($_SERVER["REQUEST_METHOD"]) !== "POST"){
 	return header( "Location: ./ ") ;
 }
+
+//設定
 
 include(__DIR__.'/config.php');
 
