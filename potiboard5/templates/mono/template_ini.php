@@ -78,6 +78,7 @@ define('MSG045', "アップロードペイントに対応していないファ�
 define('MSG046', "パスワードが短すぎます。最低6文字。[The password is too short. At least 6 characters.]");
 define('MSG047', "画像の幅と高さが大きすぎるため続行できません。<br>[The size of the picture is too large. You can not continue.]");
 define('MSG048', "不適切なURLがあります。<br>[There is an inappropriate URL.]");
+define('MSG049', "拒絶されました。<br>[The post has been rejected.]");
 
 //文字色テーブル '値[,名称]'
 $fontcolors = array('white,White'
