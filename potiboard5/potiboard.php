@@ -3,8 +3,8 @@
 
 // POTI-board EVO
 // バージョン :
-const POTI_VER = 'v5.37.0';
-const POTI_LOT = 'lot.221205';
+const POTI_VER = 'v5.38.0';
+const POTI_LOT = 'lot.221207';
 
 /*
   (C) 2018-2022 POTI改 POTI-board redevelopment team
@@ -360,14 +360,8 @@ function get_csrf_token(){
 }
 //csrfトークンをチェック	
 function check_csrf_token(){
-	//Sec-Fetch-SiteがSafariに実装されていないので、Orijinと、hostをそれぞれ取得して比較。
-	//Orijinがhostと異なっていたら投稿を拒絶。
-	$url_scheme=isset($_SERVER['HTTP_ORIGIN']) ? parse_url($_SERVER['HTTP_ORIGIN'], PHP_URL_SCHEME).'://':'';
-	if($url_scheme && isset($_SERVER['HTTP_HOST']) &&
-	str_replace($url_scheme,'',$_SERVER['HTTP_ORIGIN']) !== $_SERVER['HTTP_HOST']){
-		error(MSG049);
-	}
 
+	check_same_origin();
 	session_sta();
 	$token=(string)filter_input(INPUT_POST,'token');
 	$session_token=isset($_SESSION['token']) ? $_SESSION['token'] : '';
@@ -375,6 +369,14 @@ function check_csrf_token(){
 		error(MSG006);
 	}
 }
+function check_same_origin(){
+
+	$url_scheme=(isset($_SERVER['HTTP_ORIGIN']) && isset($_SERVER['HTTP_HOST'])) ? parse_url($_SERVER['HTTP_ORIGIN'], PHP_URL_SCHEME).'://' : '';
+	if($url_scheme && str_replace($url_scheme,'',$_SERVER['HTTP_ORIGIN']) !== $_SERVER['HTTP_HOST']){
+		error(MSG049);
+	}
+}
+
 	
 // ベース
 function basicpart(){
@@ -1499,6 +1501,8 @@ function check_dir ($path) {
 // お絵かき画面
 function paintform(){
 	global $qualitys,$usercode,$ADMIN_PASS,$pallets_dat;
+
+	check_same_origin();
 
 	$admin = (string)filter_input(INPUT_POST, 'admin');
 	$type = (string)newstring(filter_input(INPUT_POST, 'type'));
