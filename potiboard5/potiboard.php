@@ -3,8 +3,8 @@
 
 // POTI-board EVO
 // バージョン :
-const POTI_VER = 'v5.38.0';
-const POTI_LOT = 'lot.221207';
+const POTI_VER = 'v5.38.2';
+const POTI_LOT = 'lot.221209';
 
 /*
   (C) 2018-2022 POTI改 POTI-board redevelopment team
@@ -377,7 +377,6 @@ function check_same_origin(){
 	}
 }
 
-	
 // ベース
 function basicpart(){
 	global $pallets_dat;
@@ -576,8 +575,10 @@ function updatelog(){
 		//改ページ分岐ここまで
 
 		$dat['paging'] = $paging;
-
-		$logfilename = ($page === 0) ? h(PHP_SELF2) : ($page / PAGE_DEF) . PHP_EXT;
+		if(!is_numeric($page)){
+			error(MSG015);
+		} 
+		$logfilename = ($page == 0) ? h(PHP_SELF2) : ($page / PAGE_DEF) . PHP_EXT;
 		if(is_file($logfilename)){
 			if(PHP_EXT!='.php'){chmod($logfilename,PERMISSION_FOR_DEST);}
 		}
@@ -1464,7 +1465,6 @@ function lang_en(){//言語が日本語以外ならtrue。
 	$lang = ($http_langs = isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? $_SERVER['HTTP_ACCEPT_LANGUAGE'] : '')
 	? explode( ',', $http_langs )[0] : '';
   return (stripos($lang,'ja')!==0);
-  
 }
 function initial_error_message(){
 	$en=lang_en();
@@ -1518,8 +1518,8 @@ function paintform(){
 	$pich = filter_input(INPUT_POST, 'pich',FILTER_VALIDATE_INT);
 	$anime = filter_input(INPUT_POST, 'anime',FILTER_VALIDATE_BOOLEAN);
 	$shi = filter_input(INPUT_POST, 'shi');
-	$pch = (string)newstring(filter_input(INPUT_POST, 'pch'));
-	$ext = (string)newstring(filter_input(INPUT_POST, 'ext'));
+	$pch = (string)basename(newstring(filter_input(INPUT_POST, 'pch')));
+	$ext = (string)basename(newstring(filter_input(INPUT_POST, 'ext')));
 	$ctype = (string)newstring(filter_input(INPUT_POST, 'ctype'));
 	$quality = filter_input(INPUT_POST, 'quality',FILTER_VALIDATE_INT);
 	$no = filter_input(INPUT_POST, 'no',FILTER_VALIDATE_INT);
@@ -1864,6 +1864,7 @@ function openpch(){
 function deltemp(){
 	$handle = opendir(TEMP_DIR);
 	while ($file = readdir($handle)) {
+		$file=basename($file);
 		if(!is_dir($file)) {
 			//pchアップロードペイントファイル削除
 			$lapse = time() - filemtime(TEMP_DIR.$file);
@@ -2241,6 +2242,7 @@ function replace(){
 	$handle = opendir(TEMP_DIR);
 	while ($file = readdir($handle)) {
 		if(!is_dir($file) && preg_match("/\.(dat)\z/i",$file)) {
+			$file=basename($file);
 			$fp = fopen(TEMP_DIR.$file, "r");
 			$userdata = fread($fp, 1024);
 			fclose($fp);
