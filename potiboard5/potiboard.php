@@ -3,8 +3,8 @@
 
 // POTI-board EVO
 // バージョン :
-const POTI_VER = 'v5.38.2';
-const POTI_LOT = 'lot.221209';
+const POTI_VER = 'v5.38.3';
+const POTI_LOT = 'lot.221210';
 
 /*
   (C) 2018-2022 POTI改 POTI-board redevelopment team
@@ -242,6 +242,7 @@ switch($mode){
 			$dat['admin_in'] = true;
 			return htmloutput(OTHERFILE,$dat);
 		}
+		check_same_origin();
 		if($pass && ($pass !== $ADMIN_PASS)) 
 		return error(MSG029);
 	
@@ -578,7 +579,7 @@ function updatelog(){
 		if(!is_numeric($page)){
 			error(MSG015);
 		} 
-		$logfilename = ($page == 0) ? h(PHP_SELF2) : ($page / PAGE_DEF) . PHP_EXT;
+		$logfilename = ($page === 0) ? h(PHP_SELF2) : ($page / PAGE_DEF) . PHP_EXT;
 		if(is_file($logfilename)){
 			if(PHP_EXT!='.php'){chmod($logfilename,PERMISSION_FOR_DEST);}
 		}
@@ -741,7 +742,6 @@ function similar_str($str1,$str2){
 function regist(){
 	global $path,$temppath,$usercode,$ADMIN_PASS;
 	
-
 	//CSRFトークンをチェック
 	check_csrf_token();
 
@@ -1260,6 +1260,8 @@ function newstring($str){
 function userdel(){
 	global $path;
 
+	check_same_origin();
+
 	$thread_no=(string)filter_input(INPUT_POST,'thread_no',FILTER_VALIDATE_INT);
 	$logfilename=(string)filter_input(INPUT_POST,'logfilename');
 	$mode_catalog=filter_input(INPUT_POST,'mode_catalog');
@@ -1325,6 +1327,8 @@ function userdel(){
 // 管理者削除
 function admindel($pass){
 	global $path;
+
+	check_same_origin();
 
 	$onlyimgdel = filter_input(INPUT_POST, 'onlyimgdel',FILTER_VALIDATE_BOOLEAN);
 	$del = filter_input(INPUT_POST,'del',FILTER_VALIDATE_INT,FILTER_REQUIRE_ARRAY);//$del は配列
@@ -1887,6 +1891,8 @@ function deltemp(){
 function incontinue(){
 	global $addinfo;
 
+	check_same_origin();
+
 	$dat['paint_mode'] = false;
 	$dat['pch_mode'] = false;
 	$dat['useneo'] = false;
@@ -1982,6 +1988,8 @@ function incontinue(){
 // コンティニュー認証
 function check_cont_pass(){
 
+	check_same_origin();
+
 	$no = (string)filter_input(INPUT_POST, 'no',FILTER_VALIDATE_INT);
 	$pwd = (string)newstring(filter_input(INPUT_POST, 'pwd'));
 	$pwdc = (string)filter_input(INPUT_COOKIE, 'pwdc');
@@ -2046,6 +2054,8 @@ function download_app_dat(){
 // 編集画面
 function editform(){
 	global $addinfo,$fontcolors,$ADMIN_PASS;
+
+	check_same_origin();
 
 	//csrfトークンをセット
 	$dat['token']=get_csrf_token();
@@ -2228,6 +2238,9 @@ global $ADMIN_PASS;
 // 画像差し換え
 function replace(){
 	global $path,$temppath;
+
+	check_same_origin();
+
 	$no = (string)filter_input(INPUT_GET, 'no',FILTER_VALIDATE_INT);
 	$pwd = (string)newstring(filter_input(INPUT_GET, 'pwd'));
 	$repcode = (string)newstring(filter_input(INPUT_GET, 'repcode'));
