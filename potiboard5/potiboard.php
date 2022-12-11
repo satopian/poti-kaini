@@ -3,8 +3,8 @@
 
 // POTI-board EVO
 // バージョン :
-const POTI_VER = 'v5.38.3';
-const POTI_LOT = 'lot.221210';
+const POTI_VER = 'v5.38.5';
+const POTI_LOT = 'lot.221211';
 
 /*
   (C) 2018-2022 POTI改 POTI-board redevelopment team
@@ -808,7 +808,6 @@ function regist(){
 	foreach($testexts as $testext){
 		if(is_file(IMG_DIR.$time.$testext)){
 		$time=(string)(substr($time,0,-3)+1).(string)substr($time,-3);
-
 		break;
 		}
 	}
@@ -1533,7 +1532,6 @@ function paintform(){
 
 	$dat['klecksusercode']=$usercode;//klecks
 	$dat['resto']=$resto;//klecks
-	
 	// 初期化
 	$dat['image_jpeg'] = 'false';
 	$dat['image_size'] = 0;
@@ -1620,6 +1618,9 @@ function paintform(){
 			$resto= ($oyano&&((int)$oyano!==$no)) ? $oyano :'';
 			//お絵かきレスの新規投稿はスレッドへの返信の新規投稿に。
 			//親の番号ではない事を確認してレス先の番号をセット。
+		}
+		if(!is_file(IMG_DIR.$pch.$ext)){
+			error(MSG001);
 		}
 		list($picw,$pich)=getimagesize(IMG_DIR.$pch.$ext);//キャンバスサイズ
 	
@@ -2238,8 +2239,6 @@ global $ADMIN_PASS;
 // 画像差し換え
 function replace(){
 	global $path,$temppath;
-
-	check_same_origin();
 
 	$no = (string)filter_input(INPUT_GET, 'no',FILTER_VALIDATE_INT);
 	$pwd = (string)newstring(filter_input(INPUT_GET, 'pwd'));
