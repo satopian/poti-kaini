@@ -115,7 +115,7 @@ class noticemail{
 	$Message .= 'UserAgent: '.$_SERVER["HTTP_USER_AGENT"]."\n";
 	$Message .= $line;
 	$Message .= $name ? ('Name: '.$name."\n") :'';
-	$Message .= $from ? 'e-Mail:'.$from."\n" : '';
+	$Message .= $from ? ('e-Mail:'.$from."\n") : '';
 	$option = $data['option'];
 	if(is_array($option)){
 		foreach($option as $value){
