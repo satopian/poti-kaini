@@ -144,7 +144,7 @@
 			<div class="epost">
 
 				{{-- ペイントボタン --}}
-				<form action="{{$self}}" method="post" enctype="multipart/form-data">
+				<form action="{{$self}}" method="post" enctype="multipart/form-data" id="paint_form">
 					<p>
 						幅：<input name="picw" type="number" title="幅" class="form" value="{{$pdefw}}" min="300"
 							max="{{$pmaxw}}">
@@ -190,7 +190,7 @@
 			@endif
 			@if($form)
 			<div>
-				<form action="{{$self}}" method="post" enctype="multipart/form-data">
+				<form action="{{$self}}" method="post" enctype="multipart/form-data" id="comment_form">
 					<input type="hidden" name="token" value="@if($token){{$token}}@endif">
 					<input type="hidden" name="mode" value="regist">
 					@if($resno)<input type="hidden" name="resto" value="{{$resno}}">@endif
@@ -458,6 +458,25 @@
 			new Luminous(elem);
 			});
 		}
+		const paintform = document.getElementById("paint_form");
+		if(paintform){
+			paintform.onsubmit = function (){
+			SetCookie("picwc",paintform.picw.value);
+			SetCookie("pichc",paintform.pich.value);
+			SetCookie("appletc",paintform.shi.value);
+			}
+		};
+		const commentform = document.getElementById("comment_form");
+		if(commentform){
+			commentform.onsubmit = function (){
+			var nameval = encodeURIComponent(commentform.name.value);
+			var urlval = encodeURIComponent(commentform.url.value);
+			var pwdval = encodeURIComponent(commentform.pwd.value);
+			SetCookie("namec",nameval);
+			SetCookie("urlc",urlval);
+			SetCookie("pwdc",pwdval);
+			}
+		};
 	});
 
 	</script>

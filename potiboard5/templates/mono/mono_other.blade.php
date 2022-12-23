@@ -142,7 +142,7 @@
 			{{-- 未投稿画像の画像が無い時はフォームを表示しない --}}
 			@if(!$notmp)
 
-				<form class="" action="{{$self}}" method="post" enctype="multipart/form-data">
+				<form class="" action="{{$self}}" method="post" enctype="multipart/form-data" id="comment_form">
 					<input type="hidden" name="token" value="{{$token}}">
 
 					<table>
@@ -412,6 +412,25 @@
 			new Luminous(elem);
 			});
 		}
+		const paintform = document.getElementById("paint_form");
+		if(paintform){
+			paintform.onsubmit = function (){
+			SetCookie("picwc",paintform.picw.value);
+			SetCookie("pichc",paintform.pich.value);
+			SetCookie("appletc",paintform.shi.value);
+			}
+		};
+		const commentform = document.getElementById("comment_form");
+		if(commentform){
+			commentform.onsubmit = function (){
+			var nameval = encodeURIComponent(commentform.name.value);
+			var urlval = encodeURIComponent(commentform.url.value);
+			var pwdval = encodeURIComponent(commentform.pwd.value);
+			SetCookie("namec",nameval);
+			SetCookie("urlc",urlval);
+			SetCookie("pwdc",pwdval);
+			}
+		};
 	});
 
 	</script>
