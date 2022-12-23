@@ -12,14 +12,9 @@
 	<link rel="stylesheet" href="{{$skindir}}basic.css">
 	<link rel="preload" as="style" href="{{$skindir}}icomoon/style.css" onload="this.rel='stylesheet'">
 	<link rel="preload" as="script" href="lib/{{$jquery}}">
-	<title>カタログモード - {{$title}}</title>
-	<!--
-	// title…掲示板タイトル
-	// charset…文字コード
-	-->
-
-	{{-- <!--クッキー読込み用JavaScript(必須)--> --}}
+	<link rel="preload" as="script" href="{{$skindir}}js/basic_common.js">
 	<link rel="preload" as="script" href="loadcookie.js">
+	<title>カタログモード - {{$title}}</title>
 
 </head>
 
@@ -86,39 +81,19 @@
 		@include('parts.mainte_form')
 
 		<!--JavaScriptの実行(クッキーを読込み、フォームに値をセット)-->
-		<script src="loadcookie.js"></script>
-		<script>
-			document.addEventListener('DOMContentLoaded',l,false);
-		</script>
 		<footer>
 			<!--著作権表示 削除しないでください-->
 			@include('parts.copyright')
 		</footer>
 	</div>
+	<script src="loadcookie.js"></script>
+	<script>
+		document.addEventListener('DOMContentLoaded',l,false);
+	</script>
 	<div id="bottom"></div>
 	<div id="page_top"><a href="#" class="icon-angles-up-solid"></a></div>
 	<script src="lib/{{$jquery}}"></script>
-	<script>
-			// https://cotodama.co/pagetop/
-	jQuery(function() {
-		var pagetop = $('#page_top');   
-		pagetop.hide();
-		$(window).scroll(function () {
-			if ($(this).scrollTop() > 100) {  //100pxスクロールしたら表示
-				pagetop.fadeIn();
-			} else {
-				pagetop.fadeOut();
-			}
-		});
-		pagetop.click(function () {
-			$('body,html').animate({
-				scrollTop: 0
-			}, 500); //0.5秒かけてトップへ移動
-			return false;
-		});
-	});
-	</script>
-
+	<script src="{{$skindir}}js/basic_common.js"></script>
 </body>
 
 </html>

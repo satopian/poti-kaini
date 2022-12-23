@@ -25,6 +25,8 @@
 	<link rel="preload" as="script" href="lib/{{$jquery}}">
 	<link rel="preload" as="style" href="lib/luminous/luminous-basic.min.css" onload="this.rel='stylesheet'">
 	<link rel="preload" as="script" href="lib/luminous/luminous.min.js">
+	<link rel="preload" as="script" href="{{$skindir}}js/basic_common.js">
+	<link rel="preload" as="script" href="loadcookie.js">
 	<style id="for_mobile"></style>
 	<script>
 		function is_mobile() {
@@ -37,13 +39,7 @@
 	</script>
 
 	<title>[{{$oya[0][0]['no']}}] {{$oya[0][0]['sub']}} by {{$oya[0][0]['name']}} - {{$title}}</title>
-	{{-- <!--
-// title…掲示板タイトル
-// charset…文字コード
---> --}}
-	{{-- <!--クッキー読込み用JavaScript(必須)--> --}}
-	<link rel="preload" as="script" href="loadcookie.js">
-
+	{{-- title…掲示板タイトル --}}
 </head>
 
 <body>
@@ -190,7 +186,7 @@
 
 		{{-- <!--投稿フォーム欄--> --}}
 		@if($form)
-		<form action="{{$self}}" method="POST" enctype="multipart/form-data" id="post_form">
+		<form action="{{$self}}" method="POST" enctype="multipart/form-data" id="comment_form">
 			<input type="hidden" name="token" value="{{$token}}">
 			<input type="hidden" name="mode" value="regist">
 			<input type="hidden" name="resto" value="{{$resno}}">
@@ -290,56 +286,20 @@
 
 		{{-- <!-- メンテナンスフォーム欄 --> --}}
 		@include('parts.mainte_form')
-		<script src="loadcookie.js"></script>
-		<script>
-			document.addEventListener('DOMContentLoaded',l,false);
-		</script>
 	
 		<footer>
 			{{-- <!--著作権表示 削除しないでください--> --}}
 			@include('parts.copyright')
 		</footer>
 	</div>
+	<script src="loadcookie.js"></script>
+	<script>
+		document.addEventListener('DOMContentLoaded',l,false);
+	</script>
 	<div id="bottom"></div>
 	<div id="page_top"><a class="icon-angles-up-solid"></a></div>
 	<script src="lib/{{$jquery}}"></script>
 	<script src="lib/luminous/luminous.min.js"></script>
-	<script>
-	jQuery(function() {
-		window.onpageshow = function () {
-			var $btn = $('[type="submit"]');
-			//disbledを解除
-			$btn.prop('disabled', false);
-			$btn.click(function () { //送信ボタン2度押し対策
-				$(this).prop('disabled', true);
-				$(this).closest('form').submit();
-			});
-		}
-		// https://cotodama.co/pagetop/
-		var pagetop = $('#page_top');   
-		pagetop.hide();
-		$(window).scroll(function () {
-			if ($(this).scrollTop() > 100) {  //100pxスクロールしたら表示
-				pagetop.fadeIn();
-			} else {
-				pagetop.fadeOut();
-			}
-		});
-		pagetop.click(function () {
-			$('body,html').animate({
-				scrollTop: 0
-			}, 500); //0.5秒かけてトップへ移動
-			return false;
-		});
-		// https://www.webdesignleaves.com/pr/plugins/luminous-lightbox.html
-		const luminousElems = document.querySelectorAll('.luminous');
-		//取得した要素の数が 0 より大きければ
-		if( luminousElems.length > 0 ) {
-			luminousElems.forEach( (elem) => {
-			new Luminous(elem);
-			});
-		}
-		});
-		</script>
+	<script src="{{$skindir}}js/basic_common.js"></script>
 </body>
 </html>
