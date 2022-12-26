@@ -3,7 +3,7 @@
 
 // POTI-board EVO
 // バージョン :
-const POTI_VER = 'v5.51.0';
+const POTI_VER = 'v5.52.0';
 const POTI_LOT = 'lot.221223';
 
 /*
@@ -1582,7 +1582,16 @@ function paintform(){
 					error(MSG045,$pchup);
 				}
 				if($pchext==="pch"){
-					$shi = is_neo($pchup) ? 'neo': 0;
+					$is_neo=is_neo($pchup);
+					$shi = $is_neo ? 'neo': 0;
+					if($is_neo){
+						if($get_pch_size=get_pch_size($pchup)){
+							list($_picw,$_pich)=$get_pch_size;//pchの幅と高さを取得
+							$numeric_getpch_size=(is_numeric($_picw)&&is_numeric($_pich));
+							$picw = $numeric_getpch_size ? $_picw : $picw;
+							$pich = $numeric_getpch_size ? $_pich : $pich;
+						}
+					}
 					$dat['pchfile'] = $pchup;
 				} elseif($pchext==="spch"){
 					$shi=($shi==1||$shi==2) ? $shi : 1;
@@ -3054,6 +3063,24 @@ function is_neo($src) {//neoのPCHかどうか調べる
 	fclose($fp);
 	return $is_neo;
 }
+//pchデータの幅と高さ
+function get_pch_size($src) {
+	$fp = fopen("$src", "rb");
+	$pch_data=bin2hex(fread($fp,8));
+	fclose($fp);
+
+	$w0=hexdec(substr($pch_data,8,2));
+	$w1=hexdec(substr($pch_data,10,2));
+	$h0=hexdec(substr($pch_data,12,2));
+	$h1=hexdec(substr($pch_data,14,2));
+	if(!is_numeric($w0)||!is_numeric($w1)||!is_numeric($h0)||!is_numeric($h1)){
+		return;
+	}
+	$with=(int)$w0+((int)$w1*256);
+	$height=(int)$h0+((int)$h1*256);
+	return[$with,$height];
+}
+
 //表示用のログファイルを取得
 function get_log($logfile) {
 	if(!$logfile){
@@ -3092,6 +3119,6 @@ if(!$ADMIN_PASS || $ADMIN_PASS!==filter_input(INPUT_POST,'pass')){
 	file_put_contents(__DIR__.'/templates/errorlog/error.log',$errlog,FILE_APPEND);
 	chmod(__DIR__.'/templates/errorlog/error.log',0600);
 	}else{
-		unlink(__DIR__.'/templates/errorlog/error.log');
+		safe_unlink(__DIR__.'/templates/errorlog/error.log');
 	}
 }
