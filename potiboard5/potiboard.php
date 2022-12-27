@@ -3,8 +3,8 @@
 
 // POTI-board EVO
 // バージョン :
-const POTI_VER = 'v5.52.0';
-const POTI_LOT = 'lot.221223';
+const POTI_VER = 'v5.52.2';
+const POTI_LOT = 'lot.221227';
 
 /*
   (C) 2018-2022 POTI改 POTI-board redevelopment team
@@ -1586,14 +1586,14 @@ function paintform(){
 					$shi = $is_neo ? 'neo': 0;
 					if($is_neo){
 						if($get_pch_size=get_pch_size($pchup)){
-							list($_picw,$_pich)=$get_pch_size;//pchの幅と高さを取得
-							$numeric_getpch_size=(is_numeric($_picw)&&is_numeric($_pich));
-							$picw = $numeric_getpch_size ? $_picw : $picw;
-							$pich = $numeric_getpch_size ? $_pich : $pich;
+							list($picw,$pich)=$get_pch_size;//pchの幅と高さを取得
 						}
 					}
 					$dat['pchfile'] = $pchup;
 				} elseif($pchext==="spch"){
+					if($get_spch_size=get_spch_size($pchup)){
+						list($picw,$pich)=$get_spch_size;//pchの幅と高さを取得
+					}
 					$shi=($shi==1||$shi==2) ? $shi : 1;
 					$dat['pchfile'] = $pchup;
 				} elseif($pchext==="chi"){
@@ -3068,7 +3068,8 @@ function get_pch_size($src) {
 	$fp = fopen("$src", "rb");
 	$pch_data=bin2hex(fread($fp,8));
 	fclose($fp);
-
+	$width=null;
+	$height=null;
 	$w0=hexdec(substr($pch_data,8,2));
 	$w1=hexdec(substr($pch_data,10,2));
 	$h0=hexdec(substr($pch_data,12,2));
@@ -3076,11 +3077,41 @@ function get_pch_size($src) {
 	if(!is_numeric($w0)||!is_numeric($w1)||!is_numeric($h0)||!is_numeric($h1)){
 		return;
 	}
-	$with=(int)$w0+((int)$w1*256);
+	$width=(int)$w0+((int)$w1*256);
 	$height=(int)$h0+((int)$h1*256);
-	return[$with,$height];
+	return[(int)$width,(int)$height];
 }
-
+//spchデータの幅と高さ
+function get_spch_size($src) {
+	$lines=[];
+	$width=null;
+	$height=null;
+	$i=0;
+	$fp=fopen($src,"rb");
+		while($line = fgets($fp)){
+			if(!trim($line)){
+				continue;
+			}
+			$lines[]=trim($line);
+			if($i>6){
+				break;
+			}
+		++$i;
+		}
+	foreach($lines as $str){
+	parse_str($str, $output);
+	if(isset($output['image_width'])){
+		$width=$output['image_width'];
+	}
+	if(isset($output['image_height'])){
+		$height=$output['image_height'];
+	}
+	}
+	if(!is_numeric($width)||!is_numeric($height)){
+		return;
+	}
+	return[(int)$width,(int)$height];
+}
 //表示用のログファイルを取得
 function get_log($logfile) {
 	if(!$logfile){
