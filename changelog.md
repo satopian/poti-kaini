@@ -1,3 +1,22 @@
+## [2022/12/24] v5.51.0
+- PaintBBS NEO 更新 v1.5.16
+- WAF（ウェブアプリケーションファイアウォール)をオンにすると、JavaScriptでCookieを読み込めなくなる問題に対応しました。
+WAFをオンにするとCookieが、暗号化され、httpOnly属性が付きます。
+POTI-boardでは静的HTMLファイルへのJavaScriptによるCookieのロードを行っています。
+そのため、従来のPOTI-boardではWAFをオンにするとフォーム入力内容のCookieを読み込む事ができませんでした。
+フォーム入力内容のCookieをPHPプログラムによる発行に加え、JavaScriptでも発行することでこの問題を解決しました。  
+もっとも、JavaScriptでCookieを読み込む事ができないようにするhttpOnlyのCookieを使ったほうが安全性は高くなりますので、httpOnlyのCookieを使ったお絵かき掲示板を使いたい方は、[Petit Note](https://github.com/satopian/Petit_Note)の利用をご検討ください。  
+POTI-boardからのログの変換も可能です。
+[satopian/PetitNote_plugin: お絵かき掲示板 Petit Note のプラグイン](https://github.com/satopian/PetitNote_plugin)
+
+- フォーム入力内容のCookieを発行するJavaScriptをHTMLファイルに入れるとインラインのJavaScriptの行数が多くなってしまうため、外部化しました。
+そこには、スクロールすると出てくる上に戻るボタンやLuminousのポップアップ表示のためのJavaScriptも入っています。
+たびたびテンプレートの更新が必要になってしまいお手数をおかけしますがよろしくお願いします。  
+`templates/basic/js/` のような、JavaScript用のディレクトリもできました。  
+このディレクトリのアップロードを忘れると、スクロールするとでてくる上に戻るボタンや、画像をクリックすると同じ画面にポップアップするJavaScriptなどが動作しなくなりますので、ご注意ください。
+たくさん注意事項を書きましたがテンプレートをカスタマイズしていない方は、`templates/`ディレクトリをすべて上書きするだけです。
+新規設置の方もすべてアップロードするだけです。
+
 ## [2022/12/21] v5.50.11
 
 ### 改善
