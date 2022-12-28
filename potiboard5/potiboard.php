@@ -3,7 +3,7 @@
 
 // POTI-board EVO
 // バージョン :
-const POTI_VER = 'v5.52.3';
+const POTI_VER = 'v5.52.5';
 const POTI_LOT = 'lot.221228';
 
 /*
@@ -3068,7 +3068,7 @@ function get_pch_size($src) {
 		return;
 	}
 	$fp = fopen("$src", "rb");
-	$is_neo=(fread($fp,3)==="NEO");
+	$is_neo=(fread($fp,3)==="NEO");//ファイルポインタが3byte移動
 	$pch_data=bin2hex(fread($fp,8));
 	fclose($fp);
 	$width=null;
@@ -3096,6 +3096,9 @@ function get_pch_size($src) {
 }
 //spchデータの幅と高さ
 function get_spch_size($src) {
+	if(!$src){
+		return;
+	}
 	$lines=[];
 	$width=null;
 	$height=null;
@@ -3121,6 +3124,9 @@ function get_spch_size($src) {
 	}
 	}
 	if(!is_numeric($width)||!is_numeric($height)){
+		return;
+	}
+	if(!$width||!$height){
 		return;
 	}
 	return[(int)$width,(int)$height];
