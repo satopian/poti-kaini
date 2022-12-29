@@ -2751,14 +2751,26 @@ function calcPtime ($psec) {
  */
 function check_pch_ext ($filepath,$options = []) {
 	if (is_file($filepath . ".pch")) {
+		if(!in_array(mime_content_type($filepath . ".pch"),["application/octet-stream","application/gzip"])){
+			return '';
+		}
 		return ".pch";
 	} elseif (is_file($filepath . ".spch")) {
+		if(mime_content_type($filepath . ".spch")!=="application/octet-stream"){
+			return '';
+		}
 		return ".spch";
 	} elseif (!isset($options['upfile'])) {
 		return '';
 	} elseif (is_file($filepath . ".chi")) {
+		if(mime_content_type($filepath . ".chi")!=="application/octet-stream"){
+			return '';
+		}
 		return ".chi";
 	} elseif (is_file($filepath . ".psd")) {
+		if(mime_content_type($filepath . ".psd")!=="application/octet-stream"){
+			return '';
+		}
 		return ".psd";
 	} 
 	return '';
@@ -3069,7 +3081,7 @@ function get_pch_size($src) {
 	}
 	$fp = fopen("$src", "rb");
 	$is_neo=(fread($fp,3)==="NEO");//ファイルポインタが3byte移動
-	$pch_data=bin2hex(fread($fp,8));
+	$pch_data=bin2hex(fread($fp,5));
 	fclose($fp);
 	$width=null;
 	$height=null;
@@ -3079,6 +3091,9 @@ function get_pch_size($src) {
 		$h0=hexdec(substr($pch_data,6,2));
 		$h1=hexdec(substr($pch_data,8,2));
 	}else{
+		if(mime_content_type($src)!=="application/gzip"){
+			return;
+		}
 		$w0=hexdec(substr($pch_data,6,2));
 		$w1=hexdec(substr($pch_data,8,2));
 		$h0=hexdec(substr($pch_data,10,2));
