@@ -1054,9 +1054,14 @@ function regist(){
 		if ($pchext = check_pch_ext($temppath.$picfile,['upfile'=>true])) {
 			$src = $temppath.$picfile.$pchext;
 			$dst = PCH_DIR.$time.$pchext;
+
+			if(in_array(mime_content_type($src),["application/octet-stream","application/gzip","image/vnd.adobe.photoshop"])){
 				if(copy($src, $dst)){
 					chmod($dst,PERMISSION_FOR_DEST);
 				}
+			}else{
+				safe_unlink($src);
+			}
 		}
 
 		list($w, $h) = getimagesize($dest);
@@ -2403,8 +2408,13 @@ function replace(){
 			if ($pchext = check_pch_ext($temppath . $file_name,['upfile'=>true])) {
 				$src = $temppath . $file_name . $pchext;
 				$dst = PCH_DIR . $time . $pchext;
-				if(copy($src, $dst)){
-					chmod($dst, PERMISSION_FOR_DEST);
+				
+				if(in_array(mime_content_type($src),["application/octet-stream","application/gzip","image/vnd.adobe.photoshop"])){
+					if(copy($src, $dst)){
+						chmod($dst,PERMISSION_FOR_DEST);
+					}
+				}else{
+					safe_unlink($src);
 				}
 			}
 			
@@ -2750,29 +2760,21 @@ function calcPtime ($psec) {
  * @return string
  */
 function check_pch_ext ($filepath,$options = []) {
-	if (is_file($filepath . ".pch")) {
-		if(!in_array(mime_content_type($filepath . ".pch"),["application/octet-stream","application/gzip"])){
+	
+	$exts=[".pch",".spch",".chi",".psd"];
+
+	foreach($exts as $i => $ext){
+
+		if (is_file($filepath . $ext)) {
+			if(!in_array(mime_content_type($filepath . $ext),["application/octet-stream","application/gzip","image/vnd.adobe.photoshop"])){
+				return '';
+			}
+			return $ext;
+		}
+		if(!isset($options['upfile']) && $i >= 1){
 			return '';
 		}
-		return ".pch";
-	} elseif (is_file($filepath . ".spch")) {
-		if(mime_content_type($filepath . ".spch")!=="application/octet-stream"){
-			return '';
-		}
-		return ".spch";
-	} elseif (!isset($options['upfile'])) {
-		return '';
-	} elseif (is_file($filepath . ".chi")) {
-		if(mime_content_type($filepath . ".chi")!=="application/octet-stream"){
-			return '';
-		}
-		return ".chi";
-	} elseif (is_file($filepath . ".psd")) {
-		if(mime_content_type($filepath . ".psd")!=="application/octet-stream"){
-			return '';
-		}
-		return ".psd";
-	} 
+	}
 	return '';
 }
 
