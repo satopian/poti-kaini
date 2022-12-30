@@ -1,6 +1,11 @@
 {{-- ペイントボタン --}}
 
 <form action="{{$self}}" method="post" enctype="multipart/form-data" class="paint_form" id="paint_form">
+	@if($admin)
+	<input type="hidden" name="admin" value="{{$admin}}">
+	<input name="pch_upload" type="file" accept="image/*,.pch,.spch,.chi,.psd" class="pchup_button">
+	<br>
+	@endif
 	<input type="submit" value="PAINT" class="paint_button">
 	@if ($select_app)
 	<span class="bold_gray">Tool</span>
@@ -52,10 +57,6 @@
 	// // animechk…動画記録をデフォルトでチェックするとき ' checked' が入る
 	//  --}}
 @if($resno)<input type="hidden" name="resto" value="{{$resno}}">@endif
-@if($admin)
-<input type="hidden" name="admin" value="{{$admin}}">
-<input name="pch_upload" type="file" accept="image/*,.pch,.spch,.chi,.psd">
-@endif
 <input type="hidden" name="mode" value="paint">
 </form>
 
