@@ -22,6 +22,9 @@
 			margin: 6px 0;
 			display: inline-block;
 		}
+		.pchup_button {
+			margin: 0 0 10px 0;
+		}
 	</style>
 	<title>{{$title}}</title>
 	<style id="for_mobile"></style>
