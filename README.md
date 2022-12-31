@@ -113,7 +113,7 @@ HTMLタグも旧独自タグも廃止してしまいましたが、urlの自動�
 
 ## 最新のリリース
 
-- [POTI-board EVO v5.36.8 リリース](https://github.com/satopian/poti-kaini/releases/latest)
+- [リリースから安定版をダウンロードできます。](https://github.com/satopian/poti-kaini/releases/latest)
 
 ## 履歴
 
