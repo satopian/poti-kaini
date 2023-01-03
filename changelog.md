@@ -22,7 +22,7 @@ EdgeのIEモードでJavaを使用すれば2023年の環境でしぃペインタ
 
 ![image](https://user-images.githubusercontent.com/44894014/210075639-8908cd75-be38-4808-b0cd-9ce5e90097ab.png)  
 ↑    
-Javaを使用するサイトを例外リストに追加すればそのサイトでJava起動します。  
+Javaを使用するサイトを例外リストに追加すればそのサイトでJavaが起動します。  
 
 ## [2022/12/28] v5.52.2
 
