@@ -559,7 +559,7 @@ name="pch" code="pch.PCHViewer.class" archive="PCHViewer.jar,PaintBBS.jar" width
 
 @if($select_app)
 <select name="shi" class="paint_select">
-	<option value="neo">PaintBBS NEO</option>
+	@if ($use_neo)<option value="neo">PaintBBS NEO</option>@endif
 	@if($use_shi_painter) <option value="1" class="for_pc">しぃペインター</option>@endif
 	@if($use_chickenpaint) <option value="chicken">ChickenPaint</option>@endif
 	@if ($use_klecks)<option value="klecks">Klecks</option>@endif

@@ -79,19 +79,20 @@
 
 			<form action="{{$self}}" method="post" enctype="multipart/form-data" class="paint_form" id="paint_form">
 				<input type="submit" value="PAINT" class="paint_button">
-				@if ($select_app)
-				<span class="bold_gray">Tool</span>
+			@if($select_app)
+			<span class="bold_gray">Tool</span>
 				<select name="shi" class="select_applet">
-				<option value="neo">PaintBBS NEO</option>
+				@if ($use_neo)<option value="neo">PaintBBS NEO</option>@endif
 				@if ($use_shi_painter)<option value="1" class="for_pc">しぃペインター</option>@endif
 				@if ($use_chickenpaint)<option value="chicken">ChickenPaint</option>@endif
 				@if ($use_klecks)<option value="klecks">Klecks</option>@endif
 			</select>
-			@else
-			{{--  選択メニューを出さない時に起動するアプリ  --}}
-			<input type="hidden" name="shi" value="neo">
+			@endif 
+			{{-- <!-- 選択メニューを出さない時に起動するアプリ --> --}}
+			@if($app_to_use)
+			<input type="hidden" name="shi" value="{{$app_to_use}}">
 			@endif
-
+		
 			{{--  キャンバスサイズ 設定はconfig.phpで --}}
 			<span class="canvas_size_wrap">
 			<span class="bold_gray">Size</span>

@@ -46,13 +46,14 @@ define("USE_IMG_UPLOAD","1");
 define("DENY_COMMENTS_ONLY", "0");
 //する:1 でも管理者はコメントのみの投稿ができます。
 
+//PaintBBS NEOを使う 使う:1 使わない:0 
+define("USE_PAINTBBS_NEO", "1");
 //しぃペインターを使う 使う:1 使わない:0 
 define("USE_SHI_PAINTER", "1");
 //ChickenPaintを使う 使う:1 使わない:0 
 define("USE_CHICKENPAINT", "1");
 //klecksを使う 使う:1 使わない:0 
 define("USE_KLECKS", "1");
-//PaintBBS NEOはどの設定でも起動します。
 
 /*----------絶対に設定が必要な項目はここまでです。ここから下は必要に応じて。----------*/
 

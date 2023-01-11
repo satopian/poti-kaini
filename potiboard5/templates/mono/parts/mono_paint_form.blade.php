@@ -8,18 +8,20 @@
 		@endif
 		幅：<input name="picw" type="number" title="幅" class="form" value="{{$pdefw}}" min="300" max="{{$pmaxw}}">
 		高さ：<input name="pich" type="number" title="高さ" class="form" value="{{$pdefh}}" min="300" max="{{$pmaxh}}">
-		@if($select_app)
+	@if($select_app)
 		ツール:
 		<select name="shi">
-		<option value="neo">PaintBBS NEO</option>
+		@if ($use_neo)<option value="neo">PaintBBS NEO</option>@endif
 		@if($use_shi_painter)<option value="1" class="for_pc">しぃペインター</option>@endif
 		@if($use_chickenpaint)<option value="chicken">ChickenPaint</option>@endif
 		@if ($use_klecks)<option value="klecks">Klecks</option>@endif
 	</select>
-	@else 
+	@endif 
 	{{-- <!-- 選択メニューを出さない時に起動するアプリ --> --}}
-	<input type="hidden" name="shi" value="neo">
+	@if($app_to_use)
+	<input type="hidden" name="shi" value="{{$app_to_use}}">
 	@endif
+
 	
 		@if($use_select_palettes)
 		パレット：<select name="selected_palette_no" title="パレット" class="form">{!!$palette_select_tags!!}</select>
