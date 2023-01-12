@@ -54,6 +54,8 @@ define("USE_SHI_PAINTER", "1");
 define("USE_CHICKENPAINT", "1");
 //klecksを使う 使う:1 使わない:0 
 define("USE_KLECKS", "1");
+//管理者は設定に関わらすべてのアプリを使用できるようにする する:1 しない:0
+define('ALLOW_ADMINS_TO_USE_ALL_APPS_REGARDLESS_OF_SETTINGS', '1');
 
 /*----------絶対に設定が必要な項目はここまでです。ここから下は必要に応じて。----------*/
 

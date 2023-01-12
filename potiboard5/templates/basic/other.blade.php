@@ -100,8 +100,10 @@
 		@if($admin)
 		@if($regist)
 
+		@if($paint)
 		{{-- ペイントフォーム --}}
 		@include('parts.paint_form',['admin'=>$admin])
+		@endif
 
 		@endif
 		@endif
