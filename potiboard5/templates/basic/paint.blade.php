@@ -258,8 +258,9 @@ pe[n]}}function GradView(a,f){d=document}function showHideLayer(){d=document;var
 @if($useneo) <applet-dummy @else<applet @endif
 
  CODE="pbbs.PaintBBS.class" ARCHIVE="./PaintBBS.jar" NAME="paintbbs" WIDTH="{{$w}}" HEIGHT="{{$h}}" MAYSCRIPT>
- <param name="neo_confirm_unload" value="true">
- <param name="neo_show_right_button" value="true">
+<param name="neo_send_with_formdata" value="true">
+<param name="neo_confirm_unload" value="true">
+<param name="neo_show_right_button" value="true">
 @endif
 <!--しぃペインター個別設定-->
 @if($normal) 
@@ -301,7 +302,11 @@ pe[n]}}function GradView(a,f){d=document}function showHideLayer(){d=document;var
 <param name="tool_advance" value="true">
 <param name="thumbnail_width" value="100%">
 <param name="thumbnail_height" value="100%">
+@if($useneo)
+<param name="url_save" value="saveneo.php">
+@else
 <param name="url_save" value="picpost.php">
+@endif
 <param name="url_exit" value="{{$self}}?mode={{$mode}}&amp;stime={{$stime}}">
 @if($anime) 
 <param name="thumbnail_type" value="animation">
