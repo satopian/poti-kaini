@@ -115,6 +115,12 @@ define("USE_JAPANESEFILTER", "1");
 //管理者は設定にかかわらず許可
 define("DENY_COMMENTS_URL", "0");
 
+//URL入力欄を使用する する:1 しない:0
+define("USE_URL_INPUT_FIELD", "1");
+//しない:0 で、フォームの入力欄からURL欄が消えます。
+//フォームを偽装してもURLの入力ができなくなります。
+
+
 //指定した日数を過ぎたスレッドのフォームを閉じる
 //define("ELAPSED_DAYS","0");
 //設定しないなら "0"で。フォームを閉じません。

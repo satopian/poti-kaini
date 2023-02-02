@@ -182,12 +182,14 @@
 					<td><input type="text" name="email" @if($email) value="{{$email}}" @endif class="post_input_text"
 							autocomplete="email"></td>
 				</tr>
+				@if($use_url_input)
 				<tr>
 					<td class="post_table_title">URL</td>
 					<!--編集時、valueにURLをセット-->
 					<td><input type="url" name="url" @if($url) value="{{$url}}" @endif class="post_input_text"
 							autocomplete="url"></td>
 				</tr>
+				@endif
 				<tr>
 					<td class="post_table_title">題名@if($usesub) (必須) @endif</td>
 					<!--編集時、valueに題名をセット-->

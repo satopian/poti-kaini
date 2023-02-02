@@ -203,10 +203,12 @@
 					<td class="post_table_title">E-mail</td>
 					<td><input type="text" name="email" class="post_input_text" autocomplete="email"></td>
 				</tr>
+				@if($use_url_input)
 				<tr>
 					<td class="post_table_title">URL</td>
 					<td><input type="url" name="url" class="post_input_text" autocomplete="url"></td>
 				</tr>
+				@endif
 				<tr>
 					<td class="post_table_title">題名@if($usesub)(必須)@endif</td>
 					<td><input type="text" name="sub" value="{{$resub}}" class="post_input_text" autocomplete="off">
