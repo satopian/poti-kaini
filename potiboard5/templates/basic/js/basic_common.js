@@ -36,17 +36,29 @@
 		const paintform = document.getElementById("paint_form");
 		if(paintform){
 			paintform.onsubmit = function (){
-			SetCookie("picwc",paintform.picw.value);
-			SetCookie("pichc",paintform.pich.value);
-			SetCookie("appletc",paintform.shi.value);
+				if(paintform.picw){
+					SetCookie("picwc",paintform.picw.value);
+				}
+				if(paintform.pich){
+					SetCookie("pichc",paintform.pich.value);
+				}
+				if(paintform.shi){
+					SetCookie("appletc",paintform.shi.value);
+				}
 			}
 		};
 		const commentform = document.getElementById("comment_form");
 		if(commentform){
 			commentform.onsubmit = function (){
-			SetCookie("namec",commentform.name.value);
-			SetCookie("urlc",commentform.url.value);
-			SetCookie("pwdc",commentform.pwd.value);
+				if(commentform.name){
+					SetCookie("namec",commentform.name.value);
+				}
+				if(commentform.url){
+					SetCookie("urlc",commentform.url.value);
+				}
+				if(commentform.pwd){
+					SetCookie("pwdc",commentform.pwd.value);
+				}
 			}
 		};
 		function SetCookie(key, val) {
