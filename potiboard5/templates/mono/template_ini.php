@@ -45,7 +45,7 @@ define('MSG012', "名前が長すぎます。[name is too long.]");
 define('MSG013', "メールアドレスが長すぎます。[email is too long.]");
 define('MSG014', "題名が長すぎます。[subject is too long.]");
 define('MSG015', "異常です。[Unknown error]");
-define('MSG016', "拒絶されました。[Post was rejected.]<br>そのHOSTからの投稿は受け付けません。[This HOST has been banned from posting.]");
+define('MSG016', "拒絶されました。[Post was rejected.]<br>このHOSTからの投稿は受け付けません。[This HOST has been banned from posting.]");
 define('MSG017', "ＥＲＲＯＲ！[Error]　公開ＰＲＯＸＹ規制中！！[Open-PROXY is limited.](80)");
 define('MSG018', "ＥＲＲＯＲ！[Error]　公開ＰＲＯＸＹ規制中！！[Open-PROXY is limited.](8080)");
 define('MSG019', "ログの読み込みに失敗しました。[It failed in reading the log.]");
