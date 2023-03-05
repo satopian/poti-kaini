@@ -19,13 +19,21 @@
 @endif
 @if($pch_mode)<meta name="viewport" content="width=device-width,initial-scale=1.0">@endif
 @if($continue_mode)<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">@endif
-<link rel="stylesheet" type="text/css" href="{{$skindir}}basic.css">
+<link rel="stylesheet" type="text/css" href="{{$skindir}}basic.css?{{$verlot}}">
 <title>@if($paint_mode)お絵かきモード@endif @if($continue_mode)続きを描く@endif @if($pch_mode)動画表示モード@endif - {{$title}}</title>
 {{--  
 // title…掲示板タイトル
 // charset…文字コード
  --}}
-@if($paint_mode)
+ @if($continue_mode)
+ <style>
+	 /* index.cssを更新しない人がいるかもしれないためインラインでも記述 */
+	 #span_cont_paint_same_thread {
+		 display: none;
+	 }
+</style>
+ @endif	
+ @if($paint_mode)
 <style>
 	body{overscroll-behavior-x: none !important; }
 	div#chickenpaint-parent , div.appstage {
@@ -568,12 +576,15 @@ name="pch" code="pch.PCHViewer.class" archive="PCHViewer.jar,PaintBBS.jar" width
         @if($ctype_pch) <option value="pch">動画より続きを描く</option>@endif
         @if($ctype_img) <option value="img">画像より続きを描く</option>@endif
       </select>
-      画像は <select name="type" class="paint_select">
+      画像は <select name="type" class="paint_select" id="select_post">
 	<option value="rep">差し換え</option>
 	<option value="new">新規投稿</option>
-       </select>
-       </span>
-      <br>
+	</select>
+	</span>
+	<span class="nk" id="span_cont_paint_same_thread">
+		<input type="checkbox" name="cont_paint_same_thread" id="cont_paint_same_thread" value="on" checked="checked"><label for="cont_paint_same_thread">同じスレッドに投稿する</label>
+	</span>
+<br>
 {{-- 
 //select_app ツールの選択メニューを出す時にtrueが入る
 //use_shi_painter しぃペインターを使う設定の時にtrueが入る
@@ -597,7 +608,7 @@ name="pch" code="pch.PCHViewer.class" archive="PCHViewer.jar,PaintBBS.jar" width
 <span class="palette_type">PALETTE</span> <select name="selected_palette_no" title="パレット" class="paint_select palette_type">{!!$palette_select_tags!!}</select>
 @endif
 <span class="input_disp_none"><input type="text" value="" autocomplete="username"></span>
-<span class="nk">削除キー<input type="password" name="pwd" value="" class="paint_password" autocomplete="current-password"></span>
+<span class="nk" id="span_cont_pass">削除キー<input type="password" name="pwd" value="" class="paint_password" autocomplete="current-password"></span>
 <input type="submit" value="続きを描く">
 
 </form>
@@ -613,7 +624,35 @@ name="pch" code="pch.PCHViewer.class" archive="PCHViewer.jar,PaintBBS.jar" width
 	</ul>
 </div>
 
-
+<script>
+	// 新規投稿時にのみ、同じスレッドに投稿するボタンを表示
+	document.getElementById('select_post').addEventListener('change', function() {
+		var idx=document.getElementById('select_post').selectedIndex;
+		console.log(idx);
+		var obj2style_1=document.getElementById('span_cont_paint_same_thread');
+		var obj2style_2=document.getElementById('span_cont_pass');
+		if(idx === 1){
+			if(obj2style_1){
+				obj2style_1.style.display = "inline-block";
+			}
+			@if($newpost_nopassword) 
+			if(obj2style_2){
+			obj2style_2.style.display = "none";
+			}
+			@endif
+		}else{
+			if(obj2style_1){
+				obj2style_1.style.display = "none";
+			}
+			@if($newpost_nopassword) 
+			if(obj2style_2){
+				obj2style_2.style.display = "inline-block";
+			}
+			@endif
+		}
+	});
+</script>
+	
 <!--JavaScriptの実行(クッキーを読込み、フォームに値をセット)-->
 <script>
 		document.addEventListener('DOMContentLoaded',l,false);
