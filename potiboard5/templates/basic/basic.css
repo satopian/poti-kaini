@@ -628,14 +628,12 @@ input.pch_upload {
 
 
 .paint_password {
-	color: #555;
 	width: 80px;
 	height: 16px;
 	padding: 1px;
 }
 
 .paint_select {
-	color: #555;
 	height: 21px;
 }
 
