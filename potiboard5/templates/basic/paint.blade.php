@@ -582,7 +582,7 @@ name="pch" code="pch.PCHViewer.class" archive="PCHViewer.jar,PaintBBS.jar" width
 	</select>
 	</span>
 	<span class="nk" id="span_cont_paint_same_thread">
-		<input type="checkbox" name="cont_paint_same_thread" id="cont_paint_same_thread" value="on" checked="checked"><label for="cont_paint_same_thread">同じスレッドに投稿する</label>
+		<input type="checkbox" name="cont_paint_same_thread" id="cont_paint_same_thread" value="on" checked="checked"><label for="cont_paint_same_thread" class="bold_gray">同じスレッドに投稿する</label>
 	</span>
 <br>
 {{-- 

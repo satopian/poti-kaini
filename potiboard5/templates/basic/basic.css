@@ -628,14 +628,14 @@ input.pch_upload {
 
 
 .paint_password {
-	color: #666666;
+	color: #555;
 	width: 80px;
 	height: 16px;
 	padding: 1px;
 }
 
 .paint_select {
-	color: #666666;
+	color: #555;
 	height: 21px;
 }
 
@@ -809,6 +809,8 @@ tr.deltable_tr{
 /*  続から描くフォーム */
 .continue_post_form {
 	line-height: 1.8;
+	text-align: initial;
+	display: inline-block;
 }
 /* レス書き込みの説明 */
 .howtowrite {

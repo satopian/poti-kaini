@@ -101,7 +101,7 @@
 				{{$comment['com']}}
 				<div class="res_button_wrap">
 					<form action="{{$comment['link']}}" method="post" target="_blank"><input type="submit" value="返信"
-							class="res_button"></form><span class="page_top"><a href="#top">△</a></span>
+							class="res_button"></form>
 				</div>
 			</div>
 		</div>
