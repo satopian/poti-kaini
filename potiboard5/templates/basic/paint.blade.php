@@ -19,7 +19,7 @@
 @endif
 @if($pch_mode)<meta name="viewport" content="width=device-width,initial-scale=1.0">@endif
 @if($continue_mode)<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">@endif
-<link rel="stylesheet" type="text/css" href="{{$skindir}}basic.css?{{$verlot}}">
+<link rel="stylesheet" type="text/css" href="{{$skindir}}basic.css?{{$ver}}">
 <title>@if($paint_mode)お絵かきモード@endif @if($continue_mode)続きを描く@endif @if($pch_mode)動画表示モード@endif - {{$title}}</title>
 {{--  
 // title…掲示板タイトル
