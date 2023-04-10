@@ -77,8 +77,8 @@
 			{{-- <!--親記事ヘッダ--> --}}
 			@if ($loop->first)
 			{{-- 最初のループ --}}
-			<h2 class="article_title">@if($notres)<a href="{{$self}}?res={{$ress[0]['no']}}">@endif[{{$ress[0]['no']}}]
-					{{$ress[0]['sub']}}@if($notres)</a>@endif</h2>
+			<h2 class="article_title"><a href="{{$self}}?res={{$ress[0]['no']}}">[{{$ress[0]['no']}}]
+					{{$ress[0]['sub']}}</a></h2>
 		
 			@else
 			<hr>
@@ -87,6 +87,7 @@
 				<div class="res_article_title">[{{$res['no']}}] {{$res['sub']}}</div>
 				@endif
 				{{-- <!-- 記事共通ヘッダ --> --}}
+				@if(!isset($res['not_deleted'])||$res['not_deleted'])
 				<div class="article_info">
 					<span class="article_info_name"><a href="search.php?page=1&imgsearch=on&query={{$res['encoded_name']}}&radio=2"
 							target="_blank" rel="noopener">{{$res['name']}}</a></span>@if($res['url'])<span
@@ -107,7 +108,7 @@
 						@endif			
 					</div>
 				</div>
-
+				@endif
 		
 					{{-- <!-- 記事共通ヘッダここまで --> --}}
 		
@@ -119,7 +120,12 @@
 								></a>
 					</div>
 					@endif
-					<div class="comment"> {!!$res['com']!!}</div>
+					<div class="comment">
+						{!!$res['com']!!}
+						@if(isset($res['not_deleted'])&&!$res['not_deleted'])
+						この記事はありません。
+						@endif
+					</div>
 					{{-- // $res/tab…TAB順用連番
 					// $res/imgsrc…サムネイルがあるとき、サムネイルURL。サムネイルがないとき、画像URL
 					// $res/w…画像サイズ(横)

@@ -186,6 +186,7 @@
 		<div class="res_article_title">[{{$res['no']}}] {{$res['sub']}}</div>
 		@endif
 		{{-- 記事共通ヘッダ --}}
+		@if(!isset($res['not_deleted'])||$res['not_deleted'])
 		<div class="article_info">
 			<span class="article_info_name"><a href="search.php?page=1&imgsearch=on&query={{$res['encoded_name']}}&radio=2"
 					target="_blank" rel="noopener">{{$res['name']}}</a></span>@if($res['url'])<span
@@ -206,7 +207,7 @@
 				@endif			
 			</div>
 		</div>
-
+		@endif
 			{{-- 記事共通ヘッダここまで --}}
 
 			@if($res['src'])<div class="posted_image" @if($res['w']>=750) style="margin-right:0;float:none;" @endif >
@@ -217,7 +218,13 @@
 						@if($i>4)loading="lazy"@endif></a>
 			</div>
 			@endif
-			<div class="comment"> {!!$res['com']!!}</div>
+			<div class="comment"> 
+			{!!$res['com']!!}
+			@if(isset($res['not_deleted'])&&!$res['not_deleted'])
+			この記事はありません。
+			@endif
+			</div>
+
 			{{-- // $res/tab…TAB順用連番
 			// $res/imgsrc…サムネイルがあるとき、サムネイルURL。サムネイルがないとき、画像URL
 			// $res/w…画像サイズ(横)
