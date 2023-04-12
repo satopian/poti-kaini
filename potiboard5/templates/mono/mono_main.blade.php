@@ -298,7 +298,7 @@
 					<div class="comment_wrap">
 					<p>{!!$res['com']!!}
 							@if(isset($res['not_deleted'])&&!$res['not_deleted'])
-							This post does not exist.
+							この記事はありません。
 							@endif
 					</p>
 						{{-- コメント部分 --}}
