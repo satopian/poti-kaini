@@ -207,7 +207,6 @@
 				@endif			
 			</div>
 		</div>
-		@endif
 			{{-- 記事共通ヘッダここまで --}}
 
 			@if($res['src'])<div class="posted_image" @if($res['w']>=750) style="margin-right:0;float:none;" @endif >
@@ -218,12 +217,7 @@
 						@if($i>4)loading="lazy"@endif></a>
 			</div>
 			@endif
-			<div class="comment"> 
-			{!!$res['com']!!}
-			@if(isset($res['not_deleted'])&&!$res['not_deleted'])
-			この記事はありません。
-			@endif
-			</div>
+			<div class="comment">{!!$res['com']!!}</div>
 
 			{{-- // $res/tab…TAB順用連番
 			// $res/imgsrc…サムネイルがあるとき、サムネイルURL。サムネイルがないとき、画像URL
@@ -232,6 +226,11 @@
 			// $res/srcname…画像ファイル名
 			// $res/size…画像ファイルサイズ
 			// $res/com…本文 --}}
+		@endif
+			@if(isset($res['not_deleted'])&&!$res['not_deleted'])
+			この記事はありません。
+			@endif
+
 			@if ($loop->first)
 			@if ($res['skipres'])
 			<hr>

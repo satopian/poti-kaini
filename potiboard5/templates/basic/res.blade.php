@@ -73,7 +73,7 @@
 		<article>
 			@if(isset($ress) and !@empty($ress))
 		
-			@foreach ($ress as $res)
+			@foreach ($ress as $i => $res)
 			{{-- <!--親記事ヘッダ--> --}}
 			@if ($loop->first)
 			{{-- 最初のループ --}}
@@ -108,8 +108,7 @@
 						@endif			
 					</div>
 				</div>
-				@endif
-		
+				
 					{{-- <!-- 記事共通ヘッダここまで --> --}}
 		
 					@if($res['src'])<div class="posted_image" @if($res['w']>=750) style="margin-right:0;float:none;" @endif >
@@ -117,15 +116,11 @@
 								src="{{$res['imgsrc']}}" width="{{$res['w']}}" height="{{$res['h']}}"
 								alt="{{$res['sub']}} by {{$res['name']}} ({{$res['size_kb']}} KB)"
 								title="{{$res['sub']}} by {{$res['name']}} ({{$res['size_kb']}} KB) @if($res['thumb'])サムネイル縮小表示 @endif"
+								@if($i>4)loading="lazy"@endif
 								></a>
 					</div>
 					@endif
-					<div class="comment">
-						{!!$res['com']!!}
-						@if(isset($res['not_deleted'])&&!$res['not_deleted'])
-						この記事はありません。
-						@endif
-					</div>
+					<div class="comment">{!!$res['com']!!}</div>
 					{{-- // $res/tab…TAB順用連番
 					// $res/imgsrc…サムネイルがあるとき、サムネイルURL。サムネイルがないとき、画像URL
 					// $res/w…画像サイズ(横)
@@ -133,7 +128,11 @@
 					// $res/srcname…画像ファイル名
 					// $res/size…画像ファイルサイズ
 					// $res/com…本文 --}}
-			@if (!$loop->first)
+				@endif
+				@if(isset($res['not_deleted'])&&!$res['not_deleted'])
+				この記事はありません。
+				@endif
+				@if (!$loop->first)
 			</div>
 			@endif
 					
