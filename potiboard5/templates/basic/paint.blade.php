@@ -225,7 +225,7 @@ document.addEventListener("DOMContentLoaded", function() {
         allowDownload: true,
         resourcesRoot: "chickenpaint/",
         disableBootstrapAPI: true,
-		fullScreenMode: "auto"
+		fullScreenMode: "force"
 	});
 })
 </script>
