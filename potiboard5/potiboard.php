@@ -3062,7 +3062,6 @@ function writeFile ($fp, $data) {
 	fwrite($fp, $data);
 }
 
-
 function closeFile ($fp) {
 	if($fp){
 		fflush($fp);
