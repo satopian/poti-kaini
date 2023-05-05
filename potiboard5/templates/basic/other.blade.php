@@ -258,21 +258,6 @@
 			</table>
 		</form>
 		@endif
-		<script src="lib/{{$jquery}}"></script>
-		<script>
-		jQuery(function() {
-			window.onpageshow = function () {
-				var $btn = $('[type="submit"]');
-				//disbledを解除
-				$btn.prop('disabled', false);
-				$btn.click(function () { //送信ボタン2度押し対策
-					$(this).prop('disabled', true);
-					$(this).closest('form').submit();
-				});
-			}
-		});
-		</script>
-
 		<!--新規投稿のみクッキーを読込み-->
 		@if($regist)
 		<script>
