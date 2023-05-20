@@ -8,7 +8,7 @@
 - jQueryのバージョン管理はpotiboard.phpの内部で行っているため、個別のテンプレートの修正は必要ありません。
 ### 非推奨になったJavaScriptとjQueryの構文を修正しました
 - templates/basic/js/basic_common.js
-- templates/mono/js/mono_common.js
+- templates/mono/js/mono_common.js  
 各ファイルの非推奨になったJavaScriptとjQueryの構文を修正しました。
 
 ## [2023/05/07] v5.58.9.1
