@@ -1,3 +1,16 @@
+## [2023/05/20] v5.59.0
+### バグ修正
+- Tweetボタンを押した時に記事の固定リンクのURLが正しくセットされなくなっていたのを修正しました。
+- このバグはv5.58.6で発生し、v5.59.0で修正されました。
+
+### jQuery更新 
+- jQueryをjQuery3.6.0からjQuery3.7.0に更新しました。
+- jQueryのバージョン管理はpotiboard.phpの内部で行っているため、個別のテンプレートの修正は必要ありません。
+### 非推奨になったJavaScriptとjQueryの構文を修正しました
+- templates/basic/js/basic_common.js
+- templates/mono/js/mono_common.js
+各ファイルの非推奨になったJavaScriptとjQueryの構文を修正しました。
+
 ## [2023/05/07] v5.58.9.1
 - Klecks更新
 - BladeOne更新
