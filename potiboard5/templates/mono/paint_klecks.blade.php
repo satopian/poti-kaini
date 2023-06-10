@@ -73,7 +73,6 @@
 					.then((response) => {
 						if (response.ok) {
 							response.text().then((text) => {
-
 							console.log(text)
 							if(text==='ok'){
 								return window.location.href="?mode={!!$mode!!}&stime={{$stime}}";
@@ -152,8 +151,18 @@
 					ctx.restore();
 					return canvas;
 				})(),
-			}]
-		});
+			},{
+				name: '{{$TranslatedLayerName}} 1',
+				opacity: 1,
+				mixModeStr: 'source-over',
+				image: (() => {
+					const canvas = document.createElement('canvas');
+					canvas.width = {{$picw}};
+					canvas.height = {{$pich}};
+					return canvas;
+				})()
+			}
+		]});
 	}
 </script>
 <!-- embed end -->
