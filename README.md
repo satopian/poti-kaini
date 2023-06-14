@@ -119,6 +119,16 @@ HTMLタグも旧独自タグも廃止してしまいましたが、urlの自動�
 
 ## [すべての履歴はこちら](./changelog.md)
 
+## [2023/06/11] v5.60.0
+### ペイントアプリの非推奨になったJavaScriptを修正
+- PaintBBS NEOをv1.6.0に更新しました。独自拡張版として運用していたバージョンを開発元にマージしていただく事ができました。
+- ChickenPaintの独自修正版を同梱しました。
+
+### Klecksがレイヤー二枚で起動するようになりました。
+
+![image](https://github.com/satopian/poti-kaini/assets/44894014/23eec76c-969a-458b-931a-2c3bb56e9201)
+
+
 ## [2023/04/13] v5.58.5
 
 #### PaintBBS NEOの動的パレットの非推奨になったJavaScriptを修正
