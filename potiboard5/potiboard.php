@@ -3,8 +3,8 @@
 
 // POTI-board EVO
 // バージョン :
-const POTI_VER = 'v5.61.3';
-const POTI_LOT = 'lot.20230627';
+const POTI_VER = 'v5.62.0';
+const POTI_LOT = 'lot.20230707';
 
 /*
   (C) 2018-2023 POTI改 POTI-board redevelopment team
@@ -97,6 +97,7 @@ if ($err = check_file(__DIR__.'/thumbnail_gd.php')) {
 	die($err);
 }
 require(__DIR__.'/thumbnail_gd.php');
+require(__DIR__.'/sns_share.inc.php');
 
 $path = __DIR__.'/'.IMG_DIR;
 $temppath = __DIR__.'/'.TEMP_DIR;
@@ -156,6 +157,7 @@ defined("PAINT_KLECKS") or define("PAINT_KLECKS", "paint_klecks");
 defined("USE_TEGAKI") or define("USE_TEGAKI", "1");
 defined("PAINT_TEGAKI") or define("PAINT_TEGAKI", "paint_tegaki");
 defined("TGKR_VIEW") or define("TGKR_VIEW", "tgkr_view");
+defined("SET_SHARE_SERVER") or define("SET_SHARE_SERVER", "set_share_server");
 
 //レス画像から新規投稿で続きを描いた画像はレスにする する:1 しない:0
 defined("RES_CONTINUE_IN_CURRENT_THREAD") or define("RES_CONTINUE_IN_CURRENT_THREAD", "1");
@@ -305,6 +307,10 @@ switch($mode){
 		return catalog();
 	case 'download':
 		return download_app_dat();
+	case 'set_share_server':
+		return sns_share::set_share_server();
+	case 'post_share_server':
+		return sns_share::post_share_server();
 	default:
 		if($res){
 			return res($res);
