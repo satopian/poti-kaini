@@ -24,7 +24,7 @@
 	<link rel="preload" as="script" href="lib/{{$jquery}}">
 	<link rel="preload" as="style" href="lib/luminous/luminous-basic.min.css" onload="this.rel='stylesheet'">
 	<link rel="preload" as="script" href="lib/luminous/luminous.min.js">
-	<link rel="preload" as="script" href="{{$skindir}}js/basic_common.js">
+	<link rel="preload" as="script" href="{{$skindir}}js/basic_common.js?{{$ver}}">
 	<link rel="preload" as="script" href="loadcookie.js">
 	<style id="for_mobile"></style>
 	<script>
@@ -289,7 +289,7 @@
 	<div id="page_top"><a class="icon-angles-up-solid"></a></div>
 	<script src="lib/{{$jquery}}"></script>
 	<script src="lib/luminous/luminous.min.js"></script>
-	<script src="{{$skindir}}js/basic_common.js"></script>
+	<script src="{{$skindir}}js/basic_common.js?{{$ver}}"></script>
 </body>
 
 </html>

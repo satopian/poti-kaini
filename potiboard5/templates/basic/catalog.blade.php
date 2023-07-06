@@ -12,7 +12,7 @@
 	<link rel="stylesheet" href="{{$skindir}}basic.css?{{$ver}}">
 	<link rel="preload" as="style" href="{{$skindir}}icomoon/style.css" onload="this.rel='stylesheet'">
 	<link rel="preload" as="script" href="lib/{{$jquery}}">
-	<link rel="preload" as="script" href="{{$skindir}}js/basic_common.js">
+	<link rel="preload" as="script" href="{{$skindir}}js/basic_common.js?{{$ver}}">
 	<link rel="preload" as="script" href="loadcookie.js">
 	<title>カタログモード - {{$title}}</title>
 
@@ -93,7 +93,7 @@
 	<div id="bottom"></div>
 	<div id="page_top"><a href="#" class="icon-angles-up-solid"></a></div>
 	<script src="lib/{{$jquery}}"></script>
-	<script src="{{$skindir}}js/basic_common.js"></script>
+	<script src="{{$skindir}}js/basic_common.js?{{$ver}}"></script>
 </body>
 
 </html>

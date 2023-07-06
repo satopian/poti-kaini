@@ -64,8 +64,7 @@
 		function SetCookie(key, val) {
 			document.cookie = key + "=" + encodeURIComponent(val) + ";max-age=31536000;";
 		}
-
-		});
+	});
 
 		//shareするSNSのserver一覧を開く
 		var snsWindow = null; // グローバル変数としてウィンドウオブジェクトを保存する
