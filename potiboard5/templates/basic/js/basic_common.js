@@ -64,4 +64,21 @@
 		function SetCookie(key, val) {
 			document.cookie = key + "=" + encodeURIComponent(val) + ";max-age=31536000;";
 		}
-	});
+
+		});
+
+		//shareするSNSのserver一覧を開く
+		var snsWindow = null; // グローバル変数としてウィンドウオブジェクトを保存する
+
+		function open_sns_server_window(event) {
+			event.preventDefault(); // デフォルトのリンクの挙動を中断
+			
+			var url = event.currentTarget.href;
+			var windowFeatures = "width=350,height=480"; // ウィンドウのサイズを指定
+			
+			if (snsWindow && !snsWindow.closed) {
+				snsWindow.focus(); // 既に開かれているウィンドウがあればフォーカスする
+			  } else {
+				snsWindow = window.open(url, "_blank", windowFeatures); // 新しいウィンドウを開く
+			  }
+		}

@@ -252,13 +252,10 @@
 					@if($sharebutton)
 					{{-- シェアボタン --}}
 					<span class="share_button">
-						<a target="_blank"
-						href="https://twitter.com/intent/tweet?text={{$ress[0]['encoded_t']}}&url={{$ress[0]['encoded_u']}}"><span
-						class="icon-twitter"></span>Tweet</a>
-						<a target="_blank" class="fb btn"
-						href="http://www.facebook.com/share.php?u={{$ress[0]['encoded_u']}}"><span
-						class="icon-facebook2"></span>Share</a>
-					</span>
+						
+						<a href="?mode=set_share_server&encoded_t={{$ress[0]['encoded_t']}}&amp;encoded_u={{$ress[0]['encoded_u']}}" onclick="open_sns_server_window(event)"><span class="icon-share-from-square-solid"></span>
+							<?php if($en):?>Share on SNS<?php else:?>SNSで共有する<?php endif;?></a>
+		</span>
 					@endif
 					<form action="{{$self}}?res={{$ress[0]['no']}}" method="post"><input type="submit"
 						value="@if($ress[0]['disp_resbutton']) 返信 @else 表示 @endif" class="res_button"></form></div>

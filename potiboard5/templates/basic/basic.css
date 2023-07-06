@@ -63,11 +63,10 @@ input[type="url"],
 input[type="number"],
 textarea,
 select {
-	border: 1px #686868 solid;
-	background-color: #FFFFFE;
-	border-radius: 0;
-	margin: 1px;
-	color: #555;
+	/* border: 1px #686868 solid; */
+	/* border-radius: 0; */
+	/* margin: 1px; */
+	/* color: #555; */
 }
 
 select {
