@@ -74,7 +74,7 @@
 			event.preventDefault(); // デフォルトのリンクの挙動を中断
 			
 			var url = event.currentTarget.href;
-			var windowFeatures = "width=350,height=480"; // ウィンドウのサイズを指定
+			var windowFeatures = "width=350,height=490"; // ウィンドウのサイズを指定
 			
 			if (snsWindow && !snsWindow.closed) {
 				snsWindow.focus(); // 既に開かれているウィンドウがあればフォーカスする

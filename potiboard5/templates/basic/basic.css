@@ -14,7 +14,6 @@ td {
 	font-size: 16px;
 	letter-spacing: 0.09em;
 	overflow-wrap: anywhere;
-
 }
 
 #body {
@@ -63,10 +62,11 @@ input[type="url"],
 input[type="number"],
 textarea,
 select {
-	/* border: 1px #686868 solid; */
-	/* border-radius: 0; */
-	/* margin: 1px; */
-	/* color: #555; */
+	border: 1px #686868 solid;
+	border-radius: 0;
+	margin: 1px;
+	color: #555;
+	background-color: #fffffe;
 }
 
 select {
@@ -79,8 +79,8 @@ input[type="file"] {
 }
 
 input:-webkit-autofill {
-	box-shadow: 0 0 0 1000px white inset;
-	-webkit-box-shadow: 0 0 0 1000px white inset;
+	/* box-shadow: 0 0 0 1000px white inset; */
+	/* -webkit-box-shadow: 0 0 0 1000px white inset; */
 }
 
 .nk {
@@ -229,8 +229,9 @@ a:hover {
 
 .post_submit {
 	height: 2em;
-	width: 8em;
-	font-size: 13px;
+	/* width: 8em; */
+	/* font-size: 13px; */
+	padding: 0 1.5em;
 }
 
 #post_table select {
@@ -876,8 +877,9 @@ form.paint_form{
 }
 
 .paint_button {
-	width: 78px;
+	/* width: 78px; */
 	height: 25px;
+	padding: 0 1.2em;
 }
 
 .select_applet {
@@ -958,7 +960,7 @@ input.copy_txt {
 
 .copy_button {
 	border: 1px solid #ffcfcf;
-	color: #686868;
+	color: #555;
 	padding: 3px 5px;
 	border-radius: 5px;
 	margin: 0 3px 0 -2px;
