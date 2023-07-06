@@ -253,7 +253,7 @@
 					{{-- シェアボタン --}}
 					<span class="share_button">
 						
-						<a href="?mode=set_share_server&encoded_t={{$ress[0]['encoded_t']}}&amp;encoded_u={{$ress[0]['encoded_u']}}" onclick="open_sns_server_window(event)"><span class="icon-share-from-square-solid"></span>
+						<a href="{{$self2}}?mode=set_share_server&encoded_t={{$ress[0]['encoded_t']}}&amp;encoded_u={{$ress[0]['encoded_u']}}" onclick="open_sns_server_window(event)"><span class="icon-share-from-square-solid"></span>
 							<?php if($en):?>Share on SNS<?php else:?>SNSで共有する<?php endif;?></a>
 		</span>
 					@endif
