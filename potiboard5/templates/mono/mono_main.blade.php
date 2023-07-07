@@ -333,7 +333,7 @@
 				<span class="share_button">
 					@if($switch_sns)
 					<a href="{{$self}}?mode=set_share_server&encoded_t={{$ress[0]['encoded_t']}}&amp;encoded_u={{$ress[0]['encoded_u']}}" onclick="open_sns_server_window(event)"><span
-						class="button"><img src="{{$skindir}}img/share-from-square-solid.svg" alt="">SNSで共有する</span>
+						class="button"><img src="{{$skindir}}img/share-from-square-solid.svg" alt=""> SNSで共有する</span></a>
 					@else
 					<a target="_blank"
 						href="https://twitter.com/intent/tweet?text={{$ress[0]['encoded_t']}}&url={{$ress[0]['encoded_u']}}"><span

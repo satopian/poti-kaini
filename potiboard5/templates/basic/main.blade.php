@@ -252,16 +252,16 @@
 					@if($sharebutton)
 					{{-- シェアボタン --}}
 					<span class="share_button">
-					@if($switch_sns)	
+					@if($switch_sns)
 						<a href="{{$self}}?mode=set_share_server&encoded_t={{$ress[0]['encoded_t']}}&amp;encoded_u={{$ress[0]['encoded_u']}}" onclick="open_sns_server_window(event)"><span class="icon-share-from-square-solid"></span>
-							SNSで共有する</a>
+						SNSで共有する</a>
 					@else
 						<a target="_blank"
 						href="https://twitter.com/intent/tweet?text={{$ress[0]['encoded_t']}}&url={{$ress[0]['encoded_u']}}"><span
-						class="icon-twitter"></span>Tweet</a>
+						class="icon-twitter"></span> Tweet</a>
 						<a target="_blank" class="fb btn"
 						href="http://www.facebook.com/share.php?u={{$ress[0]['encoded_u']}}"><span
-						class="icon-facebook2"></span>Share</a>
+						class="icon-facebook2"></span> Share</a>
 					@endif
 					</span>
 					@endif
