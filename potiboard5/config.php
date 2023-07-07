@@ -364,7 +364,7 @@ define("LANG", "Japanese");
 define("SWITCH_SNS","1");
 
 // SNS共有の時に一覧で表示するサーバ
-//例 	["表示名","https://example.com/(SNSのサーバのurl)"],(最後にカンマが必要です)
+//例 	["表示名","https://example.com (SNSのサーバのurl)"],(最後にカンマが必要です)
 
 $servers =
 [
