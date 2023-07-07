@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8">
-	{{-- <!--SNS--> --}}
+	{{-- SNS --}}
 	@if ($sharebutton)
 	<meta name="Description" content="{{$oya[0][0]['descriptioncom']}}">
 
@@ -18,7 +18,7 @@
 	<meta property="og:site_name" content="">
 	<meta property="og:description" content="{{$oya[0][0]['descriptioncom']}}">
 	@endif
-	<!--ENDSNS-->
+	{{-- ENDSNS --}}
 	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
 	<link rel="stylesheet" href="{{$skindir}}basic.css?{{$ver}}">
 	<link rel="preload" as="style" href="{{$skindir}}icomoon/style.css" onload="this.rel='stylesheet'">
@@ -168,8 +168,17 @@
 					@if($sharebutton)
 					{{-- シェアボタン --}}
 					<span class="share_button">
+					@if($switch_sns)
 						<a href="{{$self}}?mode=set_share_server&encoded_t={{$ress[0]['encoded_t']}}&amp;encoded_u={{$ress[0]['encoded_u']}}" onclick="open_sns_server_window(event)"><span class="icon-share-from-square-solid"></span>
-							SNSで共有する</a>
+						SNSで共有する</a>
+					@else
+						<a target="_blank"
+						href="https://twitter.com/intent/tweet?text={{$ress[0]['encoded_t']}}&url={{$ress[0]['encoded_u']}}"><span
+						class="icon-twitter"></span>Tweet</a>
+						<a target="_blank" class="fb btn"
+						href="http://www.facebook.com/share.php?u={{$ress[0]['encoded_u']}}"><span
+						class="icon-facebook2"></span>Share</a>
+					@endif
 					</span>
 					@endif
 
