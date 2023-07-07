@@ -3,7 +3,7 @@
 
 // POTI-board EVO
 // バージョン :
-const POTI_VER = 'v5.62.0';
+const POTI_VER = 'v5.62.1';
 const POTI_LOT = 'lot.20230707';
 
 /*
@@ -172,6 +172,7 @@ defined("CHECK_PASSWORD_INPUT_ERROR_COUNT") or define("CHECK_PASSWORD_INPUT_ERRO
 defined("ALLOW_ADMINS_TO_USE_ALL_APPS_REGARDLESS_OF_SETTINGS") or define("ALLOW_ADMINS_TO_USE_ALL_APPS_REGARDLESS_OF_SETTINGS", "1");
 //URL入力欄を使用する する:1 しない:0
 defined("USE_URL_INPUT_FIELD") or define("USE_URL_INPUT_FIELD", "1");
+defined("SWITCH_SNS") or define("SWITCH_SNS", "1");
 
 $badurl= isset($badurl) ? $badurl : [];//拒絶するurl
 
@@ -424,6 +425,8 @@ function basicpart(){
 	$dat['skindir'] = 'templates/'.SKIN_DIR;
 	$dat['for_new_post'] = (!USE_IMG_UPLOAD && DENY_COMMENTS_ONLY||DIARY) ? false : true;
 	$dat['diary'] = DIARY ? true : false;
+	$dat['switch_sns'] = SWITCH_SNS;
+	
 	//OGPイメージ シェアボタン
 	$dat['rooturl'] = ROOT_URL;//設置場所url
 	$dat['encoded_rooturl'] = urlencode(ROOT_URL);//設置場所url
