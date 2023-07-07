@@ -63,10 +63,10 @@ input[type="number"],
 textarea,
 select {
 	border: 1px #686868 solid;
+	background-color: #fffffe;
 	border-radius: 0;
 	margin: 1px;
 	color: #555;
-	background-color: #fffffe;
 }
 
 select {
@@ -78,10 +78,6 @@ input[type="file"] {
 	background-color: transparent;
 }
 
-input:-webkit-autofill {
-	/* box-shadow: 0 0 0 1000px white inset; */
-	/* -webkit-box-shadow: 0 0 0 1000px white inset; */
-}
 
 .nk {
 	display: inline-block;
@@ -229,8 +225,7 @@ a:hover {
 
 .post_submit {
 	height: 2em;
-	/* width: 8em; */
-	/* font-size: 13px; */
+	font-size: 13px;
 	padding: 0 1.5em;
 }
 

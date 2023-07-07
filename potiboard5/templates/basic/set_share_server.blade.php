@@ -43,7 +43,7 @@
 <input type="hidden" name="encoded_t" value="{{$encoded_t}}">
 <input type="hidden" name="encoded_u" value="{{$encoded_u}}">
 <input type="hidden" name="mode" value="post_share_server">
-<input type="submit" value="@if($en) Share on SNS @else シェアする @endif" class="post_share_button">
+<input type="submit" value="@if($en) Share @else シェア @endif" class="post_share_button">
 <script src="lib/{{$jquery}}"></script>
 <script src="{{$skindir}}js/basic_common.js?{{$ver}}"></script>
 </body>
