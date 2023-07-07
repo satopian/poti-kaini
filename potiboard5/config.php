@@ -359,6 +359,49 @@ define("COMMENT_LIMIT_HIGH", "80");
 //utf-8の時は何を設定しても同じ
 define("LANG", "Japanese");
 
+/* ---------- SNSシェア機能詳細設定 ---------- */
+//シェア機能に、Mastodon、Misskeyの各サーバを含める 1:含める 0:含めない  
+defined("SWITCH_SNS","1");
+
+// SNS共有の時に一覧で表示するサーバ
+//例 	["表示名","https://example.com/(SNSのサーバのurl)"],(最後にカンマが必要です)
+
+$servers =
+[
+		
+	["twitter","https://twitter.com/"],
+	["mstdn.jp","https://mstdn.jp/"],
+	["pawoo.net","https://pawoo.net/"],
+	["fedibird.com","https://fedibird.com/"],
+	["misskey.io","https://misskey.io/"],
+	["misskey.design","https://misskey.design/"],
+	["nijimiss.moe","https://nijimiss.moe/"],
+	["sushi.ski","https://sushi.ski/"],
+
+];
+
+
+/* ---------- SNS share function advanced settings ---------- */
+//Include Mastodon and Misskey servers in the share function 1: Include 0: Do not include
+defined("SWITCH_SNS","1");
+
+// Servers displayed in the list when sharing on SNS
+//Example ["display name","https://example.com/(SNS server url)"], (comma is required at the end)
+
+$servers =
+[
+
+["twitter","https://twitter.com/"],
+["mstdn.jp","https://mstdn.jp/"],
+["pawoo.net","https://pawoo.net/"],
+["fedibird.com","https://fedibird.com/"],
+["misskey.io","https://misskey.io/"],
+["misskey.design","https://misskey.design/"],
+["nijimiss.moe","https://nijimiss.moe/"],
+["sushi.ski","https://sushi.ski/"],
+
+];
+
 /* ---------- お絵かき詳細設定 ---------- */
 
 //テンポラリ内のファイル有効期限(日数)
