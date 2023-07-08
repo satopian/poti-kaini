@@ -114,6 +114,10 @@ label{
 	cursor:pointer;
 }
 
+.form_radio_sns_server label:hover{
+	background-color: #ffe6e6;
+}
+
 
 label.radio input[type="radio"]:checked {
 	box-shadow: none;
