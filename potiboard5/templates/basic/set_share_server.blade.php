@@ -16,6 +16,9 @@
 	*{
 		font-size: 18px;
 	}
+	input[type="radio"]{
+		display: none;
+	}
 	input.post_share_button {
     width: 100%;
 	}
