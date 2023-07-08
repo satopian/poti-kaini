@@ -938,6 +938,7 @@ form.paint_form{
 input[type=radio]:checked+label {
 	color: #626262;
 	background: #ffe6e6;
+	font-weight: 600;
 }
 
 .ntslabel:hover {
