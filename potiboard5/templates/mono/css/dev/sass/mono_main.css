@@ -10,45 +10,45 @@ label {
 }
 
 body {
-  background-color: #f7f8fb;
-  color: #222;
+  background-color: #111111;
+  color: #FEFEFE;
   font-family: sans-serif;
   overflow-wrap: anywhere;
   margin: 10.5px;
 }
 
 a:link {
-  color: #555;
+  color: #CCC;
 }
 
 a:visited {
-  color: #555;
+  color: #CCC;
 }
 
 a:active {
-  color: #333;
+  color: #FEFEFE;
 }
 
 a:hover {
   text-decoration: none;
-  color: #333;
+  color: #FEFEFE;
 }
 
 h2 a:link {
-  color: #222;
+  color: #FEFEFE;
 }
 
 h2 a:visited {
-  color: #222;
+  color: #FEFEFE;
 }
 
 h2 a:active {
-  color: #222;
+  color: #FEFEFE;
 }
 
 h2 a:hover {
-  color: #222;
-  background-color: #b3daff;
+  color: #FEFEFE;
+  background-color: #252525;
 }
 
 h2 a {
@@ -57,7 +57,7 @@ h2 a {
 }
 
 hr {
-  border: dashed 1px #80afff;
+  border: dashed 1px #4ba781;
   margin: 1ex auto;
 }
 
@@ -66,7 +66,7 @@ hr.hr {
 }
 
 header, main > section > .thread, main > div#catalog, footer > div, footer > div.copy, main > section > .thread, footer > div {
-  background-color: #FEFEFE;
+  background-color: #333333;
   padding: 8px;
 }
 
@@ -74,7 +74,7 @@ header, main > section > .thread, main > div#catalog, footer > div, footer > div
   margin: 0px auto;
   display: block;
   max-width: 1350px;
-  border: solid 1px #80afff;
+  border: solid 1px #4ba781;
 }
 
 footer > div form {
@@ -87,9 +87,9 @@ footer > div.copy {
 
 input, textarea, select, .se {
   border-style: solid;
-  border-color: #4a4c56 #66F #66F #4a4c56;
+  border-color: #063 #50a57a #50a57a #063;
   border-width: 1px;
-  color: #222;
+  color: #000;
   background-color: #EEEEEE;
   padding: 3px;
 }
@@ -101,9 +101,9 @@ textarea {
 
 button, button.copy_button, .button {
   border-style: solid;
-  border-color: #66F #4a4c56 #4a4c56 #66F;
+  border-color: #50a57a #063 #063 #50a57a;
   border-width: 1px;
-  color: #222;
+  color: #000;
   background-color: #EEEEEE;
 }
 
@@ -133,7 +133,7 @@ input[name=pwd], textarea[name=pwd], select[name=pwd], .se[name=pwd], input[name
 }
 
 input[value=お絵かき], textarea[value=お絵かき], select[value=お絵かき], button.copy_button, .se[value=お絵かき], .button {
-  background-color: #7aa3f5;
+  background-color: #4e9979;
   color: #FFF;
 }
 
@@ -161,14 +161,14 @@ em.thispage {
 }
 
 .se {
-  color: #222;
+  color: #000;
   background-color: #EEEEEE;
   font-style: normal;
 }
 
 .name {
   line-height: 1em;
-  border: solid 1px #7aa3f5;
+  border: solid 1px #4e9979;
   border-radius: 5px;
   display: inline-block;
 }
@@ -180,7 +180,7 @@ em.thispage {
 }
 
 .name:hover {
-  background-color: #f0f8ff;
+  background-color: #222;
 }
 
 h1 a {
@@ -188,8 +188,8 @@ h1 a {
 }
 
 h2 {
-  border-left: solid 1ex #80afff;
-  background-color: #9CF;
+  border-left: solid 1ex #4ba781;
+  background-color: #111111;
 }
 
 h3 {
@@ -254,7 +254,7 @@ ul.menu {
 }
 
 .resma {
-  color: #505358;
+  color: #aab1ac;
 }
 
 .thfoot {
@@ -336,40 +336,40 @@ div#appstage, div#chickenpaint-parent {
 }
 
 .NEO .color_bk {
-  color: #99b6e5;
+  color: #333;
 }
 .NEO .color_bk2 {
-  color: #8a95b9;
+  color: #222;
 }
 .NEO .color_tool_icon {
-  color: #6c758a;
+  color: #333;
 }
 .NEO .color_icon {
-  color: #6c758a;
+  color: #333;
 }
 .NEO .color_iconselect {
-  color: #6c758a;
+  color: #333;
 }
 .NEO .color_text {
   color: #FFF;
 }
 .NEO .color_bar {
-  color: #7c8cbe;
+  color: #646464;
 }
 .NEO .tool_color_button {
-  color: #669;
+  color: #369;
 }
 .NEO .tool_color_button2 {
-  color: #336;
+  color: #036;
 }
 .NEO .tool_color_text {
   color: #FFF;
 }
 .NEO .tool_color_bar {
-  color: #7aa3f5;
+  color: #444a53;
 }
 .NEO .tool_color_frame {
-  color: #446393;
+  color: #222;
 }
 
 .palette {
@@ -422,10 +422,10 @@ div#appstage, div#chickenpaint-parent {
   font-size: smaller;
 }
 .delfo th, .delfo td {
-  border: 1px solid #f7f8fb;
+  border: 1px solid #111111;
 }
 .delfo tr:nth-child(odd) {
-  background-color: #9CF;
+  background-color: #111111;
 }
 
 .page {
@@ -474,7 +474,7 @@ div#appstage, div#chickenpaint-parent {
   position: fixed;
   right: 0;
   bottom: 50px;
-  background: #7aa3f5;
+  background: #4e9979;
   opacity: 0.5;
   border-radius: 50%;
 }
@@ -549,8 +549,8 @@ div#appstage, div#chickenpaint-parent {
   font-family: "Hiragino Sans", meiryo, ヒラギノ角ゴシック, メイリオ, sans-serif;
   font-size: 16px;
   line-height: 150%;
-  color: #222;
-  background-color: #FEFEFE;
+  color: #FEFEFE;
+  background-color: #333333;
   letter-spacing: 0.08em;
 }
 #search h1 {
@@ -567,11 +567,11 @@ div#appstage, div#chickenpaint-parent {
   padding-left: 5px;
 }
 #search h2 a {
-  color: #222;
+  color: #FEFEFE;
 }
 #search h2 a:hover {
-  color: #222;
-  background-color: #FEFEFE;
+  color: #FEFEFE;
+  background-color: #333333;
 }
 #search h3 {
   font-size: 16px;
@@ -579,14 +579,14 @@ div#appstage, div#chickenpaint-parent {
   margin: 0;
 }
 #search .title {
-  color: #222;
-  border-left: solid 1ex #80afff;
-  background-color: #9CF;
+  color: #FFF;
+  border-left: solid 1ex #4ba781;
+  background-color: #111111;
   padding: 6px 5px 2px;
   margin: 0 0 10px;
 }
 #search a {
-  color: #4a4c56;
+  color: #CCC;
   text-decoration: underline;
 }
 #search a:hover {
@@ -643,19 +643,19 @@ div#appstage, div#chickenpaint-parent {
   height: 20px;
   width: 180px;
   border: 1px solid;
-  color: auto;
-  border-color: #4a4c56 #686c79 #686c79 #4a4c56;
-  background-color: #FFF;
+  color: #FFF;
+  border-color: #50a57a;
+  background-color: #243124;
   vertical-align: middle;
 }
 #search input[type=text]:hover {
-  background-color: #cae5ff;
+  background-color: #010;
 }
 #search input[type=submit] {
-  background-color: #7aa3f5;
+  background-color: #4e9979;
   color: #FFF;
   border: 1px solid;
-  border-color: #686c79 #4a4c56 #4a4c56 #686c79;
+  border-color: #50a57a #063 #063 #50a57a;
   vertical-align: middle;
 }
 #search .menu {
@@ -665,15 +665,15 @@ div#appstage, div#chickenpaint-parent {
   font-weight: 700;
   color: inherit;
   display: inline-block;
-  border: solid 1px #7aa3f5;
+  border: solid 1px #4e9979;
   border-radius: 6px;
   line-height: 1em;
 }
 #search .name:hover {
-  background-color: #f0f8ff;
+  background-color: #222;
 }
 #search .name a {
-  color: #4a4c56;
+  color: #FEFEFE;
   display: block;
   padding: 5px;
 }
@@ -709,21 +709,22 @@ div#appstage, div#chickenpaint-parent {
   display: none;
 }
 #search input[type=radio]:checked + label {
-  color: #222;
-  background: #cae5ff;
+  color: #333;
+  font-weight: 600;
+  background: #c5e4c5;
 }
 #search .label {
-  color: #333;
+  color: #bbb;
   display: inline-block;
   padding: 0 10px;
   text-align: center;
   cursor: pointer;
-  border: 2px solid #7aa3f5;
+  border: 2px solid #4e9979;
   border-radius: 15px;
 }
 #search .label:hover {
-  color: #222;
-  background-color: #cae5ff;
+  color: #333;
+  background-color: #c5e4c5;
 }
 #search .radio {
   display: inline-block;
