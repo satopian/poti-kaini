@@ -212,6 +212,7 @@ input[type=radio] {
 
 input[type=radio]:checked+label {
 	color: #626262;
+	font-weight: 600;
 	background: #ffe6e6;
 }
 

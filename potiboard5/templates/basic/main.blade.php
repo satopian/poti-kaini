@@ -189,7 +189,7 @@
 		{{-- 記事共通ヘッダ --}}
 		@if(!isset($res['not_deleted'])||$res['not_deleted'])
 		<div class="article_info">
-			<span class="article_info_name"><a href="search.php?page=1&imgsearch=on&query={{$res['encoded_name']}}&radio=2"
+			<span class="article_info_name"><a href="{{$self}}?mode=search&page=1&imgsearch=on&query={{$res['encoded_name']}}&radio=2"
 					target="_blank" rel="noopener">{{$res['name']}}</a></span>@if($res['url'])<span
 				class="article_info_desc">[<a href="{{$res['url']}}" target="_blank"
 					rel="nofollow noopener noreferrer">URL</a>]</span> @endif

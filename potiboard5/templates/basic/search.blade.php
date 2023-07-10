@@ -41,11 +41,11 @@
 		</header>
 		<nav>
 			<div class="menu">
-				[<a href="./@if($php_self2){{$php_self2}} @endif">掲示板にもどる</a>]
+				[<a href="./@if($self2){{$self2}} @endif">掲示板にもどる</a>]
 				@if($imgsearch)
-				[<a href="?page=1&imgsearch=off{{$query_l}}">コメント</a>]
+				[<a href="{{$self}}?mode=search&page=1&imgsearch=off{{$query_l}}">コメント</a>]
 				@else
-				[<a href="?page=1&imgsearch=on{{$query_l}}">イラスト</a>]
+				[<a href="{{$self}}?mode=search&page=1&imgsearch=on{{$query_l}}">イラスト</a>]
 				@endif
 
 
@@ -68,7 +68,7 @@
 				<div class="comments_title_wrap">
 					<h2><a href="{{$comment['link']}}" target="_blank">{{$comment['sub']}}</a></h2>
 					{{$comment['postedtime']}}<br><span class="name"><a
-							href="?page=1&query={{$comment['encoded_name']}}&radio=2"
+							href="{{$self}}?mode=search&page=1&query={{$comment['encoded_name']}}&radio=2"
 							target="_blank">{{$comment['name']}}</a></span>
 				</div>
 				@if ($comment['img'])
@@ -109,6 +109,7 @@
 			@else
 			<input type="hidden" name="imgsearch" value="off">
 			@endif
+			<input type="hidden" name="mode" value="search">
 			<input type="text" name="query" placeholder="検索" value="{{$query}}">
 			<input type="submit" value="検索">
 		</form>

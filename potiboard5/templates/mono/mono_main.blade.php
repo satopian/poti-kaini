@@ -251,7 +251,7 @@
 				<h3>
 				@if(!isset($res['not_deleted'])||$res['not_deleted'])
 					<span class="name"><a
-							href="search.php?page=1&amp;imgsearch=on&amp;query={{$res['encoded_name']}}&amp;radio=2"
+							href="{{$self}}?mode=search&page=1&amp;imgsearch=on&amp;query={{$res['encoded_name']}}&amp;radio=2"
 							target="_blank" rel="noopener">{{$res['name']}}</a></span><span
 						class="trip">{{$res['trip']}}</span> :
 					{{$res['now']}}@if($res['id']) ID : {{$res['id']}}@endif @if($res['url']) <span class="url">[<a
