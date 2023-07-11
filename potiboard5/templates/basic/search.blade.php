@@ -94,7 +94,7 @@
 		@endif
 
 		<p></p>
-		<form method="get" action="./search.php">
+		<form method="get" action="{{$self}}">
 			<span class="radio">
 				<input type="radio" name="radio" id="author" value="1" @if($radio_chk1)checked="checked"@endif><label for="author"
 					class="label">名前</label>
