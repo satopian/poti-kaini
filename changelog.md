@@ -1,3 +1,36 @@
+## [2023/07/11] v5.63.1
+### 検索処理をsearch.phpからsearch.inc.phpへ
+jQueryのバージョン設定やその他の関数がpotiboard.phpとは別に設定されていたsearch.phpの構造を根本から見直して、potiboard.phpにincludeするclassに修正しました。
+検索結果は、これまでは`search.php?`のようなURLで表示されていましたが`potiboard.php?mode=search&`のようなURLに変わります。
+### テンプレートMONOのCSS切り替え箇所を外部化して共通化
+`templates/mono/parts/style-switcher.blade.php`にこれまでいくつものテンプレートに記述していた以下の箇所をまとめました。
+
+```
+<style>
+body{
+	visibility: hidden;
+}
+</style>
+<noscript>
+	<style>
+		body{
+			visibility: visible;
+		}
+	</style>
+</noscript>
+<link rel="stylesheet" href="{{$skindir}}css/mono_main.css?{{$ver}}">
+<link rel="stylesheet" href="{{$skindir}}css/mono_dark.css?{{$ver}}" id="css1" disabled>
+<link rel="stylesheet" href="{{$skindir}}css/mono_deep.css?{{$ver}}" id="css2" disabled>
+<link rel="stylesheet" href="{{$skindir}}css/mono_mayo.css?{{$ver}}" id="css3" disabled>
+
+```
+また、ここに`visibility: hidden;`というCSSを設定してDOMの読み込みとJavaScriptの読み込みが完了するまで画面を表示しないようにしました。 
+これにより、MONOの色設定が一瞬別の配色で表示されるのを防ぎます。
+
+### 検索で、大文字小文字を区別しない
+
+名前検索で完全一致オプションの時に、アルファベットの大文字小文字を区別しなくなりました。
+
 ## [2023/07/08] v5.62.3
 
 ###  投稿をシェアするサーバの一覧画面のデザインを調整しました。
