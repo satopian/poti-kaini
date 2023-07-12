@@ -10,17 +10,24 @@
 	<link rel="preload" as="script" href="{{$skindir}}js/basic_common.js?{{$ver}}">
 	<style>
 	form.form_radio_sns_server {
-    line-height: 2;
 	margin: 1em 0 0;
 	}
 	*{
 		font-size: 18px;
 	}
-	input[type="radio"]{
+	.form_radio_sns_server label{
+		display: block;
+		margin: 0 0 5px;
+	}
+	.form_radio_sns_server input[type="radio"]{
 		display: none;
+	}
+	.form_radio_sns_server input[type="text"]{
+		margin: 3px 0;
 	}
 	input.post_share_button {
     width: 100%;
+	margin: 8px 0 0;
 	}
 	:not(input){
 		-moz-user-select: none;
@@ -36,7 +43,7 @@
 @foreach($servers as $i => $server)
 	<input type="radio" name="sns_server_radio" value="{{$server[1]}}" id="{{$i}}" 
 	@if($i===0||$server[1]===$sns_server_radio_cookie) checked="checked"@endif>
-			<label for="{{$i}}">{{$server[0]}}</label><br>
+			<label for="{{$i}}">{{$server[0]}}</label>
 @endforeach
 <input type="text" name="sns_server_direct_input" value="{{$sns_server_direct_input_cookie}}">
 <br>
@@ -49,5 +56,6 @@
 <input type="submit" value="@if($en) Share @else シェア @endif" class="post_share_button">
 <script src="lib/{{$jquery}}"></script>
 <script src="{{$skindir}}js/basic_common.js?{{$ver}}"></script>
+</form>
 </body>
 </html>
