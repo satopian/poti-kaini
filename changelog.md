@@ -1,3 +1,12 @@
+## [2023/07/11] v5.63.2
+### 投稿を共有するSNSのサーバ一覧画面の操作性を向上
+共有するサーバの選択時にラベルの文字列の上にカーソルをあわせなくても選択できるようにしました。  
+ラベルの文字列の右側の余白をタップした時にも選択できるうようになりました。
+- set_share_server.blade.php
+のHTMLの文法エラーを修正しました。
+
+![image](https://github.com/satopian/poti-kaini/assets/44894014/a6be61e9-ab20-411a-ab41-e73b2c531ccb)
+
 ## [2023/07/11] v5.63.1
 ### 検索処理をsearch.phpからsearch.inc.phpへ
 jQueryのバージョン設定やその他の関数がpotiboard.phpとは別に設定されていたsearch.phpの構造を根本から見直して、potiboard.phpにincludeするclassに修正しました。
