@@ -12,7 +12,7 @@
 	form.form_radio_sns_server {
 	margin: 1em 0 0;
 	}
-	#search body{
+	#search body,input[type=submit]{
 		font-size: 18px;
 	}
 	.form_radio_sns_server label{
