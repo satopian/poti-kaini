@@ -5,7 +5,7 @@
 - set_share_server.blade.php
 のHTMLの文法エラーを修正しました。
 
-![image](https://github.com/satopian/poti-kaini/assets/44894014/a6be61e9-ab20-411a-ab41-e73b2c531ccb)
+![image](https://github.com/satopian/poti-kaini/assets/44894014/b6a5d020-9614-4b04-bc34-077fe694a12c)
 
 ## [2023/07/11] v5.63.1
 ### 検索処理をsearch.phpからsearch.inc.phpへ
