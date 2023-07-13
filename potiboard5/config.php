@@ -380,6 +380,14 @@ $servers =
 
 ];
 
+// SNS共有の時に開くWindowsの幅と高さ
+
+//windowの幅 初期値 350
+define("SNS_WINDOW_WIDTH","350");
+
+//windowの高さ 初期値 490
+define("SNS_WINDOW_HEIGHT","490");
+
 /* ---------- お絵かき詳細設定 ---------- */
 
 //テンポラリ内のファイル有効期限(日数)
