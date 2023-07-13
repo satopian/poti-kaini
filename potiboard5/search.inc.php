@@ -5,7 +5,6 @@
 //POTI-board EVO v5.0 対応版
 //https://paintbbs.sakura.ne.jp/
 
-
 //サポート
 
 // サポートは設置サポート掲示板、またはPOTI-board EVOのリポジトリのissuesで行います。
