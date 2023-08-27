@@ -105,6 +105,7 @@
 					@if($rep)formData.append("repcode", "{{$repcode}}");@endif
 					formData.append("stime", <?=time();?>);
 					formData.append("resto", "{{$resto}}");
+					formData.append("tool", "Klecks");
 					postData("saveklecks.php", formData);
 				});
 				// (c)satopian MIT Licence ここまで

@@ -287,6 +287,8 @@
 						({{$res['size_kb']}} KB)
 						@if($res['thumb']) - サムネイル表示中 - @endif @if($res['painttime']) PaintTime :
 						{{$res['painttime']}}@endif
+						@if($res['tool'])<span class="article_info_desc">Tool :
+						{{$res['tool']}}</span>@endif
 						<br>
 						@if($res['continue']) ●<a
 							href="{{$self}}?mode=continue&amp;no={{$res['continue']}}">続きを描く</a>@endif

@@ -871,16 +871,16 @@ function regist(){
 	$message="";
 
 	//記事管理用 ユニックスタイム10桁+3桁
-	$time = (string)(time().substr(microtime(),2,6));	//投稿時刻
+	$time = (string)(time().substr(microtime(),2,3));	//投稿時刻
 
 	$testexts=['.gif','.jpg','.png','.webp'];
 	foreach($testexts as $testext){
 		if(is_file(IMG_DIR.$time.$testext)){
-		$time=(string)(substr($time,0,-6)+1).(string)substr($time,-6);
-		break;
+			$time=(string)(substr($time,0,-3)+1).(string)substr($time,-3);
+			break;
 		}
 	}
-	$time = is_file($temppath.$time.'.tmp') ? (string)(substr($time,0,-6)+1).(string)substr($time,-6) :$time;
+	$time = is_file($temppath.$time.'.tmp') ? (string)(substr($time,0,-3)+1).(string)substr($time,-3) :$time;
 	$time = basename($time);
 	$ptime='';
 	// お絵かき絵アップロード処理
@@ -1029,8 +1029,8 @@ function regist(){
 		}
 		if($pchk){
 		//KASIRAが入らない10桁のUNIX timeを取り出す
-		$ltime= $logver==="6" ? substr($ltime,0,-6) :
-		(strlen($ltime)>10 ? substr($ltime,-13,-3) : $ltime);
+		$ltime= $logver==="6" ? substr($ltime,0,-3) :
+		(strlen($ltime)>12 ? substr($ltime,-13,-3) : $ltime);
 		$interval=time()-(int)$ltime;
 		if(RENZOKU && ($interval>=0) && ($interval < RENZOKU)){error(MSG020,$dest);}
 		if(RENZOKU2 && ($interval>=0) && ($interval < RENZOKU2) && $dest){error(MSG021,$dest);}
@@ -1149,7 +1149,7 @@ function regist(){
 	}
 	list($lastno,) = explode(",", $line[0]);
 	$no = $lastno + 1;
-	$newline = "$no,$date,$name,$email,$sub,$com,$url,$host,$pass,$ext,$w,$h,$time,$chk,$ptime,$fcolor,$pchext,$thumbnail,$tool,6\n";
+	$newline = "$no,$date,$name,$email,$sub,$com,$url,$host,$pass,$ext,$w,$h,$time,$chk,$ptime,$fcolor,$pchext,$thumbnail,$tool,6,\n";
 	$newline.= implode("\n", $line);
 
 
@@ -1521,8 +1521,8 @@ function init(){
 	if (!is_file(__DIR__.'/'.LOGFILE)) {
 		$date = now_date(time());//日付取得
 		if(DISP_ID) $date .= " ID:???";
-		$time = time().substr(microtime(),2,6);
-		$testmes="1,".$date.",".DEF_NAME.",,".DEF_SUB.",".DEF_COM.",,,,,,,".$time.",,,,,,,6\n";
+		$time = time().substr(microtime(),2,3);
+		$testmes="1,".$date.",".DEF_NAME.",,".DEF_SUB.",".DEF_COM.",,,,,,,".$time.",,,,,,,6,\n";
 		file_put_contents(LOGFILE, $testmes,LOCK_EX);
 		chmod(LOGFILE, PERMISSION_FOR_LOG);
 	}
@@ -2370,15 +2370,15 @@ function replace(){
 	}
 
 	// 時間
-	$time = (string)(time().substr(microtime(),2,6));
+	$time = (string)(time().substr(microtime(),2,3));
 	$testexts=['.gif','.jpg','.png','.webp'];
 	foreach($testexts as $testext){
 		if(is_file(IMG_DIR.$time.$testext)){
-		$time=(string)(substr($time,0,-6)+1).(string)substr($time,-6);
-		break;
+			$time=(string)(substr($time,0,-3)+1).(string)substr($time,-3);
+			break;
 		}
 	}
-	$time = is_file($temppath.$time.'.tmp') ? (string)(substr($time,0,-6)+1).(string)substr($time,-6) :$time;
+	$time = is_file($temppath.$time.'.tmp') ? (string)(substr($time,0,-3)+1).(string)substr($time,-3) :$time;
 	$time = basename($time);
 	$date = now_date(time());//日付取得
 	$date .= UPDATE_MARK;
@@ -3135,7 +3135,7 @@ function getId ($userip) {
 // 古いスレッドへの投稿を許可するかどうか
 function check_elapsed_days ($time,$logver=false) {
 
-	$time = ($logver==="6") ? (int)substr($time,0,-6) : (int)substr($time, -13, -3);
+	$time = ($logver==="6") ? (int)substr($time,0,-3) : (int)substr($time, -13, -3);
 
 	return ELAPSED_DAYS //古いスレッドのフォームを閉じる日数が設定されていたら
 		? ((time() - $time)) <= ((int)ELAPSED_DAYS * 86400) // 指定日数以内なら許可

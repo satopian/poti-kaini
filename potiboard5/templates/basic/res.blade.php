@@ -95,7 +95,8 @@
 							rel="nofollow noopener noreferrer">URL</a>]</span> @endif
 					@if($res['id'])<span class="article_info_desc">ID:{{$res['id']}}</span>@endif
 					<span class="article_info_desc">{{$res['now']}}</span>@if($res['painttime'])<span
-						class="article_info">描画時間:{{$res['painttime']}}</span>@endif
+					class="article_info">描画時間:{{$res['painttime']}}</span>@endif
+					@if($res['tool'])<span class="article_info_desc">Tool:{{$res['tool']}}</span>@endif
 					@if($res['updatemark'])<span class="article_info_desc">{{$res['updatemark']}}</span>@endif
 					@if($res['thumb'])<span class="article_info_desc">- サムネイル表示中 -</span>@endif
 					<div class="article_img_info">
