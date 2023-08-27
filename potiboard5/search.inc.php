@@ -1,7 +1,7 @@
 <?php
 //POTI-board plugin search(C)2020-2023 さとぴあ(@satopian)
 //MIT License
-//v5.8.3 lot.20230711
+//v5.8.3 lot.20230827
 //POTI-board EVO v5.0 対応版
 //https://paintbbs.sakura.ne.jp/
 
@@ -249,7 +249,7 @@ $dat['nxet']=false;
 if($page<=$disp_count_of_page){
 	$dat['prev']='<a href="./'.h(PHP_SELF2).'">掲示板にもどる</a>';//前のページ
 if($countarr>=$nxetpage){
-	$dat['nxet']='<a href="?page='.h($nxetpage.$search_type.$query_l).'">次の'.h($disp_count_of_page.$mai_or_ken).'≫</a>';//次のページ
+	$dat['nxet']='<a href="?mode=search&page='.h($nxetpage.$search_type.$query_l).'">次の'.h($disp_count_of_page.$mai_or_ken).'≫</a>';//次のページ
 }
 }
 
