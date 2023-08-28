@@ -2,7 +2,7 @@
 //POTI-board plugin search(C)2020-2023 さとぴあ(@satopian)
 //MIT License
 //v6.0.0 lot.20230828
-//POTI-board EVO v5.0 対応版
+//POTI-board EVO v6.0 対応版
 //https://paintbbs.sakura.ne.jp/
 
 //サポート
