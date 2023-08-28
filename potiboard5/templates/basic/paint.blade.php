@@ -218,7 +218,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 	@if($imgfile) loadImageUrl: "{{$imgfile}}",@endif
 	@if($img_chi) loadChibiFileUrl: "{{$img_chi}}",@endif
-	saveUrl: "save.php?usercode={!!$usercode!!}",
+	saveUrl: "?mode=saveimage&tool=chi&usercode={!!$usercode!!}",
 	postUrl: "?mode={!!$mode!!}&stime={{$stime}}",
 	exitUrl: "?mode={!!$mode!!}&stime={{$stime}}",
 
@@ -326,7 +326,7 @@ pe[n]}}function GradView(a,f){d=document}function showHideLayer(){d=document;var
 <param name="thumbnail_width" value="100%">
 <param name="thumbnail_height" value="100%">
 @if($useneo)
-<param name="url_save" value="saveneo.php">
+<param name="url_save" value="{{$self}}?mode=saveimage&tool=neo">
 @else
 <param name="url_save" value="picpost.php">
 @endif
