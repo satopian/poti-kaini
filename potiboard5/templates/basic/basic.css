@@ -289,6 +289,10 @@ input.pch_upload {
 	margin: 5px 0 8px;
 }
 
+.article_info span {
+	display: inline-block;
+}
+
 .article_info_desc {
 	padding-right: 4px;
 	display: inline-block;
