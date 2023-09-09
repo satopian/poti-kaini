@@ -51,7 +51,7 @@ defined("MAX_SEARCH") or define("MAX_SEARCH","120");
 
 //filter_input
 
-$imgsearch=(bool)filter_input(INPUT_GET,'imgsearch',FILTER_VALIDATE_BOOLEAN) ? true : false;
+$imgsearch=(bool)filter_input(INPUT_GET,'imgsearch',FILTER_VALIDATE_BOOLEAN);
 $page=(int)filter_input(INPUT_GET,'page',FILTER_VALIDATE_INT);
 $page= $page ? $page : 1;
 $query=(string)filter_input(INPUT_GET,'query');
