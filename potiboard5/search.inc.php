@@ -268,7 +268,7 @@ $dat['lastmodified']='';
 if(!empty($arr)){
 
 	$postedtime= key($arr);
-	$postedtime=(int)substr($postedtime,-13,10);
+	$postedtime=(int)substr($postedtime,0,-3);
 	$dat['lastmodified']=date("Y/m/d G:i", $postedtime);
 }
 
