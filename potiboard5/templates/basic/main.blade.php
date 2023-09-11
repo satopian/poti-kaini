@@ -277,8 +277,9 @@
 		{{-- 親記事グループここまで --}}
 		<div class="clear"></div>
 
-		{{-- メイン時ページング表示 --}}
-		<div id="paging_wrap">{!!$paging!!}</div>
+		{{-- <!--メイン時ページング表示--> --}}
+		<div id="paging_wrap">@if($startpage)<span class="parentheses"><a href="{{$self2}}">start</a> |</span>@endif{!!$paging!!}@if($totalpages)<span class="parentheses"> | <a href="{{$totalpages}}">end</a></span>@endif</div>
+
 
 		{{-- 前、次のナビゲーション --}}
 		@include('parts.prev_next')
