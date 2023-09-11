@@ -72,8 +72,6 @@
 		// $resnoimg…記事が無い場合 true が入る
 		--> --}}
 		<hr>
-		{{-- <!--メイン時ページング表示--> --}}
-		<div id="paging_wrap">{!!$paging!!}</div>
 		{{-- 前、次のナビゲーション --}}
 		@include('parts.prev_next')
 
