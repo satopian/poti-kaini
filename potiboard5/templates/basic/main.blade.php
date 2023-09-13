@@ -277,6 +277,8 @@
 		{{-- 親記事グループここまで --}}
 		<div class="clear"></div>
 
+		{{-- ページネーション --}}
+		@include('parts.paging')
 		{{-- 前、次のナビゲーション --}}
 		@include('parts.prev_next')
 		{{-- メンテナンスフォーム欄 --}}

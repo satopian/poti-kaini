@@ -72,10 +72,12 @@
 		// $resnoimg…記事が無い場合 true が入る
 		--> --}}
 		<hr>
+		{{-- ページネーション --}}
+		@include('parts.paging')
 		{{-- 前、次のナビゲーション --}}
 		@include('parts.prev_next')
 
-		{{-- <!-- メンテナンスフォーム欄 --> --}}
+		{{--  メンテナンスフォーム欄  --}}
 		@include('parts.mainte_form')
 
 		<!--JavaScriptの実行(クッキーを読込み、フォームに値をセット)-->
