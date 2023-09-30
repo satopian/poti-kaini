@@ -3,8 +3,8 @@
 
 // POTI-board EVO
 // バージョン :
-const POTI_VER = 'v6.05.0';
-const POTI_LOT = 'lot.20230930';
+const POTI_VER = 'v6.05.2';
+const POTI_LOT = 'lot.20231001';
 
 /*
   (C) 2018-2023 POTI改 POTI-board redevelopment team
@@ -740,7 +740,6 @@ function res($resno = 0){
 			$rresname[] = $res['name'];
 		}
 	}
-
 	
 	foreach($rresname as $key => $val){
 		$rep=str_replace('&quot;','”',$val);
@@ -753,7 +752,6 @@ function res($resno = 0){
 
 	$dat['resname'] = !empty($rresname) ? implode(HONORIFIC_SUFFIX.' ',$rresname) : false; // レス投稿者一覧
 
-
 	//前のスレッド、次のスレッド
 	$n=$i+1;
 	$p=$i-1;
@@ -762,22 +760,20 @@ function res($resno = 0){
 	$prev=(isset($trees[$p])&&$trees[$p]) ? explode(",",trim($trees[$p]))[0]:'';
 	$dat['res_prev']=($prev && isset($lineindex[$prev])) ? create_res($line[$lineindex[$prev]]):[];
 
-	
-	$arr1=[];
-	$arr2=[];
-
-	// $iより20手前のキーから$iまでのデータを$arr1に格納
-	for ($j = max(0, $i - 20); $j < $i; $j++) {
-		$arr1[$j] = $trees[$j];
-	}
-	$count_trees=count($trees);
-	// $iより20後ろのキーから$iまでのデータを$arr2に格納
-	for ($j = $i + 1; $j <= min($i + 20, $count_trees - 1); $j++) {
-		$arr2[$j] = $trees[$j];
-	}
-
 	$dat['view_other_works']=false;
 	if(VIEW_OTHER_WORKS){
+
+		$arr1=[];
+		$arr2=[];
+			// $iより20手前のキーから$iまでのデータを$arr1に格納
+		for ($j = max(0, $i - 20); $j < $i; $j++) {
+			$arr1[$j] = $trees[$j];
+		}
+		$count_trees=count($trees);
+		// $iより20後ろのキーから$iまでのデータを$arr2に格納
+		for ($j = $i + 1; $j <= min($i + 20, $count_trees - 1); $j++) {
+			$arr2[$j] = $trees[$j];
+		}
 		$prev_res=[];
 		$next_res=[];
 		foreach($arr1 as $j=>$val){
@@ -794,7 +790,7 @@ function res($resno = 0){
 				$next_res[]=$_res;
 			}
 		}
-		if( (3<=count($prev_res)) && (3<=count($next_res))  ){
+		if((3<=count($prev_res)) && (3<=count($next_res))){
 			$prev_res = array_slice($prev_res,-3);
 			$next_res = array_slice($next_res,0,3);
 			$view_other_works= array_merge($prev_res,$next_res);
@@ -812,6 +808,7 @@ function res($resno = 0){
 	}
 	htmloutput(RESFILE,$dat);
 }
+
 //マークダウン記法のリンクをHTMLに変換
 function md_link($str){
 	$str= preg_replace("{\[([^\[\]\(\)]+?)\]\((https?://[\w!\?/\+\-_~=;\.,\*&@#\$%\(\)'\[\]]+)\)}",'<a href="$2" target="_blank" rel="nofollow noopener noreferrer">$1</a>',$str);
