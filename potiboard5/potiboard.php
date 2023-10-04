@@ -3,7 +3,7 @@
 
 // POTI-board EVO
 // バージョン :
-const POTI_VER = 'v6.07.5';
+const POTI_VER = 'v6.07.6';
 const POTI_LOT = 'lot.20231003';
 
 /*
@@ -691,10 +691,10 @@ function res($resno = 0){
 			break;
 		}
 	}
-	$nxet_tree=[];
+	$next_tree=[];
 	foreach($trees as $j => $value){
 		if (($i<$j)&&($i+20)>=$j) {//現在のスレッドより後ろの20スレッドのツリーを取得
-			$nxet_tree[]=explode(",", trim($value))[0];
+			$next_tree[]=explode(",", trim($value))[0];
 		}
 	}
 	$prev_tree=[];
@@ -704,7 +704,6 @@ function res($resno = 0){
 		}
 	}
 
-
 	if (empty($treeline)) {
 		error(MSG001);
 	}
@@ -713,10 +712,13 @@ function res($resno = 0){
 	$fp=fopen(LOGFILE,"r");
 	$line=create_line_from_treenumber ($fp,$treeline);
 	$prev_line=create_line_from_treenumber ($fp,$prev_tree);
-	$next_line=create_line_from_treenumber ($fp,$nxet_tree);
+	$next_line=create_line_from_treenumber ($fp,$next_tree);
 	closeFile($fp);
 
 	$lineindex = get_lineindex($line); // 逆変換テーブル作成
+	$prev_lineindex = get_lineindex($prev_line); // 逆変換テーブル作成
+	$next_lineindex = get_lineindex($next_line); // 逆変換テーブル作成
+
 	if(!isset($lineindex[$resno])){
 		error(MSG001);
 	}
@@ -769,23 +771,29 @@ function res($resno = 0){
 	$dat['resname'] = !empty($rresname) ? implode(HONORIFIC_SUFFIX.' ',$rresname) : false; // レス投稿者一覧
 
 	//前のスレッド、次のスレッド
-	$dat['res_next']= isset($next_line[0]) ? create_res($next_line[0]) :[];
-	$last_prev_line = $prev_line;
-	$last_prev_line = isset($prev_line) ? end($prev_line) : [];
-	$dat['res_prev']= !empty($last_prev_line) ? create_res($last_prev_line):[];
+	$next=(isset($next_tree[0])&&$next_tree[0]) ? explode(",",trim($next_tree[0]))[0]:'';
+	$dat['res_next']=($next && isset($next_line[$next_lineindex[$next]])) ? create_res($next_line[$next_lineindex[$next]]):[];
+
+	$last_prev_tree = $prev_tree;
+	$last_prev_tree = end($last_prev_tree);
+	$prev=$last_prev_tree ? explode(",",trim($last_prev_tree))[0]:'';
+
+	$dat['res_prev']=($prev && isset($prev_lineindex[$prev])) ? create_res($prev_line[$prev_lineindex[$prev]]):[];
 	$dat['view_other_works']=false;
 	if(VIEW_OTHER_WORKS){
 
 		$prev_res=[];
 		$next_res=[];
-		foreach($prev_line as $val){
-			$_res=$val ? create_res($val):[];
+		foreach($prev_tree as $j=>$val){
+			$n=explode(",",trim($val))[0];
+			$_res=($n && isset($prev_lineindex[$n])) ? create_res($prev_line[$prev_lineindex[$n]]):[];
 			if(!empty($_res)&&$_res['imgsrc']&&$_res['no']!==$resno){
 				$prev_res[]=$_res;
 			}
 		}
-		foreach($next_line as $val){
-			$_res=$val ? create_res($val):[];
+		foreach($next_tree as $j=>$val){
+			$n=explode(",",trim($val))[0];
+			$_res=($n && isset($next_lineindex[$n])) ? create_res($next_line[$next_lineindex[$n]]):[];
 			if(!empty($_res)&&$_res['imgsrc']&&$_res['no']!==$resno){
 				$next_res[]=$_res;
 			}
@@ -2653,7 +2661,7 @@ function catalog(){
 		if($page-(CATALOG_PAGE_DEF*30)<=$l){break;}//現在ページより1つ前のページ
 	}
 	for($i = $start_page; ($i < $counttree && $i <= $end_page) ; $i += CATALOG_PAGE_DEF){
-
+	
 		$pn = $i / CATALOG_PAGE_DEF;
 		
 		if($i === $end_page){//特定のページに代入される記号 エンド
@@ -3433,7 +3441,6 @@ function getTranslatedLayerName() {
 function is_paint_tool_name($tool){
 	return in_array($tool,["Upload","PaintBBS NEO","PaintBBS","Shi-Painter","Tegaki","Klecks","ChickenPaint"]) ? $tool :'';
 }
-//ツリーnoと一致する行の配列を作成
 function create_line_from_treenumber ($fp,$trees){
 
 	rewind($fp);
