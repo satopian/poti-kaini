@@ -3,7 +3,7 @@
 
 // POTI-board EVO
 // バージョン :
-const POTI_VER = 'v6.07.1';
+const POTI_VER = 'v6.07.5';
 const POTI_LOT = 'lot.20231003';
 
 /*
@@ -709,43 +709,11 @@ function res($resno = 0){
 		error(MSG001);
 	}
 
-	$line=[];
 
 	$fp=fopen(LOGFILE,"r");
-	while($lines = fgets($fp)){
-		if(!trim($lines)){
-			continue;
-		}
-		list($no,) = explode(",", $lines);
-		if(in_array($no,$treeline)){
-			$line[]=trim($lines);
-		}
-
-	}
-	rewind($fp);
-	$prev_line=[];
-	while($lines = fgets($fp)){
-		if(!trim($lines)){
-			continue;
-		}
-		list($no,) = explode(",", $lines);
-		if(in_array($no,$prev_tree)){
-			$prev_line[]=trim($lines);
-		}
-
-	}
-	rewind($fp);
-	$next_line=[];
-	while($lines = fgets($fp)){
-		if(!trim($lines)){
-			continue;
-		}
-		list($no,) = explode(",", $lines);
-		if(in_array($no,$nxet_tree)){
-			$next_line[]=trim($lines);
-		}
-	}
-
+	$line=create_line_from_treenumber ($fp,$treeline);
+	$prev_line=create_line_from_treenumber ($fp,$prev_tree);
+	$next_line=create_line_from_treenumber ($fp,$nxet_tree);
 	closeFile($fp);
 
 	$lineindex = get_lineindex($line); // 逆変換テーブル作成
@@ -2620,14 +2588,21 @@ function catalog(){
 
 	$page = (int)filter_input(INPUT_GET, 'page',FILTER_VALIDATE_INT);
 
-	$line=get_log(LOGFILE);
 	$trees=get_log(TREEFILE);
 
 	$counttree = count($trees);
 
-	$lineindex = get_lineindex($line); // 逆変換テーブル作成
-	$dat = form();
 	$disp_threads = array_slice($trees,(int)$page,CATALOG_PAGE_DEF,false);
+	$treeline=[];
+	foreach($disp_threads as $val){
+		$treeline[]=explode(",", trim($val))[0];
+	}
+	$fp=fopen(LOGFILE,"r");
+	$line = create_line_from_treenumber ($fp,$treeline);
+	closeFile($fp);
+	$lineindex = get_lineindex($line); // 逆変換テーブル作成
+
+	$dat = form();
 
 	foreach($disp_threads as $oya=>$val){
 
@@ -2677,8 +2652,8 @@ function catalog(){
 		$end_page=$l+(CATALOG_PAGE_DEF*31);//現在のページよりひとつ後ろのページ
 		if($page-(CATALOG_PAGE_DEF*30)<=$l){break;}//現在ページより1つ前のページ
 	}
-		for($i = $start_page; ($i < $counttree && $i <= $end_page) ; $i += CATALOG_PAGE_DEF){
-	
+	for($i = $start_page; ($i < $counttree && $i <= $end_page) ; $i += CATALOG_PAGE_DEF){
+
 		$pn = $i / CATALOG_PAGE_DEF;
 		
 		if($i === $end_page){//特定のページに代入される記号 エンド
@@ -2694,7 +2669,7 @@ function catalog(){
 		str_replace("<PAGE>", $rep_page_no , OTHER_PAGE));
 		$dat['lastpage'] = (($end_page/CATALOG_PAGE_DEF) <= $totalpages) ? "?mode=catalog&amp;page=".$totalpages*CATALOG_PAGE_DEF : "";
 		$dat['firstpage'] = (0 < $start_page) ? PHP_SELF."?mode=catalog&page=0" : "";
-}
+	}
 	//改ページ分岐ここまで
 	$dat['paging'] = $paging;
 	$dat["resno"]=false;
@@ -3457,4 +3432,20 @@ function getTranslatedLayerName() {
 }
 function is_paint_tool_name($tool){
 	return in_array($tool,["Upload","PaintBBS NEO","PaintBBS","Shi-Painter","Tegaki","Klecks","ChickenPaint"]) ? $tool :'';
+}
+//ツリーnoと一致する行の配列を作成
+function create_line_from_treenumber ($fp,$trees){
+
+	rewind($fp);
+	$line=[];
+	while($lines = fgets($fp)){
+		if(!trim($lines)){
+			continue;
+		}
+		list($no,) = explode(",", $lines);
+		if(in_array($no,$trees)){
+			$line[]=trim($lines);
+		}
+	}
+	return $line;
 }
