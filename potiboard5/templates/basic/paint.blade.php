@@ -61,9 +61,9 @@
 	window.addEventListener('DOMContentLoaded',fixchicken,false);
 </script>
  
-<script src="chickenpaint/js/chickenpaint.min.js?{{$parameter_day}}"></script>
+<script src="chickenpaint/js/chickenpaint.min.js?{{$parameter_day}}&{{$ver}}"></script>
 
-<link rel="stylesheet" type="text/css" href="chickenpaint/css/chickenpaint.css?{{$parameter_day}}">
+<link rel="stylesheet" type="text/css" href="chickenpaint/css/chickenpaint.css?{{$parameter_day}}&{{$ver}}">
 
 @else
 <!-- NEOを使う -->
@@ -78,8 +78,8 @@
 		}
 	</script>
 @if($useneo) 
-<link rel="stylesheet" href="neo.css?{{$parameter_day}}" type="text/css">
-<script src="neo.js?{{$parameter_day}}" charset="UTF-8"></script>
+<link rel="stylesheet" href="neo.css?{{$parameter_day}}&{{$ver}}">
+<script src="neo.js?{{$parameter_day}}&{{$ver}}"></script>
 <script>
 	// https://qiita.com/tsmd/items/cfb5dcbec8433b87dc36
 	function isPinchZooming () {//ピンチズームを検知
@@ -114,8 +114,8 @@
 </script>
 @endif
 @if($pch_mode and $type_neo) 
-<link rel="stylesheet" href="neo.css?{{$parameter_day}}" type="text/css">
-<script src="neo.js?{{$parameter_day}}" charset="UTF-8"></script>
+<link rel="stylesheet" href="neo.css?{{$parameter_day}}&{{$ver}}">
+<script src="neo.js?{{$parameter_day}}&{{$ver}}"></script>
 @endif
 	@if(($paint_mode and !$useneo) or ($pch_mode and !$type_neo))
 	<!-- Javaが使えるかどうか判定 -->
