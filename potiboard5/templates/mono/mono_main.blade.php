@@ -105,8 +105,8 @@
 			<hr>
 			@endif
 			@endif
-			@if($paintform)
-			@if($paint and ($resno or !$diary))
+		@if($paintform)
+		@if($paint and ($resno or !$diary))
 
 			@if($resno)
 			<p class="resm">お絵かきレス</p>
@@ -116,9 +116,10 @@
 
 			{{-- ペイントフォーム --}}
 			@include('parts.mono_paint_form')
-
-				@endif
-				@if ($notres and (!$diary or $addinfo))
+			</div>
+		@endif
+			<div class="epost">
+			@if ($notres and (!$diary or $addinfo))
 				<ul>
 					@if ($paint2 and !$diary)
 					<li>お絵かきできる画像のサイズは幅 300～{{$pmaxw}}、高さ 300～{{$pmaxh}}の範囲内です。</li>
@@ -126,7 +127,7 @@
 					@endif
 					{!!$addinfo!!}
 				</ul>
-				@endif	
+			@endif	
 			</div>
 			@endif
 			@if($form)

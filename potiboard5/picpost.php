@@ -219,7 +219,7 @@ if($h=='P'){
 	$pchext = '.spch';
 }
 
-if($pchLength){
+if($pchext && $pchLength){
 	// PCHイメージを取り出す
 	$PCHdata = substr($buffer, 1 + 8 + $headerLength + 8 + 2 + $imgLength + 8, $pchLength);
 	// PCHデータをファイルに書き込む
