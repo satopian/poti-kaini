@@ -49,8 +49,6 @@ class processsearch {
 defined("MAX_SEARCH") or define("MAX_SEARCH","120");
 //設定を変更すればより多く検索できるようになりますが、サーバの負荷が高くなります。
 
-//filter_input
-
 $imgsearch=(bool)filter_input(INPUT_GET,'imgsearch',FILTER_VALIDATE_BOOLEAN);
 $page=(int)filter_input(INPUT_GET,'page',FILTER_VALIDATE_INT);
 $page= $page ? $page : 1;
@@ -126,7 +124,7 @@ while ($line = fgets($fp)) {
 		$check_query!==''&&($radio===2&&$s_name===$check_query)//作者名完全一致
 		){
 			$link='';
-			$link=PHP_SELF.'?res='.$oya[$no];
+			$link=PHP_SELF."?res={$oya[$no]}#{$time}";
 			$arr[$key_time]=[$no,$name,$sub,$com,$ext,$w,$h,$time,$link,$logver];
 			++$i;
 			if($i>=MAX_SEARCH){break;}//1掲示板あたりの最大検索数

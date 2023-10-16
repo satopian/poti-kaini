@@ -77,14 +77,14 @@
 			{{-- <!--親記事ヘッダ--> --}}
 			@if ($loop->first)
 			{{-- 最初のループ --}}
-			<h2 class="article_title"><a href="{{$self}}?res={{$ress[0]['no']}}">[{{$ress[0]['no']}}]
-					{{$ress[0]['sub']}}</a></h2>
+			<h2 class="article_title">[{{$ress[0]['no']}}]
+					{{$ress[0]['sub']}}</h2>
 		
 			@else
 			<hr>
 			{{-- <!-- レス記事ヘッダ --> --}}
 			<div class="res_article_wrap">
-				<div class="res_article_title">[{{$res['no']}}] {{$res['sub']}}</div>
+				<div class="res_article_title" id="{{$res['time']}}">[{{$res['no']}}] {{$res['sub']}}</div>
 				@endif
 				{{-- <!-- 記事共通ヘッダ --> --}}
 				@if(!isset($res['not_deleted'])||$res['not_deleted'])
