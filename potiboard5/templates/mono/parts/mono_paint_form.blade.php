@@ -6,8 +6,8 @@
 		<input name="pch_upload" type="file" accept="image/*,.pch,.spch,.chi,.psd" class="pchup_button">
 		<br>
 		@endif
-		幅 : <input name="picw" type="number" title="幅" class="form" value="{{$pdefw}}" min="300" max="{{$pmaxw}}">
-		高さ : <input name="pich" type="number" title="高さ" class="form" value="{{$pdefh}}" min="300" max="{{$pmaxh}}">
+		幅 : <input name="picw" type="number" title="幅" class="form" value="{{$pdefw}}" min="{{$pminw}}" max="{{$pmaxw}}">
+		高さ : <input name="pich" type="number" title="高さ" class="form" value="{{$pdefh}}" min="{{$pminh}}" max="{{$pmaxh}}">
 	@if($select_app)
 		ツール :
 		<select name="shi">

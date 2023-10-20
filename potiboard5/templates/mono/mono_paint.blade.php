@@ -29,9 +29,9 @@
 			}
 		</style>
 		@endif	
-				@if($useneo)
-		<link rel="stylesheet" href="neo.css?{{$parameter_day}}&{{$ver}}">
-		<script src="neo.js?{{$parameter_day}}&{{$ver}}"></script>
+		@if($useneo)
+			<link rel="stylesheet" href="neo.css?{{$parameter_day}}&{{$ver}}">
+			<script src="neo.js?{{$parameter_day}}&{{$ver}}"></script>
 		<script>
 			// https://qiita.com/tsmd/items/cfb5dcbec8433b87dc36
 			function isPinchZooming () {//ピンチズームを検知
@@ -64,7 +64,7 @@
 			});
 			window.addEventListener('DOMContentLoaded',neo_add_disable_touch_move,false);
 		</script>
-						@endif
+	@endif
 		@if($pch_mode)
 		@if($type_neo)
 		<link rel="stylesheet" href="neo.css?{{$parameter_day}}&{{$ver}}">
@@ -290,16 +290,6 @@
 						<param name="thumbnail_width" value="100%">
 						<param name="thumbnail_height" value="100%">
 						<param name="tool_advance" value="true">
-						@if($security)
-						@if($security_click)
-						<param name="security_click" value="{{$security_click}}">
-						@endif
-						@if($security_timer)
-						<param name="security_timer" value="{{$security_timer}}">
-						@endif
-						<param name="security_url" value="{{$security_url}}">
-						<param name="security_post" value="false">
-						@endif
 					@if($useneo)
 					</applet-dummy>
 					@else 
@@ -675,13 +665,13 @@
 					}
 				});
 			</script>
-			
-			<!-- (========== CONTINUE MODE(コンティニューモード) end ==========) -->
+
+			{{-- (========== CONTINUE MODE(コンティニューモード) end ==========) --}}
 			@endif
 		</main>
 		<footer>
-		{{-- <!-- 著作権表示 削除しないでください --> --}}
-							@include('parts.mono_copyright')
+		{{-- 著作権表示 削除しないでください --}}
+		@include('parts.mono_copyright')
 
 			</footer>
 		@if(!$chickenpaint)

@@ -122,7 +122,7 @@
 			@if ($notres and (!$diary or $addinfo))
 				<ul>
 					@if ($paint2 and !$diary)
-					<li>お絵かきできる画像のサイズは幅 300～{{$pmaxw}}、高さ 300～{{$pmaxh}}の範囲内です。</li>
+					<li>お絵かきできる画像のサイズは幅 {{$pminw}}px～{{$pmaxw}}px、高さ {{$pminh}}px～{{$pmaxh}}pxの範囲内です。</li>
 					<li>画像は幅 {{$maxw}}px、高さ {{$maxh}}pxを超えると縮小表示されます。</li>
 					@endif
 					{!!$addinfo!!}
