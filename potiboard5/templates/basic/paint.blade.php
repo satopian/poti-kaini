@@ -21,15 +21,15 @@
 // title…掲示板タイトル
 // charset…文字コード
  --}}
- @if($continue_mode)
+@if($continue_mode)
  <style>
 	 /* index.cssを更新しない人がいるかもしれないためインラインでも記述 */
 	 #span_cont_paint_same_thread {
 		 display: none;
 	 }
 </style>
- @endif	
- @if($paint_mode)
+@endif	
+@if($paint_mode)
 <style>
 	body{overscroll-behavior-x: none !important; }
 	div#chickenpaint-parent , div.appstage {
@@ -60,10 +60,10 @@
 	}
 	window.addEventListener('DOMContentLoaded',fixchicken,false);
 </script>
- 
+
 <script src="chickenpaint/js/chickenpaint.min.js?{{$parameter_day}}&{{$ver}}"></script>
 
-<link rel="stylesheet" type="text/css" href="chickenpaint/css/chickenpaint.css?{{$parameter_day}}&{{$ver}}">
+<link rel="stylesheet" href="chickenpaint/css/chickenpaint.css?{{$parameter_day}}&{{$ver}}">
 
 @else
 <!-- NEOを使う -->
@@ -341,16 +341,6 @@ pe[n]}}function GradView(a,f){d=document}function showHideLayer(){d=document;var
 <param name="image_canvas" value="{{$imgfile}}">
 @endif
 <param name="send_header" value="usercode={{$usercode}}">
-@if($security) 
-@if($security_click) 
-<param name="security_click" value="{{$security_click}}">
-@endif
-@if($security_timer) 
-<param name="security_timer" value="{{$security_timer}}">
-@endif
-<param name="security_url" value="{{$security_url}}">
-<param name="security_post" value="false">
-@endif
 <!--共通設定(変更不可) ここまで-->
 <!--アプレットのカラー設定(変更可)-->
 <!--アプレットのカラー設定(変更可) ここまで-->
