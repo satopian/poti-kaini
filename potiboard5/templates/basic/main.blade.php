@@ -84,7 +84,7 @@
 			<div class="howtopaint">
 				<ul id="up_desc">
 					@if ($paint2 and !$diary)
-					<li>お絵かきできる画像のサイズは横 300px～{{$pmaxw}}px、縦 300px～{{$pmaxh}}pxの範囲内です。</li>
+					<li>お絵かきできる画像のサイズは横 {{$pminw}}px～{{$pmaxw}}px、縦 {{$pminh}}px～{{$pmaxh}}pxの範囲内です。</li>
 					<li>画像は横 {{$maxw}}px、縦 {{$maxh}}pxを超えると縮小表示されます。sage機能付き。</li>
 					@endif
 					{!!$addinfo!!}
