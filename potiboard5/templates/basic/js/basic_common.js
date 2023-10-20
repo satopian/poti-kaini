@@ -35,9 +35,9 @@
 		const luminousElems = document.querySelectorAll('.luminous');
 		//取得した要素の数が 0 より大きければ
 		if( luminousElems.length > 0 ) {
-			luminousElems.forEach( (elem) => {
-			new Luminous(elem);
-			});
+			for(const elem of luminousElems)  {
+				new Luminous(elem);
+			};
 		}
 		//JavaScriptによるCookie発行
 		const paintform = document.getElementById("paint_form");
