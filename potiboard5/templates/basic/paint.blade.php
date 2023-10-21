@@ -273,7 +273,7 @@ pe[n]}}function GradView(a,f){d=document}function showHideLayer(){d=document;var
 </script>
 <!--動的パレットスクリプト ここまで-->
 <noscript><h3>JavaScriptが有効でないため正常に動作致しません。</h3></NOSCRIPT>
-<div class="appstage"><div class="app">
+<div class="appstage"><div class="app" style="width:{{$w}}px; height:{{$h}}px">
 <!--applet～の～部分の詳しい事は、PaintBBS及びしぃペインターのReadmeを参照-->
 <!--PaintBBS個別設定-->
 @if($paintbbs) 
@@ -435,7 +435,7 @@ if(DynamicColor) PaletteListSetColor();
 <INPUT SIZE="20" NAME="count">
 </FORM>
 <Script>
-	timerID=10;stime=new Date;function SetTimeCount(){now=new Date;s=Math.floor((now.getTime()-stime.getTime())/1E3);disp="";86400<=s&&(d=Math.floor(s/86400),disp+=d+"\u65e5",s-=86400*d);3600<=s&&(h=Math.floor(s/3600),disp+=h+"\u6642\u9593",s-=3600*h);60<=s&&(m=Math.floor(s/60),disp+=m+"\u5206",s-=60*m);document.watch.count.value=disp+s+"\u79d2";clearTimeout(timerID);timerID=setTimeout(function() { SetTimeCount(); },250);};
+	timerID=10;stime=new Date;function SetTimeCount(){now=new Date;s=Math.floor((now.getTime()-stime.getTime())/1E3);disp="";86400<=s&&(d=Math.floor(s/86400),disp+=d+"\u65e5",s-=86400*d);3600<=s&&(h=Math.floor(s/3600),disp+=h+"\u6642\u9593",s-=3600*h);60<=s&&(m=Math.floor(s/60),disp+=m+"\u5206",s-=60*m);document.watch.count.value=disp+s+"\u79d2";clearTimeout(timerID);timerID=setTimeout(()=> { SetTimeCount(); },250);};
 	document.addEventListener('DOMContentLoaded',SetTimeCount,false);
 	</Script>
 	</div>
@@ -450,10 +450,9 @@ if(DynamicColor) PaletteListSetColor();
 <!--PaintBBS HELP END-->
 @endif
 @endif
-{{-- <!--お絵かきモード ここまで--> --}}
-{{-- <!--動画表示モード--> --}}
-{{-- <!--
-//
+{{-- お絵かきモード ここまで --}}
+{{-- 動画表示モード --}}
+{{-- 
 // pch_mode…動画表示モードのとき true が入る
 // paintbbs…PaintBBSのPCHファイルなら true が入る
 // normal…しぃペインターのSPCHファイルなら true が入る
@@ -464,7 +463,7 @@ if(DynamicColor) PaletteListSetColor();
 // pchfile…動画ファイル名(.pch or .spch)
 // speed…動画再生スピード初期値
 // datasize…動画ファイルサイズ(Byte)
---> --}}
+--}}
 @if($pch_mode) 
 	</header>
 <div class="appstage" style="width:{{$w}}px; height:{{$h}}px">
