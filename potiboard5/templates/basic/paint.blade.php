@@ -120,21 +120,21 @@
 	@if(($paint_mode and !$useneo) or ($pch_mode and !$type_neo))
 	<!-- Javaが使えるかどうか判定 -->
 	<script>
-			function cheerpJLoad() {
-			var jEnabled = navigator.javaEnabled();
-			if(!jEnabled){
-				var sN = document.createElement("script");
-				sN.src = "{{$cheerpj_url}}";
-				sN.integrity="{{$cheerpj_hash}}";
-				sN.crossOrigin="anonymous";
-				var s0 = document.getElementsByTagName("script")[0];
-				s0.parentNode.insertBefore(sN, s0);
-				sN.addEventListener("load", function(){ cheerpjInit(); }, false);
-				}
+		function cheerpJLoad() {
+		var jEnabled = navigator.javaEnabled();
+		if(!jEnabled){
+			var sN = document.createElement("script");
+			sN.src = "{{$cheerpj_url}}";
+			sN.integrity="{{$cheerpj_hash}}";
+			sN.crossOrigin="anonymous";
+			var s0 = document.getElementsByTagName("script")[0];
+			s0.parentNode.insertBefore(sN, s0);
+			sN.addEventListener('DOMContentLoaded', ()=>{ cheerpjInit(); }, false);
 			}
-			window.addEventListener("load", function() { cheerpJLoad(); }, false);
+		}
+		document.addEventListener('DOMContentLoaded', ()=>{ cheerpJLoad(); }, false);
 	</script>
-	@endif
+@endif
 @endif
 <style id="for_mobile"></style>
 <script>
