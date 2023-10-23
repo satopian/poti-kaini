@@ -129,7 +129,7 @@
 			sN.crossOrigin="anonymous";
 			var s0 = document.getElementsByTagName("script")[0];
 			s0.parentNode.insertBefore(sN, s0);
-			sN.addEventListener('DOMContentLoaded', ()=>{ cheerpjInit(); }, false);
+			sN.addEventListener("load", ()=>{ cheerpjInit(); }, false);
 			}
 		}
 		document.addEventListener('DOMContentLoaded', ()=>{ cheerpJLoad(); }, false);
