@@ -1048,14 +1048,14 @@ ChickenPaintのパレットをペンで長押しした時に、不要なマウ�
 その場合は各作者の方に対応してもらうか、自分でコードを追加するなどの対応をお願いします。
 ```
 <script>
-	function fixchicken() {
-		document.addEventListener('dblclick', function(e){ e.preventDefault()}, { passive: false });
-		document.querySelector('#chickenpaint-parent').addEventListener('contextmenu', function (e){
+	document.addEventListener('DOMContentLoaded',()=>{
+		document.addEventListener('dblclick', (e)=>{ e.preventDefault()}, { passive: false });
+		const chicken=document.querySelector('#chickenpaint-parent');
+		chicken.addEventListener('contextmenu', (e)=>{
 			e.preventDefault();
 			e.stopPropagation();
 		}, { passive: false });
-		}
-	window.addEventListener('DOMContentLoaded',fixchicken,false);
+	});
 </script>
 
 ```
