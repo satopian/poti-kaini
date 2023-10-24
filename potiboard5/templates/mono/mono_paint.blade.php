@@ -80,19 +80,17 @@
 			user-select: none;
 		}
 		</style>
-		
 		<script>
-		function fixchicken() {
-			document.addEventListener('dblclick', function(e){ e.preventDefault()}, { passive: false });
-			const chicken=document.querySelector('#chickenpaint-parent');
-			chicken.addEventListener('contextmenu', function (e){
-				e.preventDefault();
-				e.stopPropagation();
-			}, { passive: false });
-		}
-		window.addEventListener('DOMContentLoaded',fixchicken,false);
+			document.addEventListener('DOMContentLoaded',()=>{
+				document.addEventListener('dblclick', (e)=>{ e.preventDefault()}, { passive: false });
+				const chicken=document.querySelector('#chickenpaint-parent');
+				chicken.addEventListener('contextmenu', (e)=>{
+					e.preventDefault();
+					e.stopPropagation();
+				}, { passive: false });
+			});
 		</script>
-		
+				
 
 <script src="chickenpaint/js/chickenpaint.min.js?{{$parameter_day}}&{{$ver}}"></script>
 <link rel="stylesheet" href="chickenpaint/css/chickenpaint.css?{{$parameter_day}}&{{$ver}}">

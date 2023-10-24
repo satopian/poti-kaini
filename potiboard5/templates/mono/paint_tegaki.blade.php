@@ -18,10 +18,9 @@
 		}
 	</style>
 	<script>
-		function fixtegaki() {
-			document.addEventListener('dblclick', function(e){ e.preventDefault()}, { passive: false });
-		}
-		window.addEventListener('DOMContentLoaded',fixtegaki,false);
+		document.addEventListener('DOMContentLoaded',()=>{
+		document.addEventListener('dblclick', function(e){ e.preventDefault()}, { passive: false });
+		});
 	</script>
 </head>
 <body>
