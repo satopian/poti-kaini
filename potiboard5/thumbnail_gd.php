@@ -8,7 +8,7 @@
 $thumbnail_gd_ver=20231028;
 defined('PERMISSION_FOR_DEST') or define('PERMISSION_FOR_DEST', 0606); //config.phpで未定義なら0606
 
-function thumb($path,$time,$ext,$max_w,$max_h){
+function thumb($path,$time,$ext,$max_w,$max_h,$options=[]){
 	$time=basename($time);
 	$fname=basename($path).'/'.$time.basename($ext);
 	if(!is_file($fname)){
@@ -126,12 +126,12 @@ function thumb($path,$time,$ext,$max_w,$max_h){
 		$outfile=THUMB_DIR.basename($time).'s.jpg';
 	// サムネイル画像を保存
 		ImageJPEG($im_out, $outfile,THUMB_Q);
+	}
 	// 作成したイメージを破棄
 	ImageDestroy($im_in);
 	ImageDestroy($im_out);
 	if(!chmod($outfile,PERMISSION_FOR_DEST)){
 		return;
-	}
 }
 
 return is_file($outfile);

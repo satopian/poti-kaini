@@ -3,7 +3,7 @@
 
 // POTI-board EVO
 // バージョン :
-const POTI_VER = 'v6.11.0';
+const POTI_VER = 'v6.11.1';
 const POTI_LOT = 'lot.20231028';
 
 /*
@@ -195,6 +195,8 @@ defined("CATALOG_PAGE_DEF") or define("CATALOG_PAGE_DEF",30);
 //お絵かきできる最小の幅と高さ
 defined("PMIN_W") or define("PMIN_W", "300"); //幅
 defined("PMIN_H") or define("PMIN_H", "300"); //高さ
+defined("MAX_W_PX") or define("MAX_W_PX", "1024"); //高さ
+defined("MAX_H_PX") or define("MAX_H_PX", "1024"); //高さ
 
 $badurl= isset($badurl) ? $badurl : [];//拒絶するurl
 
@@ -1128,7 +1130,7 @@ function regist(){
 	// アップロード処理
 	if($dest&&$is_file_dest){//画像が無い時は処理しない
 
-		thumb($path,$time,".tmp","1024","1024",['toolarge'=>1]);//実体データを縮小
+		thumb($temppath,$time,".tmp",MAX_W_PX,MAX_H_PX,['toolarge'=>1]);//実体データを縮小
 		//pngをjpegに変換してみてファイル容量が小さくなっていたら元のファイルを上書き
 		convert_andsave_if_smaller_png2jpg($dest,$is_upload);
 
