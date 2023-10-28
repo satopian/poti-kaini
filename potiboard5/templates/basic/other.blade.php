@@ -234,8 +234,10 @@
 						<ul class="howtowrite">
 							@if($regist)
 							@if($upfile)
-							<li>最大投稿データ量は {{$maxkb}} KB までです。sage機能付き。</li>
+							<li>横 {{$maxw_px}}px、縦 {{$maxh_px}}pxを超える添付画像は縮小されます。</li>
+							<li>最大投稿データ量は {{$maxkb}} KB までです。</li>
 							@endif
+							<li>幅 {{$maxw}}px、高さ {{$maxh}}pxを超える画像はサムネイルで表示されます。sage機能付き。</li>
 							@endif
 							<!--編集説明-->
 							@if($rewrite)

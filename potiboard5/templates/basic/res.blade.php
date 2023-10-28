@@ -258,12 +258,17 @@
 				<tr>
 					<td colspan="2" class="td_noborder">
 						<!--ファイルアップロード時の説明-->
-						@if($upfile)
 						<ul class="howtowrite">
-							<li>最大投稿データ量は {{$maxkb}} KB までです。</li>
+							@if($upfile)
+							<li>添付可能ファイルはGIF, JPG, PNG, WEBPです。</li>
+							<li>横 {{$maxw_px}}px、縦 {{$maxh_px}}pxを超える添付画像は縮小されます。</li>
+							@endif
+							@if($paint or $upfile) 
+							<li>幅 {{$maxw}}px、高さ {{$maxh}}pxを超える画像はサムネイルで表示されます。</li>
+							<li>最大投稿データ量は {{$maxkb}} KB までです。sage機能付き。</li>
+							@endif
 							{!!$addinfo!!}
 						</ul>
-						@endif
 					</td>
 				</tr>
 			</table>

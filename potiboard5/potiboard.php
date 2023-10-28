@@ -3,7 +3,7 @@
 
 // POTI-board EVO
 // バージョン :
-const POTI_VER = 'v6.11.1';
+const POTI_VER = 'v6.11.2';
 const POTI_LOT = 'lot.20231028';
 
 /*
@@ -195,6 +195,7 @@ defined("CATALOG_PAGE_DEF") or define("CATALOG_PAGE_DEF",30);
 //お絵かきできる最小の幅と高さ
 defined("PMIN_W") or define("PMIN_W", "300"); //幅
 defined("PMIN_H") or define("PMIN_H", "300"); //高さ
+//アップロード時の幅と高さの最大サイズ これ以上は縮小
 defined("MAX_W_PX") or define("MAX_W_PX", "1024"); //高さ
 defined("MAX_H_PX") or define("MAX_H_PX", "1024"); //高さ
 
@@ -518,6 +519,8 @@ function form($resno="",$tmp=""){
 	$dat['use_tegaki'] = (USE_TEGAKI ? true : false);
 	$dat['pdefw'] = PDEF_W;
 	$dat['pdefh'] = PDEF_H;
+	$dat['maxw_px'] = MAX_W_PX;
+	$dat['maxh_px'] = MAX_H_PX;
 	$dat['pmaxw'] = PMAX_W;
 	$dat['pmaxh'] = PMAX_H;
 	$dat['pminw'] = PMIN_W;
@@ -538,7 +541,10 @@ function form($resno="",$tmp=""){
 	if(!USE_IMG_UPLOAD){//画像アップロード機能を使わない時
 		$dat['upfile'] = false;
 	} else{
-		if((!$resno && !$tmp) || (RES_UPLOAD && !$tmp)) $dat['upfile'] = true;
+		if((!$resno && !$tmp) || (RES_UPLOAD && !$tmp)){
+			$dat['upfile'] = true;
+		}
+			
 	}
 	$dat['maxkb']   = MAX_KB;//実際にアップロードできるファイルサイズ
 	$dat['maxw']    = $resno ? MAX_RESW : MAX_W;
