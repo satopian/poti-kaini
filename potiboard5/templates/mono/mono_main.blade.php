@@ -114,7 +114,7 @@
 				<ul>
 					@if ($paint2 and !$diary)
 					<li>お絵かきできる画像のサイズは幅 {{$pminw}}px～{{$pmaxw}}px、高さ {{$pminh}}px～{{$pmaxh}}pxの範囲内です。</li>
-					<li>画像は幅 {{$maxw}}px、高さ {{$maxh}}pxを超えると縮小表示されます。</li>
+					<li>幅 {{$maxw}}px、高さ {{$maxh}}pxを超える画像はサムネイルで表示されます。</li>
 					@endif
 					{!!$addinfo!!}
 				</ul>
@@ -174,11 +174,9 @@
 						</tr>
 					</table>
 					<ul>
-						@if($upfile)
-						<li>添付可能ファイルはGIF, JPG, PNG, WEBPです。</li>
-						<li>横 {{$maxw_px}}px、縦 {{$maxh_px}}pxを超える添付画像は縮小されます。</li>
-						@endif
 						@if($paint or $upfile)
+						<li>添付可能ファイルはGIF, JPG, PNG, WEBPです。</li>
+						<li>幅 {{$maxw_px}}px、高さ {{$maxh_px}}pxを超える添付画像は縮小されます。</li>
 						<li>幅 {{$maxw}}px、高さ {{$maxh}}pxを超える画像はサムネイルで表示されます。</li>
 						<li>最大投稿データ量は {{$maxkb}} KB までです。sage機能付き。</li>
 						@endif

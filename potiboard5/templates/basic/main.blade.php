@@ -76,7 +76,7 @@
 				<ul id="up_desc">
 					@if ($paint2 and !$diary)
 					<li>お絵かきできる画像のサイズは横 {{$pminw}}px～{{$pmaxw}}px、縦 {{$pminh}}px～{{$pmaxh}}pxの範囲内です。</li>
-					<li>画像は横 {{$maxw}}px、縦 {{$maxh}}pxを超えると縮小表示されます。sage機能付き。</li>
+					<li>幅 {{$maxw}}px、高さ {{$maxh}}pxを超える画像はサムネイルで表示されます。sage機能付き。</li>
 					@endif
 					{!!$addinfo!!}
 				</ul>
