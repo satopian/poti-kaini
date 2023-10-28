@@ -3,8 +3,8 @@
 
 // POTI-board EVO
 // バージョン :
-const POTI_VER = 'v6.10.10';
-const POTI_LOT = 'lot.20231027';
+const POTI_VER = 'v6.11.0';
+const POTI_LOT = 'lot.20231028';
 
 /*
   (C) 2018-2023 POTI改 POTI-board redevelopment team
@@ -61,8 +61,8 @@ if ($err = check_file(__DIR__.'/lib/luminous/luminous-basic.min.css')) {
 	die($err);
 }
 
-// const CHEERPJ_URL = 'https://cjrtnc.leaningtech.com/3_20231025_240/cj3loader.js';
-// const CHEERPJ_HASH = 'sha384-hDtP7bmp5Cl2BRQenCjcXT1iveiD/ZvIsJzm3H5hQZSEDPNmPnJvJyMy5RY/hTmv';
+//const CHEERPJ_URL = 'https://cjrtnc.leaningtech.com/3_20231026_244/cj3loader.js';
+//const CHEERPJ_HASH = 'sha384-hDtP7bmp5Cl2BRQenCjcXT1iveiD/ZvIsJzm3H5hQZSEDPNmPnJvJyMy5RY/hTmv';
 
 const CHEERPJ_URL = 'https://cjrtnc.leaningtech.com/2.3/loader.js';
 const CHEERPJ_HASH = 'sha384-1s6C2I0gGJltmNWfLfzHgXW5Dj4JB4kQTpnS37fU6CaQR/FrYG219xbhcAFRcHKE';
@@ -986,6 +986,8 @@ function regist(){
 			if(!move_uploaded_file($upfile, $dest)){
 				error(MSG003,$upfile);
 			}
+			//Exifをチェックして画像が回転している時と位置情報付いている時は上書き保存
+			check_jpeg_exif($dest);
 			$tool="Upload";
 			$is_upload=true;
 		}
@@ -3010,6 +3012,46 @@ function convert_andsave_if_smaller_png2jpg($dest,$is_upload=false){
 		}
 	}
 }
+//Exifをチェックして画像が回転している時と位置情報付いている時は上書き保存
+function check_jpeg_exif($dest){
+
+	if((exif_imagetype($dest) !== IMAGETYPE_JPEG ) || !function_exists("imagecreatefromjpeg")){
+		return;
+	}
+	//画像回転の検出
+	$exif = exif_read_data($dest);
+	$orientation = isset($exif["Orientation"]) ? $exif["Orientation"] : 1;
+	//位置情報はあるか?
+	$gpsdata_exists =(isset($exif['GPSLatitude']) && isset($exif['GPSLongitude'])); 
+
+	if ($orientation !== 1||$gpsdata_exists) {//画像が回転あるいは位置情報が存在する時は
+		$image = imagecreatefromjpeg($dest);
+
+		switch ($orientation) {
+			case 3:
+				$image = imagerotate($image, 180, 0);
+				break;
+			case 6:
+				$image = imagerotate($image, -90, 0);
+				break;
+			case 8:
+				$image = imagerotate($image, 90, 0);
+				break;
+			case 1://画像が回転していない時
+				break;
+			default:
+				break;
+		}
+	// 画像を保存
+	imagejpeg($image, $dest,98);
+	// 画像のメモリを解放
+	imagedestroy($image);
+	}
+	if(!is_file($dest)){
+		error(MSG003,$upfile);
+	}
+}
+
 
 function check_badhost () {
 	global $badip;
