@@ -1128,8 +1128,10 @@ function regist(){
 	// アップロード処理
 	if($dest&&$is_file_dest){//画像が無い時は処理しない
 
+		thumb($path,$time,".tmp","1024","1024",['toolarge'=>1]);//実体データを縮小
 		//pngをjpegに変換してみてファイル容量が小さくなっていたら元のファイルを上書き
 		convert_andsave_if_smaller_png2jpg($dest,$is_upload);
+
 		clearstatcache();
 		if(filesize($dest) > MAX_KB * 1024){//ファイルサイズ再チェック
 		error(MSG034,$dest);
