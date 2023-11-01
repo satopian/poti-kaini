@@ -3,8 +3,8 @@
 
 // POTI-board EVO
 // バージョン :
-const POTI_VER = 'v6.11.8';
-const POTI_LOT = 'lot.20231031';
+const POTI_VER = 'v6.11.9';
+const POTI_LOT = 'lot.20231101';
 
 /*
   (C) 2018-2023 POTI改 POTI-board redevelopment team
@@ -3028,40 +3028,58 @@ function check_jpeg_exif($dest){
 	if((exif_imagetype($dest) !== IMAGETYPE_JPEG ) || !function_exists("imagecreatefromjpeg")){
 		return;
 	}
+	list($w,$h) = getimagesize($dest);
 	//画像回転の検出
 	$exif = exif_read_data($dest);
 	$orientation = isset($exif["Orientation"]) ? $exif["Orientation"] : 1;
 	//位置情報はあるか?
 	$gpsdata_exists =(isset($exif['GPSLatitude']) && isset($exif['GPSLongitude'])); 
 
-	if ($orientation !== 1||$gpsdata_exists) {//画像が回転あるいは位置情報が存在する時は
-		$image = imagecreatefromjpeg($dest);
-
-		switch ($orientation) {
-			case 3:
-				$image = imagerotate($image, 180, 0);
-				break;
-			case 6:
-				$image = imagerotate($image, -90, 0);
-				break;
-			case 8:
-				$image = imagerotate($image, 90, 0);
-				break;
-			case 1://画像が回転していない時
-				break;
-			default:
-				break;
-		}
-	// 画像を保存
-	imagejpeg($image, $dest,98);
-	// 画像のメモリを解放
-	imagedestroy($image);
+	if ($orientation === 1 && !$gpsdata_exists) {
+	//画像が回転していない、位置情報も存在しない時
+		return;
 	}
+	$im_in = imagecreatefromjpeg($dest);
+
+	switch ($orientation) {
+		case 3:
+			$im_in = imagerotate($im_in, 180, 0);
+			break;
+		case 6:
+			$im_in = imagerotate($im_in, -90, 0);
+			break;
+		case 8:
+			$im_in = imagerotate($im_in, 90, 0);
+			break;
+		default:
+			break;
+	}
+	if ($orientation === 6 || $orientation === 8) {
+		// 90度または270度回転の場合、幅と高さを入れ替える
+		list($w, $h) = [$h, $w];
+	}
+	$w_ratio = MAX_W_PX / $w;
+	$h_ratio = MAX_H_PX / $h;
+	$ratio = min($w_ratio, $h_ratio);
+	$out_w = ceil($w * $ratio);//端数の切り上げ
+	$out_h = ceil($h * $ratio);
+	$im_out = $im_in;//縮小しない時
+	//JPEG形式で何度も保存しなおすのを回避するため、
+	//指定範囲内にリサイズしておく。
+	if(function_exists("ImageCreateTrueColor") && function_exists("ImageCopyResampled")){
+		$im_out = ImageCreateTrueColor($out_w, $out_h);
+		ImageCopyResampled($im_out, $im_in, 0, 0, 0, 0, $out_w, $out_h, $w, $h);
+	}
+	// 画像を保存
+	imagejpeg($im_in, $dest,98);
+	// 画像のメモリを解放
+	imagedestroy($im_in);
+	imagedestroy($im_out);
+
 	if(!is_file($dest)){
-		error(MSG003,$upfile);
+		error(MSG003,$dest);
 	}
 }
-
 
 function check_badhost () {
 	global $badip;
