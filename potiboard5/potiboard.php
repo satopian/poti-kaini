@@ -3,7 +3,7 @@
 
 // POTI-board EVO
 // バージョン :
-const POTI_VER = 'v6.11.9';
+const POTI_VER = 'v6.11.10';
 const POTI_LOT = 'lot.20231101';
 
 /*
@@ -3028,7 +3028,6 @@ function check_jpeg_exif($dest){
 	if((exif_imagetype($dest) !== IMAGETYPE_JPEG ) || !function_exists("imagecreatefromjpeg")){
 		return;
 	}
-	list($w,$h) = getimagesize($dest);
 	//画像回転の検出
 	$exif = exif_read_data($dest);
 	$orientation = isset($exif["Orientation"]) ? $exif["Orientation"] : 1;
@@ -3039,6 +3038,9 @@ function check_jpeg_exif($dest){
 	//画像が回転していない、位置情報も存在しない時
 		return;
 	}
+
+	list($w,$h) = getimagesize($dest);
+
 	$im_in = imagecreatefromjpeg($dest);
 
 	switch ($orientation) {
@@ -3071,7 +3073,7 @@ function check_jpeg_exif($dest){
 		ImageCopyResampled($im_out, $im_in, 0, 0, 0, 0, $out_w, $out_h, $w, $h);
 	}
 	// 画像を保存
-	imagejpeg($im_in, $dest,98);
+	imagejpeg($im_out, $dest,98);
 	// 画像のメモリを解放
 	imagedestroy($im_in);
 	imagedestroy($im_out);
