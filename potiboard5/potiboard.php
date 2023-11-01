@@ -3,8 +3,8 @@
 
 // POTI-board EVO
 // バージョン :
-const POTI_VER = 'v6.11.7';
-const POTI_LOT = 'lot.20231030';
+const POTI_VER = 'v6.11.8';
+const POTI_LOT = 'lot.20231031';
 
 /*
   (C) 2018-2023 POTI改 POTI-board redevelopment team
@@ -981,15 +981,17 @@ function regist(){
 	$is_file_dest=false;
 	$is_upload=false;
 	if($upfile && is_file($upfile)){//アップロード
-	$img_type=mime_content_type($upfile);//190603
 	//サポートしていないフォーマットならエラーが返る
-	getImgType($img_type, $upfile);
+	getImgType($upfile);
 	$dest = $temppath.$time.'.tmp';
 	if($pictmp2){
 			copy($upfile, $dest);
 		} else{//フォームからのアップロード
 			if(!USE_IMG_UPLOAD && (!$admin||$admin!==$ADMIN_PASS)){//アップロード禁止で管理画面からの投稿ではない時
 				error(MSG006,$upfile);
+			}
+			if(!preg_match('/\A(jpe?g|jfif|gif|png|webp)\z/i', pathinfo($upfile_name, PATHINFO_EXTENSION))){//もとのファイル名の拡張子
+				error(MSG004,$upfile);
 			}
 			if(!move_uploaded_file($upfile, $dest)){
 				error(MSG003,$upfile);
@@ -1144,10 +1146,8 @@ function regist(){
 		if(filesize($dest) > MAX_KB * 1024){//ファイルサイズ再チェック
 		error(MSG034,$dest);
 		}
-		//画像フォーマット
-		$img_type=mime_content_type($dest);//190603
 		//サポートしていないフォーマットならエラーが返る
-		getImgType($img_type, $dest);
+		getImgType($dest);
 
 		$chk = md5_file($dest);
 		check_badfile($chk, $dest); // 拒絶画像チェック
@@ -1186,7 +1186,7 @@ function regist(){
 
 		list($w, $h) = getimagesize($dest);
 		//サポートしていないフォーマットならエラーが返る
-		$ext = getImgType($img_type, $dest);
+		$ext = getImgType($dest);
 	
 		rename($dest,$path.$time.$ext);
 		chmod($path.$time.$ext,PERMISSION_FOR_DEST);
@@ -2505,6 +2505,9 @@ function replace(){
 
 			$upfile = $temppath.$file_name.$imgext;
 			$dest = $temppath.$time.'.tmp';
+			
+			//サポートしていないフォーマットならエラーが返る
+			getImgType($upfile);
 			copy($upfile, $dest);
 			
 			if(!is_file($dest)) error(MSG003);
@@ -2513,10 +2516,8 @@ function replace(){
 			//pngをjpegに変換してみてファイル容量が小さくなっていたら元のファイルを上書き
 			convert_andsave_if_smaller_png2jpg($dest);
 		
-			//画像フォーマット
-			$img_type=mime_content_type($dest);
 			//サポートしていないフォーマットならエラーが返る
-			$imgext = getImgType($img_type, $dest);
+			$imgext = getImgType($dest);
 
 			$chk = md5_file($dest);
 			check_badfile($chk, $dest); // 拒絶画像チェック
@@ -2848,7 +2849,9 @@ function redirect ($url, $wait = 0, $message1 = '',$message2 = '') {
 	exit;
 }
 
-function getImgType ($img_type, $dest) {
+function getImgType ($dest) {
+
+	$img_type=mime_content_type($dest);
 
 	switch ($img_type) {
 		case "image/gif" : return ".gif";
