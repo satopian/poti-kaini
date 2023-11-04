@@ -178,7 +178,7 @@ define("DSP_RES", "7");
 //要対応テーマ
 define("USE_FONTCOLOR", "0");
 
-//投稿容量制限 KB phpの設定により2Mまで
+//投稿容量制限 KB
 //PNG形式の画像をJPEGに変換する事でこの制限を回避できる場合はJPEGに変換します
 define("MAX_KB", "2048");
 
