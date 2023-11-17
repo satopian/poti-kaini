@@ -1,6 +1,6 @@
 <?php
 /*
-  * POTI-board EVO v5.30.0 lot.221022
+  * POTI-board EVO v6.15.0 lot.231117
   * by POTI-board redevelopment team >> https://paintbbs.sakura.ne.jp/poti/
   *
   * POTI-board EVO の設定ファイルです。
@@ -438,6 +438,10 @@ define("CRYPT_PASS","fbgtK4pj9t8Auek");
 //phpの内部で処理するので覚えておく必要はありません。
 //管理パスとは別なものです。
 //適当な英数字を入れてください。
+
+//CheerpJ の旧バージョンを使用する する:1 しない:0
+//最新バージョンで問題がでる場合は、する:1
+define("USE_CHEERPJ_OLD_VERSION","0");
 
 /* ------------- トラブルシューティング ------------- */
 
