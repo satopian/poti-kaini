@@ -333,7 +333,7 @@ pe[n]}}function GradView(a,f){d=document}function showHideLayer(){d=document;var
 @if($imgfile) 
 <param name="image_canvas" value="{{$imgfile}}">
 @endif
-<param name="send_header" value="usercode={{$usercode}}">
+<param name="send_header" value="usercode={{$usercode}}&amp;tool={{$ool}}">
 <!--共通設定(変更不可) ここまで-->
 <!--アプレットのカラー設定(変更可)-->
 <!--アプレットのカラー設定(変更可) ここまで-->

@@ -1906,6 +1906,15 @@ function paintform(){
 			return htmloutput(PAINT_KLECKS,$dat);
 		}
 		default:
+
+		if($dat['normal'] || $dat['pro']){
+			$dat['tool']="Shi-Painter";
+		}elseif($dat['paintbbs']){
+			$dat['tool']="PaintBBS";
+		}elseif($dat['chickenpaint']){
+			$dat['tool']="ChickenPaint";
+		}
+		
 		return htmloutput(PAINTFILE,$dat);
 	}
 }
@@ -2378,7 +2387,7 @@ global $ADMIN_PASS;
 			if(!$sub)  $sub  = $esub;
 			if(!$com)  $com  = $ecom;
 			if(!$fcolor) $fcolor = $efcolor;
-			is_paint_tool_name($tool);
+			$tool=is_paint_tool_name($tool);
 			$line[$i] = "$no,$date,$name,$email,$sub,$com,$url,$host,$epwd,$ext,$w,$h,$time,$chk,$ptime,$fcolor,$pchext,$thumbnail,$tool,$logver,";
 			$flag = TRUE;
 			break;

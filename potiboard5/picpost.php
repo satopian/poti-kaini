@@ -8,6 +8,7 @@
 // このスクリプトはPaintBBS（藍珠CGI）のPNG保存ルーチンを参考に
 // PHP用に作成したものです。
 //----------------------------------------------------------------------
+// 2023/11/17 Javaプラグインが動作する数少ないブラウザWaterfoxから投稿できなくなっていたのを修正。
 // 2023/10/10 セキュリティ対策。pchデータのmime typeチェックを追加。
 // 2022/12/03 same-originでは無かった時はエラーにする。
 // 2022/11/23 ユーザーコード不一致の時のためのエラーメッセージを追加。
@@ -140,10 +141,11 @@ $userdata = "$u_ip\t$u_host\t$u_agent\t$imgext";
 $sendheader = substr($buffer, 1 + 8, $headerLength);
 $usercode='';
 if($sendheader){
-	$tool = "Shi-Painter";
 	$sendheader = str_replace("&amp;", "&", $sendheader);
 	parse_str($sendheader, $u);
 	$usercode = isset($u['usercode']) ? $u['usercode'] : '';
+	$tool = isset($u['tool']) ? $u['tool'] : 'Shi-Painter';
+	$tool=is_paint_tool_name($tool);
 	$resto = isset($u['resto']) ? $u['resto'] : '';
 	$repcode = isset($u['repcode']) ? $u['repcode'] : '';
 	$stime = isset($u['stime']) ? $u['stime'] : '';
@@ -155,7 +157,7 @@ if($sendheader){
 $userdata .= "\n";
 
 //CSRF
-if(!$usercode || $usercode !== (string)filter_input(INPUT_COOKIE, 'usercode')){
+if(!$usercode || (stripos($u_agent,"java") === false) && ($usercode !== (string)filter_input(INPUT_COOKIE, 'usercode'))){
 	die("error\n{$errormsg_8}");
 }
 if(((bool)SECURITY_TIMER && !$repcode && (bool)$timer) && ((int)$timer<(int)SECURITY_TIMER)){
@@ -282,4 +284,8 @@ function get_uip(){
 		$ip = $ips[0];
 	}
 	return $ip;
+}
+//ペイントツール名?
+function is_paint_tool_name($tool){
+	return in_array($tool,["PaintBBS","Shi-Painter"]) ? $tool :'';
 }
