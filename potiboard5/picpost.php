@@ -157,7 +157,9 @@ if($sendheader){
 $userdata .= "\n";
 
 //CSRF
-if(!$usercode || (stripos($u_agent,"java") === false) && ($usercode !== (string)filter_input(INPUT_COOKIE, 'usercode'))){
+$c_usercode=(string)filter_input(INPUT_COOKIE, 'usercode');//Waterfoxではクロスオリジン制約でCookieが取得できない
+$is_send_java=(stripos($u_agent,"Java/")!==false);//Javaプラグインからの送信ならtrue
+if(!$usercode || (!$is_send_java||$c_usercode) && ($usercode !== $c_usercode)){
 	die("error\n{$errormsg_8}");
 }
 if(((bool)SECURITY_TIMER && !$repcode && (bool)$timer) && ((int)$timer<(int)SECURITY_TIMER)){
@@ -195,6 +197,16 @@ if(!in_array($img_type,["image/png","image/jpeg"])){
 	unlink($full_imgfile);
 	die("error\n{$errormsg_3}");
 }
+
+if(($img_type==="image/png") && function_exists("ImageCreateFromPNG")){//PNG画像が壊れていたらエラー
+	$im_in = @ImageCreateFromPNG($full_imgfile);
+	if(!$im_in){
+		$this->error_msg($this->en ? "The image appears to be corrupted.\nPlease consider saving a screenshot to preserve your work." : "破損した画像が検出されました。\nスクリーンショットを撮り作品を保存する事を強くおすすめします。");
+	}else{
+		ImageDestroy($im_in);
+	}
+}
+
 chmod($full_imgfile,PERMISSION_FOR_DEST);
 
 // 不正画像チェック(検出したら削除)

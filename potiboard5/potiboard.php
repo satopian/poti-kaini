@@ -3,8 +3,8 @@
 
 // POTI-board EVO
 // バージョン :
-const POTI_VER = 'v6.12.1';
-const POTI_LOT = 'lot.20231106';
+const POTI_VER = 'v6.13.2';
+const POTI_LOT = 'lot.20231117';
 
 /*
   (C) 2018-2023 POTI改 POTI-board redevelopment team
@@ -2989,7 +2989,7 @@ function is_ngword ($ngwords, $strs) {
 function png2jpg ($src) {
 	global $temppath;
 	if(mime_content_type($src)!=="image/png" || !gd_check() ||!function_exists("ImageCreateFromPNG")){
-		return false;
+		return;
 	}
 	//pngならJPEGに変換
 	if($im_in=ImageCreateFromPNG($src)){
@@ -3004,15 +3004,18 @@ function png2jpg ($src) {
 			$im_out=$im_in;
 		}
 		$dst = $temppath.pathinfo($src, PATHINFO_FILENAME ).'.jpg.tmp';
-		ImageJPEG($im_out,$dst,98);
 		ImageDestroy($im_in);// 作成したイメージを破棄
+		if(!$im_out){
+			return;
+		}
+		ImageJPEG($im_out,$dst,98);
 		ImageDestroy($im_out);// 作成したイメージを破棄
 		chmod($dst,PERMISSION_FOR_DEST);
 		if(is_file($dst)){
 			return $dst;
 		}
 	}
-	return false;
+	return;
 }
 
 //pngをjpegに変換してみてファイル容量が小さくなっていたら元のファイルを上書き
@@ -3086,10 +3089,14 @@ function check_jpeg_exif($dest){
 		$im_out = ImageCreateTrueColor($out_w, $out_h);
 		ImageCopyResampled($im_out, $im_in, 0, 0, 0, 0, $out_w, $out_h, $w, $h);
 	}
+	// 画像のメモリを解放
+	imagedestroy($im_in);
+	if(!$im_out){
+		return;
+	}
 	// 画像を保存
 	imagejpeg($im_out, $dest,98);
 	// 画像のメモリを解放
-	imagedestroy($im_in);
 	imagedestroy($im_out);
 
 	if(!is_file($dest)){
