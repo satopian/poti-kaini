@@ -441,7 +441,7 @@ define("CRYPT_PASS","fbgtK4pj9t8Auek");
 
 //CheerpJ の旧バージョンを使用する する:1 しない:0
 //最新バージョンで問題がでる場合は、する:1
-define("USE_CHEERPJ_OLD_VERSION","0");
+// define("USE_CHEERPJ_OLD_VERSION","0");
 
 /* ------------- トラブルシューティング ------------- */
 
