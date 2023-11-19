@@ -90,7 +90,7 @@ while ($line = fgets($fp)) {
 		continue;
 	}
 
-	$key_time= ($logver==="6") ? $time : substr($time,-13);
+	$key_time= ($logver==="6") ? $time : (strlen($time)>12 ? substr($time,-13) : $time);
 
 	$continue_to_search=true;
 	if($imgsearch){//画像検索の場合
@@ -159,7 +159,8 @@ if(!empty($arr)){
 				}
 			}
 
-		$time= ($logver==="6") ? (int)substr($time,0,-3) : (int)substr($time,-13,-3);
+		$time=microtime2time($time,$logver);
+
 		$postedtime =$time ? (date("Y/m/d G:i", $time)) : '';
 		$sub=h($sub);
 		$com=str_replace('<br />',' ',$com);
