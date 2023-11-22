@@ -370,6 +370,10 @@
 	<script>
 	document.addEventListener('DOMContentLoaded',l,false);
 	</script>
+	@if($resno)
+	{{-- レス返信画面の画像はギャラリーモードで開く --}}
+	<script>const luminous_gallery = true;</script>
+	@endif
 	<script src="lib/{{$jquery}}"></script>
 	<script src="lib/luminous/luminous.min.js"></script>
 	<script src="{{$skindir}}js/mono_common.js?{{$ver}}"></script>

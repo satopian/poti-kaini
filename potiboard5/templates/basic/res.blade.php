@@ -314,6 +314,7 @@
 	</script>
 	<div id="bottom"></div>
 	<div id="page_top"><a class="icon-angles-up-solid"></a></div>
+	<script>const luminous_gallery = true;</script>
 	<script src="lib/{{$jquery}}"></script>
 	<script src="lib/luminous/luminous.min.js"></script>
 	<script src="{{$skindir}}js/basic_common.js?{{$ver}}"></script>
