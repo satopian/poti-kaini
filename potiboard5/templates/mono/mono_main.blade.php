@@ -370,8 +370,7 @@
 	<script>
 	document.addEventListener('DOMContentLoaded',l,false);
 	</script>
-	@if($resno)
-	{{-- レス返信画面の画像はギャラリーモードで開く --}}
+	@if($resno)	{{-- レス返信画面の画像はギャラリーモードで開く --}}
 	<script>const luminous_gallery = true;</script>
 	@endif
 	<script src="lib/{{$jquery}}"></script>
