@@ -37,8 +37,8 @@
 	<div id="top"></div>
 	<div id="body">
 		<header>
-			<h1 id="bbs_title"><a href="{{$self}}?res={{$ress[0]['no']}}">[{{$oya[0][0]['no']}}] {{$oya[0][0]['sub']}} @if($oya[0][0]['name'])<span class="title_name_wrap">by
-					{{$oya[0][0]['name']}} さんへ返信</span>@endif</a></h1>
+			<h1 id="bbs_title">[{{$oya[0][0]['no']}}] {{$oya[0][0]['sub']}} @if($oya[0][0]['name'])<span class="title_name_wrap">by
+					{{$oya[0][0]['name']}} さんへ返信</span>@endif</h1>
 			<nav>
 				<div id="self2">
 					[<a href="{{$self2}}">{{$title}}</a>]
@@ -68,8 +68,8 @@
 			{{-- <!--親記事ヘッダ--> --}}
 			@if ($loop->first)
 			{{-- 最初のループ --}}
-			<h2 class="article_title">[{{$ress[0]['no']}}]
-					{{$ress[0]['sub']}}</h2>
+			<h2 class="article_title"><a href="{{$self}}?res={{$ress[0]['no']}}">[{{$ress[0]['no']}}]
+					{{$ress[0]['sub']}}</a></h2>
 		
 			@else
 			<hr>
