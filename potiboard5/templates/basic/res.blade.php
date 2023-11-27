@@ -37,8 +37,8 @@
 	<div id="top"></div>
 	<div id="body">
 		<header>
-			<h1 id="bbs_title">[{{$oya[0][0]['no']}}] {{$oya[0][0]['sub']}} @if($oya[0][0]['name'])<span class="title_name_wrap">by
-					{{$oya[0][0]['name']}} さんへ返信</span>@endif</h1>
+			<h1 id="bbs_title"><a href="{{$self}}?res={{$ress[0]['no']}}">[{{$oya[0][0]['no']}}] {{$oya[0][0]['sub']}} @if($oya[0][0]['name'])<span class="title_name_wrap">by
+					{{$oya[0][0]['name']}} さんへ返信</span>@endif</a></h1>
 			<nav>
 				<div id="self2">
 					[<a href="{{$self2}}">{{$title}}</a>]
