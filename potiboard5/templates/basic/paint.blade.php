@@ -116,6 +116,19 @@
 	window.addEventListener('DOMContentLoaded',neo_add_disable_touch_move,false);
 </script>
 @endif
+@if($paint_mode) 
+@if(!$chickenpaint)
+<script>
+	//Firefoxのメニューバーが開閉するのため、Altキーのデフォルトの処理をキャンセル
+	document.addEventListener('keyup', function(e) {//しぃペインター NEO共通
+		// e.key を利用して特定のキーのアップイベントを検知する
+		if (e.key.toLowerCase() === 'alt') {
+			e.preventDefault(); // Alt キーのデフォルトの動作をキャンセル
+		}
+	});
+</script>
+@endif
+@endif
 @if($pch_mode and $type_neo) 
 <link rel="stylesheet" href="neo.css?{{$parameter_day}}&{{$ver}}">
 <script src="neo.js?{{$parameter_day}}&{{$ver}}"></script>
