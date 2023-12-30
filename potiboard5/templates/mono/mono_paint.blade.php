@@ -95,9 +95,9 @@
 		</style>
 		<script>
 			document.addEventListener('DOMContentLoaded',function(){
-				document.addEventListener('dblclick', fuction(e){ e.preventDefault()}, { passive: false });
+				document.addEventListener('dblclick',function (e){ e.preventDefault()}, { passive: false });
 				const chicken=document.querySelector('#chickenpaint-parent');
-				chicken.addEventListener('contextmenu', fuction(e){
+				chicken.addEventListener('contextmenu', function(e){
 					e.preventDefault();
 					e.stopPropagation();
 				}, { passive: false });
