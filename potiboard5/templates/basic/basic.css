@@ -540,6 +540,9 @@ input.pch_upload {
 	text-align: center;
 	margin: 14px 10px 14px;
 }
+.copyright a {
+	display: inline-block;
+}
 
 /* カタログ表示 */
 .catalog_title {
