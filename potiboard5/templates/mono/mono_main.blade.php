@@ -244,7 +244,7 @@
 					{{-- 親子共通 --}}
 					@if($res['src'])
 					<div class="img_info_wrap">
-						<a href="{{$res['src']}}" title="{{$res['sub']}}" target="_blank" rel="noopener" data-lightbox="filename_{{$res['no']}}">{{$res['srcname']}}</a>
+						<a href="{{$res['src']}}" target="_blank" rel="noopener" data-lightbox="filename_{{$res['no']}}">{{$res['srcname']}}</a>
 						({{$res['size_kb']}} KB)
 						@if($res['thumb']) - サムネイル表示中 - @endif @if($res['painttime']) PaintTime :
 						{{$res['painttime']}}@endif
