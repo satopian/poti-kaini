@@ -22,8 +22,8 @@
 	<link rel="stylesheet" href="{{$skindir}}basic.css?{{$ver}}">
 	<link rel="preload" as="style" href="{{$skindir}}icomoon/style.css" onload="this.rel='stylesheet'">
 	<link rel="preload" as="script" href="lib/{{$jquery}}">
-	<link rel="preload" as="style" href="lib/luminous/luminous-basic.min.css" onload="this.rel='stylesheet'">
-	<link rel="preload" as="script" href="lib/luminous/luminous.min.js">
+	<link rel="preload" as="style" href="lib/lightbox/css/lightbox.min.css" onload="this.rel='stylesheet'">
+	<link rel="preload" as="script" href="lib/lightbox/js/lightbox.min.js">
 	<link rel="preload" as="script" href="{{$skindir}}js/basic_common.js?{{$ver}}">
 	<link rel="preload" as="script" href="loadcookie.js">
 	<style id="for_mobile"></style>
@@ -139,7 +139,7 @@
 			{{-- 記事共通ヘッダここまで --}}
 
 			@if($res['src'])<div class="posted_image" @if($res['w']>=750) style="margin-right:0;float:none;" @endif >
-				<a href="{{$res['src']}}" target="_blank" rel="noopener" class="luminous"><img
+				<a href="{{$res['src']}}" target="_blank" rel="noopener" data-lightbox="{{$ress[0]['no']}}"><img
 						src="{{$res['imgsrc']}}" width="{{$res['w']}}" height="{{$res['h']}}"
 						alt="{{$res['sub']}} by {{$res['name']}} ({{$res['size_kb']}} KB)"
 						title="{{$res['sub']}} by {{$res['name']}} ({{$res['size_kb']}} KB) @if($res['thumb'])サムネイル縮小表示 @endif"
@@ -223,7 +223,7 @@
 	<div id="bottom"></div>
 	<div id="page_top"><a class="icon-angles-up-solid"></a></div>
 	<script src="lib/{{$jquery}}"></script>
-	<script src="lib/luminous/luminous.min.js"></script>
+	<script src="lib/lightbox/js/lightbox.min.js"></script>
 	<script src="{{$skindir}}js/basic_common.js?{{$ver}}"></script>
 </body>
 

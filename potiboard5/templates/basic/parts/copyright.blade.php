@@ -13,7 +13,7 @@
 	UseFunction - <span title="by WonderCatStudio">動的パレットスクリプト</span>
 	<!--http://wondercatstudio.com/-->
 	，
-	<a href="https://github.com/imgix/luminous" target="_blank" rel="noopener noreferrer" title="by Zebrafish Labs" >luminous</a>
+	<a href="http://lokeshdhakar.com/projects/lightbox2/" target="_blank" rel="noopener noreferrer" title="by Lokesh Dhakar" >Lightbox</a>
 	，
 	<a href="https://github.com/EFTEC/BladeOne" target="_blank" rel="noopener noreferrer" title="BladeOne">BladeOne</a>
 	</div>
