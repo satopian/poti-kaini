@@ -340,7 +340,7 @@ IEとEdgeのIEモードではオラクルのJava8の32bit版を使いますが�
 
 この｢Waterfox Classic｣と｢Pale Moon｣でJavaプラグインを使ったしぃペインターを起動する事はできていましたが、投稿に失敗する状態だった事がわかりました。
 独自に追加したセキュリティチェックでエラーになっていました。  
-この問題を修正して、｢Waterfox Classic｣と｢Pale Moon｣でも、Javaプラグインをつかったしぃペインターからの投稿ができるようにしました。  
+この問題を修正して、｢Waterfox Classic｣と｢Pale Moon｣でも、Javaプラグインを使ったしぃペインターからの投稿ができるようにしました。  
 Windowsであれば、EdgeのIEモードを使う事でJavaプラグインによる安定した環境でしぃペインターを利用可能でしたが、Macでは、｢Waterfox Classic｣や｢Pale Moon｣を使うしかJavaプラグインを使う方法が存在しないため、対応しました。
 
 > [どうすれば手動でJavaをダウンロードしてWindowsコンピュータにインストールできますか。](https://www.java.com/ja/download/help/windows_manual_download.html)
