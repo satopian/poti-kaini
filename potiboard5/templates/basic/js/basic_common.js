@@ -32,6 +32,7 @@
 			return false;
 		});
 		//Lightbox
+		if(typeof lightbox!=='undefined'){
 		lightbox.option({
 			'alwaysShowNavOnTouchDevices': true,
 			'disableScrolling': true,
@@ -39,7 +40,8 @@
 			'resizeDuration': 500,
 			'imageFadeDuration': 500,
 			'wrapAround': true
-		});
+			});
+		};
 		//JavaScriptによるCookie発行
 		const paintform = document.getElementById("paint_form");
 		if(paintform){
