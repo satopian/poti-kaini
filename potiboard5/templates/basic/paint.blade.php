@@ -252,6 +252,8 @@ document.addEventListener("DOMContentLoaded", function() {
 </header>
 <!--動的パレットスクリプト ここから-->
 <script>
+//	BBS Note 動的パレット＆マトリクス 2003/06/22
+//	(C) のらネコ WonderCatStudio http://wondercatstudio.com/
 var DynamicColor = 1;	// パレットリストに色表示
 var Palettes = new Array();
 // パレット配列作成
