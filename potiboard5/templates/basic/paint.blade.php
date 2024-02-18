@@ -41,6 +41,7 @@
 		word-break:initial;
 		overflow-wrap: initial;
 	}
+	a{text-decoration-skip-ink: initial;}
 </style>
 @endif
 @if($chickenpaint)
