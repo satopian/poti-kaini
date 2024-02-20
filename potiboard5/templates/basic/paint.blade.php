@@ -115,6 +115,52 @@
 		}
 	});
 	window.addEventListener('DOMContentLoaded',neo_add_disable_touch_move,false);
+	Neo.handleExit=()=>{
+	@if($rep)
+    // 画像差し換えに必要なフォームデータをセット
+    const formData = new FormData();
+    formData.append("mode", "picrep"); 
+    formData.append("no", "{{$no}}"); 
+    formData.append("pwd", "{{$pwd}}"); 
+	formData.append("repcode", "{{$repcode}}");
+
+    // 画像差し換え
+
+	fetch("{{$sefl}}", {
+        method: 'POST',
+		mode: 'same-origin',
+		headers: {
+			'X-Requested-With': 'PaintBBS'
+			,
+		},
+       body: formData
+    })
+    .then(response => {
+// console.log("response",response);
+		if (response.ok) {
+
+			if (response.redirected) {
+				return window.location.href = response.url;
+			}
+			response.text().then((text) => {
+				 //console.log(text);
+				if (text.startsWith("error\n")) {
+					console.log(text);
+					return window.location.href = "?mode=piccom&stime={{$stime}}";
+				}
+			})
+        }
+    })
+    .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+		return window.location.href = "?mode=piccom&stime={{$stime}}";
+    });
+	@else
+	return window.location.href = "?mode=piccom&stime={{$stime}}";
+	@endif
+	}
+
+
 </script>
 @endif
 @if($paint_mode) 
@@ -234,6 +280,51 @@ document.addEventListener("DOMContentLoaded", function() {
         disableBootstrapAPI: true,
 		fullScreenMode: "force"
 	});
+
+	handleExit=()=>{
+	@if($rep)
+    // 画像差し換えに必要なフォームデータをセット
+    const formData = new FormData();
+    formData.append("mode", "picrep"); 
+    formData.append("no", "{{$no}}"); 
+    formData.append("pwd", "{{$pwd}}"); 
+	formData.append("repcode", "{{$repcode}}");
+
+    // 画像差し換え
+
+	fetch("{{$sefl}}", {
+        method: 'POST',
+		mode: 'same-origin',
+		headers: {
+			'X-Requested-With': 'PaintBBS'
+			,
+		},
+       body: formData
+    })
+    .then(response => {
+// console.log("response",response);
+		if (response.ok) {
+
+			if (response.redirected) {
+				return window.location.href = response.url;
+			}
+			response.text().then((text) => {
+				 //console.log(text);
+				if (text.startsWith("error\n")) {
+						console.log(text);
+						return window.location.href = "?mode=piccom&stime={{$stime}}";
+					}
+			})
+        }
+    })
+    .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+		return window.location.href = "?mode=piccom&stime={{$stime}}";
+    });
+	@else
+	return window.location.href = "?mode=piccom&stime={{$stime}}";
+	@endif
+	}
 })
 </script>
 
