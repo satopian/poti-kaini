@@ -3,8 +3,8 @@
 
 // POTI-board EVO
 // バージョン :
-const POTI_VER = 'v6.26.8';
-const POTI_LOT = 'lot.20240220';
+const POTI_VER = 'v6.26.9';
+const POTI_LOT = 'lot.20240221';
 
 /*
   (C) 2018-2023 POTI改 POTI-board redevelopment team
@@ -1953,9 +1953,7 @@ function paintcom(){
 	$resto = (string)filter_input(INPUT_GET, 'resto',FILTER_VALIDATE_INT);
 	$stime = (string)filter_input(INPUT_GET, 'stime',FILTER_VALIDATE_INT);
 	//描画時間
-	if($stime && DSP_PAINTTIME){
-		$dat['ptime'] = calcPtime(time()-$stime);
-	}
+	$dat['ptime'] = ($stime && DSP_PAINTTIME) ? calcPtime(time()-$stime) :"";
 
 	if(USE_RESUB && $resto) {
 
@@ -2136,7 +2134,7 @@ function incontinue(){
 	$dat['ext'] = h($cext);
 	//描画時間
 	$cptime=is_numeric($cptime) ? h(calcPtime($cptime)) : h($cptime); 
-	if(DSP_PAINTTIME) $dat['painttime'] = $cptime;
+	$dat['painttime'] = DSP_PAINTTIME ? $cptime :"";
 	$dat['ctype_img'] = true;
 	$dat['ctype_pch'] = false;
 	$pch_ext=check_pch_ext(PCH_DIR.$ctim,['upfile'=>true]);
