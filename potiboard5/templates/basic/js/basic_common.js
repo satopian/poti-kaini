@@ -1,4 +1,13 @@
 	jQuery(function() {
+
+		//URLクエリからresidを取得して指定idへページ内を移動
+		const urlParams = new URLSearchParams(window.location.search);
+		const resid = urlParams.get('resid');
+		const document_resid = document.getElementById(resid);
+		if(document_resid){
+			document_resid.scrollIntoView();
+		}
+
 		window.onpageshow = function () {
 			$('[type="submit"]').each(function() {
 				const $btn = $(this);
