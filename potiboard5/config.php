@@ -59,7 +59,7 @@ define("USE_KLECKS", "1");
 //管理者は設定に関わらすべてのアプリを使用できるようにする する:1 しない:0
 define('ALLOW_ADMINS_TO_USE_ALL_APPS_REGARDLESS_OF_SETTINGS', '1');
 //続きを描く時は設定に関わらずすべてのアプリが使用できるようにする する:1 しない:0
-define('ALLOW_ALL_APPS_TO_CONTINUE_DRAWING', '1');
+define('ALLOW_ALL_APPS_TO_CONTINUE_DRAWING', '0');
 
 /*----------絶対に設定が必要な項目はここまでです。ここから下は必要に応じて。----------*/
 
