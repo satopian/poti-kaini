@@ -3,7 +3,7 @@
 
 // POTI-board EVO
 // バージョン :
-const POTI_VER = 'v6.27.0';
+const POTI_VER = 'v6.27.2';
 const POTI_LOT = 'lot.20240221';
 
 /*
@@ -2466,8 +2466,7 @@ function replace($no="",$pwd="",$repcode="",$java=""){
 
 	$replace_error_msg = $en ? 
 	"Image replacement failed.\nIt may be left in [Recover Images]."
-	:"画像の差し換えに失敗しました。/n未投稿画像に残っている可能性があります。";
-
+	:"画像の差し換えに失敗しました。\n未投稿画像に残っている可能性があります。";
 
 	$no = $no ? $no : (string)filter_input(INPUT_POST, 'no',FILTER_VALIDATE_INT);
 	$no = $no ? $no : (string)filter_input(INPUT_GET, 'no',FILTER_VALIDATE_INT);
