@@ -75,7 +75,7 @@
 			<hr>
 			{{-- <!-- レス記事ヘッダ --> --}}
 			<div class="res_article_wrap">
-				<div class="res_article_title" id="{{$res['time']}}">[{{$res['no']}}] {{$res['sub']}}</div>
+				<div class="res_article_title" id="{{$res['no']}}">[{{$res['no']}}] {{$res['sub']}}</div>
 				@endif
 				{{-- <!-- 記事共通ヘッダ --> --}}
 				@if(!isset($res['not_deleted'])||$res['not_deleted'])
