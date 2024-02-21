@@ -429,11 +429,20 @@ pe[n]}}function GradView(a,f){d=document}function showHideLayer(){d=document;var
 <param name="thumbnail_width" value="100%">
 <param name="thumbnail_height" value="100%">
 @if($useneo)
+{{-- neo --}}
 <param name="url_save" value="{{$self}}?mode=saveimage&amp;tool=neo">
-@else
-<param name="url_save" value="picpost.php">
-@endif
+<param name="send_header" value="usercode={{$usercode}}&amp;tool={{$tool}}">
 <param name="url_exit" value="{{$self}}?mode={{$mode}}&amp;stime={{$stime}}">
+@else
+{{-- しぃペインター --}}
+<param name="url_save" value="{{$self}}?mode=picpost">
+<param name="send_header" value="usercode={{$usercode}}&amp;tool={{$tool}}&amp;rep={{$rep}}&amp;no={{$no}}&amp;pwd={{$pwd}}">
+	@if($rep)
+	<param name="url_exit" value="{{$self}}?res={{$oyano}}">
+	@else
+	<param name="url_exit" value="{{$self}}?mode=piccom&amp;stime={{$stime}}">
+	@endif
+@endif
 @if($anime) 
 <param name="thumbnail_type" value="animation">
 @endif
@@ -443,7 +452,6 @@ pe[n]}}function GradView(a,f){d=document}function showHideLayer(){d=document;var
 @if($imgfile) 
 <param name="image_canvas" value="{{$imgfile}}">
 @endif
-<param name="send_header" value="usercode={{$usercode}}&amp;tool={{$tool}}">
 <!--共通設定(変更不可) ここまで-->
 <!--アプレットのカラー設定(変更可)-->
 <!--アプレットのカラー設定(変更可) ここまで-->
