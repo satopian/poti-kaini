@@ -3,7 +3,7 @@
 
 // POTI-board EVO
 // バージョン :
-const POTI_VER = 'v6.30.1';
+const POTI_VER = 'v6.30.2';
 const POTI_LOT = 'lot.20240318';
 
 /*
@@ -1958,8 +1958,8 @@ function paintform(){
 // お絵かきコメント 
 function paintcom(){
 	global $usercode;
-	$ip = get_uip();
-	$host = $ip ? gethostbyaddr($ip) : '';
+	$userip = get_uip();
+	$host = $userip ? gethostbyaddr($userip) : '';
 
 	$resto = (string)filter_input(INPUT_GET, 'resto',FILTER_VALIDATE_INT);
 	$stime = (string)filter_input(INPUT_GET, 'stime',FILTER_VALIDATE_INT);
@@ -1996,7 +1996,7 @@ function paintcom(){
 			$imgext=basename($imgext);
 			if(is_file(TEMP_DIR.$file_name.$imgext)) //画像があればリストに追加
 			//Javaから送信されるIPアドレスはIPv4形式になるのでホスト名でもチェック
-			if(($ucode == $usercode)||($uip && ($uip == $ip))||($uhost && ($uhost == $host))){
+			if(($ucode == $usercode)||($uip && ($uip == $userip))||($uhost && ($uhost == $host))){
 				$tmp[$file_name] = $file_name.$imgext;
 			}
 		}
