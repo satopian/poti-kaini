@@ -175,7 +175,7 @@
 					</table>
 					<ul>
 						@if($upfile)
-						<li>添付可能ファイルはGIF, JPG, PNG, WEBPです。</li>
+						<li>添付可能なファイル形式はGIF、JPG、PNG、およびWEBPです。</li>
 						<li>幅 {{$maxw_px}}px、高さ {{$maxh_px}}pxを超える添付画像は縮小されます。</li>
 						@endif
 						@if($paintform or $upfile)

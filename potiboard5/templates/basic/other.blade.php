@@ -234,6 +234,7 @@
 						<ul class="howtowrite">
 							@if($regist)
 							@if($upfile)
+							<li>添付可能なファイル形式はGIF、JPG、PNG、およびWEBPです。</li>							
 							<li>横 {{$maxw_px}}px、縦 {{$maxh_px}}pxを超える添付画像は縮小されます。</li>							
 							<li>幅 {{$maxw}}px、高さ {{$maxh}}pxを超える画像はサムネイルで表示されます。</li>
 							<li>最大投稿データ量は {{$maxkb}} KB までです。sage機能付き。</li>
