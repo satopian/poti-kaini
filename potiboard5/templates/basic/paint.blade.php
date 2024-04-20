@@ -263,25 +263,26 @@
 <p></p>
 
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    new ChickenPaint({
-        uiElem: document.getElementById("chickenpaint-parent"),
-		canvasWidth: {{$picw}},
-	canvasHeight: {{$pich}},
+	document.addEventListener("DOMContentLoaded", function() {
+		new ChickenPaint({
+			uiElem: document.getElementById("chickenpaint-parent"),
+			canvasWidth: {{$picw}},
+		canvasHeight: {{$pich}},
 
-	@if($imgfile) loadImageUrl: "{{$imgfile}}",@endif
-	@if($img_chi) loadChibiFileUrl: "{{$img_chi}}",@endif
-	saveUrl: "?mode=saveimage&tool=chi&usercode={!!$usercode!!}",
-	postUrl: "?mode={!!$mode!!}&stime={{$stime}}",
-	exitUrl: "?mode={!!$mode!!}&stime={{$stime}}",
+		@if($imgfile) loadImageUrl: "{{$imgfile}}",@endif
+		@if($img_chi) loadChibiFileUrl: "{{$img_chi}}",@endif
+		saveUrl: "?mode=saveimage&tool=chi&usercode={!!$usercode!!}",
+		postUrl: "?mode={!!$mode!!}&stime={{$stime}}",
+		exitUrl: "?mode={!!$mode!!}&stime={{$stime}}",
 
-        allowDownload: true,
-        resourcesRoot: "chickenpaint/",
-        disableBootstrapAPI: true,
-		fullScreenMode: "force"
+			allowDownload: true,
+			resourcesRoot: "chickenpaint/",
+			disableBootstrapAPI: true,
+			fullScreenMode: "force"
+		});
 	});
 
-	handleExit=()=>{
+	const handleExit=()=>{
 	@if($rep)
     // 画像差し換えに必要なフォームデータをセット
     const formData = new FormData();
@@ -325,7 +326,6 @@ document.addEventListener("DOMContentLoaded", function() {
 	return window.location.href = "?mode=piccom&stime={{$stime}}";
 	@endif
 	}
-})
 </script>
 
 
