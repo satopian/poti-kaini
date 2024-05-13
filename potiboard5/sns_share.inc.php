@@ -14,7 +14,6 @@ class sns_share{
 		
 			["Twitter","https://twitter.com"],
 			["Bluesky","https://bsky.app"],
-			["mstdn.jp","https://mstdn.jp"],
 			["pawoo.net","https://pawoo.net"],
 			["fedibird.com","https://fedibird.com"],
 			["misskey.io","https://misskey.io"],
@@ -60,7 +59,7 @@ class sns_share{
 			$share_url=$sns_server_direct_input."/share?text=";
 		}
 		$share_url.=$encoded_t.'&url='.$encoded_u;
-		if($sns_server_radio==="https://bsky.app"){
+		if($sns_server_radio === "https://bsky.app"||!$sns_server_radio && ($sns_server_direct_input === "https://bsky.app")){
 			$share_url="https://bsky.app/intent/compose?text=";
 			$share_url.=$encoded_t.'%20'.$encoded_u;
 		}

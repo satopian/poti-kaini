@@ -105,6 +105,16 @@
 			} else {
 			snsWindow = window.open(url, "_blank", windowFeatures); // 新しいウィンドウを開く
 			}
+		// タイムアウト処理の追加
+		if (snsWindow && !snsWindow.closed) {
+			clearTimeout(snsWindow.timeoutID); // すでにタイムアウトがセットされていればクリア
+			snsWindow.timeoutID = setTimeout(function() {
+				// URLが変更されていないかチェック
+				if (snsWindow.location.href === url) {
+					snsWindow.close(); // URLが変更されていない場合はウィンドウを閉じる
+				}
+			}, 30 * 60 * 1000); // 30分（ミリ秒単位で指定）
+		}
 	}
 	//モバイルの時はPC用のメニューを非表示
 	document.addEventListener('DOMContentLoaded',()=> {
