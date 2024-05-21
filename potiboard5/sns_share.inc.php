@@ -12,7 +12,7 @@ class sns_share{
 		$dat['servers']=isset($servers)?$servers:
 		[
 		
-			["Twitter","https://twitter.com"],
+			["X","https://x.com"],
 			["Bluesky","https://bsky.app"],
 			["pawoo.net","https://pawoo.net"],
 			["fedibird.com","https://fedibird.com"],
@@ -51,8 +51,8 @@ class sns_share{
 		setcookie("sns_server_radio_cookie",$sns_server_radio_for_cookie, time()+(86400*30),"","",false,true);
 		setcookie("sns_server_direct_input_cookie",$sns_server_direct_input, time()+(86400*30),"","",false,true);
 		$share_url='';
-		if($sns_server_radio==="https://twitter.com"){
-			$share_url="https://twitter.com/intent/tweet?text=";
+		if(in_array($sns_server_radio,["https://x.com","https://twitter.com"])){
+			$share_url="https://x.com/intent/post?text=";
 		}elseif($sns_server_radio){
 			$share_url=$sns_server_radio."/share?text=";
 		}elseif($sns_server_direct_input){
