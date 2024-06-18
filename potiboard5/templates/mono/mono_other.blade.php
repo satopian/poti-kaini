@@ -103,12 +103,12 @@
 
 					<table>
 						<tr>
-							<td>Name @if($usename){{$usename}}@endif</td>
+							<td>名前 @if($usename){{$usename}}@endif</td>
 							<td><input class="form" type="text" name="name" size="28" autocomplete="username" @if($name)
 									value="{{$name}}" @endif></td>
 						</tr>
 						<tr>
-							<td>Mail</td>
+							<td>メール</td>
 							<td><input class="form" type="text" name="email" size="28" autocomplete="email" @if($email)
 									value="{{$email}}" @endif></td>
 						</tr>
@@ -121,7 +121,7 @@
 						</tr>
 						@endif
 						<tr>
-							<td>Sub @if($usesub){{$usesub}}@endif</td>
+							<td>題名 @if($usesub){{$usesub}}@endif</td>
 							<td>
 								<input class="form" type="text" name="sub" size="20" autocomplete="section-sub"
 									@if($sub) value="{{$sub}}" @endif>
@@ -160,13 +160,13 @@
 							</td>
 						</tr>
 						<tr>
-							<td>com @if($usecom){{$usecom}}@endif</td>
+							<td>本文 @if($usecom){{$usecom}}@endif</td>
 							<td><textarea class="form" name="com" cols="48" rows="4"
 									wrap="soft">@if($com){{$com}}@endif</textarea></td>
 						</tr>
 						@if($upfile)
 						<tr>
-							<td>UpFile</td>
+							<td>ファイル</td>
 							<td><input class="form" type="file" name="upfile" size="35" accept="image/*">
 							</td>
 						</tr>
@@ -177,7 +177,7 @@
 						@endphp
 		
 						<tr>
-							<td>Images</td>
+							<td>画像</td>
 							<td><select name="picfile">
 									@foreach ($tmp as $tmpimg)
 									<option value="{{$tmpimg['srcname']}}">{{$tmpimg['srcname']}}</option>
@@ -187,7 +187,7 @@
 						@endif
 						@if($regist)
 						<tr>
-							<td>Pass</td>
+							<td>パスワード</td>
 							<td><input class="form" type="password" name="pwd" value="" autocomplete="current-password">
 								<small>(記事の編集削除用)</small></td>
 						</tr>
