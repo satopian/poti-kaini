@@ -1,4 +1,4 @@
-# お絵かき掲示板 PHPスクリプト POTI-board EVO
+、# お絵かき掲示板 PHPスクリプト POTI-board EVO
 
 ![POTI-board EVO](https://user-images.githubusercontent.com/44894014/130365226-565801a0-da27-4a13-a684-ef849769c0b4.png)
 
@@ -9,7 +9,7 @@ PHP7.4-PHP8.3
 ## そのほかのバージョン
 English translated version is here. [POTI-board EVO-EN](https://github.com/satopian/poti-kaini-EN)  
 繁體中文版本 [POTI-board EVO-zh-TW](https://github.com/satopian/poti-kaini-zh-TW)
-
+、
 
 ## 古いバージョンに存在する重大なバグ
 - [v2.26.0以前のPOTI-boardにはXSSの脆弱性があります。](https://github.com/satopian/poti-kaini/issues/11)  
@@ -46,7 +46,7 @@ v5.10.0で、新しいHTML5のペイントアプリ[klecks](https://github.com/b
 potiboard5ディレクトリをアップロードして、アップロードしたディレクトリのurlにブラウザでアクセスするだけで設置が完了します。  
 管理者パスワードの設定は必須です。  
 config.phpの最初の数行に必須設定項目がありますので、変更してください。  
-[お絵かき掲示板簡単設置方法](http://satopian.sblo.jp/article/189094093.html)
+[お絵かき掲示板簡単設置方法](https://satopian.seesaa.net/article/503394201.html)
 
 ## サンプル/サポート
 
