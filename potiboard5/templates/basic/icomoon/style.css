@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?9td0oz');
-  src:  url('fonts/icomoon.eot?9td0oz#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?9td0oz') format('truetype'),
-    url('fonts/icomoon.woff?9td0oz') format('woff'),
-    url('fonts/icomoon.svg?9td0oz#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?67uf92');
+  src:  url('fonts/icomoon.eot?67uf92#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?67uf92') format('truetype'),
+    url('fonts/icomoon.woff?67uf92') format('woff'),
+    url('fonts/icomoon.svg?67uf92#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -13,7 +13,6 @@
 [class^="icon-"], [class*=" icon-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'icomoon' !important;
-  speak: never;
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
@@ -25,17 +24,17 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-share-from-square-solid:before {
-  content: "\e908";
-}
-.icon-facebook2:before {
-  content: "\ea91";
-}
 .icon-angles-up-solid:before {
   content: "\e903";
 }
+.icon-share-from-square-solid:before {
+  content: "\e908";
+}
 .icon-checkmark2:before {
   content: "\ea11";
+}
+.icon-facebook2:before {
+  content: "\ea91";
 }
 .icon-twitter:before {
   content: "\ea96";
