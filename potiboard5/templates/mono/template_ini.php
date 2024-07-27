@@ -80,6 +80,7 @@ define('MSG047', "画像の幅と高さが大きすぎるため続行できま�
 define('MSG048', "不適切なURLがあります。<br>[There is an inappropriate URL.]");
 define('MSG049', "拒絶されました。<br>[Rejected.]");
 define('MSG050', "Cookieが確認できません。<br>[Cookie check failed.]");
+define('MSG051', "連続したパスワードの誤入力を検知したためロックしています。<br>[Locked due to incorrect password attempts.]");
 
 //文字色テーブル '値[,名称]'
 $fontcolors = array('white,White'
