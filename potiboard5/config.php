@@ -54,6 +54,8 @@ define("USE_SHI_PAINTER", "1");
 define("USE_CHICKENPAINT", "1");
 //Tegakiを使う 使う:1 使わない:0 
 define("USE_TEGAKI", "1");
+//Axnos Paintを使う 使う:1 使わない:0 
+define("USE_AXNOS", "1");
 //klecksを使う 使う:1 使わない:0 
 define("USE_KLECKS", "1");
 //管理者は設定に関わらすべてのアプリを使用できるようにする する:1 しない:0
