@@ -1,14 +1,11 @@
 <!doctype html><html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
 	<style>canvas#axp_post_canvas_postingImage{max-width:100%}</style>
 
-	<title>{{$title}}</title><script>// 画面上部のお知らせ領域に表示するテキスト（掲示板名を想定）
-
-			//2022-2024 (c)satopian MIT Licence
-			const HEADER_TEXT = "AXNOS Paint）";
+	<title>お絵かきモード - {{$title}}</title><script>// 画面上部のお知らせ領域に表示するテキスト（掲示板名を想定）
+			const HEADER_TEXT = "AXNOS Paint（アクノスペイント）";
         // ページ遷移を防止する場合アンコメントする
         window.onbeforeunload = function (event) {
             event.preventDefault();
-            event.returnValue = "";
         }
         document.addEventListener("DOMContentLoaded", function () {
             var axp = new AXNOSPaint({
@@ -28,22 +25,22 @@
 
         // 投稿処理
 
-		//引数はbase64形式の文字列
+		//Base64からBlob
 		const toBlob= (base64)=> {
-			var bin = atob(base64.replace(/^.*,/, ''));
-			var buffer = new Uint8Array(bin.length);
-			for (var i = 0; i < bin.length; i++) {
-				buffer[i] = bin.charCodeAt(i);
+			try {
+				const binaryString = atob(base64);
+				const len = binaryString.length;
+				const bytes = new Uint8Array(len);
+
+				for (let i = 0; i < len; i++) {
+				bytes[i] = binaryString.charCodeAt(i);
+				}
+
+				return new Blob([bytes], {type: 'image/png'});
+			} catch (error) {
+				console.error('Error converting base64 to Blob:', error);
+				throw error;
 			}
-			// Blobを作成
-			try{
-				var blob = new Blob([buffer.buffer], {
-					type: 'image/png'
-				});
-			}catch (e){
-				return false;
-			}
-			return blob;
 		}
 
 		function axnospaint_post(postObj) {
@@ -71,6 +68,7 @@
 								@endif
 								return window.location.href = "?mode=piccom&stime={{$stime}}";
 							}
+							console.log("text:",text)
 								return alert(text);
 							})
 						}else{
@@ -118,7 +116,7 @@
         method: 'POST',
 		mode: 'same-origin',
 		headers: {
-			'X-Requested-With': 'klecks'
+			'X-Requested-With': 'axnos'
 			,
 		},
        body: formData
