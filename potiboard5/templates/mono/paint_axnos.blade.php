@@ -4,7 +4,7 @@
 	<title>{{$title}}</title><script>// 画面上部のお知らせ領域に表示するテキスト（掲示板名を想定）
 
 			//2022-2024 (c)satopian MIT Licence
-			const HEADER_TEXT = "AXNOS Paint）";
+			const HEADER_TEXT = "AXNOS Paint（アクノスペイント）";
         // ページ遷移を防止する場合アンコメントする
         window.onbeforeunload = function (event) {
             event.preventDefault();
