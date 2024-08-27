@@ -9,7 +9,6 @@ PHP7.4-PHP8.3
 ## そのほかのバージョン
 English translated version is here. [POTI-board EVO-EN](https://github.com/satopian/poti-kaini-EN)  
 繁體中文版本 [POTI-board EVO-zh-TW](https://github.com/satopian/poti-kaini-zh-TW)
-、
 
 ## 古いバージョンに存在する重大なバグ
 - [v2.26.0以前のPOTI-boardにはXSSの脆弱性があります。](https://github.com/satopian/poti-kaini/issues/11)  
