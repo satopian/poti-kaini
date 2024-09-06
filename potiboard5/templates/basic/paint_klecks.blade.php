@@ -223,11 +223,11 @@ if (psdURL) {
 	const backgroundCanvas = await createCanvasWithImage();
 	const emptyCanvas = document.createElement('canvas');
 	emptyCanvas.width = {{$picw}};
-	emptyCanvas.height = {{$picw}};
+	emptyCanvas.height = {{$pich}};
 
 	klecks.openProject({
 		width: {{$picw}},
-		height: {{$picw}},
+		height: {{$pich}},
 		layers: [{
 			name: @if($en)'Background'@else'背景'@endif,
 			opacity: 1,
