@@ -3,7 +3,7 @@
 
 // POTI-board EVO
 // バージョン :
-const POTI_VER = 'v6.39.1';
+const POTI_VER = 'v6.39.3';
 const POTI_LOT = 'lot.20241101';
 
 /*
@@ -99,6 +99,9 @@ if ($err = check_file(__DIR__.'/thumbnail_gd.php')) {
 	die($err);
 }
 require(__DIR__.'/thumbnail_gd.php');
+if($thumbnail_gd_ver < 20241101){
+	die($en ? "Please update thumbnail_gd.php" : "thumbnail_gd.phpを更新してください。");
+}
 //SNS共有Class
 if ($err = check_file(__DIR__.'/sns_share.inc.php')) {
 	die($err);
@@ -114,7 +117,6 @@ if ($err = check_file(__DIR__.'/save.inc.php')) {
 	die($err);
 }
 require(__DIR__.'/save.inc.php');
-
 if($save_inc_ver < 20240127){
 die($en ? "Please update save.inc.php" : "save.inc.phpを更新してください。");
 }
@@ -1176,7 +1178,7 @@ function regist(){
 		convert_andsave_if_smaller_png2jpeg($temppath,$time,".tmp",$is_upload);
 
 		clearstatcache();
-		if(filesize($dest) > MAX_KB * 1024){//ファイルサイズ再チェック
+		if($is_upload && (filesize($dest) > MAX_KB * 1024)){//ファイルサイズ再チェック
 		error(MSG034,$dest);
 		}
 		//サポートしていないフォーマットならエラーが返る

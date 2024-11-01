@@ -1,11 +1,12 @@
 <?php
-// thumbnail_gd.php by (C) 2018-2022 POTI改 POTI-board redevelopment team >> https://paintbbs.sakura.ne.jp/poti/ 
+// thumbnail_gd.php by (C) 2018-2024 POTI改 POTI-board redevelopment team >> https://paintbbs.sakura.ne.jp/poti/ 
 // originalscript 2005 (C) SakaQ  >> http://www.punyu.net/php/
+//241101 pngフォーマットで投稿できる最大サイズを超過した時の処理を追加。
 //221022 1MBを超過する時はjpegのサムネイルを作成するようにした。
 //220729 処理が成功した時の返り値をtrueに変更。
 //220321 透明な箇所が黒くなる問題に対応。透明部分を白に変換。
 //201218 webp形式対応
-$thumbnail_gd_ver=20231028;
+$thumbnail_gd_ver=20241101;
 defined('PERMISSION_FOR_DEST') or define('PERMISSION_FOR_DEST', 0606); //config.phpで未定義なら0606
 
 function thumb($path,$time,$ext,$max_w,$max_h,$options=[]){
