@@ -116,8 +116,7 @@
 		@if(!isset($res['not_deleted'])||$res['not_deleted'])
 		<div class="article_info">
 			<span class="article_info_name"><a href="{{$self}}?mode=search&page=1&imgsearch=on&query={{$res['encoded_name']}}&radio=2"
-			target="_blank" rel="noopener">{{$res['name']}}</a></span>
-			@if($res['trip'])<span class="article_info_desc">{{$res['trip']}}</span>@endif
+			target="_blank" rel="noopener">{{$res['name']}}</a></span>@if($res['trip'])<span class="article_info_trip">{{$res['trip']}}</span>@endif
 			@if($res['url'])<span class="article_info_desc">[<a href="{{$res['url']}}" target="_blank"
 					rel="nofollow noopener noreferrer">URL</a>]</span> @endif
 			@if($res['id'])<span class="article_info_desc">ID:{{$res['id']}}</span>@endif

@@ -294,7 +294,7 @@ input.pch_upload {
 }
 
 .article_info_desc {
-	padding-right: 4px;
+	padding-right: 2px;
 	display: inline-block;
 }
 
@@ -869,6 +869,11 @@ tr.deltable_tr{
 
 .article_info_name:hover {
 	background-color: #fff7f7;
+}
+
+span.article_info_trip {
+		margin: 0 0 0 -4px;
+		padding-right: 2px;
 }
 
 .use_neo,.use_animation,.bold_gray {
