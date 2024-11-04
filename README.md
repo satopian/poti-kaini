@@ -71,7 +71,7 @@ config.phpの最初の数行に必須設定項目がありますので、変更�
 - `chickenpaint/`
 - `klecks/`
 - `tegaki/`
-- `axnos`
+- `axnos/`
 - `BladeOne/`
 - `templates/`  
 
