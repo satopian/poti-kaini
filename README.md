@@ -64,14 +64,15 @@ config.phpの最初の数行に必須設定項目がありますので、変更�
 ### 新しく追加されたファイル
 - `search.inc.php`
 - `save.inc.php` 
-- `picpost.inc.php` 
+- `picpost.inc.php`
+- `thumbnail_gd.inc.php`
 
 ## 追加されたディレクトリ
 - `lib/`  
 - `chickenpaint/`
 - `klecks/`
 - `tegaki/`
-- `axnos`
+- `axnos/`
 - `BladeOne/`
 - `templates/`  
 
