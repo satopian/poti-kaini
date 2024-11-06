@@ -278,7 +278,8 @@
 			allowDownload: true,
 			resourcesRoot: "chickenpaint/",
 			disableBootstrapAPI: true,
-			fullScreenMode: "force"
+			fullScreenMode: "force",
+			post_max_size: {{$max_pch}}
 		});
 	});
 
