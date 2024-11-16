@@ -132,7 +132,7 @@ HTMLタグも旧独自タグも廃止してしまいましたが、urlの自動�
 代わりに`thumbnail_gd.inc.php`を使います。  
 `thumbnail_gd.php`は不要になりましたが、サーバ上に残っていても問題ありません。  
 不要なファイルを削除しようとして、必要なファイルを削除してしまう事もありますので、削除する時は十分にご注意ください。  
- thumbnail_gd.inc.php`は、[Petit Note](https://github.com/satopian/Petit_Note)と共通のクラスになりました。  
+ `thumbnail_gd.inc.php`は、[Petit Note](https://github.com/satopian/Petit_Note)と共通のクラスになりました。  
 Petit Note、POTI-boardそれぞれの2種類のファイルをメンテナンスする必要がなくなりました。  
 ### お絵かき画像の実態サイズが縮小されるバグを修正しました
 ```
