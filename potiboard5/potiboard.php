@@ -3,7 +3,7 @@
 
 // POTI-board EVO
 // バージョン :
-const POTI_VER = 'v6.50.0';
+const POTI_VER = 'v6.50.1';
 const POTI_LOT = 'lot.20241117';
 
 /*
@@ -284,7 +284,7 @@ $usercode = $usercode ? $usercode : $session_usercode;
 //user-codeの発行
 if(!$usercode){//user-codeがなければ発行
 	$userip = get_uip();
-	$usercode = substr(hash('sha256', $userip.ID_SEED.random_bytes(16)), 0, 16);
+	$usercode = substr(hash('sha256', $userip.ID_SEED.random_bytes(16)), 0, 32);
 
 	//念の為にエスケープ文字があればアルファベットに変換
 	$usercode = strtr($usercode,"!\"#$%&'()+,/:;<=>?@[\\]^`/{|}~\t","ABCDEFGHIJKLMNOabcdefghijklmno");
@@ -946,7 +946,7 @@ function regist(){
 			$pwd=newstring($pwdc);
 			$c_pass=$pwdc;//エスケープ前の値
 		}else{
-			$pwd = substr(hash('sha256', $userip.random_bytes(16)), 2, 16);
+			$pwd = substr(hash('sha256', $userip.random_bytes(16)), 2, 15);
 			$pwd = strtr($pwd,"!\"#$%&'()+,/:;<=>?@[\\]^`/{|}~\t","ABCDEFGHIJKLMNOabcdefghijklmno");
 			$c_pass=$pwd;
 		}
@@ -1914,7 +1914,7 @@ function paintform(){
 	if($type==='rep'){
 		$time=time();
 		$userip = get_uip();
-		$repcode = substr(hash('sha256', $no.$userip.$pwd.random_bytes(16)), 0, 16);
+		$repcode = substr(hash('sha256', $no.$userip.$pwd.random_bytes(16)), 0, 32);
 
 		//念の為にエスケープ文字があればアルファベットに変換
 		$repcode = strtr($repcode,"!\"#$%&'()+,/:;<=>?@[\\]^`/{|}~\t","ABCDEFGHIJKLMNOabcdefghijklmno");
