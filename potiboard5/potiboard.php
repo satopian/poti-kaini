@@ -946,7 +946,6 @@ function regist(){
 			$pwd=newstring($pwdc);
 			$c_pass=$pwdc;//エスケープ前の値
 		}else{
-			srand();
 			$pwd = substr(hash('sha256', $userip.random_bytes(16)), 2, 16);
 			$pwd = strtr($pwd,"!\"#$%&'()+,/:;<=>?@[\\]^`/{|}~\t","ABCDEFGHIJKLMNOabcdefghijklmno");
 			$c_pass=$pwd;
