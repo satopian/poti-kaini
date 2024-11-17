@@ -179,7 +179,7 @@ class picpost{
 	//user-codeの発行
 	if(!$c_usercode){//user-codeがなければ発行
 		$userip = get_uip();
-		$usercode = (string)substr(crypt(md5($userip.ID_SEED.uniqid()),'id'),-12);
+		$usercode = substr(hash('sha256', $userip.ID_SEED.random_bytes(16)), 0, 16);
 		//念の為にエスケープ文字があればアルファベットに変換
 		$usercode = strtr($usercode,"!\"#$%&'()+,/:;<=>?@[\\]^`/{|}~\t","ABCDEFGHIJKLMNOabcdefghijklmno");
 	}
