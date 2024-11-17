@@ -343,7 +343,7 @@
 					<th class="nobreak">コメント</th>
 					<th class="column_non">ホスト名</th>
 					<th class="column_non">添付(KB)</th>
-					<th class="column_non">md5</th>
+					<th class="column_non">HASH</th>
 				</tr>
 
 				@if($dels)

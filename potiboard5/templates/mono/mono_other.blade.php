@@ -267,7 +267,7 @@
 							<th>コメント</th>
 							<th>Host</th>
 							<th>Image (size)</th>
-							<th>MD5</th>
+							<th>Hash</th>
 						</tr>
 						@foreach ($dels as $del)
 						<tr>

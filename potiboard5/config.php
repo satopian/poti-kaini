@@ -134,8 +134,8 @@ define("USE_URL_INPUT_FIELD", "1");
 //で1年以上経過したスレッドに返信できなくなります。
 define("ELAPSED_DAYS","365");
 
-//拒絶するファイルのmd5
-$badfile = array("dummy","dummy2");
+//拒絶する画像のハッシュ値
+$badfile = array("dummyhash","dummyhash2");
 
 //拒絶するホスト
 $badip = array("addr.dummy.com","addr2.dummy.com");
