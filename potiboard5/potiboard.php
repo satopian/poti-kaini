@@ -3,7 +3,7 @@
 
 // POTI-board EVO
 // バージョン :
-const POTI_VER = 'v6.51.0';
+const POTI_VER = 'v6.51.1';
 const POTI_LOT = 'lot.20241120';
 
 /*
@@ -2475,7 +2475,7 @@ global $ADMIN_PASS;
 
 	updatelog();
 
-	$destination = $thread_no ? PHP_SELF.'?res='.h($thread_no) : ($logfilename ? './'.h($logfilename) : ($mode_catalog ? PHP_SELF.'?mode=catalog&page='.h($catalog_pageno) : h(PHP_SELF2)));
+	$destination = $thread_no ? PHP_SELF.'?res='.h($thread_no).'#'.$no : ($logfilename ? './'.h($logfilename) : ($mode_catalog ? PHP_SELF.'?mode=catalog&page='.h($catalog_pageno) : h(PHP_SELF2)));
 
 	redirect($destination . (URL_PARAMETER ? "?".time() : ''));
 }
@@ -3533,6 +3533,9 @@ function get_log($logfile) {
 
 //fpからバッファを取得
 function get_buffer_from_fp($fp) {
+
+	rewind($fp);//ファイルポインタを先頭に戻す
+
 	$lines = [];
 	
 	// 1行ずつ読み込む
