@@ -3,8 +3,8 @@
 
 // POTI-board EVO
 // バージョン :
-const POTI_VER = 'v6.50.3';
-const POTI_LOT = 'lot.20241119';
+const POTI_VER = 'v6.50.5';
+const POTI_LOT = 'lot.20241120';
 
 /*
   (C) 2018-2024 POTI改 POTI-board redevelopment team
@@ -967,8 +967,6 @@ function regist(){
 		error(MSG034);//容量オーバー
 	}
 
-	$message="";
-
 	//記事管理用 ユニックスタイム10桁+3桁
 	$time = (string)(time().substr(microtime(),2,3));	//投稿時刻
 
@@ -1187,7 +1185,6 @@ function regist(){
 		check_badfile($chk, $dest); // 拒絶画像チェック
 
 		$upfile_name=newstring($upfile_name);
-		$message = UPLOADED_OBJECT_NAME." $upfile_name ".UPLOAD_SUCCESSFUL;
 
 		//重複チェック
 		$chkline=200;//チェックする最大行数
@@ -2618,8 +2615,6 @@ function replace($no="",$pwd="",$repcode="",$java=""){
 	
 			chmod($dest,PERMISSION_FOR_DEST);
 			rename($dest,$path.$time.$imgext);
-
-			$message = UPLOADED_OBJECT_NAME.UPLOAD_SUCCESSFUL;
 
 			$oya=($oyano===$no);
 			$max_w = $oya ? MAX_W : MAX_RESW ;
