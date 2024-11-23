@@ -3,7 +3,7 @@
 
 // POTI-board EVO
 // バージョン :
-const POTI_VER = 'v6.52.0';
+const POTI_VER = 'v6.52.2';
 const POTI_LOT = 'lot.20241123';
 
 /*
@@ -2543,8 +2543,7 @@ function replace($no="",$pwd="",$repcode="",$java=""){
 	//描画時間を$userdataをもとに計算
 	$psec='';
 	$_ptime = '';
-	$thumbnail="";
-
+	
 	if($starttime && is_numeric($starttime) && $postedtime && is_numeric($postedtime)){
 		$psec=(int)$postedtime-(int)$starttime;
 		$_ptime = calcPtime($psec);
@@ -2571,86 +2570,12 @@ function replace($no="",$pwd="",$repcode="",$java=""){
 		if(!trim($value)){
 			continue;
 		}
-		list($eno,$edate,$name,$email,$sub,$com,$url,$ehost,$epwd,$ext,$_w,$_h,$etim,,$ptime,$fcolor,$epchext,$ethumbnail,$etool,$logver,) = explode(",", rtrim($value).',,,,,,,');
-	//画像差し換えに管理パスは使っていない
-		if($eno === $no && check_password($pwd, $epwd)){
-			$tp=fopen(TREEFILE,"r");
-			while($tree=fgets($tp)){
-				if (strpos(',' . trim($tree) . ',',',' . $no . ',') !== false) {
-					list($oyano,) = explode(',', trim($tree));
-					break;
-				}
+			list($eno,$edate,$name,$email,$sub,$com,$url,$ehost,$epwd,$ext,$_w,$_h,$etim,,$ptime,$fcolor,$epchext,$ethumbnail,$etool,$logver,) = explode(",", rtrim($value).',,,,,,,');
+		//画像差し換えに管理パスは使っていない
+			if($eno === $no && check_password($pwd, $epwd)){
+				$flag = true;
+				break;
 			}
-			fclose($tp);
-
-			if(!check_elapsed_days($etim,$logver)||!$oyano){//指定日数より古い画像差し換えは新規投稿にする
-				closeFile($fp);
-				if($java){
-					die("error\n{$replace_error_msg}");
-				}
-				return location_paintcom();
-			}
-
-			$upfile = $temppath.$file_name.$imgext;
-			$dest = $temppath.$time.'.tmp';
-			
-			//サポートしていないフォーマットならエラーが返る
-			getImgType($upfile);
-			copy($upfile, $dest);
-			
-			if(!is_file($dest)) error(MSG003);
-			chmod($dest,PERMISSION_FOR_DEST);
-
-			//pngをjpegに変換してみてファイル容量が小さくなっていたら元のファイルを上書き
-			convert_andsave_if_smaller_png2jpeg($temppath,$time,'.tmp');
-		
-			//サポートしていないフォーマットならエラーが返る
-			$imgext = getImgType($dest);
-
-			$chk = substr(hash_file('sha256', $dest), 0, 32);
-			check_badfile($chk, $dest); // 拒絶画像チェック
-
-			list($w, $h) = getimagesize($dest);
-	
-			chmod($dest,PERMISSION_FOR_DEST);
-			rename($dest,$path.$time.$imgext);
-
-			$oya=($oyano===$no);
-			$max_w = $oya ? MAX_W : MAX_RESW ;
-			$max_h = $oya ? MAX_H : MAX_RESH ;
-			list($w,$h)=image_reduction_display($w,$h,$max_w,$max_h);
-	
-			//サムネイル作成
-			$thumbnail = make_thumbnail($time.$imgext,$time,$max_w,$max_h);
-
-			//PCHファイルアップロード
-			// .pch, .spch,.chi,.psd ブランク どれかが返ってくる
-			if ($pchext = check_pch_ext($temppath . $file_name,['upfile'=>true])) {
-				$src = $temppath . $file_name . $pchext;
-				$dst = PCH_DIR . $time . $pchext;
-				if(copy($src, $dst)){
-					chmod($dst, PERMISSION_FOR_DEST);
-				}
-			}
-			
-			//ID付加
-			if(DISP_ID){
-				$date .= " ID:" . getId($userip);
-			}
-			//描画時間追加
-			if($ptime && $_ptime){
-				$ptime = is_numeric($ptime) ? ($ptime+$psec) : $ptime.'+'.$_ptime;
-			}
-			//カンマをエスケープ
-			$date = str_replace(",", "&#44;", $date);
-			$ptime = $ptime ? str_replace(",", "&#44;", $ptime):'';
-			$date=DO_NOT_CHANGE_POSTS_TIME ? $edate : $date;
-			$tool = is_paint_tool_name($tool); 
-			$line[$i] = "$no,$date,$name,$email,$sub,$com,$url,$host,$epwd,$imgext,$w,$h,$time,$chk,$ptime,$fcolor,$pchext,$thumbnail,$tool,6,";
-			$flag = true;
-
-			break;
-		}
 	}
 	if(!$flag){
 		closeFile($fp);
@@ -2659,6 +2584,80 @@ function replace($no="",$pwd="",$repcode="",$java=""){
 		}
 		return location_paintcom();
 	}
+
+	$tp=fopen(TREEFILE,"r");
+	while($tree=fgets($tp)){
+		if (strpos(',' . trim($tree) . ',',',' . $no . ',') !== false) {
+			list($oyano,) = explode(',', trim($tree));
+			break;
+		}
+	}
+	fclose($tp);
+
+	if(!check_elapsed_days($etim,$logver)||!$oyano){//指定日数より古い画像差し換えは新規投稿にする
+		closeFile($fp);
+		if($java){
+			die("error\n{$replace_error_msg}");
+		}
+		return location_paintcom();
+	}
+
+	$upfile = $temppath.$file_name.$imgext;
+	$dest = $temppath.$time.'.tmp';
+	
+	//サポートしていないフォーマットならエラーが返る
+	getImgType($upfile);
+	copy($upfile, $dest);
+	
+	if(!is_file($dest)) error(MSG003);
+	chmod($dest,PERMISSION_FOR_DEST);
+
+	//pngをjpegに変換してみてファイル容量が小さくなっていたら元のファイルを上書き
+	convert_andsave_if_smaller_png2jpeg($temppath,$time,'.tmp');
+
+	//サポートしていないフォーマットならエラーが返る
+	$imgext = getImgType($dest);
+
+	$chk = substr(hash_file('sha256', $dest), 0, 32);
+	check_badfile($chk, $dest); // 拒絶画像チェック
+
+	list($w, $h) = getimagesize($dest);
+
+	chmod($dest,PERMISSION_FOR_DEST);
+	rename($dest,$path.$time.$imgext);
+
+	$oya=($oyano===$no);
+	$max_w = $oya ? MAX_W : MAX_RESW ;
+	$max_h = $oya ? MAX_H : MAX_RESH ;
+	list($w,$h)=image_reduction_display($w,$h,$max_w,$max_h);
+
+	//サムネイル作成
+	$thumbnail = make_thumbnail($time.$imgext,$time,$max_w,$max_h);
+
+	//PCHファイルアップロード
+	// .pch, .spch,.chi,.psd ブランク どれかが返ってくる
+	if ($pchext = check_pch_ext($temppath . $file_name,['upfile'=>true])) {
+		$src = $temppath . $file_name . $pchext;
+		$dst = PCH_DIR . $time . $pchext;
+		if(copy($src, $dst)){
+			chmod($dst, PERMISSION_FOR_DEST);
+		}
+	}
+	
+	//ID付加
+	if(DISP_ID){
+		$date .= " ID:" . getId($userip);
+	}
+	//描画時間追加
+	if($ptime && $_ptime){
+		$ptime = is_numeric($ptime) ? ($ptime+$psec) : $ptime.'+'.$_ptime;
+	}
+	//カンマをエスケープ
+	$date = str_replace(",", "&#44;", $date);
+	$ptime = $ptime ? str_replace(",", "&#44;", $ptime):'';
+	$date=DO_NOT_CHANGE_POSTS_TIME ? $edate : $date;
+	$tool = is_paint_tool_name($tool); 
+	$line[$i] = "$no,$date,$name,$email,$sub,$com,$url,$host,$epwd,$imgext,$w,$h,$time,$chk,$ptime,$fcolor,$pchext,$thumbnail,$tool,6,";
 
 	writeFile($fp, implode("\n", $line));
 
@@ -3218,9 +3217,8 @@ function create_res ($line, $options = []) {
 		$filesize = filesize($res['img']);
 		$res['size'] = $filesize;
 		$res['size_kb'] = ($filesize-($filesize % 1024)) / 1024;
-		$res['thumb'] = ($logver === "6") ? (strpos($thumbnail,"thumbnail") === 0) : is_file(THUMB_DIR.$time.'s.jpg');
-		$thumbnail_img = ($thumbnail === "thumbnail_webp") ? THUMB_DIR.$time.'s.webp' : THUMB_DIR.$time.'s.jpg';  
-		$res['imgsrc'] = $res['thumb'] ? $thumbnail_img : $res['src'];
+		$res['thumb'] = ($logver === "6") ? ($thumbnail==="thumbnail") : is_file(THUMB_DIR.$time.'s.jpg');
+		$res['imgsrc'] = $res['thumb'] ? THUMB_DIR.$time.'s.jpg' : $res['src'];
 		$tool=($tool==="shi-Painter") ? "Shi-Painter" : $tool; 
 		$res['tool'] = is_paint_tool_name($tool);
 		//描画時間
@@ -3652,11 +3650,7 @@ function make_thumbnail($imgfile,$time,$max_w,$max_h){
 	global $use_thumb; 
 	$thumbnail='';
 	if(USE_THUMB){//スレッドの画像のサムネイルを使う時
-		if(thumbnail_gd::thumb(IMG_DIR,$imgfile,$time,$max_w,$max_h,['thumbnail_webp'=>true])){
-			$thumbnail='thumbnail_webp';
-		}
-		//webpのサムネイルが作成できなかった時はjpegのサムネイルを作る
-		if(!$thumbnail && thumbnail_gd::thumb(IMG_DIR,$imgfile,$time,$max_w,$max_h)){
+		if(thumbnail_gd::thumb(IMG_DIR,$imgfile,$time,$max_w,$max_h)){
 			$thumbnail='thumbnail';
 		}
 	}
