@@ -3,8 +3,8 @@
 
 // POTI-board EVO
 // バージョン :
-const POTI_VER = 'v6.51.7';
-const POTI_LOT = 'lot.20241122';
+const POTI_VER = 'v6.52.0';
+const POTI_LOT = 'lot.20241123';
 
 /*
   (C) 2018-2024 POTI改 POTI-board redevelopment team
@@ -1229,12 +1229,7 @@ function regist(){
 		$max_w = $resto ? MAX_RESW : MAX_W;
 		$max_h = $resto ? MAX_RESH : MAX_H;
 		list($w,$h)=image_reduction_display($w,$h,$max_w,$max_h);
-
-		if(USE_THUMB){
-			if(thumbnail_gd::thumb($path,$time.$ext,$time,$max_w,$max_h)){
-				$thumbnail="thumbnail";
-			}
-		}
+		$thumbnail = make_thumbnail($time.$ext,$time,$max_w,$max_h);
 	}
 	// 最大ログ数を超過した行と画像を削除
 	$logmax=(LOG_MAX>=1000) ? LOG_MAX : 1000;
@@ -2626,11 +2621,8 @@ function replace($no="",$pwd="",$repcode="",$java=""){
 			list($w,$h)=image_reduction_display($w,$h,$max_w,$max_h);
 	
 			//サムネイル作成
-			if(USE_THUMB){
-				if(thumbnail_gd::thumb($path,$time.$imgext,$time,$max_w,$max_h)){
-					$thumbnail="thumbnail";
-				}
-			}
+			$thumbnail = make_thumbnail($time.$imgext,$time,$max_w,$max_h);
+
 			//PCHファイルアップロード
 			// .pch, .spch,.chi,.psd ブランク どれかが返ってくる
 			if ($pchext = check_pch_ext($temppath . $file_name,['upfile'=>true])) {
@@ -3226,8 +3218,9 @@ function create_res ($line, $options = []) {
 		$filesize = filesize($res['img']);
 		$res['size'] = $filesize;
 		$res['size_kb'] = ($filesize-($filesize % 1024)) / 1024;
-		$res['thumb'] = ($logver === "6") ? ($thumbnail==="thumbnail") : is_file(THUMB_DIR.$time.'s.jpg');
-		$res['imgsrc'] = $res['thumb'] ? THUMB_DIR.$time.'s.jpg' : $res['src'];
+		$res['thumb'] = ($logver === "6") ? (strpos($thumbnail,"thumbnail") === 0) : is_file(THUMB_DIR.$time.'s.jpg');
+		$thumbnail_img = ($thumbnail === "thumbnail_webp") ? THUMB_DIR.$time.'s.webp' : THUMB_DIR.$time.'s.jpg';  
+		$res['imgsrc'] = $res['thumb'] ? $thumbnail_img : $res['src'];
 		$tool=($tool==="shi-Painter") ? "Shi-Painter" : $tool; 
 		$res['tool'] = is_paint_tool_name($tool);
 		//描画時間
@@ -3654,4 +3647,19 @@ function create_line_from_treenumber ($fp,$trees){
 		}
 	}
 	return $line;
+}
+function make_thumbnail($imgfile,$time,$max_w,$max_h){
+	global $use_thumb; 
+	$thumbnail='';
+	if(USE_THUMB){//スレッドの画像のサムネイルを使う時
+		if(thumbnail_gd::thumb(IMG_DIR,$imgfile,$time,$max_w,$max_h,['thumbnail_webp'=>true])){
+			$thumbnail='thumbnail_webp';
+		}
+		//webpのサムネイルが作成できなかった時はjpegのサムネイルを作る
+		if(!$thumbnail && thumbnail_gd::thumb(IMG_DIR,$imgfile,$time,$max_w,$max_h)){
+			$thumbnail='thumbnail';
+		}
+	}
+
+	return $thumbnail;
 }
