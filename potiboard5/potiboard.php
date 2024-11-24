@@ -3,8 +3,8 @@
 
 // POTI-board EVO
 // バージョン :
-const POTI_VER = 'v6.52.2';
-const POTI_LOT = 'lot.20241123';
+const POTI_VER = 'v6.53.0';
+const POTI_LOT = 'lot.20241124';
 
 /*
   (C) 2018-2024 POTI改 POTI-board redevelopment team
@@ -99,7 +99,7 @@ if ($err = check_file(__DIR__.'/thumbnail_gd.inc.php')) {
 	die($err);
 }
 require(__DIR__.'/thumbnail_gd.inc.php');
-if($thumbnail_gd_ver < 20241102){
+if($thumbnail_gd_ver < 20241124){
 	die($en ? "Please update thumbnail_gd.inc.php" : "thumbnail_gd.inc.phpを更新してください。");
 }
 //SNS共有Class
@@ -375,37 +375,8 @@ switch($mode){
 		return redirect(h(PHP_SELF2));
 }
 
-exit;
+exit();
 
-//GD版が使えるかチェック
-function gd_check(){
-	$check = array("ImageCreate","ImageCopyResized","ImageCreateFromJPEG","ImageJPEG","ImageDestroy");
-
-	//最低限のGD関数が使えるかチェック
-	if(!(get_gd_ver() && (ImageTypes() & IMG_JPG))){
-		return false;
-	}
-	foreach ( $check as $cmd ) {
-		if(!function_exists($cmd)){
-			return false;
-		}
-	}
-	return true;
-}
-
-//gdのバージョンを調べる
-function get_gd_ver(){
-	if(function_exists("gd_info")){
-	$gdver=gd_info();
-	$phpinfo=(string)$gdver["GD Version"];
-	$end=strpos($phpinfo,".");
-	$phpinfo=substr($phpinfo,0,$end);
-	$length = strlen($phpinfo)-1;
-	$phpinfo=substr($phpinfo,$length);
-	return $phpinfo;
-	} 
-	return false;
-}
 
 //ユーザーip
 function get_uip(){
@@ -901,7 +872,7 @@ function error($mes,$dest=''){
 
 	$dat['mes'] = nl2br(h($mes));
 		htmloutput(OTHERFILE,$dat);
-	exit;
+	exit();
 }
 
 // 文字列の類似性
@@ -2570,12 +2541,12 @@ function replace($no="",$pwd="",$repcode="",$java=""){
 		if(!trim($value)){
 			continue;
 		}
-			list($eno,$edate,$name,$email,$sub,$com,$url,$ehost,$epwd,$ext,$_w,$_h,$etim,,$ptime,$fcolor,$epchext,$ethumbnail,$etool,$logver,) = explode(",", rtrim($value).',,,,,,,');
+		list($eno,$edate,$name,$email,$sub,$com,$url,$ehost,$epwd,$ext,$_w,$_h,$etim,,$ptime,$fcolor,$epchext,$ethumbnail,$etool,$logver,) = explode(",", rtrim($value).',,,,,,,');
 		//画像差し換えに管理パスは使っていない
-			if($eno === $no && check_password($pwd, $epwd)){
-				$flag = true;
-				break;
-			}
+		if($eno === $no && check_password($pwd, $epwd)){
+			$flag = true;
+			break;
+		}
 	}
 	if(!$flag){
 		closeFile($fp);
@@ -3647,7 +3618,6 @@ function create_line_from_treenumber ($fp,$trees){
 	return $line;
 }
 function make_thumbnail($imgfile,$time,$max_w,$max_h){
-	global $use_thumb; 
 	$thumbnail='';
 	if(USE_THUMB){//スレッドの画像のサムネイルを使う時
 		if(thumbnail_gd::thumb(IMG_DIR,$imgfile,$time,$max_w,$max_h)){
