@@ -3,8 +3,8 @@
 
 // POTI-board EVO
 // バージョン :
-const POTI_VER = 'v6.53.1';
-const POTI_LOT = 'lot.20241124';
+const POTI_VER = 'v6.53.2';
+const POTI_LOT = 'lot.20241126';
 
 /*
   (C) 2018-2024 POTI改 POTI-board redevelopment team
@@ -500,7 +500,7 @@ function basicpart(){
 }
 
 // 投稿フォーム 
-function form($resno="",$tmp=""){
+function form($resno=""){
 	global $addinfo;
 	global $fontcolors,$qualitys;
 	global $ADMIN_PASS;
@@ -545,14 +545,11 @@ function form($resno="",$tmp=""){
 
 	//本文必須の設定では無い時はレスでも画像かコメントがあれば通る
 	$dat['upfile'] = false;
-	if(!USE_IMG_UPLOAD){//画像アップロード機能を使わない時
-		$dat['upfile'] = false;
-	} else{
-		if((!$resno && !$tmp) || (RES_UPLOAD && !$tmp)){
+
+	if((USE_IMG_UPLOAD && !$resno || RES_UPLOAD && $resno)){
 			$dat['upfile'] = true;
-		}
-			
 	}
+			
 	$dat['maxkb']   = MAX_KB;//実際にアップロードできるファイルサイズ
 	$dat['maxw']    = $resno ? MAX_RESW : MAX_W;
 	$dat['maxh']    = $resno ? MAX_RESH : MAX_H;
@@ -2000,7 +1997,7 @@ function paintcom(){
 		}
 	}
 
-	$dat = array_merge($dat,form($resto,$tmp));
+	$dat = array_merge($dat,form($resto));
 
 	htmloutput(OTHERFILE,$dat);
 }
