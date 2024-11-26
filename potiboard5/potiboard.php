@@ -3,7 +3,7 @@
 
 // POTI-board EVO
 // バージョン :
-const POTI_VER = 'v6.53.3';
+const POTI_VER = 'v6.53.5';
 const POTI_LOT = 'lot.20241126';
 
 /*
@@ -546,7 +546,7 @@ function form($resno="",$tmp=[]){
 	//本文必須の設定では無い時はレスでも画像かコメントがあれば通る
 	$dat['upfile'] = false;
 
-	if(!$tmp && (USE_IMG_UPLOAD && !$resno || RES_UPLOAD && $resno)){
+	if(!$tmp && USE_IMG_UPLOAD && (!$resno || RES_UPLOAD && $resno)){
 			$dat['upfile'] = true;
 	}
 			
