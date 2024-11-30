@@ -140,6 +140,7 @@
 			@if(!$catalog_pageno)<input type="hidden" name="catalog_pageno" value="0">@endif
 
 			<input type="hidden" name="no" value="{{$rewrite}}">
+			<input type="hidden" name="edittime" value="{{$time}}">
 			<input type="hidden" name="pwd" value="{{$pwd}}">
 			@endif
 			@if($admin)
