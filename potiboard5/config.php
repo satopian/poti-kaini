@@ -393,6 +393,7 @@ $servers =
 		
 	["X","https://x.com"],
 	["Bluesky","https://bsky.app"],
+	["Threads","https://www.threads.net"],
 	["pawoo.net","https://pawoo.net"],
 	["fedibird.com","https://fedibird.com"],
 	["misskey.io","https://misskey.io"],
@@ -404,11 +405,11 @@ $servers =
 
 // SNS共有の時に開くWindowsの幅と高さ
 
-//windowの幅 初期値 350
-define("SNS_WINDOW_WIDTH","350");
+//windowの幅 初期値 600
+define("SNS_WINDOW_WIDTH","600");
 
-//windowの高さ 初期値 490
-define("SNS_WINDOW_HEIGHT","490");
+//windowの高さ 初期値 600
+define("SNS_WINDOW_HEIGHT","600");
 
 /* ---------- お絵かき詳細設定 ---------- */
 
