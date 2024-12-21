@@ -389,6 +389,7 @@ pe[n]}}function GradView(a,f){d=document}function showHideLayer(){d=document;var
 <param name="neo_confirm_layer_info_notsaved" value="true">
 <param name="neo_confirm_unload" value="true">
 <param name="neo_show_right_button" value="true">
+<param name="neo_animation_skip" value="true">
 @endif
 <!--しぃペインター個別設定-->
 @if($normal) 
