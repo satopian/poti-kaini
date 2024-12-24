@@ -252,9 +252,9 @@
 						{{$res['tool']}}</span>@endif
 						<br>
 						@if($res['continue']) ●<a
-							href="{{$self}}?mode=continue&amp;no={{$res['continue']}}">続きを描く</a>@endif
+							href="{{$self}}?mode=continue&amp;no={{$res['continue']}}&amp;resno={{$ress[0]['no']}}">続きを描く</a>@endif
 						@if($res['spch'])<span class="for_pc">@endif @if($res['pch']) ●<a
-								href="{{$self}}?mode=openpch&amp;pch={{$res['pch']}}" target="_blank">動画</a>@endif
+								href="{{$self}}?mode=openpch&amp;pch={{$res['pch']}}&amp;resno={{$ress[0]['no']}}&amp;no={{$res['no']}}" target="_blank">動画</a>@endif
 							@if($res['spch'])</span>@endif
 					</div>
 					<figure @if($res['w']>=750) style="float:none;margin-right:0"@endif>

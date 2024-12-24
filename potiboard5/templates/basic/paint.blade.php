@@ -608,7 +608,7 @@ name="pch" code="pch.PCHViewer.class" archive="PCHViewer.jar,PaintBBS.jar" width
 <div class="pch_download">
 <A href="{{$pchfile}}" target="_blank" rel="noopener noreferrer">Download</A><br>
 <small>Datasize : {{$datasize}} KB</small><br>
-	<a href="{{$self2}}">{{$title}}</a> / <a href="javascript:close()">閉じる</a>
+	<a href="{{$self}}?res={{$oyano}}#{{$no}}">{{$title}}</a> / <a href="javascript:close()">閉じる</a>
 </div>
 @endif
 <!--動画表示モード ここまで-->
@@ -636,8 +636,7 @@ name="pch" code="pch.PCHViewer.class" archive="PCHViewer.jar,PaintBBS.jar" width
 
 <nav>
 <div id="self2">
-	 
-[<a href="{{$self2}}">{{$title}}</a>]
+[<a href="{{$self}}?res={{$oyano}}#{{$no}}">{{$title}}</a>]
 </div>
 </nav>
 </header>

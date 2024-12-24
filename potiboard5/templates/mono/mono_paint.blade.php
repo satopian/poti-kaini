@@ -193,7 +193,11 @@
 			<hr>
 			<div>
 				<p class="menu">
+					@if($continue_mode||$pch_mode)
+					<a href="{{$self}}?res={{$oyano}}#{{$no}}">[もどる]</a>
+					@else
 					<a href="{{$self2}}">[もどる]</a>
+					@endif
 				</p>
 			</div>
 			<hr>
