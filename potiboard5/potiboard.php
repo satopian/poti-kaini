@@ -3,8 +3,8 @@
 
 // POTI-board EVO
 // バージョン :
-const POTI_VER = 'v6.61.0';
-const POTI_LOT = 'lot.20241225';
+const POTI_VER = 'v6.61.1';
+const POTI_LOT = 'lot.20241226';
 
 /*
   (C) 2018-2024 POTI改 POTI-board redevelopment team
@@ -99,7 +99,7 @@ if ($err = check_file(__DIR__.'/thumbnail_gd.inc.php')) {
 	die($err);
 }
 require(__DIR__.'/thumbnail_gd.inc.php');
-if($thumbnail_gd_ver < 20241124){
+if($thumbnail_gd_ver < 20241126){
 	die($en ? "Please update thumbnail_gd.inc.php" : "thumbnail_gd.inc.phpを更新してください。");
 }
 //SNS共有Class
