@@ -24,7 +24,7 @@ class image_save{
 
 
 	if(($_SERVER["REQUEST_METHOD"]) !== "POST"){
-		return header( "Location: ./ ") ;
+		redirect("./ ");
 	}
 
 	$lang = ($http_langs = isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? $_SERVER['HTTP_ACCEPT_LANGUAGE'] : '')
