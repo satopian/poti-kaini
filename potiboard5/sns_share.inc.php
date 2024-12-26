@@ -72,6 +72,6 @@ class sns_share{
 		if(!$share_url){
 			error($en ? "Please select an SNS sharing destination.":"SNSの共有先を選択してください。");
 		}
-		redirect('Location:'.$share_url);
+		header('Location:'.$share_url);
 	}
 }

@@ -50,12 +50,11 @@
 // 2003/08/28 perl -> php 移植  by TakeponG >> https://chomstudio.com/
 // 2003/07/11 perl版初公開
 $picpost_inc_ver=20240223;
-if(($_SERVER["REQUEST_METHOD"]) !== "POST"){
-	header( "Location: ./ ") ;
-}
 class picpost{
 	Public static function saveimage(): void {
-
+	if(($_SERVER["REQUEST_METHOD"]) !== "POST"){
+		header( "Location: ./ ") ;
+	}
 	$lang = ($http_langs = isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? $_SERVER['HTTP_ACCEPT_LANGUAGE'] : '')
 	? explode( ',', $http_langs )[0] : '';
 	$en= (stripos($lang,'ja')!==0) ? true : false;
