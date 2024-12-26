@@ -3,6 +3,9 @@
 //https://paintbbs.sakura.ne.jp/
 
 $save_inc_ver=20240217;
+if(($_SERVER["REQUEST_METHOD"]) !== "POST"){
+	return header( "Location: ./ ") ;
+}
 class image_save{
 
 	private $imgfile,$en,$count,$errtext,$session_usercode; // プロパティとして宣言
@@ -21,11 +24,6 @@ class image_save{
 	defined('PSD_MAX_KB') or define('PSD_MAX_KB', '40960');//40MBまで。ただしサーバのPHPの設定によって2MB以下に制限される可能性があります。
 	defined('PERMISSION_FOR_LOG') or define('PERMISSION_FOR_LOG', 0600); //config.phpで未定義なら0600
 	defined('PERMISSION_FOR_DEST') or define('PERMISSION_FOR_DEST', 0606); //config.phpで未定義なら0606
-
-
-	if(($_SERVER["REQUEST_METHOD"]) !== "POST"){
-		redirect("./ ");
-	}
 
 	$lang = ($http_langs = isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? $_SERVER['HTTP_ACCEPT_LANGUAGE'] : '')
 	? explode( ',', $http_langs )[0] : '';
