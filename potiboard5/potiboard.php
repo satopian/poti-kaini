@@ -2853,10 +2853,7 @@ function create_formatted_text_from_post($com,$name,$email,$url,$sub,$fcolor,$de
 		$cap=strtr($cap,"&amp;", "&");
 		$cap=strtr($cap,"&#44;", ",");
 		$name=preg_replace("/(#|＃)(.*)/","",$name);
-		$salt=substr($cap."H.",1,2);
-		$salt=preg_replace("/[^\.-z]/",".",$salt);
-		$salt=strtr($salt,":;<=>?@[\\]^_`","ABCDEFGabcdef");
-		$trip="◆".substr(crypt($cap,$salt),-10);
+		$trip="◆".substr(hash('sha256',$cap),-10);
 		$trip = strtr($trip,"!\"#$%&'()+,/:;<=>?@[\\]^`/{|}~\t","ABCDEFGHIJKLMNOabcdefghijklmno");
 		$name.=$trip;
 	}
