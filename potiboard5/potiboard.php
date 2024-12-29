@@ -3,7 +3,7 @@
 
 // POTI-board EVO
 // バージョン :
-const POTI_VER = 'v6.62.2';
+const POTI_VER = 'v6.62.3';
 const POTI_LOT = 'lot.20241230';
 
 /*
@@ -2833,7 +2833,7 @@ function create_formatted_text_from_post($com,$name,$email,$url,$sub,$fcolor,$de
 	if(!$name||preg_match("/\A\s*\z/u",$name)) $name="";
 	if(!$sub||preg_match("/\A\s*\z/u",$sub))   $sub="";
 	if(!$url||!filter_var($url,FILTER_VALIDATE_URL)||!preg_match('{\Ahttps?://}', $url)) $url="";
-		$name = str_replace("◆", "◇", $name);
+	$name = str_replace("◆", "◇", $name);
 	$sage=(stripos($email,'sage')!==false);//メールをバリデートする前にsage判定
 	$email = filter_var($email, FILTER_VALIDATE_EMAIL);
 	if(USE_NAME&&!$name) error(MSG009,$dest);
@@ -2852,8 +2852,11 @@ function create_formatted_text_from_post($com,$name,$email,$url,$sub,$fcolor,$de
 		$cap = $regs[2];
 		$cap=strtr($cap,"&amp;", "&");
 		$cap=strtr($cap,"&#44;", ",");
-		$name=str_replace(['#','＃'],"",$name);
-		$trip="◆".substr(hash('sha256',$cap),-10);
+		$name=preg_replace("/(#|＃)(.*)/","",$name);
+		$salt=substr($cap."H.",1,2);
+		$salt=preg_replace("/[^\.-z]/",".",$salt);
+		$salt=strtr($salt,":;<=>?@[\\]^_`","ABCDEFGabcdef");
+		$trip="◆".substr(crypt($cap,$salt),-10);
 		$trip = strtr($trip,"!\"#$%&'()+,/:;<=>?@[\\]^`/{|}~\t","ABCDEFGHIJKLMNOabcdefghijklmno");
 		$name.=$trip;
 	}
