@@ -3,7 +3,7 @@
 
 // POTI-board EVO
 // バージョン :
-const POTI_VER = 'v6.62.0';
+const POTI_VER = 'v6.62.1';
 const POTI_LOT = 'lot.20241229';
 
 /*
@@ -54,7 +54,8 @@ check_file(__DIR__.'/lib/'.JQUERY);
 // Lightbox
 check_file(__DIR__.'/lib/lightbox/js/lightbox.min.js');
 check_file(__DIR__.'/lib/lightbox/css/lightbox.min.css');
-safe_require(__DIR__.'/config.php');
+check_file(__DIR__.'/config.php');
+require_once(__DIR__.'/config.php');
 
 defined('USE_CHEERPJ_OLD_VERSION') or define('USE_CHEERPJ_OLD_VERSION',"0"); 
 
@@ -69,27 +70,34 @@ if(USE_CHEERPJ_OLD_VERSION){//2.3
 // https://developer.mozilla.org/docs/Web/Security/Subresource_Integrity
 
 //BladeOne
-safe_require(__DIR__.'/BladeOne/lib/BladeOne.php');
+check_file(__DIR__.'/BladeOne/lib/BladeOne.php');
+require_once(__DIR__.'/BladeOne/lib/BladeOne.php');
 Use eftec\bladeone\BladeOne;
 
 //Template設定ファイル
-safe_require(__DIR__.'/templates/'.SKIN_DIR.'template_ini.php');
+check_file(__DIR__.'/templates/'.SKIN_DIR.'template_ini.php');
+require_once(__DIR__.'/templates/'.SKIN_DIR.'template_ini.php');
 
 //サムネイルfunction
-safe_require(__DIR__.'/thumbnail_gd.inc.php');
+check_file(__DIR__.'/thumbnail_gd.inc.php');
+require_once(__DIR__.'/thumbnail_gd.inc.php');
 if($thumbnail_gd_ver < 20241126){
 	die($en ? "Please update thumbnail_gd.inc.php" : "thumbnail_gd.inc.phpを更新してください。");
 }
 //SNS共有Class
-safe_require(__DIR__.'/sns_share.inc.php');
+check_file(__DIR__.'/sns_share.inc.php');
+require_once(__DIR__.'/sns_share.inc.php');
 //検索Class
-safe_require(__DIR__.'/search.inc.php');
+check_file(__DIR__.'/search.inc.php');
+require_once(__DIR__.'/search.inc.php');
 //画像保存Class
-safe_require(__DIR__.'/save.inc.php');
+check_file(__DIR__.'/save.inc.php');
+require_once(__DIR__.'/save.inc.php');
 if($save_inc_ver < 20240127){
 die($en ? "Please update save.inc.php" : "save.inc.phpを更新してください。");
 }
-safe_require(__DIR__.'/picpost.inc.php');
+check_file(__DIR__.'/picpost.inc.php');
+require_once(__DIR__.'/picpost.inc.php');
 if($picpost_inc_ver < 20240223){
 die($en ? "Please update picpost.inc.php" : "picpost.inc.phpを更新してください。");
 }
@@ -1611,11 +1619,6 @@ function check_dir ($path): void {
 	if (!is_dir($path)) die($path . $msg['041']);
 	if (!is_readable($path)) die($path . $msg['042']);
 	if (!is_writable($path)) die($path . $msg['043']);
-}
-//ファイルの存在を確認してrequire
-function safe_require($path): void {
-	check_file($path);
-	require_once($path);
 }
 
 // お絵かき画面
