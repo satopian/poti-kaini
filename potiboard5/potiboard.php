@@ -3,8 +3,8 @@
 
 // POTI-board EVO
 // バージョン :
-const POTI_VER = 'v6.62.1';
-const POTI_LOT = 'lot.20241229';
+const POTI_VER = 'v6.62.2';
+const POTI_LOT = 'lot.20241230';
 
 /*
   (C) 2018-2024 POTI改 POTI-board redevelopment team
@@ -2852,7 +2852,7 @@ function create_formatted_text_from_post($com,$name,$email,$url,$sub,$fcolor,$de
 		$cap = $regs[2];
 		$cap=strtr($cap,"&amp;", "&");
 		$cap=strtr($cap,"&#44;", ",");
-		$name=preg_replace("/(#|＃)(.*)/","",$name);
+		$name=str_replace(['#','＃'],"",$name);
 		$trip="◆".substr(hash('sha256',$cap),-10);
 		$trip = strtr($trip,"!\"#$%&'()+,/:;<=>?@[\\]^`/{|}~\t","ABCDEFGHIJKLMNOabcdefghijklmno");
 		$name.=$trip;
