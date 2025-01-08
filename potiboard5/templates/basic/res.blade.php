@@ -180,14 +180,13 @@
 		@endforeach
 		{{-- <!--親記事グループここまで--> --}}
 		<div class="clear"></div>
+		<div class="res_form_wrap">
 		{{-- <!--お絵かきフォーム欄--> --}}
 		@if($paintform)
 		{{-- <!--実際のお絵かきフォーム--> --}}
-		<div id="res_paint_form">
 
 			@include('parts.paint_form')
 
-		</div>
 
 		@endif
 
@@ -270,6 +269,7 @@
 			</table>
 		</form>
 		@endif
+		</div>
 		<hr>
 
 		<nav>

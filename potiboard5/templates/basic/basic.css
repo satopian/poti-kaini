@@ -380,42 +380,9 @@ input.pch_upload {
 	margin: 0 3px 0;
 	vertical-align: bottom;
 }
-
-/* ミニレスフォーム */
-.minires_wrap {
-	max-width: 500px;
-	text-align: right;
-	margin-left: auto;
-}
-
-.minres_form_table {
-	width: 100%;
-	max-width: 500px;
-	text-align: right;
-}
-
-.minres_title {
-	width: 6em;
-}
-
-.minres_input_text {
-	width: 100%;
-	color: #666555;
-	height: 16px;
-	padding: 1px;
-}
-
-.minres_input_com {
-	width: 100%;
-	height: 3em;
-	color: #666555;
-	padding: 1px;
-}
-
-.minres_input_other {
-	width: 10em;
-	height: 16px;
-	padding: 1px;
+.res_form_wrap {
+	width: fit-content;
+	margin: 0 auto;
 }
 
 .color_select {
