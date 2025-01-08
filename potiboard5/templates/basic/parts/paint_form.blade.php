@@ -9,7 +9,7 @@
 	<input type="submit" value="PAINT" class="paint_button">
 @if ($select_app)
 	<span class="bold_gray">Tool</span>
-	<select name="shi" class="select_applet">
+	<select name="shi" class="select_applet" id="select_app">
 		@if ($use_neo)<option value="neo">PaintBBS NEO</option>@endif
 		@if ($use_tegaki)<option value="tegaki">Tegaki</option>@endif
 		@if ($use_axnos)<option value="axnos">Axnos Paint</option>@endif
@@ -54,7 +54,7 @@
 @if ($use_select_palettes)
 	<span class="palette_type bold_gray">PALETTE</span> <select name="selected_palette_no" title="パレット" class="canvas_select palette_type">{!!$palette_select_tags!!}</select>
 	@endif
-@if ($anime)<label class="checkbox use_animation"><input type="checkbox" value="true" name="anime" {{$animechk}}>動画記録</label>
+@if ($anime)<label id="save_playback" class="checkbox use_animation"><input type="checkbox" value="true" name="anime" {{$animechk}}>動画記録</label>
 	@endif
 	{{-- 
 	// // anime…動画記録機能を使用するとき true が入る

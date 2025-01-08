@@ -10,7 +10,7 @@
 		高さ : <input name="pich" type="number" title="高さ" class="form" value="{{$pdefh}}" min="{{$pminh}}" max="{{$pmaxh}}">
 	@if($select_app)
 		ツール :
-		<select name="shi">
+	<select name="shi" id="select_app">
 		@if ($use_neo)<option value="neo">PaintBBS NEO</option>@endif
 		@if ($use_tegaki)<option value="tegaki">Tegaki</option>@endif
 		@if ($use_axnos)<option value="axnos">Axnos Paint</option>@endif
@@ -31,8 +31,8 @@
 		@if($resno)
 		<input type="hidden" name="resto" value="{{$resno}}">
 		@endif
-		@if($anime)<label><input type="checkbox" value="true" name="anime" title="動画記録" @if($animechk){{$animechk}}@endif>動画記録</label>@endif
 		<input type="hidden" name="mode" value="paint">
 		<input class="button" type="submit" value="お絵かき">
+		@if($anime)<label id="save_playback"><input type="checkbox" value="true" name="anime" title="動画記録" @if($animechk){{$animechk}}@endif>動画記録</label>@endif
 	</p>
 </form>
