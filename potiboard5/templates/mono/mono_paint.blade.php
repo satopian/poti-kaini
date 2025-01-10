@@ -115,11 +115,11 @@
 			<script>
 				//Firefoxのメニューバーが開閉するのため、Altキーのデフォルトの処理をキャンセル
 				document.addEventListener('keyup', function(e) {//しぃペインター NEO共通
-				// e.key を利用して特定のキーのアップイベントを検知する
-				if (e.key.toLowerCase() === 'alt') {
-					e.preventDefault(); // Alt キーのデフォルトの動作をキャンセル
-				}
-			});
+					// e.key を利用して特定のキーのアップイベントを検知する
+					if (e.key.toLowerCase() === 'alt') {
+						e.preventDefault(); // Alt キーのデフォルトの動作をキャンセル
+					}
+				});
 			</script>
 			@endif
 		@endif
@@ -148,7 +148,7 @@
 				}, { passive: false });
 			});
 		</script>
-				
+
 
 <script src="chickenpaint/js/chickenpaint.min.js?{{$parameter_day}}&{{$ver}}"></script>
 <link rel="stylesheet" href="chickenpaint/css/chickenpaint.css?{{$parameter_day}}&{{$ver}}">
@@ -406,7 +406,8 @@
 					</applet>
 					@endif
 				</div>
-				<div class="palette">
+				<div class="palette_wrap">
+					<div class="palette">
 					<form name="Palette">
 						@if($useneo)
 						<fieldset>
@@ -494,7 +495,8 @@
 					</form>
 				</div>
 			</div>
-			@if($paint_mode)
+		</div>
+		@if($paint_mode)
 			<section>
 				<div class="thread">
 					<hr>
