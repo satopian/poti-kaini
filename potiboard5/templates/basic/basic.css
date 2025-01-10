@@ -203,7 +203,7 @@ a:hover {
 	padding: 2px 5px 2px 0;
 }
 .post_table_title {
-	min-width: 5.5em;
+	width: 5em;
 }
 
 .td_noborder {
