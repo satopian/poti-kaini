@@ -575,7 +575,7 @@ name="pch" code="pch.PCHViewer.class" archive="PCHViewer.jar,PaintBBS.jar" width
 @endif
 	</div>
 <div class="pch_download">
-<A href="{{$pchfile}}" target="_blank" rel="noopener noreferrer">Download</A><br>
+<A href="{{$pchfile}}" target="_blank" rel="nofollow noopener noreferrer">Download</A><br>
 <small>Datasize : {{$datasize}} KB</small><br>
 	<a href="{{$self}}?res={{$oyano}}#{{$no}}">{{$title}}</a> / <a href="javascript:close()">閉じる</a>
 </div>

@@ -645,7 +645,7 @@
 						@endif
 					</div>
 					<p>
-						<a href="{{$pchfile}}" target="_blank">Download</a> - Datasize : {{$datasize}} KB
+						<a href="{{$pchfile}}" target="_blank" rel="nofollow noopener noreferrer">Download</a> - Datasize : {{$datasize}} KB
 					</p>
 					<p>
 						<a href="javascript:close()">閉じる</a>
