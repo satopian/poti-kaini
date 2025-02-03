@@ -114,8 +114,7 @@
 						return alert(@if($en)'Server or line is unstable.\nPlease try again!'@else'サーバまたは回線が不安定です。\n時間をおいて再度投稿してみてください。'@endif);	
 					})
 				}
-				klecks.getPSD().then((psd)=>{
-					const png = klecks.getPNG();
+				Promise.all([klecks.getPNG(), klecks.getPSD()]).then(([png, psd]) => {
 					const TotalSiz=((png.size+psd.size)/1024/1024).toFixed(3);
 					if(TotalSiz>{{$max_pch}}){
 						return alert(`<?php if($en):?>File size is too large.<?php else:?>ファイルサイズが大きすぎます。<?php endif;?>\n<?php if($en):?>limit size<?php else:?>制限値<?php endif;?>:{{$max_pch}}MB\n<?php if($en):?>Current size<?php else:?>現在値<?php endif;?>:${TotalSiz}MB`);
@@ -136,7 +135,7 @@
 			}, 500);
 		}
 	});
-	//2022-2024 (c)satopian MIT Licence
+	//2022-2025 (c)satopian MIT Licence
 	//この箇所はさとぴあが作成したMIT Licenceのコードです。
 @if($rep)
 	const repData = () => {
