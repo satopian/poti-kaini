@@ -9,7 +9,7 @@
 	<meta charset="utf-8">
 	{{-- SNS --}}
 	@if ($sharebutton)
-	<meta name="twitter:card" content="summary">
+	<meta name="twitter:card" content="summary_large_image">
 	<meta name="twitter:site" content="">
 	<meta property="og:site_name" content="">
 	<meta property="og:title" content="{{$title}}">
