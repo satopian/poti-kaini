@@ -63,13 +63,13 @@ jQuery(function () {
             const pichInput = paintform.elements.namedItem("pich");
             const shiInput = paintform.elements.namedItem("shi");
     
-            if (picwInput instanceof HTMLInputElement) {
+            if (picwInput instanceof HTMLSelectElement) {
                 SetCookie("picwc", picwInput.value);
             }
-            if (pichInput instanceof HTMLInputElement) {
+            if (pichInput instanceof HTMLSelectElement) {
                 SetCookie("pichc", pichInput.value);
             }
-            if (shiInput instanceof HTMLInputElement) {
+            if (shiInput instanceof HTMLSelectElement) {
                 SetCookie("appletc", shiInput.value);
             }
         };
