@@ -1,4 +1,4 @@
-var colorIdx = GetCookie("colorIdx");
+const colorIdx = GetCookie("colorIdx");
 switch (Number(colorIdx)) {
     case 1:
         document.getElementById("css1").removeAttribute("disabled");
@@ -12,9 +12,11 @@ switch (Number(colorIdx)) {
 }
 
 function SetCss(obj) {
-    var idx = obj.selectedIndex;
-    SetCookie("colorIdx", idx);
-    window.location.reload();
+    if (obj instanceof HTMLSelectElement) {
+        const idx = obj.selectedIndex;
+        SetCookie("colorIdx", idx);
+        window.location.reload();
+    }
 }
 
 function GetCookie(key) {
@@ -33,17 +35,17 @@ function SetCookie(key, val) {
     document.cookie =
         key + "=" + encodeURIComponent(val) + ";max-age=31536000;";
 }
-colorIdx = GetCookie("colorIdx");
-var select_mystyle = document.getElementById("mystyle");
-if (select_mystyle) {
-    document.getElementById("mystyle").selectedIndex = colorIdx;
+
+const select_mystyle = document.getElementById("mystyle");
+if (select_mystyle instanceof HTMLSelectElement) {
+    select_mystyle.selectedIndex = Number(colorIdx);
 }
 
 jQuery(function () {
     //URLクエリからresidを取得して指定idへページ内を移動
     const urlParams = new URLSearchParams(window.location.search);
     const resid = urlParams.get("resid");
-    const document_resid = resid ? document.getElementById(resid): null;
+    const document_resid = resid ? document.getElementById(resid) : null;
     if (document_resid) {
         document_resid.scrollIntoView();
     }
@@ -104,7 +106,7 @@ jQuery(function () {
             const picwInput = paintform.elements.namedItem("picw");
             const pichInput = paintform.elements.namedItem("pich");
             const shiInput = paintform.elements.namedItem("shi");
-    
+
             if (picwInput instanceof HTMLInputElement) {
                 SetCookie("picwc", picwInput.value);
             }
@@ -122,7 +124,7 @@ jQuery(function () {
             const nameInput = commentform.elements.namedItem("name");
             const urlInput = commentform.elements.namedItem("url");
             const pwdInput = commentform.elements.namedItem("pwd");
-    
+
             if (nameInput instanceof HTMLInputElement) {
                 SetCookie("namec", nameInput.value);
             }
@@ -133,7 +135,7 @@ jQuery(function () {
                 SetCookie("pwdc", pwdInput.value);
             }
         };
-    };
+    }
 });
 
 //shareするSNSのserver一覧を開く
@@ -148,7 +150,6 @@ function open_sns_server_window(event, width = 600, height = 600) {
         width = 350; // デフォルト値
         height = 400; // デフォルト値
     }
-
     var url = event.currentTarget.href;
     var windowFeatures = "width=" + width + ",height=" + height; // ウィンドウのサイズを指定
 
