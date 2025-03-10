@@ -152,7 +152,7 @@ class picpost{
 	if($sendheader){
 		$sendheader = str_replace("&amp;", "&", $sendheader);
 		parse_str($sendheader, $u);
-		//GETで取得できなかった時は、拡張ヘッダから取得		
+		//拡張ヘッダから取得		
 		$tool = isset($u['tool']) ? $u['tool'] : 'Shi-Painter';
 		$tool= is_paint_tool_name($tool);
 		$resto = isset($u['resto']) ? $u['resto'] : '';
