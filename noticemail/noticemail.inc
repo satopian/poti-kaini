@@ -7,7 +7,6 @@
 ** originalscript (C)SakaQ 2004-2007
 ** http://www.punyu.net/php/
 **
-** 2023/10/20 Subjectのダブルクオートをエスケープ。
 ** 2022/12/19 コード整理。
 ** 2022/09/18 多国語対応。mb_language( 'uni' )。
 ** 2020/06/20 多国語対応。メール送信をJISからutf-8へ。
