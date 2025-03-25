@@ -3,7 +3,7 @@
 
 // POTI-board EVO
 // バージョン :
-const POTI_VER = 'v6.70.0';
+const POTI_VER = 'v6.70.1';
 const POTI_LOT = 'lot.20250325';
 
 /*
@@ -3312,8 +3312,8 @@ function saveimage(): void {
  * @return array
  */
 function separateDatetimeAndId ($date): array {
-	if (preg_match("/ ID:(.*)/", $date, $regs)){
-		return [$regs[1], preg_replace("/ ID:.*/","",$date)];
+	if (preg_match("/(.+) ID:(.*)/", $date, $regs)){
+		return [$regs[2],$regs[1]];
 	}
 	return ['', $date];
 }
@@ -3325,8 +3325,8 @@ function separateDatetimeAndId ($date): array {
  */
 function separateNameAndTrip ($name): array {
 	$name=strip_tags($name);//タグ除去
-	if(preg_match("/(◆.*)/", $name, $regs)){
-		return [preg_replace("/(◆.*)/","",$name), $regs[1]];
+	if(preg_match("/(.*)(◆.*)/", $name, $regs)){
+		return [$regs[1], $regs[2]];
 	}
 	return [$name, ''];
 }
