@@ -1,41 +1,69 @@
 <!DOCTYPE html>
 <!-- mocked drawing page -->
 <html lang="ja">
+
 <head>
 	<meta charset="UTF-8">
-	<title>お絵かきモード - {{$title}}</title> 
+	<title>お絵かきモード - {{$title}}</title>
 	<!-- this is important -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
 	<script src="tegaki/tegaki.js?{{$parameter_day}}&{{$ver}}"></script>
-<link rel="stylesheet" href="tegaki/tegaki.css?{{$parameter_day}}&{{$ver}}">
+	<link rel="stylesheet" href="tegaki/tegaki.css?{{$parameter_day}}&{{$ver}}">
 
 	<style>
-		:not(input){
-		-moz-user-select: none;
-		-webkit-user-select: none;
-		-ms-user-select: none;
-		user-select: none;
+		:not(input) {
+			-moz-user-select: none;
+			-webkit-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
 		}
 	</style>
-<script>
-	document.addEventListener('DOMContentLoaded',()=>{
-	document.addEventListener('dblclick', (e)=>{ e.preventDefault()}, { passive: false });
+	<script>
+		document.addEventListener('DOMContentLoaded',()=>{
+		document.addEventListener('dblclick', (e)=>{ 
+			e.preventDefault()
+		}, { 
+				passive: false
+			 });
 	});
-</script>
+	</script>
 </head>
+
 <body>
-<script>
-function showAlert(text) {
-  if (Tegaki.saveReplay) {
-    Tegaki.replayRecorder.start();
-  }
-  alert(text);
-}
-Tegaki.open({
-// when the user clicks on Finish
+	<script>
+		const getHttpStatusMessage = (response_status) => {
+		// HTTP ステータスコードに基づいてメッセージを返す関数
+		switch (response_status) {
+			case 400:
+				return "Bad Request";
+			case 401:
+				return "Unauthorized";
+			case 403:
+				return "Forbidden";
+			case 404:
+				return "Not Found";
+			case 500:
+				return "Internal Server Error";
+			case 502:
+				return "Bad gateway";
+			case 503:
+				return "Service Unavailable";
+			default:
+				return "Unknown Error";
+		}
+	}
+
+	const showAlert = (text) => {
+			if (Tegaki.saveReplay) {
+			Tegaki.replayRecorder.start();
+		}
+		alert(text);
+	}
+	Tegaki.open({
+	// when the user clicks on Finish
   onDone: function() {
 	
-	//2022-2024 (c)satopian MIT Licence
+	//2022-2025 (c)satopian MIT Licence
 	//この箇所はさとぴあが作成したMIT Licenceのコードです。
 
 	if (Tegaki.saveReplay) {
@@ -66,15 +94,10 @@ Tegaki.open({
 					return showAlert(text);
 				})
 			}else{
-				let response_status = response.status; 
-
-				if(response_status===403){
-					return showAlert(@if($en)'It may be a WAF false positive.\nTry to draw a little more.'@else'投稿に失敗。\nWAFの誤検知かもしれません。\nもう少し描いてみてください。'@endif);
-				}
-				if(response_status===404){
-					return showAlert(@if($en)'404 not found\nThe PHP file to save the image does not exist.'@else'エラー404\n画像を保存するPHPファイルがありません。'@endif);	
-				}
-				return showAlert(@if($en)'Your picture upload failed!\nPlease try again!'@else'投稿に失敗\n時間をおいて再度投稿してみてください。'@endif);
+				const HttpStatusMessage = getHttpStatusMessage(response.status);
+				return showAlert(@if($en)`Your picture upload failed!\nPlease try again!\n( HTTP status code ${response.status} : ${HttpStatusMessage} )`
+								@else`投稿に失敗。\n時間を置いて再度投稿してみてください。\n( HTTPステータスコード ${response.status} : ${HttpStatusMessage} )`
+								@endif);
 			}
 		})
 		.catch((error) => {
@@ -172,6 +195,7 @@ Tegaki.open({
     image.src = "{{$imgfile}}"; // image URL
 @endif
 
-</script>
+	</script>
 </body>
+
 </html>
