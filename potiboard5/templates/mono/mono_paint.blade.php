@@ -691,7 +691,7 @@ a[c],b.p_st.options[c].style.color=e[c],b.p_ed.options[c].style.background=a[c],
 		<!-- (========== CONTINUE MODE(コンティニューモード) start ==========) -->
 		<section>
 
-			<script type="text/javascript" src="loadcookie.js"></script>
+			<script type="text/javascript" src="loadcookie.js?{{$ver}}"></script>
 			<div class="thread">
 				<figure>
 					<img src="{{$picfile}}" width="{{$picw}}" height="{{$pich}}"

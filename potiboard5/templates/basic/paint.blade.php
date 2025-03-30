@@ -674,7 +674,7 @@ a[c],b.p_st.options[c].style.color=e[c],b.p_ed.options[c].style.background=a[c],
 	</header>
 	<div class="centering">
 		<!--クッキー読込み用JavaScript(必須)-->
-		<Script src="loadcookie.js"></script>
+		<Script src="loadcookie.js?{{$ver}}"></script>
 		<!--画像と描画時間-->
 		<div class="continue_img">
 			<img src="{{$picfile}}" width="{{$picw}}" height="{{$pich}}"

@@ -22,8 +22,8 @@
 		document.addEventListener('DOMContentLoaded',()=>{
 		document.addEventListener('dblclick', (e)=>{ 
 			e.preventDefault()
-		}, { 
-				passive: false
+		}, {
+			passive: false
 			 });
 	});
 	</script>
@@ -54,14 +54,14 @@
 	}
 
 	const showAlert = (text) => {
-			if (Tegaki.saveReplay) {
+		if (Tegaki.saveReplay) {
 			Tegaki.replayRecorder.start();
 		}
 		alert(text);
 	}
 	Tegaki.open({
 	// when the user clicks on Finish
-  onDone: function() {
+	onDone: function() {
 	
 	//2022-2025 (c)satopian MIT Licence
 	//この箇所はさとぴあが作成したMIT Licenceのコードです。
@@ -106,49 +106,49 @@
 	}
 	@if($rep)
 	const repData = () => {
-    // 画像差し換えに必要なフォームデータをセット
-    const formData = new FormData();
-    formData.append("mode", "picrep"); 
-    formData.append("no", "{{$no}}"); 
-    formData.append("pwd", "{{$pwd}}"); 
+	// 画像差し換えに必要なフォームデータをセット
+	const formData = new FormData();
+	formData.append("mode", "picrep"); 
+	formData.append("no", "{{$no}}"); 
+	formData.append("pwd", "{{$pwd}}"); 
 	formData.append("repcode", "{{$repcode}}");
 
-    // 画像差し換え
+	// 画像差し換え
 	fetch("{{$self}}", {
-        method: 'POST',
+		method: 'POST',
 		mode: 'same-origin',
 		headers: {
 			'X-Requested-With': 'tegaki'
 			,
 		},
-       body: formData
-    })
-    .then(response => {
-		if (response.ok) {
-			if (response.redirected) {
-				Tegaki.hide();//｢このサイトを離れますか?｣を解除
-				return window.location.href = response.url;
-				}
-			response.text().then((text) => {
-				if (text.startsWith("error\n")) {
-					console.log(text);
+			body: formData
+		})
+		.then(response => {
+			if (response.ok) {
+				if (response.redirected) {
 					Tegaki.hide();//｢このサイトを離れますか?｣を解除
-					return window.location.href = "?mode=piccom&stime={{$stime}}";
-				}
-			})
-        }
-    })
-    .catch(error => {
-        console.error('There was a problem with the fetch operation:', error);
+					return window.location.href = response.url;
+					}
+					response.text().then((text) => {
+						if (text.startsWith("error\n")) {
+							console.log(text);
+							Tegaki.hide();//｢このサイトを離れますか?｣を解除
+							return window.location.href = "?mode=piccom&stime={{$stime}}";
+					}
+				})
+			}
+		})
+		.catch(error => {
+				console.error('There was a problem with the fetch operation:', error);
 		Tegaki.hide();//｢このサイトを離れますか?｣を解除
 		return window.location.href = "?mode=piccom&stime={{$stime}}";
-    });
+		});
 	}
 	@endif
 
-    Tegaki.flatten().toBlob(
-      function(blob) {
-        // console.log(blob);
+	Tegaki.flatten().toBlob(
+		function(blob) {
+		// console.log(blob);
 		const tgkr = Tegaki.replayRecorder ? Tegaki.replayRecorder.toBlob() : null;
 		const formData = new FormData();
 		let DataSize = 1000;
@@ -162,7 +162,7 @@
 		}
 		formData.append("picture",blob,'blob');
 		formData.append("usercode", "{{$klecksusercode}}");
-		 <?php if($rep):?>formData.append("repcode", "{{$repcode}}");<?php endif;?>
+		@if($rep)formData.append("repcode", "{{$repcode}}");@endif
 		formData.append("tool", "tegaki");
 		formData.append("stime", <?=time();?>);
 		formData.append("resto", "{{$resto}}");

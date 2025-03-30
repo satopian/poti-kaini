@@ -26,7 +26,7 @@
 	<link rel="preload" as="style" href="lib/lightbox/css/lightbox.min.css" onload="this.rel='stylesheet'">
 	<link rel="preload" as="script" href="lib/lightbox/js/lightbox.min.js">
 	<link rel="preload" as="script" href="{{$skindir}}js/basic_common.js?{{$ver}}">
-	<link rel="preload" as="script" href="loadcookie.js">
+	<link rel="preload" as="script" href="loadcookie.js?{{$ver}}">
 	<style id="for_mobile"></style>
 
 	<title>[{{$oya[0][0]['no']}}] {{$oya[0][0]['sub']}} by {{$oya[0][0]['name']}} - {{$title}}</title>
@@ -306,7 +306,7 @@
 			@include('parts.copyright')
 		</footer>
 	</div>
-	<script src="loadcookie.js"></script>
+	<script src="loadcookie.js?{{$ver}}"></script>
 	<script>
 		document.addEventListener('DOMContentLoaded',l,false);
 	</script>

@@ -1,15 +1,25 @@
-<!doctype html><html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
-<style>body{overscroll-behavior-x: none !important; }</style>
+<!doctype html>
+<html lang="ja">
 
-<title>{{$title}}</title>
-<script>
-// 画面上部のお知らせ領域に表示するテキスト（掲示板名を想定）
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+	<style>
+		body {
+			overscroll-behavior-x: none !important;
+		}
+	</style>
+
+	<title>{{$title}}</title>
+	<script>
+		// 画面上部のお知らせ領域に表示するテキスト（掲示板名を想定）
 	const HEADER_TEXT = "AXNOS Paint（アクノスペイント）";
 	// ページ遷移を防止する場合アンコメントする
 	window.onbeforeunload = (e) => {
 		e.preventDefault();
 	}
 
+	//ブラウザデフォルトのキー操作をキャンセル
 	document.addEventListener("keydown",(e) => {
 		const keys = ["+",";","=","-","s","h","r","o"];
 		if ((e.ctrlKey||e.metaKey) && keys.includes(e.key.toLowerCase())) {
@@ -24,6 +34,27 @@
 			e.preventDefault(); // Alt キーのデフォルトの動作をキャンセル
 		}
 	});
+	const getHttpStatusMessage = (response_status) => {
+			// HTTP ステータスコードに基づいてメッセージを返す関数
+			switch (response_status) {
+				case 400:
+					return "Bad Request";
+				case 401:
+					return "Unauthorized";
+				case 403:
+					return "Forbidden";
+				case 404:
+					return "Not Found";
+				case 500:
+					return "Internal Server Error";
+				case 502:
+					return "Bad gateway";
+				case 503:
+					return "Service Unavailable";
+				default:
+					return "Unknown Error";
+			}
+		}
 
 	document.addEventListener("DOMContentLoaded", () => {
 
@@ -84,7 +115,7 @@
 
 				const BlobPng = toBlob(postObj.strEncodeImg)
 				// console.log(BlobPng);
-				//2022-2024 (c)satopian MIT Licence
+				//2022-2025 (c)satopian MIT Licence
 				//この箇所はさとぴあが作成したMIT Licenceのコードです。
 				const postData = (path, data) => {
 					fetch(path, {
@@ -111,18 +142,11 @@
 							return alert(text);
 							})
 						}else{
-							let response_status = response.status; 
-
-							if(response_status===403){
-								resolve(false);
-								return alert(@if($en)'It may be a WAF false positive.\nTry to draw a little more.'@else'投稿に失敗。\nWAFの誤検知かもしれません。\nもう少し描いてみてください。'@endif);
-							}
-							if(response_status===404){
-								resolve(false);
-								return alert(@if($en)'404 not found\nThe PHP file to save the image does not exist.'@else'エラー404\n画像を保存するPHPファイルがありません。'@endif);	
-							}
 							resolve(false);
-							return alert(@if($en)'Your picture upload failed!\nPlease try again!'@else'投稿に失敗\n時間をおいて再度投稿してみてください。'@endif);
+							const HttpStatusMessage = getHttpStatusMessage(response.status);
+							return alert(@if($en)`Your picture upload failed!\nPlease try again!\n( HTTP status code ${response.status} : ${HttpStatusMessage} )`
+										@else`投稿に失敗。\n時間を置いて再度投稿してみてください。\n( HTTPステータスコード ${response.status} : ${HttpStatusMessage} )`
+										@endif)
 						}
 					})
 					.catch((error) => {
@@ -142,7 +166,7 @@
 			})
 		}
 	});
-//2022-2024 (c)satopian MIT Licence
+//2022-2025 (c)satopian MIT Licence
 //この箇所はさとぴあが作成したMIT Licenceのコードです。
 @if($rep)
 const repData = () => {
@@ -184,7 +208,12 @@ const repData = () => {
 	}
 @endif
 	// (c)satopian MIT Licence ここまで
-</script>
+	</script>
 </head>
+
 <body>
-<div id="axnospaint_body"></div><script defer="defer" src="./axnos/axnospaint-lib.min.js?{{$parameter_day}}&{{$ver}}"></script></body></html>
+	<div id="axnospaint_body"></div>
+	<script defer="defer" src="./axnos/axnospaint-lib.min.js?{{$parameter_day}}&{{$ver}}"></script>
+</body>
+
+</html>
