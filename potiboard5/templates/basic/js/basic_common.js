@@ -69,7 +69,7 @@ addEventListener("DOMContentLoaded", () => {
             key + "=" + encodeURIComponent(val) + ";max-age=31536000;";
     }
 
-    //スマホの時はPC用のメニューを非表示document.addEventListener("DOMContentLoaded", function () {
+    //スマホの時はPC用のメニューを非表示
     if (navigator.maxTouchPoints && screen.width < 600) {
         const for_mobile = document.getElementById("for_mobile");
         if (for_mobile) {
