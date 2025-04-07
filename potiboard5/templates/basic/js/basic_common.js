@@ -12,20 +12,8 @@ addEventListener("DOMContentLoaded", () => {
         const submitButtons = document.querySelectorAll('[type="submit"]');
 
         submitButtons.forEach(function (btn) {
-            const form = btn.closest("form");
-            const isTargetBlank = form?.target === "_blank";
-
             // ボタンを有効化
             btn.disabled = false;
-
-            // ボタンが target="_blank" の場合は無効化しない
-            if (!isTargetBlank) {
-                btn.addEventListener("click", function () {
-                    // ボタンをクリックすると
-                    btn.disabled = true; // ボタンを無効化して
-                    form?.submit(); // 送信する
-                });
-            }
         });
     });
 
@@ -33,6 +21,12 @@ addEventListener("DOMContentLoaded", () => {
     const paintform = document.getElementById("paint_form");
     if (paintform instanceof HTMLFormElement) {
         paintform.onsubmit = function () {
+            // 二度押し防止
+            const submitButton = paintform.querySelector('[type="submit"]');
+            if (submitButton) {
+                submitButton.disabled = true;
+            }
+
             const picwInput = paintform.elements.namedItem("picw");
             const pichInput = paintform.elements.namedItem("pich");
             const shiInput = paintform.elements.namedItem("shi");
@@ -51,6 +45,11 @@ addEventListener("DOMContentLoaded", () => {
     const commentform = document.getElementById("comment_form");
     if (commentform instanceof HTMLFormElement) {
         commentform.onsubmit = function () {
+            // 二度押し防止
+            const submitButton = commentform.querySelector('[type="submit"]');
+            if (submitButton) {
+                submitButton.disabled = true;
+            }
             const nameInput = commentform.elements.namedItem("name");
             const urlInput = commentform.elements.namedItem("url");
             const pwdInput = commentform.elements.namedItem("pwd");
