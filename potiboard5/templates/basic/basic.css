@@ -960,6 +960,7 @@ input.copy_txt {
 	bottom: 50px;
 	background: #ffcfcf;
 	opacity: .5;
+	visibility: hidden;
 	border-radius: 50%
 }
 
