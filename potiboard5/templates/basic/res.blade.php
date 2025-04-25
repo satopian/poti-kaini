@@ -88,15 +88,15 @@
 			@if($res['tool'])<span class="article_info_desc">Tool:{{$res['tool']}}</span>@endif
 			@if($res['updatemark'])<span class="article_info_desc">{{$res['updatemark']}}</span>@endif
 			@if($res['thumb'])<span class="article_info_desc">- サムネイル表示中 -</span>@endif
+			@if($res['src']&&($res['continue']||$res['pch']))
 			<div class="article_img_info">
-				@if($res['src'])
 				@if($res['continue'])<span class="article_info_continue">☆<a
 						href="{{$self}}?mode=continue&no={{$res['continue']}}&resno={{$ress[0]['no']}}">続きを描く</a></span>@endif
 				@if($res['spch'])<span class="for_pc">@endif @if($res['pch'])@if($res['continue'])| @endif<span
 						class="article_info_animation">☆<a href="{{$self}}?mode=openpch&pch={{$res['pch']}}&resno={{$ress[0]['no']}}&no={{$res['no']}}"
 							target="_blank">動画</a></span>@endif @if($res['spch'])</span>@endif
-				@endif			
 			</div>
+			@endif			
 		</div>
 			{{-- 記事共通ヘッダここまで --}}
 
