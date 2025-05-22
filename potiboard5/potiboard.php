@@ -3,7 +3,7 @@
 
 // POTI-board EVO
 // バージョン :
-const POTI_VER = 'v6.75.0';
+const POTI_VER = 'v6.75.1';
 const POTI_LOT = 'lot.20250522';
 
 /*
@@ -410,7 +410,7 @@ function check_csrf_token(): void {
 	session_sta();
 	$token=(string)filter_input_data('POST','token');
 	$session_token= $_SESSION['token'] ?? '';
-	if(!$session_token||$token!==$session_token){
+	if(!$token||!$session_token||!hash_equals($token,$session_token)){
 		error(MSG006);
 	}
 }
