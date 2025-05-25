@@ -3,7 +3,7 @@
 
 // POTI-board EVO
 // バージョン :
-const POTI_VER = 'v6.76.1';
+const POTI_VER = 'v6.76.3';
 const POTI_LOT = 'lot.20250525';
 
 /*
@@ -242,7 +242,7 @@ if(!defined('LOG_MAX')|| !LOG_MAX || !is_numeric(LOG_MAX)){
 }
 
 if(X_FRAME_OPTIONS_DENY){
-	header('X-Frame-Options: DENY');//フレーム内への表示を拒否
+	header("Content-Security-Policy: frame-ancestors 'none';");//フレーム内への表示を拒否
 }
 
 //POSTから変数を取得
@@ -915,7 +915,7 @@ function regist(): void {
 	//CSRFトークンをチェック
 	check_csrf_token();
 	//投稿間隔をチェック
-	check_submission_interval();
+	check_submission_interval(3);//投稿間隔を3秒に設定
 
 	$admin = (string)filter_input_data('POST', 'admin');
 	$resto = (string)filter_input_data('POST', 'resto',FILTER_VALIDATE_INT);
@@ -3761,15 +3761,14 @@ function set_form_display_time(): void {
 	$_SESSION['form_display_time'] = time();
 }
 //投稿間隔をチェック
-function check_submission_interval(): void {
-global $en;
+function check_submission_interval($min_interval=2): void {
+	// デフォルトで最低2秒の間隔を設ける
 	session_sta();
 	if (!isset($_SESSION['form_display_time'])) {
 		error(MSG049);
 	}
 	$form_display_time = $_SESSION['form_display_time'];
 	$now = time();
-	$min_interval = 3; // 最低3秒は空ける
 
 	if (($now - $form_display_time) < $min_interval) {
 		set_form_display_time();
