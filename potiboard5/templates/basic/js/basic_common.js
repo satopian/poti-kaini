@@ -7,12 +7,14 @@ addEventListener("DOMContentLoaded", () => {
         document_resid.scrollIntoView();
     }
 
-    window.addEventListener("pageshow", function () {
+    window.addEventListener("pageshow", () => {
         // すべてのsubmitボタンを取得
         const submitButtons = document.querySelectorAll('[type="submit"]');
         submitButtons.forEach(function (btn) {
-            // ボタンを有効化
-            btn.disabled = false;
+            if (btn instanceof HTMLInputElement) {
+                // ボタンを有効化
+                btn.disabled = false;
+            }
         });
     });
 
@@ -20,12 +22,6 @@ addEventListener("DOMContentLoaded", () => {
     const paintform = document.getElementById("paint_form");
     if (paintform instanceof HTMLFormElement) {
         paintform.onsubmit = function () {
-            // 二度押し防止
-            const submitButton = paintform.querySelector('[type="submit"]');
-            if (submitButton) {
-                submitButton.disabled = true;
-            }
-
             const picwInput = paintform.elements.namedItem("picw");
             const pichInput = paintform.elements.namedItem("pich");
             const shiInput = paintform.elements.namedItem("shi");
@@ -39,16 +35,27 @@ addEventListener("DOMContentLoaded", () => {
             if (shiInput instanceof HTMLSelectElement) {
                 SetCookie("appletc", shiInput.value);
             }
+            // 二度押し防止
+            const submitButton = paintform.querySelector('[type="submit"]');
+            if (submitButton instanceof HTMLInputElement) {
+                submitButton.disabled = true;
+            }
         };
     }
     const commentform = document.getElementById("comment_form");
     if (commentform instanceof HTMLFormElement) {
-        commentform.onsubmit = function () {
-            // 二度押し防止
-            const submitButton = commentform.querySelector('[type="submit"]');
-            if (submitButton) {
-                submitButton.disabled = true;
+        commentform.onsubmit = function (e) {
+            e.preventDefault(); // フォームのデフォルトの送信を防ぐ
+
+            //自動化ツールによる自動送信を拒否する
+            const languages_length0 = navigator.languages.length === 0;
+            const webdriver = navigator.webdriver;
+            if (webdriver || languages_length0) {
+                alert("拒絶されました。");
+                return;
             }
+
+            // Cookie発行
             const nameInput = commentform.elements.namedItem("name");
             const urlInput = commentform.elements.namedItem("url");
             const pwdInput = commentform.elements.namedItem("pwd");
@@ -61,6 +68,20 @@ addEventListener("DOMContentLoaded", () => {
             }
             if (pwdInput instanceof HTMLInputElement) {
                 SetCookie("pwdc", pwdInput.value);
+            }
+            // JSからの送信であることを示す hidden フィールドを追加
+            const hidden = document.createElement("input");
+            hidden.type = "hidden";
+            hidden.name = "js_submit_flag";
+            hidden.value = "1";
+            commentform.appendChild(hidden);
+
+            const submitButton = commentform.querySelector('[type="submit"]');
+            if (submitButton instanceof HTMLInputElement) {
+                // 二度押し防止
+                submitButton.disabled = true;
+                // フォームを送信
+                submitButton.form?.submit(); 
             }
         };
     }
@@ -118,7 +139,7 @@ function open_sns_server_window(event, width = 600, height = 600) {
         snsWindow = window.open(url, "_blank", windowFeatures); // 新しいウィンドウを開く
     }
     // ウィンドウがフォーカスを失った時の処理
-    snsWindow.addEventListener("blur", function () {
+    snsWindow.addEventListener("blur", () => {
         if (snsWindow.location.href === url) {
             snsWindow.close(); // URLが変更されていない場合はウィンドウを閉じる
         }
