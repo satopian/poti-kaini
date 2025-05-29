@@ -471,12 +471,13 @@ define("PERMISSION_FOR_DIR", 0707);//初期値 0707
 //GD2のImageCopyResampledでサムネイルの画質向上 させる:1 させない:0
 //不具合がある場合のみ 0
 define("RE_SAMPLED", "1");
+
+/*セキュリティ*/
+
 //iframe内での表示を 拒否する:1 許可する:0
 //セキュリティリスクを回避するため "拒否する:1" を強く推奨。
 
 define("X_FRAME_OPTIONS_DENY", "1");
-
-/*セキュリティ*/
 
 // 管理者パスワードを5回連続して間違えた時は拒絶する
 // する: 1 しない: 0
@@ -495,4 +496,4 @@ define("CHECK_PASSWORD_INPUT_ERROR_COUNT", "0");
 // する: 1 しない: 0
 // する: 1 にすると、JavaScriptを無効にしているクライアントからの投稿は拒絶されます。
 // また、common.js が対応バージョンでない場合も拒絶されます。
-define("REJECT_WITHOUT_JAVASCRIPT", "0"); 
+define("REJECT_WITHOUT_JAVASCRIPT", "1"); 
