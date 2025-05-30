@@ -1,6 +1,6 @@
 <?php
 /*
-  * POTI-board EVO v6.15.0 lot.231117
+  * POTI-board EVO v6.77.1 lot.20250530
   * by POTI-board redevelopment team >> https://paintbbs.sakura.ne.jp/poti/
   *
   * POTI-board EVO の設定ファイルです。
@@ -139,6 +139,12 @@ $badfile = array("dummyhash","dummyhash2");
 
 //拒絶するホスト
 $badip = array("addr.dummy.com","addr2.dummy.com");
+
+//ホスト名が逆引きできないIPアドレスからの投稿を拒絶する
+//する:1 しない:0
+define("REJECT_IF_NO_REVERSE_DNS", "0");
+
+// ※逆引きできないIPアドレスの利用者も多いため、"1" にすると一部の正当なユーザーが投稿できなくなる可能性があります。
 
 /* ---------- メール通知設定 ---------- */
 // メール通知機能を使う使わないを設定する項目はここにはありません。
