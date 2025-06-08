@@ -148,25 +148,25 @@
 
 	Tegaki.flatten().toBlob(
 		function(blob) {
-		// console.log(blob);
-		const tgkr = Tegaki.replayRecorder ? Tegaki.replayRecorder.toBlob() : null;
-		const formData = new FormData();
-		let DataSize = 1000;
-		let max_pch = {{$max_pch}};
-		max_pch = parseInt(max_pch)*1024*1024;
-		if(tgkr){
-			DataSize = DataSize + blob.size + tgkr.size;
-			if(!max_pch||isNaN(max_pch)||(DataSize<max_pch)){
-				formData.append("tgkr",tgkr,'blob');
+			// console.log(blob);
+			const tgkr = Tegaki.replayRecorder ? Tegaki.replayRecorder.toBlob() : null;
+			const formData = new FormData();
+			let DataSize = 1000;
+			let max_pch = {{$max_pch}};
+			max_pch = Number(max_pch)*1024*1024;
+			if(tgkr){
+				DataSize = DataSize + blob.size + tgkr.size;
+				if(!max_pch||isNaN(max_pch)||(DataSize<max_pch)){
+					formData.append("tgkr",tgkr,'blob');
+				}
 			}
-		}
-		formData.append("picture",blob,'blob');
-		formData.append("usercode", "{{$klecksusercode}}");
-		@if($rep)formData.append("repcode", "{{$repcode}}");@endif
-		formData.append("stime", <?=time();?>);
-		formData.append("resto", "{{$resto}}");
-		formData.append("tool", "Tegaki");
-		postData("?mode=saveimage&tool=tegaki", formData);
+			formData.append("picture",blob,'blob');
+			formData.append("usercode", "{{$klecksusercode}}");
+			@if($rep)formData.append("repcode", "{{$repcode}}");@endif
+			formData.append("stime", <?=time();?>);
+			formData.append("resto", "{{$resto}}");
+			formData.append("tool", "Tegaki");
+			postData("?mode=saveimage&tool=tegaki", formData);
 			},
 			'image/png'
 		);
@@ -186,15 +186,15 @@
 
 @if($imgfile)
 	var self = Tegaki;
-		var image = new Image();
-		image.onload = function() {
-		self.activeLayer.ctx.drawImage(image, 0, 0);
-		TegakiLayers.syncLayerImageData(self.activeLayer);
-		};
-		image.src = "{{$imgfile}}"; // image URL
+	var image = new Image();
+	image.onload = function() {
+	self.activeLayer.ctx.drawImage(image, 0, 0);
+	TegakiLayers.syncLayerImageData(self.activeLayer);
+	};
+	image.src = "{{$imgfile}}"; // image URL
 @endif
 
-	</script>
+</script>
 </body>
 
 </html>
