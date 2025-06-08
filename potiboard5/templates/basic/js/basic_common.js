@@ -81,13 +81,34 @@ addEventListener("DOMContentLoaded", () => {
                 // 二度押し防止
                 submitButton.disabled = true;
                 // フォームを送信
-                submitButton.form?.submit(); 
+                submitButton.form?.submit();
             }
         };
     }
     function SetCookie(key, val) {
         document.cookie =
             key + "=" + encodeURIComponent(val) + ";max-age=31536000;";
+    }
+
+    //コメントフォームのファイルサイズチェック
+    const fileInput = document.querySelector(
+        '#comment_form input[type="file"]'
+    );
+    const maxInput = document.querySelector(
+        '#comment_form input[name="MAX_FILE_SIZE"]'
+    );
+
+    if (
+        fileInput instanceof HTMLInputElement &&
+        maxInput instanceof HTMLInputElement
+    ) {
+        const maxSize = parseInt(maxInput.value, 10);
+        fileInput.addEventListener("change", () => {
+            const file = fileInput.files?.[0];
+            if (file && file.size > maxSize) {
+                alert("ファイルサイズが大きすぎます。");
+            }
+        });
     }
 
     //スマホの時はPC用のメニューを非表示
