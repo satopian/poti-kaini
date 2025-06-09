@@ -62,6 +62,7 @@
 	//  --}}
 @if($resno)<input type="hidden" name="resto" value="{{$resno}}">@endif
 <input type="hidden" name="mode" value="paint">
+<input type="hidden" name="MAX_FILE_SIZE" value="{{ isset($upload_max_filesize) ? $upload_max_filesize : '' }}">
 </form>
 
  {{-- 
