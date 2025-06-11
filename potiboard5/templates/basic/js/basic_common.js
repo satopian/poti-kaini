@@ -135,7 +135,8 @@ addEventListener("DOMContentLoaded", () => {
         const usePlaybackApps = ["neo", "tegaki", "1", "2"];
 
         select_app.addEventListener("change", (e) => {
-            toggleHideAnimation(usePlaybackApps.includes(e.target?.value));
+            if (!(e.target instanceof HTMLSelectElement)) return;
+            toggleHideAnimation(usePlaybackApps.includes(e.target.value));
         });
 
         // 初期値の設定を反映
