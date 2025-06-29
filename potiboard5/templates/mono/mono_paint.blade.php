@@ -605,7 +605,7 @@ a[c],b.p_st.options[c].style.color=e[c],b.p_ed.options[c].style.background=a[c],
 						ペン先,描写機能指定ではありません。<br>
 						また適用されるのはフリーライン系のツールのみです。
 					</dd>
-					<dt>カラーパレット郡</dt>
+					<dt>カラーパレット群</dt>
 					<dd>
 						クリックで色取得。右クリックで色の登録。Shift+クリックでデフォルト値。
 					</dd>
