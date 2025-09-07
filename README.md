@@ -5,7 +5,7 @@
 お絵かき掲示板PHPスクリプトPOTI-boardを改良していくプロジェクトです。  
 
 ## 動作環境
-PHP7.4-PHP8.4  
+PHP7.4-PHP8.5  
 ## そのほかのバージョン
 English translated version is here. [POTI-board EVO-EN](https://github.com/satopian/poti-kaini-EN)  
 繁體中文版本 [POTI-board EVO-zh-TW](https://github.com/satopian/poti-kaini-zh-TW)
