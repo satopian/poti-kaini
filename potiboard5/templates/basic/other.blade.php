@@ -199,6 +199,7 @@
 				<tr>
 					<td class="post_table_title">添付画像</td>
 					<td><input type="file" name="upfile" accept="image/*">
+						<img id="attach_preview" style="max-width:100px;max-height:100px; display:block;">
 					</td>
 				</tr>
 				@endif
