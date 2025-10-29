@@ -164,7 +164,8 @@
 							<td>ファイル</td>
 							<td>
 								<input class="form" type="file" name="upfile" accept="image/*">
-								<img id="attach_preview" style="max-width:100px;max-height:100px; display:block;">
+								<div id="remove_attachment_btn" style="display:none">[<a href="#">選択解除</a>]</div>
+								<img id="attach_preview" style="max-width:100px;max-height:100px; display:none;">
 							</td>
 						</tr>
 						@endif

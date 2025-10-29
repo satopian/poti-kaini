@@ -21,18 +21,19 @@
 	<title>@if($post_mode and !$rewrite) 投稿フォーム @endif @if($rewrite)
 		編集モード @endif @if($admin_in) 管理用 @endif @if($admin) 管理人による投稿 @endif
 		@if($admin_del) 記事削除 @endif @if($err_mode) エラー！ @endif - {{$title}} </title>
-	{{--  
-// title…掲示板タイトル
- --}}
-<style>
-.del_page {
-    display: inline-block;
-}
-.pchup_button {
-	margin: 0 0 10px 0;
-}
-</style>
-<style id="for_mobile"></style>
+	{{--
+	// title…掲示板タイトル
+	--}}
+	<style>
+		.del_page {
+			display: inline-block;
+		}
+
+		.pchup_button {
+			margin: 0 0 10px 0;
+		}
+	</style>
+	<style id="for_mobile"></style>
 </head>
 
 <body>
@@ -40,9 +41,10 @@
 		<header>
 			<h1 id="bbs_title">@if($post_mode and !$rewrite )投稿フォーム @endif @if($rewrite)
 				編集モード @endif @if($admin_in) 管理用 @endif @if($admin) 管理人による投稿
-				@endif @if($admin_del) 記事削除 @endif @if($err_mode) エラー！ @endif - <span
-					class="title_name_wrap">{{$title}}</span></h1>
-			{{-- <!-- 
+				@endif @if($admin_del) 記事削除 @endif @if($err_mode) エラー！ @endif - <span class="title_name_wrap">{{$title}}</span>
+			</h1>
+			{{--
+			<!-- 
 投稿モード
 // 【新規投稿、お絵かき投稿、編集】
 //
@@ -100,19 +102,19 @@
 		@endif
 		<!--投稿待ちのお絵かき画像表示-->
 		@if($pictmp)
-			@if($notmp)
-			<div class="error_mesage">
+		@if($notmp)
+		<div class="error_mesage">
 			画像が見当たりません。
 			<br><a href="#" onclick="javascript:window.history.back(-1);return false;">もどる</a>
-			</div>
-			@endif
-			@if($tmp)
-			@foreach ($tmp as $tmpimg)
-			<div class="posted_img_form"><img src="{{$tmpimg['src']}}" border="0" alt="{{$tmpimg['srcname']}}"></div>
-			{{$tmpimg['srcname']}}<br>
-			[{{$tmpimg['date']}}]
-			@endforeach
-			@endif
+		</div>
+		@endif
+		@if($tmp)
+		@foreach ($tmp as $tmpimg)
+		<div class="posted_img_form"><img src="{{$tmpimg['src']}}" border="0" alt="{{$tmpimg['srcname']}}"></div>
+		{{$tmpimg['srcname']}}<br>
+		[{{$tmpimg['date']}}]
+		@endforeach
+		@endif
 		@endif
 		@if($ptime)
 		<div class="centering">
@@ -123,7 +125,7 @@
 		{{-- 未投稿画像の画像が無い時はフォームを表示しない --}}
 		@if(!$notmp)
 
-		<form action="{{$self}}" method="POST" enctype="multipart/form-data" @if(!$rewrite)id="comment_form"@endif>
+		<form action="{{$self}}" method="POST" enctype="multipart/form-data" @if(!$rewrite)id="comment_form" @endif>
 			<input type="hidden" name="token" value="{{$token}}">
 			<!--モード指定:新規投稿-->
 			@if($regist)
@@ -178,8 +180,8 @@
 				<tr>
 					<td class="post_table_title">URL</td>
 					<!--編集時、valueにURLをセット-->
-					<td><input type="url" name="url" @if($url) value="{{$url}}" @endif class="post_input_text"
-							autocomplete="url"></td>
+					<td><input type="url" name="url" @if($url) value="{{$url}}" @endif class="post_input_text" autocomplete="url">
+					</td>
 				</tr>
 				@endif
 				<tr>
@@ -199,13 +201,14 @@
 				<tr>
 					<td class="post_table_title">添付画像</td>
 					<td><input type="file" name="upfile" accept="image/*">
-						<img id="attach_preview" style="max-width:100px;max-height:100px; display:block;">
+						<div id="remove_attachment_btn" style="display:none">[<a>選択解除</a>]</div>
+						<img id="attach_preview" style="max-width:100px;max-height:100px; display:none;">
 					</td>
 				</tr>
 				@endif
 				<!--お絵かき画像選択欄-->
 				@if($tmp)
-				@php 
+				@php
 				rsort($tmp);
 				@endphp
 
@@ -222,13 +225,13 @@
 				@if($regist)
 				<tr>
 					<td class="post_table_title">削除キー</td>
-					<td><input type="password" name="pwd" value="" class="post_input_pass"
-							autocomplete="current-password">
-						<span class="howtoedit">(記事の編集削除用。英数字で)</span></td>
+					<td><input type="password" name="pwd" value="" class="post_input_pass" autocomplete="current-password">
+						<span class="howtoedit">(記事の編集削除用。英数字で)</span>
+					</td>
 				</tr> @endif
 				<tr>
-					<td colspan="2" style="text-align: center;" class="post_table_submit td_noborder"><input
-							type="submit" value="送信する" class="post_submit"></td>
+					<td colspan="2" style="text-align: center;" class="post_table_submit td_noborder"><input type="submit"
+							value="送信する" class="post_submit"></td>
 				</tr>
 				<tr>
 					<td colspan="2" class="td_noborder">
@@ -236,8 +239,8 @@
 						<ul class="howtowrite">
 							@if($regist)
 							@if($upfile)
-							<li>添付可能なファイル形式はGIF、JPG、PNG、およびWEBPです。</li>							
-							<li>横 {{$maxw_px}}px、縦 {{$maxh_px}}pxを超える添付画像は縮小されます。</li>							
+							<li>添付可能なファイル形式はGIF、JPG、PNG、およびWEBPです。</li>
+							<li>横 {{$maxw_px}}px、縦 {{$maxh_px}}pxを超える添付画像は縮小されます。</li>
 							<li>幅 {{$maxw}}px、高さ {{$maxh}}pxを超える画像はサムネイルで表示されます。</li>
 							<li>最大投稿データ量は {{$maxkb}} KB までです。sage機能付き。</li>
 							{!!$addinfo!!}
@@ -291,9 +294,12 @@
 			</div>
 		</form>
 		@endif
-		{{-- <!--管理モード(認証) ここまで--> --}}
-		{{-- <!--管理モード(削除)--> --}}
-		{{-- <!-- 
+		{{--
+		<!--管理モード(認証) ここまで--> --}}
+		{{--
+		<!--管理モード(削除)--> --}}
+		{{--
+		<!-- 
 //
 // admin_del…管理モード(削除)のとき true が入る
 // home…ホームページURL
@@ -322,20 +328,20 @@
 				削除したい記事のチェックボックスにチェックを入れ、削除ボタンを押して下さい。<br>
 				<span class="hensyu">（記事Noをクリックすると編集できます）</span>
 			</p>
-				<form action="{{$self}}" method="post">
-					<input type="hidden" name="admin" value="update">
-					<input type="hidden" name="mode" value="admin">
-					<input type="hidden" name="pass" value="{{$pass}}">
-					<input type="submit" value="ログ更新" class="admin_submit">
-				</form>
-				<form id="delete" action="{{$self}}" method="POST">
-					<input type="hidden" name="mode" value="admin">
-					<input type="hidden" name="admin" value="del">
-					<input type="hidden" name="pass" value="{{$pass}}">
+			<form action="{{$self}}" method="post">
+				<input type="hidden" name="admin" value="update">
+				<input type="hidden" name="mode" value="admin">
+				<input type="hidden" name="pass" value="{{$pass}}">
+				<input type="submit" value="ログ更新" class="admin_submit">
+			</form>
+			<form id="delete" action="{{$self}}" method="POST">
+				<input type="hidden" name="mode" value="admin">
+				<input type="hidden" name="admin" value="del">
+				<input type="hidden" name="pass" value="{{$pass}}">
 
-					<input type="submit" value="削除する"><input type="reset" value="リセット">
-					<label class="checkbox"><input type="checkbox" name="onlyimgdel" value="on">画像だけ消す</label>
-				</form>
+				<input type="submit" value="削除する"><input type="reset" value="リセット">
+				<label class="checkbox"><input type="checkbox" name="onlyimgdel" value="on">画像だけ消す</label>
+			</form>
 			<table class="admindel_table">
 				<tr class="deltable_tr">
 					<th class="nobreak">削除</th>
@@ -360,7 +366,8 @@
 						<form action="{{$self}}" method="post" id="form{{$del['no']}}">
 							<input type="hidden" name="del[]" value="{{$del['no']}}"><input type="hidden" name="pwd"
 								value="{{$pass}}"><input type="hidden" name="mode" value="edit">
-							<a href="javascript:form{{$del['no']}}.submit()">{{$del['no']}}</a></form>
+							<a href="javascript:form{{$del['no']}}.submit()">{{$del['no']}}</a>
+						</form>
 					</th>
 					<td><small>{{$del['now']}}</small></td>
 					<td>{{$del['sub']}}</td>
@@ -368,8 +375,10 @@
 					<td><small>{{$del['com']}}</small></td>
 					<td class="column_non">{{$del['host']}}</td>
 					<td class="column_non">@if($del['src'])
-								<a href="{{$del['src']}}" target="_blank" rel="noopener" title="{{$del['no']}}" data-lightbox="{{$del['no']}}">{{$del['srcname']}}</a>
-								({{$del['size_kb']}})KB @endif</td>
+						<a href="{{$del['src']}}" target="_blank" rel="noopener" title="{{$del['no']}}"
+							data-lightbox="{{$del['no']}}">{{$del['srcname']}}</a>
+						({{$del['size_kb']}})KB @endif
+					</td>
 					<td class="column_non">@if($del['src'])
 						{{$del['chk']}}@endif</td>
 				</tr>
@@ -385,14 +394,15 @@
 					<input type="hidden" name="pass" value="{{$pass}}">
 					<input type="hidden" name="del_pageno" value="{{$del_page['no']}}">
 					@if($del_page['notlink'])
-			<strong>{{$del_page['pageno']}}
-			</strong>
-		</form>
-	@else
-			<a href="javascript:form_page{{$del_page['no']}}.submit()">{{$del_page['pageno']}}</a></form>
-			@endif
-			]</div>
-		
+					<strong>{{$del_page['pageno']}}
+					</strong>
+				</form>
+				@else
+				<a href="javascript:form_page{{$del_page['no']}}.submit()">{{$del_page['pageno']}}</a></form>
+				@endif
+				]
+			</div>
+
 			@endforeach
 			@endif
 			<p>【 画像データ合計 : <b>{{$all}}</b> KB 】</p>
@@ -428,4 +438,5 @@
 	<script src="lib/lightbox/js/lightbox.min.js"></script>
 	<script src="{{$skindir}}js/basic_common.js?{{$ver}}"></script>
 </body>
+
 </html>
