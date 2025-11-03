@@ -77,6 +77,8 @@ class sns_share{
 
 		$share_url.=$encoded_t.'%20'.$encoded_u;
 		$share_url = filter_var($share_url, FILTER_VALIDATE_URL) ? $share_url : ''; 
+		$share_url = (parse_url($share_url, PHP_URL_SCHEME) === "https") ? $share_url : '';
+		
 		if(!$share_url){
 			error($en ? "Please select an SNS sharing destination.":"SNSの共有先を選択してください。");
 		}
