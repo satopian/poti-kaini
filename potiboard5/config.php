@@ -50,7 +50,7 @@ define("DENY_COMMENTS_ONLY", "0");
 define("USE_PAINTBBS_NEO", "1");
 //しぃペインターを使う 使う:1 使わない:0 
 define("USE_SHI_PAINTER", "1");
-//ChickenPaintを使う 使う:1 使わない:0 
+//litaChitを使う 使う:1 使わない:0 
 define("USE_CHICKENPAINT", "1");
 //Tegakiを使う 使う:1 使わない:0 
 define("USE_TEGAKI", "1");
