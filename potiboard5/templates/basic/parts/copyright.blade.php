@@ -5,7 +5,10 @@
 	<a href="https://paintbbs.sakura.ne.jp/poti/" target="_blank" rel="noopener noreferrer" title="POTI-board EVO {{$verlot}}"><b>POTI-board EVO {{$ver}}</b></a>
 		<span class="webstyle_wrap">Template <a href="https://paintbbs.sakura.ne.jp/poti/" target="_blank" rel="noopener noreferrer" title="BASIC {{$tver}} (by さとぴあ)"><b>BASIC</b></a></span><br>
 		OriginalScript - <a href="http://www.punyu.net/" target="_blank" rel="noopener noreferrer" title="POTI-board v1.32 (by ぷにゅねっと)">POTI-board</a>
-	<span title="futaba.php v0.8 lot.031015 (by ふたば)">futaba.php</span> <a href="http://php.loglog.jp/" target="_blank" rel="noopener noreferrer" title="gazou.php v3.0 (by レッツPHP!)">gazou.php</a><br>
+	<span title="futaba.php v0.8 lot.031015 (by ふたば)">futaba.php</span>
+	<span title="gazou.php v3.0 (by レッツPHP!)">gazou.php</span>
+	<!-- http://php.s3.to/ -->
+	<br>
 	@if($paint) 
 	OekakiApp - 
 	<span title="by しぃちゃん">Shi-Painter</span>
