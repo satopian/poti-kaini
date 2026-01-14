@@ -243,24 +243,26 @@
 		<div id="chickenpaint-parent"></div>
 		<p></p>
 
-		<script>
-			document.addEventListener("DOMContentLoaded", function() {
+	<script>
+	document.addEventListener("DOMContentLoaded", function() {
 		new ChickenPaint({
-			uiElem: document.getElementById("chickenpaint-parent"),
-			canvasWidth: {{$picw}},
+		uiElem: document.getElementById("chickenpaint-parent"),
+		canvasWidth: {{$picw}},
 		canvasHeight: {{$pich}},
 
 		@if($imgfile) loadImageUrl: "{{$imgfile}}",@endif
 		@if($img_chi) loadChibiFileUrl: "{{$img_chi}}",@endif
+		@if($img_aco ?? '') loadSwatchesUrl: "{{$img_aco}}",@endif
+
 		saveUrl: "?mode=saveimage&tool=chi&usercode={!!$usercode!!}",
 		postUrl: "?mode={!!$mode!!}&stime={{$stime}}",
 		exitUrl: "?mode={!!$mode!!}&stime={{$stime}}",
 
-			allowDownload: true,
-			resourcesRoot: "chickenpaint/",
-			disableBootstrapAPI: true,
-			fullScreenMode: "force",
-			post_max_size: {{$max_pch}}
+		allowDownload: true,
+		resourcesRoot: "chickenpaint/",
+		disableBootstrapAPI: true,
+		fullScreenMode: "force",
+		post_max_size: {{$max_pch}}
 		});
 	});
 
@@ -271,7 +273,7 @@
     formData.append("mode", "picrep"); 
     formData.append("no", "{{$no}}"); 
     formData.append("pwd", "{{$pwd}}"); 
-	formData.append("repcode", "{{$repcode}}");
+		formData.append("repcode", "{{$repcode}}");
 
     // 画像差し換え
 
