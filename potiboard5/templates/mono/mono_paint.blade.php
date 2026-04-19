@@ -191,14 +191,12 @@
 
 	@if(!$chickenpaint)
 	<header>
-		@if(!$paint_mode)
 		<h1><a href="{{$self2}}">{{$title}}</a></h1>
 		<div>
 			<a href="{{$home}}" target="_top">[ホーム]</a>
 			@if($use_admin_link)<a href="{{$self}}?mode=admin">[管理モード]</a>@endif
 		</div>
 		<hr>
-		@endif
 		<div>
 			<p class="menu">
 				@if($continue_mode||$pch_mode)
