@@ -140,6 +140,17 @@
 	@endif
 	}
 	</script>
+	<style>
+		.nts_radiowrap{
+			display: inline-block;
+		}
+		.stabilizer_label{
+			margin:0 6px;
+		}
+		select:focus {
+		  outline: none;
+		}
+	</style>
 	@endif
 	@if($paint_mode)
 	@if(!$chickenpaint)
@@ -324,6 +335,17 @@
 					<input type="radio" name="1" id="2" onclick="Neo.setToolSide(false)" checked="checked"
 						class="nts_radio"><label class="ntslabel" for="2">右へ</label>
 				</span>
+				<span class="nts_radiowrap"><span class="stabilizer_label">手ぶれ補正</span>
+					<select onchange="Neo.setStabilizLevel(this.value)">
+						<option value="0">0</option>
+						<option value="1" selected>1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+					</select>
+				</span>
+
 				@endif
 			</div>
 		</nav>

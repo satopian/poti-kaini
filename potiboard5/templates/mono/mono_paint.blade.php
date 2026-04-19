@@ -104,6 +104,11 @@
 			@endif
 			}
 	</script>
+	<style>
+	select:focus {
+  		outline: none;
+	}
+	</style>
 	@endif
 	@if($paint_mode)
 	@if(!$chickenpaint)
@@ -186,12 +191,14 @@
 
 	@if(!$chickenpaint)
 	<header>
+		@if(!$paint_mode)
 		<h1><a href="{{$self2}}">{{$title}}</a></h1>
 		<div>
 			<a href="{{$home}}" target="_top">[ホーム]</a>
 			@if($use_admin_link)<a href="{{$self}}?mode=admin">[管理モード]</a>@endif
 		</div>
 		<hr>
+		@endif
 		<div>
 			<p class="menu">
 				@if($continue_mode||$pch_mode)
@@ -424,13 +431,24 @@ a[c],b.p_st.options[c].style.color=e[c],b.p_ed.options[c].style.background=a[c],
 					<form name="Palette">
 						@if($useneo)
 						<fieldset>
-							<legend>TOOL</legend>
+							<legend>ツール</legend>
 							<input class="button" type="button" value="左" onclick="Neo.setToolSide(true)">
 							<input class="button" type="button" value="右" onclick="Neo.setToolSide(false)">
 						</fieldset>
+						<fieldset>
+							<legend>手ぶれ補正</legend>
+							<select onchange="Neo.setStabilizLevel(this.value)">
+								<option value="0">0</option>
+								<option value="1" selected>1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+							</select>
+						</fieldset>
 						@endif
 						<fieldset>
-							<legend>PALETTE</legend>
+							<legend>パレット</legend>
 							<select class="form palette_select" name="select" size="{{$palsize}}" onchange="setPalette()">
 								<option>一時保存パレット</option>
 								@if($dynp)
@@ -448,21 +466,21 @@ a[c],b.p_st.options[c].style.color=e[c],b.p_ed.options[c].style.background=a[c],
 							<input class="button" type="button" value="反転" onclick="P_Effect(255)">
 						</fieldset>
 						<fieldset>
-							<legend>MATRIX</legend>
+							<legend>マトリクス</legend>
 							<select class="form" name="m_m">
 								<option value="0">全体</option>
 								<option value="1">現在</option>
 								<option value="2">追加</option>
 							</select>
-							<input type="button" class="button" name="m_g" value="GET" onclick="PaletteMatrixGet()">
-							<input type="button" class="button" name="m_h" value="SET" onclick="PalleteMatrixSet()">
+							<input type="button" class="button" name="m_g" value="取得" onclick="PaletteMatrixGet()">
+							<input type="button" class="button" name="m_h" value="セット" onclick="PalleteMatrixSet()">
 							<input type="button" class="button" name="1" value=" ? " onclick="PalleteMatrixHelp()"><br>
 							<textarea class="form" name="setr" rows="1" cols="13" onmouseover="this.select()"></textarea>
 						</fieldset>
 					</form>
 					<form name="grad">
 						<fieldset>
-							<legend>GRADATION</legend>
+							<legend>グラデーション</legend>
 							<input type="checkbox" name="view" onclick="showHideLayer()">
 							<input type="button" class="button" value=" OK " onclick="ChengeGrad()"><br>
 							<select class="form" name="p_st" onchange="GetPalette()">
