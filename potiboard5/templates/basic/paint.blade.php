@@ -401,6 +401,7 @@ a[c],b.p_st.options[c].style.color=e[c],b.p_ed.options[c].style.background=a[c],
 				<param name="neo_animation_skip" value="true">
 				<param name="neo_disable_grid_touch_move" value="true">
 				<param name="neo_enable_zoom_out" value="true">
+				<param name="neo_disable_turn_original_glitch" value="true">
 				@endif
 				<!--しぃペインター個別設定-->
 				@if($normal)
