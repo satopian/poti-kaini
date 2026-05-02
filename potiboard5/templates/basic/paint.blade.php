@@ -90,6 +90,7 @@
 			return;
 		}
 		}
+
 	</script>
 	@if($useneo)
 	<link rel="stylesheet" href="neo.css?{{$parameter_day}}&{{$ver}}">
@@ -162,7 +163,11 @@
 				e.preventDefault(); // Alt キーのデフォルトの動作をキャンセル
 			}
 		});
-	</script>
+		document.addEventListener('DOMContentLoaded',()=>{
+		document.addEventListener('dblclick', (e)=>{ e.preventDefault()}, { passive: false });
+		});
+</script>
+	
 	@endif
 	@endif
 	@if($pch_mode and $type_neo)
