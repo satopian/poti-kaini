@@ -578,8 +578,8 @@ a[c],b.p_st.options[c].style.color=e[c],b.p_ed.options[c].style.background=a[c],
 				</p>
 				<h3>キーボードのショートカット</h3>
 				<ul>
-					<li>+で拡大-で縮小。</li>
 					<li>Bで鉛筆,Eで消しゴム。</li>
+					<li>+で拡大-で縮小。</li>
 					<li>Ctrl+ZかCtrl+Uで元に戻す、Ctrl+Alt+ZかCtrl+Yでやり直し。</li>
 					<li>Escでコピーやベジエのリセット。（右クリックでも同じ） </li>
 					<li>スペースキーを押しながらキャンバスをドラッグするとスクロールの自由移動。</li>
