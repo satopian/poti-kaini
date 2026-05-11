@@ -439,7 +439,7 @@ a[c],b.p_st.options[c].style.color=e[c],b.p_ed.options[c].style.background=a[c],
 						</fieldset>
 						<fieldset>
 							<legend>手ぶれ補正</legend>
-							<select onchange="Neo.setStabilizLevel(this.value)">
+							<select onchange="Neo.setStabilizeLevel(this.value)">
 								<option value="0">0</option>
 								<option value="1" selected>1</option>
 								<option value="2">2</option>
@@ -579,6 +579,7 @@ a[c],b.p_st.options[c].style.color=e[c],b.p_ed.options[c].style.background=a[c],
 				<h3>キーボードのショートカット</h3>
 				<ul>
 					<li>+で拡大-で縮小。</li>
+					<li>Bで鉛筆,Eで消しゴム。</li>
 					<li>Ctrl+ZかCtrl+Uで元に戻す、Ctrl+Alt+ZかCtrl+Yでやり直し。</li>
 					<li>Escでコピーやベジエのリセット。（右クリックでも同じ） </li>
 					<li>スペースキーを押しながらキャンバスをドラッグするとスクロールの自由移動。</li>

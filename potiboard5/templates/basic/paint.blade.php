@@ -341,7 +341,7 @@
 						class="nts_radio"><label class="ntslabel" for="2">右へ</label>
 				</span>
 				<span class="nts_radiowrap"><span class="stabilizer_label">手ぶれ補正</span>
-					<select onchange="Neo.setStabilizLevel(this.value)">
+					<select onchange="Neo.setStabilizeLevel(this.value)">
 						<option value="0">0</option>
 						<option value="1" selected>1</option>
 						<option value="2">2</option>
@@ -592,7 +592,8 @@ a[c],b.p_st.options[c].style.color=e[c],b.p_ed.options[c].style.background=a[c],
 		</div><br>
 		<div>特殊動作(使う必要は無いが慣れれば便利な機能)</div>
 		<div>
-			&lt;ツールバー&gt;<br>値を変更するバーはドラッグ時バーの外に出した場合変化が緩やかになりますのでそれを利用して細かく変更する事が出来ます。<br>パレットはShift+クリックで色をデフォルトの状態に戻します。<br><br>&lt;キーボードのショートカット&gt;<br>+で拡大-で縮小。
+			&lt;ツールバー&gt;<br>値を変更するバーはドラッグ時バーの外に出した場合変化が緩やかになりますのでそれを利用して細かく変更する事が出来ます。<br>パレットはShift+クリックで色をデフォルトの状態に戻します。<br><br>&lt;キーボードのショートカット&gt;<br>+で拡大-で縮小。<br>
+			Bで鉛筆,Eで消しゴム。<br>
 			<br>Ctrl+ZかCtrl+Uで元に戻す、Ctrl+Alt+ZかCtrl+Yでやり直し。<br>Escでコピーやベジエのリセット。（右クリックでも同じ）
 			<br>スペースキーを押しながらキャンバスをドラッグするとスクロールの自由移動。<br>Ctrl+Alt+ドラッグで線の幅を変更。<br><br>&lt;コピーツールの特殊な利用方法&gt;<br>レイヤー間の移動は現時点ではコピーとレイヤー結合のみです。コピーでの移動方法は、<br>まず移動したいレイヤー上の長方形を選択後、移動させたいレイヤーを選択後に通常のコピーの作業を<br>続けます。そうする事によりレイヤー間の移動が可能になります。<br>
 		</div><br>
