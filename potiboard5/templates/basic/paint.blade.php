@@ -282,7 +282,7 @@
 		});
 	});
 
-	const handleExit=()=>{
+	window.handleExit=()=>{
 	@if($rep)
     // 画像差し換えに必要なフォームデータをセット
     const formData = new FormData();

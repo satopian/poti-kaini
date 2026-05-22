@@ -59,7 +59,7 @@
 	<link rel="stylesheet" href="neo.css?{{$parameter_day}}&{{$ver}}">
 	<script src="neo.js?{{$parameter_day}}&{{$ver}}"></script>
 	<script>
-		Neo.handleExit=()=>{
+	window.handleExit=()=>{
 			@if($rep)
 			// 画像差し換えに必要なフォームデータをセット
 			const formData = new FormData();
