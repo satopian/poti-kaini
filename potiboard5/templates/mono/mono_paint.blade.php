@@ -219,6 +219,7 @@
 
 	<main>
 		@if($paint_mode)
+
 		@if($chickenpaint)
 
 		<div id="chickenpaint-parent"></div>
@@ -245,7 +246,6 @@
 					post_max_size: {{$max_pch}}
 				});
 			});
-
 			window.handleExit=()=>{
 			@if($rep)
 			// 画像差し換えに必要なフォームデータをセット
@@ -292,7 +292,7 @@
 			}
 		</script>
 		@else
-		{{- <!-- (========== PAINT MODE(お絵かきモード) start ==========) --> --}}
+		{{-- <!-- (========== PAINT MODE(お絵かきモード) start ==========) --> --}}
 	<!--動的パレットスクリプト ここから-->
 	<script>
 		"use strict";
