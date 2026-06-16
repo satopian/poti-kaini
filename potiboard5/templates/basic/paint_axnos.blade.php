@@ -11,7 +11,7 @@
 	</style>
 
 	<title>お絵かきモード - {{$title}}</title>
-	<script src="{{$skindir}}js/visibility-change-title-rewrite.js?{{$ver}}">
+	<script src="{{$skindir}}js/visibility-change-title-rewrite.js?{{$ver}}"></script>
 
 	<script>
 		// 画面上部のお知らせ領域に表示するテキスト（掲示板名を想定）
