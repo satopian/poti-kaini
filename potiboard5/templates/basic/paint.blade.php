@@ -157,7 +157,7 @@
 	@if(!$chickenpaint)
 	{{-- 動的PaletteのColorPicker --}}
 	<style>
-		.palette_gradation .gradationColorInputText {width: 70px;} .palette_gradation .gradationColorInputColorPicker {border: 0;width: 30px;height: 19px; padding: 0;background-color: transparent;cursor: pointer;}
+		.palette_gradation .gradationColorInputText {width: 70px;} .palette_gradation .gradationColorInputColorPicker {border: 0;width: 30px;height: 19px; padding: 0;background-color: transparent;cursor: pointer; vertical-align:center;}
 	</style>
 	<script src="{{$skindir}}js/visibility-change-title-rewrite.js?{{$ver}}"></script>
 	<script>
