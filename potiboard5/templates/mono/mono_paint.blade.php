@@ -20,6 +20,7 @@
 		{{-- 動的PaletteのColorPicker --}}
 	<style>
 		input.gradationColorInputText {width: 70px;} input.gradationColorInputColorPicker {border: 0;width: 30px;height: 19px; padding: 0;background-color: transparent;cursor: pointer; vertical-align:middle;}
+		input#neo-colorPicker{width:35px;height: 25px;border: 0;padding: 0;background-color: transparent;cursor: pointer; vertical-align:middle;}
 	</style>
 
 	@include('parts.style-switcher')
@@ -355,6 +356,7 @@ Neo.params ={
 	neo_disable_grid_touch_move:true,
 	neo_enable_zoom_out:true,
 	neo_disable_turn_original_glitch:true,
+	neo_color_picker_id:"neo-colorPicker",
 	send_header_count:true,
 	send_header_timer:true,
 	image_width:{{$picw}},
@@ -491,6 +493,11 @@ Neo.params ={
 							<input class="button" type="button" value="明＋" onclick="P_Effect(10)">
 							<input class="button" type="button" value="明－" onclick="P_Effect(-10)">
 							<input class="button" type="button" value="反転" onclick="P_Effect(255)">
+							<br>
+							@if($useneo)
+							<input id="neo-colorPicker" type="color" onChange="Neo.setColor(this.value)">
+							@endif
+
 						</fieldset>
 						<fieldset>
 							<legend>マトリクス</legend>
