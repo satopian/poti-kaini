@@ -395,7 +395,7 @@ if(f instanceof HTMLSelectElement&&b instanceof HTMLSelectElement)for(c=0;e>c;c+
 </script>
 	<!--動的パレットスクリプト ここまで-->
 	<noscript>
-		<h3>JavaScriptが有効でないため正常に動作致しません。</h3>
+		<p>JavaScriptが有効でないため正常に動作致しません。</p>
 	</NOSCRIPT>
 	<div class="appstage">
 		<div class="app" style="width:{{$w}}px; height:{{$h}}px">
@@ -575,7 +575,7 @@ Neo.params ={
 						<option>13</option>
 						<option>14</option>
 					</SELECT><input class="form gradationColorInputText" type="text" name="pst" size="8" onKeyPress="Chenge_()" onChange="Chenge_()">
-					<input class="gradationColorInputColorPicker" type="color" name="colorPickerPst" size="8"  onChange="colorPickerChange()" value="#fff"><br>
+					<input class="gradationColorInputColorPicker" type="color" name="colorPickerPst" size="8"  onChange="colorPickerChange()" value="#ffffff"><br>
 					<SELECT name="p_ed" onChange="GetPalette()">
 						<option>1</option>
 						<option>2</option>
@@ -592,7 +592,7 @@ Neo.params ={
 						<option>13</option>
 						<option>14</option>
 					</SELECT><input class="form gradationColorInputText" type="text" name="ped" size="8" onKeyPress="Chenge_()" onChange="Chenge_()">
-					<input class="gradationColorInputColorPicker" type="color" name="colorPickerPed" size="8"  onChange="colorPickerChange()" value="#fff">
+					<input class="gradationColorInputColorPicker" type="color" name="colorPickerPed" size="8"  onChange="colorPickerChange()" value="#ffffff">
 					<div id="psft"></div>
 				</FORM>
 			</div>
