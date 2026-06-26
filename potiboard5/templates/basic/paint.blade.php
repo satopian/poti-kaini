@@ -553,7 +553,7 @@ Neo.params ={
 					<TEXTAREA rows="1" name="setr" cols="13" onMouseOver="this.select()"></TEXTAREA><br>
 				</FORM>
 				@if($useneo)
-				<input id="neo-colorPicker" type="color" onChange="Neo.setColor(this.value)"> <span class="palette_desc">COLOR</span>
+				<input id="neo-colorPicker" type="color" oninput="Neo.setColor(this.value)"> <span class="palette_desc">COLOR</span>
 				@endif
 			</div>
 			<div class="palette_gradation">
