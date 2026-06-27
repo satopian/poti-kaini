@@ -1,5 +1,5 @@
 <?php
-$search_inc_ver = 20260614;
+$search_inc_ver = 20260627;
 //POTI-board plugin search(C)2020-2026 さとぴあ(@satopian)
 //MIT License
 //v6.173.0 lot.20260502
@@ -69,6 +69,7 @@ class processsearch {
 		!empty($invalid_keys)||
 		$page===false||
 		$radio===false||
+		!in_array($radio ,[0,1,2,3]) || 
 		$imgsearch && $isAllowedOption===false
 	)
 	{
