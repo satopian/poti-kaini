@@ -583,7 +583,7 @@ Neo.params ={
 <script>
 // Pickrの初期化
 const pickr = Pickr.create({
-    el: "#pickr-container", // 設定ファイルのIDを使用
+    el: "#pickr-container", 
     theme: 'classic',
     components: {
         preview: true,
