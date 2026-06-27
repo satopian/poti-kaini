@@ -19,8 +19,7 @@
 	@if(!$chickenpaint)
 		{{-- 動的PaletteのColorPicker --}}
 	<style>
-		input.gradationColorInputText {width: 70px;} input.gradationColorInputColorPicker {border: 0;width: 30px;height: 19px; padding: 0;background-color: transparent;cursor: pointer; vertical-align:middle;}
-		input#neo-colorPicker{width:48px;height: 22px;border: 0;padding: 0;background-color: transparent;cursor: pointer; vertical-align:middle;}
+		input.gradationColorInputText {width: 65px;} input.gradationColorInputColorPicker {border: 0;width: 30px;height: 19px; padding: 0;background-color: transparent;cursor: pointer; vertical-align:middle;}
 	</style>
 
 	@include('parts.style-switcher')
@@ -62,6 +61,8 @@
 	</style>
 	@endif
 	@if($useneo)
+	<link rel="stylesheet" href="./lib/pickr/themes/classic.min.css?{{$parameter_day}}&{{$ver}}"/>
+	<script src="./lib/pickr/pickr.min.js?{{$parameter_day}}&{{$ver}}"></script>
 	<link rel="stylesheet" href="neo.css?{{$parameter_day}}&{{$ver}}">
 	<script src="neo.js?{{$parameter_day}}&{{$ver}}"></script>
 	<script>
@@ -114,6 +115,34 @@
 	select:focus {
   		outline: none;
 	}
+
+	.pickr {
+			display: inline-block;
+			margin-top:2px;
+	}
+	.pickr .pcr-button{
+	border: 1px solid #676669;
+	width: 48px;
+	height: 18px;
+	vertical-align: middle;
+	}
+	.pickr button:focus {
+		box-shadow: none;
+	}
+	/* grab */
+	.pcr-app .pcr-selection .pcr-color-palette,
+	.pcr-app .pcr-selection .pcr-color-chooser,
+	.pcr-app .pcr-selection .pcr-color-opacity {
+		cursor: default;
+	}
+
+	/* grabbing（ドラッグ中） */
+	.pcr-app .pcr-selection .pcr-color-palette:active,
+	.pcr-app .pcr-selection .pcr-color-chooser:active,
+	.pcr-app .pcr-selection .pcr-color-opacity:active {
+		cursor: default;
+	}
+
 	</style>
 	@endif
 	@if($paint_mode)
@@ -494,8 +523,37 @@ Neo.params ={
 							<input class="button" type="button" value="明－" onclick="P_Effect(-10)">
 							<input class="button" type="button" value="反転" onclick="P_Effect(255)">
 							<br>
-							@if($useneo)
-							<input id="neo-colorPicker" type="color" oninput="Neo.setColor(this.value)">
+@if($useneo)
+<div id="pickr-container"></div>
+<script>
+// Pickrの初期化
+const pickr = Pickr.create({
+    el: "#pickr-container", // 設定ファイルのIDを使用
+    theme: 'classic',
+    components: {
+        preview: true,
+        opacity: false,
+        hue: true,
+        interaction: { input: true, save: false	 }
+    }
+});
+
+let isUpdatingFromNeo = false;
+// Pickrの change イベントを監視
+pickr.on('change', (color, instance) => {
+	 if (isUpdatingFromNeo) return;
+    //Pickrから色を取得
+    const hex = color.toHEXA().toString();
+ Neo.setColor(hex);
+});
+
+document.addEventListener("neo:colorchange", (e) => {
+	isUpdatingFromNeo = true;
+    pickr.setColor(e.detail.hex);
+		 isUpdatingFromNeo = false;
+});
+
+</script>
 							@endif
 
 						</fieldset>
@@ -534,7 +592,7 @@ Neo.params ={
 								<option>14</option>
 							</select>
 							<input class="form gradationColorInputText" type="text" name="pst" size="8" onkeypress="Chenge_()" onchange="Chenge_()">
-							<input class="gradationColorInputColorPicker" type="color" name="colorPickerPst" size="8"  onChange="colorPickerChange()" value="#ffffff"><br>
+							<input class="gradationColorInputColorPicker" type="color" name="colorPickerPst" size="8"  onChange="colorPickerChange()" value="#fff"><br>
 <select class="form" name="p_ed" onchange="GetPalette()">
 								<option>1</option>
 								<option>2</option>
@@ -552,7 +610,7 @@ Neo.params ={
 								<option>14</option>
 							</select>
 							<input class="form gradationColorInputText" type="text" name="ped" size="8" onkeypress="Chenge_()" onchange="Chenge_()">
-							<input class="gradationColorInputColorPicker" type="color" name="colorPickerPed" size="8"  onChange="colorPickerChange()" value="#ffffff">
+							<input class="gradationColorInputColorPicker" type="color" name="colorPickerPed" size="8"  onChange="colorPickerChange()" value="#fff">
 							<div id="psft"></div>
 							<script>
 								if(DynamicColor) PaletteListSetColor();

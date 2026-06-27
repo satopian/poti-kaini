@@ -93,6 +93,8 @@
 
 	</script>
 	@if($useneo)
+	<link rel="stylesheet" href="./lib/pickr/themes/classic.min.css?{{$parameter_day}}&{{$ver}}"/>
+	<script src="./lib/pickr/pickr.min.js?{{$parameter_day}}&{{$ver}}"></script>
 	<link rel="stylesheet" href="neo.css?{{$parameter_day}}&{{$ver}}">
 	<script src="neo.js?{{$parameter_day}}&{{$ver}}"></script>
 	<script>
@@ -157,8 +159,35 @@
 	@if(!$chickenpaint)
 	{{-- 動的PaletteのColorPicker --}}
 	<style>
-		.palette_gradation .gradationColorInputText {width: 70px;} .palette_gradation .gradationColorInputColorPicker {border: 0;width: 30px;height: 19px; padding: 0;background-color: transparent;cursor: pointer; vertical-align:middle;}input#neo-colorPicker{width:30px;height:25px;border: 0;padding: 0;;background-color: transparent;cursor: pointer;vertical-align:middle;}
-	</style>
+.palette_gradation{margin:6px 0 0 12px;padding:3px}.palette input,.palette_gradation input{color:#222;background-color:#fffeff;border:1px solid #686868}.palette_gradation .gradationColorInputText {width: 65px;}.palette_gradation .gradationColorInputColorPicker {border: 0;width: 30px;height: 19px; padding: 0;background-color: transparent;cursor: pointer;vertical-align:middle;}
+.palette_hr{border:none;margin:3px;}.palette_desc{font-family:Impact,Arial;font-size:14px;vertical-align: middle;}.palette_select{margin:2px 0;max-width: 100%;min-width: 130px;}
+.pickr {
+    display: inline-block;
+		margin-top:2px;
+}
+.pickr .pcr-button{
+border: 1px solid #676669;
+width: 35px;
+height: 22px;
+vertical-align: middle;
+}
+.pickr button:focus {
+  box-shadow: none;
+}
+/* grab */
+.pcr-app .pcr-selection .pcr-color-palette,
+.pcr-app .pcr-selection .pcr-color-chooser,
+.pcr-app .pcr-selection .pcr-color-opacity {
+  cursor: default;
+}
+
+/* grabbing（ドラッグ中） */
+.pcr-app .pcr-selection .pcr-color-palette:active,
+.pcr-app .pcr-selection .pcr-color-chooser:active,
+.pcr-app .pcr-selection .pcr-color-opacity:active {
+  cursor: default;
+}
+</style>
 	<script src="{{$skindir}}js/visibility-change-title-rewrite.js?{{$ver}}"></script>
 	<script>
 		//Firefoxのメニューバーが開閉するのため、Altキーのデフォルトの処理をキャンセル
@@ -395,7 +424,7 @@ if(f instanceof HTMLSelectElement&&b instanceof HTMLSelectElement)for(c=0;e>c;c+
 </script>
 	<!--動的パレットスクリプト ここまで-->
 	<noscript>
-		<p>JavaScriptが有効でないため正常に動作致しません。</p>
+		<h3>JavaScriptが有効でないため正常に動作致しません。</h3>
 	</NOSCRIPT>
 	<div class="appstage">
 		<div class="app" style="width:{{$w}}px; height:{{$h}}px">
@@ -541,7 +570,42 @@ Neo.params ={
 					<INPUT type="button" VALUE="明＋" OnClick="P_Effect(10)">
 					<INPUT type="button" VALUE="明－" OnClick="P_Effect(-10)">
 					<INPUT type="button" VALUE="反転" OnClick="P_Effect(255)">
-					<hr class="palette_hr"><span class="palette_desc">MATRIX</span>
+					<hr class="palette_hr">
+@if($useneo)
+<div id="pickr-container"></div>
+<span class="palette_desc">COLOR</span>
+<script>
+// Pickrの初期化
+const pickr = Pickr.create({
+    el: "#pickr-container", // 設定ファイルのIDを使用
+    theme: 'classic',
+    components: {
+        preview: true,
+        opacity: false,
+        hue: true,
+        interaction: { input: true, save: false	 }
+    }
+});
+
+let isUpdatingFromNeo = false;
+// Pickrの change イベントを監視
+pickr.on('change', (color, instance) => {
+	 if (isUpdatingFromNeo) return;
+    //Pickrから色を取得
+    const hex = color.toHEXA().toString();
+ Neo.setColor(hex);
+});
+
+document.addEventListener("neo:colorchange", (e) => {
+	isUpdatingFromNeo = true;
+    pickr.setColor(e.detail.hex);
+		 isUpdatingFromNeo = false;
+});
+
+</script>
+<hr class="palette_hr">
+@endif
+					<span class="palette_desc">MATRIX</span>
 					<SELECT name="m_m">
 						<option value="0">全体</option>
 						<option value="1">現在</option>
@@ -552,9 +616,6 @@ Neo.params ={
 					<INPUT name="m_h" type="button" VALUE=" ? " OnClick="PalleteMatrixHelp()"><br>
 					<TEXTAREA rows="1" name="setr" cols="13" onMouseOver="this.select()"></TEXTAREA><br>
 				</FORM>
-				@if($useneo)
-				<input id="neo-colorPicker" type="color" oninput="Neo.setColor(this.value)"> <span class="palette_desc">COLOR</span>
-				@endif
 			</div>
 			<div class="palette_gradation">
 				<FORM name="grad">
@@ -575,7 +636,7 @@ Neo.params ={
 						<option>13</option>
 						<option>14</option>
 					</SELECT><input class="form gradationColorInputText" type="text" name="pst" size="8" onKeyPress="Chenge_()" onChange="Chenge_()">
-					<input class="gradationColorInputColorPicker" type="color" name="colorPickerPst" size="8"  onChange="colorPickerChange()" value="#ffffff"><br>
+					<input class="gradationColorInputColorPicker" type="color" name="colorPickerPst" size="8"  onChange="colorPickerChange()" value="#fff"><br>
 					<SELECT name="p_ed" onChange="GetPalette()">
 						<option>1</option>
 						<option>2</option>
@@ -592,7 +653,7 @@ Neo.params ={
 						<option>13</option>
 						<option>14</option>
 					</SELECT><input class="form gradationColorInputText" type="text" name="ped" size="8" onKeyPress="Chenge_()" onChange="Chenge_()">
-					<input class="gradationColorInputColorPicker" type="color" name="colorPickerPed" size="8"  onChange="colorPickerChange()" value="#ffffff">
+					<input class="gradationColorInputColorPicker" type="color" name="colorPickerPed" size="8"  onChange="colorPickerChange()" value="#fff">
 					<div id="psft"></div>
 				</FORM>
 			</div>
