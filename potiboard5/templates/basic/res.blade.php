@@ -98,7 +98,7 @@
 						@if($res['spch'])<span class="for_pc">@endif @if($res['pch'])@if($res['continue'])| @endif<span
 								class="article_info_animation">☆<a
 									href="{{$self}}?mode=openpch&pch={{$res['pch']}}&resno={{$ress[0]['no']}}&no={{$res['no']}}"
-									target="_blank">動画</a></span>@endif @if($res['spch'])</span>@endif
+									target="_blank" rel="opener">動画</a></span>@endif @if($res['spch'])</span>@endif
 					</div>
 					@endif
 				</div>
