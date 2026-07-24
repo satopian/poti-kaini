@@ -105,7 +105,7 @@
     formData.append("mode", "picrep"); 
     formData.append("no", "{{$no}}"); 
     formData.append("pwd", "{{$pwd}}"); 
-	formData.append("repcode", "{{$repcode}}");
+    formData.append("repcode", "{{$repcode}}");
 
     // 画像差し換え
 
@@ -481,7 +481,7 @@ Neo.params ={
 	@if($anime)
 		thumbnail_type:"animation",
 	@endif
-	send_header:"usercode={{$usercode}}&tool={{$tool}}&rep={{$rep}}&no={{$no}}&pwd={{$pwd}}",
+	send_header:"usercode={{$usercode}}&tool={{$tool}}&rep={{$rep}}&no={{$no}}",
 	}
 }
 </script>
