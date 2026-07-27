@@ -19,7 +19,7 @@
 	<link rel="preload" as="script" href="{{$skindir}}js/basic_common.js?{{$ver}}">
 	<link rel="preload" as="script" href="loadcookie.js?{{$ver}}">
 	<title>@if($post_mode and !$rewrite) 投稿フォーム @endif @if($rewrite)
-		編集モード @endif @if($admin_in) 管理用 @endif @if($admin) 管理人による投稿 @endif
+		編集モード @endif @if($admin_in||$before_admin_in) 管理用 @endif @if($admin) 管理人による投稿 @endif
 		@if($admin_del) 記事削除 @endif @if($err_mode) エラー！ @endif - {{$title}} </title>
 	{{--
 	// title…掲示板タイトル
@@ -40,7 +40,7 @@
 	<div id="body">
 		<header>
 			<h1 id="bbs_title">@if($post_mode and !$rewrite )投稿フォーム @endif @if($rewrite)
-				編集モード @endif @if($admin_in) 管理用 @endif @if($admin) 管理人による投稿
+				編集モード @endif @if($admin_in||$before_admin_in) 管理用 @endif @if($admin) 管理人による投稿
 				@endif @if($admin_del) 記事削除 @endif @if($err_mode) エラー！ @endif - <span class="title_name_wrap">{{$title}}</span>
 			</h1>
 			{{--
@@ -266,8 +266,9 @@
 		@endif
 		@endif
 		<!--投稿モード ここまで-->
-		<!--管理モード(認証)-->
 		@if($n)
+		@endif
+		<!--管理モード(管理者ページを開く)-->
 		<!-- 
 //
 // admin_in…管理モード(認証)のとき true が入る
@@ -275,21 +276,33 @@
 // self…POTI-boardのスクリプト名
 // self2…入口(TOP)ページのURL
 -->
+		@if($before_admin_in)
+
+		<div id="self2">
+			[<a href="{{$self2}}">{{$title}}</a>]</div>
+		</header>
+		<form action="{{$self}}" method="post">
+			<div class="centering">
+				<input type="hidden" name="mode" value="admin_in">
+				<input type="submit" value=" 管理者ログイン " class="admin_submit">
+
+			</div>
+		</form>
 		@endif
 		@if($admin_in)
 		<div id="self2">
 			[<a href="{{$self2}}">{{$title}}</a>]</div>
 		</header>
-		<form action="{{$self}}" method="post">
+		<form action="{{$self}}" method="post" id="admin_auth_form">
 			<div class="centering">
 				<div class="margin_radio">
 					<label class="radio"><input type="radio" name="admin" value="update" checked>ログ更新 </label>
 					<label class="radio"><input type="radio" name="admin" value="del">記事削除 </label>
 					<label class="radio"><input type="radio" name="admin" value="post">管理人投稿</label>
 				</div>
-				<input type="hidden" name="mode" value="admin">
+				<input type="hidden" name="mode" value="admin_auth">
 				<input type="password" name="pass" size="8" autocomplete="current-password" class="adminpass">
-				<input type="submit" value=" 認証 " class="admin_submit">
+				<input type="submit" value=" 管理者認証 " class="admin_submit">
 
 			</div>
 		</form>
@@ -364,8 +377,9 @@
 
 					<th class="nobreak">
 						<form action="{{$self}}" method="post" id="form{{$del['no']}}">
-							<input type="hidden" name="del[]" value="{{$del['no']}}"><input type="hidden" name="pwd"
-								value="{{$pass}}"><input type="hidden" name="mode" value="edit">
+							<input type="hidden" name="del[]" value="{{$del['no']}}">
+							<input type="hidden" name="pass" value="{{$pass}}">
+							<input type="hidden" name="mode" value="edit">
 							<a href="javascript:form{{$del['no']}}.submit()">{{$del['no']}}</a>
 						</form>
 					</th>

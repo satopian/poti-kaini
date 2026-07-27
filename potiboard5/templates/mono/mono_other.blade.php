@@ -223,20 +223,33 @@
 				@endif
 			</div>
 		</section>
-		<!-- (========== POST MODE(投稿モード) end ==========) -->
 		@endif
+		<!-- (========== POST MODE(投稿モード) end ==========) -->
+		@if($before_admin_in)
+		<!-- (========== ADMIN MODE -LOGIN-(管理者ページを表示) start ==========) -->
+		<section>
+			<div class="thread">
+				<h2 class="oekaki">管理モード</h2>
+				<form action="{{$self}}" method="post" class="adminin">
+					<input type="hidden" name="mode" value="admin_in">
+					<input class="button" type="submit" value="管理者ログイン">
+				</form>
+			</div>
+		</section>
+		@endif
+		<!-- (========== ADMIN MODE -LOGIN-(管理ページを表示) end ==========) -->
 		@if($admin_in)
 		<!-- (========== ADMIN MODE -LOGIN-(管理モード(認証)) start ==========) -->
 		<section>
 			<div class="thread">
 				<h2 class="oekaki">管理モード</h2>
-				<form action="{{$self}}" method="post" class="adminin">
+				<form action="{{$self}}" method="post" class="adminin" id="admin_auth_form">
 					<label><input type="radio" name="admin" value="update" checked>ログ更新</label>
 					<label><input type="radio" name="admin" value="del">記事削除</label>
 					<label><input type="radio" name="admin" value="post">管理人投稿</label>
-					<input type="hidden" name="mode" value="admin">
+					<input type="hidden" name="mode" value="admin_auth">
 					<input class="form" type="password" name="pass">
-					<input class="button" type="submit" value="ADMIN IN">
+					<input class="button" type="submit" value="管理者認証">
 				</form>
 			</div>
 		</section>
@@ -281,7 +294,7 @@
 							<td><input form="delete" type="checkbox" name="del[]" value="{{$del['no']}}"></td>
 							<td>
 								<form action="{{$self}}" method="post" id="form{{$del['no']}}">
-									<input type="hidden" name="del[]" value="{{$del['no']}}"><input type="hidden" name="pwd"
+									<input type="hidden" name="del[]" value="{{$del['no']}}"><input type="hidden" name="pass"
 										value="{{$pass}}"><input type="hidden" name="mode" value="edit">
 									<a href="javascript:form{{$del['no']}}.submit()">{{$del['no']}}</a></form>
 							</td>
