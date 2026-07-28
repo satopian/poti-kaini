@@ -331,17 +331,17 @@ switch($mode){
 		if($admin === 'del') return admindel($pass);
 
 		if($admin === 'post'){
-				$dat['post_mode'] = true;
-				$dat['regist'] = true;
-				$dat = array_merge($dat, form($res));
-				$dat = array_merge($dat, form_admin_in('valid'));
-				set_form_display_time();
-				return htmloutput(OTHERFILE, $dat);
+			$dat['post_mode'] = true;
+			$dat['regist'] = true;
+			$dat = array_merge($dat, form($res));
+			$dat = array_merge($dat, form_admin_in('valid'));
+			set_form_display_time();
+			return htmloutput(OTHERFILE, $dat);
 		}
 
 		if($admin === 'update'){
-				updatelog();
-				redirect(h(PHP_SELF2));
+			updatelog();
+			redirect(h(PHP_SELF2));
 		}
 		exit();
 
@@ -1312,7 +1312,6 @@ function regist(): void {
 		if(!$ext){
 			error(MSG003, $dest);
 		}
-
 	
 		rename($dest,$path.$time.$ext);
 		chmod($path.$time.$ext,PERMISSION_FOR_DEST);
@@ -3410,7 +3409,8 @@ function check_jpeg_exif(?string $dest): void {
 		imagedestroy($im_out);
 	}
 }
-/** 禁止ホストチェック
+/** 
+ * 禁止ホストチェック
  * @return bool 
  */ 
 function is_badhost ($options=[]): bool {
