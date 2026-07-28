@@ -45,7 +45,7 @@
 					[<a href="{{$self}}?mode=newpost"><span class="menu_none">新規</span>投稿</a>]
 					@endif
 					[<a href="{{$self}}?mode=piccom">未<span class="menu_none">投稿画像</span></a>]
-					@if($use_admin_link)[<a href="{{$self}}?mode=admin">管<span class="menu_none">理用</span></a>]@endif
+					@if($use_admin_link)[<a href="{{$self}}?mode=admin" class="js_admin_in_link">管<span class="menu_none">理用</span></a>]@endif
 					<a href="#bottom">▽</a>
 			{{-- 
 			// home…ホームページURL

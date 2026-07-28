@@ -33,7 +33,7 @@
 		<h1><a href="{{$self2}}">{{$title}}</a></h1>
 		<div>
 			<a href="{{$home}}" target="_top">[ホーム]</a>
-			@if($use_admin_link)<a href="{{$self}}?mode=admin">[管理モード]</a>@endif
+			@if($use_admin_link)<a href="{{$self}}?mode=admin" class="js_admin_in_link">[管理モード]</a>@endif
 		</div>
 		<hr>
 		<div>
@@ -243,13 +243,14 @@
 		<section>
 			<div class="thread">
 				<h2 class="oekaki">管理モード</h2>
-				<form action="{{$self}}" method="post" class="adminin" id="admin_auth_form">
+				<form action="{{$self}}" method="post" class="adminin">
 					<label><input type="radio" name="admin" value="update" checked>ログ更新</label>
 					<label><input type="radio" name="admin" value="del">記事削除</label>
 					<label><input type="radio" name="admin" value="post">管理人投稿</label>
 					<input type="hidden" name="mode" value="admin_auth">
-					<input class="form" type="password" name="pass">
-					<input class="button" type="submit" value="管理者認証">
+					<input type="hidden" name="token" value="{{$token}}">
+					<input class="form" type="password" name="pass" autocomplete="current-password">
+					<input class="button" type="submit" value="Login">
 				</form>
 			</div>
 		</section>
@@ -262,14 +263,16 @@
 				<h2 class="oekaki">管理モード</h2>
 				<form action="{{$self}}" method="post">
 					<input type="hidden" name="admin" value="update">
-					<input type="hidden" name="mode" value="admin">
+					<input type="hidden" name="mode" value="admin_auth">
+					<input type="hidden" name="token" value="{{$token}}">
 					<input type="hidden" name="pass" value="{{$pass}}">
 					<input type="submit" value="ログ更新" class="button delbtton">
 					htmlファイルの更新を行います
 				</form>
 				<hr>
 				<form id="delete" action="{{$self}}" method="post" class="delmode">
-					<input type="hidden" name="mode" value="admin">
+					<input type="hidden" name="mode" value="admin_auth">
+					<input type="hidden" name="token" value="{{$token}}">
 					<input type="hidden" name="admin" value="del">
 					<input type="hidden" name="pass" value="{{$pass}}">
 					<p>削除したい記事のチェックボックスにチェックを入れ、削除ボタンを押して下さい。</p>
@@ -314,7 +317,8 @@
 				@foreach($del_pages as $del_page)
 				<div class="del_page">[
 					<form action="{{$self}}" method="post" id="form_page{{$del_page['no']}}">
-						<input type="hidden" name="mode" value="admin">
+						<input type="hidden" name="mode" value="admin_auth">
+						<input type="hidden" name="token" value="{{$token}}">
 						<input type="hidden" name="admin" value="del">
 						<input type="hidden" name="pass" value="{{$pass}}">
 						<input type="hidden" name="del_pageno" value="{{$del_page['no']}}">
