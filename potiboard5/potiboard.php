@@ -4,7 +4,7 @@
 // POTI-board EVO
 // バージョン :
 
-const POTI_VER = 'v7.00.7';
+const POTI_VER = 'v7.00.8';
 const POTI_LOT = 'lot.20260728';
 
 /*
@@ -299,10 +299,9 @@ $_SESSION['usercode']=$usercode;
 switch($mode){
 	case 'regist':
 		if(DIARY && !$resto){
-			if(!is_adminpass($pwd)){
+			if(!is_adminpass($admin)){
 				error(MSG029);
 			}
-			$admin=$pwd;
 		}
 		return regist();
 	case 'admin':
