@@ -488,6 +488,8 @@ define("PERMISSION_FOR_DEST", 0606);//初期値 0606
 define("PERMISSION_FOR_LOG", 0600);//初期値 0600
 //画像や動画ファイルを保存するディレクトリのパーミッション
 define("PERMISSION_FOR_DIR", 0707);//初期値 0707
+//この設定ファイル (config.php) のパーミッション
+define("PERMISSION_FOR_CONFIG", 0600);//初期値 0600
 
 //GD2のImageCopyResampledでサムネイルの画質向上 させる:1 させない:0
 //不具合がある場合のみ 0
