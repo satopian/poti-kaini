@@ -422,7 +422,6 @@ $servers =
 	["xissmie.xfolio.jp","https://xissmie.xfolio.jp"],
 	["misskey.design","https://misskey.design"],
 	["nijimiss.moe","https://nijimiss.moe"],
-	["sushi.ski","https://sushi.ski"],
 
 ];
 
