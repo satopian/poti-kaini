@@ -4,8 +4,8 @@
 // POTI-board EVO
 // バージョン :
 
-const POTI_VER = 'v7.03.1';
-const POTI_LOT = 'lot.20260806';
+const POTI_VER = 'v7.05.0';
+const POTI_LOT = 'lot.20260810';
 
 /*
   (C) 2018-2025 POTI改 POTI-board redevelopment team
@@ -1119,7 +1119,7 @@ function regist(): void {
 		chmod($dest,PERMISSION_FOR_DEST);
 	}
 	//パスワードハッシュ
-	$pass = $pwd ? password_hash($pwd,PASSWORD_BCRYPT,['cost' => 5]) : "*";
+	$pass = $pwd ? password_hash($pwd,PASSWORD_BCRYPT,['cost' => 10]) : "*";
 
 	$date = now_date(time());//日付取得
 	if(DISP_ID){
