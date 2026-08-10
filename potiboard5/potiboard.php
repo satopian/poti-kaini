@@ -4,7 +4,7 @@
 // POTI-board EVO
 // バージョン :
 
-const POTI_VER = 'v7.05.0';
+const POTI_VER = 'v7.06.0';
 const POTI_LOT = 'lot.20260810';
 
 /*
@@ -56,9 +56,9 @@ check_file(__DIR__.'/lib/'.JQUERY);
 check_file(__DIR__.'/lib/lightbox/js/lightbox.min.js');
 check_file(__DIR__.'/lib/lightbox/css/lightbox.min.css');
 
+require_once(__DIR__.'/config.php');
 defined('PERMISSION_FOR_CONFIG') or define('PERMISSION_FOR_CONFIG',0600); 
 check_file(__DIR__.'/config.php',false,PERMISSION_FOR_CONFIG);
-require_once(__DIR__.'/config.php');
 
 defined('USE_CHEERPJ_OLD_VERSION') or define('USE_CHEERPJ_OLD_VERSION',"0"); 
 
