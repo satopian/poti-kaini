@@ -166,12 +166,14 @@
 				});
 				document.addEventListener('DOMContentLoaded',()=>{
 					document.addEventListener('dblclick', (e)=>{ e.preventDefault()}, { passive: false });
+					document.querySelector('.pickr').addEventListener('contextmenu', (e)=>{ e.preventDefault()}, { passive: false });	
 				});
 	</script>
 	@endif
 	@endif
 	@if($pch_mode and $type_neo)
 	<link rel="stylesheet" href="neo.css?{{$parameter_day}}&{{$ver}}">
+
 	<script src="neo.js?{{$parameter_day}}&{{$ver}}"></script>
 	@endif
 	@if($chickenpaint)
