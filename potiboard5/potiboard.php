@@ -4,8 +4,8 @@
 // POTI-board EVO
 // バージョン :
 
-const POTI_VER = 'v7.08.2';
-const POTI_LOT = 'lot.20260814';
+const POTI_VER = 'v7.08.3';
+const POTI_LOT = 'lot.20260816';
 
 /*
   (C) 2018-2025 POTI改 POTI-board redevelopment team
@@ -126,8 +126,8 @@ validateQueryParameters();
  */
 rejectSqlInjectionAttempt();
 
-$path = __DIR__.'/'.basename(IMG_DIR);
-$temppath = __DIR__.'/'.basename(TEMP_DIR);
+$path = __DIR__.'/'.IMG_DIR;
+$temppath = __DIR__.'/'.TEMP_DIR;
 
 //POTI_VERLOT定義
 define("POTI_VERLOT", POTI_VER." ".POTI_LOT);
