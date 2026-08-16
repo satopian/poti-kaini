@@ -4,7 +4,7 @@
 // POTI-board EVO
 // バージョン :
 
-const POTI_VER = 'v7.08.0';
+const POTI_VER = 'v7.08.2';
 const POTI_LOT = 'lot.20260814';
 
 /*
@@ -126,8 +126,8 @@ validateQueryParameters();
  */
 rejectSqlInjectionAttempt();
 
-$path = __DIR__.'/'.IMG_DIR;
-$temppath = __DIR__.'/'.TEMP_DIR;
+$path = __DIR__.'/'.basename(IMG_DIR);
+$temppath = __DIR__.'/'.basename(TEMP_DIR);
 
 //POTI_VERLOT定義
 define("POTI_VERLOT", POTI_VER." ".POTI_LOT);
@@ -1322,7 +1322,7 @@ function regist(): void {
 		if(!$ext){
 			error(MSG003, $dest);
 		}
-	
+		$ext=basename($ext);
 		rename($dest,$path.$time.$ext);
 		chmod($path.$time.$ext,PERMISSION_FOR_DEST);
 		// 縮小表示
@@ -2881,7 +2881,8 @@ function replace(?string $no="",?string $pwd="",?string $repcode="",bool $java=f
 	check_badfile($chk, $dest); // 拒絶画像チェック
 
 	[$w, $h] = getimagesize($dest);
-
+		
+	$imgext=basename($imgext);
 	chmod($dest,PERMISSION_FOR_DEST);
 	rename($dest,$path.$time.$imgext);
 
