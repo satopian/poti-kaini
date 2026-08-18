@@ -3172,7 +3172,7 @@ function Reject_if_NGword_exists_in_the_post(): void {
 
 }
 
-/**POSTされた入力をチェックしてログファイルに格納する書式にフォーマット*/
+/** POSTされた入力をチェックしてログファイルに格納する書式にフォーマット */
 function create_formatted_text_from_post(?string $com,?string $name,?string $email,?string $url,?string $sub,?string $fcolor,?string $dest=''): array {
 
 	//入力チェック
@@ -3268,7 +3268,7 @@ function getImgType (?string $dest): string {
 	}
 	
 }
-/**縮小表示*/
+/** 縮小表示 */
 function image_reduction_display(int $w,int $h,int $max_w,int $max_h): array {
 	$reduced_size=[];
 	if($w > $max_w || $h > $max_h){
@@ -3383,7 +3383,7 @@ function is_ngword (array $ngwords, $strs): bool {
 	return false;
 }
 
-/**PNG形式またはWebP形式で上書き保存*/
+/** PNG形式またはWebP形式で上書き保存 */
 function convert2(?string $path,?string $time,?string $ext,bool $is_upload_img=false,?string $upload_img_mime_type=""): void {
 
 	$fname= basename($time.$ext);
@@ -3430,7 +3430,7 @@ function convert2(?string $path,?string $time,?string $ext,bool $is_upload_img=f
 	}
 }
 
-/**Exifをチェックして画像が回転している時は上書き保存*/
+/** Exifをチェックして画像が回転している時は上書き保存 */
 function check_jpeg_exif(?string $dest): void {
 
 	if((exif_imagetype($dest) !== IMAGETYPE_JPEG ) || !function_exists("imagecreatefromjpeg")){
@@ -3668,7 +3668,7 @@ function create_res (?string $line, array $options = []): array {
 	$res['com'] = preg_replace("/(^|>)((&gt;|＞)[^<]*)/i", "\\1".RE_START."\\2".RE_END, $res['com']); // '>'色設定
 	return $res;
 }
-/**SNS共有のための文字列変換 */
+/** SNS共有のための文字列変換 */
 function encode_for_share(?string $str): string {
 	$str = str_replace("&#44;",",", $str);
 	$str = htmlspecialchars_decode((string)$str, ENT_QUOTES);
@@ -3989,14 +3989,14 @@ function get_buffer_from_fp($fp): string {
 	}
 	return implode("", $lines);  // 行を1つのバッファにまとめて返す
 }
-/**ログファイルサイズが大きすぎる時はエラーにする*/
+/** ログファイルサイズが大きすぎる時はエラーにする */
 function check_log_size_limit(): void {
 	if(filesize(LOGFILE)>(int)MAX_LOG_FILESIZE*1024*1024){//15MB
 		error(MSG052);
 	}
 }
 
-/**パスワードを5回連続して間違えた時は拒絶*/
+/** パスワードを5回連続して間違えた時は拒絶 */
 function check_password_input_error_count(): void {
 	$file=__DIR__.'/templates/errorlog/error.log';
 	if(!CHECK_PASSWORD_INPUT_ERROR_COUNT){
@@ -4017,7 +4017,7 @@ if(!is_adminpass(filter_input_data('POST','pass'))){
 	}
 }
 
-/**優先言語のリストをチェックして対応する言語があればその翻訳されたレイヤー名を返す*/
+/** 優先言語のリストをチェックして対応する言語があればその翻訳されたレイヤー名を返す */
 function getTranslatedLayerName(): string {
 	$acceptedLanguages = $_SERVER['HTTP_ACCEPT_LANGUAGE'] ?? '';
 	$languageList = explode(',', $acceptedLanguages);
@@ -4085,7 +4085,7 @@ function make_thumbnail(?string $imgfile,?string $time,?string $max_w,?string $m
 	return $thumbnail;
 }
 
-/**管理者パスワード?*/
+/** 管理者パスワード? */
 function is_adminpass(?string $pwd):bool {
 	global $ADMIN_PASS;
 	if($ADMIN_PASS && $pwd && hash_equals($ADMIN_PASS,$pwd)){
