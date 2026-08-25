@@ -716,10 +716,6 @@ document.addEventListener("neo:fullscreenchange", (e) => {
 		SetTimeCount();
 		});
 		</script>
-		"use strict";
-		let s,m,h,d;let timerID=10;const stime=Date.now();function SetTimeCount(){const now=Date.now();s=Math.floor((now-stime)/1E3);let disp="";86400<=s&&(d=Math.floor(s/86400),disp+=d+"\u65e5",s-=86400*d);3600<=s&&(h=Math.floor(s/3600),disp+=h+"\u6642\u9593",s-=3600*h);60<=s&&(m=Math.floor(s/60),disp+=m+"\u5206",s-=60*m);document.forms.namedItem("watch").count.value=disp+s+"\u79d2";clearTimeout(timerID);timerID = setTimeout(()=>{ SetTimeCount(); }, 250);};
-		document.addEventListener('DOMContentLoaded',SetTimeCount,false);
-		</script>
 		</div>
 		<!--描画時間動的表示 ここまで-->
 		<p>@if($anime) ★描画アニメ記録中★@endif</p>
