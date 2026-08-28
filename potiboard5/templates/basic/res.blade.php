@@ -250,7 +250,7 @@
 						<td class="post_table_title">添付画像</td>
 						<td><input type="file" name="upfile" accept="image/*">
 							<div id="remove_attachment_btn" style="display:none">[<a>選択解除</a>]</div>
-							<img id="attach_preview" style="max-width:100px;max-height:100px; display:none;">
+							<img id="attach_preview" style="max-width:200px;max-height:200px; display:none;">
 						</td>
 					</tr>
 					@endif
