@@ -1,9 +1,9 @@
 {{-- ペイントボタン --}}
 <form action="{{$self}}" method="post" enctype="multipart/form-data" id="paint_form">
-	<p>
 		@if($admin)
 		<input type="hidden" name="admin" value="{{$admin}}">
 		<input name="pch_upload" type="file" accept="image/*,.pch,.spch,.chi,.psd" class="pchup_button">
+		<div id="remove_pch_attachment_btn" style="display:none">[<a href="#">選択解除</a>]</div>
 		<br>
 		@endif
 		幅 : <input name="picw" type="number" title="幅" class="form" value="{{$pdefw}}" min="{{$pminw}}" max="{{$pmaxw}}">
@@ -35,5 +35,4 @@
 		<input type="hidden" name="MAX_FILE_SIZE" value="{{ isset($upload_max_filesize) ? $upload_max_filesize : '' }}">
 		<input class="button" type="submit" value="お絵かき">
 		@if($anime)<label id="save_playback"><input type="checkbox" value="true" name="anime" title="動画記録" @if($animechk){{$animechk}}@endif>動画記録</label>@endif
-	</p>
 </form>

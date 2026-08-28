@@ -4,6 +4,7 @@
 	@if($admin)
 	<input type="hidden" name="admin" value="{{$admin}}">
 	<input name="pch_upload" type="file" accept="image/*,.pch,.spch,.chi,.psd" class="pchup_button">
+	<div id="remove_pch_attachment_btn" style="display:none">[<a href="#">選択解除</a>]</div>
 	<br>
 	@endif
 	<input type="submit" value="PAINT" class="paint_button">
