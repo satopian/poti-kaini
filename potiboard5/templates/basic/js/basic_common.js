@@ -461,6 +461,9 @@ class petitNoteImagePreview {
           if (this.removePchAttachmentBtn) {
             this.removePchAttachmentBtn.style.display = "inline-block";
           }
+          if (this.pchFileInput instanceof HTMLInputElement) {
+            this.pchFileInput.style.width = "inherit";
+          }
           return;
         }
         //選択解除ボタンを表示
