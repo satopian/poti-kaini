@@ -169,7 +169,7 @@
 						<tr>
 							<td>ファイル</td>
 							<td><input class="form" type="file" name="upfile" size="35" accept="image/*">
-								<div id="remove_attachment_btn" style="display:none">[<a href="#">選択解除</a>]</div>
+							<button id="remove_attachment_btn" class="button" style="display:none">選択解除</button>
 								<br>
 								<small>（添付可能なファイル形式：GIF、JPG、PNG、WEBP）</small><br>
 								{{-- プレビュー表示 --}}
