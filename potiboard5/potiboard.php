@@ -4,8 +4,8 @@
 // POTI-board EVO
 // バージョン :
 
-const POTI_VER = 'v7.15.2';
-const POTI_LOT = 'lot.20260910';
+const POTI_VER = 'v7.16.0';
+const POTI_LOT = 'lot.20260912';
 
 /*
   (C) 2018-2025 POTI改 POTI-board redevelopment team
@@ -398,6 +398,11 @@ switch($mode){
 	case '':
 		if($res){
 			return res();
+		}
+		if(!empty(filter_input_array(INPUT_GET))){
+			//不正なクエリパラメータの時は 403 Forbiddenを返す
+			header("HTTP/1.1 403 Forbidden");
+			exit();
 		}
 		 redirect(h(PHP_SELF2));
 	default:
@@ -1745,6 +1750,7 @@ return $msg;
 }
 
 /**
+ * ファイルの存在をチェック
  * @param string $path
  * @param bool $check_writable
  * @param int $permission 
@@ -1762,7 +1768,6 @@ function check_file (string $path,bool $check_writable=false,int $permission=0):
 				chmod($path, $permission);
 		}
 	}
-
 
 	if (!is_readable($path)) die($path . $msg['042']);
 	if($check_writable){//書き込みが必要なファイルのチェック
@@ -2759,7 +2764,7 @@ function rewrite(): void {
 
 	redirect($destination . (URL_PARAMETER ? "?".time() : ''));
 }
-/** 画像差し換え*/
+/** 画像差し換え */
 function replace(?string $no="",?string $pwd="",?string $repcode="",bool $java=false): void {
 	
 	global $path,$temppath,$usercode,$en;
@@ -3922,7 +3927,7 @@ function get_pch_size(?string $src): ?array {
 }
 /** 
  * spchデータの幅と高さ
- * @param $src
+ * @param string $src
  * @return array|null
  */
 function get_spch_size(string $src): ?array {
