@@ -173,7 +173,7 @@
 								<br>
 								<small>（添付可能なファイル形式：GIF、JPG、PNG、WEBP）</small><br>
 								{{-- プレビュー表示 --}}
-							<img id="attach_preview" style="max-width:200px;max-height:200px; display:none;">
+							<img id="attach_preview" style="max-width:200px;max-height:200px; display:none;" alt="preview" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==">
 							</td>
 						</tr>
 						@endif
