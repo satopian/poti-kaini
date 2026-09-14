@@ -4,8 +4,8 @@
 // POTI-board EVO
 // バージョン :
 
-const POTI_VER = 'v7.16.0';
-const POTI_LOT = 'lot.20260912';
+const POTI_VER = 'v7.16.1';
+const POTI_LOT = 'lot.20260914';
 
 /*
   (C) 2018-2025 POTI改 POTI-board redevelopment team
@@ -1449,7 +1449,9 @@ function regist(): void {
 		$data['to'] = TO_MAIL;
 		$data['name'] = $name;
 		$data['email'] = $email;
-		$data['option'][] = 'URL,'.$url;
+		if(filter_var($url, FILTER_VALIDATE_URL)){
+			$data['option'][] = 'URL,'.$url;
+		}
 		$data['option'][] = NOTICE_MAIL_TITLE.','.$sub;
 		if($ext) $data['option'][] = NOTICE_MAIL_IMG.','.ROOT_URL.IMG_DIR.$time.$ext;//拡張子があったら
 		if(is_file(THUMB_DIR.$time.'s.jpg')) $data['option'][] = NOTICE_MAIL_THUMBNAIL.','.ROOT_URL.THUMB_DIR.$time.'s.jpg';
