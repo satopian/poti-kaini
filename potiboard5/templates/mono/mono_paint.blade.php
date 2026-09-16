@@ -715,7 +715,7 @@ document.addEventListener("neo:fullscreenchange", (e) => {
 					<li>Ctrl+ZかCtrl+Uで元に戻す、Ctrl+Alt+ZかCtrl+Yでやり直し。</li>
 					<li>Escでコピーやベジエのリセット。（右クリックでも同じ） </li>
 					<li>スペースキーを押しながらキャンバスをドラッグするとスクロールの自由移動。</li>
-					<li>Ctrl+Alt+ドラッグで線の幅を変更。</li>
+					<li>左括弧 [ 、右括弧 ] 、Ctrl+Alt+ドラッグで線の幅を変更。</li>
 				</ul>
 				<h3>コピーツールの特殊な利用方法</h3>
 				<p>
