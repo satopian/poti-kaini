@@ -338,7 +338,7 @@
 			}
 		</script>
 		@else
-		{{-- <!-- (========== PAINT MODE(お絵かきモード) start ==========) --> --}}
+		{{-- ========== PAINT MODE(お絵かきモード) start ========== --}}
 	<!--動的パレットスクリプト ここから-->
 	<script>
 		"use strict";
@@ -792,10 +792,9 @@ document.addEventListener("neo:fullscreenchange", (e) => {
 		@if($pch_mode)
 
 		<!-- (========== 動画表示モード ==========) -->
-		<div id="appstage">
-			<div class="app">
-				<div style="width:{{$w}}px; height:{{$h}}px">
-	@if($type_neo)
+		<div id="appstage" style="width:{{$w}}px; max-width:100%;display:block">
+			<div class="app" style="width:{{$w}}px; max-width:100%; aspect-ratio:{{$w}} / {{$h}};display:block;">
+				@if($type_neo)
 	<div class="neo-applet-pch" data-width="{{$w}}" data-height="{{$h}}"></div>
 	<script>
 	Neo.params ={
@@ -806,6 +805,7 @@ document.addEventListener("neo:fullscreenchange", (e) => {
 		speed:{{$speed}},
 		neo_enable_zoom_out:true,
 		neo_viewer_buttonswrapper_top:true,
+		neo_viewer_max_width_100: true,
 		}		
 	}
 	</script>	
@@ -829,8 +829,6 @@ document.addEventListener("neo:fullscreenchange", (e) => {
 				<param name="speed" value="{{$speed}}">
 				<param name="buffer_progress" value="false">
 				<param name="buffer_canvas" value="false">
-				<param name="neo_enable_zoom_out" value="true">
-				<param name="neo_viewer_buttonswrapper_top" value="true">
 		</applet>
 		@endif
 				</div>
@@ -841,7 +839,6 @@ document.addEventListener("neo:fullscreenchange", (e) => {
 				<p>
 					<a href="javascript:close()">閉じる</a>
 				</p>
-			</div>
 		</div>
 		<!-- (========== 動画表示モード ここまで ==========) -->
 		@endif
@@ -849,7 +846,7 @@ document.addEventListener("neo:fullscreenchange", (e) => {
 		<!-- (========== CONTINUE MODE(コンティニューモード) start ==========) -->
 		<section>
 
-			<script type="text/javascript" src="loadcookie.js?{{$ver}}"></script>
+			<script src="loadcookie.js?{{$ver}}"></script>
 			<div class="thread">
 				<figure>
 					<img src="{{$picfile}}" width="{{$picw}}" height="{{$pich}}"
