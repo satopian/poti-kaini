@@ -151,7 +151,13 @@
 			margin:0 6px;
 		}
 		select:focus {
-		  outline: none;
+			outline: none;
+		}
+		button#neo-appletfit{
+			color: #222;
+			background-color: #fffeff;
+			border: 1px solid #686868;
+			margin: 0 0 0 6px;
 		}
 	</style>
 	@endif
@@ -399,6 +405,7 @@ vertical-align: middle;
 						<option value="5">5</option>
 					</select>
 				</span>
+				<button class="button" type="button" id="neo-appletfit" onclick="appletFit()">フィット</button>
 				@endif
 			</div>
 		</nav>
@@ -989,6 +996,45 @@ document.addEventListener("neo:fullscreenchange", (e) => {
 		<!--著作権表示 削除しないでください--> --}}
 		@include('parts.copyright')
 	</footer>
+<script>
+//Petit Note (c)さとぴあ @satopian 2021-2026 MIT License
+//https://paintbbs.sakura.ne.jp/
+let isFit=false;
+const fitLabel = {
+	on:  "@if($en) Unfit @else フィット解除 @endif",       // フィット中の表示
+	off: "@if($en)Fit canvas @else フィット @endif"  // 解除中の表示
+};
+const neo_origAppW = {{$w}};
+const neo_origAppH = {{$h}};
+const applyFit = () => {
+	const view = document.getElementById("neo-pageView");
+	if (isFit) {
+		// ウィンドウに合わせる
+		view.style.width = `${Math.max(window.innerWidth - 210,400)}px`;
+		view.style.height = `${Math.max(window.innerHeight - 150,400)}px`;
+	} else {
+		// 元のサイズに戻す(インラインstyleを初期値に戻す)
+		view.style.width = `${neo_origAppW}px`;
+		view.style.height = `${neo_origAppH}px`;
+	}
+	Neo.resizeCanvas({updateDestCanvas:false});
+}
+const appletFit = () => {
+	isFit = !isFit;
+	const btn = document.getElementById("neo-appletfit");
+	btn.textContent = isFit ? fitLabel.on : fitLabel.off;
+	applyFit();
+};
+// 画面サイズが変わったとき(フィット中だけ追従)
+let resizeTicking = false;
+window.addEventListener("resize", () => {
+	if (!isFit || resizeTicking) return;
+	resizeTicking = true;
+	requestAnimationFrame(() => {
+		applyFit();
+		resizeTicking = false;
+	});
+});
+</script>
 </body>
-
 </html>
