@@ -90,7 +90,6 @@
 			return;
 		}
 		}
-
 	</script>
 	@if($useneo)
 	<link rel="stylesheet" href="./lib/pickr/themes/monolith.min.css?{{$parameter_day}}&{{$ver}}"/>
@@ -214,7 +213,7 @@ vertical-align: middle;
 		});
 		document.addEventListener('DOMContentLoaded',()=>{
 			document.addEventListener('dblclick', (e)=>{ e.preventDefault()}, { passive: false });
-			document.querySelector('.pickr').addEventListener('contextmenu', (e)=>{ e.preventDefault()}, { passive: false });	
+			document.querySelector('.pickr')?.addEventListener('contextmenu', (e)=>{ e.preventDefault()}, { passive: false });	
 		});
 </script>
 	
@@ -420,6 +419,7 @@ var DynamicColor=1,Palettes=[];
 @if($palettes) 
 {!!htmlspecialchars($palettes,ENT_NOQUOTES)!!}
 @endif
+var DynamicColor=1,Palettes="#000000\n#FFFFFF\n#B47575\n#888888\n#FA9696\n#C096C0\n#FFB6FF\n#8080FF\n#25C7C9\n#E7E58D\n#E7962D\n#99CB7B\n#FCECE2\n#F9DDCF #FFF0DC\n#52443C\n#FFE7D0\n#5E3920\n#FFD6C0\n#B06A54\n#FFCBB3\n#C07A64\n#FFC0A3\n#DEA197\n#FFB7A2\n#ECA385\n#000000\n#FFFFFF #FFEEF7\n#FFE6E6\n#FFCAE4\n#FFC4C4\n#FF9DCE\n#FF7D7D\n#FF6AB5\n#FF5151\n#FF2894\n#FF0000\n#CF1874\n#BF0000\n#851B53\n#800000 #FFE3D7\n#FFFFDD\n#FFCBB3\n#FFFFA2\n#FFA275\n#FFFF00\n#FF8040\n#D9D900\n#FF5F11\n#AAAA00\n#DB4700\n#7D7D00\n#BD3000\n#606000 #C6FDD9\n#E8FACD\n#8EF09F\n#B9E97E\n#62D99D\n#9ADC65\n#1DB67C\n#65B933\n#1A8C5F\n#4F8729\n#136246\n#2B6824\n#0F3E2B\n#004000 #DFF4FF\n#C1FFFF\n#80C6FF\n#6DEEFC\n#60A8FF\n#44D0EE\n#1D56DC\n#209CCC\n#273D8F\n#2C769A\n#1C2260\n#295270\n#000040\n#003146 #E9D2FF\n#E1E1FF\n#DAB5FF\n#C1C1FF\n#CE9DFF\n#8080FF\n#B366FF\n#6262FF\n#9428FF\n#3D44C9\n#6900D2\n#33309E\n#3F007D\n#252D6B #ECD3BD\n#F7E2BD\n#E4C098\n#DBC7AC\n#C8A07D\n#D9B571\n#896952\n#C09450\n#825444\n#AE7B3E\n#5E4435\n#8E5C2F\n#493830\n#5F492C #FFEADD\n#DED8F5\n#FFCAAB\n#9C89C4\n#F19D71\n#CF434A\n#52443C\n#F09450\n#5BADFF\n#FDF666\n#0077D9\n#4AA683\n#000000\n#FFFFFF #F6CD8A\n#FFF99D\n#89CA9D\n#C7E19E\n#8DCFF4\n#8CCCCA\n#9595C6\n#94AAD6\n#AE88B8\n#9681B7\n#F49F9B\n#F4A0BD\n#8C6636\n#FFFFFF #C7E19E\n#D1E1FF\n#A8D59D\n#8DCFE0\n#7DC622\n#00A49E\n#528413\n#CBB99C\n#00B03B\n#766455\n#007524\n#5B3714\n#0F0F0F\n#FFFFFF #FFFF80\n#F4C1D4\n#EE9C00\n#F4BDB0\n#C45914\n#ED6B9E\n#FEE7DB\n#E76568\n#FFC89D\n#BD3131\n#ECA385\n#AE687E\n#0F0F0F\n#FFFFFF #FFFFFF\n#7F7F7F\n#EFEFEF\n#5F5F5F\n#DFDFDF\n#4F4F4F\n#CFCFCF\n#3F3F3F\n#BFBFBF\n#2F2F2F\n#AFAFAF\n#1F1F1F\n#0F0F0F\n#000000".split(" ");
 function setPalette(){var a=document.forms.namedItem("Palette");if(a&&(a=a.elements.namedItem("select"),a instanceof HTMLSelectElement)){document.paintbbs.setColors(Palettes[a.selectedIndex]);a=document.forms.namedItem("grad");var b=a?.elements.namedItem("view");a&&b instanceof HTMLInputElement&&b.checked&&GetPalette()}}async function PaletteSave(){Palettes[0]=String(await document.paintbbs.getColors())}var cutomP=0;
 async function PaletteNew(){var a=String(await document.paintbbs.getColors()),b=document.forms.namedItem("Palette");b&&(b=b.elements.namedItem("select"),b instanceof HTMLSelectElement&&(Palettes[b.length]=a,cutomP++,a=prompt("\u30d1\u30ec\u30c3\u30c8\u540d","\u30d1\u30ec\u30c3\u30c8 "+cutomP),a==null||a==""?cutomP--:(b.options[b.length]=new Option(a),30>b.length&&(b.size=b.length),PaletteListSetColor())))}
 async function PaletteRenew(){var a=document,b=document.forms.namedItem("Palette");b&&(b=b.elements.namedItem("select"),b instanceof HTMLSelectElement&&(Palettes[Number(b.selectedIndex)]=String(await a.paintbbs.getColors()),PaletteListSetColor()))}
@@ -442,7 +442,7 @@ function Hex_(a){isNaN(Number(a))?a="":a==10?a="A":a==11?a="B":a==12?a="C":a==13
 async function GetPalette(){var a=String(await document.paintbbs.getColors());if(a!="null"&&a!=""){a=a.split("\n");var b=document.forms.namedItem("grad");if(b){var c=b.elements.namedItem("p_st");c=c instanceof HTMLSelectElement?c.selectedIndex:null;var e=b.elements.namedItem("p_ed");e=e instanceof HTMLSelectElement?e.selectedIndex:null;if(c!==null&&e!==null){var d=b.elements.namedItem("pst"),f=b.elements.namedItem("ped");d instanceof HTMLInputElement&&(d.value=a[c].substring(1,7));f instanceof HTMLInputElement&&
 (f.value=a[e].substring(1,7));d=b.elements.namedItem("colorPickerPst");b=b.elements.namedItem("colorPickerPed");d instanceof HTMLInputElement&&b instanceof HTMLInputElement&&(d.value=a[c].substring(0,7),b.value=a[e].substring(0,7));GradSelC();PaletteListSetColor()}}}}
 async function GradSelC(){var a=String(await document.paintbbs.getColors());if(a!="null"&&a!=""){a=a.split("\n");var b=document.forms.namedItem("grad");if(b){var c,e=a.length,d="";for(c=0;e>c;c++){var f=255+parseInt("0x"+a[c].substring(1,3))*-1;let h=255+parseInt("0x"+a[c].substring(3,5))*-1,g=255+parseInt("0x"+a[c].substring(5,7))*-1;f>255?f=255:0>f&&(f=0);h>255?h=255:0>h&&(h=0);g>255?g=255:0>g&&(g=0);d+="#"+Hex(f)+Hex(h)+Hex(g)+"\n"}d=d.split("\n");f=b.elements.namedItem("p_st");b=b.elements.namedItem("p_ed");
-if(f instanceof HTMLSelectElement&&b instanceof HTMLSelectElement)for(c=0;e>c;c++)f.options[c].style.background=a[c],f.options[c].style.color=d[c],b.options[c].style.background=a[c],b.options[c].style.color=d[c]}}}function showHideLayer(){}document.addEventListener("DOMContentLoaded",()=>GradSelC());
+if(f instanceof HTMLSelectElement&&b instanceof HTMLSelectElement)for(c=0;e>c;c++)f.options[c].style.background=a[c],f.options[c].style.color=d[c],b.options[c].style.background=a[c],b.options[c].style.color=d[c]}}}function showHideLayer(){}document.addEventListener("DOMContentLoaded",()=>{typeof GradSelC==="function"&&document.paintbbs?.getColors&&GradSelC()});
 </script>
 	<!--動的パレットスクリプト ここまで-->
 	<noscript>
@@ -1001,8 +1001,8 @@ document.addEventListener("neo:fullscreenchange", (e) => {
 //https://paintbbs.sakura.ne.jp/
 let isFit=false;
 const fitLabel = {
-	on:  "@if($en) Unfit @else フィット解除 @endif",       // フィット中の表示
-	off: "@if($en)Fit canvas @else フィット @endif"  // 解除中の表示
+	on:  "フィット解除",       // フィット中の表示
+	off: "フィット"  // 解除中の表示
 };
 const neo_origAppW = {{$w}};
 const neo_origAppH = {{$h}};
@@ -1011,19 +1011,19 @@ const applyFit = () => {
 	if (isFit) {
 		// ウィンドウに合わせる
 		view.style.width = `${Math.max(window.innerWidth - 210,400)}px`;
-		view.style.height = `${Math.max(window.innerHeight - 150,400)}px`;
+		view.style.height = `${Math.max(window.innerHeight - 112,400)}px`;
 	} else {
-		// 元のサイズに戻す(インラインstyleを初期値に戻す)
+		// 元のサイズに戻す(インラインstyleを初期値にもどす)
 		view.style.width = `${neo_origAppW}px`;
 		view.style.height = `${neo_origAppH}px`;
 	}
-	Neo.resizeCanvas({updateDestCanvas:false});
 }
 const appletFit = () => {
 	isFit = !isFit;
 	const btn = document.getElementById("neo-appletfit");
 	btn.textContent = isFit ? fitLabel.on : fitLabel.off;
 	applyFit();
+	Neo.resizeCanvas();
 };
 // 画面サイズが変わったとき(フィット中だけ追従)
 let resizeTicking = false;
@@ -1032,6 +1032,7 @@ window.addEventListener("resize", () => {
 	resizeTicking = true;
 	requestAnimationFrame(() => {
 		applyFit();
+		Neo.resizeCanvas({updateDestCanvas:false});
 		resizeTicking = false;
 	});
 });
