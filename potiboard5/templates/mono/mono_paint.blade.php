@@ -513,7 +513,7 @@ if(f instanceof HTMLSelectElement&&b instanceof HTMLSelectElement)for(c=0;e>c;c+
 						@if($useneo)
 						<fieldset>
 							<legend>フィット</legend>
-							<button class="button" type="button" id="neo-appletfit" onclick="appletFit()">App Fit</button>
+							<button class="button" type="button" id="neo-appletfit" onclick="appletFit()">フィット</button>
 						</fieldset>
 						<fieldset>
 							<legend>ツール</legend>
