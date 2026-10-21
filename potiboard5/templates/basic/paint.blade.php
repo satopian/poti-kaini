@@ -249,7 +249,7 @@ vertical-align: middle;
 	<header>
 		@if($paint_mode)
 		@if(!$chickenpaint)
-		<h1 style="min-width:calc({{$w}}px + 176px)" id="bbs_title">お絵かきモード - <span
+		<h1 style="max-width:calc({{$w}}px + 176px)" id="bbs_title">お絵かきモード - <span
 				class="title_name_wrap">{{$title}}</span></h1>
 		@endif
 
@@ -381,7 +381,7 @@ vertical-align: middle;
 		@else
 
 		<nav>
-			<div style="min-width:calc({{$w}}px + 176px)" id="self2"> [<a href="{{$self2}}">{{$title}}</a>]
+			<div style="max-width:calc({{$w}}px + 176px)" id="self2"> [<a href="{{$self2}}">{{$title}}</a>]
 				@if($useneo)
 				<span class="nts_radiowrap">ツールを
 					<input type="radio" name="1" id="1" onclick="Neo.setToolSide(true)" class="nts_radio"><label class="ntslabel"
@@ -449,7 +449,7 @@ if(f instanceof HTMLSelectElement&&b instanceof HTMLSelectElement)for(c=0;e>c;c+
 		<h3>JavaScriptが有効でないため正常に動作致しません。</h3>
 	</NOSCRIPT>
 	<div class="appstage">
-		<div class="app" style="width:{{$w}}px; height:{{$h}}px;">
+		<div class="app" style="width:{{$w}}px; height:auto">
 			<!--applet～の～部分の詳しい事は、PaintBBS及びしぃペインターのReadmeを参照-->
 			<!--PaintBBS個別設定-->
 @if($useneo)
