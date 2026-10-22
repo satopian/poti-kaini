@@ -6,6 +6,8 @@
 
 ## 動作環境
 PHP7.4-PHP8.6  
+2026年10月にPHPそのものの深刻な脆弱性が発見されました。  
+セキュリティパッチが提供されているサポートされているPHPのバージョンでの使用を強く推奨します。   
 ## そのほかのバージョン
 English translated version is here. [POTI-board EVO-EN](https://github.com/satopian/poti-kaini-EN)  
 繁體中文版本 [POTI-board EVO-zh-TW](https://github.com/satopian/poti-kaini-zh-TW)
