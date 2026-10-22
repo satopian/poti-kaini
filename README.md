@@ -4,15 +4,8 @@
 
 お絵かき掲示板PHPスクリプトPOTI-boardを改良していくプロジェクトです。  
 
-### PHPに脆弱性
-- 2026年10月、認証なしでリモートからコードを実行されうる深刻なPHPの脆弱性(CVE-2026-109618、CVE-2026-109619)が公表されました。  
-  修正版は PHP 8.5.12 / 8.4.27 / 8.3.36 / 8.2.35 です。PHP 7.4〜8.1 は PHP 公式の更新対象外です。   
-  レンタルサーバーを利用している場合は、修正の適用をサーバー会社が行いますが、PHP8.1以前のバージョンを利用している場合はセキュリティパッチが適用されません。     
-サーバコントロールパネルなどでPHPのバージョンをご確認ください。       
-[PHPの脆弱性対策について(CVE-2026-109618、CVE-2026-109619：PHP2shell) | 情報セキュリティ | IPA 独立行政法人 情報処理推進機構](https://www.ipa.go.jp/security/security-alert/2026/alert20261022.html)
-
-- POTI-boardは、PHP7.4以上で動作しますが、セキュリティパッチが提供されているサポートされているバージョンでの使用を強く推奨します。   
-  
+## 動作環境
+PHP7.4-PHP8.5  
 ## そのほかのバージョン
 English translated version is here. [POTI-board EVO-EN](https://github.com/satopian/poti-kaini-EN)  
 繁體中文版本 [POTI-board EVO-zh-TW](https://github.com/satopian/poti-kaini-zh-TW)
