@@ -1007,8 +1007,10 @@ const fitLabel = {
 const neo_origAppW = {{$w}};
 const neo_origAppH = {{$h}};
 const applyFit = () => {
-	const view = @if($useneo) document.getElementById("neo-pageView"); @else document.paintbbs; @endif 
-	const header = document.getElementById("paintHeader");
+	const view = @if($useneo) document.getElementById("neo-pageView"); @else document.paintbbs; @endif
+	if(!view){
+		return;
+	} 
 	if (isFit) {
 		// ウィンドウに合わせる
 		view.style.width = `${Math.max(document.documentElement.clientWidth - 195,400)}px`;
