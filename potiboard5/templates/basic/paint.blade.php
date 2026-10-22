@@ -404,8 +404,8 @@ vertical-align: middle;
 						<option value="5">5</option>
 					</select>
 				</span>
-				<button class="button" type="button" id="neo-appletfit" onclick="appletFit()">フィット</button>
 				@endif
+				<button class="button" type="button" id="neo-appletfit" onclick="appletFit()">フィット</button>
 			</div>
 		</nav>
 	</header>
@@ -1007,17 +1007,22 @@ const fitLabel = {
 const neo_origAppW = {{$w}};
 const neo_origAppH = {{$h}};
 const applyFit = () => {
-	const view = document.getElementById("neo-pageView");
+	const view = @if($useneo) document.getElementById("neo-pageView"); @else document.paintbbs; @endif 
+	const header = document.getElementById("paintHeader");
 	if (isFit) {
 		// ウィンドウに合わせる
 		view.style.width = `${Math.max(document.documentElement.clientWidth - 195,400)}px`;
 		view.style.height = `${Math.max(document.documentElement.clientHeight - 112,400)}px`;
+		@if($useneo)
 		Neo.disableGridTouchMove = screen.width>=600 ? true : false;
+		@endif
 	} else {
 		// 元のサイズに戻す(インラインstyleを初期値にもどす)
 		view.style.width = `${neo_origAppW}px`;
 		view.style.height = `${neo_origAppH}px`;
+		@if($useneo)
 		Neo.disableGridTouchMove = false;
+		@endif
 	}
 }
 const appletFit = () => {
@@ -1025,7 +1030,9 @@ const appletFit = () => {
 	const btn = document.getElementById("neo-appletfit");
 	btn.textContent = isFit ? fitLabel.on : fitLabel.off;
 	applyFit();
+	@if($useneo)
 	Neo.resizeCanvas();
+	@endif
 };
 // 画面サイズが変わったとき(フィット中だけ追従)
 let resizeTicking = false;
@@ -1034,7 +1041,9 @@ window.addEventListener("resize", () => {
 	resizeTicking = true;
 	requestAnimationFrame(() => {
 		applyFit();
+		@if($useneo)
 		Neo.resizeCanvas({updateDestCanvas:false});
+		@endif
 		resizeTicking = false;
 	});
 });
