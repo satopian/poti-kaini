@@ -407,7 +407,7 @@ vertical-align: middle;
 					</select>
 				</span>
 				@endif
-				<button class="button" type="button" id="neo-appletfit" onclick="appletFit()">フィット</button>
+				<button class="button" type="button" id="neo-appletfit" onclick="appFit.onClick()">フィット</button>
 			</div>
 		</nav>
 	</header>
@@ -992,65 +992,100 @@ document.addEventListener("neo:fullscreenchange", (e) => {
 	<script src="{{$skindir}}js/basic_common.js?{{$ver}}"></script>
 	@endif
 	<!--コンティニューモード ここまで-->
-	<!--著作権表示 削除しないでください-->
 	<footer>
-		{{--
-		<!--著作権表示 削除しないでください--> --}}
+	{{--著作権表示 削除しないでください--> --}}
 		@include('parts.copyright')
 	</footer>
 <script>
 //Petit Note (c)さとぴあ @satopian 2021-2026 MIT License
 //https://paintbbs.sakura.ne.jp/
-let isFit=false;
-const fitLabel = {
-	on:  "フィット解除",       // フィット中の表示
-	off: "フィット"  // 解除中の表示
-};
-const neo_origAppW = {{$w}};
-const neo_origAppH = {{$h}};
-const applyFit = () => {
-	const view = @if($useneo) document.getElementById("neo-pageView"); @else document.paintbbs; @endif
-	if(!view){
-		return;
-	} 
-	if (isFit) {
-		// ウィンドウに合わせる
-		view.style.width = `${Math.max(document.documentElement.clientWidth - 195,400)}px`;
-		view.style.height = `${Math.max(document.documentElement.clientHeight - 112,400)}px`;
+class appletFit{
+	constructor(){
+		this.view = null;
+		this.isFit=false;
+		this.fitLabel = {
+			on:  "フィット解除",  // フィット中の表示
+			off: "フィット"  // 解除中の表示
+		};
+		this.neo_origAppW = {{$w}};
+		this.neo_origAppH = {{$h}};
+		this.resizeTicking = false;
+		this.updateWidthHeight();
+		this.hideButton();
+		this.listener();
+	}
+
+	applyFit(){
+		if(!this.view){
+				return;
+		} 
+		if (this.isFit) {
+			// ウィンドウに合わせる
+			this.updateWidthHeight();
+			this.view.style.width = `${this.newWidth}px`;
+			this.view.style.height = `${this.newHeight}px`;
+			@if($useneo)
+			Neo.disableGridTouchMove = screen.width>=600 ? true : false;
+			@endif
+		} else {
+			// 元のサイズに戻す(インラインstyleを初期値にもどす)
+			this.view.style.width = `${this.neo_origAppW}px`;
+			this.view.style.height = `${this.neo_origAppH}px`;
+			@if($useneo)
+			Neo.disableGridTouchMove = false;
+			@endif
+		}
+	}
+	onClick(){
+		this.view = @if($useneo) document.getElementById("neo-pageView"); @else document.paintbbs; @endif
+		if(!this.view){
+			return;
+		}
+		this.isFit = !this.isFit;
+		const btn = document.getElementById("neo-appletfit");
+		btn.textContent = this.isFit ? this.fitLabel.on : this.fitLabel.off;
+		this.applyFit();
 		@if($useneo)
-		Neo.disableGridTouchMove = screen.width>=600 ? true : false;
+		Neo.resizeCanvas();
 		@endif
-	} else {
-		// 元のサイズに戻す(インラインstyleを初期値にもどす)
-		view.style.width = `${neo_origAppW}px`;
-		view.style.height = `${neo_origAppH}px`;
-		@if($useneo)
-		Neo.disableGridTouchMove = false;
+	requestAnimationFrame(() => {
+			this.applyFit();
+			@if($useneo)
+			Neo.resizeCanvas();
+			@endif
+		});
+	}
+	updateWidthHeight(){
+		this.newWidth =  Math.max(document.documentElement.clientWidth - 195,400);
+		this.newHeight = Math.max(document.documentElement.clientHeight - 112,400);
+	}
+	hideButton(){
+		@if(!$useneo)
+		this.updateWidthHeight();
+		if(this.newWidth<this.neo_origAppW||this.newHeight<this.neo_origAppH){
+			document.getElementById("neo-appletfit").style.display="none";
+		}else{
+			document.getElementById("neo-appletfit").style.display="";
+		}
 		@endif
 	}
+	listener(){
+		// 画面サイズが変わったとき(フィット中だけ追従)
+		window.addEventListener("resize", () => {
+			this.hideButton();
+			if (!this.isFit || this.resizeTicking) return;
+			this.resizeTicking = true;
+			requestAnimationFrame(() => {
+				this.applyFit();
+				@if($useneo)
+				Neo.resizeCanvas({updateDestCanvas:false});
+				@endif
+				this.resizeTicking = false;
+			});
+		});
+	}
 }
-const appletFit = () => {
-	isFit = !isFit;
-	const btn = document.getElementById("neo-appletfit");
-	btn.textContent = isFit ? fitLabel.on : fitLabel.off;
-	applyFit();
-	@if($useneo)
-	Neo.resizeCanvas();
-	@endif
-};
-// 画面サイズが変わったとき(フィット中だけ追従)
-let resizeTicking = false;
-window.addEventListener("resize", () => {
-	if (!isFit || resizeTicking) return;
-	resizeTicking = true;
-	requestAnimationFrame(() => {
-		applyFit();
-		@if($useneo)
-		Neo.resizeCanvas({updateDestCanvas:false});
-		@endif
-		resizeTicking = false;
-	});
-});
+const appFit=new appletFit();
 </script>
 </body>
 </html>
