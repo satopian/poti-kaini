@@ -49,14 +49,7 @@
 		footer>div.copy {
 			margin: 0 auto;
 			display: block;
-
-			max-width: calc({
-					{
-					$w
-				}
-			}
-
-			px + 192px);
+			max-width: calc({{$w}}px + 192px);
 		}
 	</style>
 	@endif

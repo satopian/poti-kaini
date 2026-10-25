@@ -383,7 +383,7 @@ vertical-align: middle;
 		@else
 
 		<nav>
-			<div style="max-width:calc({{$w}}px + 176px)" id="self2"> [<a href="{{$self2}}">{{$title}}</a>]
+			<div style="max-width:calc({{$w}}px + 176px);min-width:max-content" id="self2"> [<a href="{{$self2}}">{{$title}}</a>]
 				@if($useneo)
 				<span class="nts_radiowrap">ツールを
 					<input type="radio" name="1" id="1" onclick="Neo.setToolSide(true)" class="nts_radio"><label class="ntslabel"
