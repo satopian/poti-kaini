@@ -4,8 +4,8 @@
 // POTI-board EVO
 // バージョン :
 
-const POTI_VER = 'v7.25.0';
-const POTI_LOT = 'lot.20261112';
+const POTI_VER = 'v7.26.0';
+const POTI_LOT = 'lot.20261113';
 
 /*
   (C) 2018-2026 POTI改 POTI-board redevelopment team
@@ -770,7 +770,7 @@ function res_view_other_works(?string $resno,array $trees,int $i): array {
 		}
 	}
 
-	$fp=fopen(LOGFILE,"r");
+	$fp=openFile(LOGFILE,"r");
 	$prev_line=create_line_from_treenumber ($fp,$prev_tree);
 	$next_line=create_line_from_treenumber ($fp,$next_tree);
 	closeFile($fp);
@@ -856,7 +856,7 @@ function res(): void {
 	//レス画面に前後のスレッドの画像一覧と次のスレッド前のスレッドのリンクを出す
 	$res_view_other_works = res_view_other_works($resno,$trees,$i);
 	
-	$fp=fopen(LOGFILE,"r");
+	$fp=openFile(LOGFILE,"r");
 	$line=create_line_from_treenumber ($fp,$treeline);
 	closeFile($fp);
 
@@ -1160,7 +1160,7 @@ function regist(): void {
 
 	//ログ読み込み
 	chmod(LOGFILE,PERMISSION_FOR_LOG);
-	$fp=fopen(LOGFILE,"r+");
+	$fp=openFile(LOGFILE,"r+");
 	file_lock($fp, LOCK_EX);
 	$buf = get_buffer_from_fp($fp);
 	if(!$buf){error(MSG019,$dest);}
@@ -1353,7 +1353,7 @@ function regist(): void {
 	$find = false;
 	$new_treeline = '';
 	chmod(TREEFILE,PERMISSION_FOR_LOG);
-	$tp=fopen(TREEFILE,"r+");
+	$tp=openFile(TREEFILE,"r+");
 	file_lock($tp, LOCK_EX);
 	stream_set_write_buffer($tp, 0);
 	$buf = get_buffer_from_fp($tp);
@@ -1477,7 +1477,7 @@ function h_decode(?string $str): string {
 /** ツリー削除 */
 function treedel(?string $delno): bool {
 	chmod(TREEFILE,PERMISSION_FOR_LOG);
-	$fp=fopen(TREEFILE,"r+");
+	$fp=openFile(TREEFILE,"r+");
 	file_lock($fp, LOCK_EX);
 	$buf = get_buffer_from_fp($fp);
 	if(!$buf){error(MSG024);}
@@ -1546,7 +1546,7 @@ function userdel(): void {
 	}
 	$pwd = $pwd ?: newstring($pwdc);
 	chmod(LOGFILE,PERMISSION_FOR_LOG);
-	$fp=fopen(LOGFILE,"r+");
+	$fp=openFile(LOGFILE,"r+");
 	file_lock($fp, LOCK_EX);
 	$buf = get_buffer_from_fp($fp);
 	if(!$buf){error(MSG027);}
@@ -1670,7 +1670,7 @@ function admindel(string $pass): void {
 
 	if(is_array($del)){
 		chmod(LOGFILE,PERMISSION_FOR_LOG);
-		$fp=fopen(LOGFILE,"r+");
+		$fp=openFile(LOGFILE,"r+");
 		file_lock($fp, LOCK_EX);
 		$buf = get_buffer_from_fp($fp);
 		if(!$buf){error(MSG030);}
@@ -1884,7 +1884,7 @@ function continue_paint(): array {
 	$shi = (string)filter_input_data('POST', 'shi');
 
 	$oyano = '';
-	$tp = fopen(TREEFILE, "r");
+	$tp = openFile(TREEFILE, "r");
 	while ($tree = fgets($tp)) {
 		if (!trim($tree)) {
 			continue;
@@ -2217,7 +2217,7 @@ function paintcom(): void {
 
 	if(USE_RESUB && $resto) {
 
-		$fp=fopen(LOGFILE,"r");
+		$fp=openFile(LOGFILE,"r");
 		while($line = fgets($fp)){
 			if(!trim($line)){
 				continue;
@@ -2391,7 +2391,7 @@ function incontinue(): void {
 	$resno = (string)filter_input_data('GET', 'resno',FILTER_VALIDATE_INT);
 	$flag = false;
 	$logver='';
-	$fp=fopen(LOGFILE,"r");
+	$fp=openFile(LOGFILE,"r");
 	while($line = fgets($fp)){//記事ナンバーのログを取得
 		if(!trim($line)){
 			continue;
@@ -2506,7 +2506,7 @@ function check_cont_pass(): void {
 	$pwdc = (string)filter_input_data('COOKIE', 'pwdc');
 	$pwd = $pwd ?: newstring($pwdc);
 	$flag = false;
-	$fp=fopen(LOGFILE,"r");
+	$fp=openFile(LOGFILE,"r");
 	while($line = fgets($fp)){
 		if(!trim($line)){
 			continue;
@@ -2542,7 +2542,7 @@ function download_app_dat(): void {
 	$cno='';
 	$ctime='';
 	$flag = false;
-	$fp=fopen(LOGFILE,"r");
+	$fp=openFile(LOGFILE,"r");
 	while($line = fgets($fp)){//記事ナンバーのログを取得		
 
 		if(!trim($line)){
@@ -2595,7 +2595,7 @@ function editform(): void {
 	}
 
 	$pwd = $pwd ?: $pwdc;
-	$fp=fopen(LOGFILE,"r");
+	$fp=openFile(LOGFILE,"r");
 	file_lock($fp, LOCK_EX);
 	$buf = get_buffer_from_fp($fp);
 	if(!$buf){error(MSG019);}
@@ -2723,7 +2723,7 @@ function rewrite(): void {
 	
 	//ログ読み込み
 	chmod(LOGFILE,PERMISSION_FOR_LOG);
-	$fp=fopen(LOGFILE,"r+");
+	$fp=openFile(LOGFILE,"r+");
 	file_lock($fp, LOCK_EX);
 	$buf = get_buffer_from_fp($fp);
 	if(!$buf){error(MSG019);}
@@ -2856,7 +2856,7 @@ function replace(?string $no="",?string $pwd="",?string $repcode="",bool $java=f
 
 	//ログ読み込み
 	chmod(LOGFILE,PERMISSION_FOR_LOG);
-	$fp=fopen(LOGFILE,"r+");
+	$fp=openFile(LOGFILE,"r+");
 	file_lock($fp, LOCK_EX,['paintcom'=>true]);
 	$buf = get_buffer_from_fp($fp);
 	if(!$buf){error(MSG019);}
@@ -2906,13 +2906,19 @@ function replace(?string $no="",?string $pwd="",?string $repcode="",bool $java=f
 	}
 
 	$tp=fopen(TREEFILE,"r");
+	if (!$tp) {
+		if($java){
+			die("error\n{$replace_error_msg}");
+		}
+		location_paintcom();
+	}
 	while($tree=fgets($tp)){
 		if (strpos(',' . trim($tree) . ',',',' . $no . ',') !== false) {
 			[$oyano,] = explode(',', trim($tree));
 			break;
 		}
 	}
-	fclose($tp);
+	closeFile($tp);
 
 	if(!check_elapsed_days($etim,$logver)||!$oyano){//指定日数より古い画像差し換えは新規投稿にする
 		closeFile($fp);
@@ -3023,7 +3029,7 @@ function catalog(): void {
 	foreach($disp_threads as $val){
 		$treeline[]=explode(",", trim($val),2)[0];
 	}
-	$fp=fopen(LOGFILE,"r");
+	$fp=openFile(LOGFILE,"r");
 	$line = create_line_from_treenumber ($fp,$treeline);
 	closeFile($fp);
 	$lineindex = get_lineindex($line); // 逆変換テーブル作成
@@ -3787,6 +3793,21 @@ function writeFile ($fp, ?string $data): void {
 	stream_set_write_buffer($fp, 0);
 	fwrite($fp, $data);
 }
+
+/** 
+ * ファイルポインタを開く
+ * @param string $filename ファイル名
+ * @param string $mode openFile()のモード
+ * @return resource|false
+ */
+function openFile($filename,$mode){
+	$fp = fopen($filename, $mode);
+	if(!$fp){
+		error(MSG019);
+	}
+	return $fp;
+}
+
 /**
  * ファイルポインタを閉じる
  * @param resource|false $fp
@@ -3796,6 +3817,24 @@ function closeFile ($fp): void {
 		fflush($fp);
 		file_lock($fp, LOCK_UN);
 		fclose($fp);
+	}
+}
+
+/**
+ * flockのラッパー関数 
+ * @param resource|false $fp
+ */
+function file_lock($fp, int $lock, array $options=[]): void {
+
+	global $en;
+	$flock=flock($fp, $lock);
+	if (!$flock) {
+			if($lock !== LOCK_UN){
+				if(isset($options['paintcom'])){
+					location_paintcom();//未投稿画像の投稿フォームへ
+				}
+				error($en ? 'Failed to lock the file.' : 'ファイルのロックに失敗しました。');
+		}
 	}
 }
 
@@ -3900,10 +3939,10 @@ function get_pch_size(?string $src): ?array {
 	if(!$src){
 		return null;
 	}
-	$fp = fopen("$src", "rb");
+	$fp = openFile("$src", "rb");
 	$is_neo=(fread($fp,3)==="NEO");//ファイルポインタが3byte移動
 	$pch_data=bin2hex(fread($fp,8));
-	fclose($fp);
+	closeFile($fp);
 	if(!$pch_data){
 		return null;
 	}
@@ -3945,30 +3984,31 @@ function get_spch_size(string $src): ?array {
 	if(mime_content_type($src)!=="application/octet-stream"){
 		return null;
 	}
-	$lines=[];
 	$width=null;
 	$height=null;
 	$i=0;
-	$fp=fopen($src,"rb");
-		while($line = fgets($fp)){
-			if(!trim($line)){
-				continue;
-			}
-			$lines[]=trim($line);
-			if($i>6){
-				break;
-			}
-		++$i;
+	$fp=openFile($src,"rb");
+	while($line = fgets($fp)){
+		if(!trim($line)){
+			continue;
 		}
-	foreach($lines as $str){
-	parse_str($str, $output);
-	if(isset($output['image_width'])){
-		$width=$output['image_width'];
+		if(!$line){
+			continue;
+		}
+
+		parse_str((string)$line, $output);
+		if(isset($output['image_width'])){
+			$width=$output['image_width'];
+		}
+		if(isset($output['image_height'])){
+			$height=$output['image_height'];
+		}
+
+		if(++$i>=6){
+			break;
+		}
 	}
-	if(isset($output['image_height'])){
-		$height=$output['image_height'];
-	}
-	}
+	closeFile($fp);
 	if(!is_numeric($width)||!is_numeric($height)){
 		return null;
 	}
@@ -3987,10 +4027,7 @@ function get_log(?string $logfile): array {
 		error(MSG019);
 	}
 	$lines=[];
-	$fp=fopen($logfile,"r");
-	if(!$fp){
-		error(MSG019);
-	}
+	$fp=openFile($logfile,"r");
 	while($line = fgets($fp)){
 		if(!trim($line)){
 			continue;
@@ -4095,6 +4132,10 @@ function is_paint_tool_name(?string $tool): string {
  */
 function create_line_from_treenumber ($fp,array $trees): array {
 
+	if(!$fp){
+		error(MSG019);
+	} 
+
 	rewind($fp);
 	$line=[];
 	$treeSet = array_flip($trees);//配列のキーと値を反転
@@ -4128,23 +4169,6 @@ function is_adminpass(?string $pwd):bool {
 	}
 	return false;
 
-}
-/**
- * flockのラッパー関数 
- * @param resource|false $fp
- */
-function file_lock($fp, int $lock, array $options=[]): void {
-
-	global $en;
-	$flock=flock($fp, $lock);
-	if (!$flock) {
-			if($lock !== LOCK_UN){
-				if(isset($options['paintcom'])){
-					location_paintcom();//未投稿画像の投稿フォームへ
-				}
-				error($en ? 'Failed to lock the file.' : 'ファイルのロックに失敗しました。');
-		}
-	}
 }
 
 /** filter_input のラッパー関数 */
