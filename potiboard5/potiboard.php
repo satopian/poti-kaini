@@ -4,7 +4,7 @@
 // POTI-board EVO
 // バージョン :
 
-const POTI_VER = 'v7.26.2';
+const POTI_VER = 'v7.26.5';
 const POTI_LOT = 'lot.20261114';
 
 /*
@@ -3913,9 +3913,12 @@ function check_password (?string $pwd,?string  $hash,?string $adminPass = ""): b
  * @return bool
  */
 function is_neo(string $src):bool {
-	$fp = openFile($src, "rb");
+	$fp = fopen($src, "rb");
+	if(!$fp){
+		return false;
+	}
 	$is_neo=(fread($fp,3)==="NEO");
-	closeFile($fp);
+	fclose($fp);
 	return $is_neo;
 }
 /** 使用するペイントアプリの配列化 */
@@ -3948,10 +3951,13 @@ function get_pch_size(?string $src): ?array {
 	if(!$src){
 		return null;
 	}
-	$fp = openFile($src, "rb");
+	$fp = fopen($src, "rb");
+	if(!$fp){
+		return null;
+	}
 	$is_neo=(fread($fp,3)==="NEO");//ファイルポインタが3byte移動
 	$pch_data=bin2hex(fread($fp,8));
-	closeFile($fp);
+	fclose($fp);
 	if(!$pch_data){
 		return null;
 	}
@@ -3996,7 +4002,10 @@ function get_spch_size(string $src): ?array {
 	$width=null;
 	$height=null;
 	$i=0;
-	$fp=openFile($src,"rb");
+	$fp = fopen($src, "rb");
+	if(!$fp){
+		return null;
+	}
 	while($line = fgets($fp)){
 		if(!trim($line)){
 			continue;
@@ -4017,7 +4026,7 @@ function get_spch_size(string $src): ?array {
 			break;
 		}
 	}
-	closeFile($fp);
+	fclose($fp);
 	if(!is_numeric($width)||!is_numeric($height)){
 		return null;
 	}
@@ -4141,10 +4150,11 @@ function is_paint_tool_name(?string $tool): string {
 /**
  * ツリーnoと一致する行の配列を作成
  * @param resource|false $fp
+ * @param array $trees
  */
 function create_line_from_treenumber ($fp,array $trees): array {
 
-	if(!$fp||!is_array($trees)||empty($trees)){
+	if(!$fp||!is_array($trees)){
 		error(MSG019);
 	} 
 
@@ -4162,7 +4172,14 @@ function create_line_from_treenumber ($fp,array $trees): array {
 	}
 	return $line;
 }
-//サムネイル作成
+
+/** サムネイル作成
+ * @param string|null $imgfile
+ * @param string|null $time
+ * @param string|null $max_w
+ * @param string|null $max_h
+ * @return string
+ */
 function make_thumbnail(?string $imgfile,?string $time,?string $max_w,?string $max_h): string {
 	$thumbnail='';
 	if(USE_THUMB){//スレッドの画像のサムネイルを使う時
