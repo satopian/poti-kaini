@@ -4,8 +4,8 @@
 // POTI-board EVO
 // バージョン :
 
-const POTI_VER = 'v7.26.0';
-const POTI_LOT = 'lot.20261113';
+const POTI_VER = 'v7.26.2';
+const POTI_LOT = 'lot.20261114';
 
 /*
   (C) 2018-2026 POTI改 POTI-board redevelopment team
@@ -2856,7 +2856,13 @@ function replace(?string $no="",?string $pwd="",?string $repcode="",bool $java=f
 
 	//ログ読み込み
 	chmod(LOGFILE,PERMISSION_FOR_LOG);
-	$fp=openFile(LOGFILE,"r+");
+	$fp=fopen(LOGFILE,"r+");
+	if(!$fp){
+		if($java){
+			die("error\n{$replace_error_msg}");
+		}
+		location_paintcom();
+	}
 	file_lock($fp, LOCK_EX,['paintcom'=>true]);
 	$buf = get_buffer_from_fp($fp);
 	if(!$buf){error(MSG019);}
@@ -3788,6 +3794,10 @@ function separateDatetimeAndUpdatemark (?string $date): array {
  * @param resource|false $fp
  */
 function writeFile ($fp, ?string $data): void {
+	$en=lang_en();
+	if(!$fp || !$data){
+		error($en ? 'Log write failed.' : 'ログの書き込みに失敗しました。');
+	}
 	ftruncate($fp,0);
 	rewind($fp);
 	stream_set_write_buffer($fp, 0);
@@ -3800,7 +3810,7 @@ function writeFile ($fp, ?string $data): void {
  * @param string $mode openFile()のモード
  * @return resource|false
  */
-function openFile($filename,$mode){
+function openFile($filename,$mode){	
 	$fp = fopen($filename, $mode);
 	if(!$fp){
 		error(MSG019);
@@ -3823,6 +3833,8 @@ function closeFile ($fp): void {
 /**
  * flockのラッパー関数 
  * @param resource|false $fp
+ * @param int $lock
+ * @param array $options
  */
 function file_lock($fp, int $lock, array $options=[]): void {
 
@@ -3901,12 +3913,9 @@ function check_password (?string $pwd,?string  $hash,?string $adminPass = ""): b
  * @return bool
  */
 function is_neo(string $src):bool {
-	$fp = fopen("$src", "rb");
-	if (!$fp) {
-		return false; // ファイルが開けなかった場合は false を返す
-	}
+	$fp = openFile($src, "rb");
 	$is_neo=(fread($fp,3)==="NEO");
-	fclose($fp);
+	closeFile($fp);
 	return $is_neo;
 }
 /** 使用するペイントアプリの配列化 */
@@ -3939,7 +3948,7 @@ function get_pch_size(?string $src): ?array {
 	if(!$src){
 		return null;
 	}
-	$fp = openFile("$src", "rb");
+	$fp = openFile($src, "rb");
 	$is_neo=(fread($fp,3)==="NEO");//ファイルポインタが3byte移動
 	$pch_data=bin2hex(fread($fp,8));
 	closeFile($fp);
@@ -4059,6 +4068,9 @@ function get_buffer_from_fp($fp): string {
 		}
 		$lines[] = $line;
 	}
+	if(empty($lines)){
+		error(MSG019);
+	}
 	return implode("", $lines);  // 行を1つのバッファにまとめて返す
 }
 /** ログファイルサイズが大きすぎる時はエラーにする */
@@ -4132,7 +4144,7 @@ function is_paint_tool_name(?string $tool): string {
  */
 function create_line_from_treenumber ($fp,array $trees): array {
 
-	if(!$fp){
+	if(!$fp||!is_array($trees)||empty($trees)){
 		error(MSG019);
 	} 
 
