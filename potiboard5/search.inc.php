@@ -111,7 +111,7 @@ class processsearch {
 			$oya[$tree_no] = $tree_nos[0]; //キーにres no、値にoya no
 		}
 	}
-	closeFile($tp);
+	fclose($tp);
 
 	$fp = openFile(LOGFILE, "r");
 	
@@ -164,7 +164,7 @@ class processsearch {
 		++$j;
 		if($j>=10000){break;}//1掲示板あたりの最大行数
 	}
-		closeFile($fp);
+	fclose($fp);
 	//検索結果の出力
 	$j=0;
 	$dat['comments']=[];
