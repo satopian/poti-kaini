@@ -3796,7 +3796,7 @@ function separateDatetimeAndUpdatemark (?string $date): array {
 function writeFile ($fp, ?string $data): void {
 	$en=lang_en();
 	if(!$fp || !$data){
-		error($en ? 'Log write failed.' : 'ログの書き込みに失敗しました。');
+		error($en?'This operation has failed.':'失敗しました。');
 	}
 	ftruncate($fp,0);
 	rewind($fp);
@@ -3846,7 +3846,7 @@ function file_lock($fp, int $lock, array $options=[]): void {
 				if(isset($options['paintcom'])){
 					location_paintcom();//未投稿画像の投稿フォームへ
 				}
-				error($en ? 'Failed to lock the file.' : 'ファイルのロックに失敗しました。');
+			error($en?'This operation has failed.':'失敗しました。');
 		}
 	}
 }
