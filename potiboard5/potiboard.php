@@ -4,8 +4,8 @@
 // POTI-board EVO
 // バージョン :
 
-const POTI_VER = 'v7.26.6';
-const POTI_LOT = 'lot.20261116';
+const POTI_VER = 'v7.27.1';
+const POTI_LOT = 'lot.20261121';
 
 /*
   (C) 2018-2026 POTI改 POTI-board redevelopment team
@@ -56,6 +56,7 @@ check_file(__DIR__.'/lib/'.JQUERY);
 check_file(__DIR__.'/lib/lightbox/js/lightbox.min.js');
 check_file(__DIR__.'/lib/lightbox/css/lightbox.min.css');
 
+/** 設定の読み込み */
 require_once(__DIR__.'/config.php');
 defined('PERMISSION_FOR_CONFIG') or define('PERMISSION_FOR_CONFIG',0600); 
 check_file(__DIR__.'/config.php',false,PERMISSION_FOR_CONFIG);
@@ -67,13 +68,30 @@ if(USE_CHEERPJ_OLD_VERSION){//2.3
 	define('CHEERPJ_HASH','sha384-1s6C2I0gGJltmNWfLfzHgXW5Dj4JB4kQTpnS37fU6CaQR/FrYG219xbhcAFRcHKE');
 	define('CHEERPJ_PRELOAD','');
 }else{//cj4.3
+	//ブラウザの言語が日本語の時は日本語のUIを表示する
+	$allowed = ['en', 'ja', 'zh', 'ko', 'fr', 'it', 'es', 'ca'];
+	$tag = strtok($_SERVER['HTTP_ACCEPT_LANGUAGE'] ?? '', ',;'); //"ja-JP"
+	[$lang, $country] = array_pad(explode('-', $tag, 2), 2, '');
+
+	$lang = strtolower($lang);
+	$lang = in_array($lang, $allowed, true) ? $lang : 'en';
+	$country = (strlen($country) === 2 && ctype_alpha($country)) ? strtoupper($country) : '';
+
+	$javaProperties = '';
+	if ($lang !== 'en') {
+		$javaProperties = ",javaProperties: [\"user.language={$lang}\"";
+		if ($country !== '') {
+			$javaProperties .= ",\"user.country={$country}\"";
+		}
+		$javaProperties .= ']';
+	}
 	define('CHEERPJ_URL','https://cjrtnc.leaningtech.com/4.3/loader.js');
 	define('CHEERPJ_HASH','sha384-uKhK9NUHrSpoCfjhgnQkV7vDjOB6IhQZY1esOxD+TF1yvLbbJS/DRhX7g6ATh/wX');
-	define('CHEERPJ_PRELOAD','{"/lt/8/jre/lib/rt.jar":[0,131072,9699328,10878976,11272192,11534336,11665408,12189696,12320768,12451840,15204352,15335424,15466496,15597568,15990784,16384000,16777216,16908288,17039360,17563648,17694720,17956864,18087936,18612224,18743296,18874368,19005440,19136512,19529728,19660800,20185088,20316160,20840448,21757952,21889024,22020096,22151168,27000832],"/lt/etc/users":[0,131072],"/lt/etc/localtime":[],"/lt/8/jre/lib/cheerpj-awt.jar":[0,131072],"/lt/8/lib/ext/meta-index":[0,131072],"/lt/8/lib/ext":[],"/lt/8/lib/ext/index.list":[],"/lt/8/lib/ext/localedata.jar":[],"/lt/8/jre/lib/jsse.jar":[0,131072,786432,917504],"/lt/8/jre/lib/jce.jar":[0,131072],"/lt/8/jre/lib/charsets.jar":[0,131072,1703936,1835008],"/lt/8/jre/lib/resources.jar":[0,131072,917504,1179648],"/lt/8/jre/lib/javaws.jar":[0,131072,1441792,1703936],"/lt/8/lib/ext/sunec.jar":[],"/lt/8/lib/ext/sunjce_provider.jar":[],"/lt/8/lib/ext/zipfs.jar":[],"/lt/8/jre/lib/meta-index":[0,131072],"/lt/8/jre/lib":[],"/lt/8/lib/accessibility.properties":[],"/lt/8/lib/security/java.security":[0,131072],"/lt/8/lib/fonts/LucidaSansRegular.ttf":[],"/lt/8/lib/security/java.policy":[0,131072],"/lt/8/lib/ext/*":[],"/lt/etc/hosts":[],"/lt/etc/resolv.conf":[0,131072],"/lt/8/lib/fonts/badfonts.txt":[],"/lt/8/lib/fonts":[],"/lt/fc/fonts/fonts.conf":[0,131072],"/lt/fc/ttf":[],"/lt/fc/cache/e21edda6a7db77f35ca341e0c3cb2a22-le32d8.cache-7":[0,131072],"/lt/8/lib/tzdb.dat":[0,131072],"/lt/8/lib/fonts/fallback":[],"/lt/fc/ttf/LiberationSans-Regular.ttf":[0,131072,262144,393216]}');
+	define('CHEERPJ_PRELOAD','{"/lt/8/jre/lib/rt.jar":[0,131072,9699328,10878976,11272192,11534336,11665408,12189696,12320768,12451840,15204352,15335424,15466496,15597568,15990784,16384000,16777216,16908288,17039360,17563648,17694720,17956864,18087936,18612224,18743296,18874368,19005440,19136512,19529728,19660800,20185088,20316160,20840448,21757952,21889024,22020096,22151168,27000832],"/lt/etc/users":[0,131072],"/lt/etc/localtime":[],"/lt/8/jre/lib/cheerpj-awt.jar":[0,131072],"/lt/8/lib/ext/meta-index":[0,131072],"/lt/8/lib/ext":[],"/lt/8/lib/ext/index.list":[],"/lt/8/lib/ext/localedata.jar":[],"/lt/8/jre/lib/jsse.jar":[0,131072,786432,917504],"/lt/8/jre/lib/jce.jar":[0,131072],"/lt/8/jre/lib/charsets.jar":[0,131072,1703936,1835008],"/lt/8/jre/lib/resources.jar":[0,131072,917504,1179648],"/lt/8/jre/lib/javaws.jar":[0,131072,1441792,1703936],"/lt/8/lib/ext/sunec.jar":[],"/lt/8/lib/ext/sunjce_provider.jar":[],"/lt/8/lib/ext/zipfs.jar":[],"/lt/8/jre/lib/meta-index":[0,131072],"/lt/8/jre/lib":[],"/lt/8/lib/accessibility.properties":[],"/lt/8/lib/security/java.security":[0,131072],"/lt/8/lib/fonts/LucidaSansRegular.ttf":[],"/lt/8/lib/security/java.policy":[0,131072],"/lt/8/lib/ext/*":[],"/lt/etc/hosts":[],"/lt/etc/resolv.conf":[0,131072],"/lt/8/lib/fonts/badfonts.txt":[],"/lt/8/lib/fonts":[],"/lt/fc/fonts/fonts.conf":[0,131072],"/lt/fc/ttf":[],"/lt/fc/cache/e21edda6a7db77f35ca341e0c3cb2a22-le32d8.cache-7":[0,131072],"/lt/8/lib/tzdb.dat":[0,131072],"/lt/8/lib/fonts/fallback":[],"/lt/fc/ttf/LiberationSans-Regular.ttf":[0,131072,262144,393216]'.$javaProperties.'}'
+	);
 }
 define('CHEERPJ_DEBUG','{ enableDebug: true }');
 define('CHEERPJ_DEBUG_MODE',0);
-
 
 // $ cat FILENAME.js | openssl dgst -sha384 -binary | openssl base64 -A
 // https://developer.mozilla.org/docs/Web/Security/Subresource_Integrity
