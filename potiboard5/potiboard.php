@@ -4,8 +4,8 @@
 // POTI-board EVO
 // バージョン :
 
-const POTI_VER = 'v7.27.1';
-const POTI_LOT = 'lot.20261121';
+const POTI_VER = 'v7.27.3';
+const POTI_LOT = 'lot.20261126';
 
 /*
   (C) 2018-2026 POTI改 POTI-board redevelopment team
@@ -85,8 +85,8 @@ if(USE_CHEERPJ_OLD_VERSION){//2.3
 		}
 		$javaProperties .= ']';
 	}
-	define('CHEERPJ_URL','https://cjrtnc.leaningtech.com/4.3/loader.js');
-	define('CHEERPJ_HASH','sha384-uKhK9NUHrSpoCfjhgnQkV7vDjOB6IhQZY1esOxD+TF1yvLbbJS/DRhX7g6ATh/wX');
+	define('CHEERPJ_URL','https://cjrtnc.leaningtech.com/20261123_3861/loader.js');
+	define('CHEERPJ_HASH','sha384-zXh+ydEgZpoWR7su3jA/GH/WrYrX7jRmHWYHcyFE+q4qEAUnF6oW1zEbkWjyZib8');
 	define('CHEERPJ_PRELOAD','{"/lt/8/jre/lib/rt.jar":[0,131072,9699328,10878976,11272192,11534336,11665408,12189696,12320768,12451840,15204352,15335424,15466496,15597568,15990784,16384000,16777216,16908288,17039360,17563648,17694720,17956864,18087936,18612224,18743296,18874368,19005440,19136512,19529728,19660800,20185088,20316160,20840448,21757952,21889024,22020096,22151168,27000832],"/lt/etc/users":[0,131072],"/lt/etc/localtime":[],"/lt/8/jre/lib/cheerpj-awt.jar":[0,131072],"/lt/8/lib/ext/meta-index":[0,131072],"/lt/8/lib/ext":[],"/lt/8/lib/ext/index.list":[],"/lt/8/lib/ext/localedata.jar":[],"/lt/8/jre/lib/jsse.jar":[0,131072,786432,917504],"/lt/8/jre/lib/jce.jar":[0,131072],"/lt/8/jre/lib/charsets.jar":[0,131072,1703936,1835008],"/lt/8/jre/lib/resources.jar":[0,131072,917504,1179648],"/lt/8/jre/lib/javaws.jar":[0,131072,1441792,1703936],"/lt/8/lib/ext/sunec.jar":[],"/lt/8/lib/ext/sunjce_provider.jar":[],"/lt/8/lib/ext/zipfs.jar":[],"/lt/8/jre/lib/meta-index":[0,131072],"/lt/8/jre/lib":[],"/lt/8/lib/accessibility.properties":[],"/lt/8/lib/security/java.security":[0,131072],"/lt/8/lib/fonts/LucidaSansRegular.ttf":[],"/lt/8/lib/security/java.policy":[0,131072],"/lt/8/lib/ext/*":[],"/lt/etc/hosts":[],"/lt/etc/resolv.conf":[0,131072],"/lt/8/lib/fonts/badfonts.txt":[],"/lt/8/lib/fonts":[],"/lt/fc/fonts/fonts.conf":[0,131072],"/lt/fc/ttf":[],"/lt/fc/cache/e21edda6a7db77f35ca341e0c3cb2a22-le32d8.cache-7":[0,131072],"/lt/8/lib/tzdb.dat":[0,131072],"/lt/8/lib/fonts/fallback":[],"/lt/fc/ttf/LiberationSans-Regular.ttf":[0,131072,262144,393216]'.$javaProperties.'}'
 	);
 }
@@ -945,7 +945,7 @@ function md_link(?string $str): string {
 	$str = preg_replace_callback($pattern, function($matches) use ($rel) {
 		// エスケープされたバックスラッシュを特定の文字だけ解除
 		$text = str_replace(['\\[', '\\]', '\\(', '\\)'], ['[', ']', '(', ')'], $matches[1]);
-		$url = filter_var($matches[2], FILTER_VALIDATE_URL) ? $matches[2] : '';
+		$url = validated_url($matches[2]);
 		// 変換されたHTMLリンクを返す
 		if(!$url){
 				// URLが無効ならテキストだけ返す
@@ -1017,7 +1017,7 @@ function regist(): void {
 	$com = (string)filter_input_data('POST', 'com');
 	$name = (string)filter_input_data('POST', 'name');
 	$email = (string)filter_input_data('POST', 'email');
-	$url = USE_URL_INPUT_FIELD ? (string)filter_input_data('POST', 'url',FILTER_VALIDATE_URL) : '';
+	$url = USE_URL_INPUT_FIELD ? validated_url(filter_input_data('POST', 'url')) : "";
 	$sub = (string)filter_input_data('POST', 'sub');
 	$fcolor = (string)filter_input_data('POST', 'fcolor');
 	$pwd = (string)newstring(filter_input_data('POST', 'pwd'));
@@ -1467,7 +1467,7 @@ function regist(): void {
 		$data['to'] = TO_MAIL;
 		$data['name'] = $name;
 		$data['email'] = $email;
-		if(filter_var($url, FILTER_VALIDATE_URL)){
+		if(validated_url($url)){
 			$data['option'][] = 'URL,'.$url;
 		}
 		$data['option'][] = NOTICE_MAIL_TITLE.','.$sub;
@@ -2671,7 +2671,7 @@ function editform(): void {
 	$dat['sub'] = h(strip_tags($sub));
 	$com = preg_replace("#<br( *)/?>#i","\n",$com); // <br>または<br />を改行へ戻す
 	$dat['com'] = h($com);
-	$dat['url'] = h(filter_var($url,FILTER_VALIDATE_URL));
+	$dat['url'] = h(validated_url($url));
 	$dat['pwd'] = h($pwd);
 	$dat['thread_no'] = h($thread_no);
 	$dat['logfilename'] = h($logfilename);
@@ -2707,7 +2707,7 @@ function rewrite(): void {
 	$com = (string)filter_input_data('POST', 'com');
 	$name = (string)filter_input_data('POST', 'name');
 	$email = (string)filter_input_data('POST', 'email');
-	$url = USE_URL_INPUT_FIELD ? (string)filter_input_data('POST', 'url',FILTER_VALIDATE_URL) : '';
+	$url = USE_URL_INPUT_FIELD ? validated_url(filter_input_data('POST', 'url')) : '';
 	$sub = (string)filter_input_data('POST', 'sub');
 	$fcolor = (string)filter_input_data('POST', 'fcolor');
 	$no = (string)filter_input_data('POST', 'no',FILTER_VALIDATE_INT);
@@ -3151,7 +3151,7 @@ function Reject_if_NGword_exists_in_the_post(): void {
 	$com = (string)filter_input_data('POST', 'com');
 	$name = (string)filter_input_data('POST', 'name');
 	$email = (string)filter_input_data('POST', 'email');
-	$url = (string)filter_input_data('POST', 'url',FILTER_VALIDATE_URL);
+	$url = validated_url(filter_input_data('POST', 'url'));
 	$sub = (string)filter_input_data('POST', 'sub');
 	$pwd = (string)filter_input_data('POST', 'pwd');
 	$admin = (string)filter_input_data('POST', 'admin');
@@ -3217,7 +3217,7 @@ function create_formatted_text_from_post(?string $com,?string $name,?string $ema
 	if(!$com||preg_match("/\A\s*\z/u",$com)) $com="";
 	if(!$name||preg_match("/\A\s*\z/u",$name)) $name="";
 	if(!$sub||preg_match("/\A\s*\z/u",$sub))   $sub="";
-	if(!$url||!filter_var($url,FILTER_VALIDATE_URL)||!preg_match('{\Ahttps?://}', $url)) $url="";
+	$url = validated_url($url);
 	$name = str_replace("◆", "◇", $name);
 	$sage=(stripos($email,'sage')!==false);//メールをバリデートする前にsage判定
 	$email = filter_var($email, FILTER_VALIDATE_EMAIL);
@@ -3650,7 +3650,7 @@ function create_res (?string $line, array $options = []): array {
 		'no' => (int)$no,
 		'sub' => strip_tags($sub),
 		'substr_sub' => mb_substr(strip_tags(($sub)),0,12).$three_point_sub,
-		'url' => $url ? filter_var($url,FILTER_VALIDATE_URL):'',
+		'url' => validated_url($url),
 		'email' => $email ? filter_var($email, FILTER_VALIDATE_EMAIL) : '',
 		'ext' => $ext,
 		'time' => $time,
@@ -4259,6 +4259,23 @@ function check_submission_interval(): void {
 		set_form_display_time();
 		error(MSG053);
 	}
+}
+
+/**
+ * http/httpsのURLとして正しければ元の値を返し、そうでなければ空白を返す
+ *
+ * @param string $url
+ * @return string
+ */
+function validated_url(string $url): string {
+    if (!filter_var($url, FILTER_VALIDATE_URL)) {
+        return false;
+    }
+    $scheme = strtolower(parse_url($url, PHP_URL_SCHEME) ?? '');
+    if (!in_array($scheme, ['http', 'https'], true)) {
+        return false;
+    }
+    return $url;
 }
 
 /**

@@ -683,7 +683,7 @@ document.addEventListener("neo:fullscreenchange", (e) => {
 						<option>13</option>
 						<option>14</option>
 					</SELECT><input class="form gradationColorInputText" type="text" name="pst" size="8" onKeyPress="Chenge_()" onChange="Chenge_()">
-					<input class="gradationColorInputColorPicker" type="color" name="colorPickerPst" size="8"  onChange="colorPickerChange()" value="#fff"><br>
+					<input class="gradationColorInputColorPicker" type="color" name="colorPickerPst" size="8"  onChange="colorPickerChange()" value="#ffffff"><br>
 					<SELECT name="p_ed" onChange="GetPalette()">
 						<option>1</option>
 						<option>2</option>
@@ -700,7 +700,7 @@ document.addEventListener("neo:fullscreenchange", (e) => {
 						<option>13</option>
 						<option>14</option>
 					</SELECT><input class="form gradationColorInputText" type="text" name="ped" size="8" onKeyPress="Chenge_()" onChange="Chenge_()">
-					<input class="gradationColorInputColorPicker" type="color" name="colorPickerPed" size="8"  onChange="colorPickerChange()" value="#fff">
+					<input class="gradationColorInputColorPicker" type="color" name="colorPickerPed" size="8"  onChange="colorPickerChange()" value="#ffffff">
 					<div id="psft"></div>
 				</FORM>
 			</div>
